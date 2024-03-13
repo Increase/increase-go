@@ -27,13 +27,17 @@ func TestProofOfAuthorizationRequestSubmissionNewWithOptionalParams(t *testing.T
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ProofOfAuthorizationRequestSubmissions.New(context.TODO(), increase.ProofOfAuthorizationRequestSubmissionNewParams{
-		AuthorizationTerms:            increase.F("I agree to the terms of service."),
-		AuthorizedAt:                  increase.F(time.Now()),
-		AuthorizerEmail:               increase.F("user@example.com"),
-		AuthorizerName:                increase.F("Ian Crease"),
-		ProofOfAuthorizationRequestID: increase.F("proof_of_authorization_request_iwp8no25h3rjvil6ad3b"),
-		AuthorizerCompany:             increase.F("National Phonograph Company"),
-		AuthorizerIPAddress:           increase.F("x"),
+		AuthorizationTerms:                            increase.F("I agree to the terms of service."),
+		AuthorizedAt:                                  increase.F(time.Now()),
+		AuthorizerEmail:                               increase.F("user@example.com"),
+		AuthorizerName:                                increase.F("Ian Crease"),
+		CustomerHasBeenOffboarded:                     increase.F(true),
+		ProofOfAuthorizationRequestID:                 increase.F("proof_of_authorization_request_iwp8no25h3rjvil6ad3b"),
+		ValidatedAccountOwnershipViaCredential:        increase.F(true),
+		ValidatedAccountOwnershipWithAccountStatement: increase.F(true),
+		ValidatedAccountOwnershipWithMicrodeposit:     increase.F(true),
+		AuthorizerCompany:                             increase.F("National Phonograph Company"),
+		AuthorizerIPAddress:                           increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
