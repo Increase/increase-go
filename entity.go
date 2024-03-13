@@ -87,6 +87,16 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 	return
 }
 
+// Depending on your program, you may be required to re-confirm an Entity's details
+// on a recurring basis. After making any required updates, call this endpoint to
+// record that your user confirmed their details.
+func (r *EntityService) Confirm(ctx context.Context, entityID string, body EntityConfirmParams, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("entities/%s/confirm", entityID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Update a Natural Person or Corporation's address
 func (r *EntityService) UpdateAddress(ctx context.Context, entityID string, body EntityUpdateAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
@@ -105,6 +115,8 @@ type Entity struct {
 	Corporation EntityCorporation `json:"corporation,required,nullable"`
 	// The entity's description for display purposes.
 	Description string `json:"description,required,nullable"`
+	// The date and time at which the entity's details were most recently confirmed.
+	DetailsConfirmedAt time.Time `json:"details_confirmed_at,required,nullable" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -135,6 +147,7 @@ type entityJSON struct {
 	ID                    apijson.Field
 	Corporation           apijson.Field
 	Description           apijson.Field
+	DetailsConfirmedAt    apijson.Field
 	IdempotencyKey        apijson.Field
 	Joint                 apijson.Field
 	NaturalPerson         apijson.Field
@@ -2035,6 +2048,16 @@ const (
 	// The entity is temporarily disabled and cannot be used for financial activity.
 	EntityListParamsStatusInDisabled EntityListParamsStatusIn = "disabled"
 )
+
+type EntityConfirmParams struct {
+	// When your user confirmed the Entity's details. If not provided, the current time
+	// will be used.
+	ConfirmedAt param.Field[time.Time] `json:"confirmed_at" format:"date-time"`
+}
+
+func (r EntityConfirmParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
 
 type EntityUpdateAddressParams struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
