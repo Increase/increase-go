@@ -4,11 +4,13 @@ package increase_test
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal"
 	"github.com/increase/increase-go/option"
 )
 
@@ -18,6 +20,28 @@ type closureTransport struct {
 
 func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return t.fn(req)
+}
+
+func TestUserAgentHeader(t *testing.T) {
+	var userAgent string
+	client := increase.NewClient(
+		option.WithHTTPClient(&http.Client{
+			Transport: &closureTransport{
+				fn: func(req *http.Request) (*http.Response, error) {
+					userAgent = req.Header.Get("User-Agent")
+					return &http.Response{
+						StatusCode: http.StatusOK,
+					}, nil
+				},
+			},
+		}),
+	)
+	client.Accounts.New(context.Background(), increase.AccountNewParams{
+		Name: increase.F("My First Increase Account"),
+	})
+	if userAgent != fmt.Sprintf("Increase/Go %s", internal.PackageVersion) {
+		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
+	}
 }
 
 func TestRetryAfter(t *testing.T) {
