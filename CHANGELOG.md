@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.1 (2024-03-18)
+
+Full Changelog: [v0.29.0...v0.29.1](https://github.com/Increase/increase-go/compare/v0.29.0...v0.29.1)
+
+### Bug Fixes
+
+* **api:** improve union handling for request bodies ([#223](https://github.com/Increase/increase-go/issues/223)) ([e07dc1f](https://github.com/Increase/increase-go/commit/e07dc1fb77f0e05d7b294ce4410a1694e4659c7b))
+
 ## 0.29.0 (2024-03-13)
 
 Full Changelog: [v0.28.1...v0.29.0](https://github.com/Increase/increase-go/compare/v0.28.1...v0.29.0)
