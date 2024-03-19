@@ -163,6 +163,14 @@ const (
 	PhysicalCardProfileCreatorUser PhysicalCardProfileCreator = "user"
 )
 
+func (r PhysicalCardProfileCreator) IsKnown() bool {
+	switch r {
+	case PhysicalCardProfileCreatorIncrease, PhysicalCardProfileCreatorUser:
+		return true
+	}
+	return false
+}
+
 // The status of the Physical Card Profile.
 type PhysicalCardProfileStatus string
 
@@ -182,6 +190,14 @@ const (
 	PhysicalCardProfileStatusArchived PhysicalCardProfileStatus = "archived"
 )
 
+func (r PhysicalCardProfileStatus) IsKnown() bool {
+	switch r {
+	case PhysicalCardProfileStatusPendingCreating, PhysicalCardProfileStatusPendingReviewing, PhysicalCardProfileStatusRejected, PhysicalCardProfileStatusPendingSubmitting, PhysicalCardProfileStatusActive, PhysicalCardProfileStatusArchived:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `physical_card_profile`.
 type PhysicalCardProfileType string
@@ -189,6 +205,14 @@ type PhysicalCardProfileType string
 const (
 	PhysicalCardProfileTypePhysicalCardProfile PhysicalCardProfileType = "physical_card_profile"
 )
+
+func (r PhysicalCardProfileType) IsKnown() bool {
+	switch r {
+	case PhysicalCardProfileTypePhysicalCardProfile:
+		return true
+	}
+	return false
+}
 
 type PhysicalCardProfileNewParams struct {
 	// The identifier of the File containing the physical card's carrier image.
@@ -261,6 +285,14 @@ const (
 	// The Physical Card Profile has been archived.
 	PhysicalCardProfileListParamsStatusInArchived PhysicalCardProfileListParamsStatusIn = "archived"
 )
+
+func (r PhysicalCardProfileListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case PhysicalCardProfileListParamsStatusInPendingCreating, PhysicalCardProfileListParamsStatusInPendingReviewing, PhysicalCardProfileListParamsStatusInRejected, PhysicalCardProfileListParamsStatusInPendingSubmitting, PhysicalCardProfileListParamsStatusInActive, PhysicalCardProfileListParamsStatusInArchived:
+		return true
+	}
+	return false
+}
 
 type PhysicalCardProfileCloneParams struct {
 	// The identifier of the File containing the physical card's carrier image.

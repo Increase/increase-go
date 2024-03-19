@@ -110,6 +110,14 @@ const (
 	RoutingNumberACHTransfersNotSupported RoutingNumberACHTransfers = "not_supported"
 )
 
+func (r RoutingNumberACHTransfers) IsKnown() bool {
+	switch r {
+	case RoutingNumberACHTransfersSupported, RoutingNumberACHTransfersNotSupported:
+		return true
+	}
+	return false
+}
+
 // This routing number's support for Real-Time Payments Transfers.
 type RoutingNumberRealTimePaymentsTransfers string
 
@@ -120,6 +128,14 @@ const (
 	RoutingNumberRealTimePaymentsTransfersNotSupported RoutingNumberRealTimePaymentsTransfers = "not_supported"
 )
 
+func (r RoutingNumberRealTimePaymentsTransfers) IsKnown() bool {
+	switch r {
+	case RoutingNumberRealTimePaymentsTransfersSupported, RoutingNumberRealTimePaymentsTransfersNotSupported:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `routing_number`.
 type RoutingNumberType string
@@ -127,6 +143,14 @@ type RoutingNumberType string
 const (
 	RoutingNumberTypeRoutingNumber RoutingNumberType = "routing_number"
 )
+
+func (r RoutingNumberType) IsKnown() bool {
+	switch r {
+	case RoutingNumberTypeRoutingNumber:
+		return true
+	}
+	return false
+}
 
 // This routing number's support for Wire Transfers.
 type RoutingNumberWireTransfers string
@@ -137,6 +161,14 @@ const (
 	// The routing number cannot receive this transfer type.
 	RoutingNumberWireTransfersNotSupported RoutingNumberWireTransfers = "not_supported"
 )
+
+func (r RoutingNumberWireTransfers) IsKnown() bool {
+	switch r {
+	case RoutingNumberWireTransfersSupported, RoutingNumberWireTransfersNotSupported:
+		return true
+	}
+	return false
+}
 
 type RoutingNumberListParams struct {
 	// Filter financial institutions by routing number.

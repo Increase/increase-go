@@ -272,6 +272,14 @@ const (
 	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
 )
 
+func (r CheckTransferCurrency) IsKnown() bool {
+	switch r {
+	case CheckTransferCurrencyCad, CheckTransferCurrencyChf, CheckTransferCurrencyEur, CheckTransferCurrencyGbp, CheckTransferCurrencyJpy, CheckTransferCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // After a check transfer is deposited, this will contain supplemental details.
 type CheckTransferDeposit struct {
 	// The identifier of the API File object containing an image of the back of the
@@ -326,6 +334,14 @@ const (
 	CheckTransferDepositTypeCheckTransferDeposit CheckTransferDepositType = "check_transfer_deposit"
 )
 
+func (r CheckTransferDepositType) IsKnown() bool {
+	switch r {
+	case CheckTransferDepositTypeCheckTransferDeposit:
+		return true
+	}
+	return false
+}
+
 // Whether Increase will print and mail the check or if you will do it yourself.
 type CheckTransferFulfillmentMethod string
 
@@ -337,6 +353,14 @@ const (
 	// amount.
 	CheckTransferFulfillmentMethodThirdParty CheckTransferFulfillmentMethod = "third_party"
 )
+
+func (r CheckTransferFulfillmentMethod) IsKnown() bool {
+	switch r {
+	case CheckTransferFulfillmentMethodPhysicalCheck, CheckTransferFulfillmentMethodThirdParty:
+		return true
+	}
+	return false
+}
 
 // If the check has been mailed by Increase, this will contain details of the
 // shipment.
@@ -507,6 +531,14 @@ const (
 	CheckTransferStatusReturned CheckTransferStatus = "returned"
 )
 
+func (r CheckTransferStatus) IsKnown() bool {
+	switch r {
+	case CheckTransferStatusPendingApproval, CheckTransferStatusPendingSubmission, CheckTransferStatusSubmitted, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusCanceled, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusRejected, CheckTransferStatusRequiresAttention, CheckTransferStatusReturned:
+		return true
+	}
+	return false
+}
+
 // After a stop-payment is requested on the check, this will contain supplemental
 // details.
 type CheckTransferStopPaymentRequest struct {
@@ -556,6 +588,14 @@ const (
 	CheckTransferStopPaymentRequestReasonUnknown CheckTransferStopPaymentRequestReason = "unknown"
 )
 
+func (r CheckTransferStopPaymentRequestReason) IsKnown() bool {
+	switch r {
+	case CheckTransferStopPaymentRequestReasonMailDeliveryFailed, CheckTransferStopPaymentRequestReasonRejectedByIncrease, CheckTransferStopPaymentRequestReasonNotAuthorized, CheckTransferStopPaymentRequestReasonUnknown:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_stop_payment_request`.
 type CheckTransferStopPaymentRequestType string
@@ -563,6 +603,14 @@ type CheckTransferStopPaymentRequestType string
 const (
 	CheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest CheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
+
+func (r CheckTransferStopPaymentRequestType) IsKnown() bool {
+	switch r {
+	case CheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest:
+		return true
+	}
+	return false
+}
 
 // After the transfer is submitted, this will contain supplemental details.
 type CheckTransferSubmission struct {
@@ -594,6 +642,14 @@ type CheckTransferType string
 const (
 	CheckTransferTypeCheckTransfer CheckTransferType = "check_transfer"
 )
+
+func (r CheckTransferType) IsKnown() bool {
+	switch r {
+	case CheckTransferTypeCheckTransfer:
+		return true
+	}
+	return false
+}
 
 type CheckTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
@@ -628,6 +684,14 @@ const (
 	// amount.
 	CheckTransferNewParamsFulfillmentMethodThirdParty CheckTransferNewParamsFulfillmentMethod = "third_party"
 )
+
+func (r CheckTransferNewParamsFulfillmentMethod) IsKnown() bool {
+	switch r {
+	case CheckTransferNewParamsFulfillmentMethodPhysicalCheck, CheckTransferNewParamsFulfillmentMethodThirdParty:
+		return true
+	}
+	return false
+}
 
 // Details relating to the physical check that Increase will print and mail. This
 // is required if `fulfillment_method` is equal to `physical_check`. It must not be
@@ -761,3 +825,11 @@ const (
 	// The check was stopped for another reason.
 	CheckTransferStopPaymentParamsReasonUnknown CheckTransferStopPaymentParamsReason = "unknown"
 )
+
+func (r CheckTransferStopPaymentParamsReason) IsKnown() bool {
+	switch r {
+	case CheckTransferStopPaymentParamsReasonMailDeliveryFailed, CheckTransferStopPaymentParamsReasonNotAuthorized, CheckTransferStopPaymentParamsReasonUnknown:
+		return true
+	}
+	return false
+}

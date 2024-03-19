@@ -164,6 +164,14 @@ const (
 	EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodOther EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod = "other"
 )
 
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber, EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodPassport, EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodDriversLicense, EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationDriversLicense struct {
@@ -225,6 +233,14 @@ const (
 	// A person who manages, directs, or has significant control of the entity.
 	EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl EntityBeneficialOwnerNewParamsBeneficialOwnerProng = "control"
 )
+
+func (r EntityBeneficialOwnerNewParamsBeneficialOwnerProng) IsKnown() bool {
+	switch r {
+	case EntityBeneficialOwnerNewParamsBeneficialOwnerProngOwnership, EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl:
+		return true
+	}
+	return false
+}
 
 type EntityBeneficialOwnerArchiveParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the

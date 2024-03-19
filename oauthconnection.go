@@ -114,6 +114,14 @@ const (
 	OAuthConnectionStatusInactive OAuthConnectionStatus = "inactive"
 )
 
+func (r OAuthConnectionStatus) IsKnown() bool {
+	switch r {
+	case OAuthConnectionStatusActive, OAuthConnectionStatusInactive:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `oauth_connection`.
 type OAuthConnectionType string
@@ -121,6 +129,14 @@ type OAuthConnectionType string
 const (
 	OAuthConnectionTypeOAuthConnection OAuthConnectionType = "oauth_connection"
 )
+
+func (r OAuthConnectionType) IsKnown() bool {
+	switch r {
+	case OAuthConnectionTypeOAuthConnection:
+		return true
+	}
+	return false
+}
 
 type OAuthConnectionListParams struct {
 	// Return the page of entries after this one.

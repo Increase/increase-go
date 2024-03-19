@@ -148,6 +148,14 @@ const (
 	DeclinedTransactionCurrencyUsd DeclinedTransactionCurrency = "USD"
 )
 
+func (r DeclinedTransactionCurrency) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionCurrencyCad, DeclinedTransactionCurrencyChf, DeclinedTransactionCurrencyEur, DeclinedTransactionCurrencyGbp, DeclinedTransactionCurrencyJpy, DeclinedTransactionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The type of the route this Declined Transaction came through.
 type DeclinedTransactionRouteType string
 
@@ -157,6 +165,14 @@ const (
 	// A Card.
 	DeclinedTransactionRouteTypeCard DeclinedTransactionRouteType = "card"
 )
+
+func (r DeclinedTransactionRouteType) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionRouteTypeAccountNumber, DeclinedTransactionRouteTypeCard:
+		return true
+	}
+	return false
+}
 
 // This is an object giving more details on the network-level event that caused the
 // Declined Transaction. For example, for a card transaction this lists the
@@ -303,6 +319,14 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonUserInitiated DeclinedTransactionSourceACHDeclineReason = "user_initiated"
 )
 
+func (r DeclinedTransactionSourceACHDeclineReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, DeclinedTransactionSourceACHDeclineReasonBreachesLimit, DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, DeclinedTransactionSourceACHDeclineReasonDuplicateReturn, DeclinedTransactionSourceACHDeclineReasonEntityNotActive, DeclinedTransactionSourceACHDeclineReasonGroupLocked, DeclinedTransactionSourceACHDeclineReasonInsufficientFunds, DeclinedTransactionSourceACHDeclineReasonMisroutedReturn, DeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, DeclinedTransactionSourceACHDeclineReasonNoACHRoute, DeclinedTransactionSourceACHDeclineReasonOriginatorRequest, DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceACHDeclineReasonUserInitiated:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `ach_decline`.
 type DeclinedTransactionSourceACHDeclineType string
@@ -310,6 +334,14 @@ type DeclinedTransactionSourceACHDeclineType string
 const (
 	DeclinedTransactionSourceACHDeclineTypeACHDecline DeclinedTransactionSourceACHDeclineType = "ach_decline"
 )
+
+func (r DeclinedTransactionSourceACHDeclineType) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceACHDeclineTypeACHDecline:
+		return true
+	}
+	return false
+}
 
 // A Card Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_decline`.
@@ -411,6 +443,14 @@ const (
 	DeclinedTransactionSourceCardDeclineActionerNetwork DeclinedTransactionSourceCardDeclineActioner = "network"
 )
 
+func (r DeclinedTransactionSourceCardDeclineActioner) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineActionerUser, DeclinedTransactionSourceCardDeclineActionerIncrease, DeclinedTransactionSourceCardDeclineActionerNetwork:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
 type DeclinedTransactionSourceCardDeclineCurrency string
@@ -429,6 +469,14 @@ const (
 	// US Dollar (USD)
 	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
+
+func (r DeclinedTransactionSourceCardDeclineCurrency) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineCurrencyCad, DeclinedTransactionSourceCardDeclineCurrencyChf, DeclinedTransactionSourceCardDeclineCurrencyEur, DeclinedTransactionSourceCardDeclineCurrencyGbp, DeclinedTransactionSourceCardDeclineCurrencyJpy, DeclinedTransactionSourceCardDeclineCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `network`.
 type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
@@ -463,6 +511,14 @@ const (
 	// Visa
 	DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa DeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
 )
+
+func (r DeclinedTransactionSourceCardDeclineNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `visa` network.
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
@@ -535,6 +591,14 @@ const (
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date.
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
@@ -561,6 +625,14 @@ const (
 	// Contact chip card, without card verification value
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type DeclinedTransactionSourceCardDeclineNetworkIdentifiers struct {
@@ -619,6 +691,14 @@ const (
 	DeclinedTransactionSourceCardDeclineProcessingCategoryRefund DeclinedTransactionSourceCardDeclineProcessingCategory = "refund"
 )
 
+func (r DeclinedTransactionSourceCardDeclineProcessingCategory) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding, DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser, DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment, DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase, DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash, DeclinedTransactionSourceCardDeclineProcessingCategoryRefund:
+		return true
+	}
+	return false
+}
+
 // Why the transaction was declined.
 type DeclinedTransactionSourceCardDeclineReason string
 
@@ -654,6 +734,14 @@ const (
 	// support@increase.com for more information.
 	DeclinedTransactionSourceCardDeclineReasonSuspectedFraud DeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
 )
+
+func (r DeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineReasonCardNotActive, DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, DeclinedTransactionSourceCardDeclineReasonEntityNotActive, DeclinedTransactionSourceCardDeclineReasonGroupLocked, DeclinedTransactionSourceCardDeclineReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceCardDeclineReasonBreachesLimit, DeclinedTransactionSourceCardDeclineReasonWebhookDeclined, DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, DeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
+		return true
+	}
+	return false
+}
 
 // Fields related to verification of cardholder-provided values.
 type DeclinedTransactionSourceCardDeclineVerification struct {
@@ -720,6 +808,14 @@ const (
 	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "no_match"
 )
 
+func (r DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNotChecked, DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultMatch, DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // Cardholder address provided in the authorization request and the address on file
 // we verified it against.
 type DeclinedTransactionSourceCardDeclineVerificationCardholderAddress struct {
@@ -776,6 +872,14 @@ const (
 	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
+func (r DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNotChecked, DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultMatch, DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // The type of the resource. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
 type DeclinedTransactionSourceCategory string
@@ -798,6 +902,14 @@ const (
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	DeclinedTransactionSourceCategoryOther DeclinedTransactionSourceCategory = "other"
 )
+
+func (r DeclinedTransactionSourceCategory) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryInternationalACHDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryOther:
+		return true
+	}
+	return false
+}
 
 // A Check Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `check_decline`.
@@ -875,6 +987,14 @@ const (
 	DeclinedTransactionSourceCheckDeclineReasonUnableToProcess DeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
 )
 
+func (r DeclinedTransactionSourceCheckDeclineReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled, DeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled, DeclinedTransactionSourceCheckDeclineReasonBreachesLimit, DeclinedTransactionSourceCheckDeclineReasonEntityNotActive, DeclinedTransactionSourceCheckDeclineReasonGroupLocked, DeclinedTransactionSourceCheckDeclineReasonInsufficientFunds, DeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested, DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment, DeclinedTransactionSourceCheckDeclineReasonNotAuthorized, DeclinedTransactionSourceCheckDeclineReasonAmountMismatch, DeclinedTransactionSourceCheckDeclineReasonNotOurItem, DeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound, DeclinedTransactionSourceCheckDeclineReasonReferToImage, DeclinedTransactionSourceCheckDeclineReasonUnableToProcess:
+		return true
+	}
+	return false
+}
+
 // An Inbound Real-Time Payments Transfer Decline object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_decline`.
@@ -948,6 +1068,14 @@ const (
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
+func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // Why the transfer was declined.
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
@@ -965,6 +1093,14 @@ const (
 	// Your account is not enabled to receive Real-Time Payments transfers.
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
+
+func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled:
+		return true
+	}
+	return false
+}
 
 // An International ACH Decline object. This field will be present in the JSON
 // response if and only if `category` is equal to `international_ach_decline`.
@@ -1135,6 +1271,14 @@ const (
 	DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorFixedToFixed DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator = "fixed_to_fixed"
 )
 
+func (r DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicator) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorFixedToVariable, DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorVariableToFixed, DeclinedTransactionSourceInternationalACHDeclineForeignExchangeIndicatorFixedToFixed:
+		return true
+	}
+	return false
+}
+
 // An instruction of how to interpret the `foreign_exchange_reference` field for
 // this Transaction.
 type DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator string
@@ -1148,6 +1292,14 @@ const (
 	// `foreign_exchange_reference` field is blank.
 	DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorBlank DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator = "blank"
 )
+
+func (r DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicator) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorForeignExchangeRate, DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber, DeclinedTransactionSourceInternationalACHDeclineForeignExchangeReferenceIndicatorBlank:
+		return true
+	}
+	return false
+}
 
 // The type of transfer. Set by the originator.
 type DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode string
@@ -1195,6 +1347,14 @@ const (
 	DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeInternetInitiated DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode = "internet_initiated"
 )
 
+func (r DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCode) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeAnnuity, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeBusinessOrCommercial, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeDeposit, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeLoan, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeMiscellaneous, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeMortgage, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodePension, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeRemittance, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeRentOrLease, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeSalaryOrPayroll, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeTax, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeAccountsReceivable, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeBackOfficeConversion, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeMachineTransfer, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodePointOfPurchase, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodePointOfSale, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeRepresentedCheck, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeSharedNetworkTransaction, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeTelphoneInitiated, DeclinedTransactionSourceInternationalACHDeclineInternationalTransactionTypeCodeInternetInitiated:
+		return true
+	}
+	return false
+}
+
 // An instruction of how to interpret the
 // `originating_depository_financial_institution_id` field for this Transaction.
 type DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier string
@@ -1209,6 +1369,14 @@ const (
 	DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierIban DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
 
+func (r DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierBicCode, DeclinedTransactionSourceInternationalACHDeclineOriginatingDepositoryFinancialInstitutionIDQualifierIban:
+		return true
+	}
+	return false
+}
+
 // An instruction of how to interpret the
 // `receiving_depository_financial_institution_id` field for this Transaction.
 type DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier string
@@ -1222,6 +1390,14 @@ const (
 	// An International Bank Account Number.
 	DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierIban DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
+
+func (r DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierBicCode, DeclinedTransactionSourceInternationalACHDeclineReceivingDepositoryFinancialInstitutionIDQualifierIban:
+		return true
+	}
+	return false
+}
 
 // A Wire Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `wire_decline`.
@@ -1268,6 +1444,14 @@ const (
 	DeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed DeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
+func (r DeclinedTransactionSourceWireDeclineReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled, DeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled, DeclinedTransactionSourceWireDeclineReasonEntityNotActive, DeclinedTransactionSourceWireDeclineReasonGroupLocked, DeclinedTransactionSourceWireDeclineReasonNoAccountNumber, DeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `declined_transaction`.
 type DeclinedTransactionType string
@@ -1275,6 +1459,14 @@ type DeclinedTransactionType string
 const (
 	DeclinedTransactionTypeDeclinedTransaction DeclinedTransactionType = "declined_transaction"
 )
+
+func (r DeclinedTransactionType) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionTypeDeclinedTransaction:
+		return true
+	}
+	return false
+}
 
 type DeclinedTransactionListParams struct {
 	// Filter Declined Transactions to ones belonging to the specified Account.
@@ -1334,6 +1526,14 @@ const (
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	DeclinedTransactionListParamsCategoryInOther DeclinedTransactionListParamsCategoryIn = "other"
 )
+
+func (r DeclinedTransactionListParamsCategoryIn) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionListParamsCategoryInACHDecline, DeclinedTransactionListParamsCategoryInCardDecline, DeclinedTransactionListParamsCategoryInCheckDecline, DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, DeclinedTransactionListParamsCategoryInInternationalACHDecline, DeclinedTransactionListParamsCategoryInWireDecline, DeclinedTransactionListParamsCategoryInOther:
+		return true
+	}
+	return false
+}
 
 type DeclinedTransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

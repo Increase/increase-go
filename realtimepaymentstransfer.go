@@ -255,6 +255,14 @@ const (
 	RealTimePaymentsTransferCurrencyUsd RealTimePaymentsTransferCurrency = "USD"
 )
 
+func (r RealTimePaymentsTransferCurrency) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferCurrencyCad, RealTimePaymentsTransferCurrencyChf, RealTimePaymentsTransferCurrencyEur, RealTimePaymentsTransferCurrencyGbp, RealTimePaymentsTransferCurrencyJpy, RealTimePaymentsTransferCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // If the transfer is rejected by Real-Time Payments or the destination financial
 // institution, this will contain supplemental details.
 type RealTimePaymentsTransferRejection struct {
@@ -357,6 +365,14 @@ const (
 	RealTimePaymentsTransferRejectionRejectReasonCodeOther RealTimePaymentsTransferRejectionRejectReasonCode = "other"
 )
 
+func (r RealTimePaymentsTransferRejectionRejectReasonCode) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferRejectionRejectReasonCodeAccountClosed, RealTimePaymentsTransferRejectionRejectReasonCodeAccountBlocked, RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorAccountType, RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorAccountNumber, RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier, RealTimePaymentsTransferRejectionRejectReasonCodeEndCustomerDeceased, RealTimePaymentsTransferRejectionRejectReasonCodeNarrative, RealTimePaymentsTransferRejectionRejectReasonCodeTransactionForbidden, RealTimePaymentsTransferRejectionRejectReasonCodeTransactionTypeNotSupported, RealTimePaymentsTransferRejectionRejectReasonCodeUnexpectedAmount, RealTimePaymentsTransferRejectionRejectReasonCodeAmountExceedsBankLimits, RealTimePaymentsTransferRejectionRejectReasonCodeInvalidCreditorAddress, RealTimePaymentsTransferRejectionRejectReasonCodeUnknownEndCustomer, RealTimePaymentsTransferRejectionRejectReasonCodeInvalidDebtorAddress, RealTimePaymentsTransferRejectionRejectReasonCodeTimeout, RealTimePaymentsTransferRejectionRejectReasonCodeUnsupportedMessageForRecipient, RealTimePaymentsTransferRejectionRejectReasonCodeRecipientConnectionNotAvailable, RealTimePaymentsTransferRejectionRejectReasonCodeRealTimePaymentsSuspended, RealTimePaymentsTransferRejectionRejectReasonCodeInstructedAgentSignedOff, RealTimePaymentsTransferRejectionRejectReasonCodeProcessingError, RealTimePaymentsTransferRejectionRejectReasonCodeOther:
+		return true
+	}
+	return false
+}
+
 // The lifecycle status of the transfer.
 type RealTimePaymentsTransferStatus string
 
@@ -377,6 +393,14 @@ const (
 	// The transfer requires attention from an Increase operator.
 	RealTimePaymentsTransferStatusRequiresAttention RealTimePaymentsTransferStatus = "requires_attention"
 )
+
+func (r RealTimePaymentsTransferStatus) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusRequiresAttention:
+		return true
+	}
+	return false
+}
 
 // After the transfer is submitted to Real-Time Payments, this will contain
 // supplemental details.
@@ -413,6 +437,14 @@ type RealTimePaymentsTransferType string
 const (
 	RealTimePaymentsTransferTypeRealTimePaymentsTransfer RealTimePaymentsTransferType = "real_time_payments_transfer"
 )
+
+func (r RealTimePaymentsTransferType) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferTypeRealTimePaymentsTransfer:
+		return true
+	}
+	return false
+}
 
 type RealTimePaymentsTransferNewParams struct {
 	// The transfer amount in USD cents. For Real-Time Payments transfers, must be

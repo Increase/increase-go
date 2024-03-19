@@ -392,6 +392,14 @@ const (
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
+func (r EntityCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber, EntityCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport, EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense, EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // Why this person is considered a beneficial owner of the entity.
 type EntityCorporationBeneficialOwnersProng string
 
@@ -401,6 +409,14 @@ const (
 	// A person who manages, directs, or has significant control of the entity.
 	EntityCorporationBeneficialOwnersProngControl EntityCorporationBeneficialOwnersProng = "control"
 )
+
+func (r EntityCorporationBeneficialOwnersProng) IsKnown() bool {
+	switch r {
+	case EntityCorporationBeneficialOwnersProngOwnership, EntityCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
 
 // Details of the joint entity. Will be present if `structure` is equal to `joint`.
 type EntityJoint struct {
@@ -537,6 +553,14 @@ const (
 	EntityJointIndividualsIdentificationMethodOther EntityJointIndividualsIdentificationMethod = "other"
 )
 
+func (r EntityJointIndividualsIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityJointIndividualsIdentificationMethodSocialSecurityNumber, EntityJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityJointIndividualsIdentificationMethodPassport, EntityJointIndividualsIdentificationMethodDriversLicense, EntityJointIndividualsIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // Details of the natural person entity. Will be present if `structure` is equal to
 // `natural_person`.
 type EntityNaturalPerson struct {
@@ -649,6 +673,14 @@ const (
 	EntityNaturalPersonIdentificationMethodOther EntityNaturalPersonIdentificationMethod = "other"
 )
 
+func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNaturalPersonIdentificationMethodSocialSecurityNumber, EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNaturalPersonIdentificationMethodPassport, EntityNaturalPersonIdentificationMethodDriversLicense, EntityNaturalPersonIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // The status of the entity.
 type EntityStatus string
 
@@ -660,6 +692,14 @@ const (
 	// The entity is temporarily disabled and cannot be used for financial activity.
 	EntityStatusDisabled EntityStatus = "disabled"
 )
+
+func (r EntityStatus) IsKnown() bool {
+	switch r {
+	case EntityStatusActive, EntityStatusArchived, EntityStatusDisabled:
+		return true
+	}
+	return false
+}
 
 // The entity's legal structure.
 type EntityStructure string
@@ -674,6 +714,14 @@ const (
 	// A trust.
 	EntityStructureTrust EntityStructure = "trust"
 )
+
+func (r EntityStructure) IsKnown() bool {
+	switch r {
+	case EntityStructureCorporation, EntityStructureNaturalPerson, EntityStructureJoint, EntityStructureTrust:
+		return true
+	}
+	return false
+}
 
 // Supplemental Documents are uploaded files connected to an Entity during
 // onboarding.
@@ -719,6 +767,14 @@ type EntitySupplementalDocumentsType string
 const (
 	EntitySupplementalDocumentsTypeEntitySupplementalDocument EntitySupplementalDocumentsType = "entity_supplemental_document"
 )
+
+func (r EntitySupplementalDocumentsType) IsKnown() bool {
+	switch r {
+	case EntitySupplementalDocumentsTypeEntitySupplementalDocument:
+		return true
+	}
+	return false
+}
 
 // Details of the trust entity. Will be present if `structure` is equal to `trust`.
 type EntityTrust struct {
@@ -809,6 +865,14 @@ const (
 	// The trust cannot be revoked.
 	EntityTrustCategoryIrrevocable EntityTrustCategory = "irrevocable"
 )
+
+func (r EntityTrustCategory) IsKnown() bool {
+	switch r {
+	case EntityTrustCategoryRevocable, EntityTrustCategoryIrrevocable:
+		return true
+	}
+	return false
+}
 
 // The grantor of the trust. Will be present if the `category` is `revocable`.
 type EntityTrustGrantor struct {
@@ -920,6 +984,14 @@ const (
 	// Another identifying document.
 	EntityTrustGrantorIdentificationMethodOther EntityTrustGrantorIdentificationMethod = "other"
 )
+
+func (r EntityTrustGrantorIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityTrustGrantorIdentificationMethodSocialSecurityNumber, EntityTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityTrustGrantorIdentificationMethodPassport, EntityTrustGrantorIdentificationMethodDriversLicense, EntityTrustGrantorIdentificationMethodOther:
+		return true
+	}
+	return false
+}
 
 type EntityTrustTrustee struct {
 	// The individual trustee of the trust. Will be present if the trustee's
@@ -1059,6 +1131,14 @@ const (
 	EntityTrustTrusteesIndividualIdentificationMethodOther EntityTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
+func (r EntityTrustTrusteesIndividualIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber, EntityTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityTrustTrusteesIndividualIdentificationMethodPassport, EntityTrustTrusteesIndividualIdentificationMethodDriversLicense, EntityTrustTrusteesIndividualIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // The structure of the trustee. Will always be equal to `individual`.
 type EntityTrustTrusteesStructure string
 
@@ -1067,6 +1147,14 @@ const (
 	EntityTrustTrusteesStructureIndividual EntityTrustTrusteesStructure = "individual"
 )
 
+func (r EntityTrustTrusteesStructure) IsKnown() bool {
+	switch r {
+	case EntityTrustTrusteesStructureIndividual:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `entity`.
 type EntityType string
@@ -1074,6 +1162,14 @@ type EntityType string
 const (
 	EntityTypeEntity EntityType = "entity"
 )
+
+func (r EntityType) IsKnown() bool {
+	switch r {
+	case EntityTypeEntity:
+		return true
+	}
+	return false
+}
 
 type EntityNewParams struct {
 	// The type of Entity to create.
@@ -1117,6 +1213,14 @@ const (
 	// A trust.
 	EntityNewParamsStructureTrust EntityNewParamsStructure = "trust"
 )
+
+func (r EntityNewParamsStructure) IsKnown() bool {
+	switch r {
+	case EntityNewParamsStructureCorporation, EntityNewParamsStructureNaturalPerson, EntityNewParamsStructureJoint, EntityNewParamsStructureTrust:
+		return true
+	}
+	return false
+}
 
 // Details of the corporation entity to create. Required if `structure` is equal to
 // `corporation`.
@@ -1262,6 +1366,14 @@ const (
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
+func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodPassport, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
@@ -1323,6 +1435,14 @@ const (
 	// A person who manages, directs, or has significant control of the entity.
 	EntityNewParamsCorporationBeneficialOwnersProngControl EntityNewParamsCorporationBeneficialOwnersProng = "control"
 )
+
+func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
+	switch r {
+	case EntityNewParamsCorporationBeneficialOwnersProngOwnership, EntityNewParamsCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
 
 // Details of the joint entity to create. Required if `structure` is equal to
 // `joint`.
@@ -1415,6 +1535,14 @@ const (
 	// Another identifying document.
 	EntityNewParamsJointIndividualsIdentificationMethodOther EntityNewParamsJointIndividualsIdentificationMethod = "other"
 )
+
+func (r EntityNewParamsJointIndividualsIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNewParamsJointIndividualsIdentificationMethodSocialSecurityNumber, EntityNewParamsJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsJointIndividualsIdentificationMethodPassport, EntityNewParamsJointIndividualsIdentificationMethodDriversLicense, EntityNewParamsJointIndividualsIdentificationMethodOther:
+		return true
+	}
+	return false
+}
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
@@ -1552,6 +1680,14 @@ const (
 	EntityNewParamsNaturalPersonIdentificationMethodOther EntityNewParamsNaturalPersonIdentificationMethod = "other"
 )
 
+func (r EntityNewParamsNaturalPersonIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNewParamsNaturalPersonIdentificationMethodSocialSecurityNumber, EntityNewParamsNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsNaturalPersonIdentificationMethodPassport, EntityNewParamsNaturalPersonIdentificationMethodDriversLicense, EntityNewParamsNaturalPersonIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
@@ -1617,6 +1753,14 @@ const (
 	// accounts.
 	EntityNewParamsRelationshipUnaffiliated EntityNewParamsRelationship = "unaffiliated"
 )
+
+func (r EntityNewParamsRelationship) IsKnown() bool {
+	switch r {
+	case EntityNewParamsRelationshipAffiliated, EntityNewParamsRelationshipInformational, EntityNewParamsRelationshipUnaffiliated:
+		return true
+	}
+	return false
+}
 
 type EntityNewParamsSupplementalDocument struct {
 	// The identifier of the File containing the document.
@@ -1689,6 +1833,14 @@ const (
 	EntityNewParamsTrustCategoryIrrevocable EntityNewParamsTrustCategory = "irrevocable"
 )
 
+func (r EntityNewParamsTrustCategory) IsKnown() bool {
+	switch r {
+	case EntityNewParamsTrustCategoryRevocable, EntityNewParamsTrustCategoryIrrevocable:
+		return true
+	}
+	return false
+}
+
 type EntityNewParamsTrustTrustee struct {
 	// The structure of the trustee.
 	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
@@ -1708,6 +1860,14 @@ const (
 	// The trustee is an individual.
 	EntityNewParamsTrustTrusteesStructureIndividual EntityNewParamsTrustTrusteesStructure = "individual"
 )
+
+func (r EntityNewParamsTrustTrusteesStructure) IsKnown() bool {
+	switch r {
+	case EntityNewParamsTrustTrusteesStructureIndividual:
+		return true
+	}
+	return false
+}
 
 // Details of the individual trustee. Required when the trustee `structure` is
 // equal to `individual`.
@@ -1789,6 +1949,14 @@ const (
 	// Another identifying document.
 	EntityNewParamsTrustTrusteesIndividualIdentificationMethodOther EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "other"
 )
+
+func (r EntityNewParamsTrustTrusteesIndividualIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNewParamsTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber, EntityNewParamsTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsTrustTrusteesIndividualIdentificationMethodPassport, EntityNewParamsTrustTrusteesIndividualIdentificationMethodDriversLicense, EntityNewParamsTrustTrusteesIndividualIdentificationMethodOther:
+		return true
+	}
+	return false
+}
 
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
@@ -1923,6 +2091,14 @@ const (
 	EntityNewParamsTrustGrantorIdentificationMethodOther EntityNewParamsTrustGrantorIdentificationMethod = "other"
 )
 
+func (r EntityNewParamsTrustGrantorIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNewParamsTrustGrantorIdentificationMethodSocialSecurityNumber, EntityNewParamsTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsTrustGrantorIdentificationMethodPassport, EntityNewParamsTrustGrantorIdentificationMethodDriversLicense, EntityNewParamsTrustGrantorIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // Information about the United States driver's license used for identification.
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
@@ -2048,6 +2224,14 @@ const (
 	// The entity is temporarily disabled and cannot be used for financial activity.
 	EntityListParamsStatusInDisabled EntityListParamsStatusIn = "disabled"
 )
+
+func (r EntityListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case EntityListParamsStatusInActive, EntityListParamsStatusInArchived, EntityListParamsStatusInDisabled:
+		return true
+	}
+	return false
+}
 
 type EntityConfirmParams struct {
 	// When your user confirmed the Entity's details. If not provided, the current time
