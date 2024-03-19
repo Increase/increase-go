@@ -167,6 +167,14 @@ const (
 	ProofOfAuthorizationRequestSubmissionStatusSent ProofOfAuthorizationRequestSubmissionStatus = "sent"
 )
 
+func (r ProofOfAuthorizationRequestSubmissionStatus) IsKnown() bool {
+	switch r {
+	case ProofOfAuthorizationRequestSubmissionStatusPendingReview, ProofOfAuthorizationRequestSubmissionStatusRejected, ProofOfAuthorizationRequestSubmissionStatusPendingSending, ProofOfAuthorizationRequestSubmissionStatusSent:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `proof_of_authorization_request_submission`.
 type ProofOfAuthorizationRequestSubmissionType string
@@ -174,6 +182,14 @@ type ProofOfAuthorizationRequestSubmissionType string
 const (
 	ProofOfAuthorizationRequestSubmissionTypeProofOfAuthorizationRequestSubmission ProofOfAuthorizationRequestSubmissionType = "proof_of_authorization_request_submission"
 )
+
+func (r ProofOfAuthorizationRequestSubmissionType) IsKnown() bool {
+	switch r {
+	case ProofOfAuthorizationRequestSubmissionTypeProofOfAuthorizationRequestSubmission:
+		return true
+	}
+	return false
+}
 
 type ProofOfAuthorizationRequestSubmissionNewParams struct {
 	// Terms of authorization.

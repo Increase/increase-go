@@ -175,6 +175,14 @@ const (
 	InboundWireTransferStatusReversed InboundWireTransferStatus = "reversed"
 )
 
+func (r InboundWireTransferStatus) IsKnown() bool {
+	switch r {
+	case InboundWireTransferStatusPending, InboundWireTransferStatusAccepted, InboundWireTransferStatusDeclined, InboundWireTransferStatusReversed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_wire_transfer`.
 type InboundWireTransferType string
@@ -182,6 +190,14 @@ type InboundWireTransferType string
 const (
 	InboundWireTransferTypeInboundWireTransfer InboundWireTransferType = "inbound_wire_transfer"
 )
+
+func (r InboundWireTransferType) IsKnown() bool {
+	switch r {
+	case InboundWireTransferTypeInboundWireTransfer:
+		return true
+	}
+	return false
+}
 
 type InboundWireTransferListParams struct {
 	// Filter Inbound Wire Tranfers to ones belonging to the specified Account.
@@ -245,3 +261,11 @@ const (
 	// The Inbound Wire Transfer was reversed.
 	InboundWireTransferListParamsStatusReversed InboundWireTransferListParamsStatus = "reversed"
 )
+
+func (r InboundWireTransferListParamsStatus) IsKnown() bool {
+	switch r {
+	case InboundWireTransferListParamsStatusPending, InboundWireTransferListParamsStatusAccepted, InboundWireTransferListParamsStatusDeclined, InboundWireTransferListParamsStatusReversed:
+		return true
+	}
+	return false
+}

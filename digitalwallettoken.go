@@ -123,6 +123,14 @@ const (
 	DigitalWalletTokenStatusDeactivated DigitalWalletTokenStatus = "deactivated"
 )
 
+func (r DigitalWalletTokenStatus) IsKnown() bool {
+	switch r {
+	case DigitalWalletTokenStatusActive, DigitalWalletTokenStatusInactive, DigitalWalletTokenStatusSuspended, DigitalWalletTokenStatusDeactivated:
+		return true
+	}
+	return false
+}
+
 // The digital wallet app being used.
 type DigitalWalletTokenTokenRequestor string
 
@@ -135,6 +143,14 @@ const (
 	DigitalWalletTokenTokenRequestorUnknown DigitalWalletTokenTokenRequestor = "unknown"
 )
 
+func (r DigitalWalletTokenTokenRequestor) IsKnown() bool {
+	switch r {
+	case DigitalWalletTokenTokenRequestorApplePay, DigitalWalletTokenTokenRequestorGooglePay, DigitalWalletTokenTokenRequestorUnknown:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `digital_wallet_token`.
 type DigitalWalletTokenType string
@@ -142,6 +158,14 @@ type DigitalWalletTokenType string
 const (
 	DigitalWalletTokenTypeDigitalWalletToken DigitalWalletTokenType = "digital_wallet_token"
 )
+
+func (r DigitalWalletTokenType) IsKnown() bool {
+	switch r {
+	case DigitalWalletTokenTypeDigitalWalletToken:
+		return true
+	}
+	return false
+}
 
 type DigitalWalletTokenListParams struct {
 	// Filter Digital Wallet Tokens to ones belonging to the specified Card.

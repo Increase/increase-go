@@ -299,6 +299,14 @@ const (
 	ACHTransferAddendaCategoryOther ACHTransferAddendaCategory = "other"
 )
 
+func (r ACHTransferAddendaCategory) IsKnown() bool {
+	switch r {
+	case ACHTransferAddendaCategoryFreeform, ACHTransferAddendaCategoryPaymentOrderRemittanceAdvice, ACHTransferAddendaCategoryOther:
+		return true
+	}
+	return false
+}
+
 // Unstructured `payment_related_information` passed through with the transfer.
 type ACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer.
@@ -471,6 +479,14 @@ const (
 	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
 )
 
+func (r ACHTransferCurrency) IsKnown() bool {
+	switch r {
+	case ACHTransferCurrencyCad, ACHTransferCurrencyChf, ACHTransferCurrencyEur, ACHTransferCurrencyGbp, ACHTransferCurrencyJpy, ACHTransferCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The type of entity that owns the account to which the ACH Transfer is being
 // sent.
 type ACHTransferDestinationAccountHolder string
@@ -484,6 +500,14 @@ const (
 	ACHTransferDestinationAccountHolderUnknown ACHTransferDestinationAccountHolder = "unknown"
 )
 
+func (r ACHTransferDestinationAccountHolder) IsKnown() bool {
+	switch r {
+	case ACHTransferDestinationAccountHolderBusiness, ACHTransferDestinationAccountHolderIndividual, ACHTransferDestinationAccountHolderUnknown:
+		return true
+	}
+	return false
+}
+
 // The type of the account to which the transfer will be sent.
 type ACHTransferFunding string
 
@@ -494,12 +518,28 @@ const (
 	ACHTransferFundingSavings ACHTransferFunding = "savings"
 )
 
+func (r ACHTransferFunding) IsKnown() bool {
+	switch r {
+	case ACHTransferFundingChecking, ACHTransferFundingSavings:
+		return true
+	}
+	return false
+}
+
 // The transfer's network.
 type ACHTransferNetwork string
 
 const (
 	ACHTransferNetworkACH ACHTransferNetwork = "ach"
 )
+
+func (r ACHTransferNetwork) IsKnown() bool {
+	switch r {
+	case ACHTransferNetworkACH:
+		return true
+	}
+	return false
+}
 
 type ACHTransferNotificationsOfChange struct {
 	// The required type of change that is being signaled by the receiving financial
@@ -583,6 +623,14 @@ const (
 	// financial institution.
 	ACHTransferNotificationsOfChangeChangeCodeIncorrectTransactionCodeByOriginatingDepositoryFinancialInstitution ACHTransferNotificationsOfChangeChangeCode = "incorrect_transaction_code_by_originating_depository_financial_institution"
 )
+
+func (r ACHTransferNotificationsOfChangeChangeCode) IsKnown() bool {
+	switch r {
+	case ACHTransferNotificationsOfChangeChangeCodeIncorrectAccountNumber, ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumber, ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumberAndAccountNumber, ACHTransferNotificationsOfChangeChangeCodeIncorrectTransactionCode, ACHTransferNotificationsOfChangeChangeCodeIncorrectAccountNumberAndTransactionCode, ACHTransferNotificationsOfChangeChangeCodeIncorrectRoutingNumberAccountNumberAndTransactionCode, ACHTransferNotificationsOfChangeChangeCodeIncorrectReceivingDepositoryFinancialInstitutionIdentification, ACHTransferNotificationsOfChangeChangeCodeIncorrectIndividualIdentificationNumber, ACHTransferNotificationsOfChangeChangeCodeAddendaFormatError, ACHTransferNotificationsOfChangeChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment, ACHTransferNotificationsOfChangeChangeCodeMisroutedNotificationOfChange, ACHTransferNotificationsOfChangeChangeCodeIncorrectTraceNumber, ACHTransferNotificationsOfChangeChangeCodeIncorrectCompanyIdentificationNumber, ACHTransferNotificationsOfChangeChangeCodeIncorrectIdentificationNumber, ACHTransferNotificationsOfChangeChangeCodeIncorrectlyFormattedCorrectedData, ACHTransferNotificationsOfChangeChangeCodeIncorrectDiscretionaryData, ACHTransferNotificationsOfChangeChangeCodeRoutingNumberNotFromOriginalEntryDetailRecord, ACHTransferNotificationsOfChangeChangeCodeDepositoryFinancialInstitutionAccountNumberNotFromOriginalEntryDetailRecord, ACHTransferNotificationsOfChangeChangeCodeIncorrectTransactionCodeByOriginatingDepositoryFinancialInstitution:
+		return true
+	}
+	return false
+}
 
 // If your transfer is returned, this will contain details of the return.
 type ACHTransferReturn struct {
@@ -813,6 +861,14 @@ const (
 	ACHTransferReturnReturnReasonCodeUntimelyReturn ACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
+func (r ACHTransferReturnReturnReasonCode) IsKnown() bool {
+	switch r {
+	case ACHTransferReturnReturnReasonCodeInsufficientFund, ACHTransferReturnReturnReasonCodeNoAccount, ACHTransferReturnReturnReasonCodeAccountClosed, ACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure, ACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction, ACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver, ACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode, ACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized, ACHTransferReturnReturnReasonCodePaymentStopped, ACHTransferReturnReturnReasonCodeNonTransactionAccount, ACHTransferReturnReturnReasonCodeUncollectedFunds, ACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError, ACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, ACHTransferReturnReturnReasonCodeAmountFieldError, ACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer, ACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber, ACHTransferReturnReturnReasonCodeFileRecordEditCriteria, ACHTransferReturnReturnReasonCodeEnrInvalidIndividualName, ACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest, ACHTransferReturnReturnReasonCodeLimitedParticipationDfi, ACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment, ACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi, ACHTransferReturnReturnReasonCodeAddendaError, ACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased, ACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms, ACHTransferReturnReturnReasonCodeCorrectedReturn, ACHTransferReturnReturnReasonCodeDuplicateEntry, ACHTransferReturnReturnReasonCodeDuplicateReturn, ACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment, ACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber, ACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber, ACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator, ACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode, ACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry, ACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError, ACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway, ACHTransferReturnReturnReasonCodeFieldError, ACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle, ACHTransferReturnReturnReasonCodeIatEntryCodingError, ACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate, ACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented, ACHTransferReturnReturnReasonCodeInvalidCompanyID, ACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification, ACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber, ACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment, ACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible, ACHTransferReturnReturnReasonCodeMandatoryFieldError, ACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn, ACHTransferReturnReturnReasonCodeMisroutedReturn, ACHTransferReturnReturnReasonCodeNoErrorsFound, ACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn, ACHTransferReturnReturnReasonCodeNonParticipantInIatProgram, ACHTransferReturnReturnReasonCodePermissibleReturnEntry, ACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted, ACHTransferReturnReturnReasonCodeRdfiNonSettlement, ACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram, ACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, ACHTransferReturnReturnReasonCodeReturnNotADuplicate, ACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit, ACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry, ACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry, ACHTransferReturnReturnReasonCodeReturnOfXckEntry, ACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment, ACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance, ACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry, ACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument, ACHTransferReturnReturnReasonCodeTimelyOriginalReturn, ACHTransferReturnReturnReasonCodeTraceNumberError, ACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn, ACHTransferReturnReturnReasonCodeUntimelyReturn:
+		return true
+	}
+	return false
+}
+
 // The Standard Entry Class (SEC) code to use for the transfer.
 type ACHTransferStandardEntryClassCode string
 
@@ -826,6 +882,14 @@ const (
 	// Internet Initiated (WEB).
 	ACHTransferStandardEntryClassCodeInternetInitiated ACHTransferStandardEntryClassCode = "internet_initiated"
 )
+
+func (r ACHTransferStandardEntryClassCode) IsKnown() bool {
+	switch r {
+	case ACHTransferStandardEntryClassCodeCorporateCreditOrDebit, ACHTransferStandardEntryClassCodeCorporateTradeExchange, ACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit, ACHTransferStandardEntryClassCodeInternetInitiated:
+		return true
+	}
+	return false
+}
 
 // The lifecycle status of the transfer.
 type ACHTransferStatus string
@@ -848,6 +912,14 @@ const (
 	// The transfer has been rejected.
 	ACHTransferStatusRejected ACHTransferStatus = "rejected"
 )
+
+func (r ACHTransferStatus) IsKnown() bool {
+	switch r {
+	case ACHTransferStatusPendingApproval, ACHTransferStatusCanceled, ACHTransferStatusPendingReviewing, ACHTransferStatusPendingSubmission, ACHTransferStatusSubmitted, ACHTransferStatusReturned, ACHTransferStatusRequiresAttention, ACHTransferStatusRejected:
+		return true
+	}
+	return false
+}
 
 // After the transfer is submitted to FedACH, this will contain supplemental
 // details. Increase batches transfers and submits a file to the Federal Reserve
@@ -902,6 +974,14 @@ type ACHTransferType string
 const (
 	ACHTransferTypeACHTransfer ACHTransferType = "ach_transfer"
 )
+
+func (r ACHTransferType) IsKnown() bool {
+	switch r {
+	case ACHTransferTypeACHTransfer:
+		return true
+	}
+	return false
+}
 
 type ACHTransferNewParams struct {
 	// The Increase identifier for the account that will send the transfer.
@@ -990,6 +1070,14 @@ const (
 	ACHTransferNewParamsAddendaCategoryPaymentOrderRemittanceAdvice ACHTransferNewParamsAddendaCategory = "payment_order_remittance_advice"
 )
 
+func (r ACHTransferNewParamsAddendaCategory) IsKnown() bool {
+	switch r {
+	case ACHTransferNewParamsAddendaCategoryFreeform, ACHTransferNewParamsAddendaCategoryPaymentOrderRemittanceAdvice:
+		return true
+	}
+	return false
+}
+
 // Unstructured `payment_related_information` passed through with the transfer.
 type ACHTransferNewParamsAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer. Please reach out to
@@ -1047,6 +1135,14 @@ const (
 	ACHTransferNewParamsDestinationAccountHolderUnknown ACHTransferNewParamsDestinationAccountHolder = "unknown"
 )
 
+func (r ACHTransferNewParamsDestinationAccountHolder) IsKnown() bool {
+	switch r {
+	case ACHTransferNewParamsDestinationAccountHolderBusiness, ACHTransferNewParamsDestinationAccountHolderIndividual, ACHTransferNewParamsDestinationAccountHolderUnknown:
+		return true
+	}
+	return false
+}
+
 // The type of the account to which the transfer will be sent.
 type ACHTransferNewParamsFunding string
 
@@ -1056,6 +1152,14 @@ const (
 	// A savings account.
 	ACHTransferNewParamsFundingSavings ACHTransferNewParamsFunding = "savings"
 )
+
+func (r ACHTransferNewParamsFunding) IsKnown() bool {
+	switch r {
+	case ACHTransferNewParamsFundingChecking, ACHTransferNewParamsFundingSavings:
+		return true
+	}
+	return false
+}
 
 // The Standard Entry Class (SEC) code to use for the transfer.
 type ACHTransferNewParamsStandardEntryClassCode string
@@ -1070,6 +1174,14 @@ const (
 	// Internet Initiated (WEB).
 	ACHTransferNewParamsStandardEntryClassCodeInternetInitiated ACHTransferNewParamsStandardEntryClassCode = "internet_initiated"
 )
+
+func (r ACHTransferNewParamsStandardEntryClassCode) IsKnown() bool {
+	switch r {
+	case ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit, ACHTransferNewParamsStandardEntryClassCodeCorporateTradeExchange, ACHTransferNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit, ACHTransferNewParamsStandardEntryClassCodeInternetInitiated:
+		return true
+	}
+	return false
+}
 
 type ACHTransferListParams struct {
 	// Filter ACH Transfers to those that originated from the specified Account.

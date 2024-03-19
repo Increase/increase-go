@@ -116,6 +116,14 @@ const (
 	BookkeepingEntryTypeBookkeepingEntry BookkeepingEntryType = "bookkeeping_entry"
 )
 
+func (r BookkeepingEntryType) IsKnown() bool {
+	switch r {
+	case BookkeepingEntryTypeBookkeepingEntry:
+		return true
+	}
+	return false
+}
+
 type BookkeepingEntryListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`

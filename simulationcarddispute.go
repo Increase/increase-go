@@ -62,3 +62,11 @@ const (
 	// The Card Dispute has been rejected.
 	SimulationCardDisputeActionParamsStatusRejected SimulationCardDisputeActionParamsStatus = "rejected"
 )
+
+func (r SimulationCardDisputeActionParamsStatus) IsKnown() bool {
+	switch r {
+	case SimulationCardDisputeActionParamsStatusAccepted, SimulationCardDisputeActionParamsStatusRejected:
+		return true
+	}
+	return false
+}

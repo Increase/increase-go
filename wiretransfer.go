@@ -300,12 +300,28 @@ const (
 	WireTransferCurrencyUsd WireTransferCurrency = "USD"
 )
 
+func (r WireTransferCurrency) IsKnown() bool {
+	switch r {
+	case WireTransferCurrencyCad, WireTransferCurrencyChf, WireTransferCurrencyEur, WireTransferCurrencyGbp, WireTransferCurrencyJpy, WireTransferCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The transfer's network.
 type WireTransferNetwork string
 
 const (
 	WireTransferNetworkWire WireTransferNetwork = "wire"
 )
+
+func (r WireTransferNetwork) IsKnown() bool {
+	switch r {
+	case WireTransferNetworkWire:
+		return true
+	}
+	return false
+}
 
 // If your transfer is reversed, this will contain details of the reversal.
 type WireTransferReversal struct {
@@ -400,6 +416,14 @@ const (
 	WireTransferStatusPendingCreating WireTransferStatus = "pending_creating"
 )
 
+func (r WireTransferStatus) IsKnown() bool {
+	switch r {
+	case WireTransferStatusCanceled, WireTransferStatusRequiresAttention, WireTransferStatusPendingApproval, WireTransferStatusRejected, WireTransferStatusReversed, WireTransferStatusComplete, WireTransferStatusPendingCreating:
+		return true
+	}
+	return false
+}
+
 // After the transfer is submitted to Fedwire, this will contain supplemental
 // details.
 type WireTransferSubmission struct {
@@ -434,6 +458,14 @@ type WireTransferType string
 const (
 	WireTransferTypeWireTransfer WireTransferType = "wire_transfer"
 )
+
+func (r WireTransferType) IsKnown() bool {
+	switch r {
+	case WireTransferTypeWireTransfer:
+		return true
+	}
+	return false
+}
 
 type WireTransferNewParams struct {
 	// The identifier for the account that will send the transfer.

@@ -157,6 +157,14 @@ const (
 	BookkeepingEntrySetTypeBookkeepingEntrySet BookkeepingEntrySetType = "bookkeeping_entry_set"
 )
 
+func (r BookkeepingEntrySetType) IsKnown() bool {
+	switch r {
+	case BookkeepingEntrySetTypeBookkeepingEntrySet:
+		return true
+	}
+	return false
+}
+
 type BookkeepingEntrySetNewParams struct {
 	// The bookkeeping entries.
 	Entries param.Field[[]BookkeepingEntrySetNewParamsEntry] `json:"entries,required"`

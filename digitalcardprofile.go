@@ -177,6 +177,14 @@ const (
 	DigitalCardProfileStatusArchived DigitalCardProfileStatus = "archived"
 )
 
+func (r DigitalCardProfileStatus) IsKnown() bool {
+	switch r {
+	case DigitalCardProfileStatusPending, DigitalCardProfileStatusRejected, DigitalCardProfileStatusActive, DigitalCardProfileStatusArchived:
+		return true
+	}
+	return false
+}
+
 // The Card's text color, specified as an RGB triple.
 type DigitalCardProfileTextColor struct {
 	// The value of the blue channel in the RGB color.
@@ -213,6 +221,14 @@ type DigitalCardProfileType string
 const (
 	DigitalCardProfileTypeDigitalCardProfile DigitalCardProfileType = "digital_card_profile"
 )
+
+func (r DigitalCardProfileType) IsKnown() bool {
+	switch r {
+	case DigitalCardProfileTypeDigitalCardProfile:
+		return true
+	}
+	return false
+}
 
 type DigitalCardProfileNewParams struct {
 	// The identifier of the File containing the card's icon image.
@@ -305,6 +321,14 @@ const (
 	// The Card Profile is no longer in use.
 	DigitalCardProfileListParamsStatusInArchived DigitalCardProfileListParamsStatusIn = "archived"
 )
+
+func (r DigitalCardProfileListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case DigitalCardProfileListParamsStatusInPending, DigitalCardProfileListParamsStatusInRejected, DigitalCardProfileListParamsStatusInActive, DigitalCardProfileListParamsStatusInArchived:
+		return true
+	}
+	return false
+}
 
 type DigitalCardProfileCloneParams struct {
 	// The identifier of the File containing the card's icon image.

@@ -116,6 +116,14 @@ const (
 	ProgramTypeProgram ProgramType = "program"
 )
 
+func (r ProgramType) IsKnown() bool {
+	switch r {
+	case ProgramTypeProgram:
+		return true
+	}
+	return false
+}
+
 type ProgramListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`

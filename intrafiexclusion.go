@@ -148,6 +148,14 @@ const (
 	IntrafiExclusionStatusArchived IntrafiExclusionStatus = "archived"
 )
 
+func (r IntrafiExclusionStatus) IsKnown() bool {
+	switch r {
+	case IntrafiExclusionStatusPending, IntrafiExclusionStatusCompleted, IntrafiExclusionStatusArchived:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `intrafi_exclusion`.
 type IntrafiExclusionType string
@@ -155,6 +163,14 @@ type IntrafiExclusionType string
 const (
 	IntrafiExclusionTypeIntrafiExclusion IntrafiExclusionType = "intrafi_exclusion"
 )
+
+func (r IntrafiExclusionType) IsKnown() bool {
+	switch r {
+	case IntrafiExclusionTypeIntrafiExclusion:
+		return true
+	}
+	return false
+}
 
 type IntrafiExclusionNewParams struct {
 	// The name of the financial institution to be excluded.

@@ -146,6 +146,14 @@ const (
 	IntrafiAccountEnrollmentStatusRequiresAttention IntrafiAccountEnrollmentStatus = "requires_attention"
 )
 
+func (r IntrafiAccountEnrollmentStatus) IsKnown() bool {
+	switch r {
+	case IntrafiAccountEnrollmentStatusPendingEnrolling, IntrafiAccountEnrollmentStatusEnrolled, IntrafiAccountEnrollmentStatusPendingUnenrolling, IntrafiAccountEnrollmentStatusUnenrolled, IntrafiAccountEnrollmentStatusRequiresAttention:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `intrafi_account_enrollment`.
 type IntrafiAccountEnrollmentType string
@@ -153,6 +161,14 @@ type IntrafiAccountEnrollmentType string
 const (
 	IntrafiAccountEnrollmentTypeIntrafiAccountEnrollment IntrafiAccountEnrollmentType = "intrafi_account_enrollment"
 )
+
+func (r IntrafiAccountEnrollmentType) IsKnown() bool {
+	switch r {
+	case IntrafiAccountEnrollmentTypeIntrafiAccountEnrollment:
+		return true
+	}
+	return false
+}
 
 type IntrafiAccountEnrollmentNewParams struct {
 	// The identifier for the account to be added to IntraFi.
@@ -220,3 +236,11 @@ const (
 	// Something unexpected happened with this account. Contact Increase support.
 	IntrafiAccountEnrollmentListParamsStatusInRequiresAttention IntrafiAccountEnrollmentListParamsStatusIn = "requires_attention"
 )
+
+func (r IntrafiAccountEnrollmentListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case IntrafiAccountEnrollmentListParamsStatusInPendingEnrolling, IntrafiAccountEnrollmentListParamsStatusInEnrolled, IntrafiAccountEnrollmentListParamsStatusInPendingUnenrolling, IntrafiAccountEnrollmentListParamsStatusInUnenrolled, IntrafiAccountEnrollmentListParamsStatusInRequiresAttention:
+		return true
+	}
+	return false
+}

@@ -155,6 +155,14 @@ const (
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
 )
 
+func (r PendingTransactionCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionCurrencyCad, PendingTransactionCurrencyChf, PendingTransactionCurrencyEur, PendingTransactionCurrencyGbp, PendingTransactionCurrencyJpy, PendingTransactionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The type of the route this Pending Transaction came through.
 type PendingTransactionRouteType string
 
@@ -164,6 +172,14 @@ const (
 	// A Card.
 	PendingTransactionRouteTypeCard PendingTransactionRouteType = "card"
 )
+
+func (r PendingTransactionRouteType) IsKnown() bool {
+	switch r {
+	case PendingTransactionRouteTypeAccountNumber, PendingTransactionRouteTypeCard:
+		return true
+	}
+	return false
+}
 
 // This is an object giving more details on the network-level event that caused the
 // Pending Transaction. For example, for a card transaction this lists the
@@ -274,6 +290,14 @@ const (
 	// US Dollar (USD)
 	PendingTransactionSourceAccountTransferInstructionCurrencyUsd PendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
+
+func (r PendingTransactionSourceAccountTransferInstructionCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceAccountTransferInstructionCurrencyCad, PendingTransactionSourceAccountTransferInstructionCurrencyChf, PendingTransactionSourceAccountTransferInstructionCurrencyEur, PendingTransactionSourceAccountTransferInstructionCurrencyGbp, PendingTransactionSourceAccountTransferInstructionCurrencyJpy, PendingTransactionSourceAccountTransferInstructionCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // An ACH Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_instruction`.
@@ -412,6 +436,14 @@ const (
 	PendingTransactionSourceCardAuthorizationActionerNetwork PendingTransactionSourceCardAuthorizationActioner = "network"
 )
 
+func (r PendingTransactionSourceCardAuthorizationActioner) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationActionerUser, PendingTransactionSourceCardAuthorizationActionerIncrease, PendingTransactionSourceCardAuthorizationActionerNetwork:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type PendingTransactionSourceCardAuthorizationCurrency string
@@ -431,6 +463,14 @@ const (
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
+func (r PendingTransactionSourceCardAuthorizationCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationCurrencyCad, PendingTransactionSourceCardAuthorizationCurrencyChf, PendingTransactionSourceCardAuthorizationCurrencyEur, PendingTransactionSourceCardAuthorizationCurrencyGbp, PendingTransactionSourceCardAuthorizationCurrencyJpy, PendingTransactionSourceCardAuthorizationCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The direction descibes the direction the funds will move, either from the
 // cardholder to the merchant or from the merchant to the cardholder.
 type PendingTransactionSourceCardAuthorizationDirection string
@@ -442,6 +482,14 @@ const (
 	// authorization, where funds are credited to the cardholder.
 	PendingTransactionSourceCardAuthorizationDirectionRefund PendingTransactionSourceCardAuthorizationDirection = "refund"
 )
+
+func (r PendingTransactionSourceCardAuthorizationDirection) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationDirectionSettlement, PendingTransactionSourceCardAuthorizationDirectionRefund:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `network`.
 type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
@@ -477,6 +525,14 @@ const (
 	// Visa
 	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "visa"
 )
+
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `visa` network.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
@@ -550,6 +606,14 @@ const (
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date.
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
@@ -576,6 +640,14 @@ const (
 	// Contact chip card, without card verification value
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type PendingTransactionSourceCardAuthorizationNetworkIdentifiers struct {
@@ -635,6 +707,14 @@ const (
 	PendingTransactionSourceCardAuthorizationProcessingCategoryRefund PendingTransactionSourceCardAuthorizationProcessingCategory = "refund"
 )
 
+func (r PendingTransactionSourceCardAuthorizationProcessingCategory) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationProcessingCategoryAccountFunding, PendingTransactionSourceCardAuthorizationProcessingCategoryAutomaticFuelDispenser, PendingTransactionSourceCardAuthorizationProcessingCategoryBillPayment, PendingTransactionSourceCardAuthorizationProcessingCategoryPurchase, PendingTransactionSourceCardAuthorizationProcessingCategoryQuasiCash, PendingTransactionSourceCardAuthorizationProcessingCategoryRefund:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
 type PendingTransactionSourceCardAuthorizationType string
@@ -642,6 +722,14 @@ type PendingTransactionSourceCardAuthorizationType string
 const (
 	PendingTransactionSourceCardAuthorizationTypeCardAuthorization PendingTransactionSourceCardAuthorizationType = "card_authorization"
 )
+
+func (r PendingTransactionSourceCardAuthorizationType) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationTypeCardAuthorization:
+		return true
+	}
+	return false
+}
 
 // Fields related to verification of cardholder-provided values.
 type PendingTransactionSourceCardAuthorizationVerification struct {
@@ -708,6 +796,14 @@ const (
 	PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultNoMatch PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
 )
 
+func (r PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultNotChecked, PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultMatch, PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // Cardholder address provided in the authorization request and the address on file
 // we verified it against.
 type PendingTransactionSourceCardAuthorizationVerificationCardholderAddress struct {
@@ -764,6 +860,14 @@ const (
 	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNoMatch PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "no_match"
 )
 
+func (r PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNotChecked, PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultMatch, PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // The type of the resource. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
 type PendingTransactionSourceCategory string
@@ -794,6 +898,14 @@ const (
 	// The Pending Transaction was made for an undocumented or deprecated reason.
 	PendingTransactionSourceCategoryOther PendingTransactionSourceCategory = "other"
 )
+
+func (r PendingTransactionSourceCategory) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryOther:
+		return true
+	}
+	return false
+}
 
 // A Check Deposit Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_instruction`.
@@ -854,6 +966,14 @@ const (
 	PendingTransactionSourceCheckDepositInstructionCurrencyUsd PendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
+func (r PendingTransactionSourceCheckDepositInstructionCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCheckDepositInstructionCurrencyCad, PendingTransactionSourceCheckDepositInstructionCurrencyChf, PendingTransactionSourceCheckDepositInstructionCurrencyEur, PendingTransactionSourceCheckDepositInstructionCurrencyGbp, PendingTransactionSourceCheckDepositInstructionCurrencyJpy, PendingTransactionSourceCheckDepositInstructionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // A Check Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_instruction`.
 type PendingTransactionSourceCheckTransferInstruction struct {
@@ -904,6 +1024,14 @@ const (
 	// US Dollar (USD)
 	PendingTransactionSourceCheckTransferInstructionCurrencyUsd PendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
+
+func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCheckTransferInstructionCurrencyCad, PendingTransactionSourceCheckTransferInstructionCurrencyChf, PendingTransactionSourceCheckTransferInstructionCurrencyEur, PendingTransactionSourceCheckTransferInstructionCurrencyGbp, PendingTransactionSourceCheckTransferInstructionCurrencyJpy, PendingTransactionSourceCheckTransferInstructionCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // An Inbound Funds Hold object. This field will be present in the JSON response if
 // and only if `category` is equal to `inbound_funds_hold`.
@@ -980,6 +1108,14 @@ const (
 	PendingTransactionSourceInboundFundsHoldCurrencyUsd PendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
+func (r PendingTransactionSourceInboundFundsHoldCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceInboundFundsHoldCurrencyCad, PendingTransactionSourceInboundFundsHoldCurrencyChf, PendingTransactionSourceInboundFundsHoldCurrencyEur, PendingTransactionSourceInboundFundsHoldCurrencyGbp, PendingTransactionSourceInboundFundsHoldCurrencyJpy, PendingTransactionSourceInboundFundsHoldCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The status of the hold.
 type PendingTransactionSourceInboundFundsHoldStatus string
 
@@ -990,6 +1126,14 @@ const (
 	PendingTransactionSourceInboundFundsHoldStatusComplete PendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
+func (r PendingTransactionSourceInboundFundsHoldStatus) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceInboundFundsHoldStatusHeld, PendingTransactionSourceInboundFundsHoldStatusComplete:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_funds_hold`.
 type PendingTransactionSourceInboundFundsHoldType string
@@ -997,6 +1141,14 @@ type PendingTransactionSourceInboundFundsHoldType string
 const (
 	PendingTransactionSourceInboundFundsHoldTypeInboundFundsHold PendingTransactionSourceInboundFundsHoldType = "inbound_funds_hold"
 )
+
+func (r PendingTransactionSourceInboundFundsHoldType) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceInboundFundsHoldTypeInboundFundsHold:
+		return true
+	}
+	return false
+}
 
 // A Real-Time Payments Transfer Instruction object. This field will be present in
 // the JSON response if and only if `category` is equal to
@@ -1080,6 +1232,14 @@ const (
 	PendingTransactionStatusComplete PendingTransactionStatus = "complete"
 )
 
+func (r PendingTransactionStatus) IsKnown() bool {
+	switch r {
+	case PendingTransactionStatusPending, PendingTransactionStatusComplete:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `pending_transaction`.
 type PendingTransactionType string
@@ -1087,6 +1247,14 @@ type PendingTransactionType string
 const (
 	PendingTransactionTypePendingTransaction PendingTransactionType = "pending_transaction"
 )
+
+func (r PendingTransactionType) IsKnown() bool {
+	switch r {
+	case PendingTransactionTypePendingTransaction:
+		return true
+	}
+	return false
+}
 
 type PendingTransactionListParams struct {
 	// Filter pending transactions to those belonging to the specified Account.
@@ -1158,6 +1326,14 @@ const (
 	PendingTransactionListParamsCategoryInOther PendingTransactionListParamsCategoryIn = "other"
 )
 
+func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
+	switch r {
+	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInOther:
+		return true
+	}
+	return false
+}
+
 type PendingTransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -1209,3 +1385,11 @@ const (
 	// can generally be hidden from UIs, etc.
 	PendingTransactionListParamsStatusInComplete PendingTransactionListParamsStatusIn = "complete"
 )
+
+func (r PendingTransactionListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case PendingTransactionListParamsStatusInPending, PendingTransactionListParamsStatusInComplete:
+		return true
+	}
+	return false
+}

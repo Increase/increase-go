@@ -198,6 +198,14 @@ const (
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
+func (r RealTimeDecisionCardAuthorizationDecision) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationDecisionApprove, RealTimeDecisionCardAuthorizationDecisionDecline:
+		return true
+	}
+	return false
+}
+
 // Fields specific to the `network`.
 type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
@@ -231,6 +239,14 @@ const (
 	// Visa
 	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "visa"
 )
+
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `visa` network.
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
@@ -303,6 +319,14 @@ const (
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date.
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
@@ -329,6 +353,14 @@ const (
 	// Contact chip card, without card verification value
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type RealTimeDecisionCardAuthorizationNetworkIdentifiers struct {
@@ -387,6 +419,14 @@ const (
 	RealTimeDecisionCardAuthorizationProcessingCategoryRefund RealTimeDecisionCardAuthorizationProcessingCategory = "refund"
 )
 
+func (r RealTimeDecisionCardAuthorizationProcessingCategory) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding, RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser, RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment, RealTimeDecisionCardAuthorizationProcessingCategoryPurchase, RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash, RealTimeDecisionCardAuthorizationProcessingCategoryRefund:
+		return true
+	}
+	return false
+}
+
 // Fields specific to the type of request, such as an incremental authorization.
 type RealTimeDecisionCardAuthorizationRequestDetails struct {
 	// The type of this request (e.g., an initial authorization or an incremental
@@ -427,6 +467,14 @@ const (
 	// An incremental request to increase the amount of an existing authorization.
 	RealTimeDecisionCardAuthorizationRequestDetailsCategoryIncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsCategory = "incremental_authorization"
 )
+
+func (r RealTimeDecisionCardAuthorizationRequestDetailsCategory) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationRequestDetailsCategoryInitialAuthorization, RealTimeDecisionCardAuthorizationRequestDetailsCategoryIncrementalAuthorization:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the category `incremental_authorization`.
 type RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization struct {
@@ -521,6 +569,14 @@ const (
 	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNoMatch RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
 )
 
+func (r RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNotChecked, RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultMatch, RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // Cardholder address provided in the authorization request and the address on file
 // we verified it against.
 type RealTimeDecisionCardAuthorizationVerificationCardholderAddress struct {
@@ -577,6 +633,14 @@ const (
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "no_match"
 )
 
+func (r RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // The category of the Real-Time Decision.
 type RealTimeDecisionCategory string
 
@@ -589,6 +653,14 @@ const (
 	// authentication.
 	RealTimeDecisionCategoryDigitalWalletAuthenticationRequested RealTimeDecisionCategory = "digital_wallet_authentication_requested"
 )
+
+func (r RealTimeDecisionCategory) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCategoryCardAuthorizationRequested, RealTimeDecisionCategoryDigitalWalletTokenRequested, RealTimeDecisionCategoryDigitalWalletAuthenticationRequested:
+		return true
+	}
+	return false
+}
 
 // Fields related to a digital wallet authentication attempt.
 type RealTimeDecisionDigitalWalletAuthentication struct {
@@ -642,6 +714,14 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationChannelEmail RealTimeDecisionDigitalWalletAuthenticationChannel = "email"
 )
 
+func (r RealTimeDecisionDigitalWalletAuthenticationChannel) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletAuthenticationChannelSMS, RealTimeDecisionDigitalWalletAuthenticationChannelEmail:
+		return true
+	}
+	return false
+}
+
 // The digital wallet app being used.
 type RealTimeDecisionDigitalWalletAuthenticationDigitalWallet string
 
@@ -654,6 +734,14 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "unknown"
 )
 
+func (r RealTimeDecisionDigitalWalletAuthenticationDigitalWallet) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown:
+		return true
+	}
+	return false
+}
+
 // Whether your application successfully delivered the one-time passcode.
 type RealTimeDecisionDigitalWalletAuthenticationResult string
 
@@ -663,6 +751,14 @@ const (
 	// Your application failed to deliver the one-time passcode to the cardholder.
 	RealTimeDecisionDigitalWalletAuthenticationResultFailure RealTimeDecisionDigitalWalletAuthenticationResult = "failure"
 )
+
+func (r RealTimeDecisionDigitalWalletAuthenticationResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletAuthenticationResultSuccess, RealTimeDecisionDigitalWalletAuthenticationResultFailure:
+		return true
+	}
+	return false
+}
 
 // Fields related to a digital wallet token provisioning attempt.
 type RealTimeDecisionDigitalWalletToken struct {
@@ -710,6 +806,14 @@ const (
 	RealTimeDecisionDigitalWalletTokenDecisionDecline RealTimeDecisionDigitalWalletTokenDecision = "decline"
 )
 
+func (r RealTimeDecisionDigitalWalletTokenDecision) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletTokenDecisionApprove, RealTimeDecisionDigitalWalletTokenDecisionDecline:
+		return true
+	}
+	return false
+}
+
 // The digital wallet app being used.
 type RealTimeDecisionDigitalWalletTokenDigitalWallet string
 
@@ -721,6 +825,14 @@ const (
 	// Unknown
 	RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown RealTimeDecisionDigitalWalletTokenDigitalWallet = "unknown"
 )
+
+func (r RealTimeDecisionDigitalWalletTokenDigitalWallet) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay, RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay, RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown:
+		return true
+	}
+	return false
+}
 
 // The status of the Real-Time Decision.
 type RealTimeDecisionStatus string
@@ -734,6 +846,14 @@ const (
 	RealTimeDecisionStatusTimedOut RealTimeDecisionStatus = "timed_out"
 )
 
+func (r RealTimeDecisionStatus) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionStatusPending, RealTimeDecisionStatusResponded, RealTimeDecisionStatusTimedOut:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `real_time_decision`.
 type RealTimeDecisionType string
@@ -741,6 +861,14 @@ type RealTimeDecisionType string
 const (
 	RealTimeDecisionTypeRealTimeDecision RealTimeDecisionType = "real_time_decision"
 )
+
+func (r RealTimeDecisionType) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionTypeRealTimeDecision:
+		return true
+	}
+	return false
+}
 
 type RealTimeDecisionActionParams struct {
 	// If the Real-Time Decision relates to a card authorization attempt, this object
@@ -779,6 +907,14 @@ const (
 	RealTimeDecisionActionParamsCardAuthorizationDecisionDecline RealTimeDecisionActionParamsCardAuthorizationDecision = "decline"
 )
 
+func (r RealTimeDecisionActionParamsCardAuthorizationDecision) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionActionParamsCardAuthorizationDecisionApprove, RealTimeDecisionActionParamsCardAuthorizationDecisionDecline:
+		return true
+	}
+	return false
+}
+
 // If the Real-Time Decision relates to a digital wallet authentication attempt,
 // this object contains your response to the authentication.
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
@@ -799,6 +935,14 @@ const (
 	// Your application failed to deliver the one-time passcode to the cardholder.
 	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultFailure RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "failure"
 )
+
+func (r RealTimeDecisionActionParamsDigitalWalletAuthenticationResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess, RealTimeDecisionActionParamsDigitalWalletAuthenticationResultFailure:
+		return true
+	}
+	return false
+}
 
 // If the Real-Time Decision relates to a digital wallet token provisioning
 // attempt, this object contains your response to the attempt.

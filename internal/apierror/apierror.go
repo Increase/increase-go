@@ -80,6 +80,14 @@ const (
 	ErrorStatus500 ErrorStatus = 500
 )
 
+func (r ErrorStatus) IsKnown() bool {
+	switch r {
+	case ErrorStatus429, ErrorStatus403, ErrorStatus404, ErrorStatus400, ErrorStatus409, ErrorStatus401, ErrorStatus500:
+		return true
+	}
+	return false
+}
+
 type ErrorType string
 
 const (
@@ -96,3 +104,11 @@ const (
 	ErrorTypeEnvironmentMismatchError       ErrorType = "environment_mismatch_error"
 	ErrorTypeAPIMethodNotFoundError         ErrorType = "api_method_not_found_error"
 )
+
+func (r ErrorType) IsKnown() bool {
+	switch r {
+	case ErrorTypeRateLimitedError, ErrorTypePrivateFeatureError, ErrorTypeObjectNotFoundError, ErrorTypeMalformedRequestError, ErrorTypeInvalidParametersError, ErrorTypeInvalidOperationError, ErrorTypeInvalidAPIKeyError, ErrorTypeInternalServerError, ErrorTypeInsufficientPermissionsError, ErrorTypeIdempotencyKeyAlreadyUsedError, ErrorTypeEnvironmentMismatchError, ErrorTypeAPIMethodNotFoundError:
+		return true
+	}
+	return false
+}

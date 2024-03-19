@@ -147,6 +147,14 @@ const (
 	TransactionCurrencyUsd TransactionCurrency = "USD"
 )
 
+func (r TransactionCurrency) IsKnown() bool {
+	switch r {
+	case TransactionCurrencyCad, TransactionCurrencyChf, TransactionCurrencyEur, TransactionCurrencyGbp, TransactionCurrencyJpy, TransactionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The type of the route this Transaction came through.
 type TransactionRouteType string
 
@@ -156,6 +164,14 @@ const (
 	// A Card.
 	TransactionRouteTypeCard TransactionRouteType = "card"
 )
+
+func (r TransactionRouteType) IsKnown() bool {
+	switch r {
+	case TransactionRouteTypeAccountNumber, TransactionRouteTypeCard:
+		return true
+	}
+	return false
+}
 
 // This is an object giving more details on the network-level event that caused the
 // Transaction. Note that for backwards compatibility reasons, additional
@@ -360,6 +376,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceAccountTransferIntentionCurrencyUsd TransactionSourceAccountTransferIntentionCurrency = "USD"
 )
+
+func (r TransactionSourceAccountTransferIntentionCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceAccountTransferIntentionCurrencyCad, TransactionSourceAccountTransferIntentionCurrencyChf, TransactionSourceAccountTransferIntentionCurrencyEur, TransactionSourceAccountTransferIntentionCurrencyGbp, TransactionSourceAccountTransferIntentionCurrencyJpy, TransactionSourceAccountTransferIntentionCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // An ACH Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_intention`.
@@ -653,6 +677,14 @@ const (
 	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn TransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
+func (r TransactionSourceACHTransferReturnReturnReasonCode) IsKnown() bool {
+	switch r {
+	case TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund, TransactionSourceACHTransferReturnReturnReasonCodeNoAccount, TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed, TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure, TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction, TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver, TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode, TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized, TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped, TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount, TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds, TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError, TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError, TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer, TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber, TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria, TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName, TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest, TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi, TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment, TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi, TransactionSourceACHTransferReturnReturnReasonCodeAddendaError, TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased, TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms, TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn, TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry, TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn, TransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment, TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber, TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber, TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator, TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode, TransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry, TransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError, TransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway, TransactionSourceACHTransferReturnReturnReasonCodeFieldError, TransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle, TransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError, TransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate, TransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented, TransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID, TransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification, TransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber, TransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment, TransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible, TransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError, TransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn, TransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn, TransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound, TransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn, TransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram, TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry, TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted, TransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement, TransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram, TransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, TransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate, TransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit, TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry, TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry, TransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry, TransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment, TransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance, TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry, TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument, TransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn, TransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError, TransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn, TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn:
+		return true
+	}
+	return false
+}
+
 // A Card Dispute Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_dispute_acceptance`.
 type TransactionSourceCardDisputeAcceptance struct {
@@ -771,6 +803,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceCardRefundCurrencyUsd TransactionSourceCardRefundCurrency = "USD"
 )
+
+func (r TransactionSourceCardRefundCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundCurrencyCad, TransactionSourceCardRefundCurrencyChf, TransactionSourceCardRefundCurrencyEur, TransactionSourceCardRefundCurrencyGbp, TransactionSourceCardRefundCurrencyJpy, TransactionSourceCardRefundCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for this refund.
 type TransactionSourceCardRefundNetworkIdentifiers struct {
@@ -950,6 +990,14 @@ const (
 	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
+func (r TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge, TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesGas, TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage, TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn, TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesOneWayServiceFee, TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation:
+		return true
+	}
+	return false
+}
+
 // An indicator that the cardholder is being billed for a reserved vehicle that was
 // not actually rented (that is, a "no-show" charge).
 type TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator string
@@ -960,6 +1008,14 @@ const (
 	// No show for specialized vehicle
 	TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
+
+func (r TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable, TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle:
+		return true
+	}
+	return false
+}
 
 // Fields specific to lodging.
 type TransactionSourceCardRefundPurchaseDetailsLodging struct {
@@ -1056,6 +1112,14 @@ const (
 	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesLaundry TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
+func (r TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesNoExtraCharge, TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesRestaurant, TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesGiftShop, TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesMiniBar, TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesTelephone, TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesOther, TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesLaundry:
+		return true
+	}
+	return false
+}
+
 // Indicator that the cardholder is being billed for a reserved room that was not
 // actually used.
 type TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator string
@@ -1066,6 +1130,14 @@ const (
 	// No show
 	TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
+
+func (r TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNotApplicable, TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow:
+		return true
+	}
+	return false
+}
 
 // The format of the purchase identifier.
 type TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat string
@@ -1082,6 +1154,14 @@ const (
 	// Invoice number
 	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
+
+func (r TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText, TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber, TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber, TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber, TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber:
+		return true
+	}
+	return false
+}
 
 // Fields specific to travel.
 type TransactionSourceCardRefundPurchaseDetailsTravel struct {
@@ -1191,6 +1271,14 @@ const (
 	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
+func (r TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther:
+		return true
+	}
+	return false
+}
+
 type TransactionSourceCardRefundPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
 	Category TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
@@ -1271,6 +1359,14 @@ const (
 	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
+func (r TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades, TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi:
+		return true
+	}
+	return false
+}
+
 // Indicates the reason for a credit to the cardholder.
 type TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator string
 
@@ -1289,6 +1385,14 @@ const (
 	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
+func (r TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit, TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation, TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther, TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket:
+		return true
+	}
+	return false
+}
+
 // Indicates whether this ticket is non-refundable.
 type TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator string
 
@@ -1298,6 +1402,14 @@ const (
 	// Restricted non-refundable ticket
 	TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
+
+func (r TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions, TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket:
+		return true
+	}
+	return false
+}
 
 // Indicates why a ticket was changed.
 type TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator string
@@ -1310,6 +1422,14 @@ const (
 	// New ticket
 	TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
+
+func (r TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone, TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket, TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket:
+		return true
+	}
+	return false
+}
 
 type TransactionSourceCardRefundPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
@@ -1361,6 +1481,14 @@ const (
 	TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
+func (r TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone, TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed, TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_refund`.
 type TransactionSourceCardRefundType string
@@ -1368,6 +1496,14 @@ type TransactionSourceCardRefundType string
 const (
 	TransactionSourceCardRefundTypeCardRefund TransactionSourceCardRefundType = "card_refund"
 )
+
+func (r TransactionSourceCardRefundType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundTypeCardRefund:
+		return true
+	}
+	return false
+}
 
 // A Card Revenue Payment object. This field will be present in the JSON response
 // if and only if `category` is equal to `card_revenue_payment`.
@@ -1425,6 +1561,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceCardRevenuePaymentCurrencyUsd TransactionSourceCardRevenuePaymentCurrency = "USD"
 )
+
+func (r TransactionSourceCardRevenuePaymentCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRevenuePaymentCurrencyCad, TransactionSourceCardRevenuePaymentCurrencyChf, TransactionSourceCardRevenuePaymentCurrencyEur, TransactionSourceCardRevenuePaymentCurrencyGbp, TransactionSourceCardRevenuePaymentCurrencyJpy, TransactionSourceCardRevenuePaymentCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // A Card Settlement object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_settlement`.
@@ -1526,6 +1670,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceCardSettlementCurrencyUsd TransactionSourceCardSettlementCurrency = "USD"
 )
+
+func (r TransactionSourceCardSettlementCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementCurrencyCad, TransactionSourceCardSettlementCurrencyChf, TransactionSourceCardSettlementCurrencyEur, TransactionSourceCardSettlementCurrencyGbp, TransactionSourceCardSettlementCurrencyJpy, TransactionSourceCardSettlementCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for this refund.
 type TransactionSourceCardSettlementNetworkIdentifiers struct {
@@ -1706,6 +1858,14 @@ const (
 	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
+func (r TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge, TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesGas, TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage, TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn, TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesOneWayServiceFee, TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation:
+		return true
+	}
+	return false
+}
+
 // An indicator that the cardholder is being billed for a reserved vehicle that was
 // not actually rented (that is, a "no-show" charge).
 type TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator string
@@ -1716,6 +1876,14 @@ const (
 	// No show for specialized vehicle
 	TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
+
+func (r TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable, TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle:
+		return true
+	}
+	return false
+}
 
 // Fields specific to lodging.
 type TransactionSourceCardSettlementPurchaseDetailsLodging struct {
@@ -1812,6 +1980,14 @@ const (
 	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesLaundry TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
+func (r TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesNoExtraCharge, TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant, TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop, TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar, TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesTelephone, TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesOther, TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesLaundry:
+		return true
+	}
+	return false
+}
+
 // Indicator that the cardholder is being billed for a reserved room that was not
 // actually used.
 type TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator string
@@ -1822,6 +1998,14 @@ const (
 	// No show
 	TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
+
+func (r TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNotApplicable, TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow:
+		return true
+	}
+	return false
+}
 
 // The format of the purchase identifier.
 type TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat string
@@ -1838,6 +2022,14 @@ const (
 	// Invoice number
 	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
+
+func (r TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText, TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber, TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber, TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber, TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber:
+		return true
+	}
+	return false
+}
 
 // Fields specific to travel.
 type TransactionSourceCardSettlementPurchaseDetailsTravel struct {
@@ -1947,6 +2139,14 @@ const (
 	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
+func (r TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther:
+		return true
+	}
+	return false
+}
+
 type TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
 	Category TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
@@ -2027,6 +2227,14 @@ const (
 	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
+func (r TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades, TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi:
+		return true
+	}
+	return false
+}
+
 // Indicates the reason for a credit to the cardholder.
 type TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator string
 
@@ -2045,6 +2253,14 @@ const (
 	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
+func (r TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit, TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation, TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther, TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket:
+		return true
+	}
+	return false
+}
+
 // Indicates whether this ticket is non-refundable.
 type TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator string
 
@@ -2054,6 +2270,14 @@ const (
 	// Restricted non-refundable ticket
 	TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
+
+func (r TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions, TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket:
+		return true
+	}
+	return false
+}
 
 // Indicates why a ticket was changed.
 type TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator string
@@ -2066,6 +2290,14 @@ const (
 	// New ticket
 	TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
+
+func (r TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone, TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket, TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket:
+		return true
+	}
+	return false
+}
 
 type TransactionSourceCardSettlementPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
@@ -2117,6 +2349,14 @@ const (
 	TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
+func (r TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone, TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed, TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_settlement`.
 type TransactionSourceCardSettlementType string
@@ -2124,6 +2364,14 @@ type TransactionSourceCardSettlementType string
 const (
 	TransactionSourceCardSettlementTypeCardSettlement TransactionSourceCardSettlementType = "card_settlement"
 )
+
+func (r TransactionSourceCardSettlementType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementTypeCardSettlement:
+		return true
+	}
+	return false
+}
 
 // The type of the resource. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
@@ -2213,6 +2461,14 @@ const (
 	TransactionSourceCategoryOther TransactionSourceCategory = "other"
 )
 
+func (r TransactionSourceCategory) IsKnown() bool {
+	switch r {
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferIntention, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheck, TransactionSourceCategoryInboundInternationalACHTransfer, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPaymentReversal, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+		return true
+	}
+	return false
+}
+
 // A Check Deposit Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_acceptance`.
 type TransactionSourceCheckDepositAcceptance struct {
@@ -2278,6 +2534,14 @@ const (
 	TransactionSourceCheckDepositAcceptanceCurrencyUsd TransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
+func (r TransactionSourceCheckDepositAcceptanceCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckDepositAcceptanceCurrencyCad, TransactionSourceCheckDepositAcceptanceCurrencyChf, TransactionSourceCheckDepositAcceptanceCurrencyEur, TransactionSourceCheckDepositAcceptanceCurrencyGbp, TransactionSourceCheckDepositAcceptanceCurrencyJpy, TransactionSourceCheckDepositAcceptanceCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // A Check Deposit Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_deposit_return`.
 type TransactionSourceCheckDepositReturn struct {
@@ -2341,6 +2605,14 @@ const (
 	TransactionSourceCheckDepositReturnCurrencyUsd TransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
+func (r TransactionSourceCheckDepositReturnCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckDepositReturnCurrencyCad, TransactionSourceCheckDepositReturnCurrencyChf, TransactionSourceCheckDepositReturnCurrencyEur, TransactionSourceCheckDepositReturnCurrencyGbp, TransactionSourceCheckDepositReturnCurrencyJpy, TransactionSourceCheckDepositReturnCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // Why this check was returned by the bank holding the account it was drawn
 // against.
 type TransactionSourceCheckDepositReturnReturnReason string
@@ -2400,6 +2672,14 @@ const (
 	TransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold TransactionSourceCheckDepositReturnReturnReason = "branch_or_account_sold"
 )
 
+func (r TransactionSourceCheckDepositReturnReturnReason) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported, TransactionSourceCheckDepositReturnReturnReasonClosedAccount, TransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission, TransactionSourceCheckDepositReturnReturnReasonInsufficientFunds, TransactionSourceCheckDepositReturnReturnReasonNoAccount, TransactionSourceCheckDepositReturnReturnReasonNotAuthorized, TransactionSourceCheckDepositReturnReturnReasonStaleDated, TransactionSourceCheckDepositReturnReturnReasonStopPayment, TransactionSourceCheckDepositReturnReturnReasonUnknownReason, TransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails, TransactionSourceCheckDepositReturnReturnReasonUnreadableImage, TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular, TransactionSourceCheckDepositReturnReturnReasonAlteredOrFictitiousItem, TransactionSourceCheckDepositReturnReturnReasonFrozenOrBlockedAccount, TransactionSourceCheckDepositReturnReturnReasonPostDated, TransactionSourceCheckDepositReturnReturnReasonEndorsementMissing, TransactionSourceCheckDepositReturnReturnReasonSignatureMissing, TransactionSourceCheckDepositReturnReturnReasonStopPaymentSuspect, TransactionSourceCheckDepositReturnReturnReasonUnusableImage, TransactionSourceCheckDepositReturnReturnReasonImageFailsSecurityCheck, TransactionSourceCheckDepositReturnReturnReasonCannotDetermineAmount, TransactionSourceCheckDepositReturnReturnReasonSignatureIrregular, TransactionSourceCheckDepositReturnReturnReasonNonCashItem, TransactionSourceCheckDepositReturnReturnReasonUnableToProcess, TransactionSourceCheckDepositReturnReturnReasonItemExceedsDollarLimit, TransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold:
+		return true
+	}
+	return false
+}
+
 // A Check Transfer Deposit object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_transfer_deposit`.
 type TransactionSourceCheckTransferDeposit struct {
@@ -2454,6 +2734,14 @@ type TransactionSourceCheckTransferDepositType string
 const (
 	TransactionSourceCheckTransferDepositTypeCheckTransferDeposit TransactionSourceCheckTransferDepositType = "check_transfer_deposit"
 )
+
+func (r TransactionSourceCheckTransferDepositType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckTransferDepositTypeCheckTransferDeposit:
+		return true
+	}
+	return false
+}
 
 // A Check Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_intention`.
@@ -2523,6 +2811,14 @@ const (
 	TransactionSourceCheckTransferIntentionCurrencyUsd TransactionSourceCheckTransferIntentionCurrency = "USD"
 )
 
+func (r TransactionSourceCheckTransferIntentionCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckTransferIntentionCurrencyCad, TransactionSourceCheckTransferIntentionCurrencyChf, TransactionSourceCheckTransferIntentionCurrencyEur, TransactionSourceCheckTransferIntentionCurrencyGbp, TransactionSourceCheckTransferIntentionCurrencyJpy, TransactionSourceCheckTransferIntentionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // A Check Transfer Stop Payment Request object. This field will be present in the
 // JSON response if and only if `category` is equal to
 // `check_transfer_stop_payment_request`.
@@ -2573,6 +2869,14 @@ const (
 	TransactionSourceCheckTransferStopPaymentRequestReasonUnknown TransactionSourceCheckTransferStopPaymentRequestReason = "unknown"
 )
 
+func (r TransactionSourceCheckTransferStopPaymentRequestReason) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckTransferStopPaymentRequestReasonMailDeliveryFailed, TransactionSourceCheckTransferStopPaymentRequestReasonRejectedByIncrease, TransactionSourceCheckTransferStopPaymentRequestReasonNotAuthorized, TransactionSourceCheckTransferStopPaymentRequestReasonUnknown:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer_stop_payment_request`.
 type TransactionSourceCheckTransferStopPaymentRequestType string
@@ -2580,6 +2884,14 @@ type TransactionSourceCheckTransferStopPaymentRequestType string
 const (
 	TransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest TransactionSourceCheckTransferStopPaymentRequestType = "check_transfer_stop_payment_request"
 )
+
+func (r TransactionSourceCheckTransferStopPaymentRequestType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCheckTransferStopPaymentRequestTypeCheckTransferStopPaymentRequest:
+		return true
+	}
+	return false
+}
 
 // A Fee Payment object. This field will be present in the JSON response if and
 // only if `category` is equal to `fee_payment`.
@@ -2631,6 +2943,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceFeePaymentCurrencyUsd TransactionSourceFeePaymentCurrency = "USD"
 )
+
+func (r TransactionSourceFeePaymentCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceFeePaymentCurrencyCad, TransactionSourceFeePaymentCurrencyChf, TransactionSourceFeePaymentCurrencyEur, TransactionSourceFeePaymentCurrencyGbp, TransactionSourceFeePaymentCurrencyJpy, TransactionSourceFeePaymentCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // An Inbound ACH Transfer Intention object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_ach_transfer`.
@@ -2726,6 +3046,14 @@ const (
 	// Unstructured addendum.
 	TransactionSourceInboundACHTransferAddendaCategoryFreeform TransactionSourceInboundACHTransferAddendaCategory = "freeform"
 )
+
+func (r TransactionSourceInboundACHTransferAddendaCategory) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundACHTransferAddendaCategoryFreeform:
+		return true
+	}
+	return false
+}
 
 // Unstructured `payment_related_information` passed through by the originator.
 type TransactionSourceInboundACHTransferAddendaFreeform struct {
@@ -2835,6 +3163,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceInboundCheckCurrencyUsd TransactionSourceInboundCheckCurrency = "USD"
 )
+
+func (r TransactionSourceInboundCheckCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundCheckCurrencyCad, TransactionSourceInboundCheckCurrencyChf, TransactionSourceInboundCheckCurrencyEur, TransactionSourceInboundCheckCurrencyGbp, TransactionSourceInboundCheckCurrencyJpy, TransactionSourceInboundCheckCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // An Inbound International ACH Transfer object. This field will be present in the
 // JSON response if and only if `category` is equal to
@@ -3006,6 +3342,14 @@ const (
 	TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_fixed"
 )
 
+func (r TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToVariable, TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorVariableToFixed, TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed:
+		return true
+	}
+	return false
+}
+
 // An instruction of how to interpret the `foreign_exchange_reference` field for
 // this Transaction.
 type TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator string
@@ -3019,6 +3363,14 @@ const (
 	// `foreign_exchange_reference` field is blank.
 	TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "blank"
 )
+
+func (r TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeRate, TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber, TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank:
+		return true
+	}
+	return false
+}
 
 // The type of transfer. Set by the originator.
 type TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode string
@@ -3066,6 +3418,14 @@ const (
 	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "internet_initiated"
 )
 
+func (r TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAnnuity, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBusinessOrCommercial, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeDeposit, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeLoan, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMiscellaneous, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMortgage, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePension, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRemittance, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRentOrLease, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSalaryOrPayroll, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTax, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAccountsReceivable, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBackOfficeConversion, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMachineTransfer, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfPurchase, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfSale, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRepresentedCheck, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSharedNetworkTransaction, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTelphoneInitiated, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated:
+		return true
+	}
+	return false
+}
+
 // An instruction of how to interpret the
 // `originating_depository_financial_institution_id` field for this Transaction.
 type TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier string
@@ -3080,6 +3440,14 @@ const (
 	TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
 
+func (r TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierBicCode, TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban:
+		return true
+	}
+	return false
+}
+
 // An instruction of how to interpret the
 // `receiving_depository_financial_institution_id` field for this Transaction.
 type TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier string
@@ -3093,6 +3461,14 @@ const (
 	// An International Bank Account Number.
 	TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
+
+func (r TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode, TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban:
+		return true
+	}
+	return false
+}
 
 // An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
@@ -3161,6 +3537,14 @@ const (
 	// US Dollar (USD)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
+
+func (r TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // An Inbound Wire Drawdown Payment object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
@@ -3509,6 +3893,14 @@ const (
 	TransactionSourceInterestPaymentCurrencyUsd TransactionSourceInterestPaymentCurrency = "USD"
 )
 
+func (r TransactionSourceInterestPaymentCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceInterestPaymentCurrencyCad, TransactionSourceInterestPaymentCurrencyChf, TransactionSourceInterestPaymentCurrencyEur, TransactionSourceInterestPaymentCurrencyGbp, TransactionSourceInterestPaymentCurrencyJpy, TransactionSourceInterestPaymentCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // An Internal Source object. This field will be present in the JSON response if
 // and only if `category` is equal to `internal_source`.
 type TransactionSourceInternalSource struct {
@@ -3561,6 +3953,14 @@ const (
 	TransactionSourceInternalSourceCurrencyUsd TransactionSourceInternalSourceCurrency = "USD"
 )
 
+func (r TransactionSourceInternalSourceCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceInternalSourceCurrencyCad, TransactionSourceInternalSourceCurrencyChf, TransactionSourceInternalSourceCurrencyEur, TransactionSourceInternalSourceCurrencyGbp, TransactionSourceInternalSourceCurrencyJpy, TransactionSourceInternalSourceCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // An Internal Source is a transaction between you and Increase. This describes the
 // reason for the transaction.
 type TransactionSourceInternalSourceReason string
@@ -3595,6 +3995,14 @@ const (
 	// Sample funds return
 	TransactionSourceInternalSourceReasonSampleFundsReturn TransactionSourceInternalSourceReason = "sample_funds_return"
 )
+
+func (r TransactionSourceInternalSourceReason) IsKnown() bool {
+	switch r {
+	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCashback, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn:
+		return true
+	}
+	return false
+}
 
 // A Real-Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
@@ -3726,6 +4134,14 @@ const (
 	TransactionTypeTransaction TransactionType = "transaction"
 )
 
+func (r TransactionType) IsKnown() bool {
+	switch r {
+	case TransactionTypeTransaction:
+		return true
+	}
+	return false
+}
+
 type TransactionListParams struct {
 	// Filter Transactions for those belonging to the specified Account.
 	AccountID param.Field[string]                         `query:"account_id"`
@@ -3849,6 +4265,14 @@ const (
 	// The Transaction was made for an undocumented or deprecated reason.
 	TransactionListParamsCategoryInOther TransactionListParamsCategoryIn = "other"
 )
+
+func (r TransactionListParamsCategoryIn) IsKnown() bool {
+	switch r {
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferIntention, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheck, TransactionListParamsCategoryInInboundInternationalACHTransfer, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+		return true
+	}
+	return false
+}
 
 type TransactionListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

@@ -165,6 +165,14 @@ const (
 	CheckDepositCurrencyUsd CheckDepositCurrency = "USD"
 )
 
+func (r CheckDepositCurrency) IsKnown() bool {
+	switch r {
+	case CheckDepositCurrencyCad, CheckDepositCurrencyChf, CheckDepositCurrencyEur, CheckDepositCurrencyGbp, CheckDepositCurrencyJpy, CheckDepositCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // If your deposit is successfully parsed and accepted by Increase, this will
 // contain details of the parsed check.
 type CheckDepositDepositAcceptance struct {
@@ -230,6 +238,14 @@ const (
 	CheckDepositDepositAcceptanceCurrencyUsd CheckDepositDepositAcceptanceCurrency = "USD"
 )
 
+func (r CheckDepositDepositAcceptanceCurrency) IsKnown() bool {
+	switch r {
+	case CheckDepositDepositAcceptanceCurrencyCad, CheckDepositDepositAcceptanceCurrencyChf, CheckDepositDepositAcceptanceCurrencyEur, CheckDepositDepositAcceptanceCurrencyGbp, CheckDepositDepositAcceptanceCurrencyJpy, CheckDepositDepositAcceptanceCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // If your deposit is rejected by Increase, this will contain details as to why it
 // was rejected.
 type CheckDepositDepositRejection struct {
@@ -285,6 +301,14 @@ const (
 	CheckDepositDepositRejectionCurrencyUsd CheckDepositDepositRejectionCurrency = "USD"
 )
 
+func (r CheckDepositDepositRejectionCurrency) IsKnown() bool {
+	switch r {
+	case CheckDepositDepositRejectionCurrencyCad, CheckDepositDepositRejectionCurrencyChf, CheckDepositDepositRejectionCurrencyEur, CheckDepositDepositRejectionCurrencyGbp, CheckDepositDepositRejectionCurrencyJpy, CheckDepositDepositRejectionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // Why the check deposit was rejected.
 type CheckDepositDepositRejectionReason string
 
@@ -310,6 +334,14 @@ const (
 	// The check was rejected for an unknown reason.
 	CheckDepositDepositRejectionReasonUnknown CheckDepositDepositRejectionReason = "unknown"
 )
+
+func (r CheckDepositDepositRejectionReason) IsKnown() bool {
+	switch r {
+	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonUnknown:
+		return true
+	}
+	return false
+}
 
 // If your deposit is returned, this will contain details as to why it was
 // returned.
@@ -374,6 +406,14 @@ const (
 	CheckDepositDepositReturnCurrencyUsd CheckDepositDepositReturnCurrency = "USD"
 )
 
+func (r CheckDepositDepositReturnCurrency) IsKnown() bool {
+	switch r {
+	case CheckDepositDepositReturnCurrencyCad, CheckDepositDepositReturnCurrencyChf, CheckDepositDepositReturnCurrencyEur, CheckDepositDepositReturnCurrencyGbp, CheckDepositDepositReturnCurrencyJpy, CheckDepositDepositReturnCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // Why this check was returned by the bank holding the account it was drawn
 // against.
 type CheckDepositDepositReturnReturnReason string
@@ -433,6 +473,14 @@ const (
 	CheckDepositDepositReturnReturnReasonBranchOrAccountSold CheckDepositDepositReturnReturnReason = "branch_or_account_sold"
 )
 
+func (r CheckDepositDepositReturnReturnReason) IsKnown() bool {
+	switch r {
+	case CheckDepositDepositReturnReturnReasonACHConversionNotSupported, CheckDepositDepositReturnReturnReasonClosedAccount, CheckDepositDepositReturnReturnReasonDuplicateSubmission, CheckDepositDepositReturnReturnReasonInsufficientFunds, CheckDepositDepositReturnReturnReasonNoAccount, CheckDepositDepositReturnReturnReasonNotAuthorized, CheckDepositDepositReturnReturnReasonStaleDated, CheckDepositDepositReturnReturnReasonStopPayment, CheckDepositDepositReturnReturnReasonUnknownReason, CheckDepositDepositReturnReturnReasonUnmatchedDetails, CheckDepositDepositReturnReturnReasonUnreadableImage, CheckDepositDepositReturnReturnReasonEndorsementIrregular, CheckDepositDepositReturnReturnReasonAlteredOrFictitiousItem, CheckDepositDepositReturnReturnReasonFrozenOrBlockedAccount, CheckDepositDepositReturnReturnReasonPostDated, CheckDepositDepositReturnReturnReasonEndorsementMissing, CheckDepositDepositReturnReturnReasonSignatureMissing, CheckDepositDepositReturnReturnReasonStopPaymentSuspect, CheckDepositDepositReturnReturnReasonUnusableImage, CheckDepositDepositReturnReturnReasonImageFailsSecurityCheck, CheckDepositDepositReturnReturnReasonCannotDetermineAmount, CheckDepositDepositReturnReturnReasonSignatureIrregular, CheckDepositDepositReturnReturnReasonNonCashItem, CheckDepositDepositReturnReturnReasonUnableToProcess, CheckDepositDepositReturnReturnReasonItemExceedsDollarLimit, CheckDepositDepositReturnReturnReasonBranchOrAccountSold:
+		return true
+	}
+	return false
+}
+
 // After the check is parsed, it is submitted to the Check21 network for
 // processing. This will contain details of the submission.
 type CheckDepositDepositSubmission struct {
@@ -473,6 +521,14 @@ const (
 	CheckDepositStatusReturned CheckDepositStatus = "returned"
 )
 
+func (r CheckDepositStatus) IsKnown() bool {
+	switch r {
+	case CheckDepositStatusPending, CheckDepositStatusSubmitted, CheckDepositStatusRejected, CheckDepositStatusReturned:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_deposit`.
 type CheckDepositType string
@@ -480,6 +536,14 @@ type CheckDepositType string
 const (
 	CheckDepositTypeCheckDeposit CheckDepositType = "check_deposit"
 )
+
+func (r CheckDepositType) IsKnown() bool {
+	switch r {
+	case CheckDepositTypeCheckDeposit:
+		return true
+	}
+	return false
+}
 
 type CheckDepositNewParams struct {
 	// The identifier for the Account to deposit the check in.

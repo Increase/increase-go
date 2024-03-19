@@ -157,6 +157,14 @@ const (
 	IntrafiBalanceCurrencyUsd IntrafiBalanceCurrency = "USD"
 )
 
+func (r IntrafiBalanceCurrency) IsKnown() bool {
+	switch r {
+	case IntrafiBalanceCurrencyCad, IntrafiBalanceCurrencyChf, IntrafiBalanceCurrencyEur, IntrafiBalanceCurrencyGbp, IntrafiBalanceCurrencyJpy, IntrafiBalanceCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `intrafi_balance`.
 type IntrafiBalanceType string
@@ -164,3 +172,11 @@ type IntrafiBalanceType string
 const (
 	IntrafiBalanceTypeIntrafiBalance IntrafiBalanceType = "intrafi_balance"
 )
+
+func (r IntrafiBalanceType) IsKnown() bool {
+	switch r {
+	case IntrafiBalanceTypeIntrafiBalance:
+		return true
+	}
+	return false
+}

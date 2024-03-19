@@ -111,6 +111,14 @@ const (
 	SupplementalDocumentTypeEntitySupplementalDocument SupplementalDocumentType = "entity_supplemental_document"
 )
 
+func (r SupplementalDocumentType) IsKnown() bool {
+	switch r {
+	case SupplementalDocumentTypeEntitySupplementalDocument:
+		return true
+	}
+	return false
+}
+
 type EntitySupplementalDocumentNewParams struct {
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id,required"`

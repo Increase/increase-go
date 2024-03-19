@@ -151,6 +151,14 @@ const (
 	ExternalAccountAccountHolderUnknown ExternalAccountAccountHolder = "unknown"
 )
 
+func (r ExternalAccountAccountHolder) IsKnown() bool {
+	switch r {
+	case ExternalAccountAccountHolderBusiness, ExternalAccountAccountHolderIndividual, ExternalAccountAccountHolderUnknown:
+		return true
+	}
+	return false
+}
+
 // The type of the account to which the transfer will be sent.
 type ExternalAccountFunding string
 
@@ -163,6 +171,14 @@ const (
 	ExternalAccountFundingOther ExternalAccountFunding = "other"
 )
 
+func (r ExternalAccountFunding) IsKnown() bool {
+	switch r {
+	case ExternalAccountFundingChecking, ExternalAccountFundingSavings, ExternalAccountFundingOther:
+		return true
+	}
+	return false
+}
+
 // The External Account's status.
 type ExternalAccountStatus string
 
@@ -173,6 +189,14 @@ const (
 	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
 )
 
+func (r ExternalAccountStatus) IsKnown() bool {
+	switch r {
+	case ExternalAccountStatusActive, ExternalAccountStatusArchived:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `external_account`.
 type ExternalAccountType string
@@ -180,6 +204,14 @@ type ExternalAccountType string
 const (
 	ExternalAccountTypeExternalAccount ExternalAccountType = "external_account"
 )
+
+func (r ExternalAccountType) IsKnown() bool {
+	switch r {
+	case ExternalAccountTypeExternalAccount:
+		return true
+	}
+	return false
+}
 
 // If you have verified ownership of the External Account.
 type ExternalAccountVerificationStatus string
@@ -192,6 +224,14 @@ const (
 	// The External Account is verified.
 	ExternalAccountVerificationStatusVerified ExternalAccountVerificationStatus = "verified"
 )
+
+func (r ExternalAccountVerificationStatus) IsKnown() bool {
+	switch r {
+	case ExternalAccountVerificationStatusUnverified, ExternalAccountVerificationStatusPending, ExternalAccountVerificationStatusVerified:
+		return true
+	}
+	return false
+}
 
 type ExternalAccountNewParams struct {
 	// The account number for the destination account.
@@ -223,6 +263,14 @@ const (
 	ExternalAccountNewParamsAccountHolderUnknown ExternalAccountNewParamsAccountHolder = "unknown"
 )
 
+func (r ExternalAccountNewParamsAccountHolder) IsKnown() bool {
+	switch r {
+	case ExternalAccountNewParamsAccountHolderBusiness, ExternalAccountNewParamsAccountHolderIndividual, ExternalAccountNewParamsAccountHolderUnknown:
+		return true
+	}
+	return false
+}
+
 // The type of the destination account. Defaults to `checking`.
 type ExternalAccountNewParamsFunding string
 
@@ -234,6 +282,14 @@ const (
 	// A different type of account.
 	ExternalAccountNewParamsFundingOther ExternalAccountNewParamsFunding = "other"
 )
+
+func (r ExternalAccountNewParamsFunding) IsKnown() bool {
+	switch r {
+	case ExternalAccountNewParamsFundingChecking, ExternalAccountNewParamsFundingSavings, ExternalAccountNewParamsFundingOther:
+		return true
+	}
+	return false
+}
 
 type ExternalAccountUpdateParams struct {
 	// The type of entity that owns the External Account.
@@ -258,6 +314,14 @@ const (
 	ExternalAccountUpdateParamsAccountHolderIndividual ExternalAccountUpdateParamsAccountHolder = "individual"
 )
 
+func (r ExternalAccountUpdateParamsAccountHolder) IsKnown() bool {
+	switch r {
+	case ExternalAccountUpdateParamsAccountHolderBusiness, ExternalAccountUpdateParamsAccountHolderIndividual:
+		return true
+	}
+	return false
+}
+
 // The status of the External Account.
 type ExternalAccountUpdateParamsStatus string
 
@@ -267,6 +331,14 @@ const (
 	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountUpdateParamsStatusArchived ExternalAccountUpdateParamsStatus = "archived"
 )
+
+func (r ExternalAccountUpdateParamsStatus) IsKnown() bool {
+	switch r {
+	case ExternalAccountUpdateParamsStatusActive, ExternalAccountUpdateParamsStatusArchived:
+		return true
+	}
+	return false
+}
 
 type ExternalAccountListParams struct {
 	// Return the page of entries after this one.
@@ -317,3 +389,11 @@ const (
 	// The External Account is archived and won't appear in the dashboard.
 	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"
 )
+
+func (r ExternalAccountListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case ExternalAccountListParamsStatusInActive, ExternalAccountListParamsStatusInArchived:
+		return true
+	}
+	return false
+}

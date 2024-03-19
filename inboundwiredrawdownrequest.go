@@ -168,6 +168,14 @@ const (
 	InboundWireDrawdownRequestTypeInboundWireDrawdownRequest InboundWireDrawdownRequestType = "inbound_wire_drawdown_request"
 )
 
+func (r InboundWireDrawdownRequestType) IsKnown() bool {
+	switch r {
+	case InboundWireDrawdownRequestTypeInboundWireDrawdownRequest:
+		return true
+	}
+	return false
+}
+
 type InboundWireDrawdownRequestListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`

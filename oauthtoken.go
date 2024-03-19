@@ -76,6 +76,14 @@ const (
 	OAuthTokenTokenTypeBearer OAuthTokenTokenType = "bearer"
 )
 
+func (r OAuthTokenTokenType) IsKnown() bool {
+	switch r {
+	case OAuthTokenTokenTypeBearer:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `oauth_token`.
 type OAuthTokenType string
@@ -83,6 +91,14 @@ type OAuthTokenType string
 const (
 	OAuthTokenTypeOAuthToken OAuthTokenType = "oauth_token"
 )
+
+func (r OAuthTokenType) IsKnown() bool {
+	switch r {
+	case OAuthTokenTypeOAuthToken:
+		return true
+	}
+	return false
+}
 
 type OAuthTokenNewParams struct {
 	// The credential you request in exchange for the code. In Production, this is
@@ -117,3 +133,11 @@ const (
 	// An OAuth production token.
 	OAuthTokenNewParamsGrantTypeProductionToken OAuthTokenNewParamsGrantType = "production_token"
 )
+
+func (r OAuthTokenNewParamsGrantType) IsKnown() bool {
+	switch r {
+	case OAuthTokenNewParamsGrantTypeAuthorizationCode, OAuthTokenNewParamsGrantTypeProductionToken:
+		return true
+	}
+	return false
+}

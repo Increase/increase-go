@@ -176,6 +176,14 @@ const (
 	WireDrawdownRequestStatusRefused WireDrawdownRequestStatus = "refused"
 )
 
+func (r WireDrawdownRequestStatus) IsKnown() bool {
+	switch r {
+	case WireDrawdownRequestStatusPendingSubmission, WireDrawdownRequestStatusPendingResponse, WireDrawdownRequestStatusFulfilled, WireDrawdownRequestStatusRefused:
+		return true
+	}
+	return false
+}
+
 // After the drawdown request is submitted to Fedwire, this will contain
 // supplemental details.
 type WireDrawdownRequestSubmission struct {
@@ -208,6 +216,14 @@ type WireDrawdownRequestType string
 const (
 	WireDrawdownRequestTypeWireDrawdownRequest WireDrawdownRequestType = "wire_drawdown_request"
 )
+
+func (r WireDrawdownRequestType) IsKnown() bool {
+	switch r {
+	case WireDrawdownRequestTypeWireDrawdownRequest:
+		return true
+	}
+	return false
+}
 
 type WireDrawdownRequestNewParams struct {
 	// The Account Number to which the recipient should send funds.

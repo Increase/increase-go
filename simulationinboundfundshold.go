@@ -115,6 +115,14 @@ const (
 	SimulationInboundFundsHoldReleaseResponseCurrencyUsd SimulationInboundFundsHoldReleaseResponseCurrency = "USD"
 )
 
+func (r SimulationInboundFundsHoldReleaseResponseCurrency) IsKnown() bool {
+	switch r {
+	case SimulationInboundFundsHoldReleaseResponseCurrencyCad, SimulationInboundFundsHoldReleaseResponseCurrencyChf, SimulationInboundFundsHoldReleaseResponseCurrencyEur, SimulationInboundFundsHoldReleaseResponseCurrencyGbp, SimulationInboundFundsHoldReleaseResponseCurrencyJpy, SimulationInboundFundsHoldReleaseResponseCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The status of the hold.
 type SimulationInboundFundsHoldReleaseResponseStatus string
 
@@ -125,6 +133,14 @@ const (
 	SimulationInboundFundsHoldReleaseResponseStatusComplete SimulationInboundFundsHoldReleaseResponseStatus = "complete"
 )
 
+func (r SimulationInboundFundsHoldReleaseResponseStatus) IsKnown() bool {
+	switch r {
+	case SimulationInboundFundsHoldReleaseResponseStatusHeld, SimulationInboundFundsHoldReleaseResponseStatusComplete:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_funds_hold`.
 type SimulationInboundFundsHoldReleaseResponseType string
@@ -132,3 +148,11 @@ type SimulationInboundFundsHoldReleaseResponseType string
 const (
 	SimulationInboundFundsHoldReleaseResponseTypeInboundFundsHold SimulationInboundFundsHoldReleaseResponseType = "inbound_funds_hold"
 )
+
+func (r SimulationInboundFundsHoldReleaseResponseType) IsKnown() bool {
+	switch r {
+	case SimulationInboundFundsHoldReleaseResponseTypeInboundFundsHold:
+		return true
+	}
+	return false
+}

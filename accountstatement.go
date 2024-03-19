@@ -127,6 +127,14 @@ const (
 	AccountStatementTypeAccountStatement AccountStatementType = "account_statement"
 )
 
+func (r AccountStatementType) IsKnown() bool {
+	switch r {
+	case AccountStatementTypeAccountStatement:
+		return true
+	}
+	return false
+}
+
 type AccountStatementListParams struct {
 	// Filter Account Statements to those belonging to the specified Account.
 	AccountID param.Field[string] `query:"account_id"`

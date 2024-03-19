@@ -240,6 +240,14 @@ const (
 	InboundACHTransferAddendaCategoryFreeform InboundACHTransferAddendaCategory = "freeform"
 )
 
+func (r InboundACHTransferAddendaCategory) IsKnown() bool {
+	switch r {
+	case InboundACHTransferAddendaCategoryFreeform:
+		return true
+	}
+	return false
+}
+
 // Unstructured `payment_related_information` passed through by the originator.
 type InboundACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum received from the originator.
@@ -350,6 +358,14 @@ const (
 	InboundACHTransferDeclineReasonUserInitiated InboundACHTransferDeclineReason = "user_initiated"
 )
 
+func (r InboundACHTransferDeclineReason) IsKnown() bool {
+	switch r {
+	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateReturn, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonMisroutedReturn, InboundACHTransferDeclineReasonReturnOfErroneousOrReversingDebit, InboundACHTransferDeclineReasonNoACHRoute, InboundACHTransferDeclineReasonOriginatorRequest, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated:
+		return true
+	}
+	return false
+}
+
 // The direction of the transfer.
 type InboundACHTransferDirection string
 
@@ -359,6 +375,14 @@ const (
 	// Debit
 	InboundACHTransferDirectionDebit InboundACHTransferDirection = "debit"
 )
+
+func (r InboundACHTransferDirection) IsKnown() bool {
+	switch r {
+	case InboundACHTransferDirectionCredit, InboundACHTransferDirectionDebit:
+		return true
+	}
+	return false
+}
 
 // If you initiate a notification of change in response to the transfer, this will
 // contain its details.
@@ -401,6 +425,14 @@ const (
 	// The Inbound ACH Transfer has been returned.
 	InboundACHTransferStatusReturned InboundACHTransferStatus = "returned"
 )
+
+func (r InboundACHTransferStatus) IsKnown() bool {
+	switch r {
+	case InboundACHTransferStatusPending, InboundACHTransferStatusDeclined, InboundACHTransferStatusAccepted, InboundACHTransferStatusReturned:
+		return true
+	}
+	return false
+}
 
 // If your transfer is returned, this will contain details of the return.
 type InboundACHTransferTransferReturn struct {
@@ -462,6 +494,14 @@ const (
 	InboundACHTransferTransferReturnReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferTransferReturnReason = "corporate_customer_advised_not_authorized"
 )
 
+func (r InboundACHTransferTransferReturnReason) IsKnown() bool {
+	switch r {
+	case InboundACHTransferTransferReturnReasonReturnedPerOdfiRequest, InboundACHTransferTransferReturnReasonAuthorizationRevokedByCustomer, InboundACHTransferTransferReturnReasonPaymentStopped, InboundACHTransferTransferReturnReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferTransferReturnReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferTransferReturnReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferTransferReturnReasonCreditEntryRefusedByReceiver, InboundACHTransferTransferReturnReasonDuplicateEntry, InboundACHTransferTransferReturnReasonCorporateCustomerAdvisedNotAuthorized:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_ach_transfer`.
 type InboundACHTransferType string
@@ -469,6 +509,14 @@ type InboundACHTransferType string
 const (
 	InboundACHTransferTypeInboundACHTransfer InboundACHTransferType = "inbound_ach_transfer"
 )
+
+func (r InboundACHTransferType) IsKnown() bool {
+	switch r {
+	case InboundACHTransferTypeInboundACHTransfer:
+		return true
+	}
+	return false
+}
 
 type InboundACHTransferListParams struct {
 	// Filter Inbound ACH Tranfers to ones belonging to the specified Account.
@@ -533,6 +581,14 @@ const (
 	InboundACHTransferListParamsStatusReturned InboundACHTransferListParamsStatus = "returned"
 )
 
+func (r InboundACHTransferListParamsStatus) IsKnown() bool {
+	switch r {
+	case InboundACHTransferListParamsStatusPending, InboundACHTransferListParamsStatusDeclined, InboundACHTransferListParamsStatusAccepted, InboundACHTransferListParamsStatusReturned:
+		return true
+	}
+	return false
+}
+
 type InboundACHTransferNotificationOfChangeParams struct {
 	// The updated account number to send in the notification of change.
 	UpdatedAccountNumber param.Field[string] `json:"updated_account_number"`
@@ -585,3 +641,11 @@ const (
 	// code is R29.
 	InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
 )
+
+func (r InboundACHTransferTransferReturnParamsReason) IsKnown() bool {
+	switch r {
+	case InboundACHTransferTransferReturnParamsReasonReturnedPerOdfiRequest, InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer, InboundACHTransferTransferReturnParamsReasonPaymentStopped, InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferTransferReturnParamsReasonCreditEntryRefusedByReceiver, InboundACHTransferTransferReturnParamsReasonDuplicateEntry, InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized:
+		return true
+	}
+	return false
+}

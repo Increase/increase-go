@@ -138,6 +138,14 @@ const (
 	BookkeepingAccountComplianceCategoryCustomerBalance BookkeepingAccountComplianceCategory = "customer_balance"
 )
 
+func (r BookkeepingAccountComplianceCategory) IsKnown() bool {
+	switch r {
+	case BookkeepingAccountComplianceCategoryCommingledCash, BookkeepingAccountComplianceCategoryCustomerBalance:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `bookkeeping_account`.
 type BookkeepingAccountType string
@@ -145,6 +153,14 @@ type BookkeepingAccountType string
 const (
 	BookkeepingAccountTypeBookkeepingAccount BookkeepingAccountType = "bookkeeping_account"
 )
+
+func (r BookkeepingAccountType) IsKnown() bool {
+	switch r {
+	case BookkeepingAccountTypeBookkeepingAccount:
+		return true
+	}
+	return false
+}
 
 // Represents a request to lookup the balance of an Bookkeeping Account at a given
 // point in time.
@@ -186,6 +202,14 @@ const (
 	BookkeepingBalanceLookupTypeBookkeepingBalanceLookup BookkeepingBalanceLookupType = "bookkeeping_balance_lookup"
 )
 
+func (r BookkeepingBalanceLookupType) IsKnown() bool {
+	switch r {
+	case BookkeepingBalanceLookupTypeBookkeepingBalanceLookup:
+		return true
+	}
+	return false
+}
+
 type BookkeepingAccountNewParams struct {
 	// The name you choose for the account.
 	Name param.Field[string] `json:"name,required"`
@@ -210,6 +234,14 @@ const (
 	// A customer balance.
 	BookkeepingAccountNewParamsComplianceCategoryCustomerBalance BookkeepingAccountNewParamsComplianceCategory = "customer_balance"
 )
+
+func (r BookkeepingAccountNewParamsComplianceCategory) IsKnown() bool {
+	switch r {
+	case BookkeepingAccountNewParamsComplianceCategoryCommingledCash, BookkeepingAccountNewParamsComplianceCategoryCustomerBalance:
+		return true
+	}
+	return false
+}
 
 type BookkeepingAccountUpdateParams struct {
 	// The name you choose for the account.
