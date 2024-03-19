@@ -176,6 +176,14 @@ const (
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
 )
 
+func (r AccountBank) IsKnown() bool {
+	switch r {
+	case AccountBankBlueRidgeBank, AccountBankFirstInternetBank:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 // currency.
 type AccountCurrency string
@@ -195,6 +203,14 @@ const (
 	AccountCurrencyUsd AccountCurrency = "USD"
 )
 
+func (r AccountCurrency) IsKnown() bool {
+	switch r {
+	case AccountCurrencyCad, AccountCurrencyChf, AccountCurrencyEur, AccountCurrencyGbp, AccountCurrencyJpy, AccountCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The status of the Account.
 type AccountStatus string
 
@@ -205,6 +221,14 @@ const (
 	AccountStatusClosed AccountStatus = "closed"
 )
 
+func (r AccountStatus) IsKnown() bool {
+	switch r {
+	case AccountStatusOpen, AccountStatusClosed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `account`.
 type AccountType string
@@ -212,6 +236,14 @@ type AccountType string
 const (
 	AccountTypeAccount AccountType = "account"
 )
+
+func (r AccountType) IsKnown() bool {
+	switch r {
+	case AccountTypeAccount:
+		return true
+	}
+	return false
+}
 
 // Represents a request to lookup the balance of an Account at a given point in
 // time.
@@ -255,6 +287,14 @@ type BalanceLookupType string
 const (
 	BalanceLookupTypeBalanceLookup BalanceLookupType = "balance_lookup"
 )
+
+func (r BalanceLookupType) IsKnown() bool {
+	switch r {
+	case BalanceLookupTypeBalanceLookup:
+		return true
+	}
+	return false
+}
 
 type AccountNewParams struct {
 	// The name you choose for the Account.
@@ -343,6 +383,14 @@ const (
 	// Closed Accounts on which no new activity can occur.
 	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
 )
+
+func (r AccountListParamsStatus) IsKnown() bool {
+	switch r {
+	case AccountListParamsStatusOpen, AccountListParamsStatusClosed:
+		return true
+	}
+	return false
+}
 
 type AccountBalanceParams struct {
 	// The moment to query the balance at. If not set, returns the current balances.

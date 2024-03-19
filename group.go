@@ -85,6 +85,14 @@ const (
 	GroupACHDebitStatusEnabled GroupACHDebitStatus = "enabled"
 )
 
+func (r GroupACHDebitStatus) IsKnown() bool {
+	switch r {
+	case GroupACHDebitStatusDisabled, GroupACHDebitStatusEnabled:
+		return true
+	}
+	return false
+}
+
 // If the Group is activated or not.
 type GroupActivationStatus string
 
@@ -95,6 +103,14 @@ const (
 	GroupActivationStatusActivated GroupActivationStatus = "activated"
 )
 
+func (r GroupActivationStatus) IsKnown() bool {
+	switch r {
+	case GroupActivationStatusUnactivated, GroupActivationStatusActivated:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `group`.
 type GroupType string
@@ -102,3 +118,11 @@ type GroupType string
 const (
 	GroupTypeGroup GroupType = "group"
 )
+
+func (r GroupType) IsKnown() bool {
+	switch r {
+	case GroupTypeGroup:
+		return true
+	}
+	return false
+}

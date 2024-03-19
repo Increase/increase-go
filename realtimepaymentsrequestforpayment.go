@@ -180,6 +180,14 @@ const (
 	RealTimePaymentsRequestForPaymentCurrencyUsd RealTimePaymentsRequestForPaymentCurrency = "USD"
 )
 
+func (r RealTimePaymentsRequestForPaymentCurrency) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsRequestForPaymentCurrencyCad, RealTimePaymentsRequestForPaymentCurrencyChf, RealTimePaymentsRequestForPaymentCurrencyEur, RealTimePaymentsRequestForPaymentCurrencyGbp, RealTimePaymentsRequestForPaymentCurrencyJpy, RealTimePaymentsRequestForPaymentCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // If the request for payment is refused by the destination financial institution
 // or the receiving customer, this will contain supplemental details.
 type RealTimePaymentsRequestForPaymentRefusal struct {
@@ -249,6 +257,14 @@ const (
 	// Some other error or issue has occurred.
 	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOther RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "other"
 )
+
+func (r RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeAccountBlocked, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeTransactionForbidden, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeTransactionTypeNotSupported, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeUnexpectedAmount, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeAmountExceedsBankLimits, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeInvalidDebtorAddress, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeInvalidCreditorAddress, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeCreditorIdentifierIncorrect, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeRequestedByCustomer, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOrderRejected, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeEndCustomerDeceased, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeCustomerHasOptedOut, RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOther:
+		return true
+	}
+	return false
+}
 
 // If the request for payment is rejected by Real-Time Payments or the destination
 // financial institution, this will contain supplemental details.
@@ -344,6 +360,14 @@ const (
 	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeOther RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "other"
 )
 
+func (r RealTimePaymentsRequestForPaymentRejectionRejectReasonCode) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAccountClosed, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAccountBlocked, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAccountType, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAccountNumber, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeEndCustomerDeceased, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeNarrative, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTransactionForbidden, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTransactionTypeNotSupported, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnexpectedAmount, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAmountExceedsBankLimits, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAddress, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnknownEndCustomer, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidDebtorAddress, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTimeout, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnsupportedMessageForRecipient, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeRecipientConnectionNotAvailable, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeRealTimePaymentsSuspended, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInstructedAgentSignedOff, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeProcessingError, RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeOther:
+		return true
+	}
+	return false
+}
+
 // The lifecycle status of the request for payment.
 type RealTimePaymentsRequestForPaymentStatus string
 
@@ -362,6 +386,14 @@ const (
 	// The request for payment was fulfilled by the receiver.
 	RealTimePaymentsRequestForPaymentStatusFulfilled RealTimePaymentsRequestForPaymentStatus = "fulfilled"
 )
+
+func (r RealTimePaymentsRequestForPaymentStatus) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsRequestForPaymentStatusPendingSubmission, RealTimePaymentsRequestForPaymentStatusPendingResponse, RealTimePaymentsRequestForPaymentStatusRejected, RealTimePaymentsRequestForPaymentStatusAccepted, RealTimePaymentsRequestForPaymentStatusRefused, RealTimePaymentsRequestForPaymentStatusFulfilled:
+		return true
+	}
+	return false
+}
 
 // After the request for payment is submitted to Real-Time Payments, this will
 // contain supplemental details.
@@ -394,6 +426,14 @@ type RealTimePaymentsRequestForPaymentType string
 const (
 	RealTimePaymentsRequestForPaymentTypeRealTimePaymentsRequestForPayment RealTimePaymentsRequestForPaymentType = "real_time_payments_request_for_payment"
 )
+
+func (r RealTimePaymentsRequestForPaymentType) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsRequestForPaymentTypeRealTimePaymentsRequestForPayment:
+		return true
+	}
+	return false
+}
 
 type RealTimePaymentsRequestForPaymentNewParams struct {
 	// The requested amount in USD cents. Must be positive.

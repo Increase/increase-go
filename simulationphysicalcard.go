@@ -71,3 +71,11 @@ const (
 	// production facility.
 	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusReturned SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "returned"
 )
+
+func (r SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus) IsKnown() bool {
+	switch r {
+	case SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusPending, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusCanceled, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusSubmitted, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusAcknowledged, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusRejected, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusShipped, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusReturned:
+		return true
+	}
+	return false
+}

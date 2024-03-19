@@ -144,6 +144,14 @@ const (
 	ExportCategoryEntityCsv ExportCategory = "entity_csv"
 )
 
+func (r ExportCategory) IsKnown() bool {
+	switch r {
+	case ExportCategoryAccountStatementOfx, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv:
+		return true
+	}
+	return false
+}
+
 // The status of the Export.
 type ExportStatus string
 
@@ -157,6 +165,14 @@ const (
 	ExportStatusFailed ExportStatus = "failed"
 )
 
+func (r ExportStatus) IsKnown() bool {
+	switch r {
+	case ExportStatusPending, ExportStatusComplete, ExportStatusFailed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `export`.
 type ExportType string
@@ -164,6 +180,14 @@ type ExportType string
 const (
 	ExportTypeExport ExportType = "export"
 )
+
+func (r ExportType) IsKnown() bool {
+	switch r {
+	case ExportTypeExport:
+		return true
+	}
+	return false
+}
 
 type ExportNewParams struct {
 	// The type of Export to create.
@@ -204,6 +228,14 @@ const (
 	// Export a CSV of entities with a given status.
 	ExportNewParamsCategoryEntityCsv ExportNewParamsCategory = "entity_csv"
 )
+
+func (r ExportNewParamsCategory) IsKnown() bool {
+	switch r {
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv:
+		return true
+	}
+	return false
+}
 
 // Options for the created export. Required if `category` is equal to
 // `account_statement_ofx`.
@@ -335,6 +367,14 @@ const (
 	// The entity is temporarily disabled and cannot be used for financial activity.
 	ExportNewParamsEntityCsvStatusInDisabled ExportNewParamsEntityCsvStatusIn = "disabled"
 )
+
+func (r ExportNewParamsEntityCsvStatusIn) IsKnown() bool {
+	switch r {
+	case ExportNewParamsEntityCsvStatusInActive, ExportNewParamsEntityCsvStatusInArchived, ExportNewParamsEntityCsvStatusInDisabled:
+		return true
+	}
+	return false
+}
 
 // Options for the created export. Required if `category` is equal to
 // `transaction_csv`.

@@ -281,6 +281,14 @@ const (
 	CardPaymentElementsCardAuthorizationActionerNetwork CardPaymentElementsCardAuthorizationActioner = "network"
 )
 
+func (r CardPaymentElementsCardAuthorizationActioner) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationActionerUser, CardPaymentElementsCardAuthorizationActionerIncrease, CardPaymentElementsCardAuthorizationActionerNetwork:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type CardPaymentElementsCardAuthorizationCurrency string
@@ -300,6 +308,14 @@ const (
 	CardPaymentElementsCardAuthorizationCurrencyUsd CardPaymentElementsCardAuthorizationCurrency = "USD"
 )
 
+func (r CardPaymentElementsCardAuthorizationCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationCurrencyCad, CardPaymentElementsCardAuthorizationCurrencyChf, CardPaymentElementsCardAuthorizationCurrencyEur, CardPaymentElementsCardAuthorizationCurrencyGbp, CardPaymentElementsCardAuthorizationCurrencyJpy, CardPaymentElementsCardAuthorizationCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The direction descibes the direction the funds will move, either from the
 // cardholder to the merchant or from the merchant to the cardholder.
 type CardPaymentElementsCardAuthorizationDirection string
@@ -311,6 +327,14 @@ const (
 	// authorization, where funds are credited to the cardholder.
 	CardPaymentElementsCardAuthorizationDirectionRefund CardPaymentElementsCardAuthorizationDirection = "refund"
 )
+
+func (r CardPaymentElementsCardAuthorizationDirection) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationDirectionSettlement, CardPaymentElementsCardAuthorizationDirectionRefund:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `network`.
 type CardPaymentElementsCardAuthorizationNetworkDetails struct {
@@ -345,6 +369,14 @@ const (
 	// Visa
 	CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa CardPaymentElementsCardAuthorizationNetworkDetailsCategory = "visa"
 )
+
+func (r CardPaymentElementsCardAuthorizationNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `visa` network.
 type CardPaymentElementsCardAuthorizationNetworkDetailsVisa struct {
@@ -417,6 +449,14 @@ const (
 	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date.
 type CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
@@ -443,6 +483,14 @@ const (
 	// Contact chip card, without card verification value
 	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardAuthorizationNetworkIdentifiers struct {
@@ -501,6 +549,14 @@ const (
 	CardPaymentElementsCardAuthorizationProcessingCategoryRefund CardPaymentElementsCardAuthorizationProcessingCategory = "refund"
 )
 
+func (r CardPaymentElementsCardAuthorizationProcessingCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding, CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment, CardPaymentElementsCardAuthorizationProcessingCategoryPurchase, CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash, CardPaymentElementsCardAuthorizationProcessingCategoryRefund:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization`.
 type CardPaymentElementsCardAuthorizationType string
@@ -508,6 +564,14 @@ type CardPaymentElementsCardAuthorizationType string
 const (
 	CardPaymentElementsCardAuthorizationTypeCardAuthorization CardPaymentElementsCardAuthorizationType = "card_authorization"
 )
+
+func (r CardPaymentElementsCardAuthorizationType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationTypeCardAuthorization:
+		return true
+	}
+	return false
+}
 
 // Fields related to verification of cardholder-provided values.
 type CardPaymentElementsCardAuthorizationVerification struct {
@@ -574,6 +638,14 @@ const (
 	CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultNoMatch CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
 )
 
+func (r CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultNotChecked, CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultMatch, CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // Cardholder address provided in the authorization request and the address on file
 // we verified it against.
 type CardPaymentElementsCardAuthorizationVerificationCardholderAddress struct {
@@ -629,6 +701,14 @@ const (
 	// Postal code and street address do not match.
 	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNoMatch CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "no_match"
 )
+
+func (r CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNotChecked, CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultMatch, CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNoMatch:
+		return true
+	}
+	return false
+}
 
 // A Card Authorization Expiration object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_authorization_expiration`.
@@ -691,6 +771,14 @@ const (
 	CardPaymentElementsCardAuthorizationExpirationCurrencyUsd CardPaymentElementsCardAuthorizationExpirationCurrency = "USD"
 )
 
+func (r CardPaymentElementsCardAuthorizationExpirationCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationExpirationCurrencyCad, CardPaymentElementsCardAuthorizationExpirationCurrencyChf, CardPaymentElementsCardAuthorizationExpirationCurrencyEur, CardPaymentElementsCardAuthorizationExpirationCurrencyGbp, CardPaymentElementsCardAuthorizationExpirationCurrencyJpy, CardPaymentElementsCardAuthorizationExpirationCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The card network used to process this card authorization.
 type CardPaymentElementsCardAuthorizationExpirationNetwork string
 
@@ -699,6 +787,14 @@ const (
 	CardPaymentElementsCardAuthorizationExpirationNetworkVisa CardPaymentElementsCardAuthorizationExpirationNetwork = "visa"
 )
 
+func (r CardPaymentElementsCardAuthorizationExpirationNetwork) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationExpirationNetworkVisa:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_authorization_expiration`.
 type CardPaymentElementsCardAuthorizationExpirationType string
@@ -706,6 +802,14 @@ type CardPaymentElementsCardAuthorizationExpirationType string
 const (
 	CardPaymentElementsCardAuthorizationExpirationTypeCardAuthorizationExpiration CardPaymentElementsCardAuthorizationExpirationType = "card_authorization_expiration"
 )
+
+func (r CardPaymentElementsCardAuthorizationExpirationType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationExpirationTypeCardAuthorizationExpiration:
+		return true
+	}
+	return false
+}
 
 // A Card Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_decline`.
@@ -807,6 +911,14 @@ const (
 	CardPaymentElementsCardDeclineActionerNetwork CardPaymentElementsCardDeclineActioner = "network"
 )
 
+func (r CardPaymentElementsCardDeclineActioner) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineActionerUser, CardPaymentElementsCardDeclineActionerIncrease, CardPaymentElementsCardDeclineActionerNetwork:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 // account currency.
 type CardPaymentElementsCardDeclineCurrency string
@@ -825,6 +937,14 @@ const (
 	// US Dollar (USD)
 	CardPaymentElementsCardDeclineCurrencyUsd CardPaymentElementsCardDeclineCurrency = "USD"
 )
+
+func (r CardPaymentElementsCardDeclineCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineCurrencyCad, CardPaymentElementsCardDeclineCurrencyChf, CardPaymentElementsCardDeclineCurrencyEur, CardPaymentElementsCardDeclineCurrencyGbp, CardPaymentElementsCardDeclineCurrencyJpy, CardPaymentElementsCardDeclineCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `network`.
 type CardPaymentElementsCardDeclineNetworkDetails struct {
@@ -859,6 +979,14 @@ const (
 	// Visa
 	CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa CardPaymentElementsCardDeclineNetworkDetailsCategory = "visa"
 )
+
+func (r CardPaymentElementsCardDeclineNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `visa` network.
 type CardPaymentElementsCardDeclineNetworkDetailsVisa struct {
@@ -931,6 +1059,14 @@ const (
 	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+func (r CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date.
 type CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
@@ -957,6 +1093,14 @@ const (
 	// Contact chip card, without card verification value
 	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+func (r CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardDeclineNetworkIdentifiers struct {
@@ -1015,6 +1159,14 @@ const (
 	CardPaymentElementsCardDeclineProcessingCategoryRefund CardPaymentElementsCardDeclineProcessingCategory = "refund"
 )
 
+func (r CardPaymentElementsCardDeclineProcessingCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineProcessingCategoryAccountFunding, CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardDeclineProcessingCategoryBillPayment, CardPaymentElementsCardDeclineProcessingCategoryPurchase, CardPaymentElementsCardDeclineProcessingCategoryQuasiCash, CardPaymentElementsCardDeclineProcessingCategoryRefund:
+		return true
+	}
+	return false
+}
+
 // Why the transaction was declined.
 type CardPaymentElementsCardDeclineReason string
 
@@ -1050,6 +1202,14 @@ const (
 	// support@increase.com for more information.
 	CardPaymentElementsCardDeclineReasonSuspectedFraud CardPaymentElementsCardDeclineReason = "suspected_fraud"
 )
+
+func (r CardPaymentElementsCardDeclineReason) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineReasonCardNotActive, CardPaymentElementsCardDeclineReasonPhysicalCardNotActive, CardPaymentElementsCardDeclineReasonEntityNotActive, CardPaymentElementsCardDeclineReasonGroupLocked, CardPaymentElementsCardDeclineReasonInsufficientFunds, CardPaymentElementsCardDeclineReasonCvv2Mismatch, CardPaymentElementsCardDeclineReasonTransactionNotAllowed, CardPaymentElementsCardDeclineReasonBreachesLimit, CardPaymentElementsCardDeclineReasonWebhookDeclined, CardPaymentElementsCardDeclineReasonWebhookTimedOut, CardPaymentElementsCardDeclineReasonDeclinedByStandInProcessing, CardPaymentElementsCardDeclineReasonInvalidPhysicalCard, CardPaymentElementsCardDeclineReasonMissingOriginalAuthorization, CardPaymentElementsCardDeclineReasonSuspectedFraud:
+		return true
+	}
+	return false
+}
 
 // Fields related to verification of cardholder-provided values.
 type CardPaymentElementsCardDeclineVerification struct {
@@ -1116,6 +1276,14 @@ const (
 	CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultNoMatch CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult = "no_match"
 )
 
+func (r CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultNotChecked, CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultMatch, CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // Cardholder address provided in the authorization request and the address on file
 // we verified it against.
 type CardPaymentElementsCardDeclineVerificationCardholderAddress struct {
@@ -1171,6 +1339,14 @@ const (
 	// Postal code and street address do not match.
 	CardPaymentElementsCardDeclineVerificationCardholderAddressResultNoMatch CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "no_match"
 )
+
+func (r CardPaymentElementsCardDeclineVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardDeclineVerificationCardholderAddressResultNotChecked, CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultNoMatch:
+		return true
+	}
+	return false
+}
 
 // A Card Fuel Confirmation object. This field will be present in the JSON response
 // if and only if `category` is equal to `card_fuel_confirmation`.
@@ -1240,6 +1416,14 @@ const (
 	CardPaymentElementsCardFuelConfirmationCurrencyUsd CardPaymentElementsCardFuelConfirmationCurrency = "USD"
 )
 
+func (r CardPaymentElementsCardFuelConfirmationCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFuelConfirmationCurrencyCad, CardPaymentElementsCardFuelConfirmationCurrencyChf, CardPaymentElementsCardFuelConfirmationCurrencyEur, CardPaymentElementsCardFuelConfirmationCurrencyGbp, CardPaymentElementsCardFuelConfirmationCurrencyJpy, CardPaymentElementsCardFuelConfirmationCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The card network used to process this card authorization.
 type CardPaymentElementsCardFuelConfirmationNetwork string
 
@@ -1247,6 +1431,14 @@ const (
 	// Visa
 	CardPaymentElementsCardFuelConfirmationNetworkVisa CardPaymentElementsCardFuelConfirmationNetwork = "visa"
 )
+
+func (r CardPaymentElementsCardFuelConfirmationNetwork) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFuelConfirmationNetworkVisa:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardFuelConfirmationNetworkIdentifiers struct {
@@ -1289,6 +1481,14 @@ type CardPaymentElementsCardFuelConfirmationType string
 const (
 	CardPaymentElementsCardFuelConfirmationTypeCardFuelConfirmation CardPaymentElementsCardFuelConfirmationType = "card_fuel_confirmation"
 )
+
+func (r CardPaymentElementsCardFuelConfirmationType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFuelConfirmationTypeCardFuelConfirmation:
+		return true
+	}
+	return false
+}
 
 // A Card Increment object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_increment`.
@@ -1363,6 +1563,14 @@ const (
 	CardPaymentElementsCardIncrementActionerNetwork CardPaymentElementsCardIncrementActioner = "network"
 )
 
+func (r CardPaymentElementsCardIncrementActioner) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardIncrementActionerUser, CardPaymentElementsCardIncrementActionerIncrease, CardPaymentElementsCardIncrementActionerNetwork:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
 // currency.
 type CardPaymentElementsCardIncrementCurrency string
@@ -1382,6 +1590,14 @@ const (
 	CardPaymentElementsCardIncrementCurrencyUsd CardPaymentElementsCardIncrementCurrency = "USD"
 )
 
+func (r CardPaymentElementsCardIncrementCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardIncrementCurrencyCad, CardPaymentElementsCardIncrementCurrencyChf, CardPaymentElementsCardIncrementCurrencyEur, CardPaymentElementsCardIncrementCurrencyGbp, CardPaymentElementsCardIncrementCurrencyJpy, CardPaymentElementsCardIncrementCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The card network used to process this card authorization.
 type CardPaymentElementsCardIncrementNetwork string
 
@@ -1389,6 +1605,14 @@ const (
 	// Visa
 	CardPaymentElementsCardIncrementNetworkVisa CardPaymentElementsCardIncrementNetwork = "visa"
 )
+
+func (r CardPaymentElementsCardIncrementNetwork) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardIncrementNetworkVisa:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardIncrementNetworkIdentifiers struct {
@@ -1430,6 +1654,14 @@ type CardPaymentElementsCardIncrementType string
 const (
 	CardPaymentElementsCardIncrementTypeCardIncrement CardPaymentElementsCardIncrementType = "card_increment"
 )
+
+func (r CardPaymentElementsCardIncrementType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardIncrementTypeCardIncrement:
+		return true
+	}
+	return false
+}
 
 // A Card Refund object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_refund`.
@@ -1517,6 +1749,14 @@ const (
 	// US Dollar (USD)
 	CardPaymentElementsCardRefundCurrencyUsd CardPaymentElementsCardRefundCurrency = "USD"
 )
+
+func (r CardPaymentElementsCardRefundCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundCurrencyCad, CardPaymentElementsCardRefundCurrencyChf, CardPaymentElementsCardRefundCurrencyEur, CardPaymentElementsCardRefundCurrencyGbp, CardPaymentElementsCardRefundCurrencyJpy, CardPaymentElementsCardRefundCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for this refund.
 type CardPaymentElementsCardRefundNetworkIdentifiers struct {
@@ -1696,6 +1936,14 @@ const (
 	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
+func (r CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge, CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesGas, CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage, CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn, CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesOneWayServiceFee, CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation:
+		return true
+	}
+	return false
+}
+
 // An indicator that the cardholder is being billed for a reserved vehicle that was
 // not actually rented (that is, a "no-show" charge).
 type CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator string
@@ -1706,6 +1954,14 @@ const (
 	// No show for specialized vehicle
 	CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
+
+func (r CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable, CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle:
+		return true
+	}
+	return false
+}
 
 // Fields specific to lodging.
 type CardPaymentElementsCardRefundPurchaseDetailsLodging struct {
@@ -1802,6 +2058,14 @@ const (
 	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesLaundry CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
+func (r CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesNoExtraCharge, CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesRestaurant, CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesGiftShop, CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesMiniBar, CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesTelephone, CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesOther, CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesLaundry:
+		return true
+	}
+	return false
+}
+
 // Indicator that the cardholder is being billed for a reserved room that was not
 // actually used.
 type CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator string
@@ -1812,6 +2076,14 @@ const (
 	// No show
 	CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
+
+func (r CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicatorNotApplicable, CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow:
+		return true
+	}
+	return false
+}
 
 // The format of the purchase identifier.
 type CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat string
@@ -1828,6 +2100,14 @@ const (
 	// Invoice number
 	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
+
+func (r CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText, CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber, CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber, CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber, CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber:
+		return true
+	}
+	return false
+}
 
 // Fields specific to travel.
 type CardPaymentElementsCardRefundPurchaseDetailsTravel struct {
@@ -1937,6 +2217,14 @@ const (
 	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
+func (r CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther:
+		return true
+	}
+	return false
+}
+
 type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
 	Category CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
@@ -2017,6 +2305,14 @@ const (
 	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
+func (r CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades, CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi:
+		return true
+	}
+	return false
+}
+
 // Indicates the reason for a credit to the cardholder.
 type CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator string
 
@@ -2035,6 +2331,14 @@ const (
 	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
+func (r CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit, CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation, CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther, CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket:
+		return true
+	}
+	return false
+}
+
 // Indicates whether this ticket is non-refundable.
 type CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator string
 
@@ -2044,6 +2348,14 @@ const (
 	// Restricted non-refundable ticket
 	CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
+
+func (r CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions, CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket:
+		return true
+	}
+	return false
+}
 
 // Indicates why a ticket was changed.
 type CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator string
@@ -2056,6 +2368,14 @@ const (
 	// New ticket
 	CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
+
+func (r CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone, CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket, CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket:
+		return true
+	}
+	return false
+}
 
 type CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
@@ -2107,6 +2427,14 @@ const (
 	CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
+func (r CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone, CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed, CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_refund`.
 type CardPaymentElementsCardRefundType string
@@ -2114,6 +2442,14 @@ type CardPaymentElementsCardRefundType string
 const (
 	CardPaymentElementsCardRefundTypeCardRefund CardPaymentElementsCardRefundType = "card_refund"
 )
+
+func (r CardPaymentElementsCardRefundType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundTypeCardRefund:
+		return true
+	}
+	return false
+}
 
 // A Card Reversal object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_reversal`.
@@ -2186,6 +2522,14 @@ const (
 	CardPaymentElementsCardReversalCurrencyUsd CardPaymentElementsCardReversalCurrency = "USD"
 )
 
+func (r CardPaymentElementsCardReversalCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardReversalCurrencyCad, CardPaymentElementsCardReversalCurrencyChf, CardPaymentElementsCardReversalCurrencyEur, CardPaymentElementsCardReversalCurrencyGbp, CardPaymentElementsCardReversalCurrencyJpy, CardPaymentElementsCardReversalCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The card network used to process this card authorization.
 type CardPaymentElementsCardReversalNetwork string
 
@@ -2193,6 +2537,14 @@ const (
 	// Visa
 	CardPaymentElementsCardReversalNetworkVisa CardPaymentElementsCardReversalNetwork = "visa"
 )
+
+func (r CardPaymentElementsCardReversalNetwork) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardReversalNetworkVisa:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardReversalNetworkIdentifiers struct {
@@ -2234,6 +2586,14 @@ type CardPaymentElementsCardReversalType string
 const (
 	CardPaymentElementsCardReversalTypeCardReversal CardPaymentElementsCardReversalType = "card_reversal"
 )
+
+func (r CardPaymentElementsCardReversalType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardReversalTypeCardReversal:
+		return true
+	}
+	return false
+}
 
 // A Card Settlement object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_settlement`.
@@ -2335,6 +2695,14 @@ const (
 	// US Dollar (USD)
 	CardPaymentElementsCardSettlementCurrencyUsd CardPaymentElementsCardSettlementCurrency = "USD"
 )
+
+func (r CardPaymentElementsCardSettlementCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementCurrencyCad, CardPaymentElementsCardSettlementCurrencyChf, CardPaymentElementsCardSettlementCurrencyEur, CardPaymentElementsCardSettlementCurrencyGbp, CardPaymentElementsCardSettlementCurrencyJpy, CardPaymentElementsCardSettlementCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for this refund.
 type CardPaymentElementsCardSettlementNetworkIdentifiers struct {
@@ -2515,6 +2883,14 @@ const (
 	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
+func (r CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge, CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesGas, CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage, CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn, CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesOneWayServiceFee, CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation:
+		return true
+	}
+	return false
+}
+
 // An indicator that the cardholder is being billed for a reserved vehicle that was
 // not actually rented (that is, a "no-show" charge).
 type CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator string
@@ -2525,6 +2901,14 @@ const (
 	// No show for specialized vehicle
 	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
+
+func (r CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable, CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle:
+		return true
+	}
+	return false
+}
 
 // Fields specific to lodging.
 type CardPaymentElementsCardSettlementPurchaseDetailsLodging struct {
@@ -2622,6 +3006,14 @@ const (
 	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesLaundry CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
+func (r CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesNoExtraCharge, CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant, CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop, CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar, CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesTelephone, CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesOther, CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesLaundry:
+		return true
+	}
+	return false
+}
+
 // Indicator that the cardholder is being billed for a reserved room that was not
 // actually used.
 type CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator string
@@ -2632,6 +3024,14 @@ const (
 	// No show
 	CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
+
+func (r CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicatorNotApplicable, CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow:
+		return true
+	}
+	return false
+}
 
 // The format of the purchase identifier.
 type CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat string
@@ -2648,6 +3048,14 @@ const (
 	// Invoice number
 	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
+
+func (r CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText, CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber, CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber, CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber, CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber:
+		return true
+	}
+	return false
+}
 
 // Fields specific to travel.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravel struct {
@@ -2757,6 +3165,14 @@ const (
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
+func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther:
+		return true
+	}
+	return false
+}
+
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
 	Category CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
@@ -2837,6 +3253,14 @@ const (
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
+func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades, CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi:
+		return true
+	}
+	return false
+}
+
 // Indicates the reason for a credit to the cardholder.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator string
 
@@ -2855,6 +3279,14 @@ const (
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
+func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit, CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation, CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation, CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther, CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket:
+		return true
+	}
+	return false
+}
+
 // Indicates whether this ticket is non-refundable.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator string
 
@@ -2864,6 +3296,14 @@ const (
 	// Restricted non-refundable ticket
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
+
+func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions, CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket:
+		return true
+	}
+	return false
+}
 
 // Indicates why a ticket was changed.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator string
@@ -2876,6 +3316,14 @@ const (
 	// New ticket
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
+
+func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone, CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket, CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket:
+		return true
+	}
+	return false
+}
 
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
@@ -2927,6 +3375,14 @@ const (
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
+func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone, CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed, CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_settlement`.
 type CardPaymentElementsCardSettlementType string
@@ -2934,6 +3390,14 @@ type CardPaymentElementsCardSettlementType string
 const (
 	CardPaymentElementsCardSettlementTypeCardSettlement CardPaymentElementsCardSettlementType = "card_settlement"
 )
+
+func (r CardPaymentElementsCardSettlementType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementTypeCardSettlement:
+		return true
+	}
+	return false
+}
 
 // A Card Validation object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_validation`.
@@ -3025,6 +3489,14 @@ const (
 	CardPaymentElementsCardValidationActionerNetwork CardPaymentElementsCardValidationActioner = "network"
 )
 
+func (r CardPaymentElementsCardValidationActioner) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationActionerUser, CardPaymentElementsCardValidationActionerIncrease, CardPaymentElementsCardValidationActionerNetwork:
+		return true
+	}
+	return false
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 // transaction's currency.
 type CardPaymentElementsCardValidationCurrency string
@@ -3043,6 +3515,14 @@ const (
 	// US Dollar (USD)
 	CardPaymentElementsCardValidationCurrencyUsd CardPaymentElementsCardValidationCurrency = "USD"
 )
+
+func (r CardPaymentElementsCardValidationCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationCurrencyCad, CardPaymentElementsCardValidationCurrencyChf, CardPaymentElementsCardValidationCurrencyEur, CardPaymentElementsCardValidationCurrencyGbp, CardPaymentElementsCardValidationCurrencyJpy, CardPaymentElementsCardValidationCurrencyUsd:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `network`.
 type CardPaymentElementsCardValidationNetworkDetails struct {
@@ -3077,6 +3557,14 @@ const (
 	// Visa
 	CardPaymentElementsCardValidationNetworkDetailsCategoryVisa CardPaymentElementsCardValidationNetworkDetailsCategory = "visa"
 )
+
+func (r CardPaymentElementsCardValidationNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationNetworkDetailsCategoryVisa:
+		return true
+	}
+	return false
+}
 
 // Fields specific to the `visa` network.
 type CardPaymentElementsCardValidationNetworkDetailsVisa struct {
@@ -3149,6 +3637,14 @@ const (
 	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
+func (r CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorRecurring, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorInstallment, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
 // The method used to enter the cardholder's primary account number and card
 // expiration date.
 type CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode string
@@ -3175,6 +3671,14 @@ const (
 	// Contact chip card, without card verification value
 	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
+
+func (r CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeUnknown, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeManual, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeContactless, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardValidationNetworkIdentifiers struct {
@@ -3216,6 +3720,14 @@ type CardPaymentElementsCardValidationType string
 const (
 	CardPaymentElementsCardValidationTypeCardValidation CardPaymentElementsCardValidationType = "card_validation"
 )
+
+func (r CardPaymentElementsCardValidationType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationTypeCardValidation:
+		return true
+	}
+	return false
+}
 
 // Fields related to verification of cardholder-provided values.
 type CardPaymentElementsCardValidationVerification struct {
@@ -3282,6 +3794,14 @@ const (
 	CardPaymentElementsCardValidationVerificationCardVerificationCodeResultNoMatch CardPaymentElementsCardValidationVerificationCardVerificationCodeResult = "no_match"
 )
 
+func (r CardPaymentElementsCardValidationVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationVerificationCardVerificationCodeResultNotChecked, CardPaymentElementsCardValidationVerificationCardVerificationCodeResultMatch, CardPaymentElementsCardValidationVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // Cardholder address provided in the authorization request and the address on file
 // we verified it against.
 type CardPaymentElementsCardValidationVerificationCardholderAddress struct {
@@ -3338,6 +3858,14 @@ const (
 	CardPaymentElementsCardValidationVerificationCardholderAddressResultNoMatch CardPaymentElementsCardValidationVerificationCardholderAddressResult = "no_match"
 )
 
+func (r CardPaymentElementsCardValidationVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardValidationVerificationCardholderAddressResultNotChecked, CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, CardPaymentElementsCardValidationVerificationCardholderAddressResultMatch, CardPaymentElementsCardValidationVerificationCardholderAddressResultNoMatch:
+		return true
+	}
+	return false
+}
+
 // The type of the resource. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
 type CardPaymentElementsCategory string
@@ -3366,6 +3894,14 @@ const (
 	// Unknown card payment element.
 	CardPaymentElementsCategoryOther CardPaymentElementsCategory = "other"
 )
+
+func (r CardPaymentElementsCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryOther:
+		return true
+	}
+	return false
+}
 
 // The summarized state of this card payment.
 type CardPaymentState struct {
@@ -3414,6 +3950,14 @@ type CardPaymentType string
 const (
 	CardPaymentTypeCardPayment CardPaymentType = "card_payment"
 )
+
+func (r CardPaymentType) IsKnown() bool {
+	switch r {
+	case CardPaymentTypeCardPayment:
+		return true
+	}
+	return false
+}
 
 type CardPaymentListParams struct {
 	// Filter Card Payments to ones belonging to the specified Account.

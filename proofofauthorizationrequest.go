@@ -135,6 +135,14 @@ const (
 	ProofOfAuthorizationRequestTypeProofOfAuthorizationRequest ProofOfAuthorizationRequestType = "proof_of_authorization_request"
 )
 
+func (r ProofOfAuthorizationRequestType) IsKnown() bool {
+	switch r {
+	case ProofOfAuthorizationRequestTypeProofOfAuthorizationRequest:
+		return true
+	}
+	return false
+}
+
 type ProofOfAuthorizationRequestListParams struct {
 	CreatedAt param.Field[ProofOfAuthorizationRequestListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.

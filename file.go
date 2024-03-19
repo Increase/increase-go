@@ -146,6 +146,14 @@ const (
 	FileDirectionFromIncrease FileDirection = "from_increase"
 )
 
+func (r FileDirection) IsKnown() bool {
+	switch r {
+	case FileDirectionToIncrease, FileDirectionFromIncrease:
+		return true
+	}
+	return false
+}
+
 // What the File will be used for. We may add additional possible values for this
 // enum over time; your application should be able to handle such additions
 // gracefully.
@@ -196,6 +204,14 @@ const (
 	FilePurposeUnusualActivityReportAttachment FilePurpose = "unusual_activity_report_attachment"
 )
 
+func (r FilePurpose) IsKnown() bool {
+	switch r {
+	case FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeMailedCheckImage, FilePurposeCheckDepositMailItem, FilePurposeForm1099Int, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `file`.
 type FileType string
@@ -203,6 +219,14 @@ type FileType string
 const (
 	FileTypeFile FileType = "file"
 )
+
+func (r FileType) IsKnown() bool {
+	switch r {
+	case FileTypeFile:
+		return true
+	}
+	return false
+}
 
 type FileNewParams struct {
 	// The file contents. This should follow the specifications of
@@ -267,6 +291,14 @@ const (
 	// An attachment to an Unusual Activity Report.
 	FileNewParamsPurposeUnusualActivityReportAttachment FileNewParamsPurpose = "unusual_activity_report_attachment"
 )
+
+func (r FileNewParamsPurpose) IsKnown() bool {
+	switch r {
+	case FileNewParamsPurposeCheckImageFront, FileNewParamsPurposeCheckImageBack, FileNewParamsPurposeMailedCheckImage, FileNewParamsPurposeFormSS4, FileNewParamsPurposeIdentityDocument, FileNewParamsPurposeOther, FileNewParamsPurposeTrustFormationDocument, FileNewParamsPurposeDigitalWalletArtwork, FileNewParamsPurposeDigitalWalletAppIcon, FileNewParamsPurposePhysicalCardFront, FileNewParamsPurposePhysicalCardCarrier, FileNewParamsPurposeDocumentRequest, FileNewParamsPurposeEntitySupplementalDocument, FileNewParamsPurposeUnusualActivityReportAttachment:
+		return true
+	}
+	return false
+}
 
 type FileListParams struct {
 	CreatedAt param.Field[FileListParamsCreatedAt] `query:"created_at"`
@@ -375,3 +407,11 @@ const (
 	// An attachment to an Unusual Activity Report.
 	FileListParamsPurposeInUnusualActivityReportAttachment FileListParamsPurposeIn = "unusual_activity_report_attachment"
 )
+
+func (r FileListParamsPurposeIn) IsKnown() bool {
+	switch r {
+	case FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInCheckDepositMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment:
+		return true
+	}
+	return false
+}

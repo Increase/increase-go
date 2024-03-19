@@ -237,6 +237,14 @@ const (
 	CardStatusCanceled CardStatus = "canceled"
 )
 
+func (r CardStatus) IsKnown() bool {
+	switch r {
+	case CardStatusActive, CardStatusDisabled, CardStatusCanceled:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card`.
 type CardType string
@@ -244,6 +252,14 @@ type CardType string
 const (
 	CardTypeCard CardType = "card"
 )
+
+func (r CardType) IsKnown() bool {
+	switch r {
+	case CardTypeCard:
+		return true
+	}
+	return false
+}
 
 // An object containing the sensitive details (card number, cvc, etc) for a Card.
 type CardDetails struct {
@@ -292,6 +308,14 @@ type CardDetailsType string
 const (
 	CardDetailsTypeCardDetails CardDetailsType = "card_details"
 )
+
+func (r CardDetailsType) IsKnown() bool {
+	switch r {
+	case CardDetailsTypeCardDetails:
+		return true
+	}
+	return false
+}
 
 type CardNewParams struct {
 	// The Account the card should belong to.
@@ -423,6 +447,14 @@ const (
 	// The card is permanently canceled.
 	CardUpdateParamsStatusCanceled CardUpdateParamsStatus = "canceled"
 )
+
+func (r CardUpdateParamsStatus) IsKnown() bool {
+	switch r {
+	case CardUpdateParamsStatusActive, CardUpdateParamsStatusDisabled, CardUpdateParamsStatusCanceled:
+		return true
+	}
+	return false
+}
 
 type CardListParams struct {
 	// Filter Cards to ones belonging to the specified Account.

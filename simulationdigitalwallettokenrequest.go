@@ -87,6 +87,14 @@ const (
 	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_declined"
 )
 
+func (r SimulationDigitalWalletTokenRequestNewResponseDeclineReason) IsKnown() bool {
+	switch r {
+	case SimulationDigitalWalletTokenRequestNewResponseDeclineReasonCardNotActive, SimulationDigitalWalletTokenRequestNewResponseDeclineReasonNoVerificationMethod, SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookTimedOut, SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `inbound_digital_wallet_token_request_simulation_result`.
 type SimulationDigitalWalletTokenRequestNewResponseType string
@@ -94,6 +102,14 @@ type SimulationDigitalWalletTokenRequestNewResponseType string
 const (
 	SimulationDigitalWalletTokenRequestNewResponseTypeInboundDigitalWalletTokenRequestSimulationResult SimulationDigitalWalletTokenRequestNewResponseType = "inbound_digital_wallet_token_request_simulation_result"
 )
+
+func (r SimulationDigitalWalletTokenRequestNewResponseType) IsKnown() bool {
+	switch r {
+	case SimulationDigitalWalletTokenRequestNewResponseTypeInboundDigitalWalletTokenRequestSimulationResult:
+		return true
+	}
+	return false
+}
 
 type SimulationDigitalWalletTokenRequestNewParams struct {
 	// The identifier of the Card to be authorized.

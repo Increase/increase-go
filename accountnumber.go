@@ -178,6 +178,14 @@ const (
 	AccountNumberInboundACHDebitStatusBlocked AccountNumberInboundACHDebitStatus = "blocked"
 )
 
+func (r AccountNumberInboundACHDebitStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberInboundACHDebitStatusAllowed, AccountNumberInboundACHDebitStatusBlocked:
+		return true
+	}
+	return false
+}
+
 // Properties related to how this Account Number should handle inbound check
 // withdrawals.
 type AccountNumberInboundChecks struct {
@@ -214,6 +222,14 @@ const (
 	AccountNumberInboundChecksStatusCheckTransfersOnly AccountNumberInboundChecksStatus = "check_transfers_only"
 )
 
+func (r AccountNumberInboundChecksStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberInboundChecksStatusAllowed, AccountNumberInboundChecksStatusCheckTransfersOnly:
+		return true
+	}
+	return false
+}
+
 // This indicates if payments can be made to the Account Number.
 type AccountNumberStatus string
 
@@ -226,6 +242,14 @@ const (
 	AccountNumberStatusCanceled AccountNumberStatus = "canceled"
 )
 
+func (r AccountNumberStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberStatusActive, AccountNumberStatusDisabled, AccountNumberStatusCanceled:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `account_number`.
 type AccountNumberType string
@@ -233,6 +257,14 @@ type AccountNumberType string
 const (
 	AccountNumberTypeAccountNumber AccountNumberType = "account_number"
 )
+
+func (r AccountNumberType) IsKnown() bool {
+	switch r {
+	case AccountNumberTypeAccountNumber:
+		return true
+	}
+	return false
+}
 
 type AccountNumberNewParams struct {
 	// The Account the Account Number should belong to.
@@ -272,6 +304,14 @@ const (
 	AccountNumberNewParamsInboundACHDebitStatusBlocked AccountNumberNewParamsInboundACHDebitStatus = "blocked"
 )
 
+func (r AccountNumberNewParamsInboundACHDebitStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberNewParamsInboundACHDebitStatusAllowed, AccountNumberNewParamsInboundACHDebitStatusBlocked:
+		return true
+	}
+	return false
+}
+
 // Options related to how this Account Number should handle inbound check
 // withdrawals.
 type AccountNumberNewParamsInboundChecks struct {
@@ -294,6 +334,14 @@ const (
 	// an existing Check Transfer.
 	AccountNumberNewParamsInboundChecksStatusCheckTransfersOnly AccountNumberNewParamsInboundChecksStatus = "check_transfers_only"
 )
+
+func (r AccountNumberNewParamsInboundChecksStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberNewParamsInboundChecksStatusAllowed, AccountNumberNewParamsInboundChecksStatusCheckTransfersOnly:
+		return true
+	}
+	return false
+}
 
 type AccountNumberUpdateParams struct {
 	// Options related to how this Account Number handles inbound ACH transfers.
@@ -333,6 +381,14 @@ const (
 	AccountNumberUpdateParamsInboundACHDebitStatusBlocked AccountNumberUpdateParamsInboundACHDebitStatus = "blocked"
 )
 
+func (r AccountNumberUpdateParamsInboundACHDebitStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberUpdateParamsInboundACHDebitStatusAllowed, AccountNumberUpdateParamsInboundACHDebitStatusBlocked:
+		return true
+	}
+	return false
+}
+
 // Options related to how this Account Number should handle inbound check
 // withdrawals.
 type AccountNumberUpdateParamsInboundChecks struct {
@@ -356,6 +412,14 @@ const (
 	AccountNumberUpdateParamsInboundChecksStatusCheckTransfersOnly AccountNumberUpdateParamsInboundChecksStatus = "check_transfers_only"
 )
 
+func (r AccountNumberUpdateParamsInboundChecksStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberUpdateParamsInboundChecksStatusAllowed, AccountNumberUpdateParamsInboundChecksStatusCheckTransfersOnly:
+		return true
+	}
+	return false
+}
+
 // This indicates if transfers can be made to the Account Number.
 type AccountNumberUpdateParamsStatus string
 
@@ -367,6 +431,14 @@ const (
 	// The account number is permanently disabled.
 	AccountNumberUpdateParamsStatusCanceled AccountNumberUpdateParamsStatus = "canceled"
 )
+
+func (r AccountNumberUpdateParamsStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberUpdateParamsStatusActive, AccountNumberUpdateParamsStatusDisabled, AccountNumberUpdateParamsStatusCanceled:
+		return true
+	}
+	return false
+}
 
 type AccountNumberListParams struct {
 	// Filter Account Numbers to those belonging to the specified Account.
@@ -407,6 +479,14 @@ const (
 	AccountNumberListParamsACHDebitStatusBlocked AccountNumberListParamsACHDebitStatus = "blocked"
 )
 
+func (r AccountNumberListParamsACHDebitStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberListParamsACHDebitStatusAllowed, AccountNumberListParamsACHDebitStatusBlocked:
+		return true
+	}
+	return false
+}
+
 type AccountNumberListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.
@@ -442,3 +522,11 @@ const (
 	// The account number is permanently disabled.
 	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
 )
+
+func (r AccountNumberListParamsStatus) IsKnown() bool {
+	switch r {
+	case AccountNumberListParamsStatusActive, AccountNumberListParamsStatusDisabled, AccountNumberListParamsStatusCanceled:
+		return true
+	}
+	return false
+}

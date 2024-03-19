@@ -202,6 +202,14 @@ const (
 	CardDisputeStatusRejected CardDisputeStatus = "rejected"
 )
 
+func (r CardDisputeStatus) IsKnown() bool {
+	switch r {
+	case CardDisputeStatusPendingReviewing, CardDisputeStatusAccepted, CardDisputeStatusRejected:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_dispute`.
 type CardDisputeType string
@@ -209,6 +217,14 @@ type CardDisputeType string
 const (
 	CardDisputeTypeCardDispute CardDisputeType = "card_dispute"
 )
+
+func (r CardDisputeType) IsKnown() bool {
+	switch r {
+	case CardDisputeTypeCardDispute:
+		return true
+	}
+	return false
+}
 
 type CardDisputeNewParams struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
@@ -295,3 +311,11 @@ const (
 	// The Card Dispute has been rejected.
 	CardDisputeListParamsStatusInRejected CardDisputeListParamsStatusIn = "rejected"
 )
+
+func (r CardDisputeListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case CardDisputeListParamsStatusInPendingReviewing, CardDisputeListParamsStatusInAccepted, CardDisputeListParamsStatusInRejected:
+		return true
+	}
+	return false
+}

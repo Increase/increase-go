@@ -120,6 +120,14 @@ const (
 	DocumentCategoryCompanyInformation DocumentCategory = "company_information"
 )
 
+func (r DocumentCategory) IsKnown() bool {
+	switch r {
+	case DocumentCategoryForm1099Int, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `document`.
 type DocumentType string
@@ -127,6 +135,14 @@ type DocumentType string
 const (
 	DocumentTypeDocument DocumentType = "document"
 )
+
+func (r DocumentType) IsKnown() bool {
+	switch r {
+	case DocumentTypeDocument:
+		return true
+	}
+	return false
+}
 
 type DocumentListParams struct {
 	Category  param.Field[DocumentListParamsCategory]  `query:"category"`
@@ -176,6 +192,14 @@ const (
 	// our due diligence process.
 	DocumentListParamsCategoryInCompanyInformation DocumentListParamsCategoryIn = "company_information"
 )
+
+func (r DocumentListParamsCategoryIn) IsKnown() bool {
+	switch r {
+	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation:
+		return true
+	}
+	return false
+}
 
 type DocumentListParamsCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)

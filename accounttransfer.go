@@ -245,12 +245,28 @@ const (
 	AccountTransferCurrencyUsd AccountTransferCurrency = "USD"
 )
 
+func (r AccountTransferCurrency) IsKnown() bool {
+	switch r {
+	case AccountTransferCurrencyCad, AccountTransferCurrencyChf, AccountTransferCurrencyEur, AccountTransferCurrencyGbp, AccountTransferCurrencyJpy, AccountTransferCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The transfer's network.
 type AccountTransferNetwork string
 
 const (
 	AccountTransferNetworkAccount AccountTransferNetwork = "account"
 )
+
+func (r AccountTransferNetwork) IsKnown() bool {
+	switch r {
+	case AccountTransferNetworkAccount:
+		return true
+	}
+	return false
+}
 
 // The lifecycle status of the transfer.
 type AccountTransferStatus string
@@ -264,6 +280,14 @@ const (
 	AccountTransferStatusComplete AccountTransferStatus = "complete"
 )
 
+func (r AccountTransferStatus) IsKnown() bool {
+	switch r {
+	case AccountTransferStatusPendingApproval, AccountTransferStatusCanceled, AccountTransferStatusComplete:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `account_transfer`.
 type AccountTransferType string
@@ -271,6 +295,14 @@ type AccountTransferType string
 const (
 	AccountTransferTypeAccountTransfer AccountTransferType = "account_transfer"
 )
+
+func (r AccountTransferType) IsKnown() bool {
+	switch r {
+	case AccountTransferTypeAccountTransfer:
+		return true
+	}
+	return false
+}
 
 type AccountTransferNewParams struct {
 	// The identifier for the account that will send the transfer.

@@ -250,6 +250,14 @@ const (
 	PhysicalCardShipmentMethodFedex2Day PhysicalCardShipmentMethod = "fedex_2_day"
 )
 
+func (r PhysicalCardShipmentMethod) IsKnown() bool {
+	switch r {
+	case PhysicalCardShipmentMethodUsps, PhysicalCardShipmentMethodFedexPriorityOvernight, PhysicalCardShipmentMethodFedex2Day:
+		return true
+	}
+	return false
+}
+
 // The status of this shipment.
 type PhysicalCardShipmentStatus string
 
@@ -271,6 +279,14 @@ const (
 	// production facility.
 	PhysicalCardShipmentStatusReturned PhysicalCardShipmentStatus = "returned"
 )
+
+func (r PhysicalCardShipmentStatus) IsKnown() bool {
+	switch r {
+	case PhysicalCardShipmentStatusPending, PhysicalCardShipmentStatusCanceled, PhysicalCardShipmentStatusSubmitted, PhysicalCardShipmentStatusAcknowledged, PhysicalCardShipmentStatusRejected, PhysicalCardShipmentStatusShipped, PhysicalCardShipmentStatusReturned:
+		return true
+	}
+	return false
+}
 
 // Tracking details for the shipment.
 type PhysicalCardShipmentTracking struct {
@@ -318,6 +334,14 @@ const (
 	PhysicalCardStatusCanceled PhysicalCardStatus = "canceled"
 )
 
+func (r PhysicalCardStatus) IsKnown() bool {
+	switch r {
+	case PhysicalCardStatusActive, PhysicalCardStatusDisabled, PhysicalCardStatusCanceled:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `physical_card`.
 type PhysicalCardType string
@@ -325,6 +349,14 @@ type PhysicalCardType string
 const (
 	PhysicalCardTypePhysicalCard PhysicalCardType = "physical_card"
 )
+
+func (r PhysicalCardType) IsKnown() bool {
+	switch r {
+	case PhysicalCardTypePhysicalCard:
+		return true
+	}
+	return false
+}
 
 type PhysicalCardNewParams struct {
 	// The underlying card representing this physical card.
@@ -402,6 +434,14 @@ const (
 	PhysicalCardNewParamsShipmentMethodFedex2Day PhysicalCardNewParamsShipmentMethod = "fedex_2_day"
 )
 
+func (r PhysicalCardNewParamsShipmentMethod) IsKnown() bool {
+	switch r {
+	case PhysicalCardNewParamsShipmentMethodUsps, PhysicalCardNewParamsShipmentMethodFedexPriorityOvernight, PhysicalCardNewParamsShipmentMethodFedex2Day:
+		return true
+	}
+	return false
+}
+
 type PhysicalCardUpdateParams struct {
 	// The status to update the Physical Card to.
 	Status param.Field[PhysicalCardUpdateParamsStatus] `json:"status,required"`
@@ -422,6 +462,14 @@ const (
 	// The physical card is permanently canceled.
 	PhysicalCardUpdateParamsStatusCanceled PhysicalCardUpdateParamsStatus = "canceled"
 )
+
+func (r PhysicalCardUpdateParamsStatus) IsKnown() bool {
+	switch r {
+	case PhysicalCardUpdateParamsStatusActive, PhysicalCardUpdateParamsStatusDisabled, PhysicalCardUpdateParamsStatusCanceled:
+		return true
+	}
+	return false
+}
 
 type PhysicalCardListParams struct {
 	// Filter Physical Cards to ones belonging to the specified Card.

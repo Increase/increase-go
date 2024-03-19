@@ -188,6 +188,14 @@ const (
 	CardPurchaseSupplementInvoiceDiscountTreatmentCodeTaxCalculatedOnPreDiscountInvoiceTotal CardPurchaseSupplementInvoiceDiscountTreatmentCode = "tax_calculated_on_pre_discount_invoice_total"
 )
 
+func (r CardPurchaseSupplementInvoiceDiscountTreatmentCode) IsKnown() bool {
+	switch r {
+	case CardPurchaseSupplementInvoiceDiscountTreatmentCodeNoInvoiceLevelDiscountProvided, CardPurchaseSupplementInvoiceDiscountTreatmentCodeTaxCalculatedOnPostDiscountInvoiceTotal, CardPurchaseSupplementInvoiceDiscountTreatmentCodeTaxCalculatedOnPreDiscountInvoiceTotal:
+		return true
+	}
+	return false
+}
+
 // Indicates how the merchant applied taxes.
 type CardPurchaseSupplementInvoiceTaxTreatments string
 
@@ -203,6 +211,14 @@ const (
 	// Gross price invoice level
 	CardPurchaseSupplementInvoiceTaxTreatmentsGrossPriceInvoiceLevel CardPurchaseSupplementInvoiceTaxTreatments = "gross_price_invoice_level"
 )
+
+func (r CardPurchaseSupplementInvoiceTaxTreatments) IsKnown() bool {
+	switch r {
+	case CardPurchaseSupplementInvoiceTaxTreatmentsNoTaxApplies, CardPurchaseSupplementInvoiceTaxTreatmentsNetPriceLineItemLevel, CardPurchaseSupplementInvoiceTaxTreatmentsNetPriceInvoiceLevel, CardPurchaseSupplementInvoiceTaxTreatmentsGrossPriceLineItemLevel, CardPurchaseSupplementInvoiceTaxTreatmentsGrossPriceInvoiceLevel:
+		return true
+	}
+	return false
+}
 
 type CardPurchaseSupplementLineItem struct {
 	// Indicates the type of line item.
@@ -285,6 +301,14 @@ const (
 	CardPurchaseSupplementLineItemsDetailIndicatorPayment CardPurchaseSupplementLineItemsDetailIndicator = "payment"
 )
 
+func (r CardPurchaseSupplementLineItemsDetailIndicator) IsKnown() bool {
+	switch r {
+	case CardPurchaseSupplementLineItemsDetailIndicatorNormal, CardPurchaseSupplementLineItemsDetailIndicatorCredit, CardPurchaseSupplementLineItemsDetailIndicatorPayment:
+		return true
+	}
+	return false
+}
+
 // Indicates how the merchant applied the discount for this specific line item.
 type CardPurchaseSupplementLineItemsDiscountTreatmentCode string
 
@@ -297,6 +321,14 @@ const (
 	CardPurchaseSupplementLineItemsDiscountTreatmentCodeTaxCalculatedOnPreDiscountLineItemTotal CardPurchaseSupplementLineItemsDiscountTreatmentCode = "tax_calculated_on_pre_discount_line_item_total"
 )
 
+func (r CardPurchaseSupplementLineItemsDiscountTreatmentCode) IsKnown() bool {
+	switch r {
+	case CardPurchaseSupplementLineItemsDiscountTreatmentCodeNoLineItemLevelDiscountProvided, CardPurchaseSupplementLineItemsDiscountTreatmentCodeTaxCalculatedOnPostDiscountLineItemTotal, CardPurchaseSupplementLineItemsDiscountTreatmentCodeTaxCalculatedOnPreDiscountLineItemTotal:
+		return true
+	}
+	return false
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `card_purchase_supplement`.
 type CardPurchaseSupplementType string
@@ -304,6 +336,14 @@ type CardPurchaseSupplementType string
 const (
 	CardPurchaseSupplementTypeCardPurchaseSupplement CardPurchaseSupplementType = "card_purchase_supplement"
 )
+
+func (r CardPurchaseSupplementType) IsKnown() bool {
+	switch r {
+	case CardPurchaseSupplementTypeCardPurchaseSupplement:
+		return true
+	}
+	return false
+}
 
 type CardPurchaseSupplementListParams struct {
 	// Filter Card Purchase Supplements to ones belonging to the specified Card
