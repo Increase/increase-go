@@ -404,6 +404,8 @@ const (
 	WireTransferStatusCanceled WireTransferStatus = "canceled"
 	// The transfer requires attention from an Increase operator.
 	WireTransferStatusRequiresAttention WireTransferStatus = "requires_attention"
+	// The transfer is pending review by Increase.
+	WireTransferStatusPendingReviewing WireTransferStatus = "pending_reviewing"
 	// The transfer is pending approval.
 	WireTransferStatusPendingApproval WireTransferStatus = "pending_approval"
 	// The transfer has been rejected.
@@ -418,7 +420,7 @@ const (
 
 func (r WireTransferStatus) IsKnown() bool {
 	switch r {
-	case WireTransferStatusCanceled, WireTransferStatusRequiresAttention, WireTransferStatusPendingApproval, WireTransferStatusRejected, WireTransferStatusReversed, WireTransferStatusComplete, WireTransferStatusPendingCreating:
+	case WireTransferStatusCanceled, WireTransferStatusRequiresAttention, WireTransferStatusPendingReviewing, WireTransferStatusPendingApproval, WireTransferStatusRejected, WireTransferStatusReversed, WireTransferStatusComplete, WireTransferStatusPendingCreating:
 		return true
 	}
 	return false

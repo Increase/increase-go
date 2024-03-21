@@ -381,6 +381,8 @@ const (
 	RealTimePaymentsTransferStatusPendingApproval RealTimePaymentsTransferStatus = "pending_approval"
 	// The transfer has been canceled.
 	RealTimePaymentsTransferStatusCanceled RealTimePaymentsTransferStatus = "canceled"
+	// The transfer is pending review by Increase.
+	RealTimePaymentsTransferStatusPendingReviewing RealTimePaymentsTransferStatus = "pending_reviewing"
 	// The transfer is queued to be submitted to Real-Time Payments.
 	RealTimePaymentsTransferStatusPendingSubmission RealTimePaymentsTransferStatus = "pending_submission"
 	// The transfer has been submitted and is pending a response from Real-Time
@@ -396,7 +398,7 @@ const (
 
 func (r RealTimePaymentsTransferStatus) IsKnown() bool {
 	switch r {
-	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusRequiresAttention:
+	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingReviewing, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusRequiresAttention:
 		return true
 	}
 	return false

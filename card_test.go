@@ -101,7 +101,6 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 			DigitalWallet: increase.F(increase.CardUpdateParamsDigitalWallet{
 				Email:                increase.F("x"),
 				Phone:                increase.F("x"),
-				CardProfileID:        increase.F("string"),
 				DigitalCardProfileID: increase.F("string"),
 			}),
 			EntityID: increase.F("string"),

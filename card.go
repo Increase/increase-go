@@ -419,9 +419,6 @@ func (r CardUpdateParamsBillingAddress) MarshalJSON() (data []byte, err error) {
 // creation. At least one field must be present to complete the digital wallet
 // steps.
 type CardUpdateParamsDigitalWallet struct {
-	// The card profile assigned to this card. Card profiles may also be assigned at
-	// the program level.
-	CardProfileID param.Field[string] `json:"card_profile_id"`
 	// The digital card profile assigned to this digital card.
 	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time passcode
