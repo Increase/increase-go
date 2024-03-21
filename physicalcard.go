@@ -92,8 +92,6 @@ type PhysicalCard struct {
 	ID string `json:"id,required"`
 	// The identifier for the Card this Physical Card represents.
 	CardID string `json:"card_id,required"`
-	// The Card Profile used for this Physical Card.
-	CardProfileID string `json:"card_profile_id,required,nullable"`
 	// Details about the cardholder, as it appears on the printed card.
 	Cardholder PhysicalCardCardholder `json:"cardholder,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -119,7 +117,6 @@ type PhysicalCard struct {
 type physicalCardJSON struct {
 	ID                    apijson.Field
 	CardID                apijson.Field
-	CardProfileID         apijson.Field
 	Cardholder            apijson.Field
 	CreatedAt             apijson.Field
 	IdempotencyKey        apijson.Field

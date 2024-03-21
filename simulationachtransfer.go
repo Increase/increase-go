@@ -85,10 +85,14 @@ type SimulationACHTransferNewInboundParams struct {
 	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
 	// The description of the transfer set by the sender.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
-	// The sender's company id.
+	// The sender's company ID.
 	CompanyID param.Field[string] `json:"company_id"`
 	// The name of the sender.
 	CompanyName param.Field[string] `json:"company_name"`
+	// The ID of the receiver of the transfer.
+	ReceiverIDNumber param.Field[string] `json:"receiver_id_number"`
+	// The name of the receiver of the transfer.
+	ReceiverName param.Field[string] `json:"receiver_name"`
 	// The time at which the transfer should be resolved. If not provided will resolve
 	// immediately.
 	ResolveAt param.Field[time.Time] `json:"resolve_at" format:"date-time"`
