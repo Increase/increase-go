@@ -34,6 +34,8 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 		CompanyEntryDescription:  increase.F("x"),
 		CompanyID:                increase.F("x"),
 		CompanyName:              increase.F("x"),
+		ReceiverIDNumber:         increase.F("x"),
+		ReceiverName:             increase.F("x"),
 		ResolveAt:                increase.F(time.Now()),
 	})
 	if err != nil {
