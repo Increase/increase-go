@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.30.0 (2024-03-21)
+
+Full Changelog: [v0.29.1...v0.30.0](https://github.com/Increase/increase-go/compare/v0.29.1...v0.30.0)
+
+### Features
+
+* add IsKnown method to enums ([#228](https://github.com/Increase/increase-go/issues/228)) ([ea1efeb](https://github.com/Increase/increase-go/commit/ea1efebce831e31cb10390e493167eaffc57b1ea))
+* **api:** adding `pending_reviewing` wire transfer state ([32ca69a](https://github.com/Increase/increase-go/commit/32ca69a78443609c3506a0c095a73b91319052a6))
+* **api:** introduce `network_risk_score` ([#230](https://github.com/Increase/increase-go/issues/230)) ([32ca69a](https://github.com/Increase/increase-go/commit/32ca69a78443609c3506a0c095a73b91319052a6))
+* **api:** remove Card Profile ID properties ([32ca69a](https://github.com/Increase/increase-go/commit/32ca69a78443609c3506a0c095a73b91319052a6))
+
+
+### Chores
+
+* **internal:** update generated pragma comment ([#227](https://github.com/Increase/increase-go/issues/227)) ([f9c18bc](https://github.com/Increase/increase-go/commit/f9c18bc921e01daeabc8c160f45cafe77b58aab1))
+
+
+### Documentation
+
+* fix typo in CONTRIBUTING.md ([#225](https://github.com/Increase/increase-go/issues/225)) ([ada1f05](https://github.com/Increase/increase-go/commit/ada1f057e4ef47b62d8ee5170ad2ee9509fb88c2))
+* **readme:** consistent use of sentence case in headings ([#229](https://github.com/Increase/increase-go/issues/229)) ([c598dce](https://github.com/Increase/increase-go/commit/c598dce5c25d598e98bf0b1745e8068938ea58d2))
+
 ## 0.29.1 (2024-03-18)
 
 Full Changelog: [v0.29.0...v0.29.1](https://github.com/Increase/increase-go/compare/v0.29.0...v0.29.1)
