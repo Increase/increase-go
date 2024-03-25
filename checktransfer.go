@@ -511,8 +511,6 @@ const (
 	CheckTransferStatusPendingApproval CheckTransferStatus = "pending_approval"
 	// The transfer is pending submission.
 	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	// The transfer is complete.
-	CheckTransferStatusSubmitted CheckTransferStatus = "submitted"
 	// The check is queued for mailing.
 	CheckTransferStatusPendingMailing CheckTransferStatus = "pending_mailing"
 	// The check has been mailed.
@@ -533,7 +531,7 @@ const (
 
 func (r CheckTransferStatus) IsKnown() bool {
 	switch r {
-	case CheckTransferStatusPendingApproval, CheckTransferStatusPendingSubmission, CheckTransferStatusSubmitted, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusCanceled, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusRejected, CheckTransferStatusRequiresAttention, CheckTransferStatusReturned:
+	case CheckTransferStatusPendingApproval, CheckTransferStatusPendingSubmission, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusCanceled, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusRejected, CheckTransferStatusRequiresAttention, CheckTransferStatusReturned:
 		return true
 	}
 	return false
