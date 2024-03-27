@@ -296,6 +296,8 @@ type ExternalAccountUpdateParams struct {
 	AccountHolder param.Field[ExternalAccountUpdateParamsAccountHolder] `json:"account_holder"`
 	// The description you choose to give the external account.
 	Description param.Field[string] `json:"description"`
+	// The funding type of the External Account.
+	Funding param.Field[ExternalAccountUpdateParamsFunding] `json:"funding"`
 	// The status of the External Account.
 	Status param.Field[ExternalAccountUpdateParamsStatus] `json:"status"`
 }
@@ -317,6 +319,26 @@ const (
 func (r ExternalAccountUpdateParamsAccountHolder) IsKnown() bool {
 	switch r {
 	case ExternalAccountUpdateParamsAccountHolderBusiness, ExternalAccountUpdateParamsAccountHolderIndividual:
+		return true
+	}
+	return false
+}
+
+// The funding type of the External Account.
+type ExternalAccountUpdateParamsFunding string
+
+const (
+	// A checking account.
+	ExternalAccountUpdateParamsFundingChecking ExternalAccountUpdateParamsFunding = "checking"
+	// A savings account.
+	ExternalAccountUpdateParamsFundingSavings ExternalAccountUpdateParamsFunding = "savings"
+	// A different type of account.
+	ExternalAccountUpdateParamsFundingOther ExternalAccountUpdateParamsFunding = "other"
+)
+
+func (r ExternalAccountUpdateParamsFunding) IsKnown() bool {
+	switch r {
+	case ExternalAccountUpdateParamsFundingChecking, ExternalAccountUpdateParamsFundingSavings, ExternalAccountUpdateParamsFundingOther:
 		return true
 	}
 	return false

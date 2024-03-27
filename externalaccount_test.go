@@ -81,6 +81,7 @@ func TestExternalAccountUpdateWithOptionalParams(t *testing.T) {
 		increase.ExternalAccountUpdateParams{
 			AccountHolder: increase.F(increase.ExternalAccountUpdateParamsAccountHolderBusiness),
 			Description:   increase.F("New description"),
+			Funding:       increase.F(increase.ExternalAccountUpdateParamsFundingChecking),
 			Status:        increase.F(increase.ExternalAccountUpdateParamsStatusActive),
 		},
 	)
