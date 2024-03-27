@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.32.0 (2024-03-27)
+
+Full Changelog: [v0.31.0...v0.32.0](https://github.com/Increase/increase-go/compare/v0.31.0...v0.32.0)
+
+### Features
+
+* **api:** add `funding` parameter to external account update ([#236](https://github.com/Increase/increase-go/issues/236)) ([8ef5546](https://github.com/Increase/increase-go/commit/8ef5546e980a89ecc44b675936a030c76035728f))
+
+
+### Documentation
+
+* fix typo in docstring for Null() ([#235](https://github.com/Increase/increase-go/issues/235)) ([5d48b33](https://github.com/Increase/increase-go/commit/5d48b33364994831da615cdb6f4d675dd9883e8f))
+* **readme:** document file uploads ([#233](https://github.com/Increase/increase-go/issues/233)) ([c68a1ee](https://github.com/Increase/increase-go/commit/c68a1eeef60d394f9298a38275d3270370dfdef4))
+
 ## 0.31.0 (2024-03-25)
 
 Full Changelog: [v0.30.0...v0.31.0](https://github.com/Increase/increase-go/compare/v0.30.0...v0.31.0)
