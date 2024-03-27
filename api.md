@@ -685,6 +685,8 @@ Methods:
 - <code title="get /real_time_payments_request_for_payments/{request_for_payment_id}">client.RealTimePaymentsRequestForPayments.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPaymentService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, requestForPaymentID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPayment">RealTimePaymentsRequestForPayment</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /real_time_payments_request_for_payments">client.RealTimePaymentsRequestForPayments.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPaymentService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPaymentListParams">RealTimePaymentsRequestForPaymentListParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go/internal/shared#Page">Page</a>[<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsRequestForPayment">RealTimePaymentsRequestForPayment</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# Webhooks
+
 # OAuthTokens
 
 Response Types:
