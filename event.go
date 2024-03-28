@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -43,7 +43,7 @@ func (r *EventService) Get(ctx context.Context, eventID string, opts ...option.R
 }
 
 // List Events
-func (r *EventService) List(ctx context.Context, query EventListParams, opts ...option.RequestOption) (res *shared.Page[Event], err error) {
+func (r *EventService) List(ctx context.Context, query EventListParams, opts ...option.RequestOption) (res *pagination.Page[Event], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -61,8 +61,8 @@ func (r *EventService) List(ctx context.Context, query EventListParams, opts ...
 }
 
 // List Events
-func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams, opts ...option.RequestOption) *shared.PageAutoPager[Event] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Event] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Events are records of things that happened to objects at Increase. Events are

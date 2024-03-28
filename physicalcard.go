@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -60,7 +60,7 @@ func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string,
 }
 
 // List Physical Cards
-func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) (res *shared.Page[PhysicalCard], err error) {
+func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) (res *pagination.Page[PhysicalCard], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -78,8 +78,8 @@ func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListPa
 }
 
 // List Physical Cards
-func (r *PhysicalCardService) ListAutoPaging(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) *shared.PageAutoPager[PhysicalCard] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *PhysicalCardService) ListAutoPaging(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) *pagination.PageAutoPager[PhysicalCard] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Custom physical Visa cards that are shipped to your customers. The artwork is
