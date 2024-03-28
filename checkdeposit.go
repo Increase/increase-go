@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *CheckDepositService) Get(ctx context.Context, checkDepositID string, op
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) (res *shared.Page[CheckDeposit], err error) {
+func (r *CheckDepositService) List(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) (res *pagination.Page[CheckDeposit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *CheckDepositService) List(ctx context.Context, query CheckDepositListPa
 }
 
 // List Check Deposits
-func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) *shared.PageAutoPager[CheckDeposit] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CheckDeposit] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Check Deposits allow you to deposit images of paper checks into your account.

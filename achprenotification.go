@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationI
 }
 
 // List ACH Prenotifications
-func (r *ACHPrenotificationService) List(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) (res *shared.Page[ACHPrenotification], err error) {
+func (r *ACHPrenotificationService) List(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) (res *pagination.Page[ACHPrenotification], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *ACHPrenotificationService) List(ctx context.Context, query ACHPrenotifi
 }
 
 // List ACH Prenotifications
-func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) *shared.PageAutoPager[ACHPrenotification] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) *pagination.PageAutoPager[ACHPrenotification] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // ACH Prenotifications are one way you can verify account and routing numbers by

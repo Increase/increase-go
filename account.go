@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -59,7 +59,7 @@ func (r *AccountService) Update(ctx context.Context, accountID string, body Acco
 }
 
 // List Accounts
-func (r *AccountService) List(ctx context.Context, query AccountListParams, opts ...option.RequestOption) (res *shared.Page[Account], err error) {
+func (r *AccountService) List(ctx context.Context, query AccountListParams, opts ...option.RequestOption) (res *pagination.Page[Account], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -77,8 +77,8 @@ func (r *AccountService) List(ctx context.Context, query AccountListParams, opts
 }
 
 // List Accounts
-func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListParams, opts ...option.RequestOption) *shared.PageAutoPager[Account] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Account] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Retrieve an Account Balance

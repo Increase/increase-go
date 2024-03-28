@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -60,7 +60,7 @@ func (r *ExternalAccountService) Update(ctx context.Context, externalAccountID s
 }
 
 // List External Accounts
-func (r *ExternalAccountService) List(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) (res *shared.Page[ExternalAccount], err error) {
+func (r *ExternalAccountService) List(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) (res *pagination.Page[ExternalAccount], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -78,8 +78,8 @@ func (r *ExternalAccountService) List(ctx context.Context, query ExternalAccount
 }
 
 // List External Accounts
-func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) *shared.PageAutoPager[ExternalAccount] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) *pagination.PageAutoPager[ExternalAccount] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // External Accounts represent accounts at financial institutions other than

@@ -15,9 +15,9 @@ import (
 	"github.com/increase/increase-go/internal/apiform"
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -57,7 +57,7 @@ func (r *FileService) Get(ctx context.Context, fileID string, opts ...option.Req
 }
 
 // List Files
-func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *shared.Page[File], err error) {
+func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *pagination.Page[File], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -75,8 +75,8 @@ func (r *FileService) List(ctx context.Context, query FileListParams, opts ...op
 }
 
 // List Files
-func (r *FileService) ListAutoPaging(ctx context.Context, query FileListParams, opts ...option.RequestOption) *shared.PageAutoPager[File] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *FileService) ListAutoPaging(ctx context.Context, query FileListParams, opts ...option.RequestOption) *pagination.PageAutoPager[File] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Files are objects that represent a file hosted on Increase's servers. The file

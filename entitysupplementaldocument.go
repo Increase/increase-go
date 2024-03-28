@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *EntitySupplementalDocumentService) New(ctx context.Context, entityID st
 }
 
 // List Entity Supplemental Document Submissions
-func (r *EntitySupplementalDocumentService) List(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) (res *shared.Page[SupplementalDocument], err error) {
+func (r *EntitySupplementalDocumentService) List(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[SupplementalDocument], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *EntitySupplementalDocumentService) List(ctx context.Context, query Enti
 }
 
 // List Entity Supplemental Document Submissions
-func (r *EntitySupplementalDocumentService) ListAutoPaging(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) *shared.PageAutoPager[SupplementalDocument] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *EntitySupplementalDocumentService) ListAutoPaging(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[SupplementalDocument] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Supplemental Documents are uploaded files connected to an Entity during
