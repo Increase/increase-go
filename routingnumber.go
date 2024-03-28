@@ -9,9 +9,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -37,7 +37,7 @@ func NewRoutingNumberService(opts ...option.RequestOption) (r *RoutingNumberServ
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) List(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) (res *shared.Page[RoutingNumber], err error) {
+func (r *RoutingNumberService) List(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) (res *pagination.Page[RoutingNumber], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -58,8 +58,8 @@ func (r *RoutingNumberService) List(ctx context.Context, query RoutingNumberList
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) *shared.PageAutoPager[RoutingNumber] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) *pagination.PageAutoPager[RoutingNumber] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Routing numbers are used to identify your bank in a financial transaction.

@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *AccountStatementService) Get(ctx context.Context, accountStatementID st
 }
 
 // List Account Statements
-func (r *AccountStatementService) List(ctx context.Context, query AccountStatementListParams, opts ...option.RequestOption) (res *shared.Page[AccountStatement], err error) {
+func (r *AccountStatementService) List(ctx context.Context, query AccountStatementListParams, opts ...option.RequestOption) (res *pagination.Page[AccountStatement], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *AccountStatementService) List(ctx context.Context, query AccountStateme
 }
 
 // List Account Statements
-func (r *AccountStatementService) ListAutoPaging(ctx context.Context, query AccountStatementListParams, opts ...option.RequestOption) *shared.PageAutoPager[AccountStatement] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *AccountStatementService) ListAutoPaging(ctx context.Context, query AccountStatementListParams, opts ...option.RequestOption) *pagination.PageAutoPager[AccountStatement] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Account Statements are generated monthly for every active Account. You can

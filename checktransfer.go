@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, 
 }
 
 // List Check Transfers
-func (r *CheckTransferService) List(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) (res *shared.Page[CheckTransfer], err error) {
+func (r *CheckTransferService) List(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) (res *pagination.Page[CheckTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *CheckTransferService) List(ctx context.Context, query CheckTransferList
 }
 
 // List Check Transfers
-func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[CheckTransfer] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CheckTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Approve a Check Transfer

@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *ProofOfAuthorizationRequestService) Get(ctx context.Context, proofOfAut
 }
 
 // List Proof of Authorization Requests
-func (r *ProofOfAuthorizationRequestService) List(ctx context.Context, query ProofOfAuthorizationRequestListParams, opts ...option.RequestOption) (res *shared.Page[ProofOfAuthorizationRequest], err error) {
+func (r *ProofOfAuthorizationRequestService) List(ctx context.Context, query ProofOfAuthorizationRequestListParams, opts ...option.RequestOption) (res *pagination.Page[ProofOfAuthorizationRequest], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *ProofOfAuthorizationRequestService) List(ctx context.Context, query Pro
 }
 
 // List Proof of Authorization Requests
-func (r *ProofOfAuthorizationRequestService) ListAutoPaging(ctx context.Context, query ProofOfAuthorizationRequestListParams, opts ...option.RequestOption) *shared.PageAutoPager[ProofOfAuthorizationRequest] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *ProofOfAuthorizationRequestService) ListAutoPaging(ctx context.Context, query ProofOfAuthorizationRequestListParams, opts ...option.RequestOption) *pagination.PageAutoPager[ProofOfAuthorizationRequest] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // A request for proof of authorization for one or more ACH debit transfers.
