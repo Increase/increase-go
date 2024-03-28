@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *OAuthConnectionService) Get(ctx context.Context, oauthConnectionID stri
 }
 
 // List OAuth Connections
-func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) (res *shared.Page[OAuthConnection], err error) {
+func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) (res *pagination.Page[OAuthConnection], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnection
 }
 
 // List OAuth Connections
-func (r *OAuthConnectionService) ListAutoPaging(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) *shared.PageAutoPager[OAuthConnection] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *OAuthConnectionService) ListAutoPaging(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[OAuthConnection] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // When a user authorizes your OAuth application, an OAuth Connection object is

@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declinedTransactio
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) List(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) (res *shared.Page[DeclinedTransaction], err error) {
+func (r *DeclinedTransactionService) List(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) (res *pagination.Page[DeclinedTransaction], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *DeclinedTransactionService) List(ctx context.Context, query DeclinedTra
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) *shared.PageAutoPager[DeclinedTransaction] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[DeclinedTransaction] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Declined Transactions are refused additions and removals of money from your bank

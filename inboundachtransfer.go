@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *InboundACHTransferService) Get(ctx context.Context, inboundACHTransferI
 }
 
 // List Inbound ACH Transfers
-func (r *InboundACHTransferService) List(ctx context.Context, query InboundACHTransferListParams, opts ...option.RequestOption) (res *shared.Page[InboundACHTransfer], err error) {
+func (r *InboundACHTransferService) List(ctx context.Context, query InboundACHTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundACHTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *InboundACHTransferService) List(ctx context.Context, query InboundACHTr
 }
 
 // List Inbound ACH Transfers
-func (r *InboundACHTransferService) ListAutoPaging(ctx context.Context, query InboundACHTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[InboundACHTransfer] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *InboundACHTransferService) ListAutoPaging(ctx context.Context, query InboundACHTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundACHTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Decline an Inbound ACH Transfer
