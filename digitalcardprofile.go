@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileI
 }
 
 // List Card Profiles
-func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) (res *shared.Page[DigitalCardProfile], err error) {
+func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalCardProfile], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardP
 }
 
 // List Card Profiles
-func (r *DigitalCardProfileService) ListAutoPaging(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) *shared.PageAutoPager[DigitalCardProfile] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *DigitalCardProfileService) ListAutoPaging(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) *pagination.PageAutoPager[DigitalCardProfile] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Archive a Digital Card Profile

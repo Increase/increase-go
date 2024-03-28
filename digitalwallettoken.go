@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *DigitalWalletTokenService) Get(ctx context.Context, digitalWalletTokenI
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) List(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) (res *shared.Page[DigitalWalletToken], err error) {
+func (r *DigitalWalletTokenService) List(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalWalletToken], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *DigitalWalletTokenService) List(ctx context.Context, query DigitalWalle
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) *shared.PageAutoPager[DigitalWalletToken] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) *pagination.PageAutoPager[DigitalWalletToken] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // A Digital Wallet Token is created when a user adds a Card to their Apple Pay or

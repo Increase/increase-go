@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccou
 }
 
 // List Bookkeeping Accounts
-func (r *BookkeepingAccountService) List(ctx context.Context, query BookkeepingAccountListParams, opts ...option.RequestOption) (res *shared.Page[BookkeepingAccount], err error) {
+func (r *BookkeepingAccountService) List(ctx context.Context, query BookkeepingAccountListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingAccount], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *BookkeepingAccountService) List(ctx context.Context, query BookkeepingA
 }
 
 // List Bookkeeping Accounts
-func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query BookkeepingAccountListParams, opts ...option.RequestOption) *shared.PageAutoPager[BookkeepingAccount] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query BookkeepingAccountListParams, opts ...option.RequestOption) *pagination.PageAutoPager[BookkeepingAccount] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Retrieve a Bookkeeping Account Balance

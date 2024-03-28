@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *ACHTransferService) Get(ctx context.Context, achTransferID string, opts
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) List(ctx context.Context, query ACHTransferListParams, opts ...option.RequestOption) (res *shared.Page[ACHTransfer], err error) {
+func (r *ACHTransferService) List(ctx context.Context, query ACHTransferListParams, opts ...option.RequestOption) (res *pagination.Page[ACHTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *ACHTransferService) List(ctx context.Context, query ACHTransferListPara
 }
 
 // List ACH Transfers
-func (r *ACHTransferService) ListAutoPaging(ctx context.Context, query ACHTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[ACHTransfer] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *ACHTransferService) ListAutoPaging(ctx context.Context, query ACHTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[ACHTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Approves an ACH Transfer in a pending_approval state.

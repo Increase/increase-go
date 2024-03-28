@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransfe
 }
 
 // List Inbound Wire Transfers
-func (r *InboundWireTransferService) List(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) (res *shared.Page[InboundWireTransfer], err error) {
+func (r *InboundWireTransferService) List(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundWireTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *InboundWireTransferService) List(ctx context.Context, query InboundWire
 }
 
 // List Inbound Wire Transfers
-func (r *InboundWireTransferService) ListAutoPaging(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[InboundWireTransfer] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *InboundWireTransferService) ListAutoPaging(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundWireTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // An Inbound Wire Transfer is a wire transfer initiated outside of Increase to

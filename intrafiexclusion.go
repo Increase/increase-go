@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID st
 }
 
 // List IntraFi Exclusions.
-func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) (res *shared.Page[IntrafiExclusion], err error) {
+func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiExclusion], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusi
 }
 
 // List IntraFi Exclusions.
-func (r *IntrafiExclusionService) ListAutoPaging(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) *shared.PageAutoPager[IntrafiExclusion] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *IntrafiExclusionService) ListAutoPaging(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[IntrafiExclusion] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Archive an IntraFi Exclusion

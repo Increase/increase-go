@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *CardPaymentService) Get(ctx context.Context, cardPaymentID string, opts
 }
 
 // List Card Payments
-func (r *CardPaymentService) List(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) (res *shared.Page[CardPayment], err error) {
+func (r *CardPaymentService) List(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) (res *pagination.Page[CardPayment], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *CardPaymentService) List(ctx context.Context, query CardPaymentListPara
 }
 
 // List Card Payments
-func (r *CardPaymentService) ListAutoPaging(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) *shared.PageAutoPager[CardPayment] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *CardPaymentService) ListAutoPaging(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardPayment] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Card Payments group together interactions related to a single card payment, such

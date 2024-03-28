@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *RealTimePaymentsRequestForPaymentService) Get(ctx context.Context, requ
 }
 
 // List Real-Time Payments Request for Payments
-func (r *RealTimePaymentsRequestForPaymentService) List(ctx context.Context, query RealTimePaymentsRequestForPaymentListParams, opts ...option.RequestOption) (res *shared.Page[RealTimePaymentsRequestForPayment], err error) {
+func (r *RealTimePaymentsRequestForPaymentService) List(ctx context.Context, query RealTimePaymentsRequestForPaymentListParams, opts ...option.RequestOption) (res *pagination.Page[RealTimePaymentsRequestForPayment], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *RealTimePaymentsRequestForPaymentService) List(ctx context.Context, que
 }
 
 // List Real-Time Payments Request for Payments
-func (r *RealTimePaymentsRequestForPaymentService) ListAutoPaging(ctx context.Context, query RealTimePaymentsRequestForPaymentListParams, opts ...option.RequestOption) *shared.PageAutoPager[RealTimePaymentsRequestForPayment] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *RealTimePaymentsRequestForPaymentService) ListAutoPaging(ctx context.Context, query RealTimePaymentsRequestForPaymentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[RealTimePaymentsRequestForPayment] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Real-Time Payments transfers move funds, within seconds, between your Increase

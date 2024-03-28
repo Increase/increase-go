@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -60,7 +60,7 @@ func (r *EventSubscriptionService) Update(ctx context.Context, eventSubscription
 }
 
 // List Event Subscriptions
-func (r *EventSubscriptionService) List(ctx context.Context, query EventSubscriptionListParams, opts ...option.RequestOption) (res *shared.Page[EventSubscription], err error) {
+func (r *EventSubscriptionService) List(ctx context.Context, query EventSubscriptionListParams, opts ...option.RequestOption) (res *pagination.Page[EventSubscription], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -78,8 +78,8 @@ func (r *EventSubscriptionService) List(ctx context.Context, query EventSubscrip
 }
 
 // List Event Subscriptions
-func (r *EventSubscriptionService) ListAutoPaging(ctx context.Context, query EventSubscriptionListParams, opts ...option.RequestOption) *shared.PageAutoPager[EventSubscription] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *EventSubscriptionService) ListAutoPaging(ctx context.Context, query EventSubscriptionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[EventSubscription] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Webhooks are event notifications we send to you by HTTPS POST requests. Event

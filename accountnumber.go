@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -60,7 +60,7 @@ func (r *AccountNumberService) Update(ctx context.Context, accountNumberID strin
 }
 
 // List Account Numbers
-func (r *AccountNumberService) List(ctx context.Context, query AccountNumberListParams, opts ...option.RequestOption) (res *shared.Page[AccountNumber], err error) {
+func (r *AccountNumberService) List(ctx context.Context, query AccountNumberListParams, opts ...option.RequestOption) (res *pagination.Page[AccountNumber], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -78,8 +78,8 @@ func (r *AccountNumberService) List(ctx context.Context, query AccountNumberList
 }
 
 // List Account Numbers
-func (r *AccountNumberService) ListAutoPaging(ctx context.Context, query AccountNumberListParams, opts ...option.RequestOption) *shared.PageAutoPager[AccountNumber] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *AccountNumberService) ListAutoPaging(ctx context.Context, query AccountNumberListParams, opts ...option.RequestOption) *pagination.PageAutoPager[AccountNumber] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Each account can have multiple account and routing numbers. We recommend that

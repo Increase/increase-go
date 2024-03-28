@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *AccountTransferService) Get(ctx context.Context, accountTransferID stri
 }
 
 // List Account Transfers
-func (r *AccountTransferService) List(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) (res *shared.Page[AccountTransfer], err error) {
+func (r *AccountTransferService) List(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) (res *pagination.Page[AccountTransfer], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *AccountTransferService) List(ctx context.Context, query AccountTransfer
 }
 
 // List Account Transfers
-func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) *shared.PageAutoPager[AccountTransfer] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[AccountTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Approve an Account Transfer

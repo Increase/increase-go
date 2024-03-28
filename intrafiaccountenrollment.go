@@ -10,9 +10,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -51,7 +51,7 @@ func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccoun
 }
 
 // List IntraFi Account Enrollments
-func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) (res *shared.Page[IntrafiAccountEnrollment], err error) {
+func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiAccountEnrollment], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -69,8 +69,8 @@ func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query Intraf
 }
 
 // List IntraFi Account Enrollments
-func (r *IntrafiAccountEnrollmentService) ListAutoPaging(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) *shared.PageAutoPager[IntrafiAccountEnrollment] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *IntrafiAccountEnrollmentService) ListAutoPaging(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[IntrafiAccountEnrollment] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Unenroll an account from IntraFi.

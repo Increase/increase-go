@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -44,7 +44,7 @@ func (r *BookkeepingEntryService) Get(ctx context.Context, bookkeepingEntryID st
 }
 
 // List Bookkeeping Entries
-func (r *BookkeepingEntryService) List(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) (res *shared.Page[BookkeepingEntry], err error) {
+func (r *BookkeepingEntryService) List(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingEntry], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -62,8 +62,8 @@ func (r *BookkeepingEntryService) List(ctx context.Context, query BookkeepingEnt
 }
 
 // List Bookkeeping Entries
-func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) *shared.PageAutoPager[BookkeepingEntry] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) *pagination.PageAutoPager[BookkeepingEntry] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Entries are T-account entries recording debits and credits. Your compliance

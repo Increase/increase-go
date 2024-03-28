@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *CardDisputeService) Get(ctx context.Context, cardDisputeID string, opts
 }
 
 // List Card Disputes
-func (r *CardDisputeService) List(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) (res *shared.Page[CardDispute], err error) {
+func (r *CardDisputeService) List(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) (res *pagination.Page[CardDispute], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *CardDisputeService) List(ctx context.Context, query CardDisputeListPara
 }
 
 // List Card Disputes
-func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) *shared.PageAutoPager[CardDispute] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardDispute] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // If unauthorized activity occurs on a card, you can create a Card Dispute and

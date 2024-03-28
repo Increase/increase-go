@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -43,7 +43,7 @@ func (r *ProgramService) Get(ctx context.Context, programID string, opts ...opti
 }
 
 // List Programs
-func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) (res *shared.Page[Program], err error) {
+func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) (res *pagination.Page[Program], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -61,8 +61,8 @@ func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts
 }
 
 // List Programs
-func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) *shared.PageAutoPager[Program] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Program] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Programs determine the compliance and commercial terms of Accounts. By default,

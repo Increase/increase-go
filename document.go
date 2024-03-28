@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -43,7 +43,7 @@ func (r *DocumentService) Get(ctx context.Context, documentID string, opts ...op
 }
 
 // List Documents
-func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *shared.Page[Document], err error) {
+func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *pagination.Page[Document], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -61,8 +61,8 @@ func (r *DocumentService) List(ctx context.Context, query DocumentListParams, op
 }
 
 // List Documents
-func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) *shared.PageAutoPager[Document] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Document] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Increase generates certain documents / forms automatically for your application;

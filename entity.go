@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -57,7 +57,7 @@ func (r *EntityService) Get(ctx context.Context, entityID string, opts ...option
 }
 
 // List Entities
-func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *shared.Page[Entity], err error) {
+func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *pagination.Page[Entity], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -75,8 +75,8 @@ func (r *EntityService) List(ctx context.Context, query EntityListParams, opts .
 }
 
 // List Entities
-func (r *EntityService) ListAutoPaging(ctx context.Context, query EntityListParams, opts ...option.RequestOption) *shared.PageAutoPager[Entity] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *EntityService) ListAutoPaging(ctx context.Context, query EntityListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Entity] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Archive an Entity

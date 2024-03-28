@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -51,7 +51,7 @@ func (r *ExportService) Get(ctx context.Context, exportID string, opts ...option
 }
 
 // List Exports
-func (r *ExportService) List(ctx context.Context, query ExportListParams, opts ...option.RequestOption) (res *shared.Page[Export], err error) {
+func (r *ExportService) List(ctx context.Context, query ExportListParams, opts ...option.RequestOption) (res *pagination.Page[Export], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -69,8 +69,8 @@ func (r *ExportService) List(ctx context.Context, query ExportListParams, opts .
 }
 
 // List Exports
-func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListParams, opts ...option.RequestOption) *shared.PageAutoPager[Export] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Export] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Exports are batch summaries of your Increase data. You can make them from the

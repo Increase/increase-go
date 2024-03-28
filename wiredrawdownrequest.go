@@ -10,9 +10,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -51,7 +51,7 @@ func (r *WireDrawdownRequestService) Get(ctx context.Context, wireDrawdownReques
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) List(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) (res *shared.Page[WireDrawdownRequest], err error) {
+func (r *WireDrawdownRequestService) List(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) (res *pagination.Page[WireDrawdownRequest], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -69,8 +69,8 @@ func (r *WireDrawdownRequestService) List(ctx context.Context, query WireDrawdow
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) *shared.PageAutoPager[WireDrawdownRequest] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) *pagination.PageAutoPager[WireDrawdownRequest] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Wire drawdown requests enable you to request that someone else send you a wire.

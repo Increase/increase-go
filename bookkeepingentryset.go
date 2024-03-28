@@ -11,9 +11,9 @@ import (
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
+	"github.com/increase/increase-go/internal/pagination"
 	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/internal/shared"
 	"github.com/increase/increase-go/option"
 )
 
@@ -52,7 +52,7 @@ func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySe
 }
 
 // List Bookkeeping Entry Sets
-func (r *BookkeepingEntrySetService) List(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) (res *shared.Page[BookkeepingEntrySet], err error) {
+func (r *BookkeepingEntrySetService) List(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingEntrySet], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -70,8 +70,8 @@ func (r *BookkeepingEntrySetService) List(ctx context.Context, query Bookkeeping
 }
 
 // List Bookkeeping Entry Sets
-func (r *BookkeepingEntrySetService) ListAutoPaging(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) *shared.PageAutoPager[BookkeepingEntrySet] {
-	return shared.NewPageAutoPager(r.List(ctx, query, opts...))
+func (r *BookkeepingEntrySetService) ListAutoPaging(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) *pagination.PageAutoPager[BookkeepingEntrySet] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Entry Sets are accounting entries that are transactionally applied. Your
