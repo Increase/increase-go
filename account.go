@@ -131,6 +131,9 @@ type Account struct {
 	InterestRate string `json:"interest_rate,required"`
 	// The name you choose for the Account.
 	Name string `json:"name,required"`
+	// The identifier of the Program determining the compliance and commercial terms of
+	// this Account.
+	ProgramID string `json:"program_id,required"`
 	// The status of the Account.
 	Status AccountStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -152,6 +155,7 @@ type accountJSON struct {
 	InterestAccruedAt     apijson.Field
 	InterestRate          apijson.Field
 	Name                  apijson.Field
+	ProgramID             apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
 	raw                   string
@@ -174,13 +178,11 @@ const (
 	AccountBankBlueRidgeBank AccountBank = "blue_ridge_bank"
 	// First Internet Bank of Indiana
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
-	// Grasshopper Bank
-	AccountBankGrasshopperBank AccountBank = "grasshopper_bank"
 )
 
 func (r AccountBank) IsKnown() bool {
 	switch r {
-	case AccountBankBlueRidgeBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
+	case AccountBankBlueRidgeBank, AccountBankFirstInternetBank:
 		return true
 	}
 	return false
