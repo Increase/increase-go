@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.34.0 (2024-03-29)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/Increase/increase-go/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** remove check transfer intention ([#242](https://github.com/Increase/increase-go/issues/242)) ([dfb36c5](https://github.com/Increase/increase-go/commit/dfb36c554e8ed5af467b6fcffe298e8646a8340c))
+
 ## 0.33.0 (2024-03-29)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/Increase/increase-go/compare/v0.32.0...v0.33.0)
