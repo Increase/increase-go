@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.33.0 (2024-03-29)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/Increase/increase-go/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** updates ([#241](https://github.com/Increase/increase-go/issues/241)) ([c9c6fe5](https://github.com/Increase/increase-go/commit/c9c6fe5df5a385b0c0c19b4c04dedcdfcf37d942))
+* **client:** implement raw requests methods on client ([#239](https://github.com/Increase/increase-go/issues/239)) ([21d9580](https://github.com/Increase/increase-go/commit/21d9580bc07fd52945486ce641ea73c64477f11d))
+
+
+### Chores
+
+* **internal:** move pagination types to pagination package ([#240](https://github.com/Increase/increase-go/issues/240)) ([d488ccc](https://github.com/Increase/increase-go/commit/d488ccc9466ffbc6d484a98bc49852dcf4d5ec2c))
+* revert temporary commit ([4e4af18](https://github.com/Increase/increase-go/commit/4e4af18cf56b195f40fb03fcfcdd7408b47bc7fa))
+* temporary commit ([#237](https://github.com/Increase/increase-go/issues/237)) ([57884fe](https://github.com/Increase/increase-go/commit/57884fee40abc00424dccabe118e45a758e646c8))
+
 ## 0.32.0 (2024-03-27)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/Increase/increase-go/compare/v0.31.0...v0.32.0)
