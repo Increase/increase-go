@@ -214,9 +214,6 @@ type TransactionSource struct {
 	// A Check Transfer Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_deposit`.
 	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
-	// A Check Transfer Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to `check_transfer_intention`.
-	CheckTransferIntention TransactionSourceCheckTransferIntention `json:"check_transfer_intention,required,nullable"`
 	// A Check Transfer Stop Payment Request object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `check_transfer_stop_payment_request`.
@@ -288,7 +285,6 @@ type transactionSourceJSON struct {
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
-	CheckTransferIntention                      apijson.Field
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
@@ -2406,9 +2402,6 @@ const (
 	// Check Transfer Deposit: details will be under the `check_transfer_deposit`
 	// object.
 	TransactionSourceCategoryCheckTransferDeposit TransactionSourceCategory = "check_transfer_deposit"
-	// Check Transfer Intention: details will be under the `check_transfer_intention`
-	// object.
-	TransactionSourceCategoryCheckTransferIntention TransactionSourceCategory = "check_transfer_intention"
 	// Check Transfer Stop Payment Request: details will be under the
 	// `check_transfer_stop_payment_request` object.
 	TransactionSourceCategoryCheckTransferStopPaymentRequest TransactionSourceCategory = "check_transfer_stop_payment_request"
@@ -2463,7 +2456,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferIntention, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheck, TransactionSourceCategoryInboundInternationalACHTransfer, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPaymentReversal, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheck, TransactionSourceCategoryInboundInternationalACHTransfer, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPaymentReversal, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -2698,7 +2691,7 @@ type TransactionSourceCheckTransferDeposit struct {
 	// The identifier of the Transaction object created when the check was deposited.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The identifier of the Check Transfer object that was deposited.
-	TransferID string `json:"transfer_id,required"`
+	TransferID string `json:"transfer_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
 	Type TransactionSourceCheckTransferDepositType `json:"type,required"`
@@ -2738,82 +2731,6 @@ const (
 func (r TransactionSourceCheckTransferDepositType) IsKnown() bool {
 	switch r {
 	case TransactionSourceCheckTransferDepositTypeCheckTransferDeposit:
-		return true
-	}
-	return false
-}
-
-// A Check Transfer Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_transfer_intention`.
-type TransactionSourceCheckTransferIntention struct {
-	// The city of the check's destination.
-	AddressCity string `json:"address_city,required,nullable"`
-	// The street address of the check's destination.
-	AddressLine1 string `json:"address_line1,required,nullable"`
-	// The second line of the address of the check's destination.
-	AddressLine2 string `json:"address_line2,required,nullable"`
-	// The state of the check's destination.
-	AddressState string `json:"address_state,required,nullable"`
-	// The postal code of the check's destination.
-	AddressZip string `json:"address_zip,required,nullable"`
-	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
-	// currency.
-	Currency TransactionSourceCheckTransferIntentionCurrency `json:"currency,required"`
-	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name,required,nullable"`
-	// The identifier of the Check Transfer with which this is associated.
-	TransferID string                                      `json:"transfer_id,required"`
-	JSON       transactionSourceCheckTransferIntentionJSON `json:"-"`
-}
-
-// transactionSourceCheckTransferIntentionJSON contains the JSON metadata for the
-// struct [TransactionSourceCheckTransferIntention]
-type transactionSourceCheckTransferIntentionJSON struct {
-	AddressCity   apijson.Field
-	AddressLine1  apijson.Field
-	AddressLine2  apijson.Field
-	AddressState  apijson.Field
-	AddressZip    apijson.Field
-	Amount        apijson.Field
-	Currency      apijson.Field
-	RecipientName apijson.Field
-	TransferID    apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r *TransactionSourceCheckTransferIntention) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r transactionSourceCheckTransferIntentionJSON) RawJSON() string {
-	return r.raw
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
-// currency.
-type TransactionSourceCheckTransferIntentionCurrency string
-
-const (
-	// Canadian Dollar (CAD)
-	TransactionSourceCheckTransferIntentionCurrencyCad TransactionSourceCheckTransferIntentionCurrency = "CAD"
-	// Swiss Franc (CHF)
-	TransactionSourceCheckTransferIntentionCurrencyChf TransactionSourceCheckTransferIntentionCurrency = "CHF"
-	// Euro (EUR)
-	TransactionSourceCheckTransferIntentionCurrencyEur TransactionSourceCheckTransferIntentionCurrency = "EUR"
-	// British Pound (GBP)
-	TransactionSourceCheckTransferIntentionCurrencyGbp TransactionSourceCheckTransferIntentionCurrency = "GBP"
-	// Japanese Yen (JPY)
-	TransactionSourceCheckTransferIntentionCurrencyJpy TransactionSourceCheckTransferIntentionCurrency = "JPY"
-	// US Dollar (USD)
-	TransactionSourceCheckTransferIntentionCurrencyUsd TransactionSourceCheckTransferIntentionCurrency = "USD"
-)
-
-func (r TransactionSourceCheckTransferIntentionCurrency) IsKnown() bool {
-	switch r {
-	case TransactionSourceCheckTransferIntentionCurrencyCad, TransactionSourceCheckTransferIntentionCurrencyChf, TransactionSourceCheckTransferIntentionCurrencyEur, TransactionSourceCheckTransferIntentionCurrencyGbp, TransactionSourceCheckTransferIntentionCurrencyJpy, TransactionSourceCheckTransferIntentionCurrencyUsd:
 		return true
 	}
 	return false
@@ -4211,9 +4128,6 @@ const (
 	// Check Transfer Deposit: details will be under the `check_transfer_deposit`
 	// object.
 	TransactionListParamsCategoryInCheckTransferDeposit TransactionListParamsCategoryIn = "check_transfer_deposit"
-	// Check Transfer Intention: details will be under the `check_transfer_intention`
-	// object.
-	TransactionListParamsCategoryInCheckTransferIntention TransactionListParamsCategoryIn = "check_transfer_intention"
 	// Check Transfer Stop Payment Request: details will be under the
 	// `check_transfer_stop_payment_request` object.
 	TransactionListParamsCategoryInCheckTransferStopPaymentRequest TransactionListParamsCategoryIn = "check_transfer_stop_payment_request"
@@ -4268,7 +4182,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferIntention, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheck, TransactionListParamsCategoryInInboundInternationalACHTransfer, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheck, TransactionListParamsCategoryInInboundInternationalACHTransfer, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPaymentReversal, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
