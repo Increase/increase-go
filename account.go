@@ -174,11 +174,13 @@ const (
 	AccountBankBlueRidgeBank AccountBank = "blue_ridge_bank"
 	// First Internet Bank of Indiana
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
+	// Grasshopper Bank
+	AccountBankGrasshopperBank AccountBank = "grasshopper_bank"
 )
 
 func (r AccountBank) IsKnown() bool {
 	switch r {
-	case AccountBankBlueRidgeBank, AccountBankFirstInternetBank:
+	case AccountBankBlueRidgeBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
 		return true
 	}
 	return false
