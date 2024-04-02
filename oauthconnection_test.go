@@ -50,6 +50,9 @@ func TestOAuthConnectionListWithOptionalParams(t *testing.T) {
 	_, err := client.OAuthConnections.List(context.TODO(), increase.OAuthConnectionListParams{
 		Cursor: increase.F("string"),
 		Limit:  increase.F(int64(1)),
+		Status: increase.F(increase.OAuthConnectionListParamsStatus{
+			In: increase.F([]increase.OAuthConnectionListParamsStatusIn{increase.OAuthConnectionListParamsStatusInActive, increase.OAuthConnectionListParamsStatusInInactive}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

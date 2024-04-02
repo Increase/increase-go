@@ -75,6 +75,9 @@ type OAuthConnection struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Connection was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
+	// Connection was deleted.
+	DeletedAt time.Time `json:"deleted_at,required,nullable" format:"date-time"`
 	// The identifier of the Group that has authorized your OAuth application.
 	GroupID string `json:"group_id,required"`
 	// Whether the connection is active.
@@ -89,6 +92,7 @@ type OAuthConnection struct {
 type oauthConnectionJSON struct {
 	ID          apijson.Field
 	CreatedAt   apijson.Field
+	DeletedAt   apijson.Field
 	GroupID     apijson.Field
 	Status      apijson.Field
 	Type        apijson.Field
@@ -143,7 +147,8 @@ type OAuthConnectionListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                           `query:"limit"`
+	Status param.Field[OAuthConnectionListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [OAuthConnectionListParams]'s query parameters as
@@ -153,4 +158,37 @@ func (r OAuthConnectionListParams) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type OAuthConnectionListParamsStatus struct {
+	// Filter to OAuth Connections by their status. By default, return only the
+	// `active` ones. For GET requests, this should be encoded as a comma-delimited
+	// string, such as `?in=one,two,three`.
+	In param.Field[[]OAuthConnectionListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [OAuthConnectionListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r OAuthConnectionListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type OAuthConnectionListParamsStatusIn string
+
+const (
+	// The OAuth connection is active.
+	OAuthConnectionListParamsStatusInActive OAuthConnectionListParamsStatusIn = "active"
+	// The OAuth connection is permanently deactivated.
+	OAuthConnectionListParamsStatusInInactive OAuthConnectionListParamsStatusIn = "inactive"
+)
+
+func (r OAuthConnectionListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case OAuthConnectionListParamsStatusInActive, OAuthConnectionListParamsStatusInInactive:
+		return true
+	}
+	return false
 }
