@@ -1235,7 +1235,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInt
 	// originating and receiving bank. Along with the amount, date, and originating
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
-	// [used to correlate returns](https://increase.com/documentation/ach#returns).
+	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
 	TraceNumber string                                                                                              `json:"trace_number,required"`
 	JSON        inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceInternationalACHDeclineJSON `json:"-"`
 }
@@ -4362,7 +4362,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 	// originating and receiving bank. Along with the amount, date, and originating
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
-	// [used to correlate returns](https://increase.com/documentation/ach#returns).
+	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
 	TraceNumber string `json:"trace_number,required"`
 	// The inbound ach transfer's identifier.
 	TransferID string                                                                                 `json:"transfer_id,required"`
@@ -4657,7 +4657,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	// originating and receiving bank. Along with the amount, date, and originating
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
-	// [used to correlate returns](https://increase.com/documentation/ach#returns).
+	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
 	TraceNumber string                                                                                              `json:"trace_number,required"`
 	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON `json:"-"`
 }
