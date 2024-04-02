@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.35.0 (2024-04-02)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/Increase/increase-go/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** filter OAuth connections by their status ([#247](https://github.com/Increase/increase-go/issues/247)) ([fae446a](https://github.com/Increase/increase-go/commit/fae446a7fc244ae9cf693af514ee519cd2d54901))
+
+
+### Chores
+
+* **internal:** use a time zone less likely to conflict with the local one ([#245](https://github.com/Increase/increase-go/issues/245)) ([f9e753b](https://github.com/Increase/increase-go/commit/f9e753bb708aae301b169235c18990cf48d05f15))
+
 ## 0.34.0 (2024-03-29)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/Increase/increase-go/compare/v0.33.0...v0.34.0)
