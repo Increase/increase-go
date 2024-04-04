@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.36.0 (2024-04-04)
+
+Full Changelog: [v0.35.0...v0.36.0](https://github.com/Increase/increase-go/compare/v0.35.0...v0.36.0)
+
+### Features
+
+* **api:** remove inbound_check category, rename check_deposit_mail_item, add inbound_mail_item ([#248](https://github.com/Increase/increase-go/issues/248)) ([9ad814c](https://github.com/Increase/increase-go/commit/9ad814cf62af777e12b1d6215acb1ef5101fd285))
+
 ## 0.35.0 (2024-04-02)
 
 Full Changelog: [v0.34.0...v0.35.0](https://github.com/Increase/increase-go/compare/v0.34.0...v0.35.0)
