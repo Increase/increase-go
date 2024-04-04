@@ -166,8 +166,8 @@ const (
 	FilePurposeCheckImageBack FilePurpose = "check_image_back"
 	// An image of a check that was mailed to a recipient.
 	FilePurposeMailedCheckImage FilePurpose = "mailed_check_image"
-	// A scanned mail item sent to Increase containing a check to deposit.
-	FilePurposeCheckDepositMailItem FilePurpose = "check_deposit_mail_item"
+	// A scanned mail item sent to Increase.
+	FilePurposeInboundMailItem FilePurpose = "inbound_mail_item"
 	// IRS Form 1099-INT.
 	FilePurposeForm1099Int FilePurpose = "form_1099_int"
 	// IRS Form SS-4.
@@ -206,7 +206,7 @@ const (
 
 func (r FilePurpose) IsKnown() bool {
 	switch r {
-	case FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeMailedCheckImage, FilePurposeCheckDepositMailItem, FilePurposeForm1099Int, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment:
+	case FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeMailedCheckImage, FilePurposeInboundMailItem, FilePurposeForm1099Int, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment:
 		return true
 	}
 	return false
@@ -370,8 +370,8 @@ const (
 	FileListParamsPurposeInCheckImageBack FileListParamsPurposeIn = "check_image_back"
 	// An image of a check that was mailed to a recipient.
 	FileListParamsPurposeInMailedCheckImage FileListParamsPurposeIn = "mailed_check_image"
-	// A scanned mail item sent to Increase containing a check to deposit.
-	FileListParamsPurposeInCheckDepositMailItem FileListParamsPurposeIn = "check_deposit_mail_item"
+	// A scanned mail item sent to Increase.
+	FileListParamsPurposeInInboundMailItem FileListParamsPurposeIn = "inbound_mail_item"
 	// IRS Form 1099-INT.
 	FileListParamsPurposeInForm1099Int FileListParamsPurposeIn = "form_1099_int"
 	// IRS Form SS-4.
@@ -410,7 +410,7 @@ const (
 
 func (r FileListParamsPurposeIn) IsKnown() bool {
 	switch r {
-	case FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInCheckDepositMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment:
+	case FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInInboundMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment:
 		return true
 	}
 	return false

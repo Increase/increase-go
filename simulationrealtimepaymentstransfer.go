@@ -1666,9 +1666,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
-	// An Inbound Check object. This field will be present in the JSON response if and
-	// only if `category` is equal to `inbound_check`.
-	InboundCheck InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck `json:"inbound_check,required,nullable"`
 	// An Inbound International ACH Transfer object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_international_ach_transfer`.
@@ -1731,7 +1728,6 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
-	InboundCheck                                apijson.Field
 	InboundInternationalACHTransfer             apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
 	InboundWireDrawdownPayment                  apijson.Field
@@ -3873,8 +3869,6 @@ const (
 	// Inbound ACH Transfer Return Intention: details will be under the
 	// `inbound_ach_transfer_return_intention` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	// Inbound Check: details will be under the `inbound_check` object.
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheck InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_check"
 	// Inbound International ACH Transfer: details will be under the
 	// `inbound_international_ach_transfer` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_international_ach_transfer"
@@ -3916,7 +3910,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheck, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
+	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -4484,78 +4478,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 
 func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() string {
 	return r.raw
-}
-
-// An Inbound Check object. This field will be present in the JSON response if and
-// only if `category` is equal to `inbound_check`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck struct {
-	// The amount in the minor unit of the destination account currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
-	// bank depositing this check. In some rare cases, this is not transmitted via
-	// Check21 and the value will be null.
-	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
-	// The front image of the check. This is a black and white TIFF image file.
-	CheckFrontImageFileID string `json:"check_front_image_file_id,required,nullable"`
-	// The number of the check. This field is set by the depositing bank and can be
-	// unreliable.
-	CheckNumber string `json:"check_number,required,nullable"`
-	// The rear image of the check. This is a black and white TIFF image file.
-	CheckRearImageFileID string `json:"check_rear_image_file_id,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
-	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency `json:"currency,required"`
-	JSON     inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON     `json:"-"`
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON struct {
-	Amount                          apijson.Field
-	BankOfFirstDepositRoutingNumber apijson.Field
-	CheckFrontImageFileID           apijson.Field
-	CheckNumber                     apijson.Field
-	CheckRearImageFileID            apijson.Field
-	Currency                        apijson.Field
-	raw                             string
-	ExtraFields                     map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheck) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckJSON) RawJSON() string {
-	return r.raw
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency string
-
-const (
-	// Canadian Dollar (CAD)
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyCad InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "CAD"
-	// Swiss Franc (CHF)
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyChf InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "CHF"
-	// Euro (EUR)
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyEur InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "EUR"
-	// British Pound (GBP)
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "GBP"
-	// Japanese Yen (JPY)
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "JPY"
-	// US Dollar (USD)
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency = "USD"
-)
-
-func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrency) IsKnown() bool {
-	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyCad, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyChf, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyEur, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyGbp, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyJpy, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundCheckCurrencyUsd:
-		return true
-	}
-	return false
 }
 
 // An Inbound International ACH Transfer object. This field will be present in the

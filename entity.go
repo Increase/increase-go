@@ -113,9 +113,13 @@ type Entity struct {
 	// Details of the corporation entity. Will be present if `structure` is equal to
 	// `corporation`.
 	Corporation EntityCorporation `json:"corporation,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Entity
+	// was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The entity's description for display purposes.
 	Description string `json:"description,required,nullable"`
-	// The date and time at which the entity's details were most recently confirmed.
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
+	// Entity's details were most recently confirmed.
 	DetailsConfirmedAt time.Time `json:"details_confirmed_at,required,nullable" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
@@ -146,6 +150,7 @@ type Entity struct {
 type entityJSON struct {
 	ID                    apijson.Field
 	Corporation           apijson.Field
+	CreatedAt             apijson.Field
 	Description           apijson.Field
 	DetailsConfirmedAt    apijson.Field
 	IdempotencyKey        apijson.Field
