@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.37.0 (2024-04-05)
+
+Full Changelog: [v0.36.0...v0.37.0](https://github.com/Increase/increase-go/compare/v0.36.0...v0.37.0)
+
+### Features
+
+* **api:** add inbound check deposit return intention ([#252](https://github.com/Increase/increase-go/issues/252)) ([2f13b6d](https://github.com/Increase/increase-go/commit/2f13b6da5aa79926bac833d890fefdbf09042021))
+
+
+### Chores
+
+* **internal:** implement Port function in apijson ([#250](https://github.com/Increase/increase-go/issues/250)) ([a83c771](https://github.com/Increase/increase-go/commit/a83c7716c84b4778a14c3c6b5600075bf239106f))
+
 ## 0.36.0 (2024-04-04)
 
 Full Changelog: [v0.35.0...v0.36.0](https://github.com/Increase/increase-go/compare/v0.35.0...v0.36.0)
