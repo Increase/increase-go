@@ -1245,8 +1245,8 @@ type EntityNewParamsCorporation struct {
 	IncorporationState param.Field[string] `json:"incorporation_state"`
 	// The North American Industry Classification System (NAICS) code for the
 	// corporation's primary line of business. This is a number, like `5132` for
-	// `Software Publishers`. A full list of classification codes is available at
-	// https://www.naics.com.
+	// `Software Publishers`. A full list of classification codes is available
+	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// The website of the corporation.
 	Website param.Field[string] `json:"website"`
