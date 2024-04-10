@@ -1644,6 +1644,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`.
 	CardSettlement InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
+	// A Cashback Payment object. This field will be present in the JSON response if
+	// and only if `category` is equal to `cashback_payment`.
+	CashbackPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPayment `json:"cashback_payment,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
 	Category InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory `json:"category,required"`
@@ -1721,6 +1724,7 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	CardRefund                                  apijson.Field
 	CardRevenuePayment                          apijson.Field
 	CardSettlement                              apijson.Field
+	CashbackPayment                             apijson.Field
 	Category                                    apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
@@ -3825,6 +3829,72 @@ func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSett
 	return false
 }
 
+// A Cashback Payment object. This field will be present in the JSON response if
+// and only if `category` is equal to `cashback_payment`.
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPayment struct {
+	// The card on which the cashback was accrued.
+	AccruedOnCardID string `json:"accrued_on_card_id,required"`
+	// The amount in the minor unit of the transaction's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+	// currency.
+	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency `json:"currency,required"`
+	// The end of the period for which this transaction paid cashback.
+	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	// The start of the period for which this transaction paid cashback.
+	PeriodStart time.Time                                                                           `json:"period_start,required" format:"date-time"`
+	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentJSON `json:"-"`
+}
+
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPayment]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentJSON struct {
+	AccruedOnCardID apijson.Field
+	Amount          apijson.Field
+	Currency        apijson.Field
+	PeriodEnd       apijson.Field
+	PeriodStart     apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+// currency.
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyCad InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency = "CAD"
+	// Swiss Franc (CHF)
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyChf InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency = "CHF"
+	// Euro (EUR)
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyEur InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency = "EUR"
+	// British Pound (GBP)
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyGbp InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency = "GBP"
+	// Japanese Yen (JPY)
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyJpy InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency = "JPY"
+	// US Dollar (USD)
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyUsd InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency = "USD"
+)
+
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrency) IsKnown() bool {
+	switch r {
+	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyCad, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyChf, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyEur, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyGbp, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyJpy, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCashbackPaymentCurrencyUsd:
+		return true
+	}
+	return false
+}
+
 // The type of the resource. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory string
@@ -3841,6 +3911,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_transfer_rejection"
 	// ACH Transfer Return: details will be under the `ach_transfer_return` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "ach_transfer_return"
+	// Cashback Payment: details will be under the `cashback_payment` object.
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCashbackPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "cashback_payment"
 	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
 	// object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
@@ -3913,7 +3985,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheckDepositReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
+	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCashbackPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheckDepositReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
 		return true
 	}
 	return false
