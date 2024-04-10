@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.38.0 (2024-04-10)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/Increase/increase-go/compare/v0.37.0...v0.38.0)
+
+### Features
+
+* **api:** updates ([#255](https://github.com/Increase/increase-go/issues/255)) ([391aa46](https://github.com/Increase/increase-go/commit/391aa46e6a8f6e8824effdaa0aa1c64e48a8080c))
+
+
+### Documentation
+
+* **api:** update links to NAICS classification codes ([#253](https://github.com/Increase/increase-go/issues/253)) ([b14327a](https://github.com/Increase/increase-go/commit/b14327a8eaa42a86bc51709bbc326b52ed80e07e))
+
 ## 0.37.0 (2024-04-05)
 
 Full Changelog: [v0.36.0...v0.37.0](https://github.com/Increase/increase-go/compare/v0.36.0...v0.37.0)
