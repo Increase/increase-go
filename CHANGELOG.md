@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.38.1 (2024-04-11)
+
+Full Changelog: [v0.38.0...v0.38.1](https://github.com/Increase/increase-go/compare/v0.38.0...v0.38.1)
+
+### Bug Fixes
+
+* **types:** mark physical card cardholder as required ([#256](https://github.com/Increase/increase-go/issues/256)) ([c3381f3](https://github.com/Increase/increase-go/commit/c3381f3cfd7cd63746520199d64bcb0f4a57f203))
+
 ## 0.38.0 (2024-04-10)
 
 Full Changelog: [v0.37.0...v0.38.0](https://github.com/Increase/increase-go/compare/v0.37.0...v0.38.0)
