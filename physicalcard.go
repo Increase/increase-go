@@ -93,7 +93,7 @@ type PhysicalCard struct {
 	// The identifier for the Card this Physical Card represents.
 	CardID string `json:"card_id,required"`
 	// Details about the cardholder, as it appears on the printed card.
-	Cardholder PhysicalCardCardholder `json:"cardholder,required,nullable"`
+	Cardholder PhysicalCardCardholder `json:"cardholder,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Physical Card was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
