@@ -112,6 +112,9 @@ type CheckTransfer struct {
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
 	Approval CheckTransferApproval `json:"approval,required,nullable"`
+	// If the Check Transfer was successfully deposited, this will contain the
+	// identifier of the Inbound Check Deposit object with details of the deposit.
+	ApprovedInboundCheckDepositID string `json:"approved_inbound_check_deposit_id,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation CheckTransferCancellation `json:"cancellation,required,nullable"`
@@ -123,8 +126,6 @@ type CheckTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
 	Currency CheckTransferCurrency `json:"currency,required"`
-	// After a check transfer is deposited, this will contain supplemental details.
-	Deposit CheckTransferDeposit `json:"deposit,required,nullable"`
 	// Whether Increase will print and mail the check or if you will do it yourself.
 	FulfillmentMethod CheckTransferFulfillmentMethod `json:"fulfillment_method,required"`
 	// The idempotency key you chose for this object. This value is unique across
@@ -162,29 +163,29 @@ type CheckTransfer struct {
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
 type checkTransferJSON struct {
-	ID                    apijson.Field
-	AccountID             apijson.Field
-	AccountNumber         apijson.Field
-	Amount                apijson.Field
-	Approval              apijson.Field
-	Cancellation          apijson.Field
-	CheckNumber           apijson.Field
-	CreatedAt             apijson.Field
-	Currency              apijson.Field
-	Deposit               apijson.Field
-	FulfillmentMethod     apijson.Field
-	IdempotencyKey        apijson.Field
-	Mailing               apijson.Field
-	PendingTransactionID  apijson.Field
-	PhysicalCheck         apijson.Field
-	RoutingNumber         apijson.Field
-	SourceAccountNumberID apijson.Field
-	Status                apijson.Field
-	StopPaymentRequest    apijson.Field
-	Submission            apijson.Field
-	Type                  apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	ID                            apijson.Field
+	AccountID                     apijson.Field
+	AccountNumber                 apijson.Field
+	Amount                        apijson.Field
+	Approval                      apijson.Field
+	ApprovedInboundCheckDepositID apijson.Field
+	Cancellation                  apijson.Field
+	CheckNumber                   apijson.Field
+	CreatedAt                     apijson.Field
+	Currency                      apijson.Field
+	FulfillmentMethod             apijson.Field
+	IdempotencyKey                apijson.Field
+	Mailing                       apijson.Field
+	PendingTransactionID          apijson.Field
+	PhysicalCheck                 apijson.Field
+	RoutingNumber                 apijson.Field
+	SourceAccountNumberID         apijson.Field
+	Status                        apijson.Field
+	StopPaymentRequest            apijson.Field
+	Submission                    apijson.Field
+	Type                          apijson.Field
+	raw                           string
+	ExtraFields                   map[string]apijson.Field
 }
 
 func (r *CheckTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -275,72 +276,6 @@ const (
 func (r CheckTransferCurrency) IsKnown() bool {
 	switch r {
 	case CheckTransferCurrencyCad, CheckTransferCurrencyChf, CheckTransferCurrencyEur, CheckTransferCurrencyGbp, CheckTransferCurrencyJpy, CheckTransferCurrencyUsd:
-		return true
-	}
-	return false
-}
-
-// After a check transfer is deposited, this will contain supplemental details.
-type CheckTransferDeposit struct {
-	// The identifier of the API File object containing an image of the back of the
-	// deposited check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
-	// bank depositing this check. In some rare cases, this is not transmitted via
-	// Check21 and the value will be null.
-	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
-	// When the check was deposited.
-	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
-	// The identifier of the API File object containing an image of the front of the
-	// deposited check.
-	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
-	// The identifier of the Inbound Check Deposit object associated with this
-	// transaction.
-	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
-	// The identifier of the Transaction object created when the check was deposited.
-	TransactionID string `json:"transaction_id,required,nullable"`
-	// The identifier of the Check Transfer object that was deposited.
-	TransferID string `json:"transfer_id,required,nullable"`
-	// A constant representing the object's type. For this resource it will always be
-	// `check_transfer_deposit`.
-	Type CheckTransferDepositType `json:"type,required"`
-	JSON checkTransferDepositJSON `json:"-"`
-}
-
-// checkTransferDepositJSON contains the JSON metadata for the struct
-// [CheckTransferDeposit]
-type checkTransferDepositJSON struct {
-	BackImageFileID                 apijson.Field
-	BankOfFirstDepositRoutingNumber apijson.Field
-	DepositedAt                     apijson.Field
-	FrontImageFileID                apijson.Field
-	InboundCheckDepositID           apijson.Field
-	TransactionID                   apijson.Field
-	TransferID                      apijson.Field
-	Type                            apijson.Field
-	raw                             string
-	ExtraFields                     map[string]apijson.Field
-}
-
-func (r *CheckTransferDeposit) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r checkTransferDepositJSON) RawJSON() string {
-	return r.raw
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `check_transfer_deposit`.
-type CheckTransferDepositType string
-
-const (
-	CheckTransferDepositTypeCheckTransferDeposit CheckTransferDepositType = "check_transfer_deposit"
-)
-
-func (r CheckTransferDepositType) IsKnown() bool {
-	switch r {
-	case CheckTransferDepositTypeCheckTransferDeposit:
 		return true
 	}
 	return false
