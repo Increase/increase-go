@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.39.0 (2024-04-16)
+
+Full Changelog: [v0.38.1...v0.39.0](https://github.com/Increase/increase-go/compare/v0.38.1...v0.39.0)
+
+### Features
+
+* **api:** add /inbound_check_deposits endpoints ([#261](https://github.com/Increase/increase-go/issues/261)) ([8e43705](https://github.com/Increase/increase-go/commit/8e43705c495753a38d266dade61f63c4a1486bf2))
+* **option:** add option to provide a raw request body ([#260](https://github.com/Increase/increase-go/issues/260)) ([63a11e4](https://github.com/Increase/increase-go/commit/63a11e48728d17d457463aa58111ea2a7fbaca8b))
+
+
+### Chores
+
+* **internal:** formatting ([#258](https://github.com/Increase/increase-go/issues/258)) ([8579856](https://github.com/Increase/increase-go/commit/8579856012fc52e3c2432d69a20d04ce0f597487))
+
 ## 0.38.1 (2024-04-11)
 
 Full Changelog: [v0.38.0...v0.38.1](https://github.com/Increase/increase-go/compare/v0.38.0...v0.38.1)
