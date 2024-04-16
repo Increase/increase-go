@@ -410,11 +410,19 @@ func (r ExportNewParamsTransactionCsvCreatedAt) MarshalJSON() (data []byte, err 
 }
 
 type ExportListParams struct {
+	Category  param.Field[ExportListParamsCategory]  `query:"category"`
+	CreatedAt param.Field[ExportListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                  `query:"limit"`
+	Status param.Field[ExportListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [ExportListParams]'s query parameters as `url.Values`.
@@ -423,4 +431,103 @@ func (r ExportListParams) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type ExportListParamsCategory struct {
+	// Filter Exports for those with the specified category or categories. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]ExportListParamsCategoryIn] `query:"in"`
+}
+
+// URLQuery serializes [ExportListParamsCategory]'s query parameters as
+// `url.Values`.
+func (r ExportListParamsCategory) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type ExportListParamsCategoryIn string
+
+const (
+	// Export an Open Financial Exchange (OFX) file of transactions and balances for a
+	// given time range and Account.
+	ExportListParamsCategoryInAccountStatementOfx ExportListParamsCategoryIn = "account_statement_ofx"
+	// Export a CSV of all transactions for a given time range.
+	ExportListParamsCategoryInTransactionCsv ExportListParamsCategoryIn = "transaction_csv"
+	// Export a CSV of account balances for the dates in a given range.
+	ExportListParamsCategoryInBalanceCsv ExportListParamsCategoryIn = "balance_csv"
+	// Export a CSV of bookkeeping account balances for the dates in a given range.
+	ExportListParamsCategoryInBookkeepingAccountBalanceCsv ExportListParamsCategoryIn = "bookkeeping_account_balance_csv"
+	// Export a CSV of entities with a given status.
+	ExportListParamsCategoryInEntityCsv ExportListParamsCategoryIn = "entity_csv"
+)
+
+func (r ExportListParamsCategoryIn) IsKnown() bool {
+	switch r {
+	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv:
+		return true
+	}
+	return false
+}
+
+type ExportListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [ExportListParamsCreatedAt]'s query parameters as
+// `url.Values`.
+func (r ExportListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type ExportListParamsStatus struct {
+	// Filter Exports for those with the specified status or statuses. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]ExportListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [ExportListParamsStatus]'s query parameters as `url.Values`.
+func (r ExportListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type ExportListParamsStatusIn string
+
+const (
+	// Increase is generating the export.
+	ExportListParamsStatusInPending ExportListParamsStatusIn = "pending"
+	// The export has been successfully generated.
+	ExportListParamsStatusInComplete ExportListParamsStatusIn = "complete"
+	// The export failed to generate. Increase will reach out to you to resolve the
+	// issue.
+	ExportListParamsStatusInFailed ExportListParamsStatusIn = "failed"
+)
+
+func (r ExportListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case ExportListParamsStatusInPending, ExportListParamsStatusInComplete, ExportListParamsStatusInFailed:
+		return true
+	}
+	return false
 }

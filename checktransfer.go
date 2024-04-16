@@ -294,6 +294,9 @@ type CheckTransferDeposit struct {
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the Inbound Check Deposit object associated with this
+	// transaction.
+	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
 	// The identifier of the Transaction object created when the check was deposited.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The identifier of the Check Transfer object that was deposited.
@@ -311,6 +314,7 @@ type checkTransferDepositJSON struct {
 	BankOfFirstDepositRoutingNumber apijson.Field
 	DepositedAt                     apijson.Field
 	FrontImageFileID                apijson.Field
+	InboundCheckDepositID           apijson.Field
 	TransactionID                   apijson.Field
 	TransferID                      apijson.Field
 	Type                            apijson.Field

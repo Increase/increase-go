@@ -63,6 +63,7 @@ type Client struct {
 	InboundWireTransfers                   *InboundWireTransferService
 	DigitalCardProfiles                    *DigitalCardProfileService
 	PhysicalCardProfiles                   *PhysicalCardProfileService
+	InboundCheckDeposits                   *InboundCheckDepositService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -128,6 +129,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.InboundWireTransfers = NewInboundWireTransferService(opts...)
 	r.DigitalCardProfiles = NewDigitalCardProfileService(opts...)
 	r.PhysicalCardProfiles = NewPhysicalCardProfileService(opts...)
+	r.InboundCheckDeposits = NewInboundCheckDepositService(opts...)
 
 	return
 }
