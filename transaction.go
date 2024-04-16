@@ -2373,7 +2373,7 @@ func (r TransactionSourceCardSettlementType) IsKnown() bool {
 // and only if `category` is equal to `cashback_payment`.
 type TransactionSourceCashbackPayment struct {
 	// The card on which the cashback was accrued.
-	AccruedOnCardID string `json:"accrued_on_card_id,required"`
+	AccruedOnCardID string `json:"accrued_on_card_id,required,nullable"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -3888,8 +3888,6 @@ const (
 	TransactionSourceInternalSourceReasonAccountClosure TransactionSourceInternalSourceReason = "account_closure"
 	// Bank migration
 	TransactionSourceInternalSourceReasonBankMigration TransactionSourceInternalSourceReason = "bank_migration"
-	// Cashback
-	TransactionSourceInternalSourceReasonCashback TransactionSourceInternalSourceReason = "cashback"
 	// Check adjustment
 	TransactionSourceInternalSourceReasonCheckAdjustment TransactionSourceInternalSourceReason = "check_adjustment"
 	// Collection payment
@@ -3916,7 +3914,7 @@ const (
 
 func (r TransactionSourceInternalSourceReason) IsKnown() bool {
 	switch r {
-	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCashback, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn:
+	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn:
 		return true
 	}
 	return false

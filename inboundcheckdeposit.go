@@ -74,7 +74,7 @@ type InboundCheckDeposit struct {
 	// The Account the check is being deposited against.
 	AccountID string `json:"account_id,required"`
 	// The Account Number the check is being deposited against.
-	AccountNumberID string `json:"account_number_id,required"`
+	AccountNumberID string `json:"account_number_id,required,nullable"`
 	// The deposited amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
