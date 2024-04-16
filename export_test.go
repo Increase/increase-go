@@ -114,8 +114,21 @@ func TestExportListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Exports.List(context.TODO(), increase.ExportListParams{
-		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(1)),
+		Category: increase.F(increase.ExportListParamsCategory{
+			In: increase.F([]increase.ExportListParamsCategoryIn{increase.ExportListParamsCategoryInAccountStatementOfx, increase.ExportListParamsCategoryInTransactionCsv, increase.ExportListParamsCategoryInBalanceCsv}),
+		}),
+		CreatedAt: increase.F(increase.ExportListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
+		Status: increase.F(increase.ExportListParamsStatus{
+			In: increase.F([]increase.ExportListParamsStatusIn{increase.ExportListParamsStatusInPending, increase.ExportListParamsStatusInComplete, increase.ExportListParamsStatusInFailed}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

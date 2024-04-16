@@ -269,9 +269,16 @@ func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
 type WireDrawdownRequestListParams struct {
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter Wire Drawdown Requests for those with the specified status.
+	Status param.Field[WireDrawdownRequestListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [WireDrawdownRequestListParams]'s query parameters as
@@ -281,4 +288,26 @@ func (r WireDrawdownRequestListParams) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+// Filter Wire Drawdown Requests for those with the specified status.
+type WireDrawdownRequestListParamsStatus string
+
+const (
+	// The drawdown request is queued to be submitted to Fedwire.
+	WireDrawdownRequestListParamsStatusPendingSubmission WireDrawdownRequestListParamsStatus = "pending_submission"
+	// The drawdown request has been sent and the recipient should respond in some way.
+	WireDrawdownRequestListParamsStatusPendingResponse WireDrawdownRequestListParamsStatus = "pending_response"
+	// The drawdown request has been fulfilled by the recipient.
+	WireDrawdownRequestListParamsStatusFulfilled WireDrawdownRequestListParamsStatus = "fulfilled"
+	// The drawdown request has been refused by the recipient.
+	WireDrawdownRequestListParamsStatusRefused WireDrawdownRequestListParamsStatus = "refused"
+)
+
+func (r WireDrawdownRequestListParamsStatus) IsKnown() bool {
+	switch r {
+	case WireDrawdownRequestListParamsStatusPendingSubmission, WireDrawdownRequestListParamsStatusPendingResponse, WireDrawdownRequestListParamsStatusFulfilled, WireDrawdownRequestListParamsStatusRefused:
+		return true
+	}
+	return false
 }
