@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.40.0 (2024-04-16)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/Increase/increase-go/compare/v0.39.0...v0.40.0)
+
+### Features
+
+* **api:** remove deposit field from check transfer ([#264](https://github.com/Increase/increase-go/issues/264)) ([f9fffb0](https://github.com/Increase/increase-go/commit/f9fffb064fd5b1962f8dbdbbc0b25b8a8ca3809f))
+
+
+### Build System
+
+* configure UTF-8 locale in devcontainer ([#262](https://github.com/Increase/increase-go/issues/262)) ([d3f39fc](https://github.com/Increase/increase-go/commit/d3f39fce996a1229d56aa1cd43fadc35e2f9737a))
+
 ## 0.39.0 (2024-04-16)
 
 Full Changelog: [v0.38.1...v0.39.0](https://github.com/Increase/increase-go/compare/v0.38.1...v0.39.0)
