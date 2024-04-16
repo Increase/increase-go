@@ -35,6 +35,7 @@ type SimulationService struct {
 	Cards                       *SimulationCardService
 	RealTimePaymentsTransfers   *SimulationRealTimePaymentsTransferService
 	PhysicalCards               *SimulationPhysicalCardService
+	InboundCheckDeposits        *SimulationInboundCheckDepositService
 }
 
 // NewSimulationService generates a new service that applies the given options to
@@ -60,6 +61,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.Cards = NewSimulationCardService(opts...)
 	r.RealTimePaymentsTransfers = NewSimulationRealTimePaymentsTransferService(opts...)
 	r.PhysicalCards = NewSimulationPhysicalCardService(opts...)
+	r.InboundCheckDeposits = NewSimulationInboundCheckDepositService(opts...)
 	return
 }
 

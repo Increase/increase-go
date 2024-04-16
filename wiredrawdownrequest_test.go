@@ -85,8 +85,10 @@ func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireDrawdownRequests.List(context.TODO(), increase.WireDrawdownRequestListParams{
-		Cursor: increase.F("string"),
-		Limit:  increase.F(int64(1)),
+		Cursor:         increase.F("string"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
+		Status:         increase.F(increase.WireDrawdownRequestListParamsStatusPendingSubmission),
 	})
 	if err != nil {
 		var apierr *increase.Error

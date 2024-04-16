@@ -259,6 +259,8 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the Inbound ACH Transfer object associated with this decline.
+	InboundACHTransferID string `json:"inbound_ach_transfer_id,required"`
 	// The descriptive date of the transfer.
 	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
 	// The additional information included with the transfer.
@@ -287,6 +289,7 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACH
 type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineJSON struct {
 	ID                                 apijson.Field
 	Amount                             apijson.Field
+	InboundACHTransferID               apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
 	OriginatorCompanyID                apijson.Field
@@ -958,9 +961,13 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceChe
 	// The identifier of the API File object containing an image of the back of the
 	// declined check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The identifier of the Check Transfer object associated with this decline.
+	CheckTransferID string `json:"check_transfer_id,required,nullable"`
 	// The identifier of the API File object containing an image of the front of the
 	// declined check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the Inbound Check Deposit object associated with this decline.
+	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
 	// Why the check was declined.
 	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
 	JSON   inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON   `json:"-"`
@@ -970,13 +977,15 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceChe
 // contains the JSON metadata for the struct
 // [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline]
 type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineJSON struct {
-	Amount           apijson.Field
-	AuxiliaryOnUs    apijson.Field
-	BackImageFileID  apijson.Field
-	FrontImageFileID apijson.Field
-	Reason           apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	Amount                apijson.Field
+	AuxiliaryOnUs         apijson.Field
+	BackImageFileID       apijson.Field
+	CheckTransferID       apijson.Field
+	FrontImageFileID      apijson.Field
+	InboundCheckDepositID apijson.Field
+	Reason                apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {
@@ -4219,6 +4228,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the Inbound Check Deposit object associated with this
+	// transaction.
+	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
 	// The identifier of the Transaction object created when the check was deposited.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// The identifier of the Check Transfer object that was deposited.
@@ -4237,6 +4249,7 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCheckTransf
 	BankOfFirstDepositRoutingNumber apijson.Field
 	DepositedAt                     apijson.Field
 	FrontImageFileID                apijson.Field
+	InboundCheckDepositID           apijson.Field
 	TransactionID                   apijson.Field
 	TransferID                      apijson.Field
 	Type                            apijson.Field
@@ -4433,7 +4446,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHT
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
 	TraceNumber string `json:"trace_number,required"`
-	// The inbound ach transfer's identifier.
+	// The Inbound ACH Transfer's identifier.
 	TransferID string                                                                                 `json:"transfer_id,required"`
 	JSON       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundACHTransferJSON `json:"-"`
 }

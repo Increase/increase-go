@@ -13,8 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationCheckTransferMail(t *testing.T) {
-	t.Skip("Prism incorrectly returns an invalid JSON error")
+func TestSimulationInboundCheckDepositNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,7 +25,11 @@ func TestSimulationCheckTransferMail(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.CheckTransfers.Mail(context.TODO(), "check_transfer_30b43acfu9vw8fyc4f5")
+	_, err := client.Simulations.InboundCheckDeposits.New(context.TODO(), increase.SimulationInboundCheckDepositNewParams{
+		AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:          increase.F(int64(1000)),
+		CheckNumber:     increase.F("1234567890"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
