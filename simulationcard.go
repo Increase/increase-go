@@ -260,6 +260,8 @@ type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the Inbound ACH Transfer object associated with this decline.
+	InboundACHTransferID string `json:"inbound_ach_transfer_id,required"`
 	// The descriptive date of the transfer.
 	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
 	// The additional information included with the transfer.
@@ -288,6 +290,7 @@ type CardAuthorizationSimulationDeclinedTransactionSourceACHDecline struct {
 type cardAuthorizationSimulationDeclinedTransactionSourceACHDeclineJSON struct {
 	ID                                 apijson.Field
 	Amount                             apijson.Field
+	InboundACHTransferID               apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
 	OriginatorCompanyDiscretionaryData apijson.Field
 	OriginatorCompanyID                apijson.Field
@@ -959,9 +962,13 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
 	// The identifier of the API File object containing an image of the back of the
 	// declined check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	// The identifier of the Check Transfer object associated with this decline.
+	CheckTransferID string `json:"check_transfer_id,required,nullable"`
 	// The identifier of the API File object containing an image of the front of the
 	// declined check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// The identifier of the Inbound Check Deposit object associated with this decline.
+	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
 	// Why the check was declined.
 	Reason CardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
 	JSON   cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON   `json:"-"`
@@ -971,13 +978,15 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline struct {
 // the JSON metadata for the struct
 // [CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline]
 type cardAuthorizationSimulationDeclinedTransactionSourceCheckDeclineJSON struct {
-	Amount           apijson.Field
-	AuxiliaryOnUs    apijson.Field
-	BackImageFileID  apijson.Field
-	FrontImageFileID apijson.Field
-	Reason           apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	Amount                apijson.Field
+	AuxiliaryOnUs         apijson.Field
+	BackImageFileID       apijson.Field
+	CheckTransferID       apijson.Field
+	FrontImageFileID      apijson.Field
+	InboundCheckDepositID apijson.Field
+	Reason                apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCheckDecline) UnmarshalJSON(data []byte) (err error) {

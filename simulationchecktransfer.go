@@ -29,15 +29,6 @@ func NewSimulationCheckTransferService(opts ...option.RequestOption) (r *Simulat
 	return
 }
 
-// Simulates a [Check Transfer](#check-transfers) being deposited at a bank. This
-// transfer must first have a `status` of `mailed`.
-func (r *SimulationCheckTransferService) Deposit(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("simulations/check_transfers/%s/deposit", checkTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
-}
-
 // Simulates the mailing of a [Check Transfer](#check-transfers), which happens
 // once per weekday in production but can be sped up in sandbox. This transfer must
 // first have a `status` of `pending_approval` or `pending_submission`.
