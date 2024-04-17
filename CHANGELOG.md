@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.41.0 (2024-04-17)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/Increase/increase-go/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* **api:** add altered_or_fictitious check decline reason ([#265](https://github.com/Increase/increase-go/issues/265)) ([959f491](https://github.com/Increase/increase-go/commit/959f491b46682695b9859082cb212368f541a77e))
+
 ## 0.40.0 (2024-04-16)
 
 Full Changelog: [v0.39.0...v0.40.0](https://github.com/Increase/increase-go/compare/v0.39.0...v0.40.0)
