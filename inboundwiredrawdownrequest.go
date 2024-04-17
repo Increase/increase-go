@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/increase/increase-go/internal/apijson"
 	"github.com/increase/increase-go/internal/apiquery"
@@ -85,6 +86,9 @@ type InboundWireDrawdownRequest struct {
 	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
 	// The drawdown request's beneficiary's routing number.
 	BeneficiaryRoutingNumber string `json:"beneficiary_routing_number,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the inbound wire drawdown requested was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
 	Currency string `json:"currency,required"`
@@ -134,6 +138,7 @@ type inboundWireDrawdownRequestJSON struct {
 	BeneficiaryAddressLine3                 apijson.Field
 	BeneficiaryName                         apijson.Field
 	BeneficiaryRoutingNumber                apijson.Field
+	CreatedAt                               apijson.Field
 	Currency                                apijson.Field
 	MessageToRecipient                      apijson.Field
 	OriginatorAccountNumber                 apijson.Field
