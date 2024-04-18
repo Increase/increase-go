@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.42.0 (2024-04-18)
+
+Full Changelog: [v0.41.0...v0.42.0](https://github.com/Increase/increase-go/compare/v0.41.0...v0.42.0)
+
+### Features
+
+* **api:** add inbound_check_deposits decline endpoint ([#267](https://github.com/Increase/increase-go/issues/267)) ([31f1457](https://github.com/Increase/increase-go/commit/31f14570b15b5720b3678193d4d30872f2273028))
+
 ## 0.41.0 (2024-04-17)
 
 Full Changelog: [v0.40.0...v0.41.0](https://github.com/Increase/increase-go/compare/v0.40.0...v0.41.0)
