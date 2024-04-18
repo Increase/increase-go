@@ -66,6 +66,14 @@ func (r *InboundCheckDepositService) ListAutoPaging(ctx context.Context, query I
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Decline an Inbound Check Deposit
+func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDepositID string, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("inbound_check_deposits/%s/decline", inboundCheckDepositID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
 // Inbound Check Deposits are records of third-parties attempting to deposit checks
 // against your account.
 type InboundCheckDeposit struct {
