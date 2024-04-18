@@ -354,7 +354,7 @@ const (
 	InboundACHTransferDeclineReasonOriginatorRequest InboundACHTransferDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	InboundACHTransferDeclineReasonTransactionNotAllowed InboundACHTransferDeclineReason = "transaction_not_allowed"
-	// The user initiated the decline.
+	// Your integration declined this transfer via the API.
 	InboundACHTransferDeclineReasonUserInitiated InboundACHTransferDeclineReason = "user_initiated"
 )
 
