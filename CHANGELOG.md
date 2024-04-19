@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.43.0 (2024-04-19)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/Increase/increase-go/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** add account_id param to ach_prenotification and third_party to check_transfer ([#269](https://github.com/Increase/increase-go/issues/269)) ([41ca668](https://github.com/Increase/increase-go/commit/41ca668d6fbafcbcb745f274d94f1daa0bafba2d))
+
 ## 0.42.0 (2024-04-18)
 
 Full Changelog: [v0.41.0...v0.42.0](https://github.com/Increase/increase-go/compare/v0.41.0...v0.42.0)
