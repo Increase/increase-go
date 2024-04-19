@@ -53,6 +53,9 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		RequireApproval: increase.F(true),
+		ThirdParty: increase.F(increase.CheckTransferNewParamsThirdParty{
+			CheckNumber: increase.F("x"),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
