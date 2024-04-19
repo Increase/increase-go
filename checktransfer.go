@@ -155,6 +155,9 @@ type CheckTransfer struct {
 	StopPaymentRequest CheckTransferStopPaymentRequest `json:"stop_payment_request,required,nullable"`
 	// After the transfer is submitted, this will contain supplemental details.
 	Submission CheckTransferSubmission `json:"submission,required,nullable"`
+	// Details relating to the custom fulfillment you will perform. Will be present if
+	// and only if `fulfillment_method` is equal to `third_party`.
+	ThirdParty CheckTransferThirdParty `json:"third_party,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
@@ -183,6 +186,7 @@ type checkTransferJSON struct {
 	Status                        apijson.Field
 	StopPaymentRequest            apijson.Field
 	Submission                    apijson.Field
+	ThirdParty                    apijson.Field
 	Type                          apijson.Field
 	raw                           string
 	ExtraFields                   map[string]apijson.Field
@@ -572,6 +576,30 @@ func (r checkTransferSubmissionJSON) RawJSON() string {
 	return r.raw
 }
 
+// Details relating to the custom fulfillment you will perform. Will be present if
+// and only if `fulfillment_method` is equal to `third_party`.
+type CheckTransferThirdParty struct {
+	// The check number that will be printed on the check.
+	CheckNumber string                      `json:"check_number,required,nullable"`
+	JSON        checkTransferThirdPartyJSON `json:"-"`
+}
+
+// checkTransferThirdPartyJSON contains the JSON metadata for the struct
+// [CheckTransferThirdParty]
+type checkTransferThirdPartyJSON struct {
+	CheckNumber apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferThirdParty) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferThirdPartyJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `check_transfer`.
 type CheckTransferType string
@@ -604,6 +632,10 @@ type CheckTransferNewParams struct {
 	PhysicalCheck param.Field[CheckTransferNewParamsPhysicalCheck] `json:"physical_check"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
+	// Details relating to the custom fulfillment you will perform. This is required if
+	// `fulfillment_method` is equal to `third_party`. It must not be included if any
+	// other `fulfillment_method` is provided.
+	ThirdParty param.Field[CheckTransferNewParamsThirdParty] `json:"third_party"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -690,6 +722,20 @@ type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 }
 
 func (r CheckTransferNewParamsPhysicalCheckReturnAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Details relating to the custom fulfillment you will perform. This is required if
+// `fulfillment_method` is equal to `third_party`. It must not be included if any
+// other `fulfillment_method` is provided.
+type CheckTransferNewParamsThirdParty struct {
+	// The check number you will print on the check. This should not contain leading
+	// zeroes. If this is omitted, Increase will generate a check number for you; you
+	// should inspect the response and use that check number.
+	CheckNumber param.Field[string] `json:"check_number"`
+}
+
+func (r CheckTransferNewParamsThirdParty) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

@@ -218,7 +218,6 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				}),
 			}),
 		}),
-		Relationship: increase.F(increase.EntityNewParamsRelationshipAffiliated),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
 		}}),
