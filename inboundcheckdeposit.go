@@ -79,6 +79,10 @@ func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDe
 type InboundCheckDeposit struct {
 	// The deposit's identifier.
 	ID string `json:"id,required"`
+	// If the Inbound Check Deposit was accepted, the
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which this
+	// took place.
+	AcceptedAt time.Time `json:"accepted_at,required,nullable" format:"date-time"`
 	// The Account the check is being deposited against.
 	AccountID string `json:"account_id,required"`
 	// The Account Number the check is being deposited against.
@@ -102,6 +106,10 @@ type InboundCheckDeposit struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
 	Currency InboundCheckDepositCurrency `json:"currency,required"`
+	// If the Inbound Check Deposit was declined, the
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which this
+	// took place.
+	DeclinedAt time.Time `json:"declined_at,required,nullable" format:"date-time"`
 	// If the deposit attempt has been rejected, the identifier of the Declined
 	// Transaction object created as a result of the failed deposit.
 	DeclinedTransactionID string `json:"declined_transaction_id,required,nullable"`
@@ -122,6 +130,7 @@ type InboundCheckDeposit struct {
 // [InboundCheckDeposit]
 type inboundCheckDepositJSON struct {
 	ID                              apijson.Field
+	AcceptedAt                      apijson.Field
 	AccountID                       apijson.Field
 	AccountNumberID                 apijson.Field
 	Amount                          apijson.Field
@@ -131,6 +140,7 @@ type inboundCheckDepositJSON struct {
 	CheckTransferID                 apijson.Field
 	CreatedAt                       apijson.Field
 	Currency                        apijson.Field
+	DeclinedAt                      apijson.Field
 	DeclinedTransactionID           apijson.Field
 	FrontImageFileID                apijson.Field
 	Status                          apijson.Field
@@ -183,12 +193,12 @@ const (
 	// The Inbound Check Deposit was accepted.
 	InboundCheckDepositStatusAccepted InboundCheckDepositStatus = "accepted"
 	// The Inbound Check Deposit was rejected.
-	InboundCheckDepositStatusRejected InboundCheckDepositStatus = "rejected"
+	InboundCheckDepositStatusDeclined InboundCheckDepositStatus = "declined"
 )
 
 func (r InboundCheckDepositStatus) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositStatusPending, InboundCheckDepositStatusAccepted, InboundCheckDepositStatusRejected:
+	case InboundCheckDepositStatusPending, InboundCheckDepositStatusAccepted, InboundCheckDepositStatusDeclined:
 		return true
 	}
 	return false
@@ -212,8 +222,11 @@ func (r InboundCheckDepositType) IsKnown() bool {
 
 type InboundCheckDepositListParams struct {
 	// Filter Inbound Check Deposits to those belonging to the specified Account.
-	AccountID param.Field[string]                                 `query:"account_id"`
-	CreatedAt param.Field[InboundCheckDepositListParamsCreatedAt] `query:"created_at"`
+	AccountID param.Field[string] `query:"account_id"`
+	// Filter Inbound Check Deposits to those belonging to the specified Check
+	// Transfer.
+	CheckTransferID param.Field[string]                                 `query:"check_transfer_id"`
+	CreatedAt       param.Field[InboundCheckDepositListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
