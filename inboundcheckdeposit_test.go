@@ -49,7 +49,8 @@ func TestInboundCheckDepositListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundCheckDeposits.List(context.TODO(), increase.InboundCheckDepositListParams{
-		AccountID: increase.F("string"),
+		AccountID:       increase.F("string"),
+		CheckTransferID: increase.F("string"),
 		CreatedAt: increase.F(increase.InboundCheckDepositListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
