@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.44.0 (2024-04-23)
+
+Full Changelog: [v0.43.0...v0.44.0](https://github.com/Increase/increase-go/compare/v0.43.0...v0.44.0)
+
+### Features
+
+* **api:** remove inbound_wire_drawdown_payment_reversal ([#271](https://github.com/Increase/increase-go/issues/271)) ([c8c5cb5](https://github.com/Increase/increase-go/commit/c8c5cb5ca9adab482582da6652e7b0f72246b5bc))
+
 ## 0.43.0 (2024-04-19)
 
 Full Changelog: [v0.42.0...v0.43.0](https://github.com/Increase/increase-go/compare/v0.42.0...v0.43.0)
