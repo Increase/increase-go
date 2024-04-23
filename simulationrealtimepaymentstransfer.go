@@ -1693,10 +1693,6 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// An Inbound Wire Drawdown Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
 	InboundWireDrawdownPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
-	// An Inbound Wire Drawdown Payment Reversal object. This field will be present in
-	// the JSON response if and only if `category` is equal to
-	// `inbound_wire_drawdown_payment_reversal`.
-	InboundWireDrawdownPaymentReversal InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal `json:"inbound_wire_drawdown_payment_reversal,required,nullable"`
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
@@ -1748,7 +1744,6 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	InboundInternationalACHTransfer             apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
 	InboundWireDrawdownPayment                  apijson.Field
-	InboundWireDrawdownPaymentReversal          apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
@@ -3963,9 +3958,6 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment Reversal: details will be under the
-	// `inbound_wire_drawdown_payment_reversal` object.
-	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment_reversal"
 	// Inbound Wire Drawdown Payment: details will be under the
 	// `inbound_wire_drawdown_payment` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "inbound_wire_drawdown_payment"
@@ -3998,7 +3990,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCashbackPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheckDepositReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPaymentReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
+	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCashbackPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheckDepositReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -5024,63 +5016,6 @@ func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInbound
 }
 
 func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentJSON) RawJSON() string {
-	return r.raw
-}
-
-// An Inbound Wire Drawdown Payment Reversal object. This field will be present in
-// the JSON response if and only if `category` is equal to
-// `inbound_wire_drawdown_payment_reversal`.
-type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal struct {
-	// The amount that was reversed.
-	Amount int64 `json:"amount,required"`
-	// The description on the reversal message from Fedwire.
-	Description string `json:"description,required"`
-	// The Fedwire cycle date for the wire reversal.
-	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
-	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
-	// The Fedwire sequence number.
-	InputSequenceNumber string `json:"input_sequence_number,required"`
-	// The Fedwire input source identifier.
-	InputSource string `json:"input_source,required"`
-	// The American Banking Association (ABA) routing number of the bank originating
-	// the transfer.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
-	// The Fedwire cycle date for the wire transfer that was reversed.
-	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
-	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
-	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource string                                                                                                 `json:"previous_message_input_source,required"`
-	JSON                       inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON `json:"-"`
-}
-
-// inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON
-// contains the JSON metadata for the struct
-// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal]
-type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON struct {
-	Amount                                        apijson.Field
-	Description                                   apijson.Field
-	InputCycleDate                                apijson.Field
-	InputMessageAccountabilityData                apijson.Field
-	InputSequenceNumber                           apijson.Field
-	InputSource                                   apijson.Field
-	OriginatorRoutingNumber                       apijson.Field
-	PreviousMessageInputCycleDate                 apijson.Field
-	PreviousMessageInputMessageAccountabilityData apijson.Field
-	PreviousMessageInputSequenceNumber            apijson.Field
-	PreviousMessageInputSource                    apijson.Field
-	raw                                           string
-	ExtraFields                                   map[string]apijson.Field
-}
-
-func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversal) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundWireDrawdownPaymentReversalJSON) RawJSON() string {
 	return r.raw
 }
 
