@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.45.0 (2024-04-25)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/Increase/increase-go/compare/v0.44.0...v0.45.0)
+
+### ⚠ BREAKING CHANGES
+
+* require account ID for creating an ACH prenotification ([#276](https://github.com/Increase/increase-go/issues/276))
+
+### Bug Fixes
+
+* require account ID for creating an ACH prenotification ([#276](https://github.com/Increase/increase-go/issues/276)) ([2b79f11](https://github.com/Increase/increase-go/commit/2b79f112f0560ee67334fa51471b0613a36fe78e))
+
+
+### Chores
+
+* **internal:** fix Port function for number and boolean enums ([#275](https://github.com/Increase/increase-go/issues/275)) ([0231358](https://github.com/Increase/increase-go/commit/0231358231699ff8910c263c9fe76dd301b20d45))
+* **internal:** use actions/checkout@v4 for codeflow ([#273](https://github.com/Increase/increase-go/issues/273)) ([fa8a81e](https://github.com/Increase/increase-go/commit/fa8a81e4a0bb110ba5680c0044e81bb3738474f0))
+
 ## 0.44.0 (2024-04-23)
 
 Full Changelog: [v0.43.0...v0.44.0](https://github.com/Increase/increase-go/compare/v0.43.0...v0.44.0)
