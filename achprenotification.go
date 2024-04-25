@@ -522,13 +522,13 @@ func (r ACHPrenotificationType) IsKnown() bool {
 }
 
 type ACHPrenotificationNewParams struct {
+	// The Increase identifier for the account that will send the transfer.
+	AccountID param.Field[string] `json:"account_id,required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number,required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number,required"`
-	// The Increase identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id"`
 	// Additional information that will be sent to the recipient.
 	Addendum param.Field[string] `json:"addendum"`
 	// The description of the date of the transfer.
