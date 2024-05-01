@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.46.0 (2024-05-01)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/Increase/increase-go/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** updates ([#281](https://github.com/Increase/increase-go/issues/281)) ([bccec8f](https://github.com/Increase/increase-go/commit/bccec8fae768f3687814220fc2b99c6d2b58a60e))
+
+
+### Bug Fixes
+
+* **test:** fix test github actions job ([#280](https://github.com/Increase/increase-go/issues/280)) ([4b926b9](https://github.com/Increase/increase-go/commit/4b926b94b55613287aa088cb1752af2ddb3170cd))
+
+
+### Chores
+
+* **internal:** add link to openapi spec ([#277](https://github.com/Increase/increase-go/issues/277)) ([bb98d60](https://github.com/Increase/increase-go/commit/bb98d60eedc632f53a59f77dd1bd86c5726b5819))
+* **internal:** add scripts/test, scripts/mock and add ci job ([#279](https://github.com/Increase/increase-go/issues/279)) ([f2ff6c9](https://github.com/Increase/increase-go/commit/f2ff6c9ef52eb40e6de95979848fcaa3bdf915fe))
+
 ## 0.45.0 (2024-04-25)
 
 Full Changelog: [v0.44.0...v0.45.0](https://github.com/Increase/increase-go/compare/v0.44.0...v0.45.0)
