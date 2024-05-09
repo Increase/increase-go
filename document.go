@@ -18,9 +18,11 @@ import (
 )
 
 // DocumentService contains methods and other services that help with interacting
-// with the increase API. Note, unlike clients, this service does not read
-// variables from the environment automatically. You should not instantiate this
-// service directly, and instead use the [NewDocumentService] method instead.
+// with the increase API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewDocumentService] method instead.
 type DocumentService struct {
 	Options []option.RequestOption
 }

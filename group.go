@@ -13,9 +13,11 @@ import (
 )
 
 // GroupService contains methods and other services that help with interacting with
-// the increase API. Note, unlike clients, this service does not read variables
-// from the environment automatically. You should not instantiate this service
-// directly, and instead use the [NewGroupService] method instead.
+// the increase API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewGroupService] method instead.
 type GroupService struct {
 	Options []option.RequestOption
 }
