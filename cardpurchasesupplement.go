@@ -18,10 +18,11 @@ import (
 )
 
 // CardPurchaseSupplementService contains methods and other services that help with
-// interacting with the increase API. Note, unlike clients, this service does not
-// read variables from the environment automatically. You should not instantiate
-// this service directly, and instead use the [NewCardPurchaseSupplementService]
-// method instead.
+// interacting with the increase API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewCardPurchaseSupplementService] method instead.
 type CardPurchaseSupplementService struct {
 	Options []option.RequestOption
 }
