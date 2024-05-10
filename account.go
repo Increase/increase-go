@@ -107,6 +107,9 @@ type Account struct {
 	// The bank the Account is with.
 	Bank AccountBank `json:"bank,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
+	// was closed.
+	ClosedAt time.Time `json:"closed_at,required,nullable" format:"date-time"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
@@ -148,6 +151,7 @@ type Account struct {
 type accountJSON struct {
 	ID                    apijson.Field
 	Bank                  apijson.Field
+	ClosedAt              apijson.Field
 	CreatedAt             apijson.Field
 	Currency              apijson.Field
 	EntityID              apijson.Field
