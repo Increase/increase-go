@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.47.0 (2024-05-10)
+
+Full Changelog: [v0.46.0...v0.47.0](https://github.com/Increase/increase-go/compare/v0.46.0...v0.47.0)
+
+### Features
+
+* **api:** enhance API with extended transaction details and new entity types ([#286](https://github.com/Increase/increase-go/issues/286)) ([afad2fe](https://github.com/Increase/increase-go/commit/afad2fe14c07142c0029baf955b370fc13db0fd7))
+* propagate resource description field from stainless config to SDK docs ([#285](https://github.com/Increase/increase-go/issues/285)) ([4f506f1](https://github.com/Increase/increase-go/commit/4f506f12babc9f5c1459bf16ee06a22e3164f364))
+
+
+### Chores
+
+* **internal:** fix bootstrap script ([#282](https://github.com/Increase/increase-go/issues/282)) ([05cf453](https://github.com/Increase/increase-go/commit/05cf453bea31167fae8ad815deed8c11ae0f8218))
+
 ## 0.46.0 (2024-05-01)
 
 Full Changelog: [v0.45.0...v0.46.0](https://github.com/Increase/increase-go/compare/v0.45.0...v0.46.0)
