@@ -108,6 +108,8 @@ type RealTimeDecisionCardAuthorization struct {
 	AccountID string `json:"account_id,required"`
 	// The identifier of the Card that is being authorized.
 	CardID string `json:"card_id,required"`
+	// The identifier of the Card Payment this authorization belongs to.
+	CardPaymentID string `json:"card_payment_id,required"`
 	// Whether or not the authorization was approved.
 	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision,required,nullable"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
@@ -163,6 +165,7 @@ type RealTimeDecisionCardAuthorization struct {
 type realTimeDecisionCardAuthorizationJSON struct {
 	AccountID            apijson.Field
 	CardID               apijson.Field
+	CardPaymentID        apijson.Field
 	Decision             apijson.Field
 	DigitalWalletTokenID apijson.Field
 	MerchantAcceptorID   apijson.Field

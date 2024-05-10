@@ -108,7 +108,7 @@ func (r *EntityService) UpdateAddress(ctx context.Context, entityID string, body
 }
 
 // Entities are the legal entities that own accounts. They can be people,
-// corporations, partnerships, or trusts.
+// corporations, partnerships, government authorities, or trusts.
 type Entity struct {
 	// The entity's identifier.
 	ID string `json:"id,required"`
@@ -123,6 +123,9 @@ type Entity struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Entity's details were most recently confirmed.
 	DetailsConfirmedAt time.Time `json:"details_confirmed_at,required,nullable" format:"date-time"`
+	// Details of the government authority entity. Will be present if `structure` is
+	// equal to `government_authority`.
+	GovernmentAuthority EntityGovernmentAuthority `json:"government_authority,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -155,6 +158,7 @@ type entityJSON struct {
 	CreatedAt             apijson.Field
 	Description           apijson.Field
 	DetailsConfirmedAt    apijson.Field
+	GovernmentAuthority   apijson.Field
 	IdempotencyKey        apijson.Field
 	Joint                 apijson.Field
 	NaturalPerson         apijson.Field
@@ -420,6 +424,122 @@ const (
 func (r EntityCorporationBeneficialOwnersProng) IsKnown() bool {
 	switch r {
 	case EntityCorporationBeneficialOwnersProngOwnership, EntityCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
+
+// Details of the government authority entity. Will be present if `structure` is
+// equal to `government_authority`.
+type EntityGovernmentAuthority struct {
+	// The government authority's address.
+	Address EntityGovernmentAuthorityAddress `json:"address,required"`
+	// The identifying details of authorized persons of the government authority.
+	AuthorizedPersons []EntityGovernmentAuthorityAuthorizedPerson `json:"authorized_persons,required"`
+	// The category of the government authority.
+	Category EntityGovernmentAuthorityCategory `json:"category,required"`
+	// The government authority's name.
+	Name string `json:"name,required"`
+	// The Employer Identification Number (EIN) of the government authority.
+	TaxIdentifier string `json:"tax_identifier,required,nullable"`
+	// The government authority's website.
+	Website string                        `json:"website,required,nullable"`
+	JSON    entityGovernmentAuthorityJSON `json:"-"`
+}
+
+// entityGovernmentAuthorityJSON contains the JSON metadata for the struct
+// [EntityGovernmentAuthority]
+type entityGovernmentAuthorityJSON struct {
+	Address           apijson.Field
+	AuthorizedPersons apijson.Field
+	Category          apijson.Field
+	Name              apijson.Field
+	TaxIdentifier     apijson.Field
+	Website           apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *EntityGovernmentAuthority) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityGovernmentAuthorityJSON) RawJSON() string {
+	return r.raw
+}
+
+// The government authority's address.
+type EntityGovernmentAuthorityAddress struct {
+	// The city of the address.
+	City string `json:"city,required"`
+	// The first line of the address.
+	Line1 string `json:"line1,required"`
+	// The second line of the address.
+	Line2 string `json:"line2,required,nullable"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State string `json:"state,required"`
+	// The ZIP code of the address.
+	Zip  string                               `json:"zip,required"`
+	JSON entityGovernmentAuthorityAddressJSON `json:"-"`
+}
+
+// entityGovernmentAuthorityAddressJSON contains the JSON metadata for the struct
+// [EntityGovernmentAuthorityAddress]
+type entityGovernmentAuthorityAddressJSON struct {
+	City        apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityGovernmentAuthorityAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityGovernmentAuthorityAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+type EntityGovernmentAuthorityAuthorizedPerson struct {
+	// The identifier of this authorized person.
+	AuthorizedPersonID string `json:"authorized_person_id,required"`
+	// The person's legal name.
+	Name string                                        `json:"name,required"`
+	JSON entityGovernmentAuthorityAuthorizedPersonJSON `json:"-"`
+}
+
+// entityGovernmentAuthorityAuthorizedPersonJSON contains the JSON metadata for the
+// struct [EntityGovernmentAuthorityAuthorizedPerson]
+type entityGovernmentAuthorityAuthorizedPersonJSON struct {
+	AuthorizedPersonID apijson.Field
+	Name               apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *EntityGovernmentAuthorityAuthorizedPerson) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityGovernmentAuthorityAuthorizedPersonJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the government authority.
+type EntityGovernmentAuthorityCategory string
+
+const (
+	// The Public Entity is a Municipality.
+	EntityGovernmentAuthorityCategoryMunicipality EntityGovernmentAuthorityCategory = "municipality"
+)
+
+func (r EntityGovernmentAuthorityCategory) IsKnown() bool {
+	switch r {
+	case EntityGovernmentAuthorityCategoryMunicipality:
 		return true
 	}
 	return false
@@ -720,11 +840,13 @@ const (
 	EntityStructureJoint EntityStructure = "joint"
 	// A trust.
 	EntityStructureTrust EntityStructure = "trust"
+	// A government authority.
+	EntityStructureGovernmentAuthority EntityStructure = "government_authority"
 )
 
 func (r EntityStructure) IsKnown() bool {
 	switch r {
-	case EntityStructureCorporation, EntityStructureNaturalPerson, EntityStructureJoint, EntityStructureTrust:
+	case EntityStructureCorporation, EntityStructureNaturalPerson, EntityStructureJoint, EntityStructureTrust, EntityStructureGovernmentAuthority:
 		return true
 	}
 	return false
@@ -1186,6 +1308,9 @@ type EntityNewParams struct {
 	Corporation param.Field[EntityNewParamsCorporation] `json:"corporation"`
 	// The description you choose to give the entity.
 	Description param.Field[string] `json:"description"`
+	// Details of the Government Authority entity to create. Required if `structure` is
+	// equal to `Government Authority`.
+	GovernmentAuthority param.Field[EntityNewParamsGovernmentAuthority] `json:"government_authority"`
 	// Details of the joint entity to create. Required if `structure` is equal to
 	// `joint`.
 	Joint param.Field[EntityNewParamsJoint] `json:"joint"`
@@ -1217,11 +1342,13 @@ const (
 	EntityNewParamsStructureJoint EntityNewParamsStructure = "joint"
 	// A trust.
 	EntityNewParamsStructureTrust EntityNewParamsStructure = "trust"
+	// A government authority.
+	EntityNewParamsStructureGovernmentAuthority EntityNewParamsStructure = "government_authority"
 )
 
 func (r EntityNewParamsStructure) IsKnown() bool {
 	switch r {
-	case EntityNewParamsStructureCorporation, EntityNewParamsStructureNaturalPerson, EntityNewParamsStructureJoint, EntityNewParamsStructureTrust:
+	case EntityNewParamsStructureCorporation, EntityNewParamsStructureNaturalPerson, EntityNewParamsStructureJoint, EntityNewParamsStructureTrust, EntityNewParamsStructureGovernmentAuthority:
 		return true
 	}
 	return false
@@ -1444,6 +1571,73 @@ const (
 func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 	switch r {
 	case EntityNewParamsCorporationBeneficialOwnersProngOwnership, EntityNewParamsCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
+
+// Details of the Government Authority entity to create. Required if `structure` is
+// equal to `Government Authority`.
+type EntityNewParamsGovernmentAuthority struct {
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
+	Address param.Field[EntityNewParamsGovernmentAuthorityAddress] `json:"address,required"`
+	// The identifying details of authorized officials acting on the entity's behalf.
+	AuthorizedPersons param.Field[[]EntityNewParamsGovernmentAuthorityAuthorizedPerson] `json:"authorized_persons,required"`
+	// The category of the government authority.
+	Category param.Field[EntityNewParamsGovernmentAuthorityCategory] `json:"category,required"`
+	// The legal name of the government authority.
+	Name param.Field[string] `json:"name,required"`
+	// The Employer Identification Number (EIN) for the government authority.
+	TaxIdentifier param.Field[string] `json:"tax_identifier,required"`
+	// The website of the government authority.
+	Website param.Field[string] `json:"website"`
+}
+
+func (r EntityNewParamsGovernmentAuthority) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
+type EntityNewParamsGovernmentAuthorityAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityNewParamsGovernmentAuthorityAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type EntityNewParamsGovernmentAuthorityAuthorizedPerson struct {
+	// The person's legal name.
+	Name param.Field[string] `json:"name,required"`
+}
+
+func (r EntityNewParamsGovernmentAuthorityAuthorizedPerson) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The category of the government authority.
+type EntityNewParamsGovernmentAuthorityCategory string
+
+const (
+	// The Public Entity is a Municipality.
+	EntityNewParamsGovernmentAuthorityCategoryMunicipality EntityNewParamsGovernmentAuthorityCategory = "municipality"
+)
+
+func (r EntityNewParamsGovernmentAuthorityCategory) IsKnown() bool {
+	switch r {
+	case EntityNewParamsGovernmentAuthorityCategoryMunicipality:
 		return true
 	}
 	return false

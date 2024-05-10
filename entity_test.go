@@ -81,6 +81,26 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			}}),
 		}),
 		Description: increase.F("x"),
+		GovernmentAuthority: increase.F(increase.EntityNewParamsGovernmentAuthority{
+			Name:          increase.F("x"),
+			Website:       increase.F("string"),
+			Category:      increase.F(increase.EntityNewParamsGovernmentAuthorityCategoryMunicipality),
+			TaxIdentifier: increase.F("x"),
+			Address: increase.F(increase.EntityNewParamsGovernmentAuthorityAddress{
+				Line1: increase.F("x"),
+				Line2: increase.F("x"),
+				City:  increase.F("x"),
+				State: increase.F("x"),
+				Zip:   increase.F("x"),
+			}),
+			AuthorizedPersons: increase.F([]increase.EntityNewParamsGovernmentAuthorityAuthorizedPerson{{
+				Name: increase.F("x"),
+			}, {
+				Name: increase.F("x"),
+			}, {
+				Name: increase.F("x"),
+			}}),
+		}),
 		Joint: increase.F(increase.EntityNewParamsJoint{
 			Name: increase.F("x"),
 			Individuals: increase.F([]increase.EntityNewParamsJointIndividual{{

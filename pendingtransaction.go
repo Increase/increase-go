@@ -377,6 +377,11 @@ type PendingTransactionSourceCardAuthorization struct {
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	// The pending amount in the minor unit of the transaction's presentment currency.
+	PresentmentAmount int64 `json:"presentment_amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
 	ProcessingCategory PendingTransactionSourceCardAuthorizationProcessingCategory `json:"processing_category,required"`
@@ -412,6 +417,8 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	NetworkRiskScore     apijson.Field
 	PendingTransactionID apijson.Field
 	PhysicalCardID       apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
 	ProcessingCategory   apijson.Field
 	RealTimeDecisionID   apijson.Field
 	Type                 apijson.Field
