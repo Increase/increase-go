@@ -35,9 +35,9 @@ func TestDigitalCardProfileNewWithOptionalParams(t *testing.T) {
 		ContactPhone:          increase.F("+18885551212"),
 		ContactWebsite:        increase.F("https://example.com"),
 		TextColor: increase.F(increase.DigitalCardProfileNewParamsTextColor{
-			Red:   increase.F(int64(26)),
-			Green: increase.F(int64(43)),
 			Blue:  increase.F(int64(59)),
+			Green: increase.F(int64(43)),
+			Red:   increase.F(int64(26)),
 		}),
 	})
 	if err != nil {
@@ -147,9 +147,9 @@ func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
 			Description:           increase.F("x"),
 			IssuerName:            increase.F("x"),
 			TextColor: increase.F(increase.DigitalCardProfileCloneParamsTextColor{
-				Red:   increase.F(int64(0)),
-				Green: increase.F(int64(0)),
 				Blue:  increase.F(int64(0)),
+				Green: increase.F(int64(0)),
+				Red:   increase.F(int64(0)),
 			}),
 		},
 	)

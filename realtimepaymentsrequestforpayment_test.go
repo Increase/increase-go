@@ -29,13 +29,13 @@ func TestRealTimePaymentsRequestForPaymentNew(t *testing.T) {
 	_, err := client.RealTimePaymentsRequestForPayments.New(context.TODO(), increase.RealTimePaymentsRequestForPaymentNewParams{
 		Amount: increase.F(int64(100)),
 		Debtor: increase.F(increase.RealTimePaymentsRequestForPaymentNewParamsDebtor{
-			Name: increase.F("Ian Crease"),
 			Address: increase.F(increase.RealTimePaymentsRequestForPaymentNewParamsDebtorAddress{
-				StreetName: increase.F("Liberty Street"),
-				PostCode:   increase.F("x"),
 				City:       increase.F("x"),
 				Country:    increase.F("US"),
+				PostCode:   increase.F("x"),
+				StreetName: increase.F("Liberty Street"),
 			}),
+			Name: increase.F("Ian Crease"),
 		}),
 		DestinationAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 		ExpiresAt:                  increase.F(time.Now()),

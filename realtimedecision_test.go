@@ -59,8 +59,8 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 			}),
 			DigitalWalletToken: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletToken{
 				Approval: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenApproval{
-					Phone: increase.F("x"),
 					Email: increase.F("x"),
+					Phone: increase.F("x"),
 				}),
 				Decline: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenDecline{
 					Reason: increase.F("x"),

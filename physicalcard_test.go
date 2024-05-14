@@ -33,17 +33,17 @@ func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 			LastName:  increase.F("Crease"),
 		}),
 		Shipment: increase.F(increase.PhysicalCardNewParamsShipment{
-			Method: increase.F(increase.PhysicalCardNewParamsShipmentMethodUsps),
 			Address: increase.F(increase.PhysicalCardNewParamsShipmentAddress{
-				Name:        increase.F("Ian Crease"),
+				City:        increase.F("New York"),
 				Line1:       increase.F("33 Liberty Street"),
 				Line2:       increase.F("Unit 2"),
 				Line3:       increase.F("x"),
+				Name:        increase.F("Ian Crease"),
 				PhoneNumber: increase.F("x"),
-				City:        increase.F("New York"),
-				State:       increase.F("NY"),
 				PostalCode:  increase.F("10045"),
+				State:       increase.F("NY"),
 			}),
+			Method: increase.F(increase.PhysicalCardNewParamsShipmentMethodUsps),
 		}),
 		PhysicalCardProfileID: increase.F("string"),
 	})

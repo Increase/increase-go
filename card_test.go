@@ -29,17 +29,17 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 	_, err := client.Cards.New(context.TODO(), increase.CardNewParams{
 		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 		BillingAddress: increase.F(increase.CardNewParamsBillingAddress{
+			City:       increase.F("x"),
 			Line1:      increase.F("x"),
 			Line2:      increase.F("x"),
-			City:       increase.F("x"),
-			State:      increase.F("x"),
 			PostalCode: increase.F("x"),
+			State:      increase.F("x"),
 		}),
 		Description: increase.F("Card for Ian Crease"),
 		DigitalWallet: increase.F(increase.CardNewParamsDigitalWallet{
+			DigitalCardProfileID: increase.F("string"),
 			Email:                increase.F("x"),
 			Phone:                increase.F("x"),
-			DigitalCardProfileID: increase.F("string"),
 		}),
 		EntityID: increase.F("string"),
 	})
@@ -91,17 +91,17 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 		"card_oubs0hwk5rn6knuecxg2",
 		increase.CardUpdateParams{
 			BillingAddress: increase.F(increase.CardUpdateParamsBillingAddress{
+				City:       increase.F("x"),
 				Line1:      increase.F("x"),
 				Line2:      increase.F("x"),
-				City:       increase.F("x"),
-				State:      increase.F("x"),
 				PostalCode: increase.F("x"),
+				State:      increase.F("x"),
 			}),
 			Description: increase.F("New description"),
 			DigitalWallet: increase.F(increase.CardUpdateParamsDigitalWallet{
+				DigitalCardProfileID: increase.F("string"),
 				Email:                increase.F("x"),
 				Phone:                increase.F("x"),
-				DigitalCardProfileID: increase.F("string"),
 			}),
 			EntityID: increase.F("string"),
 			Status:   increase.F(increase.CardUpdateParamsStatusActive),

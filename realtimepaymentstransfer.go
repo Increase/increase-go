@@ -93,13 +93,14 @@ type RealTimePaymentsTransfer struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The name of the transfer's recipient as provided by the sender.
+	// The name of the transfer's recipient. This is set by the sender when creating
+	// the transfer.
 	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For real-time payments transfers this is always equal to `USD`.
 	Currency RealTimePaymentsTransferCurrency `json:"currency,required"`
-	// The name of the transfer's sender. If not provided, the account's entity name
-	// will be used.
+	// The name of the transfer's sender. If not provided, defaults to the name of the
+	// account's entity.
 	DebtorName string `json:"debtor_name,required,nullable"`
 	// The destination account number.
 	DestinationAccountNumber string `json:"destination_account_number,required"`
@@ -134,9 +135,11 @@ type RealTimePaymentsTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_payments_transfer`.
 	Type RealTimePaymentsTransferType `json:"type,required"`
-	// The name of the party on whose behalf the creditor is receiving the payment.
+	// The name of the ultimate recipient of the transfer. Set this if the creditor is
+	// an intermediary receiving the payment for someone else.
 	UltimateCreditorName string `json:"ultimate_creditor_name,required,nullable"`
-	// The name of the the party on whose behalf the debtor is instructing the payment.
+	// The name of the ultimate sender of the transfer. Set this if the funds are being
+	// sent on behalf of someone who is not the account holder at Increase.
 	UltimateDebtorName string                       `json:"ultimate_debtor_name,required,nullable"`
 	JSON               realTimePaymentsTransferJSON `json:"-"`
 }
@@ -459,8 +462,8 @@ type RealTimePaymentsTransferNewParams struct {
 	RemittanceInformation param.Field[string] `json:"remittance_information,required"`
 	// The identifier of the Account Number from which to send the transfer.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
-	// The name of the transfer's sender. If not provided, the account's entity name
-	// will be used.
+	// The name of the transfer's sender. If not provided, defaults to the name of the
+	// account's entity.
 	DebtorName param.Field[string] `json:"debtor_name"`
 	// The destination account number.
 	DestinationAccountNumber param.Field[string] `json:"destination_account_number"`
@@ -473,9 +476,11 @@ type RealTimePaymentsTransferNewParams struct {
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// The name of the party on whose behalf the creditor is receiving the payment.
+	// The name of the ultimate recipient of the transfer. Set this if the creditor is
+	// an intermediary receiving the payment for someone else.
 	UltimateCreditorName param.Field[string] `json:"ultimate_creditor_name"`
-	// The name of the the party on whose behalf the debtor is instructing the payment.
+	// The name of the ultimate sender of the transfer. Set this if the funds are being
+	// sent on behalf of someone who is not the account holder at Increase.
 	UltimateDebtorName param.Field[string] `json:"ultimate_debtor_name"`
 }
 
