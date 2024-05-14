@@ -28,42 +28,42 @@ func TestEntityBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Entities.BeneficialOwners.New(context.TODO(), increase.EntityBeneficialOwnerNewParams{
 		BeneficialOwner: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwner{
+			CompanyTitle: increase.F("CEO"),
 			Individual: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividual{
-				Name:        increase.F("Ian Crease"),
-				DateOfBirth: increase.F(time.Now()),
 				Address: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualAddress{
+					City:  increase.F("New York"),
 					Line1: increase.F("33 Liberty Street"),
 					Line2: increase.F("x"),
-					City:  increase.F("New York"),
 					State: increase.F("NY"),
 					Zip:   increase.F("10045"),
 				}),
 				ConfirmedNoUsTaxID: increase.F(true),
+				DateOfBirth:        increase.F(time.Now()),
 				Identification: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentification{
-					Method: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber),
-					Number: increase.F("078051120"),
-					Passport: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPassport{
-						FileID:         increase.F("string"),
-						ExpirationDate: increase.F(time.Now()),
-						Country:        increase.F("x"),
-					}),
 					DriversLicense: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationDriversLicense{
-						FileID:         increase.F("string"),
 						BackFileID:     increase.F("string"),
 						ExpirationDate: increase.F(time.Now()),
+						FileID:         increase.F("string"),
 						State:          increase.F("x"),
 					}),
+					Method: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber),
+					Number: increase.F("078051120"),
 					Other: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationOther{
+						BackFileID:     increase.F("string"),
 						Country:        increase.F("x"),
 						Description:    increase.F("x"),
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("string"),
-						BackFileID:     increase.F("string"),
+					}),
+					Passport: increase.F(increase.EntityBeneficialOwnerNewParamsBeneficialOwnerIndividualIdentificationPassport{
+						Country:        increase.F("x"),
+						ExpirationDate: increase.F(time.Now()),
+						FileID:         increase.F("string"),
 					}),
 				}),
+				Name: increase.F("Ian Crease"),
 			}),
-			CompanyTitle: increase.F("CEO"),
-			Prongs:       increase.F([]increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProng{increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl}),
+			Prongs: increase.F([]increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProng{increase.EntityBeneficialOwnerNewParamsBeneficialOwnerProngControl}),
 		}),
 		EntityID: increase.F("entity_n8y8tnk2p9339ti393yi"),
 	})
@@ -115,9 +115,9 @@ func TestEntityBeneficialOwnerUpdateAddressWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Entities.BeneficialOwners.UpdateAddress(context.TODO(), increase.EntityBeneficialOwnerUpdateAddressParams{
 		Address: increase.F(increase.EntityBeneficialOwnerUpdateAddressParamsAddress{
+			City:  increase.F("New York"),
 			Line1: increase.F("33 Liberty Street"),
 			Line2: increase.F("Unit 2"),
-			City:  increase.F("New York"),
 			State: increase.F("NY"),
 			Zip:   increase.F("10045"),
 		}),
