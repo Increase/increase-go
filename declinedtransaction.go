@@ -193,6 +193,9 @@ type DeclinedTransactionSource struct {
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
+	// A Check Deposit Rejection object. This field will be present in the JSON
+	// response if and only if `category` is equal to `check_deposit_rejection`.
+	CheckDepositRejection DeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
@@ -213,6 +216,7 @@ type declinedTransactionSourceJSON struct {
 	CardDecline                            apijson.Field
 	Category                               apijson.Field
 	CheckDecline                           apijson.Field
+	CheckDepositRejection                  apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
 	WireDecline                            apijson.Field
@@ -914,13 +918,16 @@ const (
 	DeclinedTransactionSourceCategoryInternationalACHDecline DeclinedTransactionSourceCategory = "international_ach_decline"
 	// Wire Decline: details will be under the `wire_decline` object.
 	DeclinedTransactionSourceCategoryWireDecline DeclinedTransactionSourceCategory = "wire_decline"
+	// Check Deposit Rejection: details will be under the `check_deposit_rejection`
+	// object.
+	DeclinedTransactionSourceCategoryCheckDepositRejection DeclinedTransactionSourceCategory = "check_deposit_rejection"
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	DeclinedTransactionSourceCategoryOther DeclinedTransactionSourceCategory = "other"
 )
 
 func (r DeclinedTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryInternationalACHDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryOther:
+	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryInternationalACHDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryCheckDepositRejection, DeclinedTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1015,6 +1022,106 @@ const (
 func (r DeclinedTransactionSourceCheckDeclineReason) IsKnown() bool {
 	switch r {
 	case DeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled, DeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled, DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious, DeclinedTransactionSourceCheckDeclineReasonBreachesLimit, DeclinedTransactionSourceCheckDeclineReasonEntityNotActive, DeclinedTransactionSourceCheckDeclineReasonGroupLocked, DeclinedTransactionSourceCheckDeclineReasonInsufficientFunds, DeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested, DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment, DeclinedTransactionSourceCheckDeclineReasonNotAuthorized, DeclinedTransactionSourceCheckDeclineReasonAmountMismatch, DeclinedTransactionSourceCheckDeclineReasonNotOurItem, DeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound, DeclinedTransactionSourceCheckDeclineReasonReferToImage, DeclinedTransactionSourceCheckDeclineReasonUnableToProcess, DeclinedTransactionSourceCheckDeclineReasonUserInitiated:
+		return true
+	}
+	return false
+}
+
+// A Check Deposit Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_deposit_rejection`.
+type DeclinedTransactionSourceCheckDepositRejection struct {
+	// The rejected amount in the minor unit of check's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The identifier of the Check Deposit that was rejected.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+	// currency.
+	Currency DeclinedTransactionSourceCheckDepositRejectionCurrency `json:"currency,required"`
+	// Why the check deposit was rejected.
+	Reason DeclinedTransactionSourceCheckDepositRejectionReason `json:"reason,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check deposit was rejected.
+	RejectedAt time.Time                                          `json:"rejected_at,required" format:"date-time"`
+	JSON       declinedTransactionSourceCheckDepositRejectionJSON `json:"-"`
+}
+
+// declinedTransactionSourceCheckDepositRejectionJSON contains the JSON metadata
+// for the struct [DeclinedTransactionSourceCheckDepositRejection]
+type declinedTransactionSourceCheckDepositRejectionJSON struct {
+	Amount         apijson.Field
+	CheckDepositID apijson.Field
+	Currency       apijson.Field
+	Reason         apijson.Field
+	RejectedAt     apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCheckDepositRejection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCheckDepositRejectionJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
+type DeclinedTransactionSourceCheckDepositRejectionCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	DeclinedTransactionSourceCheckDepositRejectionCurrencyCad DeclinedTransactionSourceCheckDepositRejectionCurrency = "CAD"
+	// Swiss Franc (CHF)
+	DeclinedTransactionSourceCheckDepositRejectionCurrencyChf DeclinedTransactionSourceCheckDepositRejectionCurrency = "CHF"
+	// Euro (EUR)
+	DeclinedTransactionSourceCheckDepositRejectionCurrencyEur DeclinedTransactionSourceCheckDepositRejectionCurrency = "EUR"
+	// British Pound (GBP)
+	DeclinedTransactionSourceCheckDepositRejectionCurrencyGbp DeclinedTransactionSourceCheckDepositRejectionCurrency = "GBP"
+	// Japanese Yen (JPY)
+	DeclinedTransactionSourceCheckDepositRejectionCurrencyJpy DeclinedTransactionSourceCheckDepositRejectionCurrency = "JPY"
+	// US Dollar (USD)
+	DeclinedTransactionSourceCheckDepositRejectionCurrencyUsd DeclinedTransactionSourceCheckDepositRejectionCurrency = "USD"
+)
+
+func (r DeclinedTransactionSourceCheckDepositRejectionCurrency) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCheckDepositRejectionCurrencyCad, DeclinedTransactionSourceCheckDepositRejectionCurrencyChf, DeclinedTransactionSourceCheckDepositRejectionCurrencyEur, DeclinedTransactionSourceCheckDepositRejectionCurrencyGbp, DeclinedTransactionSourceCheckDepositRejectionCurrencyJpy, DeclinedTransactionSourceCheckDepositRejectionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Why the check deposit was rejected.
+type DeclinedTransactionSourceCheckDepositRejectionReason string
+
+const (
+	// The check's image is incomplete.
+	DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage DeclinedTransactionSourceCheckDepositRejectionReason = "incomplete_image"
+	// This is a duplicate check submission.
+	DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate DeclinedTransactionSourceCheckDepositRejectionReason = "duplicate"
+	// This check has poor image quality.
+	DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality DeclinedTransactionSourceCheckDepositRejectionReason = "poor_image_quality"
+	// The check was deposited with the incorrect amount.
+	DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount DeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_amount"
+	// The check is made out to someone other than the account holder.
+	DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient DeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_recipient"
+	// This check was not eligible for mobile deposit.
+	DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit DeclinedTransactionSourceCheckDepositRejectionReason = "not_eligible_for_mobile_deposit"
+	// This check is missing at least one required field.
+	DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements DeclinedTransactionSourceCheckDepositRejectionReason = "missing_required_data_elements"
+	// This check is suspected to be fraudulent.
+	DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud DeclinedTransactionSourceCheckDepositRejectionReason = "suspected_fraud"
+	// This check's deposit window has expired.
+	DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired DeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
+	// The check was rejected for an unknown reason.
+	DeclinedTransactionSourceCheckDepositRejectionReasonUnknown DeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
+)
+
+func (r DeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, DeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
 		return true
 	}
 	return false
@@ -1548,13 +1655,16 @@ const (
 	DeclinedTransactionListParamsCategoryInInternationalACHDecline DeclinedTransactionListParamsCategoryIn = "international_ach_decline"
 	// Wire Decline: details will be under the `wire_decline` object.
 	DeclinedTransactionListParamsCategoryInWireDecline DeclinedTransactionListParamsCategoryIn = "wire_decline"
+	// Check Deposit Rejection: details will be under the `check_deposit_rejection`
+	// object.
+	DeclinedTransactionListParamsCategoryInCheckDepositRejection DeclinedTransactionListParamsCategoryIn = "check_deposit_rejection"
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	DeclinedTransactionListParamsCategoryInOther DeclinedTransactionListParamsCategoryIn = "other"
 )
 
 func (r DeclinedTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionListParamsCategoryInACHDecline, DeclinedTransactionListParamsCategoryInCardDecline, DeclinedTransactionListParamsCategoryInCheckDecline, DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, DeclinedTransactionListParamsCategoryInInternationalACHDecline, DeclinedTransactionListParamsCategoryInWireDecline, DeclinedTransactionListParamsCategoryInOther:
+	case DeclinedTransactionListParamsCategoryInACHDecline, DeclinedTransactionListParamsCategoryInCardDecline, DeclinedTransactionListParamsCategoryInCheckDecline, DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, DeclinedTransactionListParamsCategoryInInternationalACHDecline, DeclinedTransactionListParamsCategoryInWireDecline, DeclinedTransactionListParamsCategoryInCheckDepositRejection, DeclinedTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
