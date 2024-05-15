@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.48.1 (2024-05-15)
+
+Full Changelog: [v0.48.0...v0.48.1](https://github.com/Increase/increase-go/compare/v0.48.0...v0.48.1)
+
+### Bug Fixes
+
+* fix reading the error body more than once ([#292](https://github.com/Increase/increase-go/issues/292)) ([e1c828a](https://github.com/Increase/increase-go/commit/e1c828a2e202f968e820dfb7397b03206c44c7af))
+
 ## 0.48.0 (2024-05-15)
 
 Full Changelog: [v0.47.0...v0.48.0](https://github.com/Increase/increase-go/compare/v0.47.0...v0.48.0)
