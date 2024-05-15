@@ -216,6 +216,9 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSource st
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
 	CheckDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
+	// A Check Deposit Rejection object. This field will be present in the JSON
+	// response if and only if `category` is equal to `check_deposit_rejection`.
+	CheckDepositRejection InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
@@ -237,6 +240,7 @@ type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceJSO
 	CardDecline                            apijson.Field
 	Category                               apijson.Field
 	CheckDecline                           apijson.Field
+	CheckDepositRejection                  apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	InternationalACHDecline                apijson.Field
 	WireDecline                            apijson.Field
@@ -944,13 +948,16 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInternationalACHDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "international_ach_decline"
 	// Wire Decline: details will be under the `wire_decline` object.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryWireDecline InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "wire_decline"
+	// Check Deposit Rejection: details will be under the `check_deposit_rejection`
+	// object.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCheckDepositRejection InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "check_deposit_rejection"
 	// The Declined Transaction was made for an undocumented or deprecated reason.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryOther InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory = "other"
 )
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryACHDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCardDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCheckDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInternationalACHDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryWireDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryOther:
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryACHDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCardDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCheckDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryInternationalACHDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryWireDecline, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryCheckDepositRejection, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1046,6 +1053,107 @@ const (
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReason) IsKnown() bool {
 	switch r {
 	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonBreachesLimit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonEntityNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonGroupLocked, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonInsufficientFunds, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonNotAuthorized, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonAmountMismatch, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonNotOurItem, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonReferToImage, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonUnableToProcess, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDeclineReasonUserInitiated:
+		return true
+	}
+	return false
+}
+
+// A Check Deposit Rejection object. This field will be present in the JSON
+// response if and only if `category` is equal to `check_deposit_rejection`.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejection struct {
+	// The rejected amount in the minor unit of check's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The identifier of the Check Deposit that was rejected.
+	CheckDepositID string `json:"check_deposit_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+	// currency.
+	Currency InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency `json:"currency,required"`
+	// Why the check deposit was rejected.
+	Reason InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason `json:"reason,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the check deposit was rejected.
+	RejectedAt time.Time                                                                                         `json:"rejected_at,required" format:"date-time"`
+	JSON       inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionJSON `json:"-"`
+}
+
+// inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejection]
+type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionJSON struct {
+	Amount         apijson.Field
+	CheckDepositID apijson.Field
+	Currency       apijson.Field
+	Reason         apijson.Field
+	RejectedAt     apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
+// currency.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyCad InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency = "CAD"
+	// Swiss Franc (CHF)
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyChf InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency = "CHF"
+	// Euro (EUR)
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyEur InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency = "EUR"
+	// British Pound (GBP)
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyGbp InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency = "GBP"
+	// Japanese Yen (JPY)
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyJpy InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency = "JPY"
+	// US Dollar (USD)
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyUsd InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency = "USD"
+)
+
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrency) IsKnown() bool {
+	switch r {
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyCad, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyChf, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyEur, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyGbp, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyJpy, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Why the check deposit was rejected.
+type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason string
+
+const (
+	// The check's image is incomplete.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "incomplete_image"
+	// This is a duplicate check submission.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "duplicate"
+	// This check has poor image quality.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "poor_image_quality"
+	// The check was deposited with the incorrect amount.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_amount"
+	// The check is made out to someone other than the account holder.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_recipient"
+	// This check was not eligible for mobile deposit.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "not_eligible_for_mobile_deposit"
+	// This check is missing at least one required field.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "missing_required_data_elements"
+	// This check is suspected to be fraudulent.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "suspected_fraud"
+	// This check's deposit window has expired.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
+	// The check was rejected for an unknown reason.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
+)
+
+func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
+	switch r {
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
 		return true
 	}
 	return false

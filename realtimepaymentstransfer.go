@@ -93,6 +93,8 @@ type RealTimePaymentsTransfer struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// What object created the transfer, either via the API or the dashboard.
+	CreatedBy RealTimePaymentsTransferCreatedBy `json:"created_by,required,nullable"`
 	// The name of the transfer's recipient. This is set by the sender when creating
 	// the transfer.
 	CreditorName string `json:"creditor_name,required"`
@@ -153,6 +155,7 @@ type realTimePaymentsTransferJSON struct {
 	Approval                 apijson.Field
 	Cancellation             apijson.Field
 	CreatedAt                apijson.Field
+	CreatedBy                apijson.Field
 	CreditorName             apijson.Field
 	Currency                 apijson.Field
 	DebtorName               apijson.Field
@@ -237,6 +240,128 @@ func (r *RealTimePaymentsTransferCancellation) UnmarshalJSON(data []byte) (err e
 }
 
 func (r realTimePaymentsTransferCancellationJSON) RawJSON() string {
+	return r.raw
+}
+
+// What object created the transfer, either via the API or the dashboard.
+type RealTimePaymentsTransferCreatedBy struct {
+	// If present, details about the API key that created the transfer.
+	APIKey RealTimePaymentsTransferCreatedByAPIKey `json:"api_key,required,nullable"`
+	// The type of object that created this transfer.
+	Category RealTimePaymentsTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the OAuth Application that created the transfer.
+	OAuthApplication RealTimePaymentsTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	// If present, details about the User that created the transfer.
+	User RealTimePaymentsTransferCreatedByUser `json:"user,required,nullable"`
+	JSON realTimePaymentsTransferCreatedByJSON `json:"-"`
+}
+
+// realTimePaymentsTransferCreatedByJSON contains the JSON metadata for the struct
+// [RealTimePaymentsTransferCreatedBy]
+type realTimePaymentsTransferCreatedByJSON struct {
+	APIKey           apijson.Field
+	Category         apijson.Field
+	OAuthApplication apijson.Field
+	User             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *RealTimePaymentsTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferCreatedByJSON) RawJSON() string {
+	return r.raw
+}
+
+// If present, details about the API key that created the transfer.
+type RealTimePaymentsTransferCreatedByAPIKey struct {
+	// The description set for the API key when it was created.
+	Description string                                      `json:"description,required,nullable"`
+	JSON        realTimePaymentsTransferCreatedByAPIKeyJSON `json:"-"`
+}
+
+// realTimePaymentsTransferCreatedByAPIKeyJSON contains the JSON metadata for the
+// struct [RealTimePaymentsTransferCreatedByAPIKey]
+type realTimePaymentsTransferCreatedByAPIKeyJSON struct {
+	Description apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimePaymentsTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferCreatedByAPIKeyJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of object that created this transfer.
+type RealTimePaymentsTransferCreatedByCategory string
+
+const (
+	// An API key. Details will be under the `api_key` object.
+	RealTimePaymentsTransferCreatedByCategoryAPIKey RealTimePaymentsTransferCreatedByCategory = "api_key"
+	// An OAuth application you connected to Increase. Details will be under the
+	// `oauth_application` object.
+	RealTimePaymentsTransferCreatedByCategoryOAuthApplication RealTimePaymentsTransferCreatedByCategory = "oauth_application"
+	// A User in the Increase dashboard. Details will be under the `user` object.
+	RealTimePaymentsTransferCreatedByCategoryUser RealTimePaymentsTransferCreatedByCategory = "user"
+)
+
+func (r RealTimePaymentsTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferCreatedByCategoryAPIKey, RealTimePaymentsTransferCreatedByCategoryOAuthApplication, RealTimePaymentsTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
+}
+
+// If present, details about the OAuth Application that created the transfer.
+type RealTimePaymentsTransferCreatedByOAuthApplication struct {
+	// The name of the OAuth Application.
+	Name string                                                `json:"name,required"`
+	JSON realTimePaymentsTransferCreatedByOAuthApplicationJSON `json:"-"`
+}
+
+// realTimePaymentsTransferCreatedByOAuthApplicationJSON contains the JSON metadata
+// for the struct [RealTimePaymentsTransferCreatedByOAuthApplication]
+type realTimePaymentsTransferCreatedByOAuthApplicationJSON struct {
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimePaymentsTransferCreatedByOAuthApplication) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferCreatedByOAuthApplicationJSON) RawJSON() string {
+	return r.raw
+}
+
+// If present, details about the User that created the transfer.
+type RealTimePaymentsTransferCreatedByUser struct {
+	// The email address of the User.
+	Email string                                    `json:"email,required"`
+	JSON  realTimePaymentsTransferCreatedByUserJSON `json:"-"`
+}
+
+// realTimePaymentsTransferCreatedByUserJSON contains the JSON metadata for the
+// struct [RealTimePaymentsTransferCreatedByUser]
+type realTimePaymentsTransferCreatedByUserJSON struct {
+	Email       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimePaymentsTransferCreatedByUser) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferCreatedByUserJSON) RawJSON() string {
 	return r.raw
 }
 
