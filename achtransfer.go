@@ -127,6 +127,8 @@ type ACHTransfer struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// What object created the transfer, either via the API or the dashboard.
+	CreatedBy ACHTransferCreatedBy `json:"created_by,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For ACH transfers this is always equal to `usd`.
 	Currency ACHTransferCurrency `json:"currency,required"`
@@ -198,6 +200,7 @@ type achTransferJSON struct {
 	CompanyEntryDescription  apijson.Field
 	CompanyName              apijson.Field
 	CreatedAt                apijson.Field
+	CreatedBy                apijson.Field
 	Currency                 apijson.Field
 	DestinationAccountHolder apijson.Field
 	EffectiveDate            apijson.Field
@@ -458,6 +461,128 @@ func (r *ACHTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r achTransferCancellationJSON) RawJSON() string {
+	return r.raw
+}
+
+// What object created the transfer, either via the API or the dashboard.
+type ACHTransferCreatedBy struct {
+	// If present, details about the API key that created the transfer.
+	APIKey ACHTransferCreatedByAPIKey `json:"api_key,required,nullable"`
+	// The type of object that created this transfer.
+	Category ACHTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the OAuth Application that created the transfer.
+	OAuthApplication ACHTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	// If present, details about the User that created the transfer.
+	User ACHTransferCreatedByUser `json:"user,required,nullable"`
+	JSON achTransferCreatedByJSON `json:"-"`
+}
+
+// achTransferCreatedByJSON contains the JSON metadata for the struct
+// [ACHTransferCreatedBy]
+type achTransferCreatedByJSON struct {
+	APIKey           apijson.Field
+	Category         apijson.Field
+	OAuthApplication apijson.Field
+	User             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *ACHTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferCreatedByJSON) RawJSON() string {
+	return r.raw
+}
+
+// If present, details about the API key that created the transfer.
+type ACHTransferCreatedByAPIKey struct {
+	// The description set for the API key when it was created.
+	Description string                         `json:"description,required,nullable"`
+	JSON        achTransferCreatedByAPIKeyJSON `json:"-"`
+}
+
+// achTransferCreatedByAPIKeyJSON contains the JSON metadata for the struct
+// [ACHTransferCreatedByAPIKey]
+type achTransferCreatedByAPIKeyJSON struct {
+	Description apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferCreatedByAPIKeyJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of object that created this transfer.
+type ACHTransferCreatedByCategory string
+
+const (
+	// An API key. Details will be under the `api_key` object.
+	ACHTransferCreatedByCategoryAPIKey ACHTransferCreatedByCategory = "api_key"
+	// An OAuth application you connected to Increase. Details will be under the
+	// `oauth_application` object.
+	ACHTransferCreatedByCategoryOAuthApplication ACHTransferCreatedByCategory = "oauth_application"
+	// A User in the Increase dashboard. Details will be under the `user` object.
+	ACHTransferCreatedByCategoryUser ACHTransferCreatedByCategory = "user"
+)
+
+func (r ACHTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case ACHTransferCreatedByCategoryAPIKey, ACHTransferCreatedByCategoryOAuthApplication, ACHTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
+}
+
+// If present, details about the OAuth Application that created the transfer.
+type ACHTransferCreatedByOAuthApplication struct {
+	// The name of the OAuth Application.
+	Name string                                   `json:"name,required"`
+	JSON achTransferCreatedByOAuthApplicationJSON `json:"-"`
+}
+
+// achTransferCreatedByOAuthApplicationJSON contains the JSON metadata for the
+// struct [ACHTransferCreatedByOAuthApplication]
+type achTransferCreatedByOAuthApplicationJSON struct {
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferCreatedByOAuthApplication) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferCreatedByOAuthApplicationJSON) RawJSON() string {
+	return r.raw
+}
+
+// If present, details about the User that created the transfer.
+type ACHTransferCreatedByUser struct {
+	// The email address of the User.
+	Email string                       `json:"email,required"`
+	JSON  achTransferCreatedByUserJSON `json:"-"`
+}
+
+// achTransferCreatedByUserJSON contains the JSON metadata for the struct
+// [ACHTransferCreatedByUser]
+type achTransferCreatedByUserJSON struct {
+	Email       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferCreatedByUser) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferCreatedByUserJSON) RawJSON() string {
 	return r.raw
 }
 
