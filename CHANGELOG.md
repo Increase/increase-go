@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.48.0 (2024-05-15)
+
+Full Changelog: [v0.47.0...v0.48.0](https://github.com/Increase/increase-go/compare/v0.47.0...v0.48.0)
+
+### Features
+
+* **api:** updates ([#291](https://github.com/Increase/increase-go/issues/291)) ([dc2958a](https://github.com/Increase/increase-go/commit/dc2958a13c8140f7ee37c1b0b11652d30d7d4f5f))
+
+
+### Chores
+
+* **docs:** add SECURITY.md ([#287](https://github.com/Increase/increase-go/issues/287)) ([6fc5be4](https://github.com/Increase/increase-go/commit/6fc5be42150e1fb1e2f5e8228e67000555031169))
+* **internal:** add slightly better logging to scripts ([#290](https://github.com/Increase/increase-go/issues/290)) ([8e2829b](https://github.com/Increase/increase-go/commit/8e2829b77902c73b94d114a20c977ef52a64f703))
+
+
+### Documentation
+
+* **api:** update examples & docstrings ([#289](https://github.com/Increase/increase-go/issues/289)) ([af75c44](https://github.com/Increase/increase-go/commit/af75c446f8a853dff7747ab397836a1353ca5c2a))
+
 ## 0.47.0 (2024-05-10)
 
 Full Changelog: [v0.46.0...v0.47.0](https://github.com/Increase/increase-go/compare/v0.46.0...v0.47.0)
