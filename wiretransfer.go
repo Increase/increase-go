@@ -140,6 +140,8 @@ type WireTransfer struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// What object created the transfer, either via the API or the dashboard.
+	CreatedBy WireTransferCreatedBy `json:"created_by,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For wire transfers this is always equal to `usd`.
 	Currency WireTransferCurrency `json:"currency,required"`
@@ -196,6 +198,7 @@ type wireTransferJSON struct {
 	BeneficiaryName         apijson.Field
 	Cancellation            apijson.Field
 	CreatedAt               apijson.Field
+	CreatedBy               apijson.Field
 	Currency                apijson.Field
 	ExternalAccountID       apijson.Field
 	IdempotencyKey          apijson.Field
@@ -279,6 +282,128 @@ func (r *WireTransferCancellation) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r wireTransferCancellationJSON) RawJSON() string {
+	return r.raw
+}
+
+// What object created the transfer, either via the API or the dashboard.
+type WireTransferCreatedBy struct {
+	// If present, details about the API key that created the transfer.
+	APIKey WireTransferCreatedByAPIKey `json:"api_key,required,nullable"`
+	// The type of object that created this transfer.
+	Category WireTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the OAuth Application that created the transfer.
+	OAuthApplication WireTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	// If present, details about the User that created the transfer.
+	User WireTransferCreatedByUser `json:"user,required,nullable"`
+	JSON wireTransferCreatedByJSON `json:"-"`
+}
+
+// wireTransferCreatedByJSON contains the JSON metadata for the struct
+// [WireTransferCreatedBy]
+type wireTransferCreatedByJSON struct {
+	APIKey           apijson.Field
+	Category         apijson.Field
+	OAuthApplication apijson.Field
+	User             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *WireTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreatedByJSON) RawJSON() string {
+	return r.raw
+}
+
+// If present, details about the API key that created the transfer.
+type WireTransferCreatedByAPIKey struct {
+	// The description set for the API key when it was created.
+	Description string                          `json:"description,required,nullable"`
+	JSON        wireTransferCreatedByAPIKeyJSON `json:"-"`
+}
+
+// wireTransferCreatedByAPIKeyJSON contains the JSON metadata for the struct
+// [WireTransferCreatedByAPIKey]
+type wireTransferCreatedByAPIKeyJSON struct {
+	Description apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreatedByAPIKeyJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of object that created this transfer.
+type WireTransferCreatedByCategory string
+
+const (
+	// An API key. Details will be under the `api_key` object.
+	WireTransferCreatedByCategoryAPIKey WireTransferCreatedByCategory = "api_key"
+	// An OAuth application you connected to Increase. Details will be under the
+	// `oauth_application` object.
+	WireTransferCreatedByCategoryOAuthApplication WireTransferCreatedByCategory = "oauth_application"
+	// A User in the Increase dashboard. Details will be under the `user` object.
+	WireTransferCreatedByCategoryUser WireTransferCreatedByCategory = "user"
+)
+
+func (r WireTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case WireTransferCreatedByCategoryAPIKey, WireTransferCreatedByCategoryOAuthApplication, WireTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
+}
+
+// If present, details about the OAuth Application that created the transfer.
+type WireTransferCreatedByOAuthApplication struct {
+	// The name of the OAuth Application.
+	Name string                                    `json:"name,required"`
+	JSON wireTransferCreatedByOAuthApplicationJSON `json:"-"`
+}
+
+// wireTransferCreatedByOAuthApplicationJSON contains the JSON metadata for the
+// struct [WireTransferCreatedByOAuthApplication]
+type wireTransferCreatedByOAuthApplicationJSON struct {
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferCreatedByOAuthApplication) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreatedByOAuthApplicationJSON) RawJSON() string {
+	return r.raw
+}
+
+// If present, details about the User that created the transfer.
+type WireTransferCreatedByUser struct {
+	// The email address of the User.
+	Email string                        `json:"email,required"`
+	JSON  wireTransferCreatedByUserJSON `json:"-"`
+}
+
+// wireTransferCreatedByUserJSON contains the JSON metadata for the struct
+// [WireTransferCreatedByUser]
+type wireTransferCreatedByUserJSON struct {
+	Email       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferCreatedByUser) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreatedByUserJSON) RawJSON() string {
 	return r.raw
 }
 

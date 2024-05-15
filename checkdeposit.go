@@ -253,6 +253,8 @@ type CheckDepositDepositRejection struct {
 	// The rejected amount in the minor unit of check's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// The identifier of the Check Deposit that was rejected.
+	CheckDepositID string `json:"check_deposit_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
 	Currency CheckDepositDepositRejectionCurrency `json:"currency,required"`
@@ -267,12 +269,13 @@ type CheckDepositDepositRejection struct {
 // checkDepositDepositRejectionJSON contains the JSON metadata for the struct
 // [CheckDepositDepositRejection]
 type checkDepositDepositRejectionJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	Reason      apijson.Field
-	RejectedAt  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Amount         apijson.Field
+	CheckDepositID apijson.Field
+	Currency       apijson.Field
+	Reason         apijson.Field
+	RejectedAt     apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *CheckDepositDepositRejection) UnmarshalJSON(data []byte) (err error) {
