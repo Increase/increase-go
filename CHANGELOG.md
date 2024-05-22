@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.49.0 (2024-05-22)
+
+Full Changelog: [v0.48.1...v0.49.0](https://github.com/Increase/increase-go/compare/v0.48.1...v0.49.0)
+
+### Features
+
+* export `ErrorType` and `ErrorStatus` types ([#296](https://github.com/Increase/increase-go/issues/296)) ([d8fd9c3](https://github.com/Increase/increase-go/commit/d8fd9c3884fa7772c4389fb049b1b3aa756f6ef0))
+
+
+### Bug Fixes
+
+* **api:** better handling of enum renaming ([d8fd9c3](https://github.com/Increase/increase-go/commit/d8fd9c3884fa7772c4389fb049b1b3aa756f6ef0))
+
+
+### Chores
+
+* **internal:** support parsing other json content types ([#294](https://github.com/Increase/increase-go/issues/294)) ([762051c](https://github.com/Increase/increase-go/commit/762051c3a08214ac746a5be9a216b8c2e2a38f40))
+
 ## 0.48.1 (2024-05-15)
 
 Full Changelog: [v0.48.0...v0.48.1](https://github.com/Increase/increase-go/compare/v0.48.0...v0.48.1)
