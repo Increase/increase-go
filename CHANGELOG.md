@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.50.0 (2024-05-23)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/Increase/increase-go/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** realtime decision updates ([#297](https://github.com/Increase/increase-go/issues/297)) ([b02c6bb](https://github.com/Increase/increase-go/commit/b02c6bbadba44e65c51b0bd1878dcaadb896f8c9))
+
 ## 0.49.0 (2024-05-22)
 
 Full Changelog: [v0.48.1...v0.49.0](https://github.com/Increase/increase-go/compare/v0.48.1...v0.49.0)
