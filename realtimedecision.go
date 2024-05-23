@@ -108,8 +108,6 @@ type RealTimeDecisionCardAuthorization struct {
 	AccountID string `json:"account_id,required"`
 	// The identifier of the Card that is being authorized.
 	CardID string `json:"card_id,required"`
-	// The identifier of the Card Payment this authorization belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
 	// Whether or not the authorization was approved.
 	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision,required,nullable"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
@@ -155,6 +153,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
 	SettlementCurrency string `json:"settlement_currency,required"`
+	// The identifier of the Card Payment this authorization will belong to. Available
+	// in the API once the card authorization has completed.
+	UpcomingCardPaymentID string `json:"upcoming_card_payment_id,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification RealTimeDecisionCardAuthorizationVerification `json:"verification,required"`
 	JSON         realTimeDecisionCardAuthorizationJSON         `json:"-"`
@@ -163,29 +164,29 @@ type RealTimeDecisionCardAuthorization struct {
 // realTimeDecisionCardAuthorizationJSON contains the JSON metadata for the struct
 // [RealTimeDecisionCardAuthorization]
 type realTimeDecisionCardAuthorizationJSON struct {
-	AccountID            apijson.Field
-	CardID               apijson.Field
-	CardPaymentID        apijson.Field
-	Decision             apijson.Field
-	DigitalWalletTokenID apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	NetworkDetails       apijson.Field
-	NetworkIdentifiers   apijson.Field
-	NetworkRiskScore     apijson.Field
-	PhysicalCardID       apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
-	ProcessingCategory   apijson.Field
-	RequestDetails       apijson.Field
-	SettlementAmount     apijson.Field
-	SettlementCurrency   apijson.Field
-	Verification         apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
+	AccountID             apijson.Field
+	CardID                apijson.Field
+	Decision              apijson.Field
+	DigitalWalletTokenID  apijson.Field
+	MerchantAcceptorID    apijson.Field
+	MerchantCategoryCode  apijson.Field
+	MerchantCity          apijson.Field
+	MerchantCountry       apijson.Field
+	MerchantDescriptor    apijson.Field
+	NetworkDetails        apijson.Field
+	NetworkIdentifiers    apijson.Field
+	NetworkRiskScore      apijson.Field
+	PhysicalCardID        apijson.Field
+	PresentmentAmount     apijson.Field
+	PresentmentCurrency   apijson.Field
+	ProcessingCategory    apijson.Field
+	RequestDetails        apijson.Field
+	SettlementAmount      apijson.Field
+	SettlementCurrency    apijson.Field
+	UpcomingCardPaymentID apijson.Field
+	Verification          apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
