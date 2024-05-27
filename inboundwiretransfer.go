@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewInboundWireTransferService(opts ...option.RequestOption) (r *InboundWire
 // Retrieve an Inbound Wire Transfer
 func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransferID string, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundWireTransferID == "" {
+		err = errors.New("missing required inbound_wire_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_wire_transfers/%s", inboundWireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

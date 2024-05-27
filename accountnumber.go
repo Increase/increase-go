@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *AccountNumberService) New(ctx context.Context, body AccountNumberNewPar
 // Retrieve an Account Number
 func (r *AccountNumberService) Get(ctx context.Context, accountNumberID string, opts ...option.RequestOption) (res *AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountNumberID == "" {
+		err = errors.New("missing required account_number_id parameter")
+		return
+	}
 	path := fmt.Sprintf("account_numbers/%s", accountNumberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -55,6 +60,10 @@ func (r *AccountNumberService) Get(ctx context.Context, accountNumberID string, 
 // Update an Account Number
 func (r *AccountNumberService) Update(ctx context.Context, accountNumberID string, body AccountNumberUpdateParams, opts ...option.RequestOption) (res *AccountNumber, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountNumberID == "" {
+		err = errors.New("missing required account_number_id parameter")
+		return
+	}
 	path := fmt.Sprintf("account_numbers/%s", accountNumberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return

@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -36,6 +37,10 @@ func NewSimulationInboundFundsHoldService(opts ...option.RequestOption) (r *Simu
 // be created as a result of e.g., an ACH debit.
 func (r *SimulationInboundFundsHoldService) Release(ctx context.Context, inboundFundsHoldID string, opts ...option.RequestOption) (res *SimulationInboundFundsHoldReleaseResponse, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundFundsHoldID == "" {
+		err = errors.New("missing required inbound_funds_hold_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/inbound_funds_holds/%s/release", inboundFundsHoldID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

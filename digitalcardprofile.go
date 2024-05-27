@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *DigitalCardProfileService) New(ctx context.Context, body DigitalCardPro
 // Retrieve a Digital Card Profile
 func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileID string, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
 	opts = append(r.Options[:], opts...)
+	if digitalCardProfileID == "" {
+		err = errors.New("missing required digital_card_profile_id parameter")
+		return
+	}
 	path := fmt.Sprintf("digital_card_profiles/%s", digitalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *DigitalCardProfileService) ListAutoPaging(ctx context.Context, query Di
 // Archive a Digital Card Profile
 func (r *DigitalCardProfileService) Archive(ctx context.Context, digitalCardProfileID string, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
 	opts = append(r.Options[:], opts...)
+	if digitalCardProfileID == "" {
+		err = errors.New("missing required digital_card_profile_id parameter")
+		return
+	}
 	path := fmt.Sprintf("digital_card_profiles/%s/archive", digitalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *DigitalCardProfileService) Archive(ctx context.Context, digitalCardProf
 // Clones a Digital Card Profile
 func (r *DigitalCardProfileService) Clone(ctx context.Context, digitalCardProfileID string, body DigitalCardProfileCloneParams, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
 	opts = append(r.Options[:], opts...)
+	if digitalCardProfileID == "" {
+		err = errors.New("missing required digital_card_profile_id parameter")
+		return
+	}
 	path := fmt.Sprintf("digital_card_profiles/%s/clone", digitalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

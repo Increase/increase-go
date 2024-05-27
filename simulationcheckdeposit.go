@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewSimulationCheckDepositService(opts ...option.RequestOption) (r *Simulati
 // of `pending`.
 func (r *SimulationCheckDepositService) Reject(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkDepositID == "" {
+		err = errors.New("missing required check_deposit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/reject", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -44,6 +49,10 @@ func (r *SimulationCheckDepositService) Reject(ctx context.Context, checkDeposit
 // must first have a `status` of `submitted`.
 func (r *SimulationCheckDepositService) Return(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkDepositID == "" {
+		err = errors.New("missing required check_deposit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/return", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -53,6 +62,10 @@ func (r *SimulationCheckDepositService) Return(ctx context.Context, checkDeposit
 // Reserve. This Check Deposit must first have a `status` of `pending`.
 func (r *SimulationCheckDepositService) Submit(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkDepositID == "" {
+		err = errors.New("missing required check_deposit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/submit", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

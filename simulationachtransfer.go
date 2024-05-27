@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -54,6 +55,10 @@ func (r *SimulationACHTransferService) NewInbound(ctx context.Context, body Simu
 // [ACH Transfer](#ach-transfers).
 func (r *SimulationACHTransferService) NotificationOfChange(ctx context.Context, achTransferID string, body SimulationACHTransferNotificationOfChangeParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/notification_of_change", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -64,6 +69,10 @@ func (r *SimulationACHTransferService) NotificationOfChange(ctx context.Context,
 // the returned funds. This transfer must first have a `status` of `submitted`.
 func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID string, body SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/return", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -77,6 +86,10 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID
 // delay and transition the ACH Transfer to a status of `submitted`.
 func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

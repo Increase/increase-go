@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *PhysicalCardProfileService) New(ctx context.Context, body PhysicalCardP
 // Retrieve a Card Profile
 func (r *PhysicalCardProfileService) Get(ctx context.Context, physicalCardProfileID string, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
 	opts = append(r.Options[:], opts...)
+	if physicalCardProfileID == "" {
+		err = errors.New("missing required physical_card_profile_id parameter")
+		return
+	}
 	path := fmt.Sprintf("physical_card_profiles/%s", physicalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *PhysicalCardProfileService) ListAutoPaging(ctx context.Context, query P
 // Archive a Physical Card Profile
 func (r *PhysicalCardProfileService) Archive(ctx context.Context, physicalCardProfileID string, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
 	opts = append(r.Options[:], opts...)
+	if physicalCardProfileID == "" {
+		err = errors.New("missing required physical_card_profile_id parameter")
+		return
+	}
 	path := fmt.Sprintf("physical_card_profiles/%s/archive", physicalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *PhysicalCardProfileService) Archive(ctx context.Context, physicalCardPr
 // Clone a Physical Card Profile
 func (r *PhysicalCardProfileService) Clone(ctx context.Context, physicalCardProfileID string, body PhysicalCardProfileCloneParams, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
 	opts = append(r.Options[:], opts...)
+	if physicalCardProfileID == "" {
+		err = errors.New("missing required physical_card_profile_id parameter")
+		return
+	}
 	path := fmt.Sprintf("physical_card_profiles/%s/clone", physicalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
