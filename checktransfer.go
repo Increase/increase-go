@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *CheckTransferService) New(ctx context.Context, body CheckTransferNewPar
 // Retrieve a Check Transfer
 func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkTransferID == "" {
+		err = errors.New("missing required check_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("check_transfers/%s", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query CheckTr
 // Approve a Check Transfer
 func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkTransferID == "" {
+		err = errors.New("missing required check_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("check_transfers/%s/approve", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID stri
 // Cancel a pending Check Transfer
 func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkTransferID == "" {
+		err = errors.New("missing required check_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("check_transfers/%s/cancel", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -94,6 +107,10 @@ func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID strin
 // Request a stop payment on a Check Transfer
 func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID string, body CheckTransferStopPaymentParams, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkTransferID == "" {
+		err = errors.New("missing required check_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("check_transfers/%s/stop_payment", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

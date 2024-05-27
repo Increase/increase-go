@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *ACHPrenotificationService) New(ctx context.Context, body ACHPrenotifica
 // Retrieve an ACH Prenotification
 func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationID string, opts ...option.RequestOption) (res *ACHPrenotification, err error) {
 	opts = append(r.Options[:], opts...)
+	if achPrenotificationID == "" {
+		err = errors.New("missing required ach_prenotification_id parameter")
+		return
+	}
 	path := fmt.Sprintf("ach_prenotifications/%s", achPrenotificationID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

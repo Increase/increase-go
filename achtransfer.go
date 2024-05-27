@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *ACHTransferService) New(ctx context.Context, body ACHTransferNewParams,
 // Retrieve an ACH Transfer
 func (r *ACHTransferService) Get(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("ach_transfers/%s", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *ACHTransferService) ListAutoPaging(ctx context.Context, query ACHTransf
 // Approves an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Approve(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("ach_transfers/%s/approve", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *ACHTransferService) Approve(ctx context.Context, achTransferID string, 
 // Cancels an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Cancel(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("ach_transfers/%s/cancel", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

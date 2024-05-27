@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *PhysicalCardService) New(ctx context.Context, body PhysicalCardNewParam
 // Retrieve a Physical Card
 func (r *PhysicalCardService) Get(ctx context.Context, physicalCardID string, opts ...option.RequestOption) (res *PhysicalCard, err error) {
 	opts = append(r.Options[:], opts...)
+	if physicalCardID == "" {
+		err = errors.New("missing required physical_card_id parameter")
+		return
+	}
 	path := fmt.Sprintf("physical_cards/%s", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -55,6 +60,10 @@ func (r *PhysicalCardService) Get(ctx context.Context, physicalCardID string, op
 // Update a Physical Card
 func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string, body PhysicalCardUpdateParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
 	opts = append(r.Options[:], opts...)
+	if physicalCardID == "" {
+		err = errors.New("missing required physical_card_id parameter")
+		return
+	}
 	path := fmt.Sprintf("physical_cards/%s", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return

@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewEntityIndustryCodeService(opts ...option.RequestOption) (r *EntityIndust
 // Update the industry code for a corporate Entity
 func (r *EntityIndustryCodeService) New(ctx context.Context, entityID string, body EntityIndustryCodeNewParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = append(r.Options[:], opts...)
+	if entityID == "" {
+		err = errors.New("missing required entity_id parameter")
+		return
+	}
 	path := fmt.Sprintf("entities/%s/industry_code", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

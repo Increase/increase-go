@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *BookkeepingEntrySetService) New(ctx context.Context, body BookkeepingEn
 // Retrieve a Bookkeeping Entry Set
 func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySetID string, opts ...option.RequestOption) (res *BookkeepingEntrySet, err error) {
 	opts = append(r.Options[:], opts...)
+	if bookkeepingEntrySetID == "" {
+		err = errors.New("missing required bookkeeping_entry_set_id parameter")
+		return
+	}
 	path := fmt.Sprintf("bookkeeping_entry_sets/%s", bookkeepingEntrySetID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

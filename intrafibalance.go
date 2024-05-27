@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -35,6 +36,10 @@ func NewIntrafiBalanceService(opts ...option.RequestOption) (r *IntrafiBalanceSe
 // Get IntraFi balances by bank
 func (r *IntrafiBalanceService) Get(ctx context.Context, accountID string, opts ...option.RequestOption) (res *IntrafiBalance, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountID == "" {
+		err = errors.New("missing required account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("intrafi_balances/%s", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

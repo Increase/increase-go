@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewInboundCheckDepositService(opts ...option.RequestOption) (r *InboundChec
 // Retrieve an Inbound Check Deposit
 func (r *InboundCheckDepositService) Get(ctx context.Context, inboundCheckDepositID string, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundCheckDepositID == "" {
+		err = errors.New("missing required inbound_check_deposit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_check_deposits/%s", inboundCheckDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -70,6 +75,10 @@ func (r *InboundCheckDepositService) ListAutoPaging(ctx context.Context, query I
 // Decline an Inbound Check Deposit
 func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDepositID string, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundCheckDepositID == "" {
+		err = errors.New("missing required inbound_check_deposit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_check_deposits/%s/decline", inboundCheckDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

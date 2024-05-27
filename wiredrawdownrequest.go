@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -46,6 +47,10 @@ func (r *WireDrawdownRequestService) New(ctx context.Context, body WireDrawdownR
 // Retrieve a Wire Drawdown Request
 func (r *WireDrawdownRequestService) Get(ctx context.Context, wireDrawdownRequestID string, opts ...option.RequestOption) (res *WireDrawdownRequest, err error) {
 	opts = append(r.Options[:], opts...)
+	if wireDrawdownRequestID == "" {
+		err = errors.New("missing required wire_drawdown_request_id parameter")
+		return
+	}
 	path := fmt.Sprintf("wire_drawdown_requests/%s", wireDrawdownRequestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

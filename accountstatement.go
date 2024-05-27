@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewAccountStatementService(opts ...option.RequestOption) (r *AccountStateme
 // Retrieve an Account Statement
 func (r *AccountStatementService) Get(ctx context.Context, accountStatementID string, opts ...option.RequestOption) (res *AccountStatement, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountStatementID == "" {
+		err = errors.New("missing required account_statement_id parameter")
+		return
+	}
 	path := fmt.Sprintf("account_statements/%s", accountStatementID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

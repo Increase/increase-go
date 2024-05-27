@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *IntrafiExclusionService) New(ctx context.Context, body IntrafiExclusion
 // Get an IntraFi Exclusion
 func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID string, opts ...option.RequestOption) (res *IntrafiExclusion, err error) {
 	opts = append(r.Options[:], opts...)
+	if intrafiExclusionID == "" {
+		err = errors.New("missing required intrafi_exclusion_id parameter")
+		return
+	}
 	path := fmt.Sprintf("intrafi_exclusions/%s", intrafiExclusionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *IntrafiExclusionService) ListAutoPaging(ctx context.Context, query Intr
 // Archive an IntraFi Exclusion
 func (r *IntrafiExclusionService) Archive(ctx context.Context, intrafiExclusionID string, opts ...option.RequestOption) (res *IntrafiExclusion, err error) {
 	opts = append(r.Options[:], opts...)
+	if intrafiExclusionID == "" {
+		err = errors.New("missing required intrafi_exclusion_id parameter")
+		return
+	}
 	path := fmt.Sprintf("intrafi_exclusions/%s/archive", intrafiExclusionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

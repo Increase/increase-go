@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewProgramService(opts ...option.RequestOption) (r *ProgramService) {
 // Retrieve a Program
 func (r *ProgramService) Get(ctx context.Context, programID string, opts ...option.RequestOption) (res *Program, err error) {
 	opts = append(r.Options[:], opts...)
+	if programID == "" {
+		err = errors.New("missing required program_id parameter")
+		return
+	}
 	path := fmt.Sprintf("programs/%s", programID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

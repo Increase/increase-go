@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *WireTransferService) New(ctx context.Context, body WireTransferNewParam
 // Retrieve a Wire Transfer
 func (r *WireTransferService) Get(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("wire_transfers/%s", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *WireTransferService) ListAutoPaging(ctx context.Context, query WireTran
 // Approve a Wire Transfer
 func (r *WireTransferService) Approve(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("wire_transfers/%s/approve", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *WireTransferService) Approve(ctx context.Context, wireTransferID string
 // Cancel a pending Wire Transfer
 func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("wire_transfers/%s/cancel", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -97,6 +110,10 @@ func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string,
 // Transfer must first have a `status` of `complete`.
 func (r *WireTransferService) Reverse(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -107,6 +124,10 @@ func (r *WireTransferService) Reverse(ctx context.Context, wireTransferID string
 // `pending_creating`.
 func (r *WireTransferService) Submit(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

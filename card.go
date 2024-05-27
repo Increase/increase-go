@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *CardService) New(ctx context.Context, body CardNewParams, opts ...optio
 // Retrieve a Card
 func (r *CardService) Get(ctx context.Context, cardID string, opts ...option.RequestOption) (res *Card, err error) {
 	opts = append(r.Options[:], opts...)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return
+	}
 	path := fmt.Sprintf("cards/%s", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -55,6 +60,10 @@ func (r *CardService) Get(ctx context.Context, cardID string, opts ...option.Req
 // Update a Card
 func (r *CardService) Update(ctx context.Context, cardID string, body CardUpdateParams, opts ...option.RequestOption) (res *Card, err error) {
 	opts = append(r.Options[:], opts...)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return
+	}
 	path := fmt.Sprintf("cards/%s", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *CardService) ListAutoPaging(ctx context.Context, query CardListParams, 
 // Retrieve sensitive details for a Card
 func (r *CardService) GetSensitiveDetails(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = append(r.Options[:], opts...)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return
+	}
 	path := fmt.Sprintf("cards/%s/details", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
