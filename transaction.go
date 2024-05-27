@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewTransactionService(opts ...option.RequestOption) (r *TransactionService)
 // Retrieve a Transaction
 func (r *TransactionService) Get(ctx context.Context, transactionID string, opts ...option.RequestOption) (res *Transaction, err error) {
 	opts = append(r.Options[:], opts...)
+	if transactionID == "" {
+		err = errors.New("missing required transaction_id parameter")
+		return
+	}
 	path := fmt.Sprintf("transactions/%s", transactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

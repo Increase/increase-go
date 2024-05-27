@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewDeclinedTransactionService(opts ...option.RequestOption) (r *DeclinedTra
 // Retrieve a Declined Transaction
 func (r *DeclinedTransactionService) Get(ctx context.Context, declinedTransactionID string, opts ...option.RequestOption) (res *DeclinedTransaction, err error) {
 	opts = append(r.Options[:], opts...)
+	if declinedTransactionID == "" {
+		err = errors.New("missing required declined_transaction_id parameter")
+		return
+	}
 	path := fmt.Sprintf("declined_transactions/%s", declinedTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

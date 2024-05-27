@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewInboundACHTransferService(opts ...option.RequestOption) (r *InboundACHTr
 // Retrieve an Inbound ACH Transfer
 func (r *InboundACHTransferService) Get(ctx context.Context, inboundACHTransferID string, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundACHTransferID == "" {
+		err = errors.New("missing required inbound_ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -70,6 +75,10 @@ func (r *InboundACHTransferService) ListAutoPaging(ctx context.Context, query In
 // Decline an Inbound ACH Transfer
 func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTransferID string, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundACHTransferID == "" {
+		err = errors.New("missing required inbound_ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/decline", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -78,6 +87,10 @@ func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTrans
 // Create a notification of change for an Inbound ACH Transfer
 func (r *InboundACHTransferService) NotificationOfChange(ctx context.Context, inboundACHTransferID string, body InboundACHTransferNotificationOfChangeParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundACHTransferID == "" {
+		err = errors.New("missing required inbound_ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/notification_of_change", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -86,6 +99,10 @@ func (r *InboundACHTransferService) NotificationOfChange(ctx context.Context, in
 // Return an Inbound ACH Transfer
 func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundACHTransferID string, body InboundACHTransferTransferReturnParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if inboundACHTransferID == "" {
+		err = errors.New("missing required inbound_ach_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/transfer_return", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

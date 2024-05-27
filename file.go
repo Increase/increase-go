@@ -5,6 +5,7 @@ package increase
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"mime/multipart"
@@ -53,6 +54,10 @@ func (r *FileService) New(ctx context.Context, body FileNewParams, opts ...optio
 // Retrieve a File
 func (r *FileService) Get(ctx context.Context, fileID string, opts ...option.RequestOption) (res *File, err error) {
 	opts = append(r.Options[:], opts...)
+	if fileID == "" {
+		err = errors.New("missing required file_id parameter")
+		return
+	}
 	path := fmt.Sprintf("files/%s", fileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

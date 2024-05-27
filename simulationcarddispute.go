@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -38,6 +39,10 @@ func NewSimulationCardDisputeService(opts ...option.RequestOption) (r *Simulatio
 // be actioned one time and must have a status of `pending_reviewing`.
 func (r *SimulationCardDisputeService) Action(ctx context.Context, cardDisputeID string, body SimulationCardDisputeActionParams, opts ...option.RequestOption) (res *CardDispute, err error) {
 	opts = append(r.Options[:], opts...)
+	if cardDisputeID == "" {
+		err = errors.New("missing required card_dispute_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/card_disputes/%s/action", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

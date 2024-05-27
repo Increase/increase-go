@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -36,6 +37,10 @@ func NewSimulationAccountTransferService(opts ...option.RequestOption) (r *Simul
 // must first have a `status` of `pending_approval`.
 func (r *SimulationAccountTransferService) Complete(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountTransferID == "" {
+		err = errors.New("missing required account_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/account_transfers/%s/complete", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

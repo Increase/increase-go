@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -39,6 +40,10 @@ func NewSimulationRealTimePaymentsTransferService(opts ...option.RequestOption) 
 // `status` of `pending_submission`.
 func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context, realTimePaymentsTransferID string, body SimulationRealTimePaymentsTransferCompleteParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if realTimePaymentsTransferID == "" {
+		err = errors.New("missing required real_time_payments_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/real_time_payments_transfers/%s/complete", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

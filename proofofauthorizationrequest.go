@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewProofOfAuthorizationRequestService(opts ...option.RequestOption) (r *Pro
 // Retrieve a Proof of Authorization Request
 func (r *ProofOfAuthorizationRequestService) Get(ctx context.Context, proofOfAuthorizationRequestID string, opts ...option.RequestOption) (res *ProofOfAuthorizationRequest, err error) {
 	opts = append(r.Options[:], opts...)
+	if proofOfAuthorizationRequestID == "" {
+		err = errors.New("missing required proof_of_authorization_request_id parameter")
+		return
+	}
 	path := fmt.Sprintf("proof_of_authorization_requests/%s", proofOfAuthorizationRequestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *RealTimePaymentsRequestForPaymentService) New(ctx context.Context, body
 // Retrieve a Real-Time Payments Request for Payment
 func (r *RealTimePaymentsRequestForPaymentService) Get(ctx context.Context, requestForPaymentID string, opts ...option.RequestOption) (res *RealTimePaymentsRequestForPayment, err error) {
 	opts = append(r.Options[:], opts...)
+	if requestForPaymentID == "" {
+		err = errors.New("missing required request_for_payment_id parameter")
+		return
+	}
 	path := fmt.Sprintf("real_time_payments_request_for_payments/%s", requestForPaymentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

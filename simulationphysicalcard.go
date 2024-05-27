@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -37,6 +38,10 @@ func NewSimulationPhysicalCardService(opts ...option.RequestOption) (r *Simulati
 // failed delivery.
 func (r *SimulationPhysicalCardService) ShipmentAdvance(ctx context.Context, physicalCardID string, body SimulationPhysicalCardShipmentAdvanceParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
 	opts = append(r.Options[:], opts...)
+	if physicalCardID == "" {
+		err = errors.New("missing required physical_card_id parameter")
+		return
+	}
 	path := fmt.Sprintf("simulations/physical_cards/%s/shipment_advance", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

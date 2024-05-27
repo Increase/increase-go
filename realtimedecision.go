@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -36,6 +37,10 @@ func NewRealTimeDecisionService(opts ...option.RequestOption) (r *RealTimeDecisi
 // Retrieve a Real-Time Decision
 func (r *RealTimeDecisionService) Get(ctx context.Context, realTimeDecisionID string, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
 	opts = append(r.Options[:], opts...)
+	if realTimeDecisionID == "" {
+		err = errors.New("missing required real_time_decision_id parameter")
+		return
+	}
 	path := fmt.Sprintf("real_time_decisions/%s", realTimeDecisionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -44,6 +49,10 @@ func (r *RealTimeDecisionService) Get(ctx context.Context, realTimeDecisionID st
 // Action a Real-Time Decision
 func (r *RealTimeDecisionService) Action(ctx context.Context, realTimeDecisionID string, body RealTimeDecisionActionParams, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
 	opts = append(r.Options[:], opts...)
+	if realTimeDecisionID == "" {
+		err = errors.New("missing required real_time_decision_id parameter")
+		return
+	}
 	path := fmt.Sprintf("real_time_decisions/%s/action", realTimeDecisionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

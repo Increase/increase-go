@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *CheckDepositService) New(ctx context.Context, body CheckDepositNewParam
 // Retrieve a Check Deposit
 func (r *CheckDepositService) Get(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
 	opts = append(r.Options[:], opts...)
+	if checkDepositID == "" {
+		err = errors.New("missing required check_deposit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("check_deposits/%s", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
