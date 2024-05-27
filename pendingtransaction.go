@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewPendingTransactionService(opts ...option.RequestOption) (r *PendingTrans
 // Retrieve a Pending Transaction
 func (r *PendingTransactionService) Get(ctx context.Context, pendingTransactionID string, opts ...option.RequestOption) (res *PendingTransaction, err error) {
 	opts = append(r.Options[:], opts...)
+	if pendingTransactionID == "" {
+		err = errors.New("missing required pending_transaction_id parameter")
+		return
+	}
 	path := fmt.Sprintf("pending_transactions/%s", pendingTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

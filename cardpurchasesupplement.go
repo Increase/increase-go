@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewCardPurchaseSupplementService(opts ...option.RequestOption) (r *CardPurc
 // Retrieve a Card Purchase Supplement
 func (r *CardPurchaseSupplementService) Get(ctx context.Context, cardPurchaseSupplementID string, opts ...option.RequestOption) (res *CardPurchaseSupplement, err error) {
 	opts = append(r.Options[:], opts...)
+	if cardPurchaseSupplementID == "" {
+		err = errors.New("missing required card_purchase_supplement_id parameter")
+		return
+	}
 	path := fmt.Sprintf("card_purchase_supplements/%s", cardPurchaseSupplementID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

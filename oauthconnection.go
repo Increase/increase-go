@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewOAuthConnectionService(opts ...option.RequestOption) (r *OAuthConnection
 // Retrieve an OAuth Connection
 func (r *OAuthConnectionService) Get(ctx context.Context, oauthConnectionID string, opts ...option.RequestOption) (res *OAuthConnection, err error) {
 	opts = append(r.Options[:], opts...)
+	if oauthConnectionID == "" {
+		err = errors.New("missing required oauth_connection_id parameter")
+		return
+	}
 	path := fmt.Sprintf("oauth_connections/%s", oauthConnectionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

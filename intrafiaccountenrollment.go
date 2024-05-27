@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -46,6 +47,10 @@ func (r *IntrafiAccountEnrollmentService) New(ctx context.Context, body IntrafiA
 // Get an IntraFi Account Enrollment
 func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccountEnrollmentID string, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
 	opts = append(r.Options[:], opts...)
+	if intrafiAccountEnrollmentID == "" {
+		err = errors.New("missing required intrafi_account_enrollment_id parameter")
+		return
+	}
 	path := fmt.Sprintf("intrafi_account_enrollments/%s", intrafiAccountEnrollmentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -77,6 +82,10 @@ func (r *IntrafiAccountEnrollmentService) ListAutoPaging(ctx context.Context, qu
 // Unenroll an account from IntraFi.
 func (r *IntrafiAccountEnrollmentService) Unenroll(ctx context.Context, intrafiAccountEnrollmentID string, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
 	opts = append(r.Options[:], opts...)
+	if intrafiAccountEnrollmentID == "" {
+		err = errors.New("missing required intrafi_account_enrollment_id parameter")
+		return
+	}
 	path := fmt.Sprintf("intrafi_account_enrollments/%s/unenroll", intrafiAccountEnrollmentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

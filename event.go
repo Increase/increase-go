@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewEventService(opts ...option.RequestOption) (r *EventService) {
 // Retrieve an Event
 func (r *EventService) Get(ctx context.Context, eventID string, opts ...option.RequestOption) (res *Event, err error) {
 	opts = append(r.Options[:], opts...)
+	if eventID == "" {
+		err = errors.New("missing required event_id parameter")
+		return
+	}
 	path := fmt.Sprintf("events/%s", eventID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

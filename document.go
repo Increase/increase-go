@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -39,6 +40,10 @@ func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 // Retrieve a Document
 func (r *DocumentService) Get(ctx context.Context, documentID string, opts ...option.RequestOption) (res *Document, err error) {
 	opts = append(r.Options[:], opts...)
+	if documentID == "" {
+		err = errors.New("missing required document_id parameter")
+		return
+	}
 	path := fmt.Sprintf("documents/%s", documentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

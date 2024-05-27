@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *BookkeepingAccountService) New(ctx context.Context, body BookkeepingAcc
 // Update a Bookkeeping Account
 func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccountID string, body BookkeepingAccountUpdateParams, opts ...option.RequestOption) (res *BookkeepingAccount, err error) {
 	opts = append(r.Options[:], opts...)
+	if bookkeepingAccountID == "" {
+		err = errors.New("missing required bookkeeping_account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("bookkeeping_accounts/%s", bookkeepingAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query Bo
 // Retrieve a Bookkeeping Account Balance
 func (r *BookkeepingAccountService) Balance(ctx context.Context, bookkeepingAccountID string, query BookkeepingAccountBalanceParams, opts ...option.RequestOption) (res *BookkeepingBalanceLookup, err error) {
 	opts = append(r.Options[:], opts...)
+	if bookkeepingAccountID == "" {
+		err = errors.New("missing required bookkeeping_account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("bookkeeping_accounts/%s/balance", bookkeepingAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return

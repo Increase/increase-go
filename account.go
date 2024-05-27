@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *AccountService) New(ctx context.Context, body AccountNewParams, opts ..
 // Retrieve an Account
 func (r *AccountService) Get(ctx context.Context, accountID string, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountID == "" {
+		err = errors.New("missing required account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("accounts/%s", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -55,6 +60,10 @@ func (r *AccountService) Get(ctx context.Context, accountID string, opts ...opti
 // Update an Account
 func (r *AccountService) Update(ctx context.Context, accountID string, body AccountUpdateParams, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountID == "" {
+		err = errors.New("missing required account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("accounts/%s", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListPa
 // Retrieve an Account Balance
 func (r *AccountService) Balance(ctx context.Context, accountID string, query AccountBalanceParams, opts ...option.RequestOption) (res *BalanceLookup, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountID == "" {
+		err = errors.New("missing required account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("accounts/%s/balance", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
@@ -94,6 +107,10 @@ func (r *AccountService) Balance(ctx context.Context, accountID string, query Ac
 // Close an Account
 func (r *AccountService) Close(ctx context.Context, accountID string, opts ...option.RequestOption) (res *Account, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountID == "" {
+		err = errors.New("missing required account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("accounts/%s/close", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return

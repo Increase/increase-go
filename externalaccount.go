@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *ExternalAccountService) New(ctx context.Context, body ExternalAccountNe
 // Retrieve an External Account
 func (r *ExternalAccountService) Get(ctx context.Context, externalAccountID string, opts ...option.RequestOption) (res *ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
+	if externalAccountID == "" {
+		err = errors.New("missing required external_account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("external_accounts/%s", externalAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -55,6 +60,10 @@ func (r *ExternalAccountService) Get(ctx context.Context, externalAccountID stri
 // Update an External Account
 func (r *ExternalAccountService) Update(ctx context.Context, externalAccountID string, body ExternalAccountUpdateParams, opts ...option.RequestOption) (res *ExternalAccount, err error) {
 	opts = append(r.Options[:], opts...)
+	if externalAccountID == "" {
+		err = errors.New("missing required external_account_id parameter")
+		return
+	}
 	path := fmt.Sprintf("external_accounts/%s", externalAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return

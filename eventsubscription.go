@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *EventSubscriptionService) New(ctx context.Context, body EventSubscripti
 // Retrieve an Event Subscription
 func (r *EventSubscriptionService) Get(ctx context.Context, eventSubscriptionID string, opts ...option.RequestOption) (res *EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
+	if eventSubscriptionID == "" {
+		err = errors.New("missing required event_subscription_id parameter")
+		return
+	}
 	path := fmt.Sprintf("event_subscriptions/%s", eventSubscriptionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -55,6 +60,10 @@ func (r *EventSubscriptionService) Get(ctx context.Context, eventSubscriptionID 
 // Update an Event Subscription
 func (r *EventSubscriptionService) Update(ctx context.Context, eventSubscriptionID string, body EventSubscriptionUpdateParams, opts ...option.RequestOption) (res *EventSubscription, err error) {
 	opts = append(r.Options[:], opts...)
+	if eventSubscriptionID == "" {
+		err = errors.New("missing required event_subscription_id parameter")
+		return
+	}
 	path := fmt.Sprintf("event_subscriptions/%s", eventSubscriptionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
 	return

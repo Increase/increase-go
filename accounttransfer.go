@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -47,6 +48,10 @@ func (r *AccountTransferService) New(ctx context.Context, body AccountTransferNe
 // Retrieve an Account Transfer
 func (r *AccountTransferService) Get(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountTransferID == "" {
+		err = errors.New("missing required account_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("account_transfers/%s", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -78,6 +83,10 @@ func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query Accou
 // Approve an Account Transfer
 func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountTransferID == "" {
+		err = errors.New("missing required account_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("account_transfers/%s/approve", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -86,6 +95,10 @@ func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID 
 // Cancel an Account Transfer
 func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = append(r.Options[:], opts...)
+	if accountTransferID == "" {
+		err = errors.New("missing required account_transfer_id parameter")
+		return
+	}
 	path := fmt.Sprintf("account_transfers/%s/cancel", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
