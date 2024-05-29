@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.51.0 (2024-05-29)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/Increase/increase-go/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** add trace number to ach transfer returns ([#302](https://github.com/Increase/increase-go/issues/302)) ([31211ca](https://github.com/Increase/increase-go/commit/31211ca06a01cbe782657eca448f5ff55d63aa4b))
+* better validation of path params ([#299](https://github.com/Increase/increase-go/issues/299)) ([4b349cd](https://github.com/Increase/increase-go/commit/4b349cd7cab4deaf7b09a202bcc88d53b2315104))
+
+
+### Chores
+
+* **internal:** fix format script ([#301](https://github.com/Increase/increase-go/issues/301)) ([fb2596f](https://github.com/Increase/increase-go/commit/fb2596f6af6c3c26477a19cf39eb5767f81e7bb5))
+
 ## 0.50.0 (2024-05-23)
 
 Full Changelog: [v0.49.0...v0.50.0](https://github.com/Increase/increase-go/compare/v0.49.0...v0.50.0)
