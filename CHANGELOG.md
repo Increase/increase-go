@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.51.1 (2024-06-03)
+
+Full Changelog: [v0.51.0...v0.51.1](https://github.com/Increase/increase-go/compare/v0.51.0...v0.51.1)
+
+### Bug Fixes
+
+* **internal:** fix the way that unions are deserialized in nested arrays ([#303](https://github.com/Increase/increase-go/issues/303)) ([aea5704](https://github.com/Increase/increase-go/commit/aea5704d3ad86c46c3013d0ad3cee75fa509bd87))
+
 ## 0.51.0 (2024-05-29)
 
 Full Changelog: [v0.50.0...v0.51.0](https://github.com/Increase/increase-go/compare/v0.50.0...v0.51.0)
