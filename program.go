@@ -84,6 +84,8 @@ type Program struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The default configuration for digital cards attached to this Program.
+	DefaultDigitalCardProfileID string `json:"default_digital_card_profile_id,required,nullable"`
 	// The name of the Program.
 	Name string `json:"name,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -97,14 +99,15 @@ type Program struct {
 
 // programJSON contains the JSON metadata for the struct [Program]
 type programJSON struct {
-	ID               apijson.Field
-	BillingAccountID apijson.Field
-	CreatedAt        apijson.Field
-	Name             apijson.Field
-	Type             apijson.Field
-	UpdatedAt        apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	ID                          apijson.Field
+	BillingAccountID            apijson.Field
+	CreatedAt                   apijson.Field
+	DefaultDigitalCardProfileID apijson.Field
+	Name                        apijson.Field
+	Type                        apijson.Field
+	UpdatedAt                   apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *Program) UnmarshalJSON(data []byte) (err error) {
