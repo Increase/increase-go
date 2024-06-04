@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.0 (2024-06-04)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/Increase/increase-go/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **api:** add `default_digital_card_profile_id` property ([#307](https://github.com/Increase/increase-go/issues/307)) ([1c28ad7](https://github.com/Increase/increase-go/commit/1c28ad75bb135888b79b2d1a2f736f35f03c971d))
+
 ## 0.52.0 (2024-06-03)
 
 Full Changelog: [v0.51.1...v0.52.0](https://github.com/Increase/increase-go/compare/v0.51.1...v0.52.0)
