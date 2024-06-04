@@ -131,9 +131,6 @@ type DigitalCardProfile struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
-	// Whether this Digital Card Profile is the default for all cards in its Increase
-	// group.
-	IsDefault bool `json:"is_default,required"`
 	// A user-facing description for whoever is issuing the card.
 	IssuerName string `json:"issuer_name,required"`
 	// The status of the Card Profile.
@@ -159,7 +156,6 @@ type digitalCardProfileJSON struct {
 	CreatedAt             apijson.Field
 	Description           apijson.Field
 	IdempotencyKey        apijson.Field
-	IsDefault             apijson.Field
 	IssuerName            apijson.Field
 	Status                apijson.Field
 	TextColor             apijson.Field
