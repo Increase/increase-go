@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.1 (2024-06-06)
+
+Full Changelog: [v0.53.0...v0.53.1](https://github.com/Increase/increase-go/compare/v0.53.0...v0.53.1)
+
+### Bug Fixes
+
+* fix port function for interface{} types ([#309](https://github.com/Increase/increase-go/issues/309)) ([80273bc](https://github.com/Increase/increase-go/commit/80273bc2174b86fcf47d8e20eeb07d04859fc4cc))
+
 ## 0.53.0 (2024-06-04)
 
 Full Changelog: [v0.52.0...v0.53.0](https://github.com/Increase/increase-go/compare/v0.52.0...v0.53.0)
