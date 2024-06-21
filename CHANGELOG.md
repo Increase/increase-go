@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.2 (2024-06-21)
+
+Full Changelog: [v0.53.1...v0.53.2](https://github.com/Increase/increase-go/compare/v0.53.1...v0.53.2)
+
+### Bug Fixes
+
+* fix ExtraFields serialization / deserialization ([#311](https://github.com/Increase/increase-go/issues/311)) ([84c304c](https://github.com/Increase/increase-go/commit/84c304c2a39493eaf8bf4675886a38f5e306bea0))
+
 ## 0.53.1 (2024-06-06)
 
 Full Changelog: [v0.53.0...v0.53.1](https://github.com/Increase/increase-go/compare/v0.53.0...v0.53.1)
