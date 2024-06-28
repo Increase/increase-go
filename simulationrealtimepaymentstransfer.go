@@ -193,11 +193,13 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeAccountNumber InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType = "account_number"
 	// A Card.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeCard InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType = "card"
+	// A Lockbox.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeLockbox InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType = "lockbox"
 )
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteType) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeAccountNumber, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeCard:
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeAccountNumber, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeCard, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -338,6 +340,8 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonDuplicateReturn InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonEntityNotActive InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	// There was an error with one of the required fields.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonFieldError InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "field_error"
 	// Your account is inactive.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonGroupLocked InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
@@ -359,7 +363,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonBreachesLimit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonDuplicateReturn, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonEntityNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonGroupLocked, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonInsufficientFunds, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonMisroutedReturn, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonNoACHRoute, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonOriginatorRequest, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonUserInitiated:
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonBreachesLimit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonDuplicateReturn, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonEntityNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonFieldError, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonGroupLocked, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonInsufficientFunds, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonMisroutedReturn, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonNoACHRoute, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonOriginatorRequest, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceACHDeclineReasonUserInitiated:
 		return true
 	}
 	return false
@@ -393,10 +397,12 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	// The identifier of the declined transaction created for this Card Decline.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
@@ -446,30 +452,31 @@ type InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCar
 // contains the JSON metadata for the struct
 // [InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline]
 type inboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineJSON struct {
-	ID                   apijson.Field
-	Actioner             apijson.Field
-	Amount               apijson.Field
-	CardPaymentID        apijson.Field
-	Currency             apijson.Field
-	DigitalWalletTokenID apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	NetworkDetails       apijson.Field
-	NetworkIdentifiers   apijson.Field
-	NetworkRiskScore     apijson.Field
-	PhysicalCardID       apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
-	ProcessingCategory   apijson.Field
-	RealTimeDecisionID   apijson.Field
-	Reason               apijson.Field
-	Verification         apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
+	ID                    apijson.Field
+	Actioner              apijson.Field
+	Amount                apijson.Field
+	CardPaymentID         apijson.Field
+	Currency              apijson.Field
+	DeclinedTransactionID apijson.Field
+	DigitalWalletTokenID  apijson.Field
+	MerchantAcceptorID    apijson.Field
+	MerchantCategoryCode  apijson.Field
+	MerchantCity          apijson.Field
+	MerchantCountry       apijson.Field
+	MerchantDescriptor    apijson.Field
+	MerchantState         apijson.Field
+	NetworkDetails        apijson.Field
+	NetworkIdentifiers    apijson.Field
+	NetworkRiskScore      apijson.Field
+	PhysicalCardID        apijson.Field
+	PresentmentAmount     apijson.Field
+	PresentmentCurrency   apijson.Field
+	ProcessingCategory    apijson.Field
+	RealTimeDecisionID    apijson.Field
+	Reason                apijson.Field
+	Verification          apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -768,6 +775,9 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInsufficientFunds InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	// The given CVV2 did not match the card's value.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	// The given expiration date did not match the card's value. Only applies when a
+	// CVV2 is present.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "card_expiration_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
 	// The transaction was blocked by a Limit.
@@ -790,7 +800,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonEntityNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonGroupLocked, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInsufficientFunds, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesLimit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookDeclined, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonEntityNotActive, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonGroupLocked, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInsufficientFunds, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonBreachesLimit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookDeclined, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
 		return true
 	}
 	return false
@@ -1154,11 +1164,13 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
 	// The check was rejected for an unknown reason.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
+	// The check was rejected by an operator who will provide details out-of-band.
+	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonOperator InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "operator"
 )
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonOperator:
 		return true
 	}
 	return false
@@ -1739,11 +1751,13 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeAccountNumber InboundRealTimePaymentsTransferSimulationResultTransactionRouteType = "account_number"
 	// A Card.
 	InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeCard InboundRealTimePaymentsTransferSimulationResultTransactionRouteType = "card"
+	// A Lockbox.
+	InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeLockbox InboundRealTimePaymentsTransferSimulationResultTransactionRouteType = "lockbox"
 )
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionRouteType) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeAccountNumber, InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeCard:
+	case InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeAccountNumber, InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeCard, InboundRealTimePaymentsTransferSimulationResultTransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -1769,6 +1783,9 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSource struct {
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	CardDisputeAcceptance InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,required,nullable"`
+	// A Card Dispute Loss object. This field will be present in the JSON response if
+	// and only if `category` is equal to `card_dispute_loss`.
+	CardDisputeLoss InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLoss `json:"card_dispute_loss,required,nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
 	CardRefund InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund `json:"card_refund,required,nullable"`
@@ -1851,6 +1868,7 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceJSON struct
 	ACHTransferRejection                        apijson.Field
 	ACHTransferReturn                           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
+	CardDisputeLoss                             apijson.Field
 	CardRefund                                  apijson.Field
 	CardRevenuePayment                          apijson.Field
 	CardSettlement                              apijson.Field
@@ -2296,18 +2314,54 @@ func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisp
 	return r.raw
 }
 
+// A Card Dispute Loss object. This field will be present in the JSON response if
+// and only if `category` is equal to `card_dispute_loss`.
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLoss struct {
+	// The identifier of the Card Dispute that was lost.
+	CardDisputeID string `json:"card_dispute_id,required"`
+	// Why the Card Dispute was lost.
+	Explanation string `json:"explanation,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card Dispute was lost.
+	LostAt time.Time `json:"lost_at,required" format:"date-time"`
+	// The identifier of the Transaction that was created to debit the disputed funds
+	// from your account.
+	TransactionID string                                                                              `json:"transaction_id,required"`
+	JSON          inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLossJSON `json:"-"`
+}
+
+// inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLossJSON
+// contains the JSON metadata for the struct
+// [InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLoss]
+type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLossJSON struct {
+	CardDisputeID apijson.Field
+	Explanation   apijson.Field
+	LostAt        apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLoss) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardDisputeLossJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Card Refund object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_refund`.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The amount in the minor unit of the transaction's settlement currency. For
+	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
+	// transaction's settlement currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency `json:"currency,required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -2324,6 +2378,11 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefund 
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
 	NetworkIdentifiers InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
+	// The amount in the minor unit of the transaction's presentment currency.
+	PresentmentAmount int64 `json:"presentment_amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
@@ -2350,6 +2409,8 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundJ
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
 	NetworkIdentifiers   apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
 	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
@@ -2366,7 +2427,7 @@ func (r inboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefu
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
+// transaction's settlement currency.
 type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardRefundCurrency string
 
 const (
@@ -3168,7 +3229,7 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlem
 	// exists.
 	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency InboundRealTimePaymentsTransferSimulationResultTransactionSourceCardSettlementCurrency `json:"currency,required"`
@@ -4051,6 +4112,8 @@ const (
 	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
 	// object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_dispute_acceptance"
+	// Card Dispute Loss: details will be under the `card_dispute_loss` object.
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeLoss InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_dispute_loss"
 	// Card Refund: details will be under the `card_refund` object.
 	InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory = "card_refund"
 	// Card Settlement: details will be under the `card_settlement` object.
@@ -4117,7 +4180,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCashbackPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheckDepositReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
+	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryAccountTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryACHTransferReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCashbackPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardDisputeLoss, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRefund, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardSettlement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCardRevenuePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositAcceptance, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckDepositReturn, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferDeposit, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryCheckTransferStopPaymentRequest, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryFeePayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundACHTransferReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundCheckDepositReturnIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundInternationalACHTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireDrawdownPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransfer, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInboundWireTransferReversal, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInterestPayment, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryInternalSource, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategorySampleFunds, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferIntention, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryWireTransferRejection, InboundRealTimePaymentsTransferSimulationResultTransactionSourceCategoryOther:
 		return true
 	}
 	return false

@@ -14,7 +14,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestCheckDepositNew(t *testing.T) {
+func TestCheckDepositNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -30,8 +30,8 @@ func TestCheckDepositNew(t *testing.T) {
 		AccountID:        increase.F("account_in71c4amph0vgo2qllky"),
 		Amount:           increase.F(int64(1000)),
 		BackImageFileID:  increase.F("file_26khfk98mzfz90a11oqx"),
-		Currency:         increase.F("USD"),
 		FrontImageFileID: increase.F("file_hkv175ovmc2tb2v2zbrm"),
+		Description:      increase.F("Vendor payment"),
 	})
 	if err != nil {
 		var apierr *increase.Error

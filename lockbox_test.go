@@ -3,10 +3,8 @@
 package increase_test
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"io"
 	"os"
 	"testing"
 	"time"
@@ -16,7 +14,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestFileNewWithOptionalParams(t *testing.T) {
+func TestLockboxNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -28,10 +26,9 @@ func TestFileNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Files.New(context.TODO(), increase.FileNewParams{
-		File:        increase.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
-		Purpose:     increase.F(increase.FileNewParamsPurposeCheckImageFront),
-		Description: increase.F("x"),
+	_, err := client.Lockboxes.New(context.TODO(), increase.LockboxNewParams{
+		AccountID:   increase.F("account_in71c4amph0vgo2qllky"),
+		Description: increase.F("Rent payments"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -42,7 +39,7 @@ func TestFileNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestFileGet(t *testing.T) {
+func TestLockboxGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -54,7 +51,7 @@ func TestFileGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Files.Get(context.TODO(), "file_makxrc67oh9l6sg7w9yc")
+	_, err := client.Lockboxes.Get(context.TODO(), "lockbox_3xt21ok13q19advds4t5")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -64,7 +61,7 @@ func TestFileGet(t *testing.T) {
 	}
 }
 
-func TestFileListWithOptionalParams(t *testing.T) {
+func TestLockboxUpdateWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -76,8 +73,38 @@ func TestFileListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Files.List(context.TODO(), increase.FileListParams{
-		CreatedAt: increase.F(increase.FileListParamsCreatedAt{
+	_, err := client.Lockboxes.Update(
+		context.TODO(),
+		"lockbox_3xt21ok13q19advds4t5",
+		increase.LockboxUpdateParams{
+			Description: increase.F("x"),
+			Status:      increase.F(increase.LockboxUpdateParamsStatusInactive),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestLockboxListWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Lockboxes.List(context.TODO(), increase.LockboxListParams{
+		AccountID: increase.F("string"),
+		CreatedAt: increase.F(increase.LockboxListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
@@ -86,9 +113,6 @@ func TestFileListWithOptionalParams(t *testing.T) {
 		Cursor:         increase.F("string"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
-		Purpose: increase.F(increase.FileListParamsPurpose{
-			In: increase.F([]increase.FileListParamsPurposeIn{increase.FileListParamsPurposeInCheckImageFront, increase.FileListParamsPurposeInCheckImageBack, increase.FileListParamsPurposeInProcessedCheckImageFront}),
-		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

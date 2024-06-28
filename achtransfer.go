@@ -148,9 +148,6 @@ type ACHTransfer struct {
 	// The type of entity that owns the account to which the ACH Transfer is being
 	// sent.
 	DestinationAccountHolder ACHTransferDestinationAccountHolder `json:"destination_account_holder,required"`
-	// The transfer effective date in
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
 	// The type of the account to which the transfer will be sent.
@@ -174,6 +171,11 @@ type ACHTransfer struct {
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// Configuration for how the effective date of the transfer will be set. This
+	// determines same-day vs future-dated settlement timing. If not set, defaults to a
+	// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+	// must be set.
+	PreferredEffectiveDate ACHTransferPreferredEffectiveDate `json:"preferred_effective_date,required"`
 	// If your transfer is returned, this will contain details of the return.
 	Return ACHTransferReturn `json:"return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -216,7 +218,6 @@ type achTransferJSON struct {
 	CreatedBy                apijson.Field
 	Currency                 apijson.Field
 	DestinationAccountHolder apijson.Field
-	EffectiveDate            apijson.Field
 	ExternalAccountID        apijson.Field
 	Funding                  apijson.Field
 	IdempotencyKey           apijson.Field
@@ -225,6 +226,7 @@ type achTransferJSON struct {
 	Network                  apijson.Field
 	NotificationsOfChange    apijson.Field
 	PendingTransactionID     apijson.Field
+	PreferredEffectiveDate   apijson.Field
 	Return                   apijson.Field
 	RoutingNumber            apijson.Field
 	StandardEntryClassCode   apijson.Field
@@ -771,6 +773,59 @@ func (r ACHTransferNotificationsOfChangeChangeCode) IsKnown() bool {
 	return false
 }
 
+// Configuration for how the effective date of the transfer will be set. This
+// determines same-day vs future-dated settlement timing. If not set, defaults to a
+// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+// must be set.
+type ACHTransferPreferredEffectiveDate struct {
+	// A specific date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format to
+	// use as the effective date when submitting this transfer.
+	Date time.Time `json:"date,required,nullable" format:"date"`
+	// A schedule by which Increase whill choose an effective date for the transfer.
+	SettlementSchedule ACHTransferPreferredEffectiveDateSettlementSchedule `json:"settlement_schedule,required,nullable"`
+	JSON               achTransferPreferredEffectiveDateJSON               `json:"-"`
+}
+
+// achTransferPreferredEffectiveDateJSON contains the JSON metadata for the struct
+// [ACHTransferPreferredEffectiveDate]
+type achTransferPreferredEffectiveDateJSON struct {
+	Date               apijson.Field
+	SettlementSchedule apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *ACHTransferPreferredEffectiveDate) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferPreferredEffectiveDateJSON) RawJSON() string {
+	return r.raw
+}
+
+// A schedule by which Increase whill choose an effective date for the transfer.
+type ACHTransferPreferredEffectiveDateSettlementSchedule string
+
+const (
+	// The chosen effective date will be the same as the ACH processing date on which
+	// the transfer is submitted. This is necessary, but not sufficient for the
+	// transfer to be settled same-day: it must also be submitted before the last
+	// same-day cutoff and be less than or equal to $1,000.000.00.
+	ACHTransferPreferredEffectiveDateSettlementScheduleSameDay ACHTransferPreferredEffectiveDateSettlementSchedule = "same_day"
+	// The chosen effective date will be the business day following the ACH processing
+	// date on which the transfer is submitted. The transfer will be settled on that
+	// future day.
+	ACHTransferPreferredEffectiveDateSettlementScheduleFutureDated ACHTransferPreferredEffectiveDateSettlementSchedule = "future_dated"
+)
+
+func (r ACHTransferPreferredEffectiveDateSettlementSchedule) IsKnown() bool {
+	switch r {
+	case ACHTransferPreferredEffectiveDateSettlementScheduleSameDay, ACHTransferPreferredEffectiveDateSettlementScheduleFutureDated:
+		return true
+	}
+	return false
+}
+
 // If your transfer is returned, this will contain details of the return.
 type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -1072,16 +1127,20 @@ func (r ACHTransferStatus) IsKnown() bool {
 // weekdays according to their
 // [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 type ACHTransferSubmission struct {
-	// The ACH's effective date sent to the receiving bank. If `effective_date` is
-	// configured in the ACH transfer, this will match the value there. Otherwise, it
-	// will the date that the ACH transfer was processed, which is usually the current
-	// or subsequent business day.
+	// The ACH transfer's effective date as sent to the Federal Reserve. If a specific
+	// date was configured using `preferred_effective_date`, this will match that
+	// value. Otherwise, it will be the date selected (following the specified
+	// settlement schedule) at the time the transfer was submitted.
 	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
-	// When the funds transfer is expected to settle in the recipient's account.
-	// Credits may be available sooner, at the receiving banks discretion. The FedACH
-	// schedule is published
+	// When the transfer is expected to settle in the recipient's account. Credits may
+	// be available sooner, at the receiving banks discretion. The FedACH schedule is
+	// published
 	// [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 	ExpectedFundsSettlementAt time.Time `json:"expected_funds_settlement_at,required" format:"date-time"`
+	// The settlement schedule the transfer is expected to follow. This expectation
+	// takes into account the `effective_date`, `submitted_at`, and the amount of the
+	// transfer.
+	ExpectedSettlementSchedule ACHTransferSubmissionExpectedSettlementSchedule `json:"expected_settlement_schedule,required"`
 	// When the ACH transfer was sent to FedACH.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
 	// A 15 digit number recorded in the Nacha file and transmitted to the receiving
@@ -1096,12 +1155,13 @@ type ACHTransferSubmission struct {
 // achTransferSubmissionJSON contains the JSON metadata for the struct
 // [ACHTransferSubmission]
 type achTransferSubmissionJSON struct {
-	EffectiveDate             apijson.Field
-	ExpectedFundsSettlementAt apijson.Field
-	SubmittedAt               apijson.Field
-	TraceNumber               apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
+	EffectiveDate              apijson.Field
+	ExpectedFundsSettlementAt  apijson.Field
+	ExpectedSettlementSchedule apijson.Field
+	SubmittedAt                apijson.Field
+	TraceNumber                apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
 }
 
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -1110,6 +1170,26 @@ func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 
 func (r achTransferSubmissionJSON) RawJSON() string {
 	return r.raw
+}
+
+// The settlement schedule the transfer is expected to follow. This expectation
+// takes into account the `effective_date`, `submitted_at`, and the amount of the
+// transfer.
+type ACHTransferSubmissionExpectedSettlementSchedule string
+
+const (
+	// The transfer is expected to settle same-day.
+	ACHTransferSubmissionExpectedSettlementScheduleSameDay ACHTransferSubmissionExpectedSettlementSchedule = "same_day"
+	// The transfer is expected to settle on a future date.
+	ACHTransferSubmissionExpectedSettlementScheduleFutureDated ACHTransferSubmissionExpectedSettlementSchedule = "future_dated"
+)
+
+func (r ACHTransferSubmissionExpectedSettlementSchedule) IsKnown() bool {
+	switch r {
+	case ACHTransferSubmissionExpectedSettlementScheduleSameDay, ACHTransferSubmissionExpectedSettlementScheduleFutureDated:
+		return true
+	}
+	return false
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -1175,6 +1255,11 @@ type ACHTransferNewParams struct {
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
 	IndividualName param.Field[string] `json:"individual_name"`
+	// Configuration for how the effective date of the transfer will be set. This
+	// determines same-day vs future-dated settlement timing. If not set, defaults to a
+	// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+	// must be set.
+	PreferredEffectiveDate param.Field[ACHTransferNewParamsPreferredEffectiveDate] `json:"preferred_effective_date"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
@@ -1301,6 +1386,45 @@ const (
 func (r ACHTransferNewParamsFunding) IsKnown() bool {
 	switch r {
 	case ACHTransferNewParamsFundingChecking, ACHTransferNewParamsFundingSavings:
+		return true
+	}
+	return false
+}
+
+// Configuration for how the effective date of the transfer will be set. This
+// determines same-day vs future-dated settlement timing. If not set, defaults to a
+// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+// must be set.
+type ACHTransferNewParamsPreferredEffectiveDate struct {
+	// A specific date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format to
+	// use as the effective date when submitting this transfer.
+	Date param.Field[time.Time] `json:"date" format:"date"`
+	// A schedule by which Increase whill choose an effective date for the transfer.
+	SettlementSchedule param.Field[ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule] `json:"settlement_schedule"`
+}
+
+func (r ACHTransferNewParamsPreferredEffectiveDate) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A schedule by which Increase whill choose an effective date for the transfer.
+type ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule string
+
+const (
+	// The chosen effective date will be the same as the ACH processing date on which
+	// the transfer is submitted. This is necessary, but not sufficient for the
+	// transfer to be settled same-day: it must also be submitted before the last
+	// same-day cutoff and be less than or equal to $1,000.000.00.
+	ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleSameDay ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule = "same_day"
+	// The chosen effective date will be the business day following the ACH processing
+	// date on which the transfer is submitted. The transfer will be settled on that
+	// future day.
+	ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleFutureDated ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule = "future_dated"
+)
+
+func (r ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule) IsKnown() bool {
+	switch r {
+	case ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleSameDay, ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleFutureDated:
 		return true
 	}
 	return false
