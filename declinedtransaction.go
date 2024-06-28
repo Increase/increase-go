@@ -170,11 +170,13 @@ const (
 	DeclinedTransactionRouteTypeAccountNumber DeclinedTransactionRouteType = "account_number"
 	// A Card.
 	DeclinedTransactionRouteTypeCard DeclinedTransactionRouteType = "card"
+	// A Lockbox.
+	DeclinedTransactionRouteTypeLockbox DeclinedTransactionRouteType = "lockbox"
 )
 
 func (r DeclinedTransactionRouteType) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionRouteTypeAccountNumber, DeclinedTransactionRouteTypeCard:
+	case DeclinedTransactionRouteTypeAccountNumber, DeclinedTransactionRouteTypeCard, DeclinedTransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -313,6 +315,8 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonDuplicateReturn DeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	DeclinedTransactionSourceACHDeclineReasonEntityNotActive DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	// There was an error with one of the required fields.
+	DeclinedTransactionSourceACHDeclineReasonFieldError DeclinedTransactionSourceACHDeclineReason = "field_error"
 	// Your account is inactive.
 	DeclinedTransactionSourceACHDeclineReasonGroupLocked DeclinedTransactionSourceACHDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
@@ -334,7 +338,7 @@ const (
 
 func (r DeclinedTransactionSourceACHDeclineReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, DeclinedTransactionSourceACHDeclineReasonBreachesLimit, DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, DeclinedTransactionSourceACHDeclineReasonDuplicateReturn, DeclinedTransactionSourceACHDeclineReasonEntityNotActive, DeclinedTransactionSourceACHDeclineReasonGroupLocked, DeclinedTransactionSourceACHDeclineReasonInsufficientFunds, DeclinedTransactionSourceACHDeclineReasonMisroutedReturn, DeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, DeclinedTransactionSourceACHDeclineReasonNoACHRoute, DeclinedTransactionSourceACHDeclineReasonOriginatorRequest, DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceACHDeclineReasonUserInitiated:
+	case DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, DeclinedTransactionSourceACHDeclineReasonBreachesLimit, DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, DeclinedTransactionSourceACHDeclineReasonDuplicateReturn, DeclinedTransactionSourceACHDeclineReasonEntityNotActive, DeclinedTransactionSourceACHDeclineReasonFieldError, DeclinedTransactionSourceACHDeclineReasonGroupLocked, DeclinedTransactionSourceACHDeclineReasonInsufficientFunds, DeclinedTransactionSourceACHDeclineReasonMisroutedReturn, DeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, DeclinedTransactionSourceACHDeclineReasonNoACHRoute, DeclinedTransactionSourceACHDeclineReasonOriginatorRequest, DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceACHDeclineReasonUserInitiated:
 		return true
 	}
 	return false
@@ -368,10 +372,12 @@ type DeclinedTransactionSourceCardDecline struct {
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	// The identifier of the declined transaction created for this Card Decline.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
@@ -420,30 +426,31 @@ type DeclinedTransactionSourceCardDecline struct {
 // declinedTransactionSourceCardDeclineJSON contains the JSON metadata for the
 // struct [DeclinedTransactionSourceCardDecline]
 type declinedTransactionSourceCardDeclineJSON struct {
-	ID                   apijson.Field
-	Actioner             apijson.Field
-	Amount               apijson.Field
-	CardPaymentID        apijson.Field
-	Currency             apijson.Field
-	DigitalWalletTokenID apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	NetworkDetails       apijson.Field
-	NetworkIdentifiers   apijson.Field
-	NetworkRiskScore     apijson.Field
-	PhysicalCardID       apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
-	ProcessingCategory   apijson.Field
-	RealTimeDecisionID   apijson.Field
-	Reason               apijson.Field
-	Verification         apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
+	ID                    apijson.Field
+	Actioner              apijson.Field
+	Amount                apijson.Field
+	CardPaymentID         apijson.Field
+	Currency              apijson.Field
+	DeclinedTransactionID apijson.Field
+	DigitalWalletTokenID  apijson.Field
+	MerchantAcceptorID    apijson.Field
+	MerchantCategoryCode  apijson.Field
+	MerchantCity          apijson.Field
+	MerchantCountry       apijson.Field
+	MerchantDescriptor    apijson.Field
+	MerchantState         apijson.Field
+	NetworkDetails        apijson.Field
+	NetworkIdentifiers    apijson.Field
+	NetworkRiskScore      apijson.Field
+	PhysicalCardID        apijson.Field
+	PresentmentAmount     apijson.Field
+	PresentmentCurrency   apijson.Field
+	ProcessingCategory    apijson.Field
+	RealTimeDecisionID    apijson.Field
+	Reason                apijson.Field
+	Verification          apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -739,6 +746,9 @@ const (
 	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	// The given CVV2 did not match the card's value.
 	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	// The given expiration date did not match the card's value. Only applies when a
+	// CVV2 is present.
+	DeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch DeclinedTransactionSourceCardDeclineReason = "card_expiration_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
 	// The transaction was blocked by a Limit.
@@ -761,7 +771,7 @@ const (
 
 func (r DeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCardDeclineReasonCardNotActive, DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, DeclinedTransactionSourceCardDeclineReasonEntityNotActive, DeclinedTransactionSourceCardDeclineReasonGroupLocked, DeclinedTransactionSourceCardDeclineReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceCardDeclineReasonBreachesLimit, DeclinedTransactionSourceCardDeclineReasonWebhookDeclined, DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, DeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
+	case DeclinedTransactionSourceCardDeclineReasonCardNotActive, DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, DeclinedTransactionSourceCardDeclineReasonEntityNotActive, DeclinedTransactionSourceCardDeclineReasonGroupLocked, DeclinedTransactionSourceCardDeclineReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, DeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch, DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceCardDeclineReasonBreachesLimit, DeclinedTransactionSourceCardDeclineReasonWebhookDeclined, DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, DeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
 		return true
 	}
 	return false
@@ -1122,11 +1132,13 @@ const (
 	DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired DeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
 	// The check was rejected for an unknown reason.
 	DeclinedTransactionSourceCheckDepositRejectionReasonUnknown DeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
+	// The check was rejected by an operator who will provide details out-of-band.
+	DeclinedTransactionSourceCheckDepositRejectionReasonOperator DeclinedTransactionSourceCheckDepositRejectionReason = "operator"
 )
 
 func (r DeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, DeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
+	case DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, DeclinedTransactionSourceCheckDepositRejectionReasonUnknown, DeclinedTransactionSourceCheckDepositRejectionReasonOperator:
 		return true
 	}
 	return false

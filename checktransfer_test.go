@@ -51,6 +51,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				PostalCode: increase.F("10045"),
 				State:      increase.F("NY"),
 			}),
+			SignatureText: increase.F("Ian Crease"),
 		}),
 		RequireApproval: increase.F(true),
 		ThirdParty: increase.F(increase.CheckTransferNewParamsThirdParty{

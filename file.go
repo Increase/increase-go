@@ -171,6 +171,12 @@ const (
 	FilePurposeCheckImageFront FilePurpose = "check_image_front"
 	// An image of the back of a check, used for check deposits.
 	FilePurposeCheckImageBack FilePurpose = "check_image_back"
+	// An image of the front of a deposited check after processing by Increase and
+	// submission to the Federal Reserve.
+	FilePurposeProcessedCheckImageFront FilePurpose = "processed_check_image_front"
+	// An image of the back of a deposited check after processing by Increase and
+	// submission to the Federal Reserve.
+	FilePurposeProcessedCheckImageBack FilePurpose = "processed_check_image_back"
 	// An image of a check that was mailed to a recipient.
 	FilePurposeMailedCheckImage FilePurpose = "mailed_check_image"
 	// A scanned mail item sent to Increase.
@@ -213,7 +219,7 @@ const (
 
 func (r FilePurpose) IsKnown() bool {
 	switch r {
-	case FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeMailedCheckImage, FilePurposeInboundMailItem, FilePurposeForm1099Int, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment:
+	case FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeProcessedCheckImageFront, FilePurposeProcessedCheckImageBack, FilePurposeMailedCheckImage, FilePurposeInboundMailItem, FilePurposeForm1099Int, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment:
 		return true
 	}
 	return false
@@ -375,6 +381,12 @@ const (
 	FileListParamsPurposeInCheckImageFront FileListParamsPurposeIn = "check_image_front"
 	// An image of the back of a check, used for check deposits.
 	FileListParamsPurposeInCheckImageBack FileListParamsPurposeIn = "check_image_back"
+	// An image of the front of a deposited check after processing by Increase and
+	// submission to the Federal Reserve.
+	FileListParamsPurposeInProcessedCheckImageFront FileListParamsPurposeIn = "processed_check_image_front"
+	// An image of the back of a deposited check after processing by Increase and
+	// submission to the Federal Reserve.
+	FileListParamsPurposeInProcessedCheckImageBack FileListParamsPurposeIn = "processed_check_image_back"
 	// An image of a check that was mailed to a recipient.
 	FileListParamsPurposeInMailedCheckImage FileListParamsPurposeIn = "mailed_check_image"
 	// A scanned mail item sent to Increase.
@@ -417,7 +429,7 @@ const (
 
 func (r FileListParamsPurposeIn) IsKnown() bool {
 	switch r {
-	case FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInInboundMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment:
+	case FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInProcessedCheckImageFront, FileListParamsPurposeInProcessedCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInInboundMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment:
 		return true
 	}
 	return false

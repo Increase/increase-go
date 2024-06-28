@@ -84,8 +84,12 @@ type CardPayment struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
 	// Payment was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The Digital Wallet Token identifier for this payment.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
 	// The interactions related to this card payment.
 	Elements []CardPaymentElement `json:"elements,required"`
+	// The Physical Card identifier for this payment.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
 	// The summarized state of this card payment.
 	State CardPaymentState `json:"state,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -96,15 +100,17 @@ type CardPayment struct {
 
 // cardPaymentJSON contains the JSON metadata for the struct [CardPayment]
 type cardPaymentJSON struct {
-	ID          apijson.Field
-	AccountID   apijson.Field
-	CardID      apijson.Field
-	CreatedAt   apijson.Field
-	Elements    apijson.Field
-	State       apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID                   apijson.Field
+	AccountID            apijson.Field
+	CardID               apijson.Field
+	CreatedAt            apijson.Field
+	DigitalWalletTokenID apijson.Field
+	Elements             apijson.Field
+	PhysicalCardID       apijson.Field
+	State                apijson.Field
+	Type                 apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *CardPayment) UnmarshalJSON(data []byte) (err error) {
@@ -190,7 +196,7 @@ type CardPaymentElementsCardAuthorization struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardPaymentElementsCardAuthorizationCurrency `json:"currency,required"`
@@ -840,10 +846,12 @@ type CardPaymentElementsCardDecline struct {
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency CardPaymentElementsCardDeclineCurrency `json:"currency,required"`
+	// The identifier of the declined transaction created for this Card Decline.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
@@ -892,30 +900,31 @@ type CardPaymentElementsCardDecline struct {
 // cardPaymentElementsCardDeclineJSON contains the JSON metadata for the struct
 // [CardPaymentElementsCardDecline]
 type cardPaymentElementsCardDeclineJSON struct {
-	ID                   apijson.Field
-	Actioner             apijson.Field
-	Amount               apijson.Field
-	CardPaymentID        apijson.Field
-	Currency             apijson.Field
-	DigitalWalletTokenID apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	NetworkDetails       apijson.Field
-	NetworkIdentifiers   apijson.Field
-	NetworkRiskScore     apijson.Field
-	PhysicalCardID       apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
-	ProcessingCategory   apijson.Field
-	RealTimeDecisionID   apijson.Field
-	Reason               apijson.Field
-	Verification         apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
+	ID                    apijson.Field
+	Actioner              apijson.Field
+	Amount                apijson.Field
+	CardPaymentID         apijson.Field
+	Currency              apijson.Field
+	DeclinedTransactionID apijson.Field
+	DigitalWalletTokenID  apijson.Field
+	MerchantAcceptorID    apijson.Field
+	MerchantCategoryCode  apijson.Field
+	MerchantCity          apijson.Field
+	MerchantCountry       apijson.Field
+	MerchantDescriptor    apijson.Field
+	MerchantState         apijson.Field
+	NetworkDetails        apijson.Field
+	NetworkIdentifiers    apijson.Field
+	NetworkRiskScore      apijson.Field
+	PhysicalCardID        apijson.Field
+	PresentmentAmount     apijson.Field
+	PresentmentCurrency   apijson.Field
+	ProcessingCategory    apijson.Field
+	RealTimeDecisionID    apijson.Field
+	Reason                apijson.Field
+	Verification          apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -1211,6 +1220,9 @@ const (
 	CardPaymentElementsCardDeclineReasonInsufficientFunds CardPaymentElementsCardDeclineReason = "insufficient_funds"
 	// The given CVV2 did not match the card's value.
 	CardPaymentElementsCardDeclineReasonCvv2Mismatch CardPaymentElementsCardDeclineReason = "cvv2_mismatch"
+	// The given expiration date did not match the card's value. Only applies when a
+	// CVV2 is present.
+	CardPaymentElementsCardDeclineReasonCardExpirationMismatch CardPaymentElementsCardDeclineReason = "card_expiration_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	CardPaymentElementsCardDeclineReasonTransactionNotAllowed CardPaymentElementsCardDeclineReason = "transaction_not_allowed"
 	// The transaction was blocked by a Limit.
@@ -1233,7 +1245,7 @@ const (
 
 func (r CardPaymentElementsCardDeclineReason) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardDeclineReasonCardNotActive, CardPaymentElementsCardDeclineReasonPhysicalCardNotActive, CardPaymentElementsCardDeclineReasonEntityNotActive, CardPaymentElementsCardDeclineReasonGroupLocked, CardPaymentElementsCardDeclineReasonInsufficientFunds, CardPaymentElementsCardDeclineReasonCvv2Mismatch, CardPaymentElementsCardDeclineReasonTransactionNotAllowed, CardPaymentElementsCardDeclineReasonBreachesLimit, CardPaymentElementsCardDeclineReasonWebhookDeclined, CardPaymentElementsCardDeclineReasonWebhookTimedOut, CardPaymentElementsCardDeclineReasonDeclinedByStandInProcessing, CardPaymentElementsCardDeclineReasonInvalidPhysicalCard, CardPaymentElementsCardDeclineReasonMissingOriginalAuthorization, CardPaymentElementsCardDeclineReasonSuspectedFraud:
+	case CardPaymentElementsCardDeclineReasonCardNotActive, CardPaymentElementsCardDeclineReasonPhysicalCardNotActive, CardPaymentElementsCardDeclineReasonEntityNotActive, CardPaymentElementsCardDeclineReasonGroupLocked, CardPaymentElementsCardDeclineReasonInsufficientFunds, CardPaymentElementsCardDeclineReasonCvv2Mismatch, CardPaymentElementsCardDeclineReasonCardExpirationMismatch, CardPaymentElementsCardDeclineReasonTransactionNotAllowed, CardPaymentElementsCardDeclineReasonBreachesLimit, CardPaymentElementsCardDeclineReasonWebhookDeclined, CardPaymentElementsCardDeclineReasonWebhookTimedOut, CardPaymentElementsCardDeclineReasonDeclinedByStandInProcessing, CardPaymentElementsCardDeclineReasonInvalidPhysicalCard, CardPaymentElementsCardDeclineReasonMissingOriginalAuthorization, CardPaymentElementsCardDeclineReasonSuspectedFraud:
 		return true
 	}
 	return false
@@ -1700,13 +1712,13 @@ func (r CardPaymentElementsCardIncrementType) IsKnown() bool {
 type CardPaymentElementsCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The amount in the minor unit of the transaction's settlement currency. For
+	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
+	// transaction's settlement currency.
 	Currency CardPaymentElementsCardRefundCurrency `json:"currency,required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -1723,6 +1735,11 @@ type CardPaymentElementsCardRefund struct {
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
 	NetworkIdentifiers CardPaymentElementsCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
+	// The amount in the minor unit of the transaction's presentment currency.
+	PresentmentAmount int64 `json:"presentment_amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails CardPaymentElementsCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
@@ -1748,6 +1765,8 @@ type cardPaymentElementsCardRefundJSON struct {
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
 	NetworkIdentifiers   apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
 	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
@@ -1764,7 +1783,7 @@ func (r cardPaymentElementsCardRefundJSON) RawJSON() string {
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
+// transaction's settlement currency.
 type CardPaymentElementsCardRefundCurrency string
 
 const (
@@ -2639,7 +2658,7 @@ type CardPaymentElementsCardSettlement struct {
 	// exists.
 	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency CardPaymentElementsCardSettlementCurrency `json:"currency,required"`
@@ -3440,7 +3459,7 @@ type CardPaymentElementsCardValidation struct {
 	// stand-in processing, or the user through a real-time decision.
 	Actioner CardPaymentElementsCardValidationActioner `json:"actioner,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardPaymentElementsCardValidationCurrency `json:"currency,required"`

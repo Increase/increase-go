@@ -227,6 +227,8 @@ func (r CardPurchaseSupplementInvoiceTaxTreatments) IsKnown() bool {
 }
 
 type CardPurchaseSupplementLineItem struct {
+	// The Card Purchase Supplement Line Item identifier.
+	ID string `json:"id,required"`
 	// Indicates the type of line item.
 	DetailIndicator CardPurchaseSupplementLineItemsDetailIndicator `json:"detail_indicator,required,nullable"`
 	// Discount amount for this specific line item.
@@ -267,6 +269,7 @@ type CardPurchaseSupplementLineItem struct {
 // cardPurchaseSupplementLineItemJSON contains the JSON metadata for the struct
 // [CardPurchaseSupplementLineItem]
 type cardPurchaseSupplementLineItemJSON struct {
+	ID                    apijson.Field
 	DetailIndicator       apijson.Field
 	DiscountAmount        apijson.Field
 	DiscountCurrency      apijson.Field

@@ -149,11 +149,13 @@ const (
 	ExportCategoryBookkeepingAccountBalanceCsv ExportCategory = "bookkeeping_account_balance_csv"
 	// Export a CSV of entities with a given status.
 	ExportCategoryEntityCsv ExportCategory = "entity_csv"
+	// Export a CSV of vendors added to the third-party risk management dashboard.
+	ExportCategoryVendorCsv ExportCategory = "vendor_csv"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv:
+	case ExportCategoryAccountStatementOfx, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv:
 		return true
 	}
 	return false
@@ -213,6 +215,8 @@ type ExportNewParams struct {
 	// Options for the created export. Required if `category` is equal to
 	// `transaction_csv`.
 	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
+	// Options for the created export. Required if `category` is equal to `vendor_csv`.
+	VendorCsv param.Field[interface{}] `json:"vendor_csv"`
 }
 
 func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
@@ -234,11 +238,13 @@ const (
 	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
 	// Export a CSV of entities with a given status.
 	ExportNewParamsCategoryEntityCsv ExportNewParamsCategory = "entity_csv"
+	// Export a CSV of vendors added to the third-party risk management dashboard.
+	ExportNewParamsCategoryVendorCsv ExportNewParamsCategory = "vendor_csv"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv:
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv:
 		return true
 	}
 	return false
@@ -470,11 +476,13 @@ const (
 	ExportListParamsCategoryInBookkeepingAccountBalanceCsv ExportListParamsCategoryIn = "bookkeeping_account_balance_csv"
 	// Export a CSV of entities with a given status.
 	ExportListParamsCategoryInEntityCsv ExportListParamsCategoryIn = "entity_csv"
+	// Export a CSV of vendors added to the third-party risk management dashboard.
+	ExportListParamsCategoryInVendorCsv ExportListParamsCategoryIn = "vendor_csv"
 )
 
 func (r ExportListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv:
+	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv:
 		return true
 	}
 	return false

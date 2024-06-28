@@ -69,6 +69,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 				OnOrBefore: increase.F(time.Now()),
 			}),
 		}),
+		VendorCsv: increase.F[any](map[string]interface{}{}),
 	})
 	if err != nil {
 		var apierr *increase.Error

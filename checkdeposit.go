@@ -94,8 +94,6 @@ type CheckDeposit struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-	Currency CheckDepositCurrency `json:"currency,required"`
 	// If your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
 	DepositAcceptance CheckDepositDepositAcceptance `json:"deposit_acceptance,required,nullable"`
@@ -108,12 +106,20 @@ type CheckDeposit struct {
 	// After the check is parsed, it is submitted to the Check21 network for
 	// processing. This will contain details of the submission.
 	DepositSubmission CheckDepositDepositSubmission `json:"deposit_submission,required,nullable"`
+	// The description of the Check Deposit, for display purposes only.
+	Description string `json:"description,required,nullable"`
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id,required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
+	// the identifier of the Inbound Mail Item.
+	InboundMailItemID string `json:"inbound_mail_item_id,required,nullable"`
+	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
+	// the identifier of the Lockbox that received it.
+	LockboxID string `json:"lockbox_id,required,nullable"`
 	// The status of the Check Deposit.
 	Status CheckDepositStatus `json:"status,required"`
 	// The ID for the Transaction created by the deposit.
@@ -131,13 +137,15 @@ type checkDepositJSON struct {
 	Amount            apijson.Field
 	BackImageFileID   apijson.Field
 	CreatedAt         apijson.Field
-	Currency          apijson.Field
 	DepositAcceptance apijson.Field
 	DepositRejection  apijson.Field
 	DepositReturn     apijson.Field
 	DepositSubmission apijson.Field
+	Description       apijson.Field
 	FrontImageFileID  apijson.Field
 	IdempotencyKey    apijson.Field
+	InboundMailItemID apijson.Field
+	LockboxID         apijson.Field
 	Status            apijson.Field
 	TransactionID     apijson.Field
 	Type              apijson.Field
@@ -151,32 +159,6 @@ func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
 
 func (r checkDepositJSON) RawJSON() string {
 	return r.raw
-}
-
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-type CheckDepositCurrency string
-
-const (
-	// Canadian Dollar (CAD)
-	CheckDepositCurrencyCad CheckDepositCurrency = "CAD"
-	// Swiss Franc (CHF)
-	CheckDepositCurrencyChf CheckDepositCurrency = "CHF"
-	// Euro (EUR)
-	CheckDepositCurrencyEur CheckDepositCurrency = "EUR"
-	// British Pound (GBP)
-	CheckDepositCurrencyGbp CheckDepositCurrency = "GBP"
-	// Japanese Yen (JPY)
-	CheckDepositCurrencyJpy CheckDepositCurrency = "JPY"
-	// US Dollar (USD)
-	CheckDepositCurrencyUsd CheckDepositCurrency = "USD"
-)
-
-func (r CheckDepositCurrency) IsKnown() bool {
-	switch r {
-	case CheckDepositCurrencyCad, CheckDepositCurrencyChf, CheckDepositCurrencyEur, CheckDepositCurrencyGbp, CheckDepositCurrencyJpy, CheckDepositCurrencyUsd:
-		return true
-	}
-	return false
 }
 
 // If your deposit is successfully parsed and accepted by Increase, this will
@@ -342,11 +324,13 @@ const (
 	CheckDepositDepositRejectionReasonDepositWindowExpired CheckDepositDepositRejectionReason = "deposit_window_expired"
 	// The check was rejected for an unknown reason.
 	CheckDepositDepositRejectionReasonUnknown CheckDepositDepositRejectionReason = "unknown"
+	// The check was rejected by an operator who will provide details out-of-band.
+	CheckDepositDepositRejectionReasonOperator CheckDepositDepositRejectionReason = "operator"
 )
 
 func (r CheckDepositDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonUnknown:
+	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonUnknown, CheckDepositDepositRejectionReasonOperator:
 		return true
 	}
 	return false
@@ -493,6 +477,12 @@ func (r CheckDepositDepositReturnReturnReason) IsKnown() bool {
 // After the check is parsed, it is submitted to the Check21 network for
 // processing. This will contain details of the submission.
 type CheckDepositDepositSubmission struct {
+	// The ID for the File containing the check back image that was submitted to the
+	// Check21 network.
+	BackFileID string `json:"back_file_id,required"`
+	// The ID for the File containing the check front image that was submitted to the
+	// Check21 network.
+	FrontFileID string `json:"front_file_id,required"`
 	// When the check deposit was submitted to the Check21 network for processing.
 	// During business days, this happens within a few hours of the check being
 	// accepted by Increase.
@@ -503,6 +493,8 @@ type CheckDepositDepositSubmission struct {
 // checkDepositDepositSubmissionJSON contains the JSON metadata for the struct
 // [CheckDepositDepositSubmission]
 type checkDepositDepositSubmissionJSON struct {
+	BackFileID  apijson.Field
+	FrontFileID apijson.Field
 	SubmittedAt apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -562,10 +554,10 @@ type CheckDepositNewParams struct {
 	Amount param.Field[int64] `json:"amount,required"`
 	// The File containing the check's back image.
 	BackImageFileID param.Field[string] `json:"back_image_file_id,required"`
-	// The currency to use for the deposit.
-	Currency param.Field[string] `json:"currency,required"`
 	// The File containing the check's front image.
 	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
+	// The description you choose to give the Check Deposit, for display purposes only.
+	Description param.Field[string] `json:"description"`
 }
 
 func (r CheckDepositNewParams) MarshalJSON() (data []byte, err error) {
