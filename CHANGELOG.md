@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.54.0 (2024-06-28)
+
+Full Changelog: [v0.53.2...v0.54.0](https://github.com/Increase/increase-go/compare/v0.53.2...v0.54.0)
+
+### Features
+
+* **api:** updates ([#315](https://github.com/Increase/increase-go/issues/315)) ([29e9044](https://github.com/Increase/increase-go/commit/29e9044af8e9f6fba08382ca8b831281b4f960ab))
+
+
+### Chores
+
+* gitignore test server logs ([#313](https://github.com/Increase/increase-go/issues/313)) ([df89522](https://github.com/Increase/increase-go/commit/df8952242cbf7b1c708aeda3c517261c018a7e7d))
+
 ## 0.53.2 (2024-06-21)
 
 Full Changelog: [v0.53.1...v0.53.2](https://github.com/Increase/increase-go/compare/v0.53.1...v0.53.2)
