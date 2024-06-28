@@ -65,9 +65,13 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
 		IndividualID:             increase.F("x"),
 		IndividualName:           increase.F("x"),
-		RequireApproval:          increase.F(true),
-		RoutingNumber:            increase.F("101050001"),
-		StandardEntryClassCode:   increase.F(increase.ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
+		PreferredEffectiveDate: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDate{
+			Date:               increase.F(time.Now()),
+			SettlementSchedule: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleSameDay),
+		}),
+		RequireApproval:        increase.F(true),
+		RoutingNumber:          increase.F("101050001"),
+		StandardEntryClassCode: increase.F(increase.ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -177,11 +177,13 @@ const (
 	PendingTransactionRouteTypeAccountNumber PendingTransactionRouteType = "account_number"
 	// A Card.
 	PendingTransactionRouteTypeCard PendingTransactionRouteType = "card"
+	// A Lockbox.
+	PendingTransactionRouteTypeLockbox PendingTransactionRouteType = "lockbox"
 )
 
 func (r PendingTransactionRouteType) IsKnown() bool {
 	switch r {
-	case PendingTransactionRouteTypeAccountNumber, PendingTransactionRouteTypeCard:
+	case PendingTransactionRouteTypeAccountNumber, PendingTransactionRouteTypeCard, PendingTransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -345,7 +347,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`

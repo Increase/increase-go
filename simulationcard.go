@@ -190,11 +190,13 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber CardAuthorizationSimulationDeclinedTransactionRouteType = "account_number"
 	// A Card.
 	CardAuthorizationSimulationDeclinedTransactionRouteTypeCard CardAuthorizationSimulationDeclinedTransactionRouteType = "card"
+	// A Lockbox.
+	CardAuthorizationSimulationDeclinedTransactionRouteTypeLockbox CardAuthorizationSimulationDeclinedTransactionRouteType = "lockbox"
 )
 
 func (r CardAuthorizationSimulationDeclinedTransactionRouteType) IsKnown() bool {
 	switch r {
-	case CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber, CardAuthorizationSimulationDeclinedTransactionRouteTypeCard:
+	case CardAuthorizationSimulationDeclinedTransactionRouteTypeAccountNumber, CardAuthorizationSimulationDeclinedTransactionRouteTypeCard, CardAuthorizationSimulationDeclinedTransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -334,6 +336,8 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	// There was an error with one of the required fields.
+	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonFieldError CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "field_error"
 	// Your account is inactive.
 	CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
@@ -355,7 +359,7 @@ const (
 
 func (r CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReason) IsKnown() bool {
 	switch r {
-	case CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonUserInitiated:
+	case CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonBreachesLimit, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonDuplicateReturn, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonEntityNotActive, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonFieldError, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonGroupLocked, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonInsufficientFunds, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonMisroutedReturn, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonNoACHRoute, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonOriginatorRequest, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, CardAuthorizationSimulationDeclinedTransactionSourceACHDeclineReasonUserInitiated:
 		return true
 	}
 	return false
@@ -389,10 +393,12 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
 	Currency CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	// The identifier of the declined transaction created for this Card Decline.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
@@ -442,30 +448,31 @@ type CardAuthorizationSimulationDeclinedTransactionSourceCardDecline struct {
 // JSON metadata for the struct
 // [CardAuthorizationSimulationDeclinedTransactionSourceCardDecline]
 type cardAuthorizationSimulationDeclinedTransactionSourceCardDeclineJSON struct {
-	ID                   apijson.Field
-	Actioner             apijson.Field
-	Amount               apijson.Field
-	CardPaymentID        apijson.Field
-	Currency             apijson.Field
-	DigitalWalletTokenID apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantState        apijson.Field
-	NetworkDetails       apijson.Field
-	NetworkIdentifiers   apijson.Field
-	NetworkRiskScore     apijson.Field
-	PhysicalCardID       apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
-	ProcessingCategory   apijson.Field
-	RealTimeDecisionID   apijson.Field
-	Reason               apijson.Field
-	Verification         apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
+	ID                    apijson.Field
+	Actioner              apijson.Field
+	Amount                apijson.Field
+	CardPaymentID         apijson.Field
+	Currency              apijson.Field
+	DeclinedTransactionID apijson.Field
+	DigitalWalletTokenID  apijson.Field
+	MerchantAcceptorID    apijson.Field
+	MerchantCategoryCode  apijson.Field
+	MerchantCity          apijson.Field
+	MerchantCountry       apijson.Field
+	MerchantDescriptor    apijson.Field
+	MerchantState         apijson.Field
+	NetworkDetails        apijson.Field
+	NetworkIdentifiers    apijson.Field
+	NetworkRiskScore      apijson.Field
+	PhysicalCardID        apijson.Field
+	PresentmentAmount     apijson.Field
+	PresentmentCurrency   apijson.Field
+	ProcessingCategory    apijson.Field
+	RealTimeDecisionID    apijson.Field
+	Reason                apijson.Field
+	Verification          apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *CardAuthorizationSimulationDeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -764,6 +771,9 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
 	// The given CVV2 did not match the card's value.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	// The given expiration date did not match the card's value. Only applies when a
+	// CVV2 is present.
+	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "card_expiration_mismatch"
 	// The attempted card transaction is not allowed per Increase's terms.
 	CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
 	// The transaction was blocked by a Limit.
@@ -786,7 +796,7 @@ const (
 
 func (r CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
 	switch r {
-	case CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
+	case CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardNotActive, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonEntityNotActive, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonGroupLocked, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInsufficientFunds, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonBreachesLimit, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookDeclined, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, CardAuthorizationSimulationDeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
 		return true
 	}
 	return false
@@ -1150,11 +1160,13 @@ const (
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
 	// The check was rejected for an unknown reason.
 	CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonUnknown CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
+	// The check was rejected by an operator who will provide details out-of-band.
+	CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonOperator CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReason = "operator"
 )
 
 func (r CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
+	case CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonUnknown, CardAuthorizationSimulationDeclinedTransactionSourceCheckDepositRejectionReasonOperator:
 		return true
 	}
 	return false
@@ -1741,11 +1753,13 @@ const (
 	CardAuthorizationSimulationPendingTransactionRouteTypeAccountNumber CardAuthorizationSimulationPendingTransactionRouteType = "account_number"
 	// A Card.
 	CardAuthorizationSimulationPendingTransactionRouteTypeCard CardAuthorizationSimulationPendingTransactionRouteType = "card"
+	// A Lockbox.
+	CardAuthorizationSimulationPendingTransactionRouteTypeLockbox CardAuthorizationSimulationPendingTransactionRouteType = "lockbox"
 )
 
 func (r CardAuthorizationSimulationPendingTransactionRouteType) IsKnown() bool {
 	switch r {
-	case CardAuthorizationSimulationPendingTransactionRouteTypeAccountNumber, CardAuthorizationSimulationPendingTransactionRouteTypeCard:
+	case CardAuthorizationSimulationPendingTransactionRouteTypeAccountNumber, CardAuthorizationSimulationPendingTransactionRouteTypeCard, CardAuthorizationSimulationPendingTransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -1911,7 +1925,7 @@ type CardAuthorizationSimulationPendingTransactionSourceCardAuthorization struct
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CardAuthorizationSimulationPendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
