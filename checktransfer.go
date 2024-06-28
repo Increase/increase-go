@@ -490,7 +490,10 @@ type CheckTransferPhysicalCheck struct {
 	RecipientName string `json:"recipient_name,required"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
-	JSON          checkTransferPhysicalCheckJSON          `json:"-"`
+	// The text that will appear as the signature on the check in cursive font. If
+	// blank, the check will be printed with 'No signature required'.
+	SignatureText string                         `json:"signature_text,required,nullable"`
+	JSON          checkTransferPhysicalCheckJSON `json:"-"`
 }
 
 // checkTransferPhysicalCheckJSON contains the JSON metadata for the struct
@@ -501,6 +504,7 @@ type checkTransferPhysicalCheckJSON struct {
 	Note           apijson.Field
 	RecipientName  apijson.Field
 	ReturnAddress  apijson.Field
+	SignatureText  apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -820,6 +824,9 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// The return address to be printed on the check. If omitted this will default to
 	// the address of the Entity of the Account used to make the Check Transfer.
 	ReturnAddress param.Field[CheckTransferNewParamsPhysicalCheckReturnAddress] `json:"return_address"`
+	// The text that will appear as the signature on the check in cursive font. If not
+	// provided, the check will be printed with 'No signature required'.
+	SignatureText param.Field[string] `json:"signature_text"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheck) MarshalJSON() (data []byte, err error) {

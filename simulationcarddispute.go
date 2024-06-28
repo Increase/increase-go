@@ -63,15 +63,22 @@ func (r SimulationCardDisputeActionParams) MarshalJSON() (data []byte, err error
 type SimulationCardDisputeActionParamsStatus string
 
 const (
-	// The Card Dispute has been accepted and your funds have been returned.
+	// The Card Dispute has been accepted and your funds have been returned. The card
+	// dispute will eventually transition into `won` or `lost` depending on the
+	// outcome.
 	SimulationCardDisputeActionParamsStatusAccepted SimulationCardDisputeActionParamsStatus = "accepted"
 	// The Card Dispute has been rejected.
 	SimulationCardDisputeActionParamsStatusRejected SimulationCardDisputeActionParamsStatus = "rejected"
+	// The Card Dispute has been lost and funds previously credited from the acceptance
+	// have been debited.
+	SimulationCardDisputeActionParamsStatusLost SimulationCardDisputeActionParamsStatus = "lost"
+	// The Card Dispute has been won and no further action can be taken.
+	SimulationCardDisputeActionParamsStatusWon SimulationCardDisputeActionParamsStatus = "won"
 )
 
 func (r SimulationCardDisputeActionParamsStatus) IsKnown() bool {
 	switch r {
-	case SimulationCardDisputeActionParamsStatusAccepted, SimulationCardDisputeActionParamsStatusRejected:
+	case SimulationCardDisputeActionParamsStatusAccepted, SimulationCardDisputeActionParamsStatusRejected, SimulationCardDisputeActionParamsStatusLost, SimulationCardDisputeActionParamsStatusWon:
 		return true
 	}
 	return false

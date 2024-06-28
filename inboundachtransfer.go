@@ -149,6 +149,8 @@ type InboundACHTransfer struct {
 	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
 	// The name of the receiver of the transfer.
 	ReceiverName string `json:"receiver_name,required,nullable"`
+	// The Standard Entry Class (SEC) code of the transfer.
+	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The status of the transfer.
 	Status InboundACHTransferStatus `json:"status,required"`
 	// The trace number of the transfer.
@@ -182,6 +184,7 @@ type inboundACHTransferJSON struct {
 	OriginatorRoutingNumber            apijson.Field
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
+	StandardEntryClassCode             apijson.Field
 	Status                             apijson.Field
 	TraceNumber                        apijson.Field
 	TransferReturn                     apijson.Field
@@ -357,6 +360,8 @@ const (
 	InboundACHTransferDeclineReasonDuplicateReturn InboundACHTransferDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	InboundACHTransferDeclineReasonEntityNotActive InboundACHTransferDeclineReason = "entity_not_active"
+	// There was an error with one of the required fields.
+	InboundACHTransferDeclineReasonFieldError InboundACHTransferDeclineReason = "field_error"
 	// Your account is inactive.
 	InboundACHTransferDeclineReasonGroupLocked InboundACHTransferDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
@@ -378,7 +383,7 @@ const (
 
 func (r InboundACHTransferDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateReturn, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonMisroutedReturn, InboundACHTransferDeclineReasonReturnOfErroneousOrReversingDebit, InboundACHTransferDeclineReasonNoACHRoute, InboundACHTransferDeclineReasonOriginatorRequest, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated:
+	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateReturn, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonFieldError, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonMisroutedReturn, InboundACHTransferDeclineReasonReturnOfErroneousOrReversingDebit, InboundACHTransferDeclineReasonNoACHRoute, InboundACHTransferDeclineReasonOriginatorRequest, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated:
 		return true
 	}
 	return false
@@ -427,6 +432,50 @@ func (r *InboundACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err
 
 func (r inboundACHTransferNotificationOfChangeJSON) RawJSON() string {
 	return r.raw
+}
+
+// The Standard Entry Class (SEC) code of the transfer.
+type InboundACHTransferStandardEntryClassCode string
+
+const (
+	// Corporate Credit and Debit (CCD).
+	InboundACHTransferStandardEntryClassCodeCorporateCreditOrDebit InboundACHTransferStandardEntryClassCode = "corporate_credit_or_debit"
+	// Corporate Trade Exchange (CTX).
+	InboundACHTransferStandardEntryClassCodeCorporateTradeExchange InboundACHTransferStandardEntryClassCode = "corporate_trade_exchange"
+	// Prearranged Payments and Deposits (PPD).
+	InboundACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit InboundACHTransferStandardEntryClassCode = "prearranged_payments_and_deposit"
+	// Internet Initiated (WEB).
+	InboundACHTransferStandardEntryClassCodeInternetInitiated InboundACHTransferStandardEntryClassCode = "internet_initiated"
+	// Point of Sale (POS).
+	InboundACHTransferStandardEntryClassCodePointOfSale InboundACHTransferStandardEntryClassCode = "point_of_sale"
+	// Telephone Initiated (TEL).
+	InboundACHTransferStandardEntryClassCodeTelephoneInitiated InboundACHTransferStandardEntryClassCode = "telephone_initiated"
+	// Customer Initiated (CIE).
+	InboundACHTransferStandardEntryClassCodeCustomerInitiated InboundACHTransferStandardEntryClassCode = "customer_initiated"
+	// Accounts Receivable (ARC).
+	InboundACHTransferStandardEntryClassCodeAccountsReceivable InboundACHTransferStandardEntryClassCode = "accounts_receivable"
+	// Machine Transfer (MTE).
+	InboundACHTransferStandardEntryClassCodeMachineTransfer InboundACHTransferStandardEntryClassCode = "machine_transfer"
+	// Shared Network Transaction (SHR).
+	InboundACHTransferStandardEntryClassCodeSharedNetworkTransaction InboundACHTransferStandardEntryClassCode = "shared_network_transaction"
+	// Represented Check (RCK).
+	InboundACHTransferStandardEntryClassCodeRepresentedCheck InboundACHTransferStandardEntryClassCode = "represented_check"
+	// Back Office Conversion (BOC).
+	InboundACHTransferStandardEntryClassCodeBackOfficeConversion InboundACHTransferStandardEntryClassCode = "back_office_conversion"
+	// Point of Purchase (POP).
+	InboundACHTransferStandardEntryClassCodePointOfPurchase InboundACHTransferStandardEntryClassCode = "point_of_purchase"
+	// Check Truncation (TRC).
+	InboundACHTransferStandardEntryClassCodeCheckTruncation InboundACHTransferStandardEntryClassCode = "check_truncation"
+	// Destroyed Check (XCK).
+	InboundACHTransferStandardEntryClassCodeDestroyedCheck InboundACHTransferStandardEntryClassCode = "destroyed_check"
+)
+
+func (r InboundACHTransferStandardEntryClassCode) IsKnown() bool {
+	switch r {
+	case InboundACHTransferStandardEntryClassCodeCorporateCreditOrDebit, InboundACHTransferStandardEntryClassCodeCorporateTradeExchange, InboundACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit, InboundACHTransferStandardEntryClassCodeInternetInitiated, InboundACHTransferStandardEntryClassCodePointOfSale, InboundACHTransferStandardEntryClassCodeTelephoneInitiated, InboundACHTransferStandardEntryClassCodeCustomerInitiated, InboundACHTransferStandardEntryClassCodeAccountsReceivable, InboundACHTransferStandardEntryClassCodeMachineTransfer, InboundACHTransferStandardEntryClassCodeSharedNetworkTransaction, InboundACHTransferStandardEntryClassCodeRepresentedCheck, InboundACHTransferStandardEntryClassCodeBackOfficeConversion, InboundACHTransferStandardEntryClassCodePointOfPurchase, InboundACHTransferStandardEntryClassCodeCheckTruncation, InboundACHTransferStandardEntryClassCodeDestroyedCheck:
+		return true
+	}
+	return false
 }
 
 // The status of the transfer.

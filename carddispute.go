@@ -99,6 +99,9 @@ type CardDispute struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// If the Card Dispute's status is `lost`, this will contain details of the lost
+	// dispute.
+	Loss CardDisputeLoss `json:"loss,required,nullable"`
 	// If the Card Dispute's status is `rejected`, this will contain details of the
 	// unsuccessful dispute.
 	Rejection CardDisputeRejection `json:"rejection,required,nullable"`
@@ -107,6 +110,9 @@ type CardDispute struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
 	Type CardDisputeType `json:"type,required"`
+	// If the Card Dispute's status is `won`, this will contain details of the won
+	// dispute.
+	Win  CardDisputeWin  `json:"win,required,nullable"`
 	JSON cardDisputeJSON `json:"-"`
 }
 
@@ -118,9 +124,11 @@ type cardDisputeJSON struct {
 	DisputedTransactionID apijson.Field
 	Explanation           apijson.Field
 	IdempotencyKey        apijson.Field
+	Loss                  apijson.Field
 	Rejection             apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
+	Win                   apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -165,6 +173,40 @@ func (r cardDisputeAcceptanceJSON) RawJSON() string {
 	return r.raw
 }
 
+// If the Card Dispute's status is `lost`, this will contain details of the lost
+// dispute.
+type CardDisputeLoss struct {
+	// The identifier of the Card Dispute that was lost.
+	CardDisputeID string `json:"card_dispute_id,required"`
+	// Why the Card Dispute was lost.
+	Explanation string `json:"explanation,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card Dispute was lost.
+	LostAt time.Time `json:"lost_at,required" format:"date-time"`
+	// The identifier of the Transaction that was created to debit the disputed funds
+	// from your account.
+	TransactionID string              `json:"transaction_id,required"`
+	JSON          cardDisputeLossJSON `json:"-"`
+}
+
+// cardDisputeLossJSON contains the JSON metadata for the struct [CardDisputeLoss]
+type cardDisputeLossJSON struct {
+	CardDisputeID apijson.Field
+	Explanation   apijson.Field
+	LostAt        apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *CardDisputeLoss) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeLossJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the Card Dispute's status is `rejected`, this will contain details of the
 // unsuccessful dispute.
 type CardDisputeRejection struct {
@@ -202,15 +244,22 @@ type CardDisputeStatus string
 const (
 	// The Card Dispute is pending review.
 	CardDisputeStatusPendingReviewing CardDisputeStatus = "pending_reviewing"
-	// The Card Dispute has been accepted and your funds have been returned.
+	// The Card Dispute has been accepted and your funds have been returned. The card
+	// dispute will eventually transition into `won` or `lost` depending on the
+	// outcome.
 	CardDisputeStatusAccepted CardDisputeStatus = "accepted"
 	// The Card Dispute has been rejected.
 	CardDisputeStatusRejected CardDisputeStatus = "rejected"
+	// The Card Dispute has been lost and funds previously credited from the acceptance
+	// have been debited.
+	CardDisputeStatusLost CardDisputeStatus = "lost"
+	// The Card Dispute has been won and no further action can be taken.
+	CardDisputeStatusWon CardDisputeStatus = "won"
 )
 
 func (r CardDisputeStatus) IsKnown() bool {
 	switch r {
-	case CardDisputeStatusPendingReviewing, CardDisputeStatusAccepted, CardDisputeStatusRejected:
+	case CardDisputeStatusPendingReviewing, CardDisputeStatusAccepted, CardDisputeStatusRejected, CardDisputeStatusLost, CardDisputeStatusWon:
 		return true
 	}
 	return false
@@ -230,6 +279,33 @@ func (r CardDisputeType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// If the Card Dispute's status is `won`, this will contain details of the won
+// dispute.
+type CardDisputeWin struct {
+	// The identifier of the Card Dispute that was won.
+	CardDisputeID string `json:"card_dispute_id,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card Dispute was won.
+	WonAt time.Time          `json:"won_at,required" format:"date-time"`
+	JSON  cardDisputeWinJSON `json:"-"`
+}
+
+// cardDisputeWinJSON contains the JSON metadata for the struct [CardDisputeWin]
+type cardDisputeWinJSON struct {
+	CardDisputeID apijson.Field
+	WonAt         apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *CardDisputeWin) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeWinJSON) RawJSON() string {
+	return r.raw
 }
 
 type CardDisputeNewParams struct {
@@ -312,15 +388,22 @@ type CardDisputeListParamsStatusIn string
 const (
 	// The Card Dispute is pending review.
 	CardDisputeListParamsStatusInPendingReviewing CardDisputeListParamsStatusIn = "pending_reviewing"
-	// The Card Dispute has been accepted and your funds have been returned.
+	// The Card Dispute has been accepted and your funds have been returned. The card
+	// dispute will eventually transition into `won` or `lost` depending on the
+	// outcome.
 	CardDisputeListParamsStatusInAccepted CardDisputeListParamsStatusIn = "accepted"
 	// The Card Dispute has been rejected.
 	CardDisputeListParamsStatusInRejected CardDisputeListParamsStatusIn = "rejected"
+	// The Card Dispute has been lost and funds previously credited from the acceptance
+	// have been debited.
+	CardDisputeListParamsStatusInLost CardDisputeListParamsStatusIn = "lost"
+	// The Card Dispute has been won and no further action can be taken.
+	CardDisputeListParamsStatusInWon CardDisputeListParamsStatusIn = "won"
 )
 
 func (r CardDisputeListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case CardDisputeListParamsStatusInPendingReviewing, CardDisputeListParamsStatusInAccepted, CardDisputeListParamsStatusInRejected:
+	case CardDisputeListParamsStatusInPendingReviewing, CardDisputeListParamsStatusInAccepted, CardDisputeListParamsStatusInRejected, CardDisputeListParamsStatusInLost, CardDisputeListParamsStatusInWon:
 		return true
 	}
 	return false

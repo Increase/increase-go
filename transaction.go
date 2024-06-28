@@ -169,11 +169,13 @@ const (
 	TransactionRouteTypeAccountNumber TransactionRouteType = "account_number"
 	// A Card.
 	TransactionRouteTypeCard TransactionRouteType = "card"
+	// A Lockbox.
+	TransactionRouteTypeLockbox TransactionRouteType = "lockbox"
 )
 
 func (r TransactionRouteType) IsKnown() bool {
 	switch r {
-	case TransactionRouteTypeAccountNumber, TransactionRouteTypeCard:
+	case TransactionRouteTypeAccountNumber, TransactionRouteTypeCard, TransactionRouteTypeLockbox:
 		return true
 	}
 	return false
@@ -199,6 +201,9 @@ type TransactionSource struct {
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,required,nullable"`
+	// A Card Dispute Loss object. This field will be present in the JSON response if
+	// and only if `category` is equal to `card_dispute_loss`.
+	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss,required,nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`.
 	CardRefund TransactionSourceCardRefund `json:"card_refund,required,nullable"`
@@ -280,6 +285,7 @@ type transactionSourceJSON struct {
 	ACHTransferRejection                        apijson.Field
 	ACHTransferReturn                           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
+	CardDisputeLoss                             apijson.Field
 	CardRefund                                  apijson.Field
 	CardRevenuePayment                          apijson.Field
 	CardSettlement                              apijson.Field
@@ -720,18 +726,53 @@ func (r transactionSourceCardDisputeAcceptanceJSON) RawJSON() string {
 	return r.raw
 }
 
+// A Card Dispute Loss object. This field will be present in the JSON response if
+// and only if `category` is equal to `card_dispute_loss`.
+type TransactionSourceCardDisputeLoss struct {
+	// The identifier of the Card Dispute that was lost.
+	CardDisputeID string `json:"card_dispute_id,required"`
+	// Why the Card Dispute was lost.
+	Explanation string `json:"explanation,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card Dispute was lost.
+	LostAt time.Time `json:"lost_at,required" format:"date-time"`
+	// The identifier of the Transaction that was created to debit the disputed funds
+	// from your account.
+	TransactionID string                               `json:"transaction_id,required"`
+	JSON          transactionSourceCardDisputeLossJSON `json:"-"`
+}
+
+// transactionSourceCardDisputeLossJSON contains the JSON metadata for the struct
+// [TransactionSourceCardDisputeLoss]
+type transactionSourceCardDisputeLossJSON struct {
+	CardDisputeID apijson.Field
+	Explanation   apijson.Field
+	LostAt        apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardDisputeLoss) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardDisputeLossJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Card Refund object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_refund`.
 type TransactionSourceCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The amount in the minor unit of the transaction's settlement currency. For
+	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// transaction's currency.
+	// transaction's settlement currency.
 	Currency TransactionSourceCardRefundCurrency `json:"currency,required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -748,6 +789,11 @@ type TransactionSourceCardRefund struct {
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
 	NetworkIdentifiers TransactionSourceCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
+	// The amount in the minor unit of the transaction's presentment currency.
+	PresentmentAmount int64 `json:"presentment_amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails TransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
@@ -773,6 +819,8 @@ type transactionSourceCardRefundJSON struct {
 	MerchantName         apijson.Field
 	MerchantState        apijson.Field
 	NetworkIdentifiers   apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
 	PurchaseDetails      apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
@@ -789,7 +837,7 @@ func (r transactionSourceCardRefundJSON) RawJSON() string {
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-// transaction's currency.
+// transaction's settlement currency.
 type TransactionSourceCardRefundCurrency string
 
 const (
@@ -1585,7 +1633,7 @@ type TransactionSourceCardSettlement struct {
 	// exists.
 	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency TransactionSourceCardSettlementCurrency `json:"currency,required"`
@@ -2462,6 +2510,8 @@ const (
 	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
 	// object.
 	TransactionSourceCategoryCardDisputeAcceptance TransactionSourceCategory = "card_dispute_acceptance"
+	// Card Dispute Loss: details will be under the `card_dispute_loss` object.
+	TransactionSourceCategoryCardDisputeLoss TransactionSourceCategory = "card_dispute_loss"
 	// Card Refund: details will be under the `card_refund` object.
 	TransactionSourceCategoryCardRefund TransactionSourceCategory = "card_refund"
 	// Card Settlement: details will be under the `card_settlement` object.
@@ -2528,7 +2578,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundInternationalACHTransfer, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundInternationalACHTransfer, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -4063,6 +4113,8 @@ const (
 	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
 	// object.
 	TransactionListParamsCategoryInCardDisputeAcceptance TransactionListParamsCategoryIn = "card_dispute_acceptance"
+	// Card Dispute Loss: details will be under the `card_dispute_loss` object.
+	TransactionListParamsCategoryInCardDisputeLoss TransactionListParamsCategoryIn = "card_dispute_loss"
 	// Card Refund: details will be under the `card_refund` object.
 	TransactionListParamsCategoryInCardRefund TransactionListParamsCategoryIn = "card_refund"
 	// Card Settlement: details will be under the `card_settlement` object.
@@ -4129,7 +4181,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundInternationalACHTransfer, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundInternationalACHTransfer, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false

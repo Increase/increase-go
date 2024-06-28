@@ -49,6 +49,8 @@ func (r *IntrafiBalanceService) Get(ctx context.Context, accountID string, opts 
 // amount are swept to various other institutions. Funds are rebalanced across
 // banks as needed once per business day.
 type IntrafiBalance struct {
+	// The identifier of this balance.
+	ID string `json:"id,required"`
 	// Each entry represents a balance held at a different bank. IntraFi separates the
 	// total balance across many participating banks in the network.
 	Balances []IntrafiBalanceBalance `json:"balances,required"`
@@ -68,6 +70,7 @@ type IntrafiBalance struct {
 
 // intrafiBalanceJSON contains the JSON metadata for the struct [IntrafiBalance]
 type intrafiBalanceJSON struct {
+	ID            apijson.Field
 	Balances      apijson.Field
 	Currency      apijson.Field
 	EffectiveDate apijson.Field
@@ -86,6 +89,8 @@ func (r intrafiBalanceJSON) RawJSON() string {
 }
 
 type IntrafiBalanceBalance struct {
+	// The identifier of this balance.
+	ID string `json:"id,required"`
 	// The balance, in minor units of `currency`, held with this bank.
 	Balance int64 `json:"balance,required"`
 	// The name of the bank holding these funds.
@@ -102,6 +107,7 @@ type IntrafiBalanceBalance struct {
 // intrafiBalanceBalanceJSON contains the JSON metadata for the struct
 // [IntrafiBalanceBalance]
 type intrafiBalanceBalanceJSON struct {
+	ID                    apijson.Field
 	Balance               apijson.Field
 	Bank                  apijson.Field
 	BankLocation          apijson.Field

@@ -86,6 +86,10 @@ type Program struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The default configuration for digital cards attached to this Program.
 	DefaultDigitalCardProfileID string `json:"default_digital_card_profile_id,required,nullable"`
+	// The Interest Rate currently being earned on the accounts in this program, as a
+	// string containing a decimal number. For example, a 1% interest rate would be
+	// represented as "0.01".
+	InterestRate string `json:"interest_rate,required"`
 	// The name of the Program.
 	Name string `json:"name,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -103,6 +107,7 @@ type programJSON struct {
 	BillingAccountID            apijson.Field
 	CreatedAt                   apijson.Field
 	DefaultDigitalCardProfileID apijson.Field
+	InterestRate                apijson.Field
 	Name                        apijson.Field
 	Type                        apijson.Field
 	UpdatedAt                   apijson.Field
