@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.55.0 (2024-07-01)
+
+Full Changelog: [v0.54.0...v0.55.0](https://github.com/Increase/increase-go/compare/v0.54.0...v0.55.0)
+
+### Features
+
+* **api:** add method to simulate international ACH transfers ([#316](https://github.com/Increase/increase-go/issues/316)) ([fef8cce](https://github.com/Increase/increase-go/commit/fef8ccea9793451207efefaa3e2ee167e51d113e))
+
 ## 0.54.0 (2024-06-28)
 
 Full Changelog: [v0.53.2...v0.54.0](https://github.com/Increase/increase-go/compare/v0.53.2...v0.54.0)
