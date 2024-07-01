@@ -1164,13 +1164,11 @@ const (
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
 	// The check was rejected for an unknown reason.
 	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
-	// The check was rejected by an operator who will provide details out-of-band.
-	InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonOperator InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason = "operator"
 )
 
 func (r InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonOperator:
+	case InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, InboundRealTimePaymentsTransferSimulationResultDeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
 		return true
 	}
 	return false
@@ -4854,8 +4852,11 @@ type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
-	TraceNumber string                                                                                              `json:"trace_number,required"`
-	JSON        inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON `json:"-"`
+	TraceNumber string `json:"trace_number,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_international_ach_transfer`.
+	Type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferType `json:"type,required"`
+	JSON inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferJSON
@@ -4898,6 +4899,7 @@ type inboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInte
 	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
 	ReceivingDepositoryFinancialInstitutionName            apijson.Field
 	TraceNumber                                            apijson.Field
+	Type                                                   apijson.Field
 	raw                                                    string
 	ExtraFields                                            map[string]apijson.Field
 }
@@ -5048,6 +5050,22 @@ const (
 func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
 	switch r {
 	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode, InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_international_ach_transfer`.
+type InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferType string
+
+const (
+	InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferTypeInboundInternationalACHTransfer InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferType = "inbound_international_ach_transfer"
+)
+
+func (r InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferType) IsKnown() bool {
+	switch r {
+	case InboundRealTimePaymentsTransferSimulationResultTransactionSourceInboundInternationalACHTransferTypeInboundInternationalACHTransfer:
 		return true
 	}
 	return false
