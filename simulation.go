@@ -19,25 +19,26 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewSimulationService] method instead.
 type SimulationService struct {
-	Options                     []option.RequestOption
-	AccountTransfers            *SimulationAccountTransferService
-	AccountStatements           *SimulationAccountStatementService
-	ACHTransfers                *SimulationACHTransferService
-	CardDisputes                *SimulationCardDisputeService
-	CardRefunds                 *SimulationCardRefundService
-	CheckTransfers              *SimulationCheckTransferService
-	Documents                   *SimulationDocumentService
-	DigitalWalletTokenRequests  *SimulationDigitalWalletTokenRequestService
-	CheckDeposits               *SimulationCheckDepositService
-	Programs                    *SimulationProgramService
-	InboundWireDrawdownRequests *SimulationInboundWireDrawdownRequestService
-	InboundFundsHolds           *SimulationInboundFundsHoldService
-	InterestPayments            *SimulationInterestPaymentService
-	WireTransfers               *SimulationWireTransferService
-	Cards                       *SimulationCardService
-	RealTimePaymentsTransfers   *SimulationRealTimePaymentsTransferService
-	PhysicalCards               *SimulationPhysicalCardService
-	InboundCheckDeposits        *SimulationInboundCheckDepositService
+	Options                          []option.RequestOption
+	AccountTransfers                 *SimulationAccountTransferService
+	AccountStatements                *SimulationAccountStatementService
+	ACHTransfers                     *SimulationACHTransferService
+	CardDisputes                     *SimulationCardDisputeService
+	CardRefunds                      *SimulationCardRefundService
+	CheckTransfers                   *SimulationCheckTransferService
+	Documents                        *SimulationDocumentService
+	DigitalWalletTokenRequests       *SimulationDigitalWalletTokenRequestService
+	CheckDeposits                    *SimulationCheckDepositService
+	Programs                         *SimulationProgramService
+	InboundWireDrawdownRequests      *SimulationInboundWireDrawdownRequestService
+	InboundFundsHolds                *SimulationInboundFundsHoldService
+	InterestPayments                 *SimulationInterestPaymentService
+	WireTransfers                    *SimulationWireTransferService
+	Cards                            *SimulationCardService
+	RealTimePaymentsTransfers        *SimulationRealTimePaymentsTransferService
+	PhysicalCards                    *SimulationPhysicalCardService
+	InboundCheckDeposits             *SimulationInboundCheckDepositService
+	InboundInternationalACHTransfers *SimulationInboundInternationalACHTransferService
 }
 
 // NewSimulationService generates a new service that applies the given options to
@@ -64,6 +65,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.RealTimePaymentsTransfers = NewSimulationRealTimePaymentsTransferService(opts...)
 	r.PhysicalCards = NewSimulationPhysicalCardService(opts...)
 	r.InboundCheckDeposits = NewSimulationInboundCheckDepositService(opts...)
+	r.InboundInternationalACHTransfers = NewSimulationInboundInternationalACHTransferService(opts...)
 	return
 }
 
