@@ -594,6 +594,16 @@ Methods:
 
 - <code title="post /simulations/inbound_check_deposits">client.Simulations.InboundCheckDeposits.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundCheckDepositService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundCheckDepositNewParams">SimulationInboundCheckDepositNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundCheckDeposit">InboundCheckDeposit</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## InboundInternationalACHTransfers
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundInternationalACHTransfer">InboundInternationalACHTransfer</a>
+
+Methods:
+
+- <code title="post /simulations/inbound_international_ach_transfers">client.Simulations.InboundInternationalACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundInternationalACHTransferService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundInternationalACHTransferNewParams">SimulationInboundInternationalACHTransferNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundInternationalACHTransfer">InboundInternationalACHTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # PhysicalCards
 
 Response Types:

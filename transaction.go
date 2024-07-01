@@ -3244,8 +3244,11 @@ type TransactionSourceInboundInternationalACHTransfer struct {
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
-	TraceNumber string                                               `json:"trace_number,required"`
-	JSON        transactionSourceInboundInternationalACHTransferJSON `json:"-"`
+	TraceNumber string `json:"trace_number,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_international_ach_transfer`.
+	Type TransactionSourceInboundInternationalACHTransferType `json:"type,required"`
+	JSON transactionSourceInboundInternationalACHTransferJSON `json:"-"`
 }
 
 // transactionSourceInboundInternationalACHTransferJSON contains the JSON metadata
@@ -3287,6 +3290,7 @@ type transactionSourceInboundInternationalACHTransferJSON struct {
 	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
 	ReceivingDepositoryFinancialInstitutionName            apijson.Field
 	TraceNumber                                            apijson.Field
+	Type                                                   apijson.Field
 	raw                                                    string
 	ExtraFields                                            map[string]apijson.Field
 }
@@ -3437,6 +3441,22 @@ const (
 func (r TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
 	switch r {
 	case TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode, TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_international_ach_transfer`.
+type TransactionSourceInboundInternationalACHTransferType string
+
+const (
+	TransactionSourceInboundInternationalACHTransferTypeInboundInternationalACHTransfer TransactionSourceInboundInternationalACHTransferType = "inbound_international_ach_transfer"
+)
+
+func (r TransactionSourceInboundInternationalACHTransferType) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundInternationalACHTransferTypeInboundInternationalACHTransfer:
 		return true
 	}
 	return false
