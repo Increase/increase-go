@@ -59,7 +59,7 @@ func (r *WireDrawdownRequestService) Get(ctx context.Context, wireDrawdownReques
 // List Wire Drawdown Requests
 func (r *WireDrawdownRequestService) List(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) (res *pagination.Page[WireDrawdownRequest], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "wire_drawdown_requests"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

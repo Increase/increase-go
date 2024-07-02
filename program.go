@@ -52,7 +52,7 @@ func (r *ProgramService) Get(ctx context.Context, programID string, opts ...opti
 // List Programs
 func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) (res *pagination.Page[Program], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "programs"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

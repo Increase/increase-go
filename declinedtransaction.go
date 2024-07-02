@@ -52,7 +52,7 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declinedTransactio
 // List Declined Transactions
 func (r *DeclinedTransactionService) List(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) (res *pagination.Page[DeclinedTransaction], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "declined_transactions"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

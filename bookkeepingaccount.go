@@ -60,7 +60,7 @@ func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccou
 // List Bookkeeping Accounts
 func (r *BookkeepingAccountService) List(ctx context.Context, query BookkeepingAccountListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingAccount], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_accounts"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

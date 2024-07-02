@@ -60,7 +60,7 @@ func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID st
 // List IntraFi Exclusions.
 func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiExclusion], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "intrafi_exclusions"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

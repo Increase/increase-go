@@ -52,7 +52,7 @@ func (r *BookkeepingEntryService) Get(ctx context.Context, bookkeepingEntryID st
 // List Bookkeeping Entries
 func (r *BookkeepingEntryService) List(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingEntry], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_entries"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

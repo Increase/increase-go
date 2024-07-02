@@ -60,7 +60,7 @@ func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileI
 // List Card Profiles
 func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalCardProfile], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "digital_card_profiles"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

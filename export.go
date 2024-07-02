@@ -60,7 +60,7 @@ func (r *ExportService) Get(ctx context.Context, exportID string, opts ...option
 // List Exports
 func (r *ExportService) List(ctx context.Context, query ExportListParams, opts ...option.RequestOption) (res *pagination.Page[Export], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "exports"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
