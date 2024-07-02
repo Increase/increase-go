@@ -72,7 +72,7 @@ func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string,
 // List Physical Cards
 func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) (res *pagination.Page[PhysicalCard], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "physical_cards"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

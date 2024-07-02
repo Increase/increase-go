@@ -60,7 +60,7 @@ func (r *RealTimePaymentsRequestForPaymentService) Get(ctx context.Context, requ
 // List Real-Time Payments Request for Payments
 func (r *RealTimePaymentsRequestForPaymentService) List(ctx context.Context, query RealTimePaymentsRequestForPaymentListParams, opts ...option.RequestOption) (res *pagination.Page[RealTimePaymentsRequestForPayment], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "real_time_payments_request_for_payments"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

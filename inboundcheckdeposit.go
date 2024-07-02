@@ -52,7 +52,7 @@ func (r *InboundCheckDepositService) Get(ctx context.Context, inboundCheckDeposi
 // List Inbound Check Deposits
 func (r *InboundCheckDepositService) List(ctx context.Context, query InboundCheckDepositListParams, opts ...option.RequestOption) (res *pagination.Page[InboundCheckDeposit], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_check_deposits"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

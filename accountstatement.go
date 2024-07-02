@@ -52,7 +52,7 @@ func (r *AccountStatementService) Get(ctx context.Context, accountStatementID st
 // List Account Statements
 func (r *AccountStatementService) List(ctx context.Context, query AccountStatementListParams, opts ...option.RequestOption) (res *pagination.Page[AccountStatement], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_statements"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
