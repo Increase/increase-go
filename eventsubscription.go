@@ -72,7 +72,7 @@ func (r *EventSubscriptionService) Update(ctx context.Context, eventSubscription
 // List Event Subscriptions
 func (r *EventSubscriptionService) List(ctx context.Context, query EventSubscriptionListParams, opts ...option.RequestOption) (res *pagination.Page[EventSubscription], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "event_subscriptions"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

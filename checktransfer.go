@@ -60,7 +60,7 @@ func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, 
 // List Check Transfers
 func (r *CheckTransferService) List(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) (res *pagination.Page[CheckTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

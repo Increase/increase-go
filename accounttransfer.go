@@ -60,7 +60,7 @@ func (r *AccountTransferService) Get(ctx context.Context, accountTransferID stri
 // List Account Transfers
 func (r *AccountTransferService) List(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) (res *pagination.Page[AccountTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

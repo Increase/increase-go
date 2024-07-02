@@ -61,7 +61,7 @@ func (r *ProofOfAuthorizationRequestSubmissionService) Get(ctx context.Context, 
 // List Proof of Authorization Request Submissions
 func (r *ProofOfAuthorizationRequestSubmissionService) List(ctx context.Context, query ProofOfAuthorizationRequestSubmissionListParams, opts ...option.RequestOption) (res *pagination.Page[ProofOfAuthorizationRequestSubmission], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "proof_of_authorization_request_submissions"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

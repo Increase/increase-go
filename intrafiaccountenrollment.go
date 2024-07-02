@@ -59,7 +59,7 @@ func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccoun
 // List IntraFi Account Enrollments
 func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiAccountEnrollment], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "intrafi_account_enrollments"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

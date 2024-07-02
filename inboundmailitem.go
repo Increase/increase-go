@@ -52,7 +52,7 @@ func (r *InboundMailItemService) Get(ctx context.Context, inboundMailItemID stri
 // List Inbound Mail Items
 func (r *InboundMailItemService) List(ctx context.Context, query InboundMailItemListParams, opts ...option.RequestOption) (res *pagination.Page[InboundMailItem], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_mail_items"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

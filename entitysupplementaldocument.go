@@ -52,7 +52,7 @@ func (r *EntitySupplementalDocumentService) New(ctx context.Context, entityID st
 // List Entity Supplemental Document Submissions
 func (r *EntitySupplementalDocumentService) List(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[SupplementalDocument], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "entity_supplemental_documents"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

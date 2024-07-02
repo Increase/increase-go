@@ -72,7 +72,7 @@ func (r *LockboxService) Update(ctx context.Context, lockboxID string, body Lock
 // List Lockboxes
 func (r *LockboxService) List(ctx context.Context, query LockboxListParams, opts ...option.RequestOption) (res *pagination.Page[Lockbox], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "lockboxes"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
