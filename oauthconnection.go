@@ -52,7 +52,7 @@ func (r *OAuthConnectionService) Get(ctx context.Context, oauthConnectionID stri
 // List OAuth Connections
 func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) (res *pagination.Page[OAuthConnection], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "oauth_connections"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

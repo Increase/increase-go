@@ -52,7 +52,7 @@ func (r *CardPaymentService) Get(ctx context.Context, cardPaymentID string, opts
 // List Card Payments
 func (r *CardPaymentService) List(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) (res *pagination.Page[CardPayment], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_payments"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

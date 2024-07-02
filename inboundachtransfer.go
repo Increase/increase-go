@@ -52,7 +52,7 @@ func (r *InboundACHTransferService) Get(ctx context.Context, inboundACHTransferI
 // List Inbound ACH Transfers
 func (r *InboundACHTransferService) List(ctx context.Context, query InboundACHTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundACHTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_ach_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

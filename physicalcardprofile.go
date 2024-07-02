@@ -60,7 +60,7 @@ func (r *PhysicalCardProfileService) Get(ctx context.Context, physicalCardProfil
 // List Physical Card Profiles
 func (r *PhysicalCardProfileService) List(ctx context.Context, query PhysicalCardProfileListParams, opts ...option.RequestOption) (res *pagination.Page[PhysicalCardProfile], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "physical_card_profiles"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
