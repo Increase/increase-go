@@ -123,6 +123,9 @@ type InboundCheckDeposit struct {
 	// If the deposit attempt has been rejected, the identifier of the Declined
 	// Transaction object created as a result of the failed deposit.
 	DeclinedTransactionID string `json:"declined_transaction_id,required,nullable"`
+	// If you requested a return of this deposit, this will contain details of the
+	// return.
+	DepositReturn InboundCheckDepositDepositReturn `json:"deposit_return,required,nullable"`
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// The status of the Inbound Check Deposit.
@@ -152,6 +155,7 @@ type inboundCheckDepositJSON struct {
 	Currency                        apijson.Field
 	DeclinedAt                      apijson.Field
 	DeclinedTransactionID           apijson.Field
+	DepositReturn                   apijson.Field
 	FrontImageFileID                apijson.Field
 	Status                          apijson.Field
 	TransactionID                   apijson.Field
@@ -192,6 +196,33 @@ func (r InboundCheckDepositCurrency) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// If you requested a return of this deposit, this will contain details of the
+// return.
+type InboundCheckDepositDepositReturn struct {
+	// The time at which the deposit was returned.
+	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
+	// The id of the transaction for the returned deposit.
+	TransactionID string                               `json:"transaction_id,required"`
+	JSON          inboundCheckDepositDepositReturnJSON `json:"-"`
+}
+
+// inboundCheckDepositDepositReturnJSON contains the JSON metadata for the struct
+// [InboundCheckDepositDepositReturn]
+type inboundCheckDepositDepositReturnJSON struct {
+	ReturnedAt    apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *InboundCheckDepositDepositReturn) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundCheckDepositDepositReturnJSON) RawJSON() string {
+	return r.raw
 }
 
 // The status of the Inbound Check Deposit.
