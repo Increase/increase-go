@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.56.0 (2024-07-02)
+
+Full Changelog: [v0.55.0...v0.56.0](https://github.com/Increase/increase-go/compare/v0.55.0...v0.56.0)
+
+### Features
+
+* **api:** add deposit return property to inbound check deposit model ([#318](https://github.com/Increase/increase-go/issues/318)) ([179c2bf](https://github.com/Increase/increase-go/commit/179c2bf5235bda03be8f9fd9b08f8c70ec3a1e60))
+
 ## 0.55.0 (2024-07-01)
 
 Full Changelog: [v0.54.0...v0.55.0](https://github.com/Increase/increase-go/compare/v0.54.0...v0.55.0)
