@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.56.1 (2024-07-02)
+
+Full Changelog: [v0.56.0...v0.56.1](https://github.com/Increase/increase-go/compare/v0.56.0...v0.56.1)
+
+### Bug Fixes
+
+* use slice instead of appending to r.Options ([#320](https://github.com/Increase/increase-go/issues/320)) ([5968421](https://github.com/Increase/increase-go/commit/5968421610a93adafd7c3e425bae089a27674f40))
+
 ## 0.56.0 (2024-07-02)
 
 Full Changelog: [v0.55.0...v0.56.0](https://github.com/Increase/increase-go/compare/v0.55.0...v0.56.0)
