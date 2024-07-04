@@ -380,6 +380,8 @@ type SimulationInboundInternationalACHTransferNewParams struct {
 	OriginatorCompanyEntryDescription param.Field[string] `json:"originator_company_entry_description"`
 	// Either the name of the originator or an intermediary money transmitter.
 	OriginatorName param.Field[string] `json:"originator_name"`
+	// An identification number the originator uses for the receiver.
+	ReceiverIdentificationNumber param.Field[string] `json:"receiver_identification_number"`
 	// The name of the receiver of the transfer.
 	ReceivingCompanyOrIndividualName param.Field[string] `json:"receiving_company_or_individual_name"`
 }

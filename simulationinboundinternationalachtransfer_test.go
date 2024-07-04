@@ -32,6 +32,7 @@ func TestSimulationInboundInternationalACHTransferNewWithOptionalParams(t *testi
 		OriginatingCurrencyCode:           increase.F("NOK"),
 		OriginatorCompanyEntryDescription: increase.F("x"),
 		OriginatorName:                    increase.F("x"),
+		ReceiverIdentificationNumber:      increase.F("x"),
 		ReceivingCompanyOrIndividualName:  increase.F("x"),
 	})
 	if err != nil {
