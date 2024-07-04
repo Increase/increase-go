@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.57.0 (2024-07-04)
+
+Full Changelog: [v0.56.1...v0.57.0](https://github.com/Increase/increase-go/compare/v0.56.1...v0.57.0)
+
+### Features
+
+* **api:** add property 'receiver identification number' to 'originator company entry description' ([#324](https://github.com/Increase/increase-go/issues/324)) ([1e2bf92](https://github.com/Increase/increase-go/commit/1e2bf927207149838acc79ba2ade75c5982d6a64))
+
+
+### Chores
+
+* **internal:** improve deserialization of embedded structs ([#322](https://github.com/Increase/increase-go/issues/322)) ([5e83b4c](https://github.com/Increase/increase-go/commit/5e83b4c790625109867e04457698b7b7ed7c6371))
+
 ## 0.56.1 (2024-07-02)
 
 Full Changelog: [v0.56.0...v0.56.1](https://github.com/Increase/increase-go/compare/v0.56.0...v0.56.1)
