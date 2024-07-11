@@ -48,7 +48,7 @@ func TestBookkeepingEntryListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BookkeepingEntries.List(context.TODO(), increase.BookkeepingEntryListParams{
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {

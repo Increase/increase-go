@@ -49,15 +49,15 @@ func TestInboundCheckDepositListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundCheckDeposits.List(context.TODO(), increase.InboundCheckDepositListParams{
-		AccountID:       increase.F("string"),
-		CheckTransferID: increase.F("string"),
+		AccountID:       increase.F("account_id"),
+		CheckTransferID: increase.F("check_transfer_id"),
 		CreatedAt: increase.F(increase.InboundCheckDepositListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {

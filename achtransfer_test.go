@@ -61,7 +61,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		CompanyName:              increase.F("x"),
 		DestinationAccountHolder: increase.F(increase.ACHTransferNewParamsDestinationAccountHolderBusiness),
 		EffectiveDate:            increase.F(time.Now()),
-		ExternalAccountID:        increase.F("string"),
+		ExternalAccountID:        increase.F("external_account_id"),
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
 		IndividualID:             increase.F("x"),
 		IndividualName:           increase.F("x"),
@@ -117,15 +117,15 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.List(context.TODO(), increase.ACHTransferListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		CreatedAt: increase.F(increase.ACHTransferListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:            increase.F("string"),
-		ExternalAccountID: increase.F("string"),
+		Cursor:            increase.F("cursor"),
+		ExternalAccountID: increase.F("external_account_id"),
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
 	})

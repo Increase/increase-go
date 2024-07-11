@@ -73,8 +73,8 @@ func TestIntrafiAccountEnrollmentListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Intrafi.AccountEnrollments.List(context.TODO(), increase.IntrafiAccountEnrollmentListParams{
-		AccountID:      increase.F("string"),
-		Cursor:         increase.F("string"),
+		AccountID:      increase.F("account_id"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.IntrafiAccountEnrollmentListParamsStatus{

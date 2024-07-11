@@ -77,14 +77,14 @@ func TestAccountTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountTransfers.List(context.TODO(), increase.AccountTransferListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		CreatedAt: increase.F(increase.AccountTransferListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 	})

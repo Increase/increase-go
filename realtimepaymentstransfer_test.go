@@ -34,7 +34,7 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		DebtorName:               increase.F("x"),
 		DestinationAccountNumber: increase.F("987654321"),
 		DestinationRoutingNumber: increase.F("101050001"),
-		ExternalAccountID:        increase.F("string"),
+		ExternalAccountID:        increase.F("external_account_id"),
 		RequireApproval:          increase.F(true),
 		UltimateCreditorName:     increase.F("x"),
 		UltimateDebtorName:       increase.F("x"),
@@ -83,15 +83,15 @@ func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsTransfers.List(context.TODO(), increase.RealTimePaymentsTransferListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		CreatedAt: increase.F(increase.RealTimePaymentsTransferListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:            increase.F("string"),
-		ExternalAccountID: increase.F("string"),
+		Cursor:            increase.F("cursor"),
+		ExternalAccountID: increase.F("external_account_id"),
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
 	})

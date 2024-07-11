@@ -37,11 +37,11 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 		}),
 		Description: increase.F("Card for Ian Crease"),
 		DigitalWallet: increase.F(increase.CardNewParamsDigitalWallet{
-			DigitalCardProfileID: increase.F("string"),
+			DigitalCardProfileID: increase.F("digital_card_profile_id"),
 			Email:                increase.F("x"),
 			Phone:                increase.F("x"),
 		}),
-		EntityID: increase.F("string"),
+		EntityID: increase.F("entity_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -99,11 +99,11 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 			}),
 			Description: increase.F("New description"),
 			DigitalWallet: increase.F(increase.CardUpdateParamsDigitalWallet{
-				DigitalCardProfileID: increase.F("string"),
+				DigitalCardProfileID: increase.F("digital_card_profile_id"),
 				Email:                increase.F("x"),
 				Phone:                increase.F("x"),
 			}),
-			EntityID: increase.F("string"),
+			EntityID: increase.F("entity_id"),
 			Status:   increase.F(increase.CardUpdateParamsStatusActive),
 		},
 	)
@@ -129,14 +129,14 @@ func TestCardListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Cards.List(context.TODO(), increase.CardListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		CreatedAt: increase.F(increase.CardListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 	})

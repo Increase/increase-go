@@ -84,7 +84,7 @@ func TestDigitalCardProfileListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DigitalCardProfiles.List(context.TODO(), increase.DigitalCardProfileListParams{
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.DigitalCardProfileListParamsStatus{
@@ -138,12 +138,12 @@ func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"digital_card_profile_s3puplu90f04xhcwkiga",
 		increase.DigitalCardProfileCloneParams{
-			AppIconFileID:         increase.F("string"),
+			AppIconFileID:         increase.F("app_icon_file_id"),
 			BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
 			CardDescription:       increase.F("x"),
 			ContactEmail:          increase.F("x"),
 			ContactPhone:          increase.F("x"),
-			ContactWebsite:        increase.F("string"),
+			ContactWebsite:        increase.F("contact_website"),
 			Description:           increase.F("x"),
 			IssuerName:            increase.F("x"),
 			TextColor: increase.F(increase.DigitalCardProfileCloneParamsTextColor{

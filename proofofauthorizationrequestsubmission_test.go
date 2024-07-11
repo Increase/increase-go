@@ -83,10 +83,10 @@ func TestProofOfAuthorizationRequestSubmissionListWithOptionalParams(t *testing.
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ProofOfAuthorizationRequestSubmissions.List(context.TODO(), increase.ProofOfAuthorizationRequestSubmissionListParams{
-		Cursor:                        increase.F("string"),
+		Cursor:                        increase.F("cursor"),
 		IdempotencyKey:                increase.F("x"),
 		Limit:                         increase.F(int64(1)),
-		ProofOfAuthorizationRequestID: increase.F("string"),
+		ProofOfAuthorizationRequestID: increase.F("proof_of_authorization_request_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
