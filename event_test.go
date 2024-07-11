@@ -49,7 +49,7 @@ func TestEventListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Events.List(context.TODO(), increase.EventListParams{
-		AssociatedObjectID: increase.F("string"),
+		AssociatedObjectID: increase.F("associated_object_id"),
 		Category: increase.F(increase.EventListParamsCategory{
 			In: increase.F([]increase.EventListParamsCategoryIn{increase.EventListParamsCategoryInAccountCreated, increase.EventListParamsCategoryInAccountUpdated, increase.EventListParamsCategoryInAccountNumberCreated}),
 		}),
@@ -59,7 +59,7 @@ func TestEventListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {

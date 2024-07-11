@@ -29,7 +29,7 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 	_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name:                  increase.F("New Account!"),
 		EntityID:              increase.F("entity_n8y8tnk2p9339ti393yi"),
-		InformationalEntityID: increase.F("string"),
+		InformationalEntityID: increase.F("informational_entity_id"),
 		ProgramID:             increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
@@ -110,10 +110,10 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:                increase.F("string"),
-		EntityID:              increase.F("string"),
+		Cursor:                increase.F("cursor"),
+		EntityID:              increase.F("entity_id"),
 		IdempotencyKey:        increase.F("x"),
-		InformationalEntityID: increase.F("string"),
+		InformationalEntityID: increase.F("informational_entity_id"),
 		Limit:                 increase.F(int64(1)),
 		Status:                increase.F(increase.AccountListParamsStatusOpen),
 	})

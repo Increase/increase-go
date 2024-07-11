@@ -55,9 +55,9 @@ func TestInboundMailItemListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:    increase.F("string"),
+		Cursor:    increase.F("cursor"),
 		Limit:     increase.F(int64(1)),
-		LockboxID: increase.F("string"),
+		LockboxID: increase.F("lockbox_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

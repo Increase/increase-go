@@ -27,7 +27,7 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
 		URL:                   increase.F("https://website.com/webhooks"),
-		OAuthConnectionID:     increase.F("string"),
+		OAuthConnectionID:     increase.F("oauth_connection_id"),
 		SelectedEventCategory: increase.F(increase.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated),
 		SharedSecret:          increase.F("x"),
 	})
@@ -103,7 +103,7 @@ func TestEventSubscriptionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EventSubscriptions.List(context.TODO(), increase.EventSubscriptionListParams{
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 	})

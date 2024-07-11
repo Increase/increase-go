@@ -28,14 +28,14 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 	_, err := client.Simulations.Cards.Authorize(context.TODO(), increase.SimulationCardAuthorizeParams{
 		Amount:               increase.F(int64(1000)),
 		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
-		DigitalWalletTokenID: increase.F("string"),
+		DigitalWalletTokenID: increase.F("digital_wallet_token_id"),
 		EventSubscriptionID:  increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
 		MerchantAcceptorID:   increase.F("5665270011000168"),
 		MerchantCategoryCode: increase.F("5734"),
 		MerchantCity:         increase.F("New York"),
 		MerchantCountry:      increase.F("US"),
 		MerchantDescriptor:   increase.F("AMAZON.COM"),
-		PhysicalCardID:       increase.F("string"),
+		PhysicalCardID:       increase.F("physical_card_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

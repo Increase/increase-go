@@ -49,7 +49,7 @@ func TestTransactionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Transactions.List(context.TODO(), increase.TransactionListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		Category: increase.F(increase.TransactionListParamsCategory{
 			In: increase.F([]increase.TransactionListParamsCategoryIn{increase.TransactionListParamsCategoryInAccountTransferIntention, increase.TransactionListParamsCategoryInACHTransferIntention, increase.TransactionListParamsCategoryInACHTransferRejection}),
 		}),
@@ -59,9 +59,9 @@ func TestTransactionListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:  increase.F("string"),
+		Cursor:  increase.F("cursor"),
 		Limit:   increase.F(int64(1)),
-		RouteID: increase.F("string"),
+		RouteID: increase.F("route_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
