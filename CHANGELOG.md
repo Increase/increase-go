@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.57.1 (2024-07-11)
+
+Full Changelog: [v0.57.0...v0.57.1](https://github.com/Increase/increase-go/compare/v0.57.0...v0.57.1)
+
+### Bug Fixes
+
+* **internal:** fix MarshalJSON logic for interface elemnets ([#325](https://github.com/Increase/increase-go/issues/325)) ([e461394](https://github.com/Increase/increase-go/commit/e4613944b54e1a600678319782312efdf323bcc7))
+
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#327](https://github.com/Increase/increase-go/issues/327)) ([24ede29](https://github.com/Increase/increase-go/commit/24ede2971bc38c56e6a2c5010e41779923a20aeb))
+
+
+### Documentation
+
+* **examples:** update example values ([#328](https://github.com/Increase/increase-go/issues/328)) ([c3635e4](https://github.com/Increase/increase-go/commit/c3635e48cc921252d5f5ca5940544abf59335319))
+
 ## 0.57.0 (2024-07-04)
 
 Full Changelog: [v0.56.1...v0.57.0](https://github.com/Increase/increase-go/compare/v0.56.1...v0.57.0)
