@@ -29,7 +29,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 	_, err := client.Exports.New(context.TODO(), increase.ExportNewParams{
 		Category: increase.F(increase.ExportNewParamsCategoryTransactionCsv),
 		AccountStatementOfx: increase.F(increase.ExportNewParamsAccountStatementOfx{
-			AccountID: increase.F("string"),
+			AccountID: increase.F("account_id"),
 			CreatedAt: increase.F(increase.ExportNewParamsAccountStatementOfxCreatedAt{
 				After:      increase.F(time.Now()),
 				Before:     increase.F(time.Now()),
@@ -38,7 +38,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		BalanceCsv: increase.F(increase.ExportNewParamsBalanceCsv{
-			AccountID: increase.F("string"),
+			AccountID: increase.F("account_id"),
 			CreatedAt: increase.F(increase.ExportNewParamsBalanceCsvCreatedAt{
 				After:      increase.F(time.Now()),
 				Before:     increase.F(time.Now()),
@@ -47,7 +47,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		BookkeepingAccountBalanceCsv: increase.F(increase.ExportNewParamsBookkeepingAccountBalanceCsv{
-			BookkeepingAccountID: increase.F("string"),
+			BookkeepingAccountID: increase.F("bookkeeping_account_id"),
 			CreatedAt: increase.F(increase.ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt{
 				After:      increase.F(time.Now()),
 				Before:     increase.F(time.Now()),
@@ -124,7 +124,7 @@ func TestExportListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.ExportListParamsStatus{

@@ -77,14 +77,14 @@ func TestCheckDepositListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CheckDeposits.List(context.TODO(), increase.CheckDepositListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		CreatedAt: increase.F(increase.CheckDepositListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 	})

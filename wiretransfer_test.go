@@ -35,7 +35,7 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		BeneficiaryAddressLine1: increase.F("33 Liberty Street"),
 		BeneficiaryAddressLine2: increase.F("New York"),
 		BeneficiaryAddressLine3: increase.F("NY 10045"),
-		ExternalAccountID:       increase.F("string"),
+		ExternalAccountID:       increase.F("external_account_id"),
 		OriginatorAddressLine1:  increase.F("x"),
 		OriginatorAddressLine2:  increase.F("x"),
 		OriginatorAddressLine3:  increase.F("x"),
@@ -87,15 +87,15 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.List(context.TODO(), increase.WireTransferListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		CreatedAt: increase.F(increase.WireTransferListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:            increase.F("string"),
-		ExternalAccountID: increase.F("string"),
+		Cursor:            increase.F("cursor"),
+		ExternalAccountID: increase.F("external_account_id"),
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
 	})

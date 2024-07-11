@@ -77,7 +77,7 @@ func TestSimulationCardIncrementsWithOptionalParams(t *testing.T) {
 	_, err := client.Simulations.CardIncrements(context.TODO(), increase.SimulationCardIncrementsParams{
 		Amount:              increase.F(int64(500)),
 		CardPaymentID:       increase.F("card_payment_nd3k2kacrqjli8482ave"),
-		EventSubscriptionID: increase.F("string"),
+		EventSubscriptionID: increase.F("event_subscription_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

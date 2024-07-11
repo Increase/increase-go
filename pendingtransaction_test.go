@@ -49,7 +49,7 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PendingTransactions.List(context.TODO(), increase.PendingTransactionListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		Category: increase.F(increase.PendingTransactionListParamsCategory{
 			In: increase.F([]increase.PendingTransactionListParamsCategoryIn{increase.PendingTransactionListParamsCategoryInAccountTransferInstruction, increase.PendingTransactionListParamsCategoryInACHTransferInstruction, increase.PendingTransactionListParamsCategoryInCardAuthorization}),
 		}),
@@ -59,10 +59,10 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:   increase.F("string"),
+		Cursor:   increase.F("cursor"),
 		Limit:    increase.F(int64(1)),
-		RouteID:  increase.F("string"),
-		SourceID: increase.F("string"),
+		RouteID:  increase.F("route_id"),
+		SourceID: increase.F("source_id"),
 		Status: increase.F(increase.PendingTransactionListParamsStatus{
 			In: increase.F([]increase.PendingTransactionListParamsStatusIn{increase.PendingTransactionListParamsStatusInPending, increase.PendingTransactionListParamsStatusInComplete}),
 		}),

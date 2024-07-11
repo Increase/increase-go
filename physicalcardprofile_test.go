@@ -75,7 +75,7 @@ func TestPhysicalCardProfileListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCardProfiles.List(context.TODO(), increase.PhysicalCardProfileListParams{
-		Cursor:         increase.F("string"),
+		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.PhysicalCardProfileListParamsStatus{
@@ -129,7 +129,7 @@ func TestPhysicalCardProfileCloneWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"physical_card_profile_m534d5rn9qyy9ufqxoec",
 		increase.PhysicalCardProfileCloneParams{
-			CarrierImageFileID: increase.F("string"),
+			CarrierImageFileID: increase.F("carrier_image_file_id"),
 			ContactPhone:       increase.F("x"),
 			Description:        increase.F("x"),
 			FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),

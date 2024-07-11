@@ -48,7 +48,7 @@ func TestInboundWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundWireDrawdownRequests.List(context.TODO(), increase.InboundWireDrawdownRequestListParams{
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {

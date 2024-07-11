@@ -49,7 +49,7 @@ func TestDeclinedTransactionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeclinedTransactions.List(context.TODO(), increase.DeclinedTransactionListParams{
-		AccountID: increase.F("string"),
+		AccountID: increase.F("account_id"),
 		Category: increase.F(increase.DeclinedTransactionListParamsCategory{
 			In: increase.F([]increase.DeclinedTransactionListParamsCategoryIn{increase.DeclinedTransactionListParamsCategoryInACHDecline, increase.DeclinedTransactionListParamsCategoryInCardDecline, increase.DeclinedTransactionListParamsCategoryInCheckDecline}),
 		}),
@@ -59,9 +59,9 @@ func TestDeclinedTransactionListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:  increase.F("string"),
+		Cursor:  increase.F("cursor"),
 		Limit:   increase.F(int64(1)),
-		RouteID: increase.F("string"),
+		RouteID: increase.F("route_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

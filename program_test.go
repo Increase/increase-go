@@ -48,7 +48,7 @@ func TestProgramListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Programs.List(context.TODO(), increase.ProgramListParams{
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
