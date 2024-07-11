@@ -48,7 +48,7 @@ func TestOAuthConnectionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.OAuthConnections.List(context.TODO(), increase.OAuthConnectionListParams{
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 		Status: increase.F(increase.OAuthConnectionListParamsStatus{
 			In: increase.F([]increase.OAuthConnectionListParamsStatusIn{increase.OAuthConnectionListParamsStatusInActive, increase.OAuthConnectionListParamsStatusInInactive}),

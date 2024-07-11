@@ -49,15 +49,15 @@ func TestCardPaymentListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardPayments.List(context.TODO(), increase.CardPaymentListParams{
-		AccountID: increase.F("string"),
-		CardID:    increase.F("string"),
+		AccountID: increase.F("account_id"),
+		CardID:    increase.F("card_id"),
 		CreatedAt: increase.F(increase.CardPaymentListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor: increase.F("string"),
+		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
