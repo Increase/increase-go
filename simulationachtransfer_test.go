@@ -7,14 +7,13 @@ import (
 	"errors"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
+func TestSimulationACHTransferAcknowledge(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,18 +25,7 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.ACHTransfers.NewInbound(context.TODO(), increase.SimulationACHTransferNewInboundParams{
-		AccountNumberID:          increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		Amount:                   increase.F(int64(1000)),
-		CompanyDescriptiveDate:   increase.F("x"),
-		CompanyDiscretionaryData: increase.F("x"),
-		CompanyEntryDescription:  increase.F("x"),
-		CompanyID:                increase.F("x"),
-		CompanyName:              increase.F("x"),
-		ReceiverIDNumber:         increase.F("x"),
-		ReceiverName:             increase.F("x"),
-		ResolveAt:                increase.F(time.Now()),
-	})
+	_, err := client.Simulations.ACHTransfers.Acknowledge(context.TODO(), "ach_transfer_uoxatyh3lt5evrsdvo7q")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -47,7 +35,7 @@ func TestSimulationACHTransferNewInboundWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestSimulationACHTransferNotificationOfChange(t *testing.T) {
+func TestSimulationACHTransferNewNotificationOfChange(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -59,11 +47,11 @@ func TestSimulationACHTransferNotificationOfChange(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.ACHTransfers.NotificationOfChange(
+	_, err := client.Simulations.ACHTransfers.NewNotificationOfChange(
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
-		increase.SimulationACHTransferNotificationOfChangeParams{
-			ChangeCode:    increase.F(increase.SimulationACHTransferNotificationOfChangeParamsChangeCodeIncorrectRoutingNumber),
+		increase.SimulationACHTransferNewNotificationOfChangeParams{
+			ChangeCode:    increase.F(increase.SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumber),
 			CorrectedData: increase.F("123456789"),
 		},
 	)
@@ -77,7 +65,6 @@ func TestSimulationACHTransferNotificationOfChange(t *testing.T) {
 }
 
 func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
-	t.Skip("Prism incorrectly returns an invalid JSON error")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -106,7 +93,6 @@ func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
 }
 
 func TestSimulationACHTransferSubmit(t *testing.T) {
-	t.Skip("Prism incorrectly returns an invalid JSON error")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

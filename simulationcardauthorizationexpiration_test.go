@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationAccountTransferComplete(t *testing.T) {
+func TestSimulationCardAuthorizationExpirationNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,9 @@ func TestSimulationAccountTransferComplete(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.AccountTransfers.Complete(context.TODO(), "account_transfer_7k9qe1ysdgqztnt63l7n")
+	_, err := client.Simulations.CardAuthorizationExpirations.New(context.TODO(), increase.SimulationCardAuthorizationExpirationNewParams{
+		CardPaymentID: increase.F("card_payment_nd3k2kacrqjli8482ave"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

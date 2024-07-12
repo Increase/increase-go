@@ -215,32 +215,6 @@ func (r InboundMailItemType) IsKnown() bool {
 	return false
 }
 
-// A list of Inbound Mail Item objects.
-type InboundMailItemList struct {
-	// The contents of the list.
-	Data []InboundMailItem `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string                  `json:"next_cursor,required,nullable"`
-	JSON       inboundMailItemListJSON `json:"-"`
-}
-
-// inboundMailItemListJSON contains the JSON metadata for the struct
-// [InboundMailItemList]
-type inboundMailItemListJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundMailItemList) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundMailItemListJSON) RawJSON() string {
-	return r.raw
-}
-
 type InboundMailItemListParams struct {
 	CreatedAt param.Field[InboundMailItemListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.

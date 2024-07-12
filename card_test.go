@@ -149,7 +149,7 @@ func TestCardListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestCardGetSensitiveDetails(t *testing.T) {
+func TestCardDetails(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -161,7 +161,7 @@ func TestCardGetSensitiveDetails(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Cards.GetSensitiveDetails(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
+	_, err := client.Cards.Details(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

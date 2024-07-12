@@ -4,10 +4,10 @@ package increase
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"net/http"
 
-	"github.com/increase/increase-go/internal/apijson"
-	"github.com/increase/increase-go/internal/param"
 	"github.com/increase/increase-go/internal/requestconfig"
 	"github.com/increase/increase-go/option"
 )
@@ -31,63 +31,31 @@ func NewSimulationWireTransferService(opts ...option.RequestOption) (r *Simulati
 	return
 }
 
-// Simulates an inbound Wire Transfer to your account.
-func (r *SimulationWireTransferService) NewInbound(ctx context.Context, body SimulationWireTransferNewInboundParams, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
+// Simulates the reversal of a [Wire Transfer](#wire-transfers) by the Federal
+// Reserve due to error conditions. This will also create a
+// [Transaction](#transaction) to account for the returned funds. This Wire
+// Transfer must first have a `status` of `complete`.
+func (r *SimulationWireTransferService) Reverse(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := "simulations/inbound_wire_transfers"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wireTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
 
-type SimulationWireTransferNewInboundParams struct {
-	// The identifier of the Account Number the inbound Wire Transfer is for.
-	AccountNumberID param.Field[string] `json:"account_number_id,required"`
-	// The transfer amount in cents. Must be positive.
-	Amount param.Field[int64] `json:"amount,required"`
-	// The sending bank will set beneficiary_address_line1 in production. You can
-	// simulate any value here.
-	BeneficiaryAddressLine1 param.Field[string] `json:"beneficiary_address_line1"`
-	// The sending bank will set beneficiary_address_line2 in production. You can
-	// simulate any value here.
-	BeneficiaryAddressLine2 param.Field[string] `json:"beneficiary_address_line2"`
-	// The sending bank will set beneficiary_address_line3 in production. You can
-	// simulate any value here.
-	BeneficiaryAddressLine3 param.Field[string] `json:"beneficiary_address_line3"`
-	// The sending bank will set beneficiary_name in production. You can simulate any
-	// value here.
-	BeneficiaryName param.Field[string] `json:"beneficiary_name"`
-	// The sending bank will set beneficiary_reference in production. You can simulate
-	// any value here.
-	BeneficiaryReference param.Field[string] `json:"beneficiary_reference"`
-	// The sending bank will set originator_address_line1 in production. You can
-	// simulate any value here.
-	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
-	// The sending bank will set originator_address_line2 in production. You can
-	// simulate any value here.
-	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
-	// The sending bank will set originator_address_line3 in production. You can
-	// simulate any value here.
-	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
-	// The sending bank will set originator_name in production. You can simulate any
-	// value here.
-	OriginatorName param.Field[string] `json:"originator_name"`
-	// The sending bank will set originator_routing_number in production. You can
-	// simulate any value here.
-	OriginatorRoutingNumber param.Field[string] `json:"originator_routing_number"`
-	// The sending bank will set originator_to_beneficiary_information_line1 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine1 param.Field[string] `json:"originator_to_beneficiary_information_line1"`
-	// The sending bank will set originator_to_beneficiary_information_line2 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine2 param.Field[string] `json:"originator_to_beneficiary_information_line2"`
-	// The sending bank will set originator_to_beneficiary_information_line3 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine3 param.Field[string] `json:"originator_to_beneficiary_information_line3"`
-	// The sending bank will set originator_to_beneficiary_information_line4 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine4 param.Field[string] `json:"originator_to_beneficiary_information_line4"`
-}
-
-func (r SimulationWireTransferNewInboundParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
+// Simulates the submission of a [Wire Transfer](#wire-transfers) to the Federal
+// Reserve. This transfer must first have a `status` of `pending_approval` or
+// `pending_creating`.
+func (r *SimulationWireTransferService) Submit(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	if wireTransferID == "" {
+		err = errors.New("missing required wire_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wireTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
 }
