@@ -711,16 +711,6 @@ Methods:
 
 - <code title="post /simulations/real_time_payments_transfers/{real_time_payments_transfer_id}/complete">client.Simulations.RealTimePaymentsTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationRealTimePaymentsTransferService.Complete">Complete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, realTimePaymentsTransferID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationRealTimePaymentsTransferCompleteParams">SimulationRealTimePaymentsTransferCompleteParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#RealTimePaymentsTransfer">RealTimePaymentsTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-## InboundInternationalACHTransfers
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundInternationalACHTransferNewResponse">SimulationInboundInternationalACHTransferNewResponse</a>
-
-Methods:
-
-- <code title="post /simulations/inbound_international_ach_transfers">client.Simulations.InboundInternationalACHTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundInternationalACHTransferService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundInternationalACHTransferNewParams">SimulationInboundInternationalACHTransferNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundInternationalACHTransferNewResponse">SimulationInboundInternationalACHTransferNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
 ## CardAuthorizations
 
 Response Types:
