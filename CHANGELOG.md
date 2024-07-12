@@ -1,5 +1,369 @@
 # Changelog
 
+## 0.57.1 (2024-07-11)
+
+Full Changelog: [v0.57.0...v0.57.1](https://github.com/Increase/increase-go/compare/v0.57.0...v0.57.1)
+
+### Bug Fixes
+
+* **internal:** fix MarshalJSON logic for interface elemnets ([#325](https://github.com/Increase/increase-go/issues/325)) ([e461394](https://github.com/Increase/increase-go/commit/e4613944b54e1a600678319782312efdf323bcc7))
+
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#327](https://github.com/Increase/increase-go/issues/327)) ([24ede29](https://github.com/Increase/increase-go/commit/24ede2971bc38c56e6a2c5010e41779923a20aeb))
+
+
+### Documentation
+
+* **examples:** update example values ([#328](https://github.com/Increase/increase-go/issues/328)) ([c3635e4](https://github.com/Increase/increase-go/commit/c3635e48cc921252d5f5ca5940544abf59335319))
+
+## 0.57.0 (2024-07-04)
+
+Full Changelog: [v0.56.1...v0.57.0](https://github.com/Increase/increase-go/compare/v0.56.1...v0.57.0)
+
+### Features
+
+* **api:** add property 'receiver identification number' to 'originator company entry description' ([#324](https://github.com/Increase/increase-go/issues/324)) ([1e2bf92](https://github.com/Increase/increase-go/commit/1e2bf927207149838acc79ba2ade75c5982d6a64))
+
+
+### Chores
+
+* **internal:** improve deserialization of embedded structs ([#322](https://github.com/Increase/increase-go/issues/322)) ([5e83b4c](https://github.com/Increase/increase-go/commit/5e83b4c790625109867e04457698b7b7ed7c6371))
+
+## 0.56.1 (2024-07-02)
+
+Full Changelog: [v0.56.0...v0.56.1](https://github.com/Increase/increase-go/compare/v0.56.0...v0.56.1)
+
+### Bug Fixes
+
+* use slice instead of appending to r.Options ([#320](https://github.com/Increase/increase-go/issues/320)) ([5968421](https://github.com/Increase/increase-go/commit/5968421610a93adafd7c3e425bae089a27674f40))
+
+## 0.56.0 (2024-07-02)
+
+Full Changelog: [v0.55.0...v0.56.0](https://github.com/Increase/increase-go/compare/v0.55.0...v0.56.0)
+
+### Features
+
+* **api:** add deposit return property to inbound check deposit model ([#318](https://github.com/Increase/increase-go/issues/318)) ([179c2bf](https://github.com/Increase/increase-go/commit/179c2bf5235bda03be8f9fd9b08f8c70ec3a1e60))
+
+## 0.55.0 (2024-07-01)
+
+Full Changelog: [v0.54.0...v0.55.0](https://github.com/Increase/increase-go/compare/v0.54.0...v0.55.0)
+
+### Features
+
+* **api:** add method to simulate international ACH transfers ([#316](https://github.com/Increase/increase-go/issues/316)) ([fef8cce](https://github.com/Increase/increase-go/commit/fef8ccea9793451207efefaa3e2ee167e51d113e))
+
+## 0.54.0 (2024-06-28)
+
+Full Changelog: [v0.53.2...v0.54.0](https://github.com/Increase/increase-go/compare/v0.53.2...v0.54.0)
+
+### Features
+
+* **api:** updates ([#315](https://github.com/Increase/increase-go/issues/315)) ([29e9044](https://github.com/Increase/increase-go/commit/29e9044af8e9f6fba08382ca8b831281b4f960ab))
+
+
+### Chores
+
+* gitignore test server logs ([#313](https://github.com/Increase/increase-go/issues/313)) ([df89522](https://github.com/Increase/increase-go/commit/df8952242cbf7b1c708aeda3c517261c018a7e7d))
+
+## 0.53.2 (2024-06-21)
+
+Full Changelog: [v0.53.1...v0.53.2](https://github.com/Increase/increase-go/compare/v0.53.1...v0.53.2)
+
+### Bug Fixes
+
+* fix ExtraFields serialization / deserialization ([#311](https://github.com/Increase/increase-go/issues/311)) ([84c304c](https://github.com/Increase/increase-go/commit/84c304c2a39493eaf8bf4675886a38f5e306bea0))
+
+## 0.53.1 (2024-06-06)
+
+Full Changelog: [v0.53.0...v0.53.1](https://github.com/Increase/increase-go/compare/v0.53.0...v0.53.1)
+
+### Bug Fixes
+
+* fix port function for interface{} types ([#309](https://github.com/Increase/increase-go/issues/309)) ([80273bc](https://github.com/Increase/increase-go/commit/80273bc2174b86fcf47d8e20eeb07d04859fc4cc))
+
+## 0.53.0 (2024-06-04)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/Increase/increase-go/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **api:** add `default_digital_card_profile_id` property ([#307](https://github.com/Increase/increase-go/issues/307)) ([1c28ad7](https://github.com/Increase/increase-go/commit/1c28ad75bb135888b79b2d1a2f736f35f03c971d))
+
+## 0.52.0 (2024-06-03)
+
+Full Changelog: [v0.51.1...v0.52.0](https://github.com/Increase/increase-go/compare/v0.51.1...v0.52.0)
+
+### Features
+
+* **api:** updates ([#305](https://github.com/Increase/increase-go/issues/305)) ([bf9032f](https://github.com/Increase/increase-go/commit/bf9032f94bf65e5d629b6344ea4401b8cd605ae4))
+
+## 0.51.1 (2024-06-03)
+
+Full Changelog: [v0.51.0...v0.51.1](https://github.com/Increase/increase-go/compare/v0.51.0...v0.51.1)
+
+### Bug Fixes
+
+* **internal:** fix the way that unions are deserialized in nested arrays ([#303](https://github.com/Increase/increase-go/issues/303)) ([aea5704](https://github.com/Increase/increase-go/commit/aea5704d3ad86c46c3013d0ad3cee75fa509bd87))
+
+## 0.51.0 (2024-05-29)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/Increase/increase-go/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** add trace number to ach transfer returns ([#302](https://github.com/Increase/increase-go/issues/302)) ([31211ca](https://github.com/Increase/increase-go/commit/31211ca06a01cbe782657eca448f5ff55d63aa4b))
+* better validation of path params ([#299](https://github.com/Increase/increase-go/issues/299)) ([4b349cd](https://github.com/Increase/increase-go/commit/4b349cd7cab4deaf7b09a202bcc88d53b2315104))
+
+
+### Chores
+
+* **internal:** fix format script ([#301](https://github.com/Increase/increase-go/issues/301)) ([fb2596f](https://github.com/Increase/increase-go/commit/fb2596f6af6c3c26477a19cf39eb5767f81e7bb5))
+
+## 0.50.0 (2024-05-23)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/Increase/increase-go/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** realtime decision updates ([#297](https://github.com/Increase/increase-go/issues/297)) ([b02c6bb](https://github.com/Increase/increase-go/commit/b02c6bbadba44e65c51b0bd1878dcaadb896f8c9))
+
+## 0.49.0 (2024-05-22)
+
+Full Changelog: [v0.48.1...v0.49.0](https://github.com/Increase/increase-go/compare/v0.48.1...v0.49.0)
+
+### Features
+
+* export `ErrorType` and `ErrorStatus` types ([#296](https://github.com/Increase/increase-go/issues/296)) ([d8fd9c3](https://github.com/Increase/increase-go/commit/d8fd9c3884fa7772c4389fb049b1b3aa756f6ef0))
+
+
+### Bug Fixes
+
+* **api:** better handling of enum renaming ([d8fd9c3](https://github.com/Increase/increase-go/commit/d8fd9c3884fa7772c4389fb049b1b3aa756f6ef0))
+
+
+### Chores
+
+* **internal:** support parsing other json content types ([#294](https://github.com/Increase/increase-go/issues/294)) ([762051c](https://github.com/Increase/increase-go/commit/762051c3a08214ac746a5be9a216b8c2e2a38f40))
+
+## 0.48.1 (2024-05-15)
+
+Full Changelog: [v0.48.0...v0.48.1](https://github.com/Increase/increase-go/compare/v0.48.0...v0.48.1)
+
+### Bug Fixes
+
+* fix reading the error body more than once ([#292](https://github.com/Increase/increase-go/issues/292)) ([e1c828a](https://github.com/Increase/increase-go/commit/e1c828a2e202f968e820dfb7397b03206c44c7af))
+
+## 0.48.0 (2024-05-15)
+
+Full Changelog: [v0.47.0...v0.48.0](https://github.com/Increase/increase-go/compare/v0.47.0...v0.48.0)
+
+### Features
+
+* **api:** updates ([#291](https://github.com/Increase/increase-go/issues/291)) ([dc2958a](https://github.com/Increase/increase-go/commit/dc2958a13c8140f7ee37c1b0b11652d30d7d4f5f))
+
+
+### Chores
+
+* **docs:** add SECURITY.md ([#287](https://github.com/Increase/increase-go/issues/287)) ([6fc5be4](https://github.com/Increase/increase-go/commit/6fc5be42150e1fb1e2f5e8228e67000555031169))
+* **internal:** add slightly better logging to scripts ([#290](https://github.com/Increase/increase-go/issues/290)) ([8e2829b](https://github.com/Increase/increase-go/commit/8e2829b77902c73b94d114a20c977ef52a64f703))
+
+
+### Documentation
+
+* **api:** update examples & docstrings ([#289](https://github.com/Increase/increase-go/issues/289)) ([af75c44](https://github.com/Increase/increase-go/commit/af75c446f8a853dff7747ab397836a1353ca5c2a))
+
+## 0.47.0 (2024-05-10)
+
+Full Changelog: [v0.46.0...v0.47.0](https://github.com/Increase/increase-go/compare/v0.46.0...v0.47.0)
+
+### Features
+
+* **api:** enhance API with extended transaction details and new entity types ([#286](https://github.com/Increase/increase-go/issues/286)) ([afad2fe](https://github.com/Increase/increase-go/commit/afad2fe14c07142c0029baf955b370fc13db0fd7))
+* propagate resource description field from stainless config to SDK docs ([#285](https://github.com/Increase/increase-go/issues/285)) ([4f506f1](https://github.com/Increase/increase-go/commit/4f506f12babc9f5c1459bf16ee06a22e3164f364))
+
+
+### Chores
+
+* **internal:** fix bootstrap script ([#282](https://github.com/Increase/increase-go/issues/282)) ([05cf453](https://github.com/Increase/increase-go/commit/05cf453bea31167fae8ad815deed8c11ae0f8218))
+
+## 0.46.0 (2024-05-01)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/Increase/increase-go/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** updates ([#281](https://github.com/Increase/increase-go/issues/281)) ([bccec8f](https://github.com/Increase/increase-go/commit/bccec8fae768f3687814220fc2b99c6d2b58a60e))
+
+
+### Bug Fixes
+
+* **test:** fix test github actions job ([#280](https://github.com/Increase/increase-go/issues/280)) ([4b926b9](https://github.com/Increase/increase-go/commit/4b926b94b55613287aa088cb1752af2ddb3170cd))
+
+
+### Chores
+
+* **internal:** add link to openapi spec ([#277](https://github.com/Increase/increase-go/issues/277)) ([bb98d60](https://github.com/Increase/increase-go/commit/bb98d60eedc632f53a59f77dd1bd86c5726b5819))
+* **internal:** add scripts/test, scripts/mock and add ci job ([#279](https://github.com/Increase/increase-go/issues/279)) ([f2ff6c9](https://github.com/Increase/increase-go/commit/f2ff6c9ef52eb40e6de95979848fcaa3bdf915fe))
+
+## 0.45.0 (2024-04-25)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/Increase/increase-go/compare/v0.44.0...v0.45.0)
+
+### ⚠ BREAKING CHANGES
+
+* require account ID for creating an ACH prenotification ([#276](https://github.com/Increase/increase-go/issues/276))
+
+### Bug Fixes
+
+* require account ID for creating an ACH prenotification ([#276](https://github.com/Increase/increase-go/issues/276)) ([2b79f11](https://github.com/Increase/increase-go/commit/2b79f112f0560ee67334fa51471b0613a36fe78e))
+
+
+### Chores
+
+* **internal:** fix Port function for number and boolean enums ([#275](https://github.com/Increase/increase-go/issues/275)) ([0231358](https://github.com/Increase/increase-go/commit/0231358231699ff8910c263c9fe76dd301b20d45))
+* **internal:** use actions/checkout@v4 for codeflow ([#273](https://github.com/Increase/increase-go/issues/273)) ([fa8a81e](https://github.com/Increase/increase-go/commit/fa8a81e4a0bb110ba5680c0044e81bb3738474f0))
+
+## 0.44.0 (2024-04-23)
+
+Full Changelog: [v0.43.0...v0.44.0](https://github.com/Increase/increase-go/compare/v0.43.0...v0.44.0)
+
+### Features
+
+* **api:** remove inbound_wire_drawdown_payment_reversal ([#271](https://github.com/Increase/increase-go/issues/271)) ([c8c5cb5](https://github.com/Increase/increase-go/commit/c8c5cb5ca9adab482582da6652e7b0f72246b5bc))
+
+## 0.43.0 (2024-04-19)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/Increase/increase-go/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** add account_id param to ach_prenotification and third_party to check_transfer ([#269](https://github.com/Increase/increase-go/issues/269)) ([41ca668](https://github.com/Increase/increase-go/commit/41ca668d6fbafcbcb745f274d94f1daa0bafba2d))
+
+## 0.42.0 (2024-04-18)
+
+Full Changelog: [v0.41.0...v0.42.0](https://github.com/Increase/increase-go/compare/v0.41.0...v0.42.0)
+
+### Features
+
+* **api:** add inbound_check_deposits decline endpoint ([#267](https://github.com/Increase/increase-go/issues/267)) ([31f1457](https://github.com/Increase/increase-go/commit/31f14570b15b5720b3678193d4d30872f2273028))
+
+## 0.41.0 (2024-04-17)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/Increase/increase-go/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* **api:** add altered_or_fictitious check decline reason ([#265](https://github.com/Increase/increase-go/issues/265)) ([959f491](https://github.com/Increase/increase-go/commit/959f491b46682695b9859082cb212368f541a77e))
+
+## 0.40.0 (2024-04-16)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/Increase/increase-go/compare/v0.39.0...v0.40.0)
+
+### Features
+
+* **api:** remove deposit field from check transfer ([#264](https://github.com/Increase/increase-go/issues/264)) ([f9fffb0](https://github.com/Increase/increase-go/commit/f9fffb064fd5b1962f8dbdbbc0b25b8a8ca3809f))
+
+
+### Build System
+
+* configure UTF-8 locale in devcontainer ([#262](https://github.com/Increase/increase-go/issues/262)) ([d3f39fc](https://github.com/Increase/increase-go/commit/d3f39fce996a1229d56aa1cd43fadc35e2f9737a))
+
+## 0.39.0 (2024-04-16)
+
+Full Changelog: [v0.38.1...v0.39.0](https://github.com/Increase/increase-go/compare/v0.38.1...v0.39.0)
+
+### Features
+
+* **api:** add /inbound_check_deposits endpoints ([#261](https://github.com/Increase/increase-go/issues/261)) ([8e43705](https://github.com/Increase/increase-go/commit/8e43705c495753a38d266dade61f63c4a1486bf2))
+* **option:** add option to provide a raw request body ([#260](https://github.com/Increase/increase-go/issues/260)) ([63a11e4](https://github.com/Increase/increase-go/commit/63a11e48728d17d457463aa58111ea2a7fbaca8b))
+
+
+### Chores
+
+* **internal:** formatting ([#258](https://github.com/Increase/increase-go/issues/258)) ([8579856](https://github.com/Increase/increase-go/commit/8579856012fc52e3c2432d69a20d04ce0f597487))
+
+## 0.38.1 (2024-04-11)
+
+Full Changelog: [v0.38.0...v0.38.1](https://github.com/Increase/increase-go/compare/v0.38.0...v0.38.1)
+
+### Bug Fixes
+
+* **types:** mark physical card cardholder as required ([#256](https://github.com/Increase/increase-go/issues/256)) ([c3381f3](https://github.com/Increase/increase-go/commit/c3381f3cfd7cd63746520199d64bcb0f4a57f203))
+
+## 0.38.0 (2024-04-10)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/Increase/increase-go/compare/v0.37.0...v0.38.0)
+
+### Features
+
+* **api:** updates ([#255](https://github.com/Increase/increase-go/issues/255)) ([391aa46](https://github.com/Increase/increase-go/commit/391aa46e6a8f6e8824effdaa0aa1c64e48a8080c))
+
+
+### Documentation
+
+* **api:** update links to NAICS classification codes ([#253](https://github.com/Increase/increase-go/issues/253)) ([b14327a](https://github.com/Increase/increase-go/commit/b14327a8eaa42a86bc51709bbc326b52ed80e07e))
+
+## 0.37.0 (2024-04-05)
+
+Full Changelog: [v0.36.0...v0.37.0](https://github.com/Increase/increase-go/compare/v0.36.0...v0.37.0)
+
+### Features
+
+* **api:** add inbound check deposit return intention ([#252](https://github.com/Increase/increase-go/issues/252)) ([2f13b6d](https://github.com/Increase/increase-go/commit/2f13b6da5aa79926bac833d890fefdbf09042021))
+
+
+### Chores
+
+* **internal:** implement Port function in apijson ([#250](https://github.com/Increase/increase-go/issues/250)) ([a83c771](https://github.com/Increase/increase-go/commit/a83c7716c84b4778a14c3c6b5600075bf239106f))
+
+## 0.36.0 (2024-04-04)
+
+Full Changelog: [v0.35.0...v0.36.0](https://github.com/Increase/increase-go/compare/v0.35.0...v0.36.0)
+
+### Features
+
+* **api:** remove inbound_check category, rename check_deposit_mail_item, add inbound_mail_item ([#248](https://github.com/Increase/increase-go/issues/248)) ([9ad814c](https://github.com/Increase/increase-go/commit/9ad814cf62af777e12b1d6215acb1ef5101fd285))
+
+## 0.35.0 (2024-04-02)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/Increase/increase-go/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** filter OAuth connections by their status ([#247](https://github.com/Increase/increase-go/issues/247)) ([fae446a](https://github.com/Increase/increase-go/commit/fae446a7fc244ae9cf693af514ee519cd2d54901))
+
+
+### Chores
+
+* **internal:** use a time zone less likely to conflict with the local one ([#245](https://github.com/Increase/increase-go/issues/245)) ([f9e753b](https://github.com/Increase/increase-go/commit/f9e753bb708aae301b169235c18990cf48d05f15))
+
+## 0.34.0 (2024-03-29)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/Increase/increase-go/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** remove check transfer intention ([#242](https://github.com/Increase/increase-go/issues/242)) ([dfb36c5](https://github.com/Increase/increase-go/commit/dfb36c554e8ed5af467b6fcffe298e8646a8340c))
+
+## 0.33.0 (2024-03-29)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/Increase/increase-go/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** updates ([#241](https://github.com/Increase/increase-go/issues/241)) ([c9c6fe5](https://github.com/Increase/increase-go/commit/c9c6fe5df5a385b0c0c19b4c04dedcdfcf37d942))
+* **client:** implement raw requests methods on client ([#239](https://github.com/Increase/increase-go/issues/239)) ([21d9580](https://github.com/Increase/increase-go/commit/21d9580bc07fd52945486ce641ea73c64477f11d))
+
+
+### Chores
+
+* **internal:** move pagination types to pagination package ([#240](https://github.com/Increase/increase-go/issues/240)) ([d488ccc](https://github.com/Increase/increase-go/commit/d488ccc9466ffbc6d484a98bc49852dcf4d5ec2c))
+* revert temporary commit ([4e4af18](https://github.com/Increase/increase-go/commit/4e4af18cf56b195f40fb03fcfcdd7408b47bc7fa))
+* temporary commit ([#237](https://github.com/Increase/increase-go/issues/237)) ([57884fe](https://github.com/Increase/increase-go/commit/57884fee40abc00424dccabe118e45a758e646c8))
+
 ## 0.32.0 (2024-03-27)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/Increase/increase-go/compare/v0.31.0...v0.32.0)

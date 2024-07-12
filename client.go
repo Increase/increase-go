@@ -58,6 +58,7 @@ type Client struct {
 	ProofOfAuthorizationRequestSubmissions *ProofOfAuthorizationRequestSubmissionService
 	Intrafi                                *IntrafiService
 	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
+	Webhooks                               *WebhookService
 	OAuthTokens                            *OAuthTokenService
 	InboundWireTransfers                   *InboundWireTransferService
 	DigitalCardProfiles                    *DigitalCardProfileService
@@ -125,6 +126,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.ProofOfAuthorizationRequestSubmissions = NewProofOfAuthorizationRequestSubmissionService(opts...)
 	r.Intrafi = NewIntrafiService(opts...)
 	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
+	r.Webhooks = NewWebhookService(opts...)
 	r.OAuthTokens = NewOAuthTokenService(opts...)
 	r.InboundWireTransfers = NewInboundWireTransferService(opts...)
 	r.DigitalCardProfiles = NewDigitalCardProfileService(opts...)
