@@ -210,31 +210,6 @@ func (r LockboxType) IsKnown() bool {
 	return false
 }
 
-// A list of Lockbox objects.
-type LockboxList struct {
-	// The contents of the list.
-	Data []Lockbox `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor string          `json:"next_cursor,required,nullable"`
-	JSON       lockboxListJSON `json:"-"`
-}
-
-// lockboxListJSON contains the JSON metadata for the struct [LockboxList]
-type lockboxListJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *LockboxList) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r lockboxListJSON) RawJSON() string {
-	return r.raw
-}
-
 type LockboxNewParams struct {
 	// The Account checks sent to this Lockbox should be deposited into.
 	AccountID param.Field[string] `json:"account_id,required"`

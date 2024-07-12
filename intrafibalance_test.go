@@ -25,7 +25,7 @@ func TestIntrafiBalanceGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.Balances.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
+	_, err := client.IntrafiBalances.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

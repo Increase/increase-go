@@ -37,7 +37,7 @@ func NewSimulationInboundInternationalACHTransferService(opts ...option.RequestO
 // institution. The transfer may be either a credit or a debit depending on if the
 // `amount` is positive or negative. The result of calling this API will contain
 // the created transfer. .
-func (r *SimulationInboundInternationalACHTransferService) New(ctx context.Context, body SimulationInboundInternationalACHTransferNewParams, opts ...option.RequestOption) (res *InboundInternationalACHTransfer, err error) {
+func (r *SimulationInboundInternationalACHTransferService) New(ctx context.Context, body SimulationInboundInternationalACHTransferNewParams, opts ...option.RequestOption) (res *SimulationInboundInternationalACHTransferNewResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_international_ach_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -47,7 +47,7 @@ func (r *SimulationInboundInternationalACHTransferService) New(ctx context.Conte
 // An Inbound International ACH Transfer is created when an "IAT" ACH transfer is
 // initiated at another bank and received by Increase. There are additional fields
 // on this object that are not present on all Inbound ACH Transfer object.
-type InboundInternationalACHTransfer struct {
+type SimulationInboundInternationalACHTransferNewResponse struct {
 	// The amount in the minor unit of the destination account currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -58,20 +58,20 @@ type InboundInternationalACHTransfer struct {
 	// destination bank account.
 	DestinationCurrencyCode string `json:"destination_currency_code,required"`
 	// A description of how the foreign exchange rate was calculated.
-	ForeignExchangeIndicator InboundInternationalACHTransferForeignExchangeIndicator `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeIndicator SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicator `json:"foreign_exchange_indicator,required"`
 	// Depending on the `foreign_exchange_reference_indicator`, an exchange rate or a
 	// reference to a well-known rate.
 	ForeignExchangeReference string `json:"foreign_exchange_reference,required,nullable"`
 	// An instruction of how to interpret the `foreign_exchange_reference` field for
 	// this Transaction.
-	ForeignExchangeReferenceIndicator InboundInternationalACHTransferForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator,required"`
+	ForeignExchangeReferenceIndicator SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator,required"`
 	// The amount in the minor unit of the foreign payment currency. For dollars, for
 	// example, this is cents.
 	ForeignPaymentAmount int64 `json:"foreign_payment_amount,required"`
 	// A reference number in the foreign banking infrastructure.
 	ForeignTraceNumber string `json:"foreign_trace_number,required,nullable"`
 	// The type of transfer. Set by the originator.
-	InternationalTransactionTypeCode InboundInternationalACHTransferInternationalTransactionTypeCode `json:"international_transaction_type_code,required"`
+	InternationalTransactionTypeCode SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode `json:"international_transaction_type_code,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
 	// originating bank account.
 	OriginatingCurrencyCode string `json:"originating_currency_code,required"`
@@ -84,7 +84,7 @@ type InboundInternationalACHTransfer struct {
 	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id,required"`
 	// An instruction of how to interpret the
 	// `originating_depository_financial_institution_id` field for this Transaction.
-	OriginatingDepositoryFinancialInstitutionIDQualifier InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier,required"`
 	// The name of the originating bank. Sometimes this will refer to an American bank
 	// and obscure the correspondent foreign bank.
 	OriginatingDepositoryFinancialInstitutionName string `json:"originating_depository_financial_institution_name,required"`
@@ -136,7 +136,7 @@ type InboundInternationalACHTransfer struct {
 	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id,required"`
 	// An instruction of how to interpret the
 	// `receiving_depository_financial_institution_id` field for this Transaction.
-	ReceivingDepositoryFinancialInstitutionIDQualifier InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier,required"`
 	// The name of the receiving bank, as set by the sending financial institution.
 	ReceivingDepositoryFinancialInstitutionName string `json:"receiving_depository_financial_institution_name,required"`
 	// A 15 digit number recorded in the Nacha file and available to both the
@@ -147,13 +147,13 @@ type InboundInternationalACHTransfer struct {
 	TraceNumber string `json:"trace_number,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_international_ach_transfer`.
-	Type InboundInternationalACHTransferType `json:"type,required"`
-	JSON inboundInternationalACHTransferJSON `json:"-"`
+	Type SimulationInboundInternationalACHTransferNewResponseType `json:"type,required"`
+	JSON simulationInboundInternationalACHTransferNewResponseJSON `json:"-"`
 }
 
-// inboundInternationalACHTransferJSON contains the JSON metadata for the struct
-// [InboundInternationalACHTransfer]
-type inboundInternationalACHTransferJSON struct {
+// simulationInboundInternationalACHTransferNewResponseJSON contains the JSON
+// metadata for the struct [SimulationInboundInternationalACHTransferNewResponse]
+type simulationInboundInternationalACHTransferNewResponseJSON struct {
 	Amount                                                 apijson.Field
 	DestinationCountryCode                                 apijson.Field
 	DestinationCurrencyCode                                apijson.Field
@@ -195,32 +195,32 @@ type inboundInternationalACHTransferJSON struct {
 	ExtraFields                                            map[string]apijson.Field
 }
 
-func (r *InboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
+func (r *SimulationInboundInternationalACHTransferNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r inboundInternationalACHTransferJSON) RawJSON() string {
+func (r simulationInboundInternationalACHTransferNewResponseJSON) RawJSON() string {
 	return r.raw
 }
 
 // A description of how the foreign exchange rate was calculated.
-type InboundInternationalACHTransferForeignExchangeIndicator string
+type SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicator string
 
 const (
 	// The originator chose an amount in their own currency. The settled amount in USD
 	// was converted using the exchange rate.
-	InboundInternationalACHTransferForeignExchangeIndicatorFixedToVariable InboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_variable"
+	SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicatorFixedToVariable SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicator = "fixed_to_variable"
 	// The originator chose an amount to settle in USD. The originator's amount was
 	// variable; known only after the foreign exchange conversion.
-	InboundInternationalACHTransferForeignExchangeIndicatorVariableToFixed InboundInternationalACHTransferForeignExchangeIndicator = "variable_to_fixed"
+	SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicatorVariableToFixed SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicator = "variable_to_fixed"
 	// The amount was originated and settled as a fixed amount in USD. There is no
 	// foreign exchange conversion.
-	InboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed InboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_fixed"
+	SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicatorFixedToFixed SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicator = "fixed_to_fixed"
 )
 
-func (r InboundInternationalACHTransferForeignExchangeIndicator) IsKnown() bool {
+func (r SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicator) IsKnown() bool {
 	switch r {
-	case InboundInternationalACHTransferForeignExchangeIndicatorFixedToVariable, InboundInternationalACHTransferForeignExchangeIndicatorVariableToFixed, InboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed:
+	case SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicatorFixedToVariable, SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicatorVariableToFixed, SimulationInboundInternationalACHTransferNewResponseForeignExchangeIndicatorFixedToFixed:
 		return true
 	}
 	return false
@@ -228,75 +228,75 @@ func (r InboundInternationalACHTransferForeignExchangeIndicator) IsKnown() bool 
 
 // An instruction of how to interpret the `foreign_exchange_reference` field for
 // this Transaction.
-type InboundInternationalACHTransferForeignExchangeReferenceIndicator string
+type SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicator string
 
 const (
 	// The ACH file contains a foreign exchange rate.
-	InboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeRate InboundInternationalACHTransferForeignExchangeReferenceIndicator = "foreign_exchange_rate"
+	SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicatorForeignExchangeRate SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicator = "foreign_exchange_rate"
 	// The ACH file contains a reference to a well-known foreign exchange rate.
-	InboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber InboundInternationalACHTransferForeignExchangeReferenceIndicator = "foreign_exchange_reference_number"
+	SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicator = "foreign_exchange_reference_number"
 	// There is no foreign exchange for this transfer, so the
 	// `foreign_exchange_reference` field is blank.
-	InboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank InboundInternationalACHTransferForeignExchangeReferenceIndicator = "blank"
+	SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicatorBlank SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicator = "blank"
 )
 
-func (r InboundInternationalACHTransferForeignExchangeReferenceIndicator) IsKnown() bool {
+func (r SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicator) IsKnown() bool {
 	switch r {
-	case InboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeRate, InboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber, InboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank:
+	case SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicatorForeignExchangeRate, SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber, SimulationInboundInternationalACHTransferNewResponseForeignExchangeReferenceIndicatorBlank:
 		return true
 	}
 	return false
 }
 
 // The type of transfer. Set by the originator.
-type InboundInternationalACHTransferInternationalTransactionTypeCode string
+type SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode string
 
 const (
 	// Sent as `ANN` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeAnnuity InboundInternationalACHTransferInternationalTransactionTypeCode = "annuity"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeAnnuity SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "annuity"
 	// Sent as `BUS` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeBusinessOrCommercial InboundInternationalACHTransferInternationalTransactionTypeCode = "business_or_commercial"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeBusinessOrCommercial SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "business_or_commercial"
 	// Sent as `DEP` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeDeposit InboundInternationalACHTransferInternationalTransactionTypeCode = "deposit"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeDeposit SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "deposit"
 	// Sent as `LOA` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeLoan InboundInternationalACHTransferInternationalTransactionTypeCode = "loan"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeLoan SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "loan"
 	// Sent as `MIS` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeMiscellaneous InboundInternationalACHTransferInternationalTransactionTypeCode = "miscellaneous"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeMiscellaneous SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "miscellaneous"
 	// Sent as `MOR` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeMortgage InboundInternationalACHTransferInternationalTransactionTypeCode = "mortgage"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeMortgage SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "mortgage"
 	// Sent as `PEN` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodePension InboundInternationalACHTransferInternationalTransactionTypeCode = "pension"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodePension SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "pension"
 	// Sent as `REM` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeRemittance InboundInternationalACHTransferInternationalTransactionTypeCode = "remittance"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeRemittance SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "remittance"
 	// Sent as `RLS` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeRentOrLease InboundInternationalACHTransferInternationalTransactionTypeCode = "rent_or_lease"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeRentOrLease SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "rent_or_lease"
 	// Sent as `SAL` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeSalaryOrPayroll InboundInternationalACHTransferInternationalTransactionTypeCode = "salary_or_payroll"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeSalaryOrPayroll SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "salary_or_payroll"
 	// Sent as `TAX` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeTax InboundInternationalACHTransferInternationalTransactionTypeCode = "tax"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeTax SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "tax"
 	// Sent as `ARC` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeAccountsReceivable InboundInternationalACHTransferInternationalTransactionTypeCode = "accounts_receivable"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeAccountsReceivable SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "accounts_receivable"
 	// Sent as `BOC` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeBackOfficeConversion InboundInternationalACHTransferInternationalTransactionTypeCode = "back_office_conversion"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeBackOfficeConversion SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "back_office_conversion"
 	// Sent as `MTE` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeMachineTransfer InboundInternationalACHTransferInternationalTransactionTypeCode = "machine_transfer"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeMachineTransfer SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "machine_transfer"
 	// Sent as `POP` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodePointOfPurchase InboundInternationalACHTransferInternationalTransactionTypeCode = "point_of_purchase"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodePointOfPurchase SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "point_of_purchase"
 	// Sent as `POS` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodePointOfSale InboundInternationalACHTransferInternationalTransactionTypeCode = "point_of_sale"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodePointOfSale SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "point_of_sale"
 	// Sent as `RCK` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeRepresentedCheck InboundInternationalACHTransferInternationalTransactionTypeCode = "represented_check"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeRepresentedCheck SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "represented_check"
 	// Sent as `SHR` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeSharedNetworkTransaction InboundInternationalACHTransferInternationalTransactionTypeCode = "shared_network_transaction"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeSharedNetworkTransaction SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "shared_network_transaction"
 	// Sent as `TEL` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeTelphoneInitiated InboundInternationalACHTransferInternationalTransactionTypeCode = "telphone_initiated"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeTelphoneInitiated SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "telphone_initiated"
 	// Sent as `WEB` in the Nacha file.
-	InboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated InboundInternationalACHTransferInternationalTransactionTypeCode = "internet_initiated"
+	SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeInternetInitiated SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode = "internet_initiated"
 )
 
-func (r InboundInternationalACHTransferInternationalTransactionTypeCode) IsKnown() bool {
+func (r SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCode) IsKnown() bool {
 	switch r {
-	case InboundInternationalACHTransferInternationalTransactionTypeCodeAnnuity, InboundInternationalACHTransferInternationalTransactionTypeCodeBusinessOrCommercial, InboundInternationalACHTransferInternationalTransactionTypeCodeDeposit, InboundInternationalACHTransferInternationalTransactionTypeCodeLoan, InboundInternationalACHTransferInternationalTransactionTypeCodeMiscellaneous, InboundInternationalACHTransferInternationalTransactionTypeCodeMortgage, InboundInternationalACHTransferInternationalTransactionTypeCodePension, InboundInternationalACHTransferInternationalTransactionTypeCodeRemittance, InboundInternationalACHTransferInternationalTransactionTypeCodeRentOrLease, InboundInternationalACHTransferInternationalTransactionTypeCodeSalaryOrPayroll, InboundInternationalACHTransferInternationalTransactionTypeCodeTax, InboundInternationalACHTransferInternationalTransactionTypeCodeAccountsReceivable, InboundInternationalACHTransferInternationalTransactionTypeCodeBackOfficeConversion, InboundInternationalACHTransferInternationalTransactionTypeCodeMachineTransfer, InboundInternationalACHTransferInternationalTransactionTypeCodePointOfPurchase, InboundInternationalACHTransferInternationalTransactionTypeCodePointOfSale, InboundInternationalACHTransferInternationalTransactionTypeCodeRepresentedCheck, InboundInternationalACHTransferInternationalTransactionTypeCodeSharedNetworkTransaction, InboundInternationalACHTransferInternationalTransactionTypeCodeTelphoneInitiated, InboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated:
+	case SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeAnnuity, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeBusinessOrCommercial, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeDeposit, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeLoan, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeMiscellaneous, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeMortgage, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodePension, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeRemittance, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeRentOrLease, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeSalaryOrPayroll, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeTax, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeAccountsReceivable, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeBackOfficeConversion, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeMachineTransfer, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodePointOfPurchase, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodePointOfSale, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeRepresentedCheck, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeSharedNetworkTransaction, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeTelphoneInitiated, SimulationInboundInternationalACHTransferNewResponseInternationalTransactionTypeCodeInternetInitiated:
 		return true
 	}
 	return false
@@ -304,21 +304,21 @@ func (r InboundInternationalACHTransferInternationalTransactionTypeCode) IsKnown
 
 // An instruction of how to interpret the
 // `originating_depository_financial_institution_id` field for this Transaction.
-type InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier string
+type SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifier string
 
 const (
 	// A domestic clearing system number. In the US, for example, this is the American
 	// Banking Association (ABA) routing number.
-	InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
+	SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
 	// The SWIFT Bank Identifier Code (BIC) of the bank.
-	InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierBicCode InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifierBicCode SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
 	// An International Bank Account Number.
-	InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
+	SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifierIban SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
 
-func (r InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
+func (r SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
 	switch r {
-	case InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierBicCode, InboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban:
+	case SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifierBicCode, SimulationInboundInternationalACHTransferNewResponseOriginatingDepositoryFinancialInstitutionIDQualifierIban:
 		return true
 	}
 	return false
@@ -326,21 +326,21 @@ func (r InboundInternationalACHTransferOriginatingDepositoryFinancialInstitution
 
 // An instruction of how to interpret the
 // `receiving_depository_financial_institution_id` field for this Transaction.
-type InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier string
+type SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifier string
 
 const (
 	// A domestic clearing system number. In the US, for example, this is the American
 	// Banking Association (ABA) routing number.
-	InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
+	SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
 	// The SWIFT Bank Identifier Code (BIC) of the bank.
-	InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifierBicCode SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
 	// An International Bank Account Number.
-	InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
+	SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifierIban SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
 
-func (r InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
+func (r SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
 	switch r {
-	case InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode, InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban:
+	case SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifierBicCode, SimulationInboundInternationalACHTransferNewResponseReceivingDepositoryFinancialInstitutionIDQualifierIban:
 		return true
 	}
 	return false
@@ -348,15 +348,15 @@ func (r InboundInternationalACHTransferReceivingDepositoryFinancialInstitutionID
 
 // A constant representing the object's type. For this resource it will always be
 // `inbound_international_ach_transfer`.
-type InboundInternationalACHTransferType string
+type SimulationInboundInternationalACHTransferNewResponseType string
 
 const (
-	InboundInternationalACHTransferTypeInboundInternationalACHTransfer InboundInternationalACHTransferType = "inbound_international_ach_transfer"
+	SimulationInboundInternationalACHTransferNewResponseTypeInboundInternationalACHTransfer SimulationInboundInternationalACHTransferNewResponseType = "inbound_international_ach_transfer"
 )
 
-func (r InboundInternationalACHTransferType) IsKnown() bool {
+func (r SimulationInboundInternationalACHTransferNewResponseType) IsKnown() bool {
 	switch r {
-	case InboundInternationalACHTransferTypeInboundInternationalACHTransfer:
+	case SimulationInboundInternationalACHTransferNewResponseTypeInboundInternationalACHTransfer:
 		return true
 	}
 	return false
