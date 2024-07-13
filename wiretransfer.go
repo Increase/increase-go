@@ -476,6 +476,8 @@ type WireTransferReversal struct {
 	// Information included in the wire reversal for the receiving financial
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
+	// The sending bank's reference number for the wire reversal.
+	SenderReference string `json:"sender_reference,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
@@ -500,6 +502,7 @@ type wireTransferReversalJSON struct {
 	PreviousMessageInputSequenceNumber                    apijson.Field
 	PreviousMessageInputSource                            apijson.Field
 	ReceiverFinancialInstitutionInformation               apijson.Field
+	SenderReference                                       apijson.Field
 	TransactionID                                         apijson.Field
 	WireTransferID                                        apijson.Field
 	raw                                                   string
