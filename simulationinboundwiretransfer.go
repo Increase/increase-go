@@ -86,6 +86,9 @@ type SimulationInboundWireTransferNewParams struct {
 	// The sending bank will set originator_to_beneficiary_information_line4 in
 	// production. You can simulate any value here.
 	OriginatorToBeneficiaryInformationLine4 param.Field[string] `json:"originator_to_beneficiary_information_line4"`
+	// The sending bank will set sender_reference in production. You can simulate any
+	// value here.
+	SenderReference param.Field[string] `json:"sender_reference"`
 }
 
 func (r SimulationInboundWireTransferNewParams) MarshalJSON() (data []byte, err error) {
