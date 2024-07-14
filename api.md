@@ -565,6 +565,8 @@ Methods:
 - <code title="get /oauth_connections/{oauth_connection_id}">client.OAuthConnections.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthConnectionService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, oauthConnectionID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthConnection">OAuthConnection</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /oauth_connections">client.OAuthConnections.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthConnectionService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthConnectionListParams">OAuthConnectionListParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go/internal/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go/internal/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#OAuthConnection">OAuthConnection</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# Webhooks
+
 # OAuthTokens
 
 Response Types:

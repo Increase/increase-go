@@ -62,6 +62,7 @@ type Client struct {
 	BookkeepingEntries                     *BookkeepingEntryService
 	Groups                                 *GroupService
 	OAuthConnections                       *OAuthConnectionService
+	Webhooks                               *WebhookService
 	OAuthTokens                            *OAuthTokenService
 	IntrafiAccountEnrollments              *IntrafiAccountEnrollmentService
 	IntrafiBalances                        *IntrafiBalanceService
@@ -132,6 +133,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.BookkeepingEntries = NewBookkeepingEntryService(opts...)
 	r.Groups = NewGroupService(opts...)
 	r.OAuthConnections = NewOAuthConnectionService(opts...)
+	r.Webhooks = NewWebhookService(opts...)
 	r.OAuthTokens = NewOAuthTokenService(opts...)
 	r.IntrafiAccountEnrollments = NewIntrafiAccountEnrollmentService(opts...)
 	r.IntrafiBalances = NewIntrafiBalanceService(opts...)
