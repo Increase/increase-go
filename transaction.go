@@ -238,10 +238,6 @@ type TransactionSource struct {
 	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
-	// An Inbound International ACH Transfer object. This field will be present in the
-	// JSON response if and only if `category` is equal to
-	// `inbound_international_ach_transfer`.
-	InboundInternationalACHTransfer TransactionSourceInboundInternationalACHTransfer `json:"inbound_international_ach_transfer,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
@@ -297,7 +293,6 @@ type transactionSourceJSON struct {
 	CheckTransferStopPaymentRequest             apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
-	InboundInternationalACHTransfer             apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
 	InboundWireDrawdownPayment                  apijson.Field
 	InboundWireReversal                         apijson.Field
@@ -2540,9 +2535,6 @@ const (
 	// Inbound Check Deposit Return Intention: details will be under the
 	// `inbound_check_deposit_return_intention` object.
 	TransactionSourceCategoryInboundCheckDepositReturnIntention TransactionSourceCategory = "inbound_check_deposit_return_intention"
-	// Inbound International ACH Transfer: details will be under the
-	// `inbound_international_ach_transfer` object.
-	TransactionSourceCategoryInboundInternationalACHTransfer TransactionSourceCategory = "inbound_international_ach_transfer"
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
@@ -2578,7 +2570,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundInternationalACHTransfer, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryCheckTransferStopPaymentRequest, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3142,324 +3134,6 @@ func (r *TransactionSourceInboundACHTransferAddendaFreeformEntry) UnmarshalJSON(
 
 func (r transactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() string {
 	return r.raw
-}
-
-// An Inbound International ACH Transfer object. This field will be present in the
-// JSON response if and only if `category` is equal to
-// `inbound_international_ach_transfer`.
-type TransactionSourceInboundInternationalACHTransfer struct {
-	// The amount in the minor unit of the destination account currency. For dollars,
-	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
-	// country code of the destination country.
-	DestinationCountryCode string `json:"destination_country_code,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
-	// destination bank account.
-	DestinationCurrencyCode string `json:"destination_currency_code,required"`
-	// A description of how the foreign exchange rate was calculated.
-	ForeignExchangeIndicator TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator `json:"foreign_exchange_indicator,required"`
-	// Depending on the `foreign_exchange_reference_indicator`, an exchange rate or a
-	// reference to a well-known rate.
-	ForeignExchangeReference string `json:"foreign_exchange_reference,required,nullable"`
-	// An instruction of how to interpret the `foreign_exchange_reference` field for
-	// this Transaction.
-	ForeignExchangeReferenceIndicator TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator,required"`
-	// The amount in the minor unit of the foreign payment currency. For dollars, for
-	// example, this is cents.
-	ForeignPaymentAmount int64 `json:"foreign_payment_amount,required"`
-	// A reference number in the foreign banking infrastructure.
-	ForeignTraceNumber string `json:"foreign_trace_number,required,nullable"`
-	// The type of transfer. Set by the originator.
-	InternationalTransactionTypeCode TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode `json:"international_transaction_type_code,required"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
-	// originating bank account.
-	OriginatingCurrencyCode string `json:"originating_currency_code,required"`
-	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
-	// country code of the originating branch country.
-	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
-	// An identifier for the originating bank. One of an International Bank Account
-	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
-	// domestic identifier like a US Routing Number.
-	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id,required"`
-	// An instruction of how to interpret the
-	// `originating_depository_financial_institution_id` field for this Transaction.
-	OriginatingDepositoryFinancialInstitutionIDQualifier TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier,required"`
-	// The name of the originating bank. Sometimes this will refer to an American bank
-	// and obscure the correspondent foreign bank.
-	OriginatingDepositoryFinancialInstitutionName string `json:"originating_depository_financial_institution_name,required"`
-	// A portion of the originator address. This may be incomplete.
-	OriginatorCity string `json:"originator_city,required"`
-	// A description field set by the originator.
-	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
-	// A portion of the originator address. The
-	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
-	// code of the originator country.
-	OriginatorCountry string `json:"originator_country,required"`
-	// An identifier for the originating company. This is generally stable across
-	// multiple ACH transfers.
-	OriginatorIdentification string `json:"originator_identification,required"`
-	// Either the name of the originator or an intermediary money transmitter.
-	OriginatorName string `json:"originator_name,required"`
-	// A portion of the originator address. This may be incomplete.
-	OriginatorPostalCode string `json:"originator_postal_code,required,nullable"`
-	// A portion of the originator address. This may be incomplete.
-	OriginatorStateOrProvince string `json:"originator_state_or_province,required,nullable"`
-	// A portion of the originator address. This may be incomplete.
-	OriginatorStreetAddress string `json:"originator_street_address,required"`
-	// A description field set by the originator.
-	PaymentRelatedInformation string `json:"payment_related_information,required,nullable"`
-	// A description field set by the originator.
-	PaymentRelatedInformation2 string `json:"payment_related_information2,required,nullable"`
-	// A portion of the receiver address. This may be incomplete.
-	ReceiverCity string `json:"receiver_city,required"`
-	// A portion of the receiver address. The
-	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
-	// code of the receiver country.
-	ReceiverCountry string `json:"receiver_country,required"`
-	// An identification number the originator uses for the receiver.
-	ReceiverIdentificationNumber string `json:"receiver_identification_number,required,nullable"`
-	// A portion of the receiver address. This may be incomplete.
-	ReceiverPostalCode string `json:"receiver_postal_code,required,nullable"`
-	// A portion of the receiver address. This may be incomplete.
-	ReceiverStateOrProvince string `json:"receiver_state_or_province,required,nullable"`
-	// A portion of the receiver address. This may be incomplete.
-	ReceiverStreetAddress string `json:"receiver_street_address,required"`
-	// The name of the receiver of the transfer. This is not verified by Increase.
-	ReceivingCompanyOrIndividualName string `json:"receiving_company_or_individual_name,required"`
-	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
-	// country code of the receiving bank country.
-	ReceivingDepositoryFinancialInstitutionCountry string `json:"receiving_depository_financial_institution_country,required"`
-	// An identifier for the receiving bank. One of an International Bank Account
-	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
-	// domestic identifier like a US Routing Number.
-	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id,required"`
-	// An instruction of how to interpret the
-	// `receiving_depository_financial_institution_id` field for this Transaction.
-	ReceivingDepositoryFinancialInstitutionIDQualifier TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier,required"`
-	// The name of the receiving bank, as set by the sending financial institution.
-	ReceivingDepositoryFinancialInstitutionName string `json:"receiving_depository_financial_institution_name,required"`
-	// A 15 digit number recorded in the Nacha file and available to both the
-	// originating and receiving bank. Along with the amount, date, and originating
-	// routing number, this can be used to identify the ACH transfer at either bank.
-	// ACH trace numbers are not unique, but are
-	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
-	TraceNumber string `json:"trace_number,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `inbound_international_ach_transfer`.
-	Type TransactionSourceInboundInternationalACHTransferType `json:"type,required"`
-	JSON transactionSourceInboundInternationalACHTransferJSON `json:"-"`
-}
-
-// transactionSourceInboundInternationalACHTransferJSON contains the JSON metadata
-// for the struct [TransactionSourceInboundInternationalACHTransfer]
-type transactionSourceInboundInternationalACHTransferJSON struct {
-	Amount                                                 apijson.Field
-	DestinationCountryCode                                 apijson.Field
-	DestinationCurrencyCode                                apijson.Field
-	ForeignExchangeIndicator                               apijson.Field
-	ForeignExchangeReference                               apijson.Field
-	ForeignExchangeReferenceIndicator                      apijson.Field
-	ForeignPaymentAmount                                   apijson.Field
-	ForeignTraceNumber                                     apijson.Field
-	InternationalTransactionTypeCode                       apijson.Field
-	OriginatingCurrencyCode                                apijson.Field
-	OriginatingDepositoryFinancialInstitutionBranchCountry apijson.Field
-	OriginatingDepositoryFinancialInstitutionID            apijson.Field
-	OriginatingDepositoryFinancialInstitutionIDQualifier   apijson.Field
-	OriginatingDepositoryFinancialInstitutionName          apijson.Field
-	OriginatorCity                                         apijson.Field
-	OriginatorCompanyEntryDescription                      apijson.Field
-	OriginatorCountry                                      apijson.Field
-	OriginatorIdentification                               apijson.Field
-	OriginatorName                                         apijson.Field
-	OriginatorPostalCode                                   apijson.Field
-	OriginatorStateOrProvince                              apijson.Field
-	OriginatorStreetAddress                                apijson.Field
-	PaymentRelatedInformation                              apijson.Field
-	PaymentRelatedInformation2                             apijson.Field
-	ReceiverCity                                           apijson.Field
-	ReceiverCountry                                        apijson.Field
-	ReceiverIdentificationNumber                           apijson.Field
-	ReceiverPostalCode                                     apijson.Field
-	ReceiverStateOrProvince                                apijson.Field
-	ReceiverStreetAddress                                  apijson.Field
-	ReceivingCompanyOrIndividualName                       apijson.Field
-	ReceivingDepositoryFinancialInstitutionCountry         apijson.Field
-	ReceivingDepositoryFinancialInstitutionID              apijson.Field
-	ReceivingDepositoryFinancialInstitutionIDQualifier     apijson.Field
-	ReceivingDepositoryFinancialInstitutionName            apijson.Field
-	TraceNumber                                            apijson.Field
-	Type                                                   apijson.Field
-	raw                                                    string
-	ExtraFields                                            map[string]apijson.Field
-}
-
-func (r *TransactionSourceInboundInternationalACHTransfer) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r transactionSourceInboundInternationalACHTransferJSON) RawJSON() string {
-	return r.raw
-}
-
-// A description of how the foreign exchange rate was calculated.
-type TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator string
-
-const (
-	// The originator chose an amount in their own currency. The settled amount in USD
-	// was converted using the exchange rate.
-	TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToVariable TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_variable"
-	// The originator chose an amount to settle in USD. The originator's amount was
-	// variable; known only after the foreign exchange conversion.
-	TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorVariableToFixed TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "variable_to_fixed"
-	// The amount was originated and settled as a fixed amount in USD. There is no
-	// foreign exchange conversion.
-	TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator = "fixed_to_fixed"
-)
-
-func (r TransactionSourceInboundInternationalACHTransferForeignExchangeIndicator) IsKnown() bool {
-	switch r {
-	case TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToVariable, TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorVariableToFixed, TransactionSourceInboundInternationalACHTransferForeignExchangeIndicatorFixedToFixed:
-		return true
-	}
-	return false
-}
-
-// An instruction of how to interpret the `foreign_exchange_reference` field for
-// this Transaction.
-type TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator string
-
-const (
-	// The ACH file contains a foreign exchange rate.
-	TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeRate TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "foreign_exchange_rate"
-	// The ACH file contains a reference to a well-known foreign exchange rate.
-	TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "foreign_exchange_reference_number"
-	// There is no foreign exchange for this transfer, so the
-	// `foreign_exchange_reference` field is blank.
-	TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator = "blank"
-)
-
-func (r TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicator) IsKnown() bool {
-	switch r {
-	case TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeRate, TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber, TransactionSourceInboundInternationalACHTransferForeignExchangeReferenceIndicatorBlank:
-		return true
-	}
-	return false
-}
-
-// The type of transfer. Set by the originator.
-type TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode string
-
-const (
-	// Sent as `ANN` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAnnuity TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "annuity"
-	// Sent as `BUS` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBusinessOrCommercial TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "business_or_commercial"
-	// Sent as `DEP` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeDeposit TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "deposit"
-	// Sent as `LOA` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeLoan TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "loan"
-	// Sent as `MIS` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMiscellaneous TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "miscellaneous"
-	// Sent as `MOR` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMortgage TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "mortgage"
-	// Sent as `PEN` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePension TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "pension"
-	// Sent as `REM` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRemittance TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "remittance"
-	// Sent as `RLS` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRentOrLease TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "rent_or_lease"
-	// Sent as `SAL` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSalaryOrPayroll TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "salary_or_payroll"
-	// Sent as `TAX` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTax TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "tax"
-	// Sent as `ARC` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAccountsReceivable TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "accounts_receivable"
-	// Sent as `BOC` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBackOfficeConversion TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "back_office_conversion"
-	// Sent as `MTE` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMachineTransfer TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "machine_transfer"
-	// Sent as `POP` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfPurchase TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "point_of_purchase"
-	// Sent as `POS` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfSale TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "point_of_sale"
-	// Sent as `RCK` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRepresentedCheck TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "represented_check"
-	// Sent as `SHR` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSharedNetworkTransaction TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "shared_network_transaction"
-	// Sent as `TEL` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTelphoneInitiated TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "telphone_initiated"
-	// Sent as `WEB` in the Nacha file.
-	TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode = "internet_initiated"
-)
-
-func (r TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCode) IsKnown() bool {
-	switch r {
-	case TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAnnuity, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBusinessOrCommercial, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeDeposit, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeLoan, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMiscellaneous, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMortgage, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePension, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRemittance, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRentOrLease, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSalaryOrPayroll, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTax, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeAccountsReceivable, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeBackOfficeConversion, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeMachineTransfer, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfPurchase, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodePointOfSale, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeRepresentedCheck, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeSharedNetworkTransaction, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeTelphoneInitiated, TransactionSourceInboundInternationalACHTransferInternationalTransactionTypeCodeInternetInitiated:
-		return true
-	}
-	return false
-}
-
-// An instruction of how to interpret the
-// `originating_depository_financial_institution_id` field for this Transaction.
-type TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier string
-
-const (
-	// A domestic clearing system number. In the US, for example, this is the American
-	// Banking Association (ABA) routing number.
-	TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
-	// The SWIFT Bank Identifier Code (BIC) of the bank.
-	TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierBicCode TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
-	// An International Bank Account Number.
-	TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
-)
-
-func (r TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
-	switch r {
-	case TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierBicCode, TransactionSourceInboundInternationalACHTransferOriginatingDepositoryFinancialInstitutionIDQualifierIban:
-		return true
-	}
-	return false
-}
-
-// An instruction of how to interpret the
-// `receiving_depository_financial_institution_id` field for this Transaction.
-type TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier string
-
-const (
-	// A domestic clearing system number. In the US, for example, this is the American
-	// Banking Association (ABA) routing number.
-	TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
-	// The SWIFT Bank Identifier Code (BIC) of the bank.
-	TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
-	// An International Bank Account Number.
-	TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
-)
-
-func (r TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
-	switch r {
-	case TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber, TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierBicCode, TransactionSourceInboundInternationalACHTransferReceivingDepositoryFinancialInstitutionIDQualifierIban:
-		return true
-	}
-	return false
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `inbound_international_ach_transfer`.
-type TransactionSourceInboundInternationalACHTransferType string
-
-const (
-	TransactionSourceInboundInternationalACHTransferTypeInboundInternationalACHTransfer TransactionSourceInboundInternationalACHTransferType = "inbound_international_ach_transfer"
-)
-
-func (r TransactionSourceInboundInternationalACHTransferType) IsKnown() bool {
-	switch r {
-	case TransactionSourceInboundInternationalACHTransferTypeInboundInternationalACHTransfer:
-		return true
-	}
-	return false
 }
 
 // An Inbound Real-Time Payments Transfer Confirmation object. This field will be
@@ -4166,9 +3840,6 @@ const (
 	// Inbound Check Deposit Return Intention: details will be under the
 	// `inbound_check_deposit_return_intention` object.
 	TransactionListParamsCategoryInInboundCheckDepositReturnIntention TransactionListParamsCategoryIn = "inbound_check_deposit_return_intention"
-	// Inbound International ACH Transfer: details will be under the
-	// `inbound_international_ach_transfer` object.
-	TransactionListParamsCategoryInInboundInternationalACHTransfer TransactionListParamsCategoryIn = "inbound_international_ach_transfer"
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
@@ -4204,7 +3875,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundInternationalACHTransfer, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInCheckTransferStopPaymentRequest, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
