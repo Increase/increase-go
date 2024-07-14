@@ -25,7 +25,7 @@ func TestIntrafiAccountEnrollmentNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.New(context.TODO(), increase.IntrafiAccountEnrollmentNewParams{
+	_, err := client.IntrafiAccountEnrollments.New(context.TODO(), increase.IntrafiAccountEnrollmentNewParams{
 		AccountID:    increase.F("account_in71c4amph0vgo2qllky"),
 		EmailAddress: increase.F("user@example.com"),
 	})
@@ -50,7 +50,7 @@ func TestIntrafiAccountEnrollmentGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.Get(context.TODO(), "intrafi_account_enrollment_w8l97znzreopkwf2tg75")
+	_, err := client.IntrafiAccountEnrollments.Get(context.TODO(), "intrafi_account_enrollment_w8l97znzreopkwf2tg75")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -72,7 +72,7 @@ func TestIntrafiAccountEnrollmentListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.List(context.TODO(), increase.IntrafiAccountEnrollmentListParams{
+	_, err := client.IntrafiAccountEnrollments.List(context.TODO(), increase.IntrafiAccountEnrollmentListParams{
 		AccountID:      increase.F("account_id"),
 		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
@@ -102,7 +102,7 @@ func TestIntrafiAccountEnrollmentUnenroll(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.AccountEnrollments.Unenroll(context.TODO(), "intrafi_account_enrollment_w8l97znzreopkwf2tg75")
+	_, err := client.IntrafiAccountEnrollments.Unenroll(context.TODO(), "intrafi_account_enrollment_w8l97znzreopkwf2tg75")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

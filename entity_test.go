@@ -487,6 +487,34 @@ func TestEntityArchive(t *testing.T) {
 	}
 }
 
+func TestEntityArchiveBeneficialOwner(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Entities.ArchiveBeneficialOwner(
+		context.TODO(),
+		"entity_n8y8tnk2p9339ti393yi",
+		increase.EntityArchiveBeneficialOwnerParams{
+			BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestEntityConfirmWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -504,6 +532,71 @@ func TestEntityConfirmWithOptionalParams(t *testing.T) {
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntityConfirmParams{
 			ConfirmedAt: increase.F(time.Now()),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Entities.NewBeneficialOwner(
+		context.TODO(),
+		"entity_n8y8tnk2p9339ti393yi",
+		increase.EntityNewBeneficialOwnerParams{
+			BeneficialOwner: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwner{
+				CompanyTitle: increase.F("CEO"),
+				Individual: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual{
+					Address: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress{
+						City:  increase.F("New York"),
+						Line1: increase.F("33 Liberty Street"),
+						Line2: increase.F("x"),
+						State: increase.F("NY"),
+						Zip:   increase.F("10045"),
+					}),
+					ConfirmedNoUsTaxID: increase.F(true),
+					DateOfBirth:        increase.F(time.Now()),
+					Identification: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification{
+						DriversLicense: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationDriversLicense{
+							BackFileID:     increase.F("back_file_id"),
+							ExpirationDate: increase.F(time.Now()),
+							FileID:         increase.F("file_id"),
+							State:          increase.F("x"),
+						}),
+						Method: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber),
+						Number: increase.F("078051120"),
+						Other: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationOther{
+							BackFileID:     increase.F("back_file_id"),
+							Country:        increase.F("x"),
+							Description:    increase.F("x"),
+							ExpirationDate: increase.F(time.Now()),
+							FileID:         increase.F("file_id"),
+						}),
+						Passport: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPassport{
+							Country:        increase.F("x"),
+							ExpirationDate: increase.F(time.Now()),
+							FileID:         increase.F("file_id"),
+						}),
+					}),
+					Name: increase.F("Ian Crease"),
+				}),
+				Prongs: increase.F([]increase.EntityNewBeneficialOwnerParamsBeneficialOwnerProng{increase.EntityNewBeneficialOwnerParamsBeneficialOwnerProngControl}),
+			}),
 		},
 	)
 	if err != nil {
@@ -538,6 +631,69 @@ func TestEntityUpdateAddressWithOptionalParams(t *testing.T) {
 				State: increase.F("NY"),
 				Zip:   increase.F("10045"),
 			}),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestEntityUpdateBeneficialOwnerAddressWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Entities.UpdateBeneficialOwnerAddress(
+		context.TODO(),
+		"entity_n8y8tnk2p9339ti393yi",
+		increase.EntityUpdateBeneficialOwnerAddressParams{
+			Address: increase.F(increase.EntityUpdateBeneficialOwnerAddressParamsAddress{
+				City:  increase.F("New York"),
+				Line1: increase.F("33 Liberty Street"),
+				Line2: increase.F("Unit 2"),
+				State: increase.F("NY"),
+				Zip:   increase.F("10045"),
+			}),
+			BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestEntityUpdateIndustryCode(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Entities.UpdateIndustryCode(
+		context.TODO(),
+		"entity_n8y8tnk2p9339ti393yi",
+		increase.EntityUpdateIndustryCodeParams{
+			IndustryCode: increase.F("5132"),
 		},
 	)
 	if err != nil {

@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestEntitySupplementalDocumentNew(t *testing.T) {
+func TestSupplementalDocumentNew(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,13 +25,10 @@ func TestEntitySupplementalDocumentNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Entities.SupplementalDocuments.New(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntitySupplementalDocumentNewParams{
-			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
-		},
-	)
+	_, err := client.SupplementalDocuments.New(context.TODO(), increase.SupplementalDocumentNewParams{
+		EntityID: increase.F("entity_n8y8tnk2p9339ti393yi"),
+		FileID:   increase.F("file_makxrc67oh9l6sg7w9yc"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -41,7 +38,7 @@ func TestEntitySupplementalDocumentNew(t *testing.T) {
 	}
 }
 
-func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
+func TestSupplementalDocumentListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -53,7 +50,7 @@ func TestEntitySupplementalDocumentListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Entities.SupplementalDocuments.List(context.TODO(), increase.EntitySupplementalDocumentListParams{
+	_, err := client.SupplementalDocuments.List(context.TODO(), increase.SupplementalDocumentListParams{
 		EntityID:       increase.F("entity_id"),
 		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),

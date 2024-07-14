@@ -18,54 +18,57 @@ type Client struct {
 	Options                                []option.RequestOption
 	Accounts                               *AccountService
 	AccountNumbers                         *AccountNumberService
-	BookkeepingAccounts                    *BookkeepingAccountService
-	BookkeepingEntrySets                   *BookkeepingEntrySetService
-	BookkeepingEntries                     *BookkeepingEntryService
-	RealTimeDecisions                      *RealTimeDecisionService
-	RealTimePaymentsTransfers              *RealTimePaymentsTransferService
 	Cards                                  *CardService
-	CardDisputes                           *CardDisputeService
+	CardPayments                           *CardPaymentService
 	CardPurchaseSupplements                *CardPurchaseSupplementService
-	ExternalAccounts                       *ExternalAccountService
-	Exports                                *ExportService
+	CardDisputes                           *CardDisputeService
+	PhysicalCards                          *PhysicalCardService
+	DigitalCardProfiles                    *DigitalCardProfileService
+	PhysicalCardProfiles                   *PhysicalCardProfileService
 	DigitalWalletTokens                    *DigitalWalletTokenService
 	Transactions                           *TransactionService
 	PendingTransactions                    *PendingTransactionService
-	Programs                               *ProgramService
 	DeclinedTransactions                   *DeclinedTransactionService
 	AccountTransfers                       *AccountTransferService
 	ACHTransfers                           *ACHTransferService
 	ACHPrenotifications                    *ACHPrenotificationService
-	Documents                              *DocumentService
-	WireTransfers                          *WireTransferService
-	CheckTransfers                         *CheckTransferService
-	Entities                               *EntityService
 	InboundACHTransfers                    *InboundACHTransferService
-	InboundWireDrawdownRequests            *InboundWireDrawdownRequestService
+	WireTransfers                          *WireTransferService
+	InboundWireTransfers                   *InboundWireTransferService
 	WireDrawdownRequests                   *WireDrawdownRequestService
-	Events                                 *EventService
-	EventSubscriptions                     *EventSubscriptionService
-	Files                                  *FileService
-	Groups                                 *GroupService
-	OAuthConnections                       *OAuthConnectionService
+	InboundWireDrawdownRequests            *InboundWireDrawdownRequestService
+	CheckTransfers                         *CheckTransferService
+	InboundCheckDeposits                   *InboundCheckDepositService
+	RealTimePaymentsTransfers              *RealTimePaymentsTransferService
 	CheckDeposits                          *CheckDepositService
+	Lockboxes                              *LockboxService
+	InboundMailItems                       *InboundMailItemService
 	RoutingNumbers                         *RoutingNumberService
-	AccountStatements                      *AccountStatementService
-	Simulations                            *SimulationService
-	PhysicalCards                          *PhysicalCardService
-	CardPayments                           *CardPaymentService
+	ExternalAccounts                       *ExternalAccountService
+	Entities                               *EntityService
+	SupplementalDocuments                  *SupplementalDocumentService
+	Programs                               *ProgramService
 	ProofOfAuthorizationRequests           *ProofOfAuthorizationRequestService
 	ProofOfAuthorizationRequestSubmissions *ProofOfAuthorizationRequestSubmissionService
-	Intrafi                                *IntrafiService
-	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
+	AccountStatements                      *AccountStatementService
+	Files                                  *FileService
+	Documents                              *DocumentService
+	Exports                                *ExportService
+	Events                                 *EventService
+	EventSubscriptions                     *EventSubscriptionService
+	RealTimeDecisions                      *RealTimeDecisionService
+	BookkeepingAccounts                    *BookkeepingAccountService
+	BookkeepingEntrySets                   *BookkeepingEntrySetService
+	BookkeepingEntries                     *BookkeepingEntryService
+	Groups                                 *GroupService
+	OAuthConnections                       *OAuthConnectionService
 	Webhooks                               *WebhookService
 	OAuthTokens                            *OAuthTokenService
-	InboundWireTransfers                   *InboundWireTransferService
-	DigitalCardProfiles                    *DigitalCardProfileService
-	PhysicalCardProfiles                   *PhysicalCardProfileService
-	InboundCheckDeposits                   *InboundCheckDepositService
-	InboundMailItems                       *InboundMailItemService
-	Lockboxes                              *LockboxService
+	IntrafiAccountEnrollments              *IntrafiAccountEnrollmentService
+	IntrafiBalances                        *IntrafiBalanceService
+	IntrafiExclusions                      *IntrafiExclusionService
+	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
+	Simulations                            *SimulationService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -86,54 +89,57 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r.Accounts = NewAccountService(opts...)
 	r.AccountNumbers = NewAccountNumberService(opts...)
-	r.BookkeepingAccounts = NewBookkeepingAccountService(opts...)
-	r.BookkeepingEntrySets = NewBookkeepingEntrySetService(opts...)
-	r.BookkeepingEntries = NewBookkeepingEntryService(opts...)
-	r.RealTimeDecisions = NewRealTimeDecisionService(opts...)
-	r.RealTimePaymentsTransfers = NewRealTimePaymentsTransferService(opts...)
 	r.Cards = NewCardService(opts...)
-	r.CardDisputes = NewCardDisputeService(opts...)
+	r.CardPayments = NewCardPaymentService(opts...)
 	r.CardPurchaseSupplements = NewCardPurchaseSupplementService(opts...)
-	r.ExternalAccounts = NewExternalAccountService(opts...)
-	r.Exports = NewExportService(opts...)
+	r.CardDisputes = NewCardDisputeService(opts...)
+	r.PhysicalCards = NewPhysicalCardService(opts...)
+	r.DigitalCardProfiles = NewDigitalCardProfileService(opts...)
+	r.PhysicalCardProfiles = NewPhysicalCardProfileService(opts...)
 	r.DigitalWalletTokens = NewDigitalWalletTokenService(opts...)
 	r.Transactions = NewTransactionService(opts...)
 	r.PendingTransactions = NewPendingTransactionService(opts...)
-	r.Programs = NewProgramService(opts...)
 	r.DeclinedTransactions = NewDeclinedTransactionService(opts...)
 	r.AccountTransfers = NewAccountTransferService(opts...)
 	r.ACHTransfers = NewACHTransferService(opts...)
 	r.ACHPrenotifications = NewACHPrenotificationService(opts...)
-	r.Documents = NewDocumentService(opts...)
-	r.WireTransfers = NewWireTransferService(opts...)
-	r.CheckTransfers = NewCheckTransferService(opts...)
-	r.Entities = NewEntityService(opts...)
 	r.InboundACHTransfers = NewInboundACHTransferService(opts...)
-	r.InboundWireDrawdownRequests = NewInboundWireDrawdownRequestService(opts...)
+	r.WireTransfers = NewWireTransferService(opts...)
+	r.InboundWireTransfers = NewInboundWireTransferService(opts...)
 	r.WireDrawdownRequests = NewWireDrawdownRequestService(opts...)
-	r.Events = NewEventService(opts...)
-	r.EventSubscriptions = NewEventSubscriptionService(opts...)
-	r.Files = NewFileService(opts...)
-	r.Groups = NewGroupService(opts...)
-	r.OAuthConnections = NewOAuthConnectionService(opts...)
+	r.InboundWireDrawdownRequests = NewInboundWireDrawdownRequestService(opts...)
+	r.CheckTransfers = NewCheckTransferService(opts...)
+	r.InboundCheckDeposits = NewInboundCheckDepositService(opts...)
+	r.RealTimePaymentsTransfers = NewRealTimePaymentsTransferService(opts...)
 	r.CheckDeposits = NewCheckDepositService(opts...)
+	r.Lockboxes = NewLockboxService(opts...)
+	r.InboundMailItems = NewInboundMailItemService(opts...)
 	r.RoutingNumbers = NewRoutingNumberService(opts...)
-	r.AccountStatements = NewAccountStatementService(opts...)
-	r.Simulations = NewSimulationService(opts...)
-	r.PhysicalCards = NewPhysicalCardService(opts...)
-	r.CardPayments = NewCardPaymentService(opts...)
+	r.ExternalAccounts = NewExternalAccountService(opts...)
+	r.Entities = NewEntityService(opts...)
+	r.SupplementalDocuments = NewSupplementalDocumentService(opts...)
+	r.Programs = NewProgramService(opts...)
 	r.ProofOfAuthorizationRequests = NewProofOfAuthorizationRequestService(opts...)
 	r.ProofOfAuthorizationRequestSubmissions = NewProofOfAuthorizationRequestSubmissionService(opts...)
-	r.Intrafi = NewIntrafiService(opts...)
-	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
+	r.AccountStatements = NewAccountStatementService(opts...)
+	r.Files = NewFileService(opts...)
+	r.Documents = NewDocumentService(opts...)
+	r.Exports = NewExportService(opts...)
+	r.Events = NewEventService(opts...)
+	r.EventSubscriptions = NewEventSubscriptionService(opts...)
+	r.RealTimeDecisions = NewRealTimeDecisionService(opts...)
+	r.BookkeepingAccounts = NewBookkeepingAccountService(opts...)
+	r.BookkeepingEntrySets = NewBookkeepingEntrySetService(opts...)
+	r.BookkeepingEntries = NewBookkeepingEntryService(opts...)
+	r.Groups = NewGroupService(opts...)
+	r.OAuthConnections = NewOAuthConnectionService(opts...)
 	r.Webhooks = NewWebhookService(opts...)
 	r.OAuthTokens = NewOAuthTokenService(opts...)
-	r.InboundWireTransfers = NewInboundWireTransferService(opts...)
-	r.DigitalCardProfiles = NewDigitalCardProfileService(opts...)
-	r.PhysicalCardProfiles = NewPhysicalCardProfileService(opts...)
-	r.InboundCheckDeposits = NewInboundCheckDepositService(opts...)
-	r.InboundMailItems = NewInboundMailItemService(opts...)
-	r.Lockboxes = NewLockboxService(opts...)
+	r.IntrafiAccountEnrollments = NewIntrafiAccountEnrollmentService(opts...)
+	r.IntrafiBalances = NewIntrafiBalanceService(opts...)
+	r.IntrafiExclusions = NewIntrafiExclusionService(opts...)
+	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
+	r.Simulations = NewSimulationService(opts...)
 
 	return
 }

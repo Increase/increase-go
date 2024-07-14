@@ -93,7 +93,7 @@ func (r *CardService) ListAutoPaging(ctx context.Context, query CardListParams, 
 }
 
 // Retrieve sensitive details for a Card
-func (r *CardService) GetSensitiveDetails(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
+func (r *CardService) Details(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = append(r.Options[:], opts...)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")

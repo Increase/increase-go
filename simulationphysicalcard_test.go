@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationPhysicalCardShipmentAdvance(t *testing.T) {
+func TestSimulationPhysicalCardAdvanceShipment(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,11 +25,11 @@ func TestSimulationPhysicalCardShipmentAdvance(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.PhysicalCards.ShipmentAdvance(
+	_, err := client.Simulations.PhysicalCards.AdvanceShipment(
 		context.TODO(),
 		"physical_card_ode8duyq5v2ynhjoharl",
-		increase.SimulationPhysicalCardShipmentAdvanceParams{
-			ShipmentStatus: increase.F(increase.SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusShipped),
+		increase.SimulationPhysicalCardAdvanceShipmentParams{
+			ShipmentStatus: increase.F(increase.SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped),
 		},
 	)
 	if err != nil {

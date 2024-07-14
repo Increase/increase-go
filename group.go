@@ -32,7 +32,7 @@ func NewGroupService(opts ...option.RequestOption) (r *GroupService) {
 }
 
 // Returns details for the currently authenticated Group.
-func (r *GroupService) GetDetails(ctx context.Context, opts ...option.RequestOption) (res *Group, err error) {
+func (r *GroupService) Get(ctx context.Context, opts ...option.RequestOption) (res *Group, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "groups/current"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)

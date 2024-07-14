@@ -72,6 +72,18 @@ func (r *InboundACHTransferService) ListAutoPaging(ctx context.Context, query In
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Create a notification of change for an Inbound ACH Transfer
+func (r *InboundACHTransferService) NewNotificationOfChange(ctx context.Context, inboundACHTransferID string, body InboundACHTransferNewNotificationOfChangeParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	if inboundACHTransferID == "" {
+		err = errors.New("missing required inbound_ach_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("inbound_ach_transfers/%s/create_notification_of_change", inboundACHTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Decline an Inbound ACH Transfer
 func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTransferID string, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
@@ -81,18 +93,6 @@ func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTrans
 	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/decline", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
-}
-
-// Create a notification of change for an Inbound ACH Transfer
-func (r *InboundACHTransferService) NotificationOfChange(ctx context.Context, inboundACHTransferID string, body InboundACHTransferNotificationOfChangeParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
-	if inboundACHTransferID == "" {
-		err = errors.New("missing required inbound_ach_transfer_id parameter")
-		return
-	}
-	path := fmt.Sprintf("inbound_ach_transfers/%s/notification_of_change", inboundACHTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -659,14 +659,14 @@ func (r InboundACHTransferListParamsStatus) IsKnown() bool {
 	return false
 }
 
-type InboundACHTransferNotificationOfChangeParams struct {
+type InboundACHTransferNewNotificationOfChangeParams struct {
 	// The updated account number to send in the notification of change.
 	UpdatedAccountNumber param.Field[string] `json:"updated_account_number"`
 	// The updated routing number to send in the notification of change.
 	UpdatedRoutingNumber param.Field[string] `json:"updated_routing_number"`
 }
 
-func (r InboundACHTransferNotificationOfChangeParams) MarshalJSON() (data []byte, err error) {
+func (r InboundACHTransferNewNotificationOfChangeParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
