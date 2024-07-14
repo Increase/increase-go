@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestGroupGetDetails(t *testing.T) {
+func TestGroupGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,7 @@ func TestGroupGetDetails(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Groups.GetDetails(context.TODO())
+	_, err := client.Groups.Get(context.TODO())
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

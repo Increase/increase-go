@@ -52,7 +52,9 @@ func main() {
 		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
 	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-		Name: increase.F("My First Increase Account"),
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
 		panic(err.Error())
@@ -208,10 +210,6 @@ if err != nil {
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
-		println(apierr.Type)                       // missing_param
-		println(apierr.Title)                      // Missing param "name"
-		println(apierr.Detail)                     // Looks like "naem" may have been a typo?
-		println(apierr.Status)                     // 400
 	}
 	panic(err.Error()) // GET "/accounts": 400 Bad Request { ... }
 }
@@ -231,10 +229,12 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Accounts.List(
+client.Accounts.New(
 	ctx,
-	increase.AccountListParams{
-		Status: increase.F(increase.AccountListParamsStatusOpen),
+	increase.AccountNewParams{
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -259,19 +259,19 @@ which can be used to wrap any `io.Reader` with the appropriate file name and con
 file, err := os.Open("my/file.txt")
 increase.FileNewParams{
 	File:    increase.F[io.Reader](file),
-	Purpose: increase.F(increase.FileNewParamsPurposeOther),
+	Purpose: increase.F(increase.FileNewParamsPurposeCheckImageFront),
 }
 
 // A file from a string
 increase.FileNewParams{
 	File:    increase.F[io.Reader](strings.NewReader("my file contents")),
-	Purpose: increase.F(increase.FileNewParamsPurposeOther),
+	Purpose: increase.F(increase.FileNewParamsPurposeCheckImageFront),
 }
 
 // With a custom filename and contentType
 increase.FileNewParams{
 	File:    increase.FileParam(strings.NewReader(`{"hello": "foo"}`), "file.go", "application/json"),
-	Purpose: increase.F(increase.FileNewParamsPurposeOther),
+	Purpose: increase.F(increase.FileNewParamsPurposeCheckImageFront),
 }
 ```
 
@@ -293,7 +293,9 @@ client := increase.NewClient(
 client.Accounts.New(
 	context.TODO(),
 	increase.AccountNewParams{
-		Name: increase.F("Jack"),
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	},
 	option.WithMaxRetries(5),
 )

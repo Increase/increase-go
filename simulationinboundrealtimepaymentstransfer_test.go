@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestEntityIndustryCodeNew(t *testing.T) {
+func TestSimulationInboundRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,13 +25,15 @@ func TestEntityIndustryCodeNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Entities.IndustryCode.New(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntityIndustryCodeNewParams{
-			IndustryCode: increase.F("5132"),
-		},
-	)
+	_, err := client.Simulations.InboundRealTimePaymentsTransfers.New(context.TODO(), increase.SimulationInboundRealTimePaymentsTransferNewParams{
+		AccountNumberID:       increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:                increase.F(int64(1000)),
+		DebtorAccountNumber:   increase.F("x"),
+		DebtorName:            increase.F("x"),
+		DebtorRoutingNumber:   increase.F("xxxxxxxxx"),
+		RemittanceInformation: increase.F("x"),
+		RequestForPaymentID:   increase.F("real_time_payments_request_for_payment_28kcliz1oevcnqyn9qp7"),
+	})
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

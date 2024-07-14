@@ -36,7 +36,7 @@ func NewSimulationInterestPaymentService(opts ...option.RequestOption) (r *Simul
 // automatically on the first of each month.
 func (r *SimulationInterestPaymentService) New(ctx context.Context, body SimulationInterestPaymentNewParams, opts ...option.RequestOption) (res *Transaction, err error) {
 	opts = append(r.Options[:], opts...)
-	path := "simulations/interest_payment"
+	path := "simulations/interest_payments"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

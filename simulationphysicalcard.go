@@ -36,51 +36,51 @@ func NewSimulationPhysicalCardService(opts ...option.RequestOption) (r *Simulati
 // This endpoint allows you to simulate advancing the shipment status of a Physical
 // Card, to simulate e.g., that a physical card was attempted shipped but then
 // failed delivery.
-func (r *SimulationPhysicalCardService) ShipmentAdvance(ctx context.Context, physicalCardID string, body SimulationPhysicalCardShipmentAdvanceParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
+func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, physicalCardID string, body SimulationPhysicalCardAdvanceShipmentParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
 	opts = append(r.Options[:], opts...)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
 		return
 	}
-	path := fmt.Sprintf("simulations/physical_cards/%s/shipment_advance", physicalCardID)
+	path := fmt.Sprintf("simulations/physical_cards/%s/advance_shipment", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type SimulationPhysicalCardShipmentAdvanceParams struct {
+type SimulationPhysicalCardAdvanceShipmentParams struct {
 	// The shipment status to move the Physical Card to.
-	ShipmentStatus param.Field[SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus] `json:"shipment_status,required"`
+	ShipmentStatus param.Field[SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus] `json:"shipment_status,required"`
 }
 
-func (r SimulationPhysicalCardShipmentAdvanceParams) MarshalJSON() (data []byte, err error) {
+func (r SimulationPhysicalCardAdvanceShipmentParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // The shipment status to move the Physical Card to.
-type SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus string
+type SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus string
 
 const (
 	// The physical card has not yet been shipped.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusPending SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "pending"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusPending SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "pending"
 	// The physical card shipment was canceled prior to submission.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusCanceled SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "canceled"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusCanceled SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "canceled"
 	// The physical card shipment has been submitted to the card fulfillment provider.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusSubmitted SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "submitted"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusSubmitted SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "submitted"
 	// The physical card shipment has been acknowledged by the card fulfillment
 	// provider and will be processed in their next batch.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusAcknowledged SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "acknowledged"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusAcknowledged SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "acknowledged"
 	// The physical card shipment was rejected by the card printer due to an error.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusRejected SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "rejected"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusRejected SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "rejected"
 	// The physical card has been shipped.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusShipped SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "shipped"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "shipped"
 	// The physical card shipment was returned to the sender and destroyed by the
 	// production facility.
-	SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusReturned SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus = "returned"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusReturned SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "returned"
 )
 
-func (r SimulationPhysicalCardShipmentAdvanceParamsShipmentStatus) IsKnown() bool {
+func (r SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus) IsKnown() bool {
 	switch r {
-	case SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusPending, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusCanceled, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusSubmitted, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusAcknowledged, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusRejected, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusShipped, SimulationPhysicalCardShipmentAdvanceParamsShipmentStatusReturned:
+	case SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusPending, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusCanceled, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusSubmitted, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusAcknowledged, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusRejected, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusReturned:
 		return true
 	}
 	return false

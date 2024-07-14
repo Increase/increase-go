@@ -104,35 +104,6 @@ func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string,
 	return
 }
 
-// Simulates the reversal of a [Wire Transfer](#wire-transfers) by the Federal
-// Reserve due to error conditions. This will also create a
-// [Transaction](#transaction) to account for the returned funds. This Wire
-// Transfer must first have a `status` of `complete`.
-func (r *WireTransferService) Reverse(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
-	if wireTransferID == "" {
-		err = errors.New("missing required wire_transfer_id parameter")
-		return
-	}
-	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wireTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
-}
-
-// Simulates the submission of a [Wire Transfer](#wire-transfers) to the Federal
-// Reserve. This transfer must first have a `status` of `pending_approval` or
-// `pending_creating`.
-func (r *WireTransferService) Submit(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
-	if wireTransferID == "" {
-		err = errors.New("missing required wire_transfer_id parameter")
-		return
-	}
-	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wireTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
-}
-
 // Wire transfers move funds between your Increase account and any other account
 // accessible by Fedwire.
 type WireTransfer struct {

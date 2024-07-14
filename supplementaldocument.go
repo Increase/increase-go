@@ -4,8 +4,6 @@ package increase
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -18,39 +16,35 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-// EntitySupplementalDocumentService contains methods and other services that help
-// with interacting with the increase API.
+// SupplementalDocumentService contains methods and other services that help with
+// interacting with the increase API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
-// the [NewEntitySupplementalDocumentService] method instead.
-type EntitySupplementalDocumentService struct {
+// the [NewSupplementalDocumentService] method instead.
+type SupplementalDocumentService struct {
 	Options []option.RequestOption
 }
 
-// NewEntitySupplementalDocumentService generates a new service that applies the
-// given options to each request. These options are applied after the parent
-// client's options (if there is one), and before any request-specific options.
-func NewEntitySupplementalDocumentService(opts ...option.RequestOption) (r *EntitySupplementalDocumentService) {
-	r = &EntitySupplementalDocumentService{}
+// NewSupplementalDocumentService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
+func NewSupplementalDocumentService(opts ...option.RequestOption) (r *SupplementalDocumentService) {
+	r = &SupplementalDocumentService{}
 	r.Options = opts
 	return
 }
 
 // Create a supplemental document for an Entity
-func (r *EntitySupplementalDocumentService) New(ctx context.Context, entityID string, body EntitySupplementalDocumentNewParams, opts ...option.RequestOption) (res *Entity, err error) {
+func (r *SupplementalDocumentService) New(ctx context.Context, body SupplementalDocumentNewParams, opts ...option.RequestOption) (res *EntitySupplementalDocument, err error) {
 	opts = append(r.Options[:], opts...)
-	if entityID == "" {
-		err = errors.New("missing required entity_id parameter")
-		return
-	}
-	path := fmt.Sprintf("entities/%s/supplemental_documents", entityID)
+	path := "entity_supplemental_documents"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
 // List Entity Supplemental Document Submissions
-func (r *EntitySupplementalDocumentService) List(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[SupplementalDocument], err error) {
+func (r *SupplementalDocumentService) List(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[EntitySupplementalDocument], err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -68,16 +62,18 @@ func (r *EntitySupplementalDocumentService) List(ctx context.Context, query Enti
 }
 
 // List Entity Supplemental Document Submissions
-func (r *EntitySupplementalDocumentService) ListAutoPaging(ctx context.Context, query EntitySupplementalDocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[SupplementalDocument] {
+func (r *SupplementalDocumentService) ListAutoPaging(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[EntitySupplementalDocument] {
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Supplemental Documents are uploaded files connected to an Entity during
 // onboarding.
-type SupplementalDocument struct {
+type EntitySupplementalDocument struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Supplemental Document was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The Entity the supplemental document is attached to.
+	EntityID string `json:"entity_id,required"`
 	// The File containing the document.
 	FileID string `json:"file_id,required"`
 	// The idempotency key you chose for this object. This value is unique across
@@ -86,14 +82,15 @@ type SupplementalDocument struct {
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
-	Type SupplementalDocumentType `json:"type,required"`
-	JSON supplementalDocumentJSON `json:"-"`
+	Type EntitySupplementalDocumentType `json:"type,required"`
+	JSON entitySupplementalDocumentJSON `json:"-"`
 }
 
-// supplementalDocumentJSON contains the JSON metadata for the struct
-// [SupplementalDocument]
-type supplementalDocumentJSON struct {
+// entitySupplementalDocumentJSON contains the JSON metadata for the struct
+// [EntitySupplementalDocument]
+type entitySupplementalDocumentJSON struct {
 	CreatedAt      apijson.Field
+	EntityID       apijson.Field
 	FileID         apijson.Field
 	IdempotencyKey apijson.Field
 	Type           apijson.Field
@@ -101,40 +98,42 @@ type supplementalDocumentJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *SupplementalDocument) UnmarshalJSON(data []byte) (err error) {
+func (r *EntitySupplementalDocument) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r supplementalDocumentJSON) RawJSON() string {
+func (r entitySupplementalDocumentJSON) RawJSON() string {
 	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
 // `entity_supplemental_document`.
-type SupplementalDocumentType string
+type EntitySupplementalDocumentType string
 
 const (
-	SupplementalDocumentTypeEntitySupplementalDocument SupplementalDocumentType = "entity_supplemental_document"
+	EntitySupplementalDocumentTypeEntitySupplementalDocument EntitySupplementalDocumentType = "entity_supplemental_document"
 )
 
-func (r SupplementalDocumentType) IsKnown() bool {
+func (r EntitySupplementalDocumentType) IsKnown() bool {
 	switch r {
-	case SupplementalDocumentTypeEntitySupplementalDocument:
+	case EntitySupplementalDocumentTypeEntitySupplementalDocument:
 		return true
 	}
 	return false
 }
 
-type EntitySupplementalDocumentNewParams struct {
+type SupplementalDocumentNewParams struct {
+	// The identifier of the Entity to associate with the supplemental document.
+	EntityID param.Field[string] `json:"entity_id,required"`
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id,required"`
 }
 
-func (r EntitySupplementalDocumentNewParams) MarshalJSON() (data []byte, err error) {
+func (r SupplementalDocumentNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type EntitySupplementalDocumentListParams struct {
+type SupplementalDocumentListParams struct {
 	// The identifier of the Entity to list supplemental documents for.
 	EntityID param.Field[string] `query:"entity_id,required"`
 	// Return the page of entries after this one.
@@ -149,9 +148,9 @@ type EntitySupplementalDocumentListParams struct {
 	Limit param.Field[int64] `query:"limit"`
 }
 
-// URLQuery serializes [EntitySupplementalDocumentListParams]'s query parameters as
+// URLQuery serializes [SupplementalDocumentListParams]'s query parameters as
 // `url.Values`.
-func (r EntitySupplementalDocumentListParams) URLQuery() (v url.Values) {
+func (r SupplementalDocumentListParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,

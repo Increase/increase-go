@@ -25,7 +25,7 @@ func TestIntrafiExclusionNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.Exclusions.New(context.TODO(), increase.IntrafiExclusionNewParams{
+	_, err := client.IntrafiExclusions.New(context.TODO(), increase.IntrafiExclusionNewParams{
 		BankName: increase.F("Example Bank"),
 		EntityID: increase.F("entity_n8y8tnk2p9339ti393yi"),
 	})
@@ -50,7 +50,7 @@ func TestIntrafiExclusionGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.Exclusions.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
+	_, err := client.IntrafiExclusions.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -72,7 +72,7 @@ func TestIntrafiExclusionListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.Exclusions.List(context.TODO(), increase.IntrafiExclusionListParams{
+	_, err := client.IntrafiExclusions.List(context.TODO(), increase.IntrafiExclusionListParams{
 		Cursor:         increase.F("cursor"),
 		EntityID:       increase.F("entity_id"),
 		IdempotencyKey: increase.F("x"),
@@ -99,7 +99,7 @@ func TestIntrafiExclusionArchive(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Intrafi.Exclusions.Archive(context.TODO(), "intrafi_exclusion_ygfqduuzpau3jqof6jyh")
+	_, err := client.IntrafiExclusions.Archive(context.TODO(), "intrafi_exclusion_ygfqduuzpau3jqof6jyh")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
