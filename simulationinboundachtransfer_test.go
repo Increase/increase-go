@@ -37,6 +37,7 @@ func TestSimulationInboundACHTransferNewWithOptionalParams(t *testing.T) {
 		ReceiverIDNumber:         increase.F("x"),
 		ReceiverName:             increase.F("x"),
 		ResolveAt:                increase.F(time.Now()),
+		StandardEntryClassCode:   increase.F(increase.SimulationInboundACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
 	})
 	if err != nil {
 		var apierr *increase.Error
