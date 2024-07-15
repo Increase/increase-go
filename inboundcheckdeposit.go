@@ -84,18 +84,6 @@ func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDe
 	return
 }
 
-// Return an Inbound Check Deposit
-func (r *InboundCheckDepositService) Return(ctx context.Context, inboundCheckDepositID string, body InboundCheckDepositReturnParams, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
-	if inboundCheckDepositID == "" {
-		err = errors.New("missing required inbound_check_deposit_id parameter")
-		return
-	}
-	path := fmt.Sprintf("inbound_check_deposits/%s/return", inboundCheckDepositID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
 // Inbound Check Deposits are records of third-parties attempting to deposit checks
 // against your account.
 type InboundCheckDeposit struct {
@@ -213,8 +201,6 @@ func (r InboundCheckDepositCurrency) IsKnown() bool {
 // If you requested a return of this deposit, this will contain details of the
 // return.
 type InboundCheckDepositDepositReturn struct {
-	// The reason the deposit was returned.
-	Reason InboundCheckDepositDepositReturnReason `json:"reason,required"`
 	// The time at which the deposit was returned.
 	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
 	// The id of the transaction for the returned deposit.
@@ -225,7 +211,6 @@ type InboundCheckDepositDepositReturn struct {
 // inboundCheckDepositDepositReturnJSON contains the JSON metadata for the struct
 // [InboundCheckDepositDepositReturn]
 type inboundCheckDepositDepositReturnJSON struct {
-	Reason        apijson.Field
 	ReturnedAt    apijson.Field
 	TransactionID apijson.Field
 	raw           string
@@ -240,26 +225,6 @@ func (r inboundCheckDepositDepositReturnJSON) RawJSON() string {
 	return r.raw
 }
 
-// The reason the deposit was returned.
-type InboundCheckDepositDepositReturnReason string
-
-const (
-	// The check was altered or fictitious.
-	InboundCheckDepositDepositReturnReasonAlteredOrFictitious InboundCheckDepositDepositReturnReason = "altered_or_fictitious"
-	// The check was not authorized.
-	InboundCheckDepositDepositReturnReasonNotAuthorized InboundCheckDepositDepositReturnReason = "not_authorized"
-	// The check was a duplicate presentment.
-	InboundCheckDepositDepositReturnReasonDuplicatePresentment InboundCheckDepositDepositReturnReason = "duplicate_presentment"
-)
-
-func (r InboundCheckDepositDepositReturnReason) IsKnown() bool {
-	switch r {
-	case InboundCheckDepositDepositReturnReasonAlteredOrFictitious, InboundCheckDepositDepositReturnReasonNotAuthorized, InboundCheckDepositDepositReturnReasonDuplicatePresentment:
-		return true
-	}
-	return false
-}
-
 // The status of the Inbound Check Deposit.
 type InboundCheckDepositStatus string
 
@@ -270,13 +235,11 @@ const (
 	InboundCheckDepositStatusAccepted InboundCheckDepositStatus = "accepted"
 	// The Inbound Check Deposit was rejected.
 	InboundCheckDepositStatusDeclined InboundCheckDepositStatus = "declined"
-	// The Inbound Check Deposit was returned.
-	InboundCheckDepositStatusReturned InboundCheckDepositStatus = "returned"
 )
 
 func (r InboundCheckDepositStatus) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositStatusPending, InboundCheckDepositStatusAccepted, InboundCheckDepositStatusDeclined, InboundCheckDepositStatusReturned:
+	case InboundCheckDepositStatusPending, InboundCheckDepositStatusAccepted, InboundCheckDepositStatusDeclined:
 		return true
 	}
 	return false
@@ -343,33 +306,4 @@ func (r InboundCheckDepositListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
-}
-
-type InboundCheckDepositReturnParams struct {
-	// The reason to return the Inbound Check Deposit.
-	Reason param.Field[InboundCheckDepositReturnParamsReason] `json:"reason,required"`
-}
-
-func (r InboundCheckDepositReturnParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The reason to return the Inbound Check Deposit.
-type InboundCheckDepositReturnParamsReason string
-
-const (
-	// The check was altered or fictitious.
-	InboundCheckDepositReturnParamsReasonAlteredOrFictitious InboundCheckDepositReturnParamsReason = "altered_or_fictitious"
-	// The check was not authorized.
-	InboundCheckDepositReturnParamsReasonNotAuthorized InboundCheckDepositReturnParamsReason = "not_authorized"
-	// The check was a duplicate presentment.
-	InboundCheckDepositReturnParamsReasonDuplicatePresentment InboundCheckDepositReturnParamsReason = "duplicate_presentment"
-)
-
-func (r InboundCheckDepositReturnParamsReason) IsKnown() bool {
-	switch r {
-	case InboundCheckDepositReturnParamsReasonAlteredOrFictitious, InboundCheckDepositReturnParamsReasonNotAuthorized, InboundCheckDepositReturnParamsReasonDuplicatePresentment:
-		return true
-	}
-	return false
 }
