@@ -42,6 +42,7 @@ func TestSimulationInboundWireTransferNewWithOptionalParams(t *testing.T) {
 		OriginatorToBeneficiaryInformationLine2: increase.F("x"),
 		OriginatorToBeneficiaryInformationLine3: increase.F("x"),
 		OriginatorToBeneficiaryInformationLine4: increase.F("x"),
+		SenderReference:                         increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
