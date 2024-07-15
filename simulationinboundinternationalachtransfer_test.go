@@ -7,14 +7,13 @@ import (
 	"errors"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/increase/increase-go"
 	"github.com/increase/increase-go/internal/testutil"
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationInboundACHTransferNewWithOptionalParams(t *testing.T) {
+func TestSimulationInboundInternationalACHTransferNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,17 +25,15 @@ func TestSimulationInboundACHTransferNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.InboundACHTransfers.New(context.TODO(), increase.SimulationInboundACHTransferNewParams{
-		AccountNumberID:          increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		Amount:                   increase.F(int64(1000)),
-		CompanyDescriptiveDate:   increase.F("x"),
-		CompanyDiscretionaryData: increase.F("x"),
-		CompanyEntryDescription:  increase.F("x"),
-		CompanyID:                increase.F("x"),
-		CompanyName:              increase.F("x"),
-		ReceiverIDNumber:         increase.F("x"),
-		ReceiverName:             increase.F("x"),
-		ResolveAt:                increase.F(time.Now()),
+	_, err := client.Simulations.InboundInternationalACHTransfers.New(context.TODO(), increase.SimulationInboundInternationalACHTransferNewParams{
+		AccountNumberID:                   increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:                            increase.F(int64(1000)),
+		ForeignPaymentAmount:              increase.F(int64(10650)),
+		OriginatingCurrencyCode:           increase.F("NOK"),
+		OriginatorCompanyEntryDescription: increase.F("x"),
+		OriginatorName:                    increase.F("x"),
+		ReceiverIdentificationNumber:      increase.F("x"),
+		ReceivingCompanyOrIndividualName:  increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
