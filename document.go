@@ -73,8 +73,7 @@ func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentList
 }
 
 // Increase generates certain documents / forms automatically for your application;
-// they can be listed here. Currently the only supported document type is IRS Form
-// 1099-INT.
+// they can be listed here.
 type Document struct {
 	// The Document identifier.
 	ID string `json:"id,required"`
