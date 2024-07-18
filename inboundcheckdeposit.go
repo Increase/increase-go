@@ -250,11 +250,13 @@ const (
 	InboundCheckDepositDepositReturnReasonNotAuthorized InboundCheckDepositDepositReturnReason = "not_authorized"
 	// The check was a duplicate presentment.
 	InboundCheckDepositDepositReturnReasonDuplicatePresentment InboundCheckDepositDepositReturnReason = "duplicate_presentment"
+	// The check was not endorsed.
+	InboundCheckDepositDepositReturnReasonEndorsementMissing InboundCheckDepositDepositReturnReason = "endorsement_missing"
 )
 
 func (r InboundCheckDepositDepositReturnReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositDepositReturnReasonAlteredOrFictitious, InboundCheckDepositDepositReturnReasonNotAuthorized, InboundCheckDepositDepositReturnReasonDuplicatePresentment:
+	case InboundCheckDepositDepositReturnReasonAlteredOrFictitious, InboundCheckDepositDepositReturnReasonNotAuthorized, InboundCheckDepositDepositReturnReasonDuplicatePresentment, InboundCheckDepositDepositReturnReasonEndorsementMissing:
 		return true
 	}
 	return false
@@ -364,11 +366,13 @@ const (
 	InboundCheckDepositReturnParamsReasonNotAuthorized InboundCheckDepositReturnParamsReason = "not_authorized"
 	// The check was a duplicate presentment.
 	InboundCheckDepositReturnParamsReasonDuplicatePresentment InboundCheckDepositReturnParamsReason = "duplicate_presentment"
+	// The check was not endorsed.
+	InboundCheckDepositReturnParamsReasonEndorsementMissing InboundCheckDepositReturnParamsReason = "endorsement_missing"
 )
 
 func (r InboundCheckDepositReturnParamsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositReturnParamsReasonAlteredOrFictitious, InboundCheckDepositReturnParamsReasonNotAuthorized, InboundCheckDepositReturnParamsReasonDuplicatePresentment:
+	case InboundCheckDepositReturnParamsReasonAlteredOrFictitious, InboundCheckDepositReturnParamsReasonNotAuthorized, InboundCheckDepositReturnParamsReasonDuplicatePresentment, InboundCheckDepositReturnParamsReasonEndorsementMissing:
 		return true
 	}
 	return false
