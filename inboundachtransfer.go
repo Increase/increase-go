@@ -129,6 +129,8 @@ type InboundACHTransfer struct {
 	Decline InboundACHTransferDecline `json:"decline,required,nullable"`
 	// The direction of the transfer.
 	Direction InboundACHTransferDirection `json:"direction,required"`
+	// The settlement schedule the transfer is expected to follow.
+	ExpectedSettlementSchedule InboundACHTransferExpectedSettlementSchedule `json:"expected_settlement_schedule,required"`
 	// If the Inbound ACH Transfer has a Standard Entry Class Code of IAT, this will
 	// contain fields pertaining to the International ACH Transaction.
 	InternationalAddenda InboundACHTransferInternationalAddenda `json:"international_addenda,required,nullable"`
@@ -178,6 +180,7 @@ type inboundACHTransferJSON struct {
 	AutomaticallyResolvesAt            apijson.Field
 	Decline                            apijson.Field
 	Direction                          apijson.Field
+	ExpectedSettlementSchedule         apijson.Field
 	InternationalAddenda               apijson.Field
 	NotificationOfChange               apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
@@ -406,6 +409,24 @@ const (
 func (r InboundACHTransferDirection) IsKnown() bool {
 	switch r {
 	case InboundACHTransferDirectionCredit, InboundACHTransferDirectionDebit:
+		return true
+	}
+	return false
+}
+
+// The settlement schedule the transfer is expected to follow.
+type InboundACHTransferExpectedSettlementSchedule string
+
+const (
+	// The transfer is expected to settle same-day.
+	InboundACHTransferExpectedSettlementScheduleSameDay InboundACHTransferExpectedSettlementSchedule = "same_day"
+	// The transfer is expected to settle on a future date.
+	InboundACHTransferExpectedSettlementScheduleFutureDated InboundACHTransferExpectedSettlementSchedule = "future_dated"
+)
+
+func (r InboundACHTransferExpectedSettlementSchedule) IsKnown() bool {
+	switch r {
+	case InboundACHTransferExpectedSettlementScheduleSameDay, InboundACHTransferExpectedSettlementScheduleFutureDated:
 		return true
 	}
 	return false
