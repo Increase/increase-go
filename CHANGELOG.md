@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.64.0 (2024-07-23)
+
+Full Changelog: [v0.63.0...v0.64.0](https://github.com/Increase/increase-go/compare/v0.63.0...v0.64.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#356](https://github.com/Increase/increase-go/issues/356)) ([a4edfe2](https://github.com/Increase/increase-go/commit/a4edfe276e7ac728407abe7d6762244c0f89ef7f))
+
+
+### Chores
+
+* **ci:** remove unused release doctor ([#353](https://github.com/Increase/increase-go/issues/353)) ([1302e04](https://github.com/Increase/increase-go/commit/1302e040936996f549f966fa262ff06a478702d1))
+* **tests:** update prism version ([#355](https://github.com/Increase/increase-go/issues/355)) ([d289ce4](https://github.com/Increase/increase-go/commit/d289ce440dc56781ab2806e53fab965e0c362971))
+
 ## 0.63.0 (2024-07-23)
 
 Full Changelog: [v0.62.0...v0.63.0](https://github.com/Increase/increase-go/compare/v0.62.0...v0.63.0)
