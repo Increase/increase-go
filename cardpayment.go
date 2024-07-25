@@ -221,6 +221,8 @@ type CardPaymentElementsCardAuthorization struct {
 	MerchantCountry string `json:"merchant_country,required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
 	// Fields specific to the `network`.
 	NetworkDetails CardPaymentElementsCardAuthorizationNetworkDetails `json:"network_details,required"`
 	// Network-specific identifiers for a specific request or transaction.
@@ -268,6 +270,7 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
 	NetworkDetails       apijson.Field
 	NetworkIdentifiers   apijson.Field
 	NetworkRiskScore     apijson.Field
@@ -3478,6 +3481,8 @@ type CardPaymentElementsCardValidation struct {
 	MerchantCountry string `json:"merchant_country,required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
 	// Fields specific to the `network`.
 	NetworkDetails CardPaymentElementsCardValidationNetworkDetails `json:"network_details,required"`
 	// Network-specific identifiers for a specific request or transaction.
@@ -3512,6 +3517,7 @@ type cardPaymentElementsCardValidationJSON struct {
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantDescriptor   apijson.Field
+	MerchantState        apijson.Field
 	NetworkDetails       apijson.Field
 	NetworkIdentifiers   apijson.Field
 	NetworkRiskScore     apijson.Field
