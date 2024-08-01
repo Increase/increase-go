@@ -27,8 +27,9 @@ func TestLockboxNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Lockboxes.New(context.TODO(), increase.LockboxNewParams{
-		AccountID:   increase.F("account_in71c4amph0vgo2qllky"),
-		Description: increase.F("Rent payments"),
+		AccountID:     increase.F("account_in71c4amph0vgo2qllky"),
+		Description:   increase.F("Rent payments"),
+		RecipientName: increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -77,8 +78,9 @@ func TestLockboxUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"lockbox_3xt21ok13q19advds4t5",
 		increase.LockboxUpdateParams{
-			Description: increase.F("x"),
-			Status:      increase.F(increase.LockboxUpdateParamsStatusInactive),
+			Description:   increase.F("x"),
+			RecipientName: increase.F("x"),
+			Status:        increase.F(increase.LockboxUpdateParamsStatusInactive),
 		},
 	)
 	if err != nil {

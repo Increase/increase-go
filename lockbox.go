@@ -111,6 +111,8 @@ type Lockbox struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// The recipient name you choose for the Lockbox.
+	RecipientName string `json:"recipient_name,required,nullable"`
 	// This indicates if mail can be sent to this address.
 	Status LockboxStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -127,6 +129,7 @@ type lockboxJSON struct {
 	CreatedAt      apijson.Field
 	Description    apijson.Field
 	IdempotencyKey apijson.Field
+	RecipientName  apijson.Field
 	Status         apijson.Field
 	Type           apijson.Field
 	raw            string
@@ -151,6 +154,11 @@ type LockboxAddress struct {
 	Line2 string `json:"line2,required"`
 	// The postal code of the address.
 	PostalCode string `json:"postal_code,required"`
+	// The recipient line of the address. This will include the recipient name you
+	// provide when creating the address, as well as an ATTN suffix to help route the
+	// mail to your lockbox. Mail senders must include this ATTN line to receive mail
+	// at this Lockbox.
+	Recipient string `json:"recipient,required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
 	State string             `json:"state,required"`
@@ -163,6 +171,7 @@ type lockboxAddressJSON struct {
 	Line1       apijson.Field
 	Line2       apijson.Field
 	PostalCode  apijson.Field
+	Recipient   apijson.Field
 	State       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -215,6 +224,8 @@ type LockboxNewParams struct {
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The description you choose for the Lockbox, for display purposes.
 	Description param.Field[string] `json:"description"`
+	// The name of the recipient that will receive mail at this location.
+	RecipientName param.Field[string] `json:"recipient_name"`
 }
 
 func (r LockboxNewParams) MarshalJSON() (data []byte, err error) {
@@ -224,6 +235,8 @@ func (r LockboxNewParams) MarshalJSON() (data []byte, err error) {
 type LockboxUpdateParams struct {
 	// The description you choose for the Lockbox.
 	Description param.Field[string] `json:"description"`
+	// The recipient name you choose for the Lockbox.
+	RecipientName param.Field[string] `json:"recipient_name"`
 	// This indicates if checks can be sent to the Lockbox.
 	Status param.Field[LockboxUpdateParamsStatus] `json:"status"`
 }
