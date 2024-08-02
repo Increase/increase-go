@@ -238,9 +238,6 @@ type TransactionSource struct {
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
-	// An Inbound Wire Drawdown Payment object. This field will be present in the JSON
-	// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-	InboundWireDrawdownPayment TransactionSourceInboundWireDrawdownPayment `json:"inbound_wire_drawdown_payment,required,nullable"`
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
@@ -289,7 +286,6 @@ type transactionSourceJSON struct {
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
-	InboundWireDrawdownPayment                  apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
@@ -2530,9 +2526,6 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment: details will be under the
-	// `inbound_wire_drawdown_payment` object.
-	TransactionSourceCategoryInboundWireDrawdownPayment TransactionSourceCategory = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	TransactionSourceCategoryInboundWireReversal TransactionSourceCategory = "inbound_wire_reversal"
 	// Inbound Wire Transfer Intention: details will be under the
@@ -2562,7 +2555,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireDrawdownPayment, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3130,85 +3123,6 @@ func (r TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) Is
 	return false
 }
 
-// An Inbound Wire Drawdown Payment object. This field will be present in the JSON
-// response if and only if `category` is equal to `inbound_wire_drawdown_payment`.
-type TransactionSourceInboundWireDrawdownPayment struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
-	Amount int64 `json:"amount,required"`
-	// A free-form address field set by the sender.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
-	// A free-form address field set by the sender.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
-	// A free-form address field set by the sender.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	// A name set by the sender.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
-	// A free-form reference string set by the sender, to help identify the transfer.
-	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
-	// An Increase-constructed description of the transfer.
-	Description string `json:"description,required"`
-	// A unique identifier available to the originating and receiving banks, commonly
-	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
-	// service and is helpful when debugging wires with the receiving bank.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The originator of the wire, set by the sending bank.
-	OriginatorName string `json:"originator_name,required,nullable"`
-	// The American Banking Association (ABA) routing number of the bank originating
-	// the transfer.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
-	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
-	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string                                          `json:"originator_to_beneficiary_information_line4,required,nullable"`
-	JSON                                    transactionSourceInboundWireDrawdownPaymentJSON `json:"-"`
-}
-
-// transactionSourceInboundWireDrawdownPaymentJSON contains the JSON metadata for
-// the struct [TransactionSourceInboundWireDrawdownPayment]
-type transactionSourceInboundWireDrawdownPaymentJSON struct {
-	Amount                                  apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryReference                    apijson.Field
-	Description                             apijson.Field
-	InputMessageAccountabilityData          apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorRoutingNumber                 apijson.Field
-	OriginatorToBeneficiaryInformation      apijson.Field
-	OriginatorToBeneficiaryInformationLine1 apijson.Field
-	OriginatorToBeneficiaryInformationLine2 apijson.Field
-	OriginatorToBeneficiaryInformationLine3 apijson.Field
-	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	raw                                     string
-	ExtraFields                             map[string]apijson.Field
-}
-
-func (r *TransactionSourceInboundWireDrawdownPayment) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r transactionSourceInboundWireDrawdownPaymentJSON) RawJSON() string {
-	return r.raw
-}
-
 // An Inbound Wire Reversal object. This field will be present in the JSON response
 // if and only if `category` is equal to `inbound_wire_reversal`.
 type TransactionSourceInboundWireReversal struct {
@@ -3762,9 +3676,6 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Wire Drawdown Payment: details will be under the
-	// `inbound_wire_drawdown_payment` object.
-	TransactionListParamsCategoryInInboundWireDrawdownPayment TransactionListParamsCategoryIn = "inbound_wire_drawdown_payment"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	TransactionListParamsCategoryInInboundWireReversal TransactionListParamsCategoryIn = "inbound_wire_reversal"
 	// Inbound Wire Transfer Intention: details will be under the
@@ -3794,7 +3705,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireDrawdownPayment, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
