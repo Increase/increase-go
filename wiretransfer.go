@@ -529,11 +529,13 @@ const (
 	WireTransferStatusPendingReviewing WireTransferStatus = "pending_reviewing"
 	// The transfer is pending approval.
 	WireTransferStatusPendingApproval WireTransferStatus = "pending_approval"
-	// The transfer has been rejected.
+	// The transfer has been rejected by Increase.
 	WireTransferStatusRejected WireTransferStatus = "rejected"
 	// The transfer has been reversed.
 	WireTransferStatusReversed WireTransferStatus = "reversed"
-	// The transfer is complete.
+	// The transfer has been submitted to Fedwire.
+	WireTransferStatusSubmitted WireTransferStatus = "submitted"
+	// The transfer has been acknowledged by Fedwire and can be considered complete.
 	WireTransferStatusComplete WireTransferStatus = "complete"
 	// The transfer is pending creation.
 	WireTransferStatusPendingCreating WireTransferStatus = "pending_creating"
@@ -541,7 +543,7 @@ const (
 
 func (r WireTransferStatus) IsKnown() bool {
 	switch r {
-	case WireTransferStatusCanceled, WireTransferStatusRequiresAttention, WireTransferStatusPendingReviewing, WireTransferStatusPendingApproval, WireTransferStatusRejected, WireTransferStatusReversed, WireTransferStatusComplete, WireTransferStatusPendingCreating:
+	case WireTransferStatusCanceled, WireTransferStatusRequiresAttention, WireTransferStatusPendingReviewing, WireTransferStatusPendingApproval, WireTransferStatusRejected, WireTransferStatusReversed, WireTransferStatusSubmitted, WireTransferStatusComplete, WireTransferStatusPendingCreating:
 		return true
 	}
 	return false
