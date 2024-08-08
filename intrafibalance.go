@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Increase/increase-go/internal/apijson"
-	"github.com/Increase/increase-go/internal/requestconfig"
-	"github.com/Increase/increase-go/option"
+	"github.com/increase/increase-go/internal/apijson"
+	"github.com/increase/increase-go/internal/requestconfig"
+	"github.com/increase/increase-go/option"
 )
 
 // IntrafiBalanceService contains methods and other services that help with

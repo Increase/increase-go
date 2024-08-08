@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Increase/increase-go"
-	"github.com/Increase/increase-go/internal/testutil"
-	"github.com/Increase/increase-go/option"
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal/testutil"
+	"github.com/increase/increase-go/option"
 )
 
 func TestSimulationAccountStatementNew(t *testing.T) {
