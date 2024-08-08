@@ -17,11 +17,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Increase/increase-go/internal"
-	"github.com/Increase/increase-go/internal/apierror"
-	"github.com/Increase/increase-go/internal/apiform"
-	"github.com/Increase/increase-go/internal/apiquery"
 	"github.com/google/uuid"
+	"github.com/increase/increase-go/internal"
+	"github.com/increase/increase-go/internal/apierror"
+	"github.com/increase/increase-go/internal/apiform"
+	"github.com/increase/increase-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {
