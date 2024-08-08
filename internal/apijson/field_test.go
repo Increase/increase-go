@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Increase/increase-go/internal/param"
+	"github.com/increase/increase-go/internal/param"
 )
 
 type Struct struct {

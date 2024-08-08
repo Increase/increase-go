@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Increase/increase-go"
-	"github.com/Increase/increase-go/internal"
-	"github.com/Increase/increase-go/option"
+	"github.com/increase/increase-go"
+	"github.com/increase/increase-go/internal"
+	"github.com/increase/increase-go/option"
 )
 
 type closureTransport struct {

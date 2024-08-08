@@ -3,7 +3,7 @@
 package increase
 
 import (
-	"github.com/Increase/increase-go/option"
+	"github.com/increase/increase-go/option"
 )
 
 // SimulationService contains methods and other services that help with interacting

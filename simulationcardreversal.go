@@ -6,10 +6,10 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Increase/increase-go/internal/apijson"
-	"github.com/Increase/increase-go/internal/param"
-	"github.com/Increase/increase-go/internal/requestconfig"
-	"github.com/Increase/increase-go/option"
+	"github.com/increase/increase-go/internal/apijson"
+	"github.com/increase/increase-go/internal/param"
+	"github.com/increase/increase-go/internal/requestconfig"
+	"github.com/increase/increase-go/option"
 )
 
 // SimulationCardReversalService contains methods and other services that help with
