@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/increase/increase-go"
-	"github.com/increase/increase-go/internal/testutil"
-	"github.com/increase/increase-go/option"
+	"github.com/Increase/increase-go"
+	"github.com/Increase/increase-go/internal/testutil"
+	"github.com/Increase/increase-go/option"
 )
 
 func TestPhysicalCardProfileNew(t *testing.T) {
