@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/option"
+	"github.com/Increase/increase-go/internal/requestconfig"
+	"github.com/Increase/increase-go/option"
 )
 
 // SimulationCheckDepositService contains methods and other services that help with

@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/increase/increase-go/internal/requestconfig"
-	"github.com/increase/increase-go/option"
+	"github.com/Increase/increase-go/internal/requestconfig"
+	"github.com/Increase/increase-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
