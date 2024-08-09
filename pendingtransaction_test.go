@@ -59,10 +59,9 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:   increase.F("cursor"),
-		Limit:    increase.F(int64(1)),
-		RouteID:  increase.F("route_id"),
-		SourceID: increase.F("source_id"),
+		Cursor:  increase.F("cursor"),
+		Limit:   increase.F(int64(1)),
+		RouteID: increase.F("route_id"),
 		Status: increase.F(increase.PendingTransactionListParamsStatus{
 			In: increase.F([]increase.PendingTransactionListParamsStatusIn{increase.PendingTransactionListParamsStatusInPending, increase.PendingTransactionListParamsStatusInComplete}),
 		}),
