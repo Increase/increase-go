@@ -1293,10 +1293,8 @@ type PendingTransactionListParams struct {
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
 	// Filter pending transactions to those belonging to the specified Route.
-	RouteID param.Field[string] `query:"route_id"`
-	// Filter pending transactions to those caused by the specified source.
-	SourceID param.Field[string]                             `query:"source_id"`
-	Status   param.Field[PendingTransactionListParamsStatus] `query:"status"`
+	RouteID param.Field[string]                             `query:"route_id"`
+	Status  param.Field[PendingTransactionListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [PendingTransactionListParams]'s query parameters as
