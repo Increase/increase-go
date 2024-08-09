@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.70.0 (2024-08-08)
+
+Full Changelog: [v0.69.0...v0.70.0](https://github.com/Increase/increase-go/compare/v0.69.0...v0.70.0)
+
+### Features
+
+* **api:** api updates ([#376](https://github.com/Increase/increase-go/issues/376)) ([57202a5](https://github.com/Increase/increase-go/commit/57202a569dcf3084dd5ace28ce7095285acb4c70))
+* **api:** OpenAPI spec update via Stainless API ([#378](https://github.com/Increase/increase-go/issues/378)) ([659f33c](https://github.com/Increase/increase-go/commit/659f33c3c4e1d6745fdf6280a9dacd02cccb99f1))
+* **api:** OpenAPI spec update via Stainless API ([#379](https://github.com/Increase/increase-go/issues/379)) ([909636b](https://github.com/Increase/increase-go/commit/909636b394668f113aece2ab3dc0b1d1e831c141))
+
+
+### Chores
+
+* **internal:** capitalize github org name ([#377](https://github.com/Increase/increase-go/issues/377)) ([bff7aca](https://github.com/Increase/increase-go/commit/bff7aca5248d06b86bf4f0bcc3c7f015fd6827b6))
+* **internal:** codegen related update ([#374](https://github.com/Increase/increase-go/issues/374)) ([34bdf97](https://github.com/Increase/increase-go/commit/34bdf97b61dad305aba7a03bbb3403135dba674b))
+
 ## 0.69.0 (2024-08-01)
 
 Full Changelog: [v0.68.0...v0.69.0](https://github.com/Increase/increase-go/compare/v0.68.0...v0.69.0)
