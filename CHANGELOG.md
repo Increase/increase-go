@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.71.1 (2024-08-09)
+
+Full Changelog: [v0.71.0...v0.71.1](https://github.com/Increase/increase-go/compare/v0.71.0...v0.71.1)
+
+### Bug Fixes
+
+* deserialization of struct unions that implement json.Unmarshaler ([#386](https://github.com/Increase/increase-go/issues/386)) ([be0c8b2](https://github.com/Increase/increase-go/commit/be0c8b231c49d49f19aa5cebdae12423ff7367f7))
+
+
+### Chores
+
+* **ci:** bump prism mock server version ([#384](https://github.com/Increase/increase-go/issues/384)) ([54d1c1f](https://github.com/Increase/increase-go/commit/54d1c1f5afa9cc0643b4c5ba0001a454ad519386))
+
 ## 0.71.0 (2024-08-09)
 
 Full Changelog: [v0.70.0...v0.71.0](https://github.com/Increase/increase-go/compare/v0.70.0...v0.71.0)
