@@ -156,6 +156,9 @@ type ACHTransfer struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// Increase will sometimes hold the funds for ACH debit transfers. If funds are
+	// held, this sub-object will contain details of the hold.
+	InboundFundsHold ACHTransferInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
 	// Your identifier for the transfer recipient.
 	IndividualID string `json:"individual_id,required,nullable"`
 	// The name of the transfer recipient. This value is information and not verified
@@ -221,6 +224,7 @@ type achTransferJSON struct {
 	ExternalAccountID        apijson.Field
 	Funding                  apijson.Field
 	IdempotencyKey           apijson.Field
+	InboundFundsHold         apijson.Field
 	IndividualID             apijson.Field
 	IndividualName           apijson.Field
 	Network                  apijson.Field
@@ -662,6 +666,123 @@ const (
 func (r ACHTransferFunding) IsKnown() bool {
 	switch r {
 	case ACHTransferFundingChecking, ACHTransferFundingSavings:
+		return true
+	}
+	return false
+}
+
+// Increase will sometimes hold the funds for ACH debit transfers. If funds are
+// held, this sub-object will contain details of the hold.
+type ACHTransferInboundFundsHold struct {
+	// The Inbound Funds Hold identifier.
+	ID string `json:"id,required"`
+	// The held amount in the minor unit of the account's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// When the hold will be released automatically. Certain conditions may cause it to
+	// be released before this time.
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
+	// was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
+	// currency.
+	Currency ACHTransferInboundFundsHoldCurrency `json:"currency,required"`
+	// The ID of the Transaction for which funds were held.
+	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
+	// The ID of the Pending Transaction representing the held funds.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// When the hold was released (if it has been released).
+	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	// The status of the hold.
+	Status ACHTransferInboundFundsHoldStatus `json:"status,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_funds_hold`.
+	Type ACHTransferInboundFundsHoldType `json:"type,required"`
+	JSON achTransferInboundFundsHoldJSON `json:"-"`
+}
+
+// achTransferInboundFundsHoldJSON contains the JSON metadata for the struct
+// [ACHTransferInboundFundsHold]
+type achTransferInboundFundsHoldJSON struct {
+	ID                      apijson.Field
+	Amount                  apijson.Field
+	AutomaticallyReleasesAt apijson.Field
+	CreatedAt               apijson.Field
+	Currency                apijson.Field
+	HeldTransactionID       apijson.Field
+	PendingTransactionID    apijson.Field
+	ReleasedAt              apijson.Field
+	Status                  apijson.Field
+	Type                    apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *ACHTransferInboundFundsHold) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferInboundFundsHoldJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
+// currency.
+type ACHTransferInboundFundsHoldCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	ACHTransferInboundFundsHoldCurrencyCad ACHTransferInboundFundsHoldCurrency = "CAD"
+	// Swiss Franc (CHF)
+	ACHTransferInboundFundsHoldCurrencyChf ACHTransferInboundFundsHoldCurrency = "CHF"
+	// Euro (EUR)
+	ACHTransferInboundFundsHoldCurrencyEur ACHTransferInboundFundsHoldCurrency = "EUR"
+	// British Pound (GBP)
+	ACHTransferInboundFundsHoldCurrencyGbp ACHTransferInboundFundsHoldCurrency = "GBP"
+	// Japanese Yen (JPY)
+	ACHTransferInboundFundsHoldCurrencyJpy ACHTransferInboundFundsHoldCurrency = "JPY"
+	// US Dollar (USD)
+	ACHTransferInboundFundsHoldCurrencyUsd ACHTransferInboundFundsHoldCurrency = "USD"
+)
+
+func (r ACHTransferInboundFundsHoldCurrency) IsKnown() bool {
+	switch r {
+	case ACHTransferInboundFundsHoldCurrencyCad, ACHTransferInboundFundsHoldCurrencyChf, ACHTransferInboundFundsHoldCurrencyEur, ACHTransferInboundFundsHoldCurrencyGbp, ACHTransferInboundFundsHoldCurrencyJpy, ACHTransferInboundFundsHoldCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The status of the hold.
+type ACHTransferInboundFundsHoldStatus string
+
+const (
+	// Funds are still being held.
+	ACHTransferInboundFundsHoldStatusHeld ACHTransferInboundFundsHoldStatus = "held"
+	// Funds have been released.
+	ACHTransferInboundFundsHoldStatusComplete ACHTransferInboundFundsHoldStatus = "complete"
+)
+
+func (r ACHTransferInboundFundsHoldStatus) IsKnown() bool {
+	switch r {
+	case ACHTransferInboundFundsHoldStatusHeld, ACHTransferInboundFundsHoldStatusComplete:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_funds_hold`.
+type ACHTransferInboundFundsHoldType string
+
+const (
+	ACHTransferInboundFundsHoldTypeInboundFundsHold ACHTransferInboundFundsHoldType = "inbound_funds_hold"
+)
+
+func (r ACHTransferInboundFundsHoldType) IsKnown() bool {
+	switch r {
+	case ACHTransferInboundFundsHoldTypeInboundFundsHold:
 		return true
 	}
 	return false

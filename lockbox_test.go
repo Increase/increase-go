@@ -80,7 +80,7 @@ func TestLockboxUpdateWithOptionalParams(t *testing.T) {
 		increase.LockboxUpdateParams{
 			Description:   increase.F("x"),
 			RecipientName: increase.F("x"),
-			Status:        increase.F(increase.LockboxUpdateParamsStatusInactive),
+			Status:        increase.F(increase.LockboxUpdateParamsStatusActive),
 		},
 	)
 	if err != nil {

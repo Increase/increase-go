@@ -137,7 +137,7 @@ func TestInboundACHTransferTransferReturn(t *testing.T) {
 		context.TODO(),
 		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
 		increase.InboundACHTransferTransferReturnParams{
-			Reason: increase.F(increase.InboundACHTransferTransferReturnParamsReasonPaymentStopped),
+			Reason: increase.F(increase.InboundACHTransferTransferReturnParamsReasonInsufficientFunds),
 		},
 	)
 	if err != nil {
