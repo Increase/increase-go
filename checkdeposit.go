@@ -114,6 +114,9 @@ type CheckDeposit struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// Increase will sometimes hold the funds for Check Deposits. If funds are held,
+	// this sub-object will contain details of the hold.
+	InboundFundsHold CheckDepositInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
 	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
 	// the identifier of the Inbound Mail Item.
 	InboundMailItemID string `json:"inbound_mail_item_id,required,nullable"`
@@ -144,6 +147,7 @@ type checkDepositJSON struct {
 	Description       apijson.Field
 	FrontImageFileID  apijson.Field
 	IdempotencyKey    apijson.Field
+	InboundFundsHold  apijson.Field
 	InboundMailItemID apijson.Field
 	LockboxID         apijson.Field
 	Status            apijson.Field
@@ -504,6 +508,123 @@ func (r *CheckDepositDepositSubmission) UnmarshalJSON(data []byte) (err error) {
 
 func (r checkDepositDepositSubmissionJSON) RawJSON() string {
 	return r.raw
+}
+
+// Increase will sometimes hold the funds for Check Deposits. If funds are held,
+// this sub-object will contain details of the hold.
+type CheckDepositInboundFundsHold struct {
+	// The Inbound Funds Hold identifier.
+	ID string `json:"id,required"`
+	// The held amount in the minor unit of the account's currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// When the hold will be released automatically. Certain conditions may cause it to
+	// be released before this time.
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
+	// was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
+	// currency.
+	Currency CheckDepositInboundFundsHoldCurrency `json:"currency,required"`
+	// The ID of the Transaction for which funds were held.
+	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
+	// The ID of the Pending Transaction representing the held funds.
+	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// When the hold was released (if it has been released).
+	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	// The status of the hold.
+	Status CheckDepositInboundFundsHoldStatus `json:"status,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `inbound_funds_hold`.
+	Type CheckDepositInboundFundsHoldType `json:"type,required"`
+	JSON checkDepositInboundFundsHoldJSON `json:"-"`
+}
+
+// checkDepositInboundFundsHoldJSON contains the JSON metadata for the struct
+// [CheckDepositInboundFundsHold]
+type checkDepositInboundFundsHoldJSON struct {
+	ID                      apijson.Field
+	Amount                  apijson.Field
+	AutomaticallyReleasesAt apijson.Field
+	CreatedAt               apijson.Field
+	Currency                apijson.Field
+	HeldTransactionID       apijson.Field
+	PendingTransactionID    apijson.Field
+	ReleasedAt              apijson.Field
+	Status                  apijson.Field
+	Type                    apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *CheckDepositInboundFundsHold) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkDepositInboundFundsHoldJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
+// currency.
+type CheckDepositInboundFundsHoldCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	CheckDepositInboundFundsHoldCurrencyCad CheckDepositInboundFundsHoldCurrency = "CAD"
+	// Swiss Franc (CHF)
+	CheckDepositInboundFundsHoldCurrencyChf CheckDepositInboundFundsHoldCurrency = "CHF"
+	// Euro (EUR)
+	CheckDepositInboundFundsHoldCurrencyEur CheckDepositInboundFundsHoldCurrency = "EUR"
+	// British Pound (GBP)
+	CheckDepositInboundFundsHoldCurrencyGbp CheckDepositInboundFundsHoldCurrency = "GBP"
+	// Japanese Yen (JPY)
+	CheckDepositInboundFundsHoldCurrencyJpy CheckDepositInboundFundsHoldCurrency = "JPY"
+	// US Dollar (USD)
+	CheckDepositInboundFundsHoldCurrencyUsd CheckDepositInboundFundsHoldCurrency = "USD"
+)
+
+func (r CheckDepositInboundFundsHoldCurrency) IsKnown() bool {
+	switch r {
+	case CheckDepositInboundFundsHoldCurrencyCad, CheckDepositInboundFundsHoldCurrencyChf, CheckDepositInboundFundsHoldCurrencyEur, CheckDepositInboundFundsHoldCurrencyGbp, CheckDepositInboundFundsHoldCurrencyJpy, CheckDepositInboundFundsHoldCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The status of the hold.
+type CheckDepositInboundFundsHoldStatus string
+
+const (
+	// Funds are still being held.
+	CheckDepositInboundFundsHoldStatusHeld CheckDepositInboundFundsHoldStatus = "held"
+	// Funds have been released.
+	CheckDepositInboundFundsHoldStatusComplete CheckDepositInboundFundsHoldStatus = "complete"
+)
+
+func (r CheckDepositInboundFundsHoldStatus) IsKnown() bool {
+	switch r {
+	case CheckDepositInboundFundsHoldStatusHeld, CheckDepositInboundFundsHoldStatusComplete:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `inbound_funds_hold`.
+type CheckDepositInboundFundsHoldType string
+
+const (
+	CheckDepositInboundFundsHoldTypeInboundFundsHold CheckDepositInboundFundsHoldType = "inbound_funds_hold"
+)
+
+func (r CheckDepositInboundFundsHoldType) IsKnown() bool {
+	switch r {
+	case CheckDepositInboundFundsHoldTypeInboundFundsHold:
+		return true
+	}
+	return false
 }
 
 // The status of the Check Deposit.
