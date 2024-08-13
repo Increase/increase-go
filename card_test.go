@@ -31,9 +31,9 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 		BillingAddress: increase.F(increase.CardNewParamsBillingAddress{
 			City:       increase.F("x"),
 			Line1:      increase.F("x"),
-			Line2:      increase.F("x"),
 			PostalCode: increase.F("x"),
 			State:      increase.F("x"),
+			Line2:      increase.F("x"),
 		}),
 		Description: increase.F("Card for Ian Crease"),
 		DigitalWallet: increase.F(increase.CardNewParamsDigitalWallet{
@@ -93,9 +93,9 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 			BillingAddress: increase.F(increase.CardUpdateParamsBillingAddress{
 				City:       increase.F("x"),
 				Line1:      increase.F("x"),
-				Line2:      increase.F("x"),
 				PostalCode: increase.F("x"),
 				State:      increase.F("x"),
+				Line2:      increase.F("x"),
 			}),
 			Description: increase.F("New description"),
 			DigitalWallet: increase.F(increase.CardUpdateParamsDigitalWallet{

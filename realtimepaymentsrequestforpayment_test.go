@@ -30,8 +30,8 @@ func TestRealTimePaymentsRequestForPaymentNew(t *testing.T) {
 		Amount: increase.F(int64(100)),
 		Debtor: increase.F(increase.RealTimePaymentsRequestForPaymentNewParamsDebtor{
 			Address: increase.F(increase.RealTimePaymentsRequestForPaymentNewParamsDebtorAddress{
-				City:       increase.F("x"),
 				Country:    increase.F("US"),
+				City:       increase.F("x"),
 				PostCode:   increase.F("x"),
 				StreetName: increase.F("Liberty Street"),
 			}),
