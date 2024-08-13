@@ -36,12 +36,12 @@ func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 			Address: increase.F(increase.PhysicalCardNewParamsShipmentAddress{
 				City:        increase.F("New York"),
 				Line1:       increase.F("33 Liberty Street"),
-				Line2:       increase.F("Unit 2"),
-				Line3:       increase.F("x"),
 				Name:        increase.F("Ian Crease"),
-				PhoneNumber: increase.F("x"),
 				PostalCode:  increase.F("10045"),
 				State:       increase.F("NY"),
+				Line2:       increase.F("Unit 2"),
+				Line3:       increase.F("x"),
+				PhoneNumber: increase.F("x"),
 			}),
 			Method: increase.F(increase.PhysicalCardNewParamsShipmentMethodUsps),
 		}),
@@ -94,7 +94,7 @@ func TestPhysicalCardUpdate(t *testing.T) {
 		context.TODO(),
 		"physical_card_ode8duyq5v2ynhjoharl",
 		increase.PhysicalCardUpdateParams{
-			Status: increase.F(increase.PhysicalCardUpdateParamsStatusDisabled),
+			Status: increase.F(increase.PhysicalCardUpdateParamsStatusActive),
 		},
 	)
 	if err != nil {
