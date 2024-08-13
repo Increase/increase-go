@@ -822,7 +822,8 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
 	// The return address to be printed on the check. If omitted this will default to
-	// the address of the Entity of the Account used to make the Check Transfer.
+	// an Increase-owned address that will mark checks as delivery failed and shred
+	// them.
 	ReturnAddress param.Field[CheckTransferNewParamsPhysicalCheckReturnAddress] `json:"return_address"`
 	// The text that will appear as the signature on the check in cursive font. If not
 	// provided, the check will be printed with 'No signature required'.
@@ -855,7 +856,8 @@ func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data [
 }
 
 // The return address to be printed on the check. If omitted this will default to
-// the address of the Entity of the Account used to make the Check Transfer.
+// an Increase-owned address that will mark checks as delivery failed and shred
+// them.
 type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 	// The city of the return address.
 	City param.Field[string] `json:"city,required"`
