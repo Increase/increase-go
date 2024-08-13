@@ -29,7 +29,7 @@ func TestSimulationPhysicalCardAdvanceShipment(t *testing.T) {
 		context.TODO(),
 		"physical_card_ode8duyq5v2ynhjoharl",
 		increase.SimulationPhysicalCardAdvanceShipmentParams{
-			ShipmentStatus: increase.F(increase.SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped),
+			ShipmentStatus: increase.F(increase.SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusPending),
 		},
 	)
 	if err != nil {
