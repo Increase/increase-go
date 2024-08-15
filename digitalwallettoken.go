@@ -145,13 +145,15 @@ const (
 	DigitalWalletTokenTokenRequestorApplePay DigitalWalletTokenTokenRequestor = "apple_pay"
 	// Google Pay
 	DigitalWalletTokenTokenRequestorGooglePay DigitalWalletTokenTokenRequestor = "google_pay"
+	// Samsung Pay
+	DigitalWalletTokenTokenRequestorSamsungPay DigitalWalletTokenTokenRequestor = "samsung_pay"
 	// Unknown
 	DigitalWalletTokenTokenRequestorUnknown DigitalWalletTokenTokenRequestor = "unknown"
 )
 
 func (r DigitalWalletTokenTokenRequestor) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenTokenRequestorApplePay, DigitalWalletTokenTokenRequestorGooglePay, DigitalWalletTokenTokenRequestorUnknown:
+	case DigitalWalletTokenTokenRequestorApplePay, DigitalWalletTokenTokenRequestorGooglePay, DigitalWalletTokenTokenRequestorSamsungPay, DigitalWalletTokenTokenRequestorUnknown:
 		return true
 	}
 	return false
