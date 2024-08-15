@@ -755,13 +755,15 @@ const (
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "apple_pay"
 	// Google Pay
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "google_pay"
+	// Samsung Pay
+	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletSamsungPay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "samsung_pay"
 	// Unknown
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "unknown"
 )
 
 func (r RealTimeDecisionDigitalWalletAuthenticationDigitalWallet) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown:
+	case RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletSamsungPay, RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown:
 		return true
 	}
 	return false
@@ -847,13 +849,15 @@ const (
 	RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "apple_pay"
 	// Google Pay
 	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
+	// Samsung Pay
+	RealTimeDecisionDigitalWalletTokenDigitalWalletSamsungPay RealTimeDecisionDigitalWalletTokenDigitalWallet = "samsung_pay"
 	// Unknown
 	RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown RealTimeDecisionDigitalWalletTokenDigitalWallet = "unknown"
 )
 
 func (r RealTimeDecisionDigitalWalletTokenDigitalWallet) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay, RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay, RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown:
+	case RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay, RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay, RealTimeDecisionDigitalWalletTokenDigitalWalletSamsungPay, RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown:
 		return true
 	}
 	return false
