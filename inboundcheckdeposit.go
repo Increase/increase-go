@@ -252,11 +252,13 @@ const (
 	InboundCheckDepositDepositReturnReasonDuplicatePresentment InboundCheckDepositDepositReturnReason = "duplicate_presentment"
 	// The check was not endorsed.
 	InboundCheckDepositDepositReturnReasonEndorsementMissing InboundCheckDepositDepositReturnReason = "endorsement_missing"
+	// The check was not endorsed by the payee.
+	InboundCheckDepositDepositReturnReasonEndorsementIrregular InboundCheckDepositDepositReturnReason = "endorsement_irregular"
 )
 
 func (r InboundCheckDepositDepositReturnReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositDepositReturnReasonAlteredOrFictitious, InboundCheckDepositDepositReturnReasonNotAuthorized, InboundCheckDepositDepositReturnReasonDuplicatePresentment, InboundCheckDepositDepositReturnReasonEndorsementMissing:
+	case InboundCheckDepositDepositReturnReasonAlteredOrFictitious, InboundCheckDepositDepositReturnReasonNotAuthorized, InboundCheckDepositDepositReturnReasonDuplicatePresentment, InboundCheckDepositDepositReturnReasonEndorsementMissing, InboundCheckDepositDepositReturnReasonEndorsementIrregular:
 		return true
 	}
 	return false
@@ -368,11 +370,13 @@ const (
 	InboundCheckDepositReturnParamsReasonDuplicatePresentment InboundCheckDepositReturnParamsReason = "duplicate_presentment"
 	// The check was not endorsed.
 	InboundCheckDepositReturnParamsReasonEndorsementMissing InboundCheckDepositReturnParamsReason = "endorsement_missing"
+	// The check was not endorsed by the payee.
+	InboundCheckDepositReturnParamsReasonEndorsementIrregular InboundCheckDepositReturnParamsReason = "endorsement_irregular"
 )
 
 func (r InboundCheckDepositReturnParamsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositReturnParamsReasonAlteredOrFictitious, InboundCheckDepositReturnParamsReasonNotAuthorized, InboundCheckDepositReturnParamsReasonDuplicatePresentment, InboundCheckDepositReturnParamsReasonEndorsementMissing:
+	case InboundCheckDepositReturnParamsReasonAlteredOrFictitious, InboundCheckDepositReturnParamsReasonNotAuthorized, InboundCheckDepositReturnParamsReasonDuplicatePresentment, InboundCheckDepositReturnParamsReasonEndorsementMissing, InboundCheckDepositReturnParamsReasonEndorsementIrregular:
 		return true
 	}
 	return false
