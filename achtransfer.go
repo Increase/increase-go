@@ -1363,9 +1363,6 @@ type ACHTransferNewParams struct {
 	// The type of entity that owns the account to which the ACH Transfer is being
 	// sent.
 	DestinationAccountHolder param.Field[ACHTransferNewParamsDestinationAccountHolder] `json:"destination_account_holder"`
-	// The transfer effective date in
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
