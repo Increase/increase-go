@@ -760,6 +760,8 @@ type TransactionSourceCardRefund struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency TransactionSourceCardRefundCurrency `json:"currency,required"`
+	// Interchange assessed as a part of this transaciton.
+	Interchange TransactionSourceCardRefundInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
@@ -798,6 +800,7 @@ type transactionSourceCardRefundJSON struct {
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
+	Interchange          apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
@@ -844,6 +847,65 @@ const (
 func (r TransactionSourceCardRefundCurrency) IsKnown() bool {
 	switch r {
 	case TransactionSourceCardRefundCurrencyCad, TransactionSourceCardRefundCurrencyChf, TransactionSourceCardRefundCurrencyEur, TransactionSourceCardRefundCurrencyGbp, TransactionSourceCardRefundCurrencyJpy, TransactionSourceCardRefundCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Interchange assessed as a part of this transaciton.
+type TransactionSourceCardRefundInterchange struct {
+	// The interchange amount given as a string containing a decimal number. The amount
+	// is a positive number if it is credited to Increase (e.g., settlements) and a
+	// negative number if it is debited (e.g., refunds).
+	Amount string `json:"amount,required"`
+	// The card network specific interchange code.
+	Code string `json:"code,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+	// reimbursement.
+	Currency TransactionSourceCardRefundInterchangeCurrency `json:"currency,required"`
+	JSON     transactionSourceCardRefundInterchangeJSON     `json:"-"`
+}
+
+// transactionSourceCardRefundInterchangeJSON contains the JSON metadata for the
+// struct [TransactionSourceCardRefundInterchange]
+type transactionSourceCardRefundInterchangeJSON struct {
+	Amount      apijson.Field
+	Code        apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardRefundInterchange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardRefundInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+// reimbursement.
+type TransactionSourceCardRefundInterchangeCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	TransactionSourceCardRefundInterchangeCurrencyCad TransactionSourceCardRefundInterchangeCurrency = "CAD"
+	// Swiss Franc (CHF)
+	TransactionSourceCardRefundInterchangeCurrencyChf TransactionSourceCardRefundInterchangeCurrency = "CHF"
+	// Euro (EUR)
+	TransactionSourceCardRefundInterchangeCurrencyEur TransactionSourceCardRefundInterchangeCurrency = "EUR"
+	// British Pound (GBP)
+	TransactionSourceCardRefundInterchangeCurrencyGbp TransactionSourceCardRefundInterchangeCurrency = "GBP"
+	// Japanese Yen (JPY)
+	TransactionSourceCardRefundInterchangeCurrencyJpy TransactionSourceCardRefundInterchangeCurrency = "JPY"
+	// US Dollar (USD)
+	TransactionSourceCardRefundInterchangeCurrencyUsd TransactionSourceCardRefundInterchangeCurrency = "USD"
+)
+
+func (r TransactionSourceCardRefundInterchangeCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundInterchangeCurrencyCad, TransactionSourceCardRefundInterchangeCurrencyChf, TransactionSourceCardRefundInterchangeCurrencyEur, TransactionSourceCardRefundInterchangeCurrencyGbp, TransactionSourceCardRefundInterchangeCurrencyJpy, TransactionSourceCardRefundInterchangeCurrencyUsd:
 		return true
 	}
 	return false
@@ -1623,6 +1685,8 @@ type TransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency TransactionSourceCardSettlementCurrency `json:"currency,required"`
+	// Interchange assessed as a part of this transaciton.
+	Interchange TransactionSourceCardSettlementInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
@@ -1664,6 +1728,7 @@ type transactionSourceCardSettlementJSON struct {
 	CardAuthorization    apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
+	Interchange          apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
@@ -1711,6 +1776,65 @@ const (
 func (r TransactionSourceCardSettlementCurrency) IsKnown() bool {
 	switch r {
 	case TransactionSourceCardSettlementCurrencyCad, TransactionSourceCardSettlementCurrencyChf, TransactionSourceCardSettlementCurrencyEur, TransactionSourceCardSettlementCurrencyGbp, TransactionSourceCardSettlementCurrencyJpy, TransactionSourceCardSettlementCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Interchange assessed as a part of this transaciton.
+type TransactionSourceCardSettlementInterchange struct {
+	// The interchange amount given as a string containing a decimal number. The amount
+	// is a positive number if it is credited to Increase (e.g., settlements) and a
+	// negative number if it is debited (e.g., refunds).
+	Amount string `json:"amount,required"`
+	// The card network specific interchange code.
+	Code string `json:"code,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+	// reimbursement.
+	Currency TransactionSourceCardSettlementInterchangeCurrency `json:"currency,required"`
+	JSON     transactionSourceCardSettlementInterchangeJSON     `json:"-"`
+}
+
+// transactionSourceCardSettlementInterchangeJSON contains the JSON metadata for
+// the struct [TransactionSourceCardSettlementInterchange]
+type transactionSourceCardSettlementInterchangeJSON struct {
+	Amount      apijson.Field
+	Code        apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardSettlementInterchange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardSettlementInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+// reimbursement.
+type TransactionSourceCardSettlementInterchangeCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	TransactionSourceCardSettlementInterchangeCurrencyCad TransactionSourceCardSettlementInterchangeCurrency = "CAD"
+	// Swiss Franc (CHF)
+	TransactionSourceCardSettlementInterchangeCurrencyChf TransactionSourceCardSettlementInterchangeCurrency = "CHF"
+	// Euro (EUR)
+	TransactionSourceCardSettlementInterchangeCurrencyEur TransactionSourceCardSettlementInterchangeCurrency = "EUR"
+	// British Pound (GBP)
+	TransactionSourceCardSettlementInterchangeCurrencyGbp TransactionSourceCardSettlementInterchangeCurrency = "GBP"
+	// Japanese Yen (JPY)
+	TransactionSourceCardSettlementInterchangeCurrencyJpy TransactionSourceCardSettlementInterchangeCurrency = "JPY"
+	// US Dollar (USD)
+	TransactionSourceCardSettlementInterchangeCurrencyUsd TransactionSourceCardSettlementInterchangeCurrency = "USD"
+)
+
+func (r TransactionSourceCardSettlementInterchangeCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementInterchangeCurrencyCad, TransactionSourceCardSettlementInterchangeCurrencyChf, TransactionSourceCardSettlementInterchangeCurrencyEur, TransactionSourceCardSettlementInterchangeCurrencyGbp, TransactionSourceCardSettlementInterchangeCurrencyJpy, TransactionSourceCardSettlementInterchangeCurrencyUsd:
 		return true
 	}
 	return false
