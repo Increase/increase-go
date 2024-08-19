@@ -1731,6 +1731,8 @@ type CardPaymentElementsCardRefund struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency CardPaymentElementsCardRefundCurrency `json:"currency,required"`
+	// Interchange assessed as a part of this transaciton.
+	Interchange CardPaymentElementsCardRefundInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
@@ -1769,6 +1771,7 @@ type cardPaymentElementsCardRefundJSON struct {
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
+	Interchange          apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
@@ -1815,6 +1818,65 @@ const (
 func (r CardPaymentElementsCardRefundCurrency) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardRefundCurrencyCad, CardPaymentElementsCardRefundCurrencyChf, CardPaymentElementsCardRefundCurrencyEur, CardPaymentElementsCardRefundCurrencyGbp, CardPaymentElementsCardRefundCurrencyJpy, CardPaymentElementsCardRefundCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Interchange assessed as a part of this transaciton.
+type CardPaymentElementsCardRefundInterchange struct {
+	// The interchange amount given as a string containing a decimal number. The amount
+	// is a positive number if it is credited to Increase (e.g., settlements) and a
+	// negative number if it is debited (e.g., refunds).
+	Amount string `json:"amount,required"`
+	// The card network specific interchange code.
+	Code string `json:"code,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+	// reimbursement.
+	Currency CardPaymentElementsCardRefundInterchangeCurrency `json:"currency,required"`
+	JSON     cardPaymentElementsCardRefundInterchangeJSON     `json:"-"`
+}
+
+// cardPaymentElementsCardRefundInterchangeJSON contains the JSON metadata for the
+// struct [CardPaymentElementsCardRefundInterchange]
+type cardPaymentElementsCardRefundInterchangeJSON struct {
+	Amount      apijson.Field
+	Code        apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardRefundInterchange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+// reimbursement.
+type CardPaymentElementsCardRefundInterchangeCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	CardPaymentElementsCardRefundInterchangeCurrencyCad CardPaymentElementsCardRefundInterchangeCurrency = "CAD"
+	// Swiss Franc (CHF)
+	CardPaymentElementsCardRefundInterchangeCurrencyChf CardPaymentElementsCardRefundInterchangeCurrency = "CHF"
+	// Euro (EUR)
+	CardPaymentElementsCardRefundInterchangeCurrencyEur CardPaymentElementsCardRefundInterchangeCurrency = "EUR"
+	// British Pound (GBP)
+	CardPaymentElementsCardRefundInterchangeCurrencyGbp CardPaymentElementsCardRefundInterchangeCurrency = "GBP"
+	// Japanese Yen (JPY)
+	CardPaymentElementsCardRefundInterchangeCurrencyJpy CardPaymentElementsCardRefundInterchangeCurrency = "JPY"
+	// US Dollar (USD)
+	CardPaymentElementsCardRefundInterchangeCurrencyUsd CardPaymentElementsCardRefundInterchangeCurrency = "USD"
+)
+
+func (r CardPaymentElementsCardRefundInterchangeCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundInterchangeCurrencyCad, CardPaymentElementsCardRefundInterchangeCurrencyChf, CardPaymentElementsCardRefundInterchangeCurrencyEur, CardPaymentElementsCardRefundInterchangeCurrencyGbp, CardPaymentElementsCardRefundInterchangeCurrencyJpy, CardPaymentElementsCardRefundInterchangeCurrencyUsd:
 		return true
 	}
 	return false
@@ -2673,6 +2735,8 @@ type CardPaymentElementsCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency CardPaymentElementsCardSettlementCurrency `json:"currency,required"`
+	// Interchange assessed as a part of this transaciton.
+	Interchange CardPaymentElementsCardSettlementInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
@@ -2714,6 +2778,7 @@ type cardPaymentElementsCardSettlementJSON struct {
 	CardAuthorization    apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
+	Interchange          apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
@@ -2761,6 +2826,65 @@ const (
 func (r CardPaymentElementsCardSettlementCurrency) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardSettlementCurrencyCad, CardPaymentElementsCardSettlementCurrencyChf, CardPaymentElementsCardSettlementCurrencyEur, CardPaymentElementsCardSettlementCurrencyGbp, CardPaymentElementsCardSettlementCurrencyJpy, CardPaymentElementsCardSettlementCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Interchange assessed as a part of this transaciton.
+type CardPaymentElementsCardSettlementInterchange struct {
+	// The interchange amount given as a string containing a decimal number. The amount
+	// is a positive number if it is credited to Increase (e.g., settlements) and a
+	// negative number if it is debited (e.g., refunds).
+	Amount string `json:"amount,required"`
+	// The card network specific interchange code.
+	Code string `json:"code,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+	// reimbursement.
+	Currency CardPaymentElementsCardSettlementInterchangeCurrency `json:"currency,required"`
+	JSON     cardPaymentElementsCardSettlementInterchangeJSON     `json:"-"`
+}
+
+// cardPaymentElementsCardSettlementInterchangeJSON contains the JSON metadata for
+// the struct [CardPaymentElementsCardSettlementInterchange]
+type cardPaymentElementsCardSettlementInterchangeJSON struct {
+	Amount      apijson.Field
+	Code        apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardSettlementInterchange) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+// reimbursement.
+type CardPaymentElementsCardSettlementInterchangeCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	CardPaymentElementsCardSettlementInterchangeCurrencyCad CardPaymentElementsCardSettlementInterchangeCurrency = "CAD"
+	// Swiss Franc (CHF)
+	CardPaymentElementsCardSettlementInterchangeCurrencyChf CardPaymentElementsCardSettlementInterchangeCurrency = "CHF"
+	// Euro (EUR)
+	CardPaymentElementsCardSettlementInterchangeCurrencyEur CardPaymentElementsCardSettlementInterchangeCurrency = "EUR"
+	// British Pound (GBP)
+	CardPaymentElementsCardSettlementInterchangeCurrencyGbp CardPaymentElementsCardSettlementInterchangeCurrency = "GBP"
+	// Japanese Yen (JPY)
+	CardPaymentElementsCardSettlementInterchangeCurrencyJpy CardPaymentElementsCardSettlementInterchangeCurrency = "JPY"
+	// US Dollar (USD)
+	CardPaymentElementsCardSettlementInterchangeCurrencyUsd CardPaymentElementsCardSettlementInterchangeCurrency = "USD"
+)
+
+func (r CardPaymentElementsCardSettlementInterchangeCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementInterchangeCurrencyCad, CardPaymentElementsCardSettlementInterchangeCurrencyChf, CardPaymentElementsCardSettlementInterchangeCurrencyEur, CardPaymentElementsCardSettlementInterchangeCurrencyGbp, CardPaymentElementsCardSettlementInterchangeCurrencyJpy, CardPaymentElementsCardSettlementInterchangeCurrencyUsd:
 		return true
 	}
 	return false
