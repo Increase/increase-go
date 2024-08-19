@@ -60,7 +60,6 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		CompanyEntryDescription:  increase.F("x"),
 		CompanyName:              increase.F("x"),
 		DestinationAccountHolder: increase.F(increase.ACHTransferNewParamsDestinationAccountHolderBusiness),
-		EffectiveDate:            increase.F(time.Now()),
 		ExternalAccountID:        increase.F("external_account_id"),
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
 		IndividualID:             increase.F("x"),
