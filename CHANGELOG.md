@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.83.0 (2024-08-20)
+
+Full Changelog: [v0.82.0...v0.83.0](https://github.com/Increase/increase-go/compare/v0.82.0...v0.83.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#422](https://github.com/Increase/increase-go/issues/422)) ([9acfb1d](https://github.com/Increase/increase-go/commit/9acfb1db6c693c50a0f64f228180a510605419a0))
+
 ## 0.82.0 (2024-08-19)
 
 Full Changelog: [v0.81.0...v0.82.0](https://github.com/Increase/increase-go/compare/v0.81.0...v0.82.0)
