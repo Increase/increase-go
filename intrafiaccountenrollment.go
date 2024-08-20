@@ -36,7 +36,7 @@ func NewIntrafiAccountEnrollmentService(opts ...option.RequestOption) (r *Intraf
 	return
 }
 
-// Enroll an account in the IntraFi deposit sweep network.
+// Enroll an account in the IntraFi deposit sweep network
 func (r *IntrafiAccountEnrollmentService) New(ctx context.Context, body IntrafiAccountEnrollmentNewParams, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "intrafi_account_enrollments"
@@ -79,7 +79,7 @@ func (r *IntrafiAccountEnrollmentService) ListAutoPaging(ctx context.Context, qu
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Unenroll an account from IntraFi.
+// Unenroll an account from IntraFi
 func (r *IntrafiAccountEnrollmentService) Unenroll(ctx context.Context, intrafiAccountEnrollmentID string, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
 	opts = append(r.Options[:], opts...)
 	if intrafiAccountEnrollmentID == "" {
