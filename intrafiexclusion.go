@@ -57,7 +57,7 @@ func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID st
 	return
 }
 
-// List IntraFi Exclusions.
+// List IntraFi Exclusions
 func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiExclusion], err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
@@ -75,7 +75,7 @@ func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusi
 	return res, nil
 }
 
-// List IntraFi Exclusions.
+// List IntraFi Exclusions
 func (r *IntrafiExclusionService) ListAutoPaging(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[IntrafiExclusion] {
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
