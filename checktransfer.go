@@ -492,21 +492,24 @@ type CheckTransferPhysicalCheck struct {
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
 	// The text that will appear as the signature on the check in cursive font. If
 	// blank, the check will be printed with 'No signature required'.
-	SignatureText string                         `json:"signature_text,required,nullable"`
-	JSON          checkTransferPhysicalCheckJSON `json:"-"`
+	SignatureText string `json:"signature_text,required,nullable"`
+	// Tracking updates relating to the physical check's delivery.
+	TrackingUpdates []CheckTransferPhysicalCheckTrackingUpdate `json:"tracking_updates,required"`
+	JSON            checkTransferPhysicalCheckJSON             `json:"-"`
 }
 
 // checkTransferPhysicalCheckJSON contains the JSON metadata for the struct
 // [CheckTransferPhysicalCheck]
 type checkTransferPhysicalCheckJSON struct {
-	MailingAddress apijson.Field
-	Memo           apijson.Field
-	Note           apijson.Field
-	RecipientName  apijson.Field
-	ReturnAddress  apijson.Field
-	SignatureText  apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	MailingAddress  apijson.Field
+	Memo            apijson.Field
+	Note            apijson.Field
+	RecipientName   apijson.Field
+	ReturnAddress   apijson.Field
+	SignatureText   apijson.Field
+	TrackingUpdates apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
 }
 
 func (r *CheckTransferPhysicalCheck) UnmarshalJSON(data []byte) (err error) {
@@ -591,6 +594,48 @@ func (r *CheckTransferPhysicalCheckReturnAddress) UnmarshalJSON(data []byte) (er
 
 func (r checkTransferPhysicalCheckReturnAddressJSON) RawJSON() string {
 	return r.raw
+}
+
+type CheckTransferPhysicalCheckTrackingUpdate struct {
+	// The type of tracking event.
+	Category CheckTransferPhysicalCheckTrackingUpdatesCategory `json:"category,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the tracking event took place.
+	CreatedAt time.Time                                    `json:"created_at,required" format:"date-time"`
+	JSON      checkTransferPhysicalCheckTrackingUpdateJSON `json:"-"`
+}
+
+// checkTransferPhysicalCheckTrackingUpdateJSON contains the JSON metadata for the
+// struct [CheckTransferPhysicalCheckTrackingUpdate]
+type checkTransferPhysicalCheckTrackingUpdateJSON struct {
+	Category    apijson.Field
+	CreatedAt   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheckTrackingUpdate) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferPhysicalCheckTrackingUpdateJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of tracking event.
+type CheckTransferPhysicalCheckTrackingUpdatesCategory string
+
+const (
+	// Delivery failed and the check was returned to sender.
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender CheckTransferPhysicalCheckTrackingUpdatesCategory = "returned_to_sender"
+)
+
+func (r CheckTransferPhysicalCheckTrackingUpdatesCategory) IsKnown() bool {
+	switch r {
+	case CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender:
+		return true
+	}
+	return false
 }
 
 // The lifecycle status of the transfer.
