@@ -660,6 +660,12 @@ Methods:
 
 - <code title="post /simulations/inbound_check_deposits">client.Simulations.InboundCheckDeposits.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundCheckDepositService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundCheckDepositNewParams">SimulationInboundCheckDepositNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundCheckDeposit">InboundCheckDeposit</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## InboundMailItems
+
+Methods:
+
+- <code title="post /simulations/inbound_mail_items">client.Simulations.InboundMailItems.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundMailItemService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundMailItemNewParams">SimulationInboundMailItemNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundMailItem">InboundMailItem</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## CheckDeposits
 
 Methods:

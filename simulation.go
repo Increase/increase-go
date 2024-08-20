@@ -19,6 +19,7 @@ type SimulationService struct {
 	ACHTransfers                     *SimulationACHTransferService
 	CheckTransfers                   *SimulationCheckTransferService
 	InboundCheckDeposits             *SimulationInboundCheckDepositService
+	InboundMailItems                 *SimulationInboundMailItemService
 	CheckDeposits                    *SimulationCheckDepositService
 	InboundWireTransfers             *SimulationInboundWireTransferService
 	WireTransfers                    *SimulationWireTransferService
@@ -53,6 +54,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.ACHTransfers = NewSimulationACHTransferService(opts...)
 	r.CheckTransfers = NewSimulationCheckTransferService(opts...)
 	r.InboundCheckDeposits = NewSimulationInboundCheckDepositService(opts...)
+	r.InboundMailItems = NewSimulationInboundMailItemService(opts...)
 	r.CheckDeposits = NewSimulationCheckDepositService(opts...)
 	r.InboundWireTransfers = NewSimulationInboundWireTransferService(opts...)
 	r.WireTransfers = NewSimulationWireTransferService(opts...)
