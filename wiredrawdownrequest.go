@@ -95,7 +95,7 @@ type WireDrawdownRequest struct {
 	Currency string `json:"currency,required"`
 	// If the recipient fulfills the drawdown request by sending funds, then this will
 	// be the identifier of the corresponding Transaction.
-	FulfillmentTransactionID string `json:"fulfillment_transaction_id,required,nullable"`
+	FulfillmentInboundWireTransferID string `json:"fulfillment_inbound_wire_transfer_id,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -136,28 +136,28 @@ type WireDrawdownRequest struct {
 // wireDrawdownRequestJSON contains the JSON metadata for the struct
 // [WireDrawdownRequest]
 type wireDrawdownRequestJSON struct {
-	ID                       apijson.Field
-	AccountNumberID          apijson.Field
-	Amount                   apijson.Field
-	Currency                 apijson.Field
-	FulfillmentTransactionID apijson.Field
-	IdempotencyKey           apijson.Field
-	MessageToRecipient       apijson.Field
-	OriginatorAddressLine1   apijson.Field
-	OriginatorAddressLine2   apijson.Field
-	OriginatorAddressLine3   apijson.Field
-	OriginatorName           apijson.Field
-	RecipientAccountNumber   apijson.Field
-	RecipientAddressLine1    apijson.Field
-	RecipientAddressLine2    apijson.Field
-	RecipientAddressLine3    apijson.Field
-	RecipientName            apijson.Field
-	RecipientRoutingNumber   apijson.Field
-	Status                   apijson.Field
-	Submission               apijson.Field
-	Type                     apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	ID                               apijson.Field
+	AccountNumberID                  apijson.Field
+	Amount                           apijson.Field
+	Currency                         apijson.Field
+	FulfillmentInboundWireTransferID apijson.Field
+	IdempotencyKey                   apijson.Field
+	MessageToRecipient               apijson.Field
+	OriginatorAddressLine1           apijson.Field
+	OriginatorAddressLine2           apijson.Field
+	OriginatorAddressLine3           apijson.Field
+	OriginatorName                   apijson.Field
+	RecipientAccountNumber           apijson.Field
+	RecipientAddressLine1            apijson.Field
+	RecipientAddressLine2            apijson.Field
+	RecipientAddressLine3            apijson.Field
+	RecipientName                    apijson.Field
+	RecipientRoutingNumber           apijson.Field
+	Status                           apijson.Field
+	Submission                       apijson.Field
+	Type                             apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
 }
 
 func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
