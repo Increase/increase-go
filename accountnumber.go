@@ -295,7 +295,8 @@ func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
 // Options related to how this Account Number should handle inbound ACH transfers.
 type AccountNumberNewParamsInboundACH struct {
 	// Whether ACH debits are allowed against this Account Number. Note that ACH debits
-	// will be declined if this is `allowed` but the Account Number is not active.
+	// will be declined if this is `allowed` but the Account Number is not active. If
+	// you do not specify this field, the default is `allowed`.
 	DebitStatus param.Field[AccountNumberNewParamsInboundACHDebitStatus] `json:"debit_status,required"`
 }
 
@@ -304,7 +305,8 @@ func (r AccountNumberNewParamsInboundACH) MarshalJSON() (data []byte, err error)
 }
 
 // Whether ACH debits are allowed against this Account Number. Note that ACH debits
-// will be declined if this is `allowed` but the Account Number is not active.
+// will be declined if this is `allowed` but the Account Number is not active. If
+// you do not specify this field, the default is `allowed`.
 type AccountNumberNewParamsInboundACHDebitStatus string
 
 const (
@@ -325,7 +327,8 @@ func (r AccountNumberNewParamsInboundACHDebitStatus) IsKnown() bool {
 // Options related to how this Account Number should handle inbound check
 // withdrawals.
 type AccountNumberNewParamsInboundChecks struct {
-	// How Increase should process checks with this account number printed on them.
+	// How Increase should process checks with this account number printed on them. If
+	// you do not specify this field, the default is `check_transfers_only`.
 	Status param.Field[AccountNumberNewParamsInboundChecksStatus] `json:"status,required"`
 }
 
@@ -333,7 +336,8 @@ func (r AccountNumberNewParamsInboundChecks) MarshalJSON() (data []byte, err err
 	return apijson.MarshalRoot(r)
 }
 
-// How Increase should process checks with this account number printed on them.
+// How Increase should process checks with this account number printed on them. If
+// you do not specify this field, the default is `check_transfers_only`.
 type AccountNumberNewParamsInboundChecksStatus string
 
 const (
