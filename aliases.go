@@ -7,6 +7,14 @@ import (
 )
 
 type Error = apierror.Error
+type ErrorReason = apierror.ErrorReason
+
+const ErrorReasonDeletedCredential = apierror.ErrorReasonDeletedCredential
+const ErrorReasonExpiredCredential = apierror.ErrorReasonExpiredCredential
+const ErrorReasonNoCredential = apierror.ErrorReasonNoCredential
+const ErrorReasonNoHeader = apierror.ErrorReasonNoHeader
+const ErrorReasonWrongEnvironment = apierror.ErrorReasonWrongEnvironment
+
 type ErrorStatus = apierror.ErrorStatus
 
 const ErrorStatus429 = apierror.ErrorStatus429
