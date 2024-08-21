@@ -17,6 +17,7 @@ type Error struct {
 	Detail string `json:"detail,required,nullable"`
 	// All errors related to parsing the request parameters.
 	Errors []interface{} `json:"errors,required"`
+	Reason ErrorReason `json:"reason,required"`
 	ResourceID string      `json:"resource_id,required"`
 	Status     ErrorStatus `json:"status,required"`
 	Title      string      `json:"title,required"`
@@ -32,6 +33,7 @@ type Error struct {
 type errorJSON struct {
 	Detail      apijson.Field
 	Errors      apijson.Field
+	Reason      apijson.Field
 	ResourceID  apijson.Field
 	Status      apijson.Field
 	Title       apijson.Field
@@ -65,6 +67,29 @@ func (r *Error) DumpRequest(body bool) []byte {
 func (r *Error) DumpResponse(body bool) []byte {
 	out, _ := httputil.DumpResponse(r.Response, body)
 	return out
+}
+
+type ErrorReason string
+
+const (
+	// deleted_credential
+	ErrorReasonDeletedCredential ErrorReason = "deleted_credential"
+	// expired_credential
+	ErrorReasonExpiredCredential ErrorReason = "expired_credential"
+	// no_credential
+	ErrorReasonNoCredential ErrorReason = "no_credential"
+	// no_header
+	ErrorReasonNoHeader ErrorReason = "no_header"
+	// wrong_environment
+	ErrorReasonWrongEnvironment ErrorReason = "wrong_environment"
+)
+
+func (r ErrorReason) IsKnown() bool {
+	switch r {
+	case ErrorReasonDeletedCredential, ErrorReasonExpiredCredential, ErrorReasonNoCredential, ErrorReasonNoHeader, ErrorReasonWrongEnvironment:
+		return true
+	}
+	return false
 }
 
 type ErrorStatus int64
