@@ -13,7 +13,7 @@ import (
 	"github.com/increase/increase-go/option"
 )
 
-func TestSimulationInboundMailItemNew(t *testing.T) {
+func TestSimulationInboundMailItemNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,8 +26,9 @@ func TestSimulationInboundMailItemNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.InboundMailItems.New(context.TODO(), increase.SimulationInboundMailItemNewParams{
-		Amount:    increase.F(int64(1000)),
-		LockboxID: increase.F("lockbox_3xt21ok13q19advds4t5"),
+		Amount:         increase.F(int64(1000)),
+		LockboxID:      increase.F("lockbox_3xt21ok13q19advds4t5"),
+		ContentsFileID: increase.F("contents_file_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
