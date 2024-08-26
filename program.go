@@ -79,6 +79,8 @@ func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListPa
 type Program struct {
 	// The Program identifier.
 	ID string `json:"id,required"`
+	// The Bank the Program is with.
+	Bank ProgramBank `json:"bank,required"`
 	// The Program billing account.
 	BillingAccountID string `json:"billing_account_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
@@ -104,6 +106,7 @@ type Program struct {
 // programJSON contains the JSON metadata for the struct [Program]
 type programJSON struct {
 	ID                          apijson.Field
+	Bank                        apijson.Field
 	BillingAccountID            apijson.Field
 	CreatedAt                   apijson.Field
 	DefaultDigitalCardProfileID apijson.Field
@@ -121,6 +124,26 @@ func (r *Program) UnmarshalJSON(data []byte) (err error) {
 
 func (r programJSON) RawJSON() string {
 	return r.raw
+}
+
+// The Bank the Program is with.
+type ProgramBank string
+
+const (
+	// Blue Ridge Bank, N.A.
+	ProgramBankBlueRidgeBank ProgramBank = "blue_ridge_bank"
+	// First Internet Bank of Indiana
+	ProgramBankFirstInternetBank ProgramBank = "first_internet_bank"
+	// Grasshopper Bank
+	ProgramBankGrasshopperBank ProgramBank = "grasshopper_bank"
+)
+
+func (r ProgramBank) IsKnown() bool {
+	switch r {
+	case ProgramBankBlueRidgeBank, ProgramBankFirstInternetBank, ProgramBankGrasshopperBank:
+		return true
+	}
+	return false
 }
 
 // A constant representing the object's type. For this resource it will always be
