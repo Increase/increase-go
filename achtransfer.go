@@ -176,7 +176,7 @@ type ACHTransfer struct {
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// Configuration for how the effective date of the transfer will be set. This
 	// determines same-day vs future-dated settlement timing. If not set, defaults to a
-	// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+	// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
 	// must be set.
 	PreferredEffectiveDate ACHTransferPreferredEffectiveDate `json:"preferred_effective_date,required"`
 	// If your transfer is returned, this will contain details of the return.
@@ -896,13 +896,13 @@ func (r ACHTransferNotificationsOfChangeChangeCode) IsKnown() bool {
 
 // Configuration for how the effective date of the transfer will be set. This
 // determines same-day vs future-dated settlement timing. If not set, defaults to a
-// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
 // must be set.
 type ACHTransferPreferredEffectiveDate struct {
 	// A specific date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format to
 	// use as the effective date when submitting this transfer.
 	Date time.Time `json:"date,required,nullable" format:"date"`
-	// A schedule by which Increase whill choose an effective date for the transfer.
+	// A schedule by which Increase will choose an effective date for the transfer.
 	SettlementSchedule ACHTransferPreferredEffectiveDateSettlementSchedule `json:"settlement_schedule,required,nullable"`
 	JSON               achTransferPreferredEffectiveDateJSON               `json:"-"`
 }
@@ -924,7 +924,7 @@ func (r achTransferPreferredEffectiveDateJSON) RawJSON() string {
 	return r.raw
 }
 
-// A schedule by which Increase whill choose an effective date for the transfer.
+// A schedule by which Increase will choose an effective date for the transfer.
 type ACHTransferPreferredEffectiveDateSettlementSchedule string
 
 const (
@@ -1375,7 +1375,7 @@ type ACHTransferNewParams struct {
 	IndividualName param.Field[string] `json:"individual_name"`
 	// Configuration for how the effective date of the transfer will be set. This
 	// determines same-day vs future-dated settlement timing. If not set, defaults to a
-	// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+	// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
 	// must be set.
 	PreferredEffectiveDate param.Field[ACHTransferNewParamsPreferredEffectiveDate] `json:"preferred_effective_date"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
@@ -1511,13 +1511,13 @@ func (r ACHTransferNewParamsFunding) IsKnown() bool {
 
 // Configuration for how the effective date of the transfer will be set. This
 // determines same-day vs future-dated settlement timing. If not set, defaults to a
-// `settlement_schedule` of `same_day`. If set, exactly one of the child atributes
+// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
 // must be set.
 type ACHTransferNewParamsPreferredEffectiveDate struct {
 	// A specific date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format to
 	// use as the effective date when submitting this transfer.
 	Date param.Field[time.Time] `json:"date" format:"date"`
-	// A schedule by which Increase whill choose an effective date for the transfer.
+	// A schedule by which Increase will choose an effective date for the transfer.
 	SettlementSchedule param.Field[ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule] `json:"settlement_schedule"`
 }
 
@@ -1525,7 +1525,7 @@ func (r ACHTransferNewParamsPreferredEffectiveDate) MarshalJSON() (data []byte, 
 	return apijson.MarshalRoot(r)
 }
 
-// A schedule by which Increase whill choose an effective date for the transfer.
+// A schedule by which Increase will choose an effective date for the transfer.
 type ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule string
 
 const (
