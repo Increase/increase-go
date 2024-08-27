@@ -94,7 +94,7 @@ func (r *IntrafiAccountEnrollmentService) Unenroll(ctx context.Context, intrafiA
 // IntraFi is a network of financial institutions that allows Increase users to
 // sweep funds to multiple banks, in addition to Increase's main bank partners.
 // This enables accounts to become eligible for additional Federal Deposit
-// Insurance Corporation (FDIC) insurance. An Intrafi Account Enrollment object
+// Insurance Corporation (FDIC) insurance. An IntraFi Account Enrollment object
 // represents the status of an account in the network. Sweeping an account to
 // IntraFi doesn't affect funds availability.
 type IntrafiAccountEnrollment struct {
