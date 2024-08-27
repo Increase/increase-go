@@ -354,7 +354,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
-	// The direction descibes the direction the funds will move, either from the
+	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
 	Direction PendingTransactionSourceCardAuthorizationDirection `json:"direction,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
@@ -497,7 +497,7 @@ func (r PendingTransactionSourceCardAuthorizationCurrency) IsKnown() bool {
 	return false
 }
 
-// The direction descibes the direction the funds will move, either from the
+// The direction describes the direction the funds will move, either from the
 // cardholder to the merchant or from the merchant to the cardholder.
 type PendingTransactionSourceCardAuthorizationDirection string
 
