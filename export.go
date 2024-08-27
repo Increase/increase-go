@@ -321,7 +321,7 @@ func (r ExportNewParamsBalanceCsvCreatedAt) MarshalJSON() (data []byte, err erro
 // Options for the created export. Required if `category` is equal to
 // `bookkeeping_account_balance_csv`.
 type ExportNewParamsBookkeepingAccountBalanceCsv struct {
-	// Filter exported Transactions to the specified BookkeepingAccount.
+	// Filter exported Transactions to the specified Bookkeeping Account.
 	BookkeepingAccountID param.Field[string] `json:"bookkeeping_account_id"`
 	// Filter results by time range on the `created_at` attribute.
 	CreatedAt param.Field[ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt] `json:"created_at"`

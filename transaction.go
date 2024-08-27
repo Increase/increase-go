@@ -3041,7 +3041,7 @@ type TransactionSourceInboundACHTransfer struct {
 	OriginatorCompanyID string `json:"originator_company_id,required"`
 	// A name set by the originator to identify themselves.
 	OriginatorCompanyName string `json:"originator_company_name,required"`
-	// The originator's identifier for the transfer receipient.
+	// The originator's identifier for the transfer recipient.
 	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by Increase.
