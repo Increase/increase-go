@@ -2585,6 +2585,23 @@ type CardPaymentElementsCardReversal struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
 	// currency.
 	Currency CardPaymentElementsCardReversalCurrency `json:"currency,required"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+	// ZIP code, where the first 5 and last 4 are separated by a dash.
+	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
 	// The card network used to process this card authorization.
 	Network CardPaymentElementsCardReversalNetwork `json:"network,required"`
 	// Network-specific identifiers for a specific request or transaction.
@@ -2594,6 +2611,8 @@ type CardPaymentElementsCardReversal struct {
 	// The amount of this reversal in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	ReversalAmount int64 `json:"reversal_amount,required"`
+	// Why this reversal was initiated.
+	ReversalReason CardPaymentElementsCardReversalReversalReason `json:"reversal_reason,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_reversal`.
 	Type CardPaymentElementsCardReversalType `json:"type,required"`
@@ -2609,10 +2628,18 @@ type cardPaymentElementsCardReversalJSON struct {
 	ID                         apijson.Field
 	CardAuthorizationID        apijson.Field
 	Currency                   apijson.Field
+	MerchantAcceptorID         apijson.Field
+	MerchantCategoryCode       apijson.Field
+	MerchantCity               apijson.Field
+	MerchantCountry            apijson.Field
+	MerchantDescriptor         apijson.Field
+	MerchantPostalCode         apijson.Field
+	MerchantState              apijson.Field
 	Network                    apijson.Field
 	NetworkIdentifiers         apijson.Field
 	PendingTransactionID       apijson.Field
 	ReversalAmount             apijson.Field
+	ReversalReason             apijson.Field
 	Type                       apijson.Field
 	UpdatedAuthorizationAmount apijson.Field
 	raw                        string
@@ -2701,6 +2728,28 @@ func (r *CardPaymentElementsCardReversalNetworkIdentifiers) UnmarshalJSON(data [
 
 func (r cardPaymentElementsCardReversalNetworkIdentifiersJSON) RawJSON() string {
 	return r.raw
+}
+
+// Why this reversal was initiated.
+type CardPaymentElementsCardReversalReversalReason string
+
+const (
+	// The Card Reversal was initiated at the customer's request.
+	CardPaymentElementsCardReversalReversalReasonReversedByCustomer CardPaymentElementsCardReversalReversalReason = "reversed_by_customer"
+	// The Card Reversal was initiated by the network or acquirer.
+	CardPaymentElementsCardReversalReversalReasonReversedByNetworkOrAcquirer CardPaymentElementsCardReversalReversalReason = "reversed_by_network_or_acquirer"
+	// The Card Reversal was initiated by the point of sale device.
+	CardPaymentElementsCardReversalReversalReasonReversedByPointOfSale CardPaymentElementsCardReversalReversalReason = "reversed_by_point_of_sale"
+	// The Card Reversal was a partial reversal, for any reason.
+	CardPaymentElementsCardReversalReversalReasonPartialReversal CardPaymentElementsCardReversalReversalReason = "partial_reversal"
+)
+
+func (r CardPaymentElementsCardReversalReversalReason) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardReversalReversalReasonReversedByCustomer, CardPaymentElementsCardReversalReversalReasonReversedByNetworkOrAcquirer, CardPaymentElementsCardReversalReversalReasonReversedByPointOfSale, CardPaymentElementsCardReversalReversalReasonPartialReversal:
+		return true
+	}
+	return false
 }
 
 // A constant representing the object's type. For this resource it will always be
