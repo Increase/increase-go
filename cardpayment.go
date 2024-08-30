@@ -2590,7 +2590,7 @@ type CardPaymentElementsCardReversal struct {
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
