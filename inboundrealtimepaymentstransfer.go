@@ -175,11 +175,13 @@ const (
 	InboundRealTimePaymentsTransferStatusTimedOut InboundRealTimePaymentsTransferStatus = "timed_out"
 	// The transfer has been received successfully and is confirmed.
 	InboundRealTimePaymentsTransferStatusConfirmed InboundRealTimePaymentsTransferStatus = "confirmed"
+	// The transfer has been declined.
+	InboundRealTimePaymentsTransferStatusDeclined InboundRealTimePaymentsTransferStatus = "declined"
 )
 
 func (r InboundRealTimePaymentsTransferStatus) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferStatusPendingConfirmation, InboundRealTimePaymentsTransferStatusTimedOut, InboundRealTimePaymentsTransferStatusConfirmed:
+	case InboundRealTimePaymentsTransferStatusPendingConfirmation, InboundRealTimePaymentsTransferStatusTimedOut, InboundRealTimePaymentsTransferStatusConfirmed, InboundRealTimePaymentsTransferStatusDeclined:
 		return true
 	}
 	return false
