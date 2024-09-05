@@ -83,6 +83,8 @@ type InboundRealTimePaymentsTransfer struct {
 	AccountNumberID string `json:"account_number_id,required"`
 	// The amount in USD cents.
 	Amount int64 `json:"amount,required"`
+	// If your transfer is confirmed, this will contain details of the confirmation.
+	Confirmation InboundRealTimePaymentsTransferConfirmation `json:"confirmation,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -97,6 +99,8 @@ type InboundRealTimePaymentsTransfer struct {
 	DebtorName string `json:"debtor_name,required"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	// If your transfer is declined, this will contain details of the decline.
+	Decline InboundRealTimePaymentsTransferDecline `json:"decline,required,nullable"`
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The lifecycle status of the transfer.
@@ -116,12 +120,14 @@ type inboundRealTimePaymentsTransferJSON struct {
 	AccountID                 apijson.Field
 	AccountNumberID           apijson.Field
 	Amount                    apijson.Field
+	Confirmation              apijson.Field
 	CreatedAt                 apijson.Field
 	CreditorName              apijson.Field
 	Currency                  apijson.Field
 	DebtorAccountNumber       apijson.Field
 	DebtorName                apijson.Field
 	DebtorRoutingNumber       apijson.Field
+	Decline                   apijson.Field
 	RemittanceInformation     apijson.Field
 	Status                    apijson.Field
 	TransactionIdentification apijson.Field
@@ -135,6 +141,32 @@ func (r *InboundRealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error)
 }
 
 func (r inboundRealTimePaymentsTransferJSON) RawJSON() string {
+	return r.raw
+}
+
+// If your transfer is confirmed, this will contain details of the confirmation.
+type InboundRealTimePaymentsTransferConfirmation struct {
+	// The time at which the transfer was confirmed.
+	ConfirmedAt time.Time `json:"confirmed_at,required" format:"date-time"`
+	// The id of the transaction for the confirmed transfer.
+	TransactionID string                                          `json:"transaction_id,required"`
+	JSON          inboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
+}
+
+// inboundRealTimePaymentsTransferConfirmationJSON contains the JSON metadata for
+// the struct [InboundRealTimePaymentsTransferConfirmation]
+type inboundRealTimePaymentsTransferConfirmationJSON struct {
+	ConfirmedAt   apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferConfirmationJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -160,6 +192,61 @@ const (
 func (r InboundRealTimePaymentsTransferCurrency) IsKnown() bool {
 	switch r {
 	case InboundRealTimePaymentsTransferCurrencyCad, InboundRealTimePaymentsTransferCurrencyChf, InboundRealTimePaymentsTransferCurrencyEur, InboundRealTimePaymentsTransferCurrencyGbp, InboundRealTimePaymentsTransferCurrencyJpy, InboundRealTimePaymentsTransferCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// If your transfer is declined, this will contain details of the decline.
+type InboundRealTimePaymentsTransferDecline struct {
+	// The time at which the transfer was declined.
+	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
+	// The id of the transaction for the declined transfer.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	// The reason for the transfer decline.
+	Reason InboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
+	JSON   inboundRealTimePaymentsTransferDeclineJSON   `json:"-"`
+}
+
+// inboundRealTimePaymentsTransferDeclineJSON contains the JSON metadata for the
+// struct [InboundRealTimePaymentsTransferDecline]
+type inboundRealTimePaymentsTransferDeclineJSON struct {
+	DeclinedAt            apijson.Field
+	DeclinedTransactionID apijson.Field
+	Reason                apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason for the transfer decline.
+type InboundRealTimePaymentsTransferDeclineReason string
+
+const (
+	// The account number is canceled.
+	InboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled InboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	// The account number is disabled.
+	InboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled InboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	// Your account is restricted.
+	InboundRealTimePaymentsTransferDeclineReasonAccountRestricted InboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	// Your account is inactive.
+	InboundRealTimePaymentsTransferDeclineReasonGroupLocked InboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	// The account's entity is not active.
+	InboundRealTimePaymentsTransferDeclineReasonEntityNotActive InboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	// Your account is not enabled to receive Real-Time Payments transfers.
+	InboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled InboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
+)
+
+func (r InboundRealTimePaymentsTransferDeclineReason) IsKnown() bool {
+	switch r {
+	case InboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled, InboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled, InboundRealTimePaymentsTransferDeclineReasonAccountRestricted, InboundRealTimePaymentsTransferDeclineReasonGroupLocked, InboundRealTimePaymentsTransferDeclineReasonEntityNotActive, InboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled:
 		return true
 	}
 	return false
