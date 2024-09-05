@@ -34,62 +34,11 @@ func NewSimulationInboundRealTimePaymentsTransferService(opts ...option.RequestO
 
 // Simulates an inbound Real-Time Payments transfer to your account. Real-Time
 // Payments are a beta feature.
-func (r *SimulationInboundRealTimePaymentsTransferService) New(ctx context.Context, body SimulationInboundRealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *SimulationInboundRealTimePaymentsTransferNewResponse, err error) {
+func (r *SimulationInboundRealTimePaymentsTransferService) New(ctx context.Context, body SimulationInboundRealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *InboundRealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_real_time_payments_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
-}
-
-// The results of an inbound Real-Time Payments Transfer simulation.
-type SimulationInboundRealTimePaymentsTransferNewResponse struct {
-	// If the Real-Time Payments Transfer attempt fails, this will contain the
-	// resulting [Declined Transaction](#declined-transactions) object. The Declined
-	// Transaction's `source` will be of
-	// `category: inbound_real_time_payments_transfer_decline`.
-	DeclinedTransaction DeclinedTransaction `json:"declined_transaction,required,nullable"`
-	// If the Real-Time Payments Transfer attempt succeeds, this will contain the
-	// resulting [Transaction](#transactions) object. The Transaction's `source` will
-	// be of `category: inbound_real_time_payments_transfer_confirmation`.
-	Transaction Transaction `json:"transaction,required,nullable"`
-	// A constant representing the object's type. For this resource it will always be
-	// `inbound_real_time_payments_transfer_simulation_result`.
-	Type SimulationInboundRealTimePaymentsTransferNewResponseType `json:"type,required"`
-	JSON simulationInboundRealTimePaymentsTransferNewResponseJSON `json:"-"`
-}
-
-// simulationInboundRealTimePaymentsTransferNewResponseJSON contains the JSON
-// metadata for the struct [SimulationInboundRealTimePaymentsTransferNewResponse]
-type simulationInboundRealTimePaymentsTransferNewResponseJSON struct {
-	DeclinedTransaction apijson.Field
-	Transaction         apijson.Field
-	Type                apijson.Field
-	raw                 string
-	ExtraFields         map[string]apijson.Field
-}
-
-func (r *SimulationInboundRealTimePaymentsTransferNewResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r simulationInboundRealTimePaymentsTransferNewResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-// A constant representing the object's type. For this resource it will always be
-// `inbound_real_time_payments_transfer_simulation_result`.
-type SimulationInboundRealTimePaymentsTransferNewResponseType string
-
-const (
-	SimulationInboundRealTimePaymentsTransferNewResponseTypeInboundRealTimePaymentsTransferSimulationResult SimulationInboundRealTimePaymentsTransferNewResponseType = "inbound_real_time_payments_transfer_simulation_result"
-)
-
-func (r SimulationInboundRealTimePaymentsTransferNewResponseType) IsKnown() bool {
-	switch r {
-	case SimulationInboundRealTimePaymentsTransferNewResponseTypeInboundRealTimePaymentsTransferSimulationResult:
-		return true
-	}
-	return false
 }
 
 type SimulationInboundRealTimePaymentsTransferNewParams struct {
