@@ -698,13 +698,9 @@ Methods:
 
 ## InboundRealTimePaymentsTransfers
 
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundRealTimePaymentsTransferNewResponse">SimulationInboundRealTimePaymentsTransferNewResponse</a>
-
 Methods:
 
-- <code title="post /simulations/inbound_real_time_payments_transfers">client.Simulations.InboundRealTimePaymentsTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundRealTimePaymentsTransferService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundRealTimePaymentsTransferNewParams">SimulationInboundRealTimePaymentsTransferNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundRealTimePaymentsTransferNewResponse">SimulationInboundRealTimePaymentsTransferNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /simulations/inbound_real_time_payments_transfers">client.Simulations.InboundRealTimePaymentsTransfers.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundRealTimePaymentsTransferService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#SimulationInboundRealTimePaymentsTransferNewParams">SimulationInboundRealTimePaymentsTransferNewParams</a>) (<a href="https://pkg.go.dev/github.com/increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/increase/increase-go#InboundRealTimePaymentsTransfer">InboundRealTimePaymentsTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## InboundFundsHolds
 
