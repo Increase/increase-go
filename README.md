@@ -1,6 +1,6 @@
 # Increase Go API Library
 
-<a href="https://pkg.go.dev/github.com/increase/increase-go"><img src="https://pkg.go.dev/badge/github.com/increase/increase-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/Increase/increase-go"><img src="https://pkg.go.dev/badge/github.com/Increase/increase-go.svg" alt="Go Reference"></a>
 
 The Increase Go library provides convenient access to [the Increase REST
 API](https://increase.com/documentation) from applications written in Go. The full API of this library can be found in [api.md](api.md).
@@ -11,7 +11,7 @@ API](https://increase.com/documentation) from applications written in Go. The fu
 
 ```go
 import (
-	"github.com/increase/increase-go" // imported as increase
+	"github.com/Increase/increase-go" // imported as increase
 )
 ```
 
@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/increase/increase-go@v0.96.0'
+go get -u 'github.com/Increase/increase-go@v0.96.0'
 ```
 
 <!-- x-release-please-end -->
@@ -42,8 +42,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/increase/increase-go"
-	"github.com/increase/increase-go/option"
+	"github.com/Increase/increase-go"
+	"github.com/Increase/increase-go/option"
 )
 
 func main() {
@@ -156,7 +156,7 @@ client.Accounts.New(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/increase/increase-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/Increase/increase-go/option).
 
 ### Pagination
 
@@ -396,4 +396,4 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/increase/increase-go/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Increase/increase-go/issues) with questions, bugs, or suggestions.

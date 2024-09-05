@@ -1,4 +1,4 @@
-module github.com/increase/increase-go
+module github.com/Increase/increase-go
 
 go 1.21
 
