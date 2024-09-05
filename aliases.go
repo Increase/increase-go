@@ -3,7 +3,7 @@
 package increase
 
 import (
-	"github.com/increase/increase-go/internal/apierror"
+	"github.com/Increase/increase-go/internal/apierror"
 )
 
 type Error = apierror.Error

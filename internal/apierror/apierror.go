@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/increase/increase-go/internal/apijson"
+	"github.com/Increase/increase-go/internal/apijson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is
