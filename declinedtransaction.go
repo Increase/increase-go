@@ -1052,6 +1052,8 @@ type DeclinedTransactionSourceCheckDepositRejection struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
 	Currency DeclinedTransactionSourceCheckDepositRejectionCurrency `json:"currency,required"`
+	// The identifier of the associated declined transaction.
+	DeclinedTransactionID string `json:"declined_transaction_id,required"`
 	// Why the check deposit was rejected.
 	Reason DeclinedTransactionSourceCheckDepositRejectionReason `json:"reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -1063,13 +1065,14 @@ type DeclinedTransactionSourceCheckDepositRejection struct {
 // declinedTransactionSourceCheckDepositRejectionJSON contains the JSON metadata
 // for the struct [DeclinedTransactionSourceCheckDepositRejection]
 type declinedTransactionSourceCheckDepositRejectionJSON struct {
-	Amount         apijson.Field
-	CheckDepositID apijson.Field
-	Currency       apijson.Field
-	Reason         apijson.Field
-	RejectedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	Amount                apijson.Field
+	CheckDepositID        apijson.Field
+	Currency              apijson.Field
+	DeclinedTransactionID apijson.Field
+	Reason                apijson.Field
+	RejectedAt            apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCheckDepositRejection) UnmarshalJSON(data []byte) (err error) {
