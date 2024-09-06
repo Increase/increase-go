@@ -238,6 +238,10 @@ type TransactionSource struct {
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
 	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
+	// An Inbound Real-Time Payments Transfer Decline object. This field will be
+	// present in the JSON response if and only if `category` is equal to
+	// `inbound_real_time_payments_transfer_decline`.
+	InboundRealTimePaymentsTransferDecline TransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`.
 	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
@@ -286,6 +290,7 @@ type transactionSourceJSON struct {
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
+	InboundRealTimePaymentsTransferDecline      apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
@@ -2650,6 +2655,9 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
+	// `inbound_real_time_payments_transfer_decline` object.
+	TransactionSourceCategoryInboundRealTimePaymentsTransferDecline TransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	TransactionSourceCategoryInboundWireReversal TransactionSourceCategory = "inbound_wire_reversal"
 	// Inbound Wire Transfer Intention: details will be under the
@@ -2679,7 +2687,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3192,8 +3200,10 @@ type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string                                                           `json:"transaction_identification,required"`
-	JSON                      transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
+	TransactionIdentification string `json:"transaction_identification,required"`
+	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
+	TransferID string                                                           `json:"transfer_id,required"`
+	JSON       transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
 // transactionSourceInboundRealTimePaymentsTransferConfirmationJSON contains the
@@ -3208,6 +3218,7 @@ type transactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
 	DebtorRoutingNumber       apijson.Field
 	RemittanceInformation     apijson.Field
 	TransactionIdentification apijson.Field
+	TransferID                apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
@@ -3242,6 +3253,116 @@ const (
 func (r TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) IsKnown() bool {
 	switch r {
 	case TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// An Inbound Real-Time Payments Transfer Decline object. This field will be
+// present in the JSON response if and only if `category` is equal to
+// `inbound_real_time_payments_transfer_decline`.
+type TransactionSourceInboundRealTimePaymentsTransferDecline struct {
+	// The declined amount in the minor unit of the destination account currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The name the sender of the transfer specified as the recipient of the transfer.
+	CreditorName string `json:"creditor_name,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+	// transfer's currency. This will always be "USD" for a Real-Time Payments
+	// transfer.
+	Currency TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
+	// The account number of the account that sent the transfer.
+	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The name provided by the sender of the transfer.
+	DebtorName string `json:"debtor_name,required"`
+	// The routing number of the account that sent the transfer.
+	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	// Why the transfer was declined.
+	Reason TransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
+	// Additional information included with the transfer.
+	RemittanceInformation string `json:"remittance_information,required,nullable"`
+	// The Real-Time Payments network identification of the declined transfer.
+	TransactionIdentification string `json:"transaction_identification,required"`
+	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
+	TransferID string                                                      `json:"transfer_id,required"`
+	JSON       transactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
+}
+
+// transactionSourceInboundRealTimePaymentsTransferDeclineJSON contains the JSON
+// metadata for the struct
+// [TransactionSourceInboundRealTimePaymentsTransferDecline]
+type transactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
+	Amount                    apijson.Field
+	CreditorName              apijson.Field
+	Currency                  apijson.Field
+	DebtorAccountNumber       apijson.Field
+	DebtorName                apijson.Field
+	DebtorRoutingNumber       apijson.Field
+	Reason                    apijson.Field
+	RemittanceInformation     apijson.Field
+	TransactionIdentification apijson.Field
+	TransferID                apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceInboundRealTimePaymentsTransferDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
+// transfer's currency. This will always be "USD" for a Real-Time Payments
+// transfer.
+type TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
+	// Swiss Franc (CHF)
+	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
+	// Euro (EUR)
+	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
+	// British Pound (GBP)
+	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
+	// Japanese Yen (JPY)
+	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
+	// US Dollar (USD)
+	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
+)
+
+func (r TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad, TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf, TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur, TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp, TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy, TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// Why the transfer was declined.
+type TransactionSourceInboundRealTimePaymentsTransferDeclineReason string
+
+const (
+	// The account number is canceled.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	// The account number is disabled.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	// Your account is restricted.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	// Your account is inactive.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	// The account's entity is not active.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
+	// Your account is not enabled to receive Real-Time Payments transfers.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
+)
+
+func (r TransactionSourceInboundRealTimePaymentsTransferDeclineReason) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled, TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled, TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted, TransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked, TransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive, TransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled:
 		return true
 	}
 	return false
@@ -3800,6 +3921,9 @@ const (
 	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
 	// `inbound_real_time_payments_transfer_confirmation` object.
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
+	// Inbound Real-Time Payments Transfer Decline: details will be under the
+	// `inbound_real_time_payments_transfer_decline` object.
+	TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_decline"
 	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
 	TransactionListParamsCategoryInInboundWireReversal TransactionListParamsCategoryIn = "inbound_wire_reversal"
 	// Inbound Wire Transfer Intention: details will be under the
@@ -3829,7 +3953,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
