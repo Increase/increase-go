@@ -1168,8 +1168,10 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// Additional information included with the transfer.
 	RemittanceInformation string `json:"remittance_information,required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
-	TransactionIdentification string                                                              `json:"transaction_identification,required"`
-	JSON                      declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
+	TransactionIdentification string `json:"transaction_identification,required"`
+	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
+	TransferID string                                                              `json:"transfer_id,required"`
+	JSON       declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON contains the
@@ -1185,6 +1187,7 @@ type declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct 
 	Reason                    apijson.Field
 	RemittanceInformation     apijson.Field
 	TransactionIdentification apijson.Field
+	TransferID                apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
