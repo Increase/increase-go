@@ -308,28 +308,12 @@ const (
 	DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled DeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
 	// The transaction would cause an Increase limit to be exceeded.
 	DeclinedTransactionSourceACHDeclineReasonBreachesLimit DeclinedTransactionSourceACHDeclineReason = "breaches_limit"
-	// A credit was refused. This is a reasonable default reason for decline of
-	// credits.
-	DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver DeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	// A rare return reason. The return this message refers to was a duplicate.
-	DeclinedTransactionSourceACHDeclineReasonDuplicateReturn DeclinedTransactionSourceACHDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	DeclinedTransactionSourceACHDeclineReasonEntityNotActive DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	// There was an error with one of the required fields.
-	DeclinedTransactionSourceACHDeclineReasonFieldError DeclinedTransactionSourceACHDeclineReason = "field_error"
 	// Your account is inactive.
 	DeclinedTransactionSourceACHDeclineReasonGroupLocked DeclinedTransactionSourceACHDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	DeclinedTransactionSourceACHDeclineReasonInsufficientFunds DeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	// A rare return reason. The return this message refers to was misrouted.
-	DeclinedTransactionSourceACHDeclineReasonMisroutedReturn DeclinedTransactionSourceACHDeclineReason = "misrouted_return"
-	// The originating financial institution made a mistake and this return corrects
-	// it.
-	DeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit DeclinedTransactionSourceACHDeclineReason = "return_of_erroneous_or_reversing_debit"
-	// The account number that was debited does not exist.
-	DeclinedTransactionSourceACHDeclineReasonNoACHRoute DeclinedTransactionSourceACHDeclineReason = "no_ach_route"
-	// The originating financial institution asked for this transfer to be returned.
-	DeclinedTransactionSourceACHDeclineReasonOriginatorRequest DeclinedTransactionSourceACHDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
 	// Your integration declined this transfer via the API.
@@ -338,7 +322,7 @@ const (
 
 func (r DeclinedTransactionSourceACHDeclineReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, DeclinedTransactionSourceACHDeclineReasonBreachesLimit, DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver, DeclinedTransactionSourceACHDeclineReasonDuplicateReturn, DeclinedTransactionSourceACHDeclineReasonEntityNotActive, DeclinedTransactionSourceACHDeclineReasonFieldError, DeclinedTransactionSourceACHDeclineReasonGroupLocked, DeclinedTransactionSourceACHDeclineReasonInsufficientFunds, DeclinedTransactionSourceACHDeclineReasonMisroutedReturn, DeclinedTransactionSourceACHDeclineReasonReturnOfErroneousOrReversingDebit, DeclinedTransactionSourceACHDeclineReasonNoACHRoute, DeclinedTransactionSourceACHDeclineReasonOriginatorRequest, DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceACHDeclineReasonUserInitiated:
+	case DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled, DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled, DeclinedTransactionSourceACHDeclineReasonBreachesLimit, DeclinedTransactionSourceACHDeclineReasonEntityNotActive, DeclinedTransactionSourceACHDeclineReasonGroupLocked, DeclinedTransactionSourceACHDeclineReasonInsufficientFunds, DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceACHDeclineReasonUserInitiated:
 		return true
 	}
 	return false
