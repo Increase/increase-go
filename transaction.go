@@ -254,6 +254,9 @@ type TransactionSource struct {
 	// An Internal Source object. This field will be present in the JSON response if
 	// and only if `category` is equal to `internal_source`.
 	InternalSource TransactionSourceInternalSource `json:"internal_source,required,nullable"`
+	// If the category of this Transaction source is equal to `other`, this field will
+	// contain an empty object, otherwise it will contain null.
+	Other interface{} `json:"other,required,nullable"`
 	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`.
@@ -295,6 +298,7 @@ type transactionSourceJSON struct {
 	InboundWireTransfer                         apijson.Field
 	InterestPayment                             apijson.Field
 	InternalSource                              apijson.Field
+	Other                                       apijson.Field
 	RealTimePaymentsTransferAcknowledgement     apijson.Field
 	SampleFunds                                 apijson.Field
 	WireTransferIntention                       apijson.Field

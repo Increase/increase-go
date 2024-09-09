@@ -214,6 +214,9 @@ type PendingTransactionSource struct {
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
+	// If the category of this Transaction source is equal to `other`, this field will
+	// contain an empty object, otherwise it will contain null.
+	Other interface{} `json:"other,required,nullable"`
 	// A Real-Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
@@ -234,6 +237,7 @@ type pendingTransactionSourceJSON struct {
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
 	InboundFundsHold                    apijson.Field
+	Other                               apijson.Field
 	RealTimePaymentsTransferInstruction apijson.Field
 	WireTransferInstruction             apijson.Field
 	raw                                 string
