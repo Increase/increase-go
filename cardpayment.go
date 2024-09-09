@@ -154,8 +154,11 @@ type CardPaymentElement struct {
 	Category CardPaymentElementsCategory `json:"category,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the card payment element was created.
-	CreatedAt time.Time              `json:"created_at,required" format:"date-time"`
-	JSON      cardPaymentElementJSON `json:"-"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// If the category of this Transaction source is equal to `other`, this field will
+	// contain an empty object, otherwise it will contain null.
+	Other interface{}            `json:"other,required,nullable"`
+	JSON  cardPaymentElementJSON `json:"-"`
 }
 
 // cardPaymentElementJSON contains the JSON metadata for the struct
@@ -172,6 +175,7 @@ type cardPaymentElementJSON struct {
 	CardValidation              apijson.Field
 	Category                    apijson.Field
 	CreatedAt                   apijson.Field
+	Other                       apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }

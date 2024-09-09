@@ -207,6 +207,9 @@ type DeclinedTransactionSource struct {
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
+	// If the category of this Transaction source is equal to `other`, this field will
+	// contain an empty object, otherwise it will contain null.
+	Other interface{} `json:"other,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
@@ -222,6 +225,7 @@ type declinedTransactionSourceJSON struct {
 	CheckDecline                           apijson.Field
 	CheckDepositRejection                  apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
+	Other                                  apijson.Field
 	WireDecline                            apijson.Field
 	raw                                    string
 	ExtraFields                            map[string]apijson.Field
