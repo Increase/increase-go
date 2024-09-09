@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/increase/increase-go"
-	"github.com/increase/increase-go/option"
+	"github.com/Increase/increase-go"
+	"github.com/Increase/increase-go/option"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/increase/increase-go"
+	"github.com/Increase/increase-go"
 )
 
 func main() {

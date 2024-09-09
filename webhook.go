@@ -3,7 +3,7 @@
 package increase
 
 import (
-	"github.com/increase/increase-go/option"
+	"github.com/Increase/increase-go/option"
 )
 
 // WebhookService contains methods and other services that help with interacting
