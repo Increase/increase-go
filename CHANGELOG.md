@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.101.1 (2024-09-09)
+
+Full Changelog: [v0.101.0...v0.101.1](https://github.com/Increase/increase-go/compare/v0.101.0...v0.101.1)
+
+### Bug Fixes
+
+* casing in imports ([64c2d9c](https://github.com/Increase/increase-go/commit/64c2d9c4715482154ec181b502e919ea192360ef))
+
 ## 0.101.0 (2024-09-09)
 
 Full Changelog: [v0.100.0...v0.101.0](https://github.com/Increase/increase-go/compare/v0.100.0...v0.101.0)
