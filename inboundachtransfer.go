@@ -360,28 +360,12 @@ const (
 	InboundACHTransferDeclineReasonACHRouteDisabled InboundACHTransferDeclineReason = "ach_route_disabled"
 	// The transaction would cause an Increase limit to be exceeded.
 	InboundACHTransferDeclineReasonBreachesLimit InboundACHTransferDeclineReason = "breaches_limit"
-	// A credit was refused. This is a reasonable default reason for decline of
-	// credits.
-	InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver InboundACHTransferDeclineReason = "credit_entry_refused_by_receiver"
-	// A rare return reason. The return this message refers to was a duplicate.
-	InboundACHTransferDeclineReasonDuplicateReturn InboundACHTransferDeclineReason = "duplicate_return"
 	// The account's entity is not active.
 	InboundACHTransferDeclineReasonEntityNotActive InboundACHTransferDeclineReason = "entity_not_active"
-	// There was an error with one of the required fields.
-	InboundACHTransferDeclineReasonFieldError InboundACHTransferDeclineReason = "field_error"
 	// Your account is inactive.
 	InboundACHTransferDeclineReasonGroupLocked InboundACHTransferDeclineReason = "group_locked"
 	// Your account contains insufficient funds.
 	InboundACHTransferDeclineReasonInsufficientFunds InboundACHTransferDeclineReason = "insufficient_funds"
-	// A rare return reason. The return this message refers to was misrouted.
-	InboundACHTransferDeclineReasonMisroutedReturn InboundACHTransferDeclineReason = "misrouted_return"
-	// The originating financial institution made a mistake and this return corrects
-	// it.
-	InboundACHTransferDeclineReasonReturnOfErroneousOrReversingDebit InboundACHTransferDeclineReason = "return_of_erroneous_or_reversing_debit"
-	// The account number that was debited does not exist.
-	InboundACHTransferDeclineReasonNoACHRoute InboundACHTransferDeclineReason = "no_ach_route"
-	// The originating financial institution asked for this transfer to be returned.
-	InboundACHTransferDeclineReasonOriginatorRequest InboundACHTransferDeclineReason = "originator_request"
 	// The transaction is not allowed per Increase's terms.
 	InboundACHTransferDeclineReasonTransactionNotAllowed InboundACHTransferDeclineReason = "transaction_not_allowed"
 	// Your integration declined this transfer via the API.
@@ -390,7 +374,7 @@ const (
 
 func (r InboundACHTransferDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateReturn, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonFieldError, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonMisroutedReturn, InboundACHTransferDeclineReasonReturnOfErroneousOrReversingDebit, InboundACHTransferDeclineReasonNoACHRoute, InboundACHTransferDeclineReasonOriginatorRequest, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated:
+	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated:
 		return true
 	}
 	return false
