@@ -258,6 +258,8 @@ type InboundRealTimePaymentsTransferStatus string
 const (
 	// The transfer is pending confirmation.
 	InboundRealTimePaymentsTransferStatusPendingConfirmation InboundRealTimePaymentsTransferStatus = "pending_confirmation"
+	// The transfer is pending confirmation.
+	InboundRealTimePaymentsTransferStatusPendingConfirming InboundRealTimePaymentsTransferStatus = "pending_confirming"
 	// The transfer was not responded to in time.
 	InboundRealTimePaymentsTransferStatusTimedOut InboundRealTimePaymentsTransferStatus = "timed_out"
 	// The transfer has been received successfully and is confirmed.
@@ -268,7 +270,7 @@ const (
 
 func (r InboundRealTimePaymentsTransferStatus) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferStatusPendingConfirmation, InboundRealTimePaymentsTransferStatusTimedOut, InboundRealTimePaymentsTransferStatusConfirmed, InboundRealTimePaymentsTransferStatusDeclined:
+	case InboundRealTimePaymentsTransferStatusPendingConfirmation, InboundRealTimePaymentsTransferStatusPendingConfirming, InboundRealTimePaymentsTransferStatusTimedOut, InboundRealTimePaymentsTransferStatusConfirmed, InboundRealTimePaymentsTransferStatusDeclined:
 		return true
 	}
 	return false
