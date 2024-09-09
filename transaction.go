@@ -267,9 +267,6 @@ type TransactionSource struct {
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`.
 	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,required,nullable"`
-	// A Wire Transfer Rejection object. This field will be present in the JSON
-	// response if and only if `category` is equal to `wire_transfer_rejection`.
-	WireTransferRejection TransactionSourceWireTransferRejection `json:"wire_transfer_rejection,required,nullable"`
 	JSON                  transactionSourceJSON                  `json:"-"`
 }
 
@@ -302,7 +299,6 @@ type transactionSourceJSON struct {
 	RealTimePaymentsTransferAcknowledgement     apijson.Field
 	SampleFunds                                 apijson.Field
 	WireTransferIntention                       apijson.Field
-	WireTransferRejection                       apijson.Field
 	raw                                         string
 	ExtraFields                                 map[string]apijson.Field
 }
@@ -2682,16 +2678,13 @@ const (
 	// Wire Transfer Intention: details will be under the `wire_transfer_intention`
 	// object.
 	TransactionSourceCategoryWireTransferIntention TransactionSourceCategory = "wire_transfer_intention"
-	// Wire Transfer Rejection: details will be under the `wire_transfer_rejection`
-	// object.
-	TransactionSourceCategoryWireTransferRejection TransactionSourceCategory = "wire_transfer_rejection"
 	// The Transaction was made for an undocumented or deprecated reason.
 	TransactionSourceCategoryOther TransactionSourceCategory = "other"
 )
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryWireTransferRejection, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3798,30 +3791,6 @@ func (r transactionSourceWireTransferIntentionJSON) RawJSON() string {
 	return r.raw
 }
 
-// A Wire Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `wire_transfer_rejection`.
-type TransactionSourceWireTransferRejection struct {
-	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string                                     `json:"transfer_id,required"`
-	JSON       transactionSourceWireTransferRejectionJSON `json:"-"`
-}
-
-// transactionSourceWireTransferRejectionJSON contains the JSON metadata for the
-// struct [TransactionSourceWireTransferRejection]
-type transactionSourceWireTransferRejectionJSON struct {
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionSourceWireTransferRejection) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r transactionSourceWireTransferRejectionJSON) RawJSON() string {
-	return r.raw
-}
-
 // A constant representing the object's type. For this resource it will always be
 // `transaction`.
 type TransactionType string
@@ -3948,16 +3917,13 @@ const (
 	// Wire Transfer Intention: details will be under the `wire_transfer_intention`
 	// object.
 	TransactionListParamsCategoryInWireTransferIntention TransactionListParamsCategoryIn = "wire_transfer_intention"
-	// Wire Transfer Rejection: details will be under the `wire_transfer_rejection`
-	// object.
-	TransactionListParamsCategoryInWireTransferRejection TransactionListParamsCategoryIn = "wire_transfer_rejection"
 	// The Transaction was made for an undocumented or deprecated reason.
 	TransactionListParamsCategoryInOther TransactionListParamsCategoryIn = "other"
 )
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInWireTransferRejection, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
