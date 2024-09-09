@@ -258,7 +258,7 @@ type InboundRealTimePaymentsTransferStatus string
 const (
 	// The transfer is pending confirmation.
 	InboundRealTimePaymentsTransferStatusPendingConfirmation InboundRealTimePaymentsTransferStatus = "pending_confirmation"
-	// Your webhook failed to respond to the transfer in time.
+	// The transfer was not responded to in time.
 	InboundRealTimePaymentsTransferStatusTimedOut InboundRealTimePaymentsTransferStatus = "timed_out"
 	// The transfer has been received successfully and is confirmed.
 	InboundRealTimePaymentsTransferStatusConfirmed InboundRealTimePaymentsTransferStatus = "confirmed"
