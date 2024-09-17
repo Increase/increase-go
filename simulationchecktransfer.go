@@ -32,8 +32,9 @@ func NewSimulationCheckTransferService(opts ...option.RequestOption) (r *Simulat
 }
 
 // Simulates the mailing of a [Check Transfer](#check-transfers), which happens
-// once per weekday in production but can be sped up in sandbox. This transfer must
-// first have a `status` of `pending_approval` or `pending_submission`.
+// periodically throughout the day in production but can be sped up in sandbox.
+// This transfer must first have a `status` of `pending_approval` or
+// `pending_submission`.
 func (r *SimulationCheckTransferService) Mail(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	if checkTransferID == "" {
