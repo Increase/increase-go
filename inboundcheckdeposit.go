@@ -276,11 +276,13 @@ const (
 	InboundCheckDepositStatusDeclined InboundCheckDepositStatus = "declined"
 	// The Inbound Check Deposit was returned.
 	InboundCheckDepositStatusReturned InboundCheckDepositStatus = "returned"
+	// The Inbound Check Deposit requires attention from an Increase operator.
+	InboundCheckDepositStatusRequiresAttention InboundCheckDepositStatus = "requires_attention"
 )
 
 func (r InboundCheckDepositStatus) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositStatusPending, InboundCheckDepositStatusAccepted, InboundCheckDepositStatusDeclined, InboundCheckDepositStatusReturned:
+	case InboundCheckDepositStatusPending, InboundCheckDepositStatusAccepted, InboundCheckDepositStatusDeclined, InboundCheckDepositStatusReturned, InboundCheckDepositStatusRequiresAttention:
 		return true
 	}
 	return false
