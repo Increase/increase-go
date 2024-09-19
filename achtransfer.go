@@ -1218,6 +1218,8 @@ type ACHTransferStatus string
 const (
 	// The transfer is pending approval.
 	ACHTransferStatusPendingApproval ACHTransferStatus = "pending_approval"
+	// The transfer belongs to a Transfer Session that is pending confirmation.
+	ACHTransferStatusPendingTransferSessionConfirmation ACHTransferStatus = "pending_transfer_session_confirmation"
 	// The transfer has been canceled.
 	ACHTransferStatusCanceled ACHTransferStatus = "canceled"
 	// The transfer is pending review by Increase.
@@ -1236,7 +1238,7 @@ const (
 
 func (r ACHTransferStatus) IsKnown() bool {
 	switch r {
-	case ACHTransferStatusPendingApproval, ACHTransferStatusCanceled, ACHTransferStatusPendingReviewing, ACHTransferStatusPendingSubmission, ACHTransferStatusSubmitted, ACHTransferStatusReturned, ACHTransferStatusRequiresAttention, ACHTransferStatusRejected:
+	case ACHTransferStatusPendingApproval, ACHTransferStatusPendingTransferSessionConfirmation, ACHTransferStatusCanceled, ACHTransferStatusPendingReviewing, ACHTransferStatusPendingSubmission, ACHTransferStatusSubmitted, ACHTransferStatusReturned, ACHTransferStatusRequiresAttention, ACHTransferStatusRejected:
 		return true
 	}
 	return false
