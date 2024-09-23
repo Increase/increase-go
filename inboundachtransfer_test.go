@@ -99,7 +99,7 @@ func TestInboundACHTransferNewNotificationOfChangeWithOptionalParams(t *testing.
 	}
 }
 
-func TestInboundACHTransferDecline(t *testing.T) {
+func TestInboundACHTransferDeclineWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -111,7 +111,13 @@ func TestInboundACHTransferDecline(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.InboundACHTransfers.Decline(context.TODO(), "inbound_ach_transfer_tdrwqr3fq9gnnq49odev")
+	_, err := client.InboundACHTransfers.Decline(
+		context.TODO(),
+		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
+		increase.InboundACHTransferDeclineParams{
+			Reason: increase.F(increase.InboundACHTransferDeclineParamsReasonInsufficientFunds),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

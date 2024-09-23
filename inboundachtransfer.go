@@ -85,14 +85,14 @@ func (r *InboundACHTransferService) NewNotificationOfChange(ctx context.Context,
 }
 
 // Decline an Inbound ACH Transfer
-func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTransferID string, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
+func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTransferID string, body InboundACHTransferDeclineParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
 		return
 	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/decline", inboundACHTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -364,17 +364,36 @@ const (
 	InboundACHTransferDeclineReasonEntityNotActive InboundACHTransferDeclineReason = "entity_not_active"
 	// Your account is inactive.
 	InboundACHTransferDeclineReasonGroupLocked InboundACHTransferDeclineReason = "group_locked"
-	// Your account contains insufficient funds.
-	InboundACHTransferDeclineReasonInsufficientFunds InboundACHTransferDeclineReason = "insufficient_funds"
 	// The transaction is not allowed per Increase's terms.
 	InboundACHTransferDeclineReasonTransactionNotAllowed InboundACHTransferDeclineReason = "transaction_not_allowed"
 	// Your integration declined this transfer via the API.
 	InboundACHTransferDeclineReasonUserInitiated InboundACHTransferDeclineReason = "user_initiated"
+	// Your account contains insufficient funds.
+	InboundACHTransferDeclineReasonInsufficientFunds InboundACHTransferDeclineReason = "insufficient_funds"
+	// The originating financial institution asked for this transfer to be returned.
+	// The receiving bank is complying with the request.
+	InboundACHTransferDeclineReasonReturnedPerOdfiRequest InboundACHTransferDeclineReason = "returned_per_odfi_request"
+	// The customer no longer authorizes this transaction.
+	InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer InboundACHTransferDeclineReason = "authorization_revoked_by_customer"
+	// The customer asked for the payment to be stopped.
+	InboundACHTransferDeclineReasonPaymentStopped InboundACHTransferDeclineReason = "payment_stopped"
+	// The customer advises that the debit was unauthorized.
+	InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferDeclineReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The payee is deceased.
+	InboundACHTransferDeclineReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferDeclineReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	// The account holder is deceased.
+	InboundACHTransferDeclineReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferDeclineReason = "beneficiary_or_account_holder_deceased"
+	// The customer refused a credit entry.
+	InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver InboundACHTransferDeclineReason = "credit_entry_refused_by_receiver"
+	// The account holder identified this transaction as a duplicate.
+	InboundACHTransferDeclineReasonDuplicateEntry InboundACHTransferDeclineReason = "duplicate_entry"
+	// The corporate customer no longer authorizes this transaction.
+	InboundACHTransferDeclineReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferDeclineReason = "corporate_customer_advised_not_authorized"
 )
 
 func (r InboundACHTransferDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated:
+	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonReturnedPerOdfiRequest, InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer, InboundACHTransferDeclineReasonPaymentStopped, InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferDeclineReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferDeclineReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateEntry, InboundACHTransferDeclineReasonCorporateCustomerAdvisedNotAuthorized:
 		return true
 	}
 	return false
@@ -962,6 +981,61 @@ type InboundACHTransferNewNotificationOfChangeParams struct {
 
 func (r InboundACHTransferNewNotificationOfChangeParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+type InboundACHTransferDeclineParams struct {
+	// The reason why this transfer will be returned. If this parameter is unset, the
+	// return codes will be `payment_stopped` for debits and
+	// `credit_entry_refused_by_receiver` for credits.
+	Reason param.Field[InboundACHTransferDeclineParamsReason] `json:"reason"`
+}
+
+func (r InboundACHTransferDeclineParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The reason why this transfer will be returned. If this parameter is unset, the
+// return codes will be `payment_stopped` for debits and
+// `credit_entry_refused_by_receiver` for credits.
+type InboundACHTransferDeclineParamsReason string
+
+const (
+	// The customer's account has insufficient funds. This reason is only allowed for
+	// debits. The Nacha return code is R01.
+	InboundACHTransferDeclineParamsReasonInsufficientFunds InboundACHTransferDeclineParamsReason = "insufficient_funds"
+	// The originating financial institution asked for this transfer to be returned.
+	// The receiving bank is complying with the request. The Nacha return code is R06.
+	InboundACHTransferDeclineParamsReasonReturnedPerOdfiRequest InboundACHTransferDeclineParamsReason = "returned_per_odfi_request"
+	// The customer no longer authorizes this transaction. The Nacha return code is
+	// R07.
+	InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer InboundACHTransferDeclineParamsReason = "authorization_revoked_by_customer"
+	// The customer asked for the payment to be stopped. This reason is only allowed
+	// for debits. The Nacha return code is R08.
+	InboundACHTransferDeclineParamsReasonPaymentStopped InboundACHTransferDeclineParamsReason = "payment_stopped"
+	// The customer advises that the debit was unauthorized. The Nacha return code is
+	// R10.
+	InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferDeclineParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	// The payee is deceased. The Nacha return code is R14.
+	InboundACHTransferDeclineParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferDeclineParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
+	// The account holder is deceased. The Nacha return code is R15.
+	InboundACHTransferDeclineParamsReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferDeclineParamsReason = "beneficiary_or_account_holder_deceased"
+	// The customer refused a credit entry. This reason is only allowed for credits.
+	// The Nacha return code is R23.
+	InboundACHTransferDeclineParamsReasonCreditEntryRefusedByReceiver InboundACHTransferDeclineParamsReason = "credit_entry_refused_by_receiver"
+	// The account holder identified this transaction as a duplicate. The Nacha return
+	// code is R24.
+	InboundACHTransferDeclineParamsReasonDuplicateEntry InboundACHTransferDeclineParamsReason = "duplicate_entry"
+	// The corporate customer no longer authorizes this transaction. The Nacha return
+	// code is R29.
+	InboundACHTransferDeclineParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferDeclineParamsReason = "corporate_customer_advised_not_authorized"
+)
+
+func (r InboundACHTransferDeclineParamsReason) IsKnown() bool {
+	switch r {
+	case InboundACHTransferDeclineParamsReasonInsufficientFunds, InboundACHTransferDeclineParamsReasonReturnedPerOdfiRequest, InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer, InboundACHTransferDeclineParamsReasonPaymentStopped, InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferDeclineParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferDeclineParamsReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferDeclineParamsReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineParamsReasonDuplicateEntry, InboundACHTransferDeclineParamsReasonCorporateCustomerAdvisedNotAuthorized:
+		return true
+	}
+	return false
 }
 
 type InboundACHTransferTransferReturnParams struct {
