@@ -14,7 +14,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestCardDisputeNew(t *testing.T) {
+func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -29,6 +29,7 @@ func TestCardDisputeNew(t *testing.T) {
 	_, err := client.CardDisputes.New(context.TODO(), increase.CardDisputeNewParams{
 		DisputedTransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"),
 		Explanation:           increase.F("Unauthorized recurring transaction."),
+		Amount:                increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error

@@ -88,6 +88,8 @@ type CardDispute struct {
 	// If the Card Dispute's status is `accepted`, this will contain details of the
 	// successful dispute.
 	Acceptance CardDisputeAcceptance `json:"acceptance,required,nullable"`
+	// The amount of the dispute, if provided, or the transaction amount otherwise.
+	Amount int64 `json:"amount,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -120,6 +122,7 @@ type CardDispute struct {
 type cardDisputeJSON struct {
 	ID                    apijson.Field
 	Acceptance            apijson.Field
+	Amount                apijson.Field
 	CreatedAt             apijson.Field
 	DisputedTransactionID apijson.Field
 	Explanation           apijson.Field
@@ -314,6 +317,11 @@ type CardDisputeNewParams struct {
 	DisputedTransactionID param.Field[string] `json:"disputed_transaction_id,required"`
 	// Why you are disputing this Transaction.
 	Explanation param.Field[string] `json:"explanation,required"`
+	// The monetary amount of the part of the transaction that is being disputed. This
+	// is optional and will default to the full amount of the transaction if not
+	// provided. If provided, the amount must be less than or equal to the amount of
+	// the transaction.
+	Amount param.Field[int64] `json:"amount"`
 }
 
 func (r CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
