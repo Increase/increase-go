@@ -88,8 +88,6 @@ type InboundMailItem struct {
 	RecipientName string `json:"recipient_name,required,nullable"`
 	// If the mail item has been rejected, why it was rejected.
 	RejectionReason InboundMailItemRejectionReason `json:"rejection_reason,required,nullable"`
-	// The return address as written on the mail item.
-	ReturnAddress InboundMailItemReturnAddress `json:"return_address,required,nullable"`
 	// If the mail item has been processed.
 	Status InboundMailItemStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -106,7 +104,6 @@ type inboundMailItemJSON struct {
 	LockboxID       apijson.Field
 	RecipientName   apijson.Field
 	RejectionReason apijson.Field
-	ReturnAddress   apijson.Field
 	Status          apijson.Field
 	Type            apijson.Field
 	raw             string
@@ -139,44 +136,6 @@ func (r InboundMailItemRejectionReason) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// The return address as written on the mail item.
-type InboundMailItemReturnAddress struct {
-	// The return address city.
-	City string `json:"city,required,nullable"`
-	// The return address line1.
-	Line1 string `json:"line1,required,nullable"`
-	// The return address line2.
-	Line2 string `json:"line2,required,nullable"`
-	// The return address name.
-	Name string `json:"name,required,nullable"`
-	// The return address postal code.
-	PostalCode string `json:"postal_code,required,nullable"`
-	// The return address state.
-	State string                           `json:"state,required,nullable"`
-	JSON  inboundMailItemReturnAddressJSON `json:"-"`
-}
-
-// inboundMailItemReturnAddressJSON contains the JSON metadata for the struct
-// [InboundMailItemReturnAddress]
-type inboundMailItemReturnAddressJSON struct {
-	City        apijson.Field
-	Line1       apijson.Field
-	Line2       apijson.Field
-	Name        apijson.Field
-	PostalCode  apijson.Field
-	State       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundMailItemReturnAddress) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundMailItemReturnAddressJSON) RawJSON() string {
-	return r.raw
 }
 
 // If the mail item has been processed.
