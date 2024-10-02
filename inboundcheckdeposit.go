@@ -109,6 +109,9 @@ type InboundCheckDeposit struct {
 	AccountID string `json:"account_id,required"`
 	// The Account Number the check is being deposited against.
 	AccountNumberID string `json:"account_number_id,required,nullable"`
+	// If the deposit or the return was adjusted by the sending institution, this will
+	// contain details of the adjustments.
+	Adjustments []InboundCheckDepositAdjustment `json:"adjustments,required"`
 	// The deposited amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -158,6 +161,7 @@ type inboundCheckDepositJSON struct {
 	AcceptedAt                      apijson.Field
 	AccountID                       apijson.Field
 	AccountNumberID                 apijson.Field
+	Adjustments                     apijson.Field
 	Amount                          apijson.Field
 	BackImageFileID                 apijson.Field
 	BankOfFirstDepositRoutingNumber apijson.Field
@@ -182,6 +186,54 @@ func (r *InboundCheckDeposit) UnmarshalJSON(data []byte) (err error) {
 
 func (r inboundCheckDepositJSON) RawJSON() string {
 	return r.raw
+}
+
+type InboundCheckDepositAdjustment struct {
+	// The time at which the return adjustment was received.
+	AdjustedAt time.Time `json:"adjusted_at,required" format:"date-time"`
+	// The amount of the adjustment.
+	Amount int64 `json:"amount,required"`
+	// The reason for the adjustment.
+	Reason InboundCheckDepositAdjustmentsReason `json:"reason,required"`
+	// The id of the transaction for the adjustment.
+	TransactionID string                            `json:"transaction_id,required"`
+	JSON          inboundCheckDepositAdjustmentJSON `json:"-"`
+}
+
+// inboundCheckDepositAdjustmentJSON contains the JSON metadata for the struct
+// [InboundCheckDepositAdjustment]
+type inboundCheckDepositAdjustmentJSON struct {
+	AdjustedAt    apijson.Field
+	Amount        apijson.Field
+	Reason        apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *InboundCheckDepositAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundCheckDepositAdjustmentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason for the adjustment.
+type InboundCheckDepositAdjustmentsReason string
+
+const (
+	// The return was initiated too late and the receiving institution has responded
+	// with a Late Return Claim.
+	InboundCheckDepositAdjustmentsReasonLateReturn InboundCheckDepositAdjustmentsReason = "late_return"
+)
+
+func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
+	switch r {
+	case InboundCheckDepositAdjustmentsReasonLateReturn:
+		return true
+	}
+	return false
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
