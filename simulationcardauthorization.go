@@ -100,6 +100,9 @@ type SimulationCardAuthorizationNewParams struct {
 	Amount param.Field[int64] `json:"amount,required"`
 	// The identifier of the Card to be authorized.
 	CardID param.Field[string] `json:"card_id"`
+	// Forces a card decline with a specific reason. No real time decision will be
+	// sent.
+	DeclineReason param.Field[SimulationCardAuthorizationNewParamsDeclineReason] `json:"decline_reason"`
 	// The identifier of the Digital Wallet Token to be authorized.
 	DigitalWalletTokenID param.Field[string] `json:"digital_wallet_token_id"`
 	// The direction describes the direction the funds will move, either from the
@@ -128,6 +131,54 @@ type SimulationCardAuthorizationNewParams struct {
 
 func (r SimulationCardAuthorizationNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Forces a card decline with a specific reason. No real time decision will be
+// sent.
+type SimulationCardAuthorizationNewParamsDeclineReason string
+
+const (
+	// The Card was not active.
+	SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive SimulationCardAuthorizationNewParamsDeclineReason = "card_not_active"
+	// The Physical Card was not active.
+	SimulationCardAuthorizationNewParamsDeclineReasonPhysicalCardNotActive SimulationCardAuthorizationNewParamsDeclineReason = "physical_card_not_active"
+	// The account's entity was not active.
+	SimulationCardAuthorizationNewParamsDeclineReasonEntityNotActive SimulationCardAuthorizationNewParamsDeclineReason = "entity_not_active"
+	// The account was inactive.
+	SimulationCardAuthorizationNewParamsDeclineReasonGroupLocked SimulationCardAuthorizationNewParamsDeclineReason = "group_locked"
+	// The Card's Account did not have a sufficient available balance.
+	SimulationCardAuthorizationNewParamsDeclineReasonInsufficientFunds SimulationCardAuthorizationNewParamsDeclineReason = "insufficient_funds"
+	// The given CVV2 did not match the card's value.
+	SimulationCardAuthorizationNewParamsDeclineReasonCvv2Mismatch SimulationCardAuthorizationNewParamsDeclineReason = "cvv2_mismatch"
+	// The given expiration date did not match the card's value. Only applies when a
+	// CVV2 is present.
+	SimulationCardAuthorizationNewParamsDeclineReasonCardExpirationMismatch SimulationCardAuthorizationNewParamsDeclineReason = "card_expiration_mismatch"
+	// The attempted card transaction is not allowed per Increase's terms.
+	SimulationCardAuthorizationNewParamsDeclineReasonTransactionNotAllowed SimulationCardAuthorizationNewParamsDeclineReason = "transaction_not_allowed"
+	// The transaction was blocked by a Limit.
+	SimulationCardAuthorizationNewParamsDeclineReasonBreachesLimit SimulationCardAuthorizationNewParamsDeclineReason = "breaches_limit"
+	// Your application declined the transaction via webhook.
+	SimulationCardAuthorizationNewParamsDeclineReasonWebhookDeclined SimulationCardAuthorizationNewParamsDeclineReason = "webhook_declined"
+	// Your application webhook did not respond without the required timeout.
+	SimulationCardAuthorizationNewParamsDeclineReasonWebhookTimedOut SimulationCardAuthorizationNewParamsDeclineReason = "webhook_timed_out"
+	// Declined by stand-in processing.
+	SimulationCardAuthorizationNewParamsDeclineReasonDeclinedByStandInProcessing SimulationCardAuthorizationNewParamsDeclineReason = "declined_by_stand_in_processing"
+	// The card read had an invalid CVV, dCVV, or authorization request cryptogram.
+	SimulationCardAuthorizationNewParamsDeclineReasonInvalidPhysicalCard SimulationCardAuthorizationNewParamsDeclineReason = "invalid_physical_card"
+	// The original card authorization for this incremental authorization does not
+	// exist.
+	SimulationCardAuthorizationNewParamsDeclineReasonMissingOriginalAuthorization SimulationCardAuthorizationNewParamsDeclineReason = "missing_original_authorization"
+	// The transaction was suspected to be fraudulent. Please reach out to
+	// support@increase.com for more information.
+	SimulationCardAuthorizationNewParamsDeclineReasonSuspectedFraud SimulationCardAuthorizationNewParamsDeclineReason = "suspected_fraud"
+)
+
+func (r SimulationCardAuthorizationNewParamsDeclineReason) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive, SimulationCardAuthorizationNewParamsDeclineReasonPhysicalCardNotActive, SimulationCardAuthorizationNewParamsDeclineReasonEntityNotActive, SimulationCardAuthorizationNewParamsDeclineReasonGroupLocked, SimulationCardAuthorizationNewParamsDeclineReasonInsufficientFunds, SimulationCardAuthorizationNewParamsDeclineReasonCvv2Mismatch, SimulationCardAuthorizationNewParamsDeclineReasonCardExpirationMismatch, SimulationCardAuthorizationNewParamsDeclineReasonTransactionNotAllowed, SimulationCardAuthorizationNewParamsDeclineReasonBreachesLimit, SimulationCardAuthorizationNewParamsDeclineReasonWebhookDeclined, SimulationCardAuthorizationNewParamsDeclineReasonWebhookTimedOut, SimulationCardAuthorizationNewParamsDeclineReasonDeclinedByStandInProcessing, SimulationCardAuthorizationNewParamsDeclineReasonInvalidPhysicalCard, SimulationCardAuthorizationNewParamsDeclineReasonMissingOriginalAuthorization, SimulationCardAuthorizationNewParamsDeclineReasonSuspectedFraud:
+		return true
+	}
+	return false
 }
 
 // The direction describes the direction the funds will move, either from the
