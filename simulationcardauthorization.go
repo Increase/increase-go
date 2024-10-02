@@ -102,6 +102,9 @@ type SimulationCardAuthorizationNewParams struct {
 	CardID param.Field[string] `json:"card_id"`
 	// The identifier of the Digital Wallet Token to be authorized.
 	DigitalWalletTokenID param.Field[string] `json:"digital_wallet_token_id"`
+	// The direction describes the direction the funds will move, either from the
+	// cardholder to the merchant or from the merchant to the cardholder.
+	Direction param.Field[SimulationCardAuthorizationNewParamsDirection] `json:"direction"`
 	// The identifier of the Event Subscription to use. If provided, will override the
 	// default real time event subscription. Because you can only create one real time
 	// decision event subscription, you can use this field to route events to any
@@ -125,4 +128,24 @@ type SimulationCardAuthorizationNewParams struct {
 
 func (r SimulationCardAuthorizationNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The direction describes the direction the funds will move, either from the
+// cardholder to the merchant or from the merchant to the cardholder.
+type SimulationCardAuthorizationNewParamsDirection string
+
+const (
+	// A regular card authorization where funds are debited from the cardholder.
+	SimulationCardAuthorizationNewParamsDirectionSettlement SimulationCardAuthorizationNewParamsDirection = "settlement"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	SimulationCardAuthorizationNewParamsDirectionRefund SimulationCardAuthorizationNewParamsDirection = "refund"
+)
+
+func (r SimulationCardAuthorizationNewParamsDirection) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsDirectionSettlement, SimulationCardAuthorizationNewParamsDirectionRefund:
+		return true
+	}
+	return false
 }
