@@ -28,6 +28,7 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 	_, err := client.Simulations.CardAuthorizations.New(context.TODO(), increase.SimulationCardAuthorizationNewParams{
 		Amount:               increase.F(int64(1000)),
 		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
+		DeclineReason:        increase.F(increase.SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive),
 		DigitalWalletTokenID: increase.F("digital_wallet_token_id"),
 		Direction:            increase.F(increase.SimulationCardAuthorizationNewParamsDirectionSettlement),
 		EventSubscriptionID:  increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
