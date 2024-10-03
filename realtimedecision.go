@@ -122,6 +122,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The direction describes the direction the funds will move, either from the
+	// cardholder to the merchant or from the merchant to the cardholder.
+	Direction RealTimeDecisionCardAuthorizationDirection `json:"direction,required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
@@ -182,6 +185,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	CardID                apijson.Field
 	Decision              apijson.Field
 	DigitalWalletTokenID  apijson.Field
+	Direction             apijson.Field
 	MerchantAcceptorID    apijson.Field
 	MerchantCategoryCode  apijson.Field
 	MerchantCity          apijson.Field
@@ -226,6 +230,26 @@ const (
 func (r RealTimeDecisionCardAuthorizationDecision) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardAuthorizationDecisionApprove, RealTimeDecisionCardAuthorizationDecisionDecline:
+		return true
+	}
+	return false
+}
+
+// The direction describes the direction the funds will move, either from the
+// cardholder to the merchant or from the merchant to the cardholder.
+type RealTimeDecisionCardAuthorizationDirection string
+
+const (
+	// A regular card authorization where funds are debited from the cardholder.
+	RealTimeDecisionCardAuthorizationDirectionSettlement RealTimeDecisionCardAuthorizationDirection = "settlement"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	RealTimeDecisionCardAuthorizationDirectionRefund RealTimeDecisionCardAuthorizationDirection = "refund"
+)
+
+func (r RealTimeDecisionCardAuthorizationDirection) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationDirectionSettlement, RealTimeDecisionCardAuthorizationDirectionRefund:
 		return true
 	}
 	return false
