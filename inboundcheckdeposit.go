@@ -226,11 +226,14 @@ const (
 	// The return was initiated too late and the receiving institution has responded
 	// with a Late Return Claim.
 	InboundCheckDepositAdjustmentsReasonLateReturn InboundCheckDepositAdjustmentsReason = "late_return"
+	// The check was deposited to the wrong payee and the depositing institution has
+	// reimbursed the funds with a Wrong Payee Credit.
+	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositAdjustmentsReasonLateReturn:
+	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit:
 		return true
 	}
 	return false
