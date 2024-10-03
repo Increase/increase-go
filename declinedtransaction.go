@@ -384,6 +384,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The direction describes the direction the funds will move, either from the
+	// cardholder to the merchant or from the merchant to the cardholder.
+	Direction DeclinedTransactionSourceCardDeclineDirection `json:"direction,required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
@@ -439,6 +442,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	Currency              apijson.Field
 	DeclinedTransactionID apijson.Field
 	DigitalWalletTokenID  apijson.Field
+	Direction             apijson.Field
 	MerchantAcceptorID    apijson.Field
 	MerchantCategoryCode  apijson.Field
 	MerchantCity          apijson.Field
@@ -511,6 +515,26 @@ const (
 func (r DeclinedTransactionSourceCardDeclineCurrency) IsKnown() bool {
 	switch r {
 	case DeclinedTransactionSourceCardDeclineCurrencyCad, DeclinedTransactionSourceCardDeclineCurrencyChf, DeclinedTransactionSourceCardDeclineCurrencyEur, DeclinedTransactionSourceCardDeclineCurrencyGbp, DeclinedTransactionSourceCardDeclineCurrencyJpy, DeclinedTransactionSourceCardDeclineCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The direction describes the direction the funds will move, either from the
+// cardholder to the merchant or from the merchant to the cardholder.
+type DeclinedTransactionSourceCardDeclineDirection string
+
+const (
+	// A regular card authorization where funds are debited from the cardholder.
+	DeclinedTransactionSourceCardDeclineDirectionSettlement DeclinedTransactionSourceCardDeclineDirection = "settlement"
+	// A refund card authorization, sometimes referred to as a credit voucher
+	// authorization, where funds are credited to the cardholder.
+	DeclinedTransactionSourceCardDeclineDirectionRefund DeclinedTransactionSourceCardDeclineDirection = "refund"
+)
+
+func (r DeclinedTransactionSourceCardDeclineDirection) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineDirectionSettlement, DeclinedTransactionSourceCardDeclineDirectionRefund:
 		return true
 	}
 	return false
