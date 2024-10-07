@@ -51,6 +51,9 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"real_time_decision_j76n2e810ezcg3zh5qtn",
 		increase.RealTimeDecisionActionParams{
+			CardAuthentication: increase.F(increase.RealTimeDecisionActionParamsCardAuthentication{
+				Decision: increase.F(increase.RealTimeDecisionActionParamsCardAuthenticationDecisionApprove),
+			}),
 			CardAuthorization: increase.F(increase.RealTimeDecisionActionParamsCardAuthorization{
 				Decision: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDecisionApprove),
 			}),
