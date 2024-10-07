@@ -67,6 +67,8 @@ type RealTimeDecision struct {
 	ID string `json:"id,required"`
 	// Fields related to a 3DS authentication attempt.
 	CardAuthentication RealTimeDecisionCardAuthentication `json:"card_authentication,required,nullable"`
+	// Fields related to a 3DS authentication attempt.
+	CardAuthenticationChallenge RealTimeDecisionCardAuthenticationChallenge `json:"card_authentication_challenge,required,nullable"`
 	// Fields related to a card authorization.
 	CardAuthorization RealTimeDecisionCardAuthorization `json:"card_authorization,required,nullable"`
 	// The category of the Real-Time Decision.
@@ -94,6 +96,7 @@ type RealTimeDecision struct {
 type realTimeDecisionJSON struct {
 	ID                          apijson.Field
 	CardAuthentication          apijson.Field
+	CardAuthenticationChallenge apijson.Field
 	CardAuthorization           apijson.Field
 	Category                    apijson.Field
 	CreatedAt                   apijson.Field
@@ -162,6 +165,60 @@ const (
 func (r RealTimeDecisionCardAuthenticationDecision) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardAuthenticationDecisionApprove, RealTimeDecisionCardAuthenticationDecisionChallenge, RealTimeDecisionCardAuthenticationDecisionDeny:
+		return true
+	}
+	return false
+}
+
+// Fields related to a 3DS authentication attempt.
+type RealTimeDecisionCardAuthenticationChallenge struct {
+	// The identifier of the Account the card belongs to.
+	AccountID string `json:"account_id,required"`
+	// The identifier of the Card that is being tokenized.
+	CardID string `json:"card_id,required"`
+	// The identifier of the Card Payment this authentication challenge attempt belongs
+	// to.
+	CardPaymentID string `json:"card_payment_id,required"`
+	// The one-time code delivered to the cardholder.
+	OneTimeCode string `json:"one_time_code,required"`
+	// Whether or not the challenge was delivered to the cardholder.
+	Result RealTimeDecisionCardAuthenticationChallengeResult `json:"result,required,nullable"`
+	JSON   realTimeDecisionCardAuthenticationChallengeJSON   `json:"-"`
+}
+
+// realTimeDecisionCardAuthenticationChallengeJSON contains the JSON metadata for
+// the struct [RealTimeDecisionCardAuthenticationChallenge]
+type realTimeDecisionCardAuthenticationChallengeJSON struct {
+	AccountID     apijson.Field
+	CardID        apijson.Field
+	CardPaymentID apijson.Field
+	OneTimeCode   apijson.Field
+	Result        apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthenticationChallenge) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthenticationChallengeJSON) RawJSON() string {
+	return r.raw
+}
+
+// Whether or not the challenge was delivered to the cardholder.
+type RealTimeDecisionCardAuthenticationChallengeResult string
+
+const (
+	// Your application successfully delivered the one-time code to the cardholder.
+	RealTimeDecisionCardAuthenticationChallengeResultSuccess RealTimeDecisionCardAuthenticationChallengeResult = "success"
+	// Your application was unable to deliver the one-time code to the cardholder.
+	RealTimeDecisionCardAuthenticationChallengeResultFailure RealTimeDecisionCardAuthenticationChallengeResult = "failure"
+)
+
+func (r RealTimeDecisionCardAuthenticationChallengeResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthenticationChallengeResultSuccess, RealTimeDecisionCardAuthenticationChallengeResultFailure:
 		return true
 	}
 	return false
@@ -754,6 +811,8 @@ const (
 	RealTimeDecisionCategoryCardAuthorizationRequested RealTimeDecisionCategory = "card_authorization_requested"
 	// 3DS authentication is requested.
 	RealTimeDecisionCategoryCardAuthenticationRequested RealTimeDecisionCategory = "card_authentication_requested"
+	// 3DS authentication challenge requires cardholder involvement.
+	RealTimeDecisionCategoryCardAuthenticationChallengeRequested RealTimeDecisionCategory = "card_authentication_challenge_requested"
 	// A card is being loaded into a digital wallet.
 	RealTimeDecisionCategoryDigitalWalletTokenRequested RealTimeDecisionCategory = "digital_wallet_token_requested"
 	// A card is being loaded into a digital wallet and requires cardholder
@@ -763,7 +822,7 @@ const (
 
 func (r RealTimeDecisionCategory) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionCategoryCardAuthorizationRequested, RealTimeDecisionCategoryCardAuthenticationRequested, RealTimeDecisionCategoryDigitalWalletTokenRequested, RealTimeDecisionCategoryDigitalWalletAuthenticationRequested:
+	case RealTimeDecisionCategoryCardAuthorizationRequested, RealTimeDecisionCategoryCardAuthenticationRequested, RealTimeDecisionCategoryCardAuthenticationChallengeRequested, RealTimeDecisionCategoryDigitalWalletTokenRequested, RealTimeDecisionCategoryDigitalWalletAuthenticationRequested:
 		return true
 	}
 	return false
@@ -985,6 +1044,9 @@ type RealTimeDecisionActionParams struct {
 	// If the Real-Time Decision relates to a 3DS card authentication attempt, this
 	// object contains your response to the authentication.
 	CardAuthentication param.Field[RealTimeDecisionActionParamsCardAuthentication] `json:"card_authentication"`
+	// If the Real-Time Decision relates to 3DS card authentication challenge delivery,
+	// this object contains your response.
+	CardAuthenticationChallenge param.Field[RealTimeDecisionActionParamsCardAuthenticationChallenge] `json:"card_authentication_challenge"`
 	// If the Real-Time Decision relates to a card authorization attempt, this object
 	// contains your response to the authorization.
 	CardAuthorization param.Field[RealTimeDecisionActionParamsCardAuthorization] `json:"card_authorization"`
@@ -1026,6 +1088,37 @@ const (
 func (r RealTimeDecisionActionParamsCardAuthenticationDecision) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionActionParamsCardAuthenticationDecisionApprove, RealTimeDecisionActionParamsCardAuthenticationDecisionChallenge, RealTimeDecisionActionParamsCardAuthenticationDecisionDeny:
+		return true
+	}
+	return false
+}
+
+// If the Real-Time Decision relates to 3DS card authentication challenge delivery,
+// this object contains your response.
+type RealTimeDecisionActionParamsCardAuthenticationChallenge struct {
+	// Whether the card authentication challenge was successfully delivered to the
+	// cardholder.
+	Result param.Field[RealTimeDecisionActionParamsCardAuthenticationChallengeResult] `json:"result,required"`
+}
+
+func (r RealTimeDecisionActionParamsCardAuthenticationChallenge) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Whether the card authentication challenge was successfully delivered to the
+// cardholder.
+type RealTimeDecisionActionParamsCardAuthenticationChallengeResult string
+
+const (
+	// Your application successfully delivered the one-time code to the cardholder.
+	RealTimeDecisionActionParamsCardAuthenticationChallengeResultSuccess RealTimeDecisionActionParamsCardAuthenticationChallengeResult = "success"
+	// Your application was unable to deliver the one-time code to the cardholder.
+	RealTimeDecisionActionParamsCardAuthenticationChallengeResultFailure RealTimeDecisionActionParamsCardAuthenticationChallengeResult = "failure"
+)
+
+func (r RealTimeDecisionActionParamsCardAuthenticationChallengeResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionActionParamsCardAuthenticationChallengeResultSuccess, RealTimeDecisionActionParamsCardAuthenticationChallengeResultFailure:
 		return true
 	}
 	return false
