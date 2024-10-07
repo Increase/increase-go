@@ -167,6 +167,9 @@ const (
 	ProofOfAuthorizationRequestSubmissionStatusPendingReview ProofOfAuthorizationRequestSubmissionStatus = "pending_review"
 	// The proof of authorization request submission was rejected.
 	ProofOfAuthorizationRequestSubmissionStatusRejected ProofOfAuthorizationRequestSubmissionStatus = "rejected"
+	// The proof of authorization request submission was canceled and replaced with
+	// another.
+	ProofOfAuthorizationRequestSubmissionStatusCanceled ProofOfAuthorizationRequestSubmissionStatus = "canceled"
 	// The proof of authorization request submission is pending sending.
 	ProofOfAuthorizationRequestSubmissionStatusPendingSending ProofOfAuthorizationRequestSubmissionStatus = "pending_sending"
 	// The proof of authorization request submission was sent.
@@ -175,7 +178,7 @@ const (
 
 func (r ProofOfAuthorizationRequestSubmissionStatus) IsKnown() bool {
 	switch r {
-	case ProofOfAuthorizationRequestSubmissionStatusPendingReview, ProofOfAuthorizationRequestSubmissionStatusRejected, ProofOfAuthorizationRequestSubmissionStatusPendingSending, ProofOfAuthorizationRequestSubmissionStatusSent:
+	case ProofOfAuthorizationRequestSubmissionStatusPendingReview, ProofOfAuthorizationRequestSubmissionStatusRejected, ProofOfAuthorizationRequestSubmissionStatusCanceled, ProofOfAuthorizationRequestSubmissionStatusPendingSending, ProofOfAuthorizationRequestSubmissionStatusSent:
 		return true
 	}
 	return false
