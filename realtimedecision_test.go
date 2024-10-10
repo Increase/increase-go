@@ -62,6 +62,10 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 			}),
 			DigitalWalletAuthentication: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthentication{
 				Result: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess),
+				Success: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess{
+					Email: increase.F("x"),
+					Phone: increase.F("x"),
+				}),
 			}),
 			DigitalWalletToken: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletToken{
 				Approval: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletTokenApproval{
