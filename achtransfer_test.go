@@ -71,6 +71,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		RequireApproval:        increase.F(true),
 		RoutingNumber:          increase.F("101050001"),
 		StandardEntryClassCode: increase.F(increase.ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit),
+		TransactionTiming:      increase.F(increase.ACHTransferNewParamsTransactionTimingSynchronous),
 	})
 	if err != nil {
 		var apierr *increase.Error
