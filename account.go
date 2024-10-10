@@ -367,6 +367,8 @@ type AccountListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
+	// Filter Accounts for those in a specific Program.
+	ProgramID param.Field[string] `query:"program_id"`
 	// Filter Accounts for those with the specified status.
 	Status param.Field[AccountListParamsStatus] `query:"status"`
 }
