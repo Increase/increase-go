@@ -1158,6 +1158,7 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDecision) IsKnown() bool {
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
 	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+	Success param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess] `json:"success"`
 }
 
 func (r RealTimeDecisionActionParamsDigitalWalletAuthentication) MarshalJSON() (data []byte, err error) {
@@ -1180,6 +1181,18 @@ func (r RealTimeDecisionActionParamsDigitalWalletAuthenticationResult) IsKnown()
 		return true
 	}
 	return false
+}
+
+type RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess struct {
+	// The email address that was used to verify the cardholder via one-time passcode.
+	Email param.Field[string] `json:"email"`
+	// The phone number that was used to verify the cardholder via one-time passcode
+	// over SMS.
+	Phone param.Field[string] `json:"phone"`
+}
+
+func (r RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // If the Real-Time Decision relates to a digital wallet token provisioning
