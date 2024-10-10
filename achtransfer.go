@@ -1387,6 +1387,8 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
+	// The timing of the transaction.
+	TransactionTiming param.Field[ACHTransferNewParamsTransactionTiming] `json:"transaction_timing"`
 }
 
 func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -1567,6 +1569,24 @@ const (
 func (r ACHTransferNewParamsStandardEntryClassCode) IsKnown() bool {
 	switch r {
 	case ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit, ACHTransferNewParamsStandardEntryClassCodeCorporateTradeExchange, ACHTransferNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit, ACHTransferNewParamsStandardEntryClassCodeInternetInitiated:
+		return true
+	}
+	return false
+}
+
+// The timing of the transaction.
+type ACHTransferNewParamsTransactionTiming string
+
+const (
+	// A Transaction will be created immediately.
+	ACHTransferNewParamsTransactionTimingSynchronous ACHTransferNewParamsTransactionTiming = "synchronous"
+	// A Transaction will be created when the funds settle at the Federal Reserve.
+	ACHTransferNewParamsTransactionTimingAsynchronous ACHTransferNewParamsTransactionTiming = "asynchronous"
+)
+
+func (r ACHTransferNewParamsTransactionTiming) IsKnown() bool {
+	switch r {
+	case ACHTransferNewParamsTransactionTimingSynchronous, ACHTransferNewParamsTransactionTimingAsynchronous:
 		return true
 	}
 	return false
