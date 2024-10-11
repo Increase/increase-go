@@ -77,6 +77,21 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID
 	return
 }
 
+// Simulates the settlement of an [ACH Transfer](#ach-transfers) by the Federal
+// Reserve. This transfer must first have a `status` of `submitted`. Without this
+// simulation the transfer will eventually settle on its own following the same
+// Federal Reserve timeline as in production.
+func (r *SimulationACHTransferService) Settle(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	if achTransferID == "" {
+		err = errors.New("missing required ach_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/ach_transfers/%s/settle", achTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
 // Simulates the submission of an [ACH Transfer](#ach-transfers) to the Federal
 // Reserve. This transfer must first have a `status` of `pending_approval` or
 // `pending_submission`. In production, Increase submits ACH Transfers to the
