@@ -626,13 +626,19 @@ func (r checkTransferPhysicalCheckTrackingUpdateJSON) RawJSON() string {
 type CheckTransferPhysicalCheckTrackingUpdatesCategory string
 
 const (
+	// The check is in transit.
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit CheckTransferPhysicalCheckTrackingUpdatesCategory = "in_transit"
+	// The check has been processed for delivery.
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryProcessedForDelivery CheckTransferPhysicalCheckTrackingUpdatesCategory = "processed_for_delivery"
+	// The check has been delivered.
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered CheckTransferPhysicalCheckTrackingUpdatesCategory = "delivered"
 	// Delivery failed and the check was returned to sender.
 	CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender CheckTransferPhysicalCheckTrackingUpdatesCategory = "returned_to_sender"
 )
 
 func (r CheckTransferPhysicalCheckTrackingUpdatesCategory) IsKnown() bool {
 	switch r {
-	case CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender:
+	case CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit, CheckTransferPhysicalCheckTrackingUpdatesCategoryProcessedForDelivery, CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered, CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender:
 		return true
 	}
 	return false
