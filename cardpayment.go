@@ -4147,6 +4147,8 @@ type CardPaymentElementsCategory string
 const (
 	// Card Authorization: details will be under the `card_authorization` object.
 	CardPaymentElementsCategoryCardAuthorization CardPaymentElementsCategory = "card_authorization"
+	// Card Authentication: details will be under the `card_authentication` object.
+	CardPaymentElementsCategoryCardAuthentication CardPaymentElementsCategory = "card_authentication"
 	// Card Validation: details will be under the `card_validation` object.
 	CardPaymentElementsCategoryCardValidation CardPaymentElementsCategory = "card_validation"
 	// Card Decline: details will be under the `card_decline` object.
@@ -4171,7 +4173,7 @@ const (
 
 func (r CardPaymentElementsCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryOther:
+	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardAuthentication, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryOther:
 		return true
 	}
 	return false
