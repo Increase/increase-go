@@ -183,6 +183,9 @@ type ACHTransfer struct {
 	Return ACHTransferReturn `json:"return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
+	// A subhash containing information about when and how the transfer settled at the
+	// Federal Reserve.
+	Settlement ACHTransferSettlement `json:"settlement,required,nullable"`
 	// The Standard Entry Class (SEC) code to use for the transfer.
 	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The descriptor that will show on the recipient's bank statement.
@@ -233,6 +236,7 @@ type achTransferJSON struct {
 	PreferredEffectiveDate   apijson.Field
 	Return                   apijson.Field
 	RoutingNumber            apijson.Field
+	Settlement               apijson.Field
 	StandardEntryClassCode   apijson.Field
 	StatementDescriptor      apijson.Field
 	Status                   apijson.Field
@@ -1188,6 +1192,31 @@ func (r ACHTransferReturnReturnReasonCode) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A subhash containing information about when and how the transfer settled at the
+// Federal Reserve.
+type ACHTransferSettlement struct {
+	// When the funds for this transfer have settled at the destination bank at the
+	// Federal Reserve.
+	SettledAt time.Time                 `json:"settled_at,required" format:"date-time"`
+	JSON      achTransferSettlementJSON `json:"-"`
+}
+
+// achTransferSettlementJSON contains the JSON metadata for the struct
+// [ACHTransferSettlement]
+type achTransferSettlementJSON struct {
+	SettledAt   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ACHTransferSettlement) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r achTransferSettlementJSON) RawJSON() string {
+	return r.raw
 }
 
 // The Standard Entry Class (SEC) code to use for the transfer.
