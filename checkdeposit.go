@@ -12,10 +12,10 @@ import (
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/apiquery"
-	"github.com/Increase/increase-go/internal/pagination"
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CheckDepositService contains methods and other services that help with
@@ -328,13 +328,15 @@ const (
 	CheckDepositDepositRejectionReasonSuspectedFraud CheckDepositDepositRejectionReason = "suspected_fraud"
 	// This check's deposit window has expired.
 	CheckDepositDepositRejectionReasonDepositWindowExpired CheckDepositDepositRejectionReason = "deposit_window_expired"
+	// The check was rejected at the user's request.
+	CheckDepositDepositRejectionReasonRequestedByUser CheckDepositDepositRejectionReason = "requested_by_user"
 	// The check was rejected for an unknown reason.
 	CheckDepositDepositRejectionReasonUnknown CheckDepositDepositRejectionReason = "unknown"
 )
 
 func (r CheckDepositDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonUnknown:
+	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonRequestedByUser, CheckDepositDepositRejectionReasonUnknown:
 		return true
 	}
 	return false
