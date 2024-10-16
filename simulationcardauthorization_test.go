@@ -26,18 +26,19 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CardAuthorizations.New(context.TODO(), increase.SimulationCardAuthorizationNewParams{
-		Amount:               increase.F(int64(1000)),
-		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
-		DeclineReason:        increase.F(increase.SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive),
-		DigitalWalletTokenID: increase.F("digital_wallet_token_id"),
-		Direction:            increase.F(increase.SimulationCardAuthorizationNewParamsDirectionSettlement),
-		EventSubscriptionID:  increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
-		MerchantAcceptorID:   increase.F("5665270011000168"),
-		MerchantCategoryCode: increase.F("5734"),
-		MerchantCity:         increase.F("New York"),
-		MerchantCountry:      increase.F("US"),
-		MerchantDescriptor:   increase.F("AMAZON.COM"),
-		PhysicalCardID:       increase.F("physical_card_id"),
+		Amount:                     increase.F(int64(1000)),
+		AuthenticatedCardPaymentID: increase.F("authenticated_card_payment_id"),
+		CardID:                     increase.F("card_oubs0hwk5rn6knuecxg2"),
+		DeclineReason:              increase.F(increase.SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive),
+		DigitalWalletTokenID:       increase.F("digital_wallet_token_id"),
+		Direction:                  increase.F(increase.SimulationCardAuthorizationNewParamsDirectionSettlement),
+		EventSubscriptionID:        increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
+		MerchantAcceptorID:         increase.F("5665270011000168"),
+		MerchantCategoryCode:       increase.F("5734"),
+		MerchantCity:               increase.F("New York"),
+		MerchantCountry:            increase.F("US"),
+		MerchantDescriptor:         increase.F("AMAZON.COM"),
+		PhysicalCardID:             increase.F("physical_card_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

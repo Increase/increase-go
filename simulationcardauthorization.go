@@ -98,6 +98,9 @@ func (r SimulationCardAuthorizationNewResponseType) IsKnown() bool {
 type SimulationCardAuthorizationNewParams struct {
 	// The authorization amount in cents.
 	Amount param.Field[int64] `json:"amount,required"`
+	// The identifier of a Card Payment with a `card_authentication` if you want to
+	// simulate an authenticated authorization.
+	AuthenticatedCardPaymentID param.Field[string] `json:"authenticated_card_payment_id"`
 	// The identifier of the Card to be authorized.
 	CardID param.Field[string] `json:"card_id"`
 	// Forces a card decline with a specific reason. No real time decision will be
