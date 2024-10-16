@@ -1363,7 +1363,7 @@ func (r ACHTransferType) IsKnown() bool {
 type ACHTransferNewParams struct {
 	// The Increase identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The transfer amount in cents. A positive amount originates a credit transfer
+	// The transfer amount in USD cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
 	Amount param.Field[int64] `json:"amount,required"`

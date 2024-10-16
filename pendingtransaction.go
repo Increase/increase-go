@@ -314,8 +314,7 @@ func (r PendingTransactionSourceAccountTransferInstructionCurrency) IsKnown() bo
 // An ACH Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `ach_transfer_instruction`.
 type PendingTransactionSourceACHTransferInstruction struct {
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The pending amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
 	TransferID string                                             `json:"transfer_id,required"`
@@ -940,8 +939,7 @@ func (r PendingTransactionSourceCategory) IsKnown() bool {
 // A Check Deposit Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_deposit_instruction`.
 type PendingTransactionSourceCheckDepositInstruction struct {
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The pending amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
@@ -1007,8 +1005,7 @@ func (r PendingTransactionSourceCheckDepositInstructionCurrency) IsKnown() bool 
 // A Check Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `check_transfer_instruction`.
 type PendingTransactionSourceCheckTransferInstruction struct {
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
@@ -1184,8 +1181,7 @@ func (r PendingTransactionSourceInboundFundsHoldType) IsKnown() bool {
 // the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_instruction`.
 type PendingTransactionSourceRealTimePaymentsTransferInstruction struct {
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Pending
 	// Transaction.
@@ -1216,8 +1212,7 @@ func (r pendingTransactionSourceRealTimePaymentsTransferInstructionJSON) RawJSON
 type PendingTransactionSourceWireTransferInstruction struct {
 	// The account number for the destination account.
 	AccountNumber string `json:"account_number,required"`
-	// The pending amount in the minor unit of the transaction's currency. For dollars,
-	// for example, this is cents.
+	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required"`

@@ -2769,8 +2769,7 @@ func (r TransactionSourceCheckDepositAcceptanceCurrency) IsKnown() bool {
 // A Check Deposit Return object. This field will be present in the JSON response
 // if and only if `category` is equal to `check_deposit_return`.
 type TransactionSourceCheckDepositReturn struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
+	// The returned amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Check Deposit that was returned.
 	CheckDepositID string `json:"check_deposit_id,required"`
@@ -3035,8 +3034,7 @@ func (r TransactionSourceFeePaymentCurrency) IsKnown() bool {
 type TransactionSourceInboundACHTransfer struct {
 	// Additional information sent from the originator.
 	Addenda TransactionSourceInboundACHTransferAddenda `json:"addenda,required,nullable"`
-	// The amount in the minor unit of the destination account currency. For dollars,
-	// for example, this is cents.
+	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The description of the date of the transfer, usually in the format `YYMMDD`.
 	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
