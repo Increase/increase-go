@@ -241,6 +241,10 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
 		}}),
+		ThirdPartyVerification: increase.F(increase.EntityNewParamsThirdPartyVerification{
+			Reference: increase.F("x"),
+			Vendor:    increase.F(increase.EntityNewParamsThirdPartyVerificationVendorAlloy),
+		}),
 		Trust: increase.F(increase.EntityNewParamsTrust{
 			Address: increase.F(increase.EntityNewParamsTrustAddress{
 				City:  increase.F("x"),

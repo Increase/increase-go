@@ -202,6 +202,9 @@ type Entity struct {
 	// first 10 documents for an entity. If an entity has more than 10 documents, use
 	// the GET /entity_supplemental_documents list endpoint to retrieve them.
 	SupplementalDocuments []EntitySupplementalDocument `json:"supplemental_documents,required"`
+	// A reference to data stored in a third-party verification service. Your
+	// integration may or may not use this field.
+	ThirdPartyVerification EntityThirdPartyVerification `json:"third_party_verification,required,nullable"`
 	// Details of the trust entity. Will be present if `structure` is equal to `trust`.
 	Trust EntityTrust `json:"trust,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
@@ -212,22 +215,23 @@ type Entity struct {
 
 // entityJSON contains the JSON metadata for the struct [Entity]
 type entityJSON struct {
-	ID                    apijson.Field
-	Corporation           apijson.Field
-	CreatedAt             apijson.Field
-	Description           apijson.Field
-	DetailsConfirmedAt    apijson.Field
-	GovernmentAuthority   apijson.Field
-	IdempotencyKey        apijson.Field
-	Joint                 apijson.Field
-	NaturalPerson         apijson.Field
-	Status                apijson.Field
-	Structure             apijson.Field
-	SupplementalDocuments apijson.Field
-	Trust                 apijson.Field
-	Type                  apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	ID                     apijson.Field
+	Corporation            apijson.Field
+	CreatedAt              apijson.Field
+	Description            apijson.Field
+	DetailsConfirmedAt     apijson.Field
+	GovernmentAuthority    apijson.Field
+	IdempotencyKey         apijson.Field
+	Joint                  apijson.Field
+	NaturalPerson          apijson.Field
+	Status                 apijson.Field
+	Structure              apijson.Field
+	SupplementalDocuments  apijson.Field
+	ThirdPartyVerification apijson.Field
+	Trust                  apijson.Field
+	Type                   apijson.Field
+	raw                    string
+	ExtraFields            map[string]apijson.Field
 }
 
 func (r *Entity) UnmarshalJSON(data []byte) (err error) {
@@ -911,6 +915,49 @@ func (r EntityStructure) IsKnown() bool {
 	return false
 }
 
+// A reference to data stored in a third-party verification service. Your
+// integration may or may not use this field.
+type EntityThirdPartyVerification struct {
+	// The reference identifier for the third party verification.
+	Reference string `json:"reference,required"`
+	// The vendor that was used to perform the verification.
+	Vendor EntityThirdPartyVerificationVendor `json:"vendor,required"`
+	JSON   entityThirdPartyVerificationJSON   `json:"-"`
+}
+
+// entityThirdPartyVerificationJSON contains the JSON metadata for the struct
+// [EntityThirdPartyVerification]
+type entityThirdPartyVerificationJSON struct {
+	Reference   apijson.Field
+	Vendor      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityThirdPartyVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityThirdPartyVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
+// The vendor that was used to perform the verification.
+type EntityThirdPartyVerificationVendor string
+
+const (
+	// Alloy
+	EntityThirdPartyVerificationVendorAlloy EntityThirdPartyVerificationVendor = "alloy"
+)
+
+func (r EntityThirdPartyVerificationVendor) IsKnown() bool {
+	switch r {
+	case EntityThirdPartyVerificationVendorAlloy:
+		return true
+	}
+	return false
+}
+
 // Details of the trust entity. Will be present if `structure` is equal to `trust`.
 type EntityTrust struct {
 	// The trust's address.
@@ -1327,6 +1374,9 @@ type EntityNewParams struct {
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
+	// A reference to data stored in a third-party verification service. Your
+	// integration may or may not use this field.
+	ThirdPartyVerification param.Field[EntityNewParamsThirdPartyVerification] `json:"third_party_verification"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
 	Trust param.Field[EntityNewParamsTrust] `json:"trust"`
@@ -1953,6 +2003,35 @@ type EntityNewParamsSupplementalDocument struct {
 
 func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// A reference to data stored in a third-party verification service. Your
+// integration may or may not use this field.
+type EntityNewParamsThirdPartyVerification struct {
+	// The reference identifier for the third party verification.
+	Reference param.Field[string] `json:"reference,required"`
+	// The vendor that was used to perform the verification.
+	Vendor param.Field[EntityNewParamsThirdPartyVerificationVendor] `json:"vendor,required"`
+}
+
+func (r EntityNewParamsThirdPartyVerification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The vendor that was used to perform the verification.
+type EntityNewParamsThirdPartyVerificationVendor string
+
+const (
+	// Alloy
+	EntityNewParamsThirdPartyVerificationVendorAlloy EntityNewParamsThirdPartyVerificationVendor = "alloy"
+)
+
+func (r EntityNewParamsThirdPartyVerificationVendor) IsKnown() bool {
+	switch r {
+	case EntityNewParamsThirdPartyVerificationVendorAlloy:
+		return true
+	}
+	return false
 }
 
 // Details of the trust entity to create. Required if `structure` is equal to
