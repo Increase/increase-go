@@ -86,8 +86,7 @@ type CheckDeposit struct {
 	ID string `json:"id,required"`
 	// The Account the check was deposited into.
 	AccountID string `json:"account_id,required"`
-	// The deposited amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The deposited amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The ID for the File containing the image of the back of the check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
@@ -344,8 +343,7 @@ func (r CheckDepositDepositRejectionReason) IsKnown() bool {
 // If your deposit is returned, this will contain details as to why it was
 // returned.
 type CheckDepositDepositReturn struct {
-	// The amount in the minor unit of the transaction's currency. For dollars, for
-	// example, this is cents.
+	// The returned amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Check Deposit that was returned.
 	CheckDepositID string `json:"check_deposit_id,required"`
@@ -671,8 +669,7 @@ func (r CheckDepositType) IsKnown() bool {
 type CheckDepositNewParams struct {
 	// The identifier for the Account to deposit the check in.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The deposit amount in the minor unit of the account currency. For dollars, for
-	// example, this is cents.
+	// The deposit amount in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
 	// The File containing the check's back image.
 	BackImageFileID param.Field[string] `json:"back_image_file_id,required"`
