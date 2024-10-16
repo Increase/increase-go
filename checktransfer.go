@@ -817,7 +817,7 @@ func (r CheckTransferType) IsKnown() bool {
 type CheckTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The transfer amount in cents.
+	// The transfer amount in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.

@@ -112,8 +112,7 @@ type InboundCheckDeposit struct {
 	// If the deposit or the return was adjusted by the sending institution, this will
 	// contain details of the adjustments.
 	Adjustments []InboundCheckDepositAdjustment `json:"adjustments,required"`
-	// The deposited amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The deposited amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The ID for the File containing the image of the back of the check.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`

@@ -234,7 +234,7 @@ func (r WireDrawdownRequestType) IsKnown() bool {
 type WireDrawdownRequestNewParams struct {
 	// The Account Number to which the recipient should send funds.
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`
-	// The amount requested from the recipient, in cents.
+	// The amount requested from the recipient, in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
 	// A message the recipient will see as part of the request.
 	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`

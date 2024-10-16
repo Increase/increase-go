@@ -244,8 +244,7 @@ func (r declinedTransactionSourceJSON) RawJSON() string {
 type DeclinedTransactionSourceACHDecline struct {
 	// The ACH Decline's identifier.
 	ID string `json:"id,required"`
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The declined amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Inbound ACH Transfer object associated with this decline.
 	InboundACHTransferID string `json:"inbound_ach_transfer_id,required"`
@@ -979,8 +978,7 @@ func (r DeclinedTransactionSourceCategory) IsKnown() bool {
 // A Check Decline object. This field will be present in the JSON response if and
 // only if `category` is equal to `check_decline`.
 type DeclinedTransactionSourceCheckDecline struct {
-	// The declined amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The declined amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// A computer-readable number printed on the MICR line of business checks, usually
 	// the check number. This is useful for positive pay checks, but can be unreliably
