@@ -595,7 +595,7 @@ func (r WireTransferType) IsKnown() bool {
 type WireTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
-	// The transfer amount in cents.
+	// The transfer amount in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
 	// The beneficiary's name.
 	BeneficiaryName param.Field[string] `json:"beneficiary_name,required"`
