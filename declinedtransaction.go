@@ -12,10 +12,10 @@ import (
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/apiquery"
-	"github.com/Increase/increase-go/internal/pagination"
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // DeclinedTransactionService contains methods and other services that help with
@@ -1161,13 +1161,15 @@ const (
 	DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud DeclinedTransactionSourceCheckDepositRejectionReason = "suspected_fraud"
 	// This check's deposit window has expired.
 	DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired DeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
+	// The check was rejected at the user's request.
+	DeclinedTransactionSourceCheckDepositRejectionReasonRequestedByUser DeclinedTransactionSourceCheckDepositRejectionReason = "requested_by_user"
 	// The check was rejected for an unknown reason.
 	DeclinedTransactionSourceCheckDepositRejectionReasonUnknown DeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
 )
 
 func (r DeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, DeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
+	case DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, DeclinedTransactionSourceCheckDepositRejectionReasonRequestedByUser, DeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
 		return true
 	}
 	return false
