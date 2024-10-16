@@ -12,10 +12,10 @@ import (
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/apiquery"
-	"github.com/Increase/increase-go/internal/pagination"
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // ProofOfAuthorizationRequestService contains methods and other services that help
