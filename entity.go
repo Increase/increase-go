@@ -946,13 +946,15 @@ func (r entityThirdPartyVerificationJSON) RawJSON() string {
 type EntityThirdPartyVerificationVendor string
 
 const (
-	// Alloy
+	// Alloy. See https://alloy.com for more information.
 	EntityThirdPartyVerificationVendorAlloy EntityThirdPartyVerificationVendor = "alloy"
+	// Middesk. See https://middesk.com for more information.
+	EntityThirdPartyVerificationVendorMiddesk EntityThirdPartyVerificationVendor = "middesk"
 )
 
 func (r EntityThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityThirdPartyVerificationVendorAlloy:
+	case EntityThirdPartyVerificationVendorAlloy, EntityThirdPartyVerificationVendorMiddesk:
 		return true
 	}
 	return false
@@ -2022,13 +2024,15 @@ func (r EntityNewParamsThirdPartyVerification) MarshalJSON() (data []byte, err e
 type EntityNewParamsThirdPartyVerificationVendor string
 
 const (
-	// Alloy
+	// Alloy. See https://alloy.com for more information.
 	EntityNewParamsThirdPartyVerificationVendorAlloy EntityNewParamsThirdPartyVerificationVendor = "alloy"
+	// Middesk. See https://middesk.com for more information.
+	EntityNewParamsThirdPartyVerificationVendorMiddesk EntityNewParamsThirdPartyVerificationVendor = "middesk"
 )
 
 func (r EntityNewParamsThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityNewParamsThirdPartyVerificationVendorAlloy:
+	case EntityNewParamsThirdPartyVerificationVendorAlloy, EntityNewParamsThirdPartyVerificationVendorMiddesk:
 		return true
 	}
 	return false
