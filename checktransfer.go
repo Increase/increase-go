@@ -601,8 +601,10 @@ type CheckTransferPhysicalCheckTrackingUpdate struct {
 	Category CheckTransferPhysicalCheckTrackingUpdatesCategory `json:"category,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the tracking event took place.
-	CreatedAt time.Time                                    `json:"created_at,required" format:"date-time"`
-	JSON      checkTransferPhysicalCheckTrackingUpdateJSON `json:"-"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The postal code where the event took place.
+	PostalCode string                                       `json:"postal_code,required"`
+	JSON       checkTransferPhysicalCheckTrackingUpdateJSON `json:"-"`
 }
 
 // checkTransferPhysicalCheckTrackingUpdateJSON contains the JSON metadata for the
@@ -610,6 +612,7 @@ type CheckTransferPhysicalCheckTrackingUpdate struct {
 type checkTransferPhysicalCheckTrackingUpdateJSON struct {
 	Category    apijson.Field
 	CreatedAt   apijson.Field
+	PostalCode  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
