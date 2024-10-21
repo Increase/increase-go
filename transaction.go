@@ -2980,8 +2980,10 @@ type TransactionSourceFeePayment struct {
 	// currency.
 	Currency TransactionSourceFeePaymentCurrency `json:"currency,required"`
 	// The start of this payment's fee period, usually the first day of a month.
-	FeePeriodStart time.Time                       `json:"fee_period_start,required" format:"date"`
-	JSON           transactionSourceFeePaymentJSON `json:"-"`
+	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
+	// The Program for which this fee was incurred.
+	ProgramID string                          `json:"program_id,required,nullable"`
+	JSON      transactionSourceFeePaymentJSON `json:"-"`
 }
 
 // transactionSourceFeePaymentJSON contains the JSON metadata for the struct
@@ -2990,6 +2992,7 @@ type transactionSourceFeePaymentJSON struct {
 	Amount         apijson.Field
 	Currency       apijson.Field
 	FeePeriodStart apijson.Field
+	ProgramID      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
