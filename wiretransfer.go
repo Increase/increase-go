@@ -164,6 +164,8 @@ type WireTransfer struct {
 	Reversal WireTransferReversal `json:"reversal,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
+	// The Account Number that was passed to the wire's recipient.
+	SourceAccountNumberID string `json:"source_account_number_id,required,nullable"`
 	// The lifecycle status of the transfer.
 	Status WireTransferStatus `json:"status,required"`
 	// After the transfer is submitted to Fedwire, this will contain supplemental
@@ -203,6 +205,7 @@ type wireTransferJSON struct {
 	PendingTransactionID    apijson.Field
 	Reversal                apijson.Field
 	RoutingNumber           apijson.Field
+	SourceAccountNumberID   apijson.Field
 	Status                  apijson.Field
 	Submission              apijson.Field
 	TransactionID           apijson.Field
@@ -629,6 +632,8 @@ type WireTransferNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number"`
+	// The ID of an Account Number that will be passed to the wire's recipient
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
 }
 
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
