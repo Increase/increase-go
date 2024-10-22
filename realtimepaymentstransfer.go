@@ -517,6 +517,10 @@ const (
 	RealTimePaymentsTransferStatusCanceled RealTimePaymentsTransferStatus = "canceled"
 	// The transfer is pending review by Increase.
 	RealTimePaymentsTransferStatusPendingReviewing RealTimePaymentsTransferStatus = "pending_reviewing"
+	// The transfer requires attention from an Increase operator.
+	RealTimePaymentsTransferStatusRequiresAttention RealTimePaymentsTransferStatus = "requires_attention"
+	// The transfer was rejected by the network or the recipient's bank.
+	RealTimePaymentsTransferStatusRejected RealTimePaymentsTransferStatus = "rejected"
 	// The transfer is queued to be submitted to Real-Time Payments.
 	RealTimePaymentsTransferStatusPendingSubmission RealTimePaymentsTransferStatus = "pending_submission"
 	// The transfer has been submitted and is pending a response from Real-Time
@@ -524,15 +528,11 @@ const (
 	RealTimePaymentsTransferStatusSubmitted RealTimePaymentsTransferStatus = "submitted"
 	// The transfer has been sent successfully and is complete.
 	RealTimePaymentsTransferStatusComplete RealTimePaymentsTransferStatus = "complete"
-	// The transfer was rejected by the network or the recipient's bank.
-	RealTimePaymentsTransferStatusRejected RealTimePaymentsTransferStatus = "rejected"
-	// The transfer requires attention from an Increase operator.
-	RealTimePaymentsTransferStatusRequiresAttention RealTimePaymentsTransferStatus = "requires_attention"
 )
 
 func (r RealTimePaymentsTransferStatus) IsKnown() bool {
 	switch r {
-	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingReviewing, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusRequiresAttention:
+	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingReviewing, RealTimePaymentsTransferStatusRequiresAttention, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete:
 		return true
 	}
 	return false

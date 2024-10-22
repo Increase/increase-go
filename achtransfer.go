@@ -1251,23 +1251,23 @@ const (
 	ACHTransferStatusPendingTransferSessionConfirmation ACHTransferStatus = "pending_transfer_session_confirmation"
 	// The transfer has been canceled.
 	ACHTransferStatusCanceled ACHTransferStatus = "canceled"
-	// The transfer is pending review by Increase.
-	ACHTransferStatusPendingReviewing ACHTransferStatus = "pending_reviewing"
 	// The transfer is pending submission to the Federal Reserve.
 	ACHTransferStatusPendingSubmission ACHTransferStatus = "pending_submission"
-	// The transfer is complete.
-	ACHTransferStatusSubmitted ACHTransferStatus = "submitted"
-	// The transfer has been returned.
-	ACHTransferStatusReturned ACHTransferStatus = "returned"
+	// The transfer is pending review by Increase.
+	ACHTransferStatusPendingReviewing ACHTransferStatus = "pending_reviewing"
 	// The transfer requires attention from an Increase operator.
 	ACHTransferStatusRequiresAttention ACHTransferStatus = "requires_attention"
 	// The transfer has been rejected.
 	ACHTransferStatusRejected ACHTransferStatus = "rejected"
+	// The transfer is complete.
+	ACHTransferStatusSubmitted ACHTransferStatus = "submitted"
+	// The transfer has been returned.
+	ACHTransferStatusReturned ACHTransferStatus = "returned"
 )
 
 func (r ACHTransferStatus) IsKnown() bool {
 	switch r {
-	case ACHTransferStatusPendingApproval, ACHTransferStatusPendingTransferSessionConfirmation, ACHTransferStatusCanceled, ACHTransferStatusPendingReviewing, ACHTransferStatusPendingSubmission, ACHTransferStatusSubmitted, ACHTransferStatusReturned, ACHTransferStatusRequiresAttention, ACHTransferStatusRejected:
+	case ACHTransferStatusPendingApproval, ACHTransferStatusPendingTransferSessionConfirmation, ACHTransferStatusCanceled, ACHTransferStatusPendingSubmission, ACHTransferStatusPendingReviewing, ACHTransferStatusRequiresAttention, ACHTransferStatusRejected, ACHTransferStatusSubmitted, ACHTransferStatusReturned:
 		return true
 	}
 	return false
