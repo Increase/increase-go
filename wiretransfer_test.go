@@ -42,6 +42,7 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		OriginatorName:          increase.F("x"),
 		RequireApproval:         increase.F(true),
 		RoutingNumber:           increase.F("101050001"),
+		SourceAccountNumberID:   increase.F("source_account_number_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
