@@ -653,29 +653,29 @@ type CheckTransferStatus string
 const (
 	// The transfer is awaiting approval.
 	CheckTransferStatusPendingApproval CheckTransferStatus = "pending_approval"
+	// The transfer has been canceled.
+	CheckTransferStatusCanceled CheckTransferStatus = "canceled"
 	// The transfer is pending submission.
 	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
+	// The transfer requires attention from an Increase operator.
+	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
+	// The transfer has been rejected.
+	CheckTransferStatusRejected CheckTransferStatus = "rejected"
 	// The check is queued for mailing.
 	CheckTransferStatusPendingMailing CheckTransferStatus = "pending_mailing"
 	// The check has been mailed.
 	CheckTransferStatusMailed CheckTransferStatus = "mailed"
-	// The transfer has been canceled.
-	CheckTransferStatusCanceled CheckTransferStatus = "canceled"
 	// The check has been deposited.
 	CheckTransferStatusDeposited CheckTransferStatus = "deposited"
 	// A stop-payment was requested for this check.
 	CheckTransferStatusStopped CheckTransferStatus = "stopped"
-	// The transfer has been rejected.
-	CheckTransferStatusRejected CheckTransferStatus = "rejected"
-	// The transfer requires attention from an Increase operator.
-	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
 	// The transfer has been returned.
 	CheckTransferStatusReturned CheckTransferStatus = "returned"
 )
 
 func (r CheckTransferStatus) IsKnown() bool {
 	switch r {
-	case CheckTransferStatusPendingApproval, CheckTransferStatusPendingSubmission, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusCanceled, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusRejected, CheckTransferStatusRequiresAttention, CheckTransferStatusReturned:
+	case CheckTransferStatusPendingApproval, CheckTransferStatusCanceled, CheckTransferStatusPendingSubmission, CheckTransferStatusRequiresAttention, CheckTransferStatusRejected, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusReturned:
 		return true
 	}
 	return false
