@@ -521,29 +521,29 @@ func (r wireTransferReversalJSON) RawJSON() string {
 type WireTransferStatus string
 
 const (
-	// The transfer has been canceled.
-	WireTransferStatusCanceled WireTransferStatus = "canceled"
-	// The transfer requires attention from an Increase operator.
-	WireTransferStatusRequiresAttention WireTransferStatus = "requires_attention"
-	// The transfer is pending review by Increase.
-	WireTransferStatusPendingReviewing WireTransferStatus = "pending_reviewing"
 	// The transfer is pending approval.
 	WireTransferStatusPendingApproval WireTransferStatus = "pending_approval"
+	// The transfer has been canceled.
+	WireTransferStatusCanceled WireTransferStatus = "canceled"
+	// The transfer is pending review by Increase.
+	WireTransferStatusPendingReviewing WireTransferStatus = "pending_reviewing"
 	// The transfer has been rejected by Increase.
 	WireTransferStatusRejected WireTransferStatus = "rejected"
+	// The transfer requires attention from an Increase operator.
+	WireTransferStatusRequiresAttention WireTransferStatus = "requires_attention"
+	// The transfer is pending creation.
+	WireTransferStatusPendingCreating WireTransferStatus = "pending_creating"
 	// The transfer has been reversed.
 	WireTransferStatusReversed WireTransferStatus = "reversed"
 	// The transfer has been submitted to Fedwire.
 	WireTransferStatusSubmitted WireTransferStatus = "submitted"
 	// The transfer has been acknowledged by Fedwire and can be considered complete.
 	WireTransferStatusComplete WireTransferStatus = "complete"
-	// The transfer is pending creation.
-	WireTransferStatusPendingCreating WireTransferStatus = "pending_creating"
 )
 
 func (r WireTransferStatus) IsKnown() bool {
 	switch r {
-	case WireTransferStatusCanceled, WireTransferStatusRequiresAttention, WireTransferStatusPendingReviewing, WireTransferStatusPendingApproval, WireTransferStatusRejected, WireTransferStatusReversed, WireTransferStatusSubmitted, WireTransferStatusComplete, WireTransferStatusPendingCreating:
+	case WireTransferStatusPendingApproval, WireTransferStatusCanceled, WireTransferStatusPendingReviewing, WireTransferStatusRejected, WireTransferStatusRequiresAttention, WireTransferStatusPendingCreating, WireTransferStatusReversed, WireTransferStatusSubmitted, WireTransferStatusComplete:
 		return true
 	}
 	return false
