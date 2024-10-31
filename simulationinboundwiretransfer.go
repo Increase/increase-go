@@ -31,7 +31,7 @@ func NewSimulationInboundWireTransferService(opts ...option.RequestOption) (r *S
 	return
 }
 
-// Simulates an inbound Wire Transfer to your account.
+// Simulates an [Inbound Wire Transfer](#inbound-wire-transfers) to your account.
 func (r *SimulationInboundWireTransferService) New(ctx context.Context, body SimulationInboundWireTransferNewParams, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_wire_transfers"

@@ -32,8 +32,9 @@ func NewSimulationInboundRealTimePaymentsTransferService(opts ...option.RequestO
 	return
 }
 
-// Simulates an inbound Real-Time Payments transfer to your account. Real-Time
-// Payments are a beta feature.
+// Simulates an
+// [Inbound Real-Time Payments Transfer](#inbound-real-time-payments-transfers) to
+// your account. Real-Time Payments are a beta feature.
 func (r *SimulationInboundRealTimePaymentsTransferService) New(ctx context.Context, body SimulationInboundRealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *InboundRealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/inbound_real_time_payments_transfers"
