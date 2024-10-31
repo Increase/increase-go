@@ -31,9 +31,10 @@ func NewSimulationProgramService(opts ...option.RequestOption) (r *SimulationPro
 	return
 }
 
-// Simulates a program being created in your group. By default, your group has one
-// program called Commercial Banking. Note that when your group operates more than
-// one program, `program_id` is a required field when creating accounts.
+// Simulates a [Program](#programs) being created in your group. By default, your
+// group has one program called Commercial Banking. Note that when your group
+// operates more than one program, `program_id` is a required field when creating
+// accounts.
 func (r *SimulationProgramService) New(ctx context.Context, body SimulationProgramNewParams, opts ...option.RequestOption) (res *Program, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/programs"

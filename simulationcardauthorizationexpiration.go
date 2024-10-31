@@ -32,7 +32,7 @@ func NewSimulationCardAuthorizationExpirationService(opts ...option.RequestOptio
 	return
 }
 
-// Simulates expiring a card authorization immediately.
+// Simulates expiring a Card Authorization immediately.
 func (r *SimulationCardAuthorizationExpirationService) New(ctx context.Context, body SimulationCardAuthorizationExpirationNewParams, opts ...option.RequestOption) (res *CardPayment, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "simulations/card_authorization_expirations"

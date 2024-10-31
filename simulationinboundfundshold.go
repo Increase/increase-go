@@ -33,7 +33,7 @@ func NewSimulationInboundFundsHoldService(opts ...option.RequestOption) (r *Simu
 	return
 }
 
-// This endpoint simulates immediately releasing an inbound funds hold, which might
+// This endpoint simulates immediately releasing an Inbound Funds Hold, which might
 // be created as a result of e.g., an ACH debit.
 func (r *SimulationInboundFundsHoldService) Release(ctx context.Context, inboundFundsHoldID string, opts ...option.RequestOption) (res *SimulationInboundFundsHoldReleaseResponse, err error) {
 	opts = append(r.Options[:], opts...)
