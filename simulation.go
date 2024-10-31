@@ -14,33 +14,33 @@ import (
 // the [NewSimulationService] method instead.
 type SimulationService struct {
 	Options                          []option.RequestOption
-	AccountTransfers                 *SimulationAccountTransferService
-	InboundACHTransfers              *SimulationInboundACHTransferService
-	ACHTransfers                     *SimulationACHTransferService
-	CheckTransfers                   *SimulationCheckTransferService
-	InboundCheckDeposits             *SimulationInboundCheckDepositService
-	CheckDeposits                    *SimulationCheckDepositService
-	InboundWireTransfers             *SimulationInboundWireTransferService
-	WireTransfers                    *SimulationWireTransferService
-	InboundWireDrawdownRequests      *SimulationInboundWireDrawdownRequestService
-	InboundRealTimePaymentsTransfers *SimulationInboundRealTimePaymentsTransferService
-	InboundFundsHolds                *SimulationInboundFundsHoldService
-	RealTimePaymentsTransfers        *SimulationRealTimePaymentsTransferService
+	InterestPayments                 *SimulationInterestPaymentService
 	CardAuthorizations               *SimulationCardAuthorizationService
+	CardAuthorizationExpirations     *SimulationCardAuthorizationExpirationService
 	CardSettlements                  *SimulationCardSettlementService
 	CardReversals                    *SimulationCardReversalService
 	CardIncrements                   *SimulationCardIncrementService
-	CardAuthorizationExpirations     *SimulationCardAuthorizationExpirationService
 	CardFuelConfirmations            *SimulationCardFuelConfirmationService
 	CardRefunds                      *SimulationCardRefundService
 	CardDisputes                     *SimulationCardDisputeService
-	DigitalWalletTokenRequests       *SimulationDigitalWalletTokenRequestService
 	PhysicalCards                    *SimulationPhysicalCardService
-	InterestPayments                 *SimulationInterestPaymentService
-	AccountStatements                *SimulationAccountStatementService
-	Documents                        *SimulationDocumentService
+	DigitalWalletTokenRequests       *SimulationDigitalWalletTokenRequestService
+	InboundFundsHolds                *SimulationInboundFundsHoldService
+	AccountTransfers                 *SimulationAccountTransferService
+	ACHTransfers                     *SimulationACHTransferService
+	InboundACHTransfers              *SimulationInboundACHTransferService
+	WireTransfers                    *SimulationWireTransferService
+	InboundWireTransfers             *SimulationInboundWireTransferService
+	InboundWireDrawdownRequests      *SimulationInboundWireDrawdownRequestService
+	CheckTransfers                   *SimulationCheckTransferService
+	InboundCheckDeposits             *SimulationInboundCheckDepositService
+	RealTimePaymentsTransfers        *SimulationRealTimePaymentsTransferService
+	InboundRealTimePaymentsTransfers *SimulationInboundRealTimePaymentsTransferService
+	CheckDeposits                    *SimulationCheckDepositService
 	InboundMailItems                 *SimulationInboundMailItemService
 	Programs                         *SimulationProgramService
+	AccountStatements                *SimulationAccountStatementService
+	Documents                        *SimulationDocumentService
 }
 
 // NewSimulationService generates a new service that applies the given options to
@@ -49,32 +49,32 @@ type SimulationService struct {
 func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r = &SimulationService{}
 	r.Options = opts
-	r.AccountTransfers = NewSimulationAccountTransferService(opts...)
-	r.InboundACHTransfers = NewSimulationInboundACHTransferService(opts...)
-	r.ACHTransfers = NewSimulationACHTransferService(opts...)
-	r.CheckTransfers = NewSimulationCheckTransferService(opts...)
-	r.InboundCheckDeposits = NewSimulationInboundCheckDepositService(opts...)
-	r.CheckDeposits = NewSimulationCheckDepositService(opts...)
-	r.InboundWireTransfers = NewSimulationInboundWireTransferService(opts...)
-	r.WireTransfers = NewSimulationWireTransferService(opts...)
-	r.InboundWireDrawdownRequests = NewSimulationInboundWireDrawdownRequestService(opts...)
-	r.InboundRealTimePaymentsTransfers = NewSimulationInboundRealTimePaymentsTransferService(opts...)
-	r.InboundFundsHolds = NewSimulationInboundFundsHoldService(opts...)
-	r.RealTimePaymentsTransfers = NewSimulationRealTimePaymentsTransferService(opts...)
+	r.InterestPayments = NewSimulationInterestPaymentService(opts...)
 	r.CardAuthorizations = NewSimulationCardAuthorizationService(opts...)
+	r.CardAuthorizationExpirations = NewSimulationCardAuthorizationExpirationService(opts...)
 	r.CardSettlements = NewSimulationCardSettlementService(opts...)
 	r.CardReversals = NewSimulationCardReversalService(opts...)
 	r.CardIncrements = NewSimulationCardIncrementService(opts...)
-	r.CardAuthorizationExpirations = NewSimulationCardAuthorizationExpirationService(opts...)
 	r.CardFuelConfirmations = NewSimulationCardFuelConfirmationService(opts...)
 	r.CardRefunds = NewSimulationCardRefundService(opts...)
 	r.CardDisputes = NewSimulationCardDisputeService(opts...)
-	r.DigitalWalletTokenRequests = NewSimulationDigitalWalletTokenRequestService(opts...)
 	r.PhysicalCards = NewSimulationPhysicalCardService(opts...)
-	r.InterestPayments = NewSimulationInterestPaymentService(opts...)
-	r.AccountStatements = NewSimulationAccountStatementService(opts...)
-	r.Documents = NewSimulationDocumentService(opts...)
+	r.DigitalWalletTokenRequests = NewSimulationDigitalWalletTokenRequestService(opts...)
+	r.InboundFundsHolds = NewSimulationInboundFundsHoldService(opts...)
+	r.AccountTransfers = NewSimulationAccountTransferService(opts...)
+	r.ACHTransfers = NewSimulationACHTransferService(opts...)
+	r.InboundACHTransfers = NewSimulationInboundACHTransferService(opts...)
+	r.WireTransfers = NewSimulationWireTransferService(opts...)
+	r.InboundWireTransfers = NewSimulationInboundWireTransferService(opts...)
+	r.InboundWireDrawdownRequests = NewSimulationInboundWireDrawdownRequestService(opts...)
+	r.CheckTransfers = NewSimulationCheckTransferService(opts...)
+	r.InboundCheckDeposits = NewSimulationInboundCheckDepositService(opts...)
+	r.RealTimePaymentsTransfers = NewSimulationRealTimePaymentsTransferService(opts...)
+	r.InboundRealTimePaymentsTransfers = NewSimulationInboundRealTimePaymentsTransferService(opts...)
+	r.CheckDeposits = NewSimulationCheckDepositService(opts...)
 	r.InboundMailItems = NewSimulationInboundMailItemService(opts...)
 	r.Programs = NewSimulationProgramService(opts...)
+	r.AccountStatements = NewSimulationAccountStatementService(opts...)
+	r.Documents = NewSimulationDocumentService(opts...)
 	return
 }
