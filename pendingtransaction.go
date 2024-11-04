@@ -572,6 +572,9 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	// Only present when `actioner: network`. Describes why a card authorization was
+	// approved or declined by Visa through stand-in processing.
+	StandInProcessingReason PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
 	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -581,6 +584,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 type pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
+	StandInProcessingReason     apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }
@@ -673,6 +677,37 @@ const (
 func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
 	switch r {
 	case PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
+
+// Only present when `actioner: network`. Describes why a card authorization was
+// approved or declined by Visa through stand-in processing.
+type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason string
+
+const (
+	// Increase failed to process the authorization in a timely manner.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	// The physical card read had an invalid CVV, dCVV, or authorization request
+	// cryptogram.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	// The 3DS cardholder authentication verification value was invalid.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	// An internal Visa error occurred. Visa uses this reason code for certain expected
+	// occurrences as well, such as Application Transaction Counter (ATC) replays.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
+	// The merchant has enabled Visa's Transaction Advisory Service and requires
+	// further authentication to perform the transaction. In practice this is often
+	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
+	// An unspecific reason for stand-in processing.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
+)
+
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther:
 		return true
 	}
 	return false
