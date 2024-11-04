@@ -419,6 +419,9 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
 	PointOfServiceEntryMode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	// Only present when `actioner: network`. Describes why a card authorization was
+	// approved or declined by Visa through stand-in processing.
+	StandInProcessingReason RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
 	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -427,6 +430,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 type realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
+	StandInProcessingReason     apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }
@@ -519,6 +523,37 @@ const (
 func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
+
+// Only present when `actioner: network`. Describes why a card authorization was
+// approved or declined by Visa through stand-in processing.
+type RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason string
+
+const (
+	// Increase failed to process the authorization in a timely manner.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	// The physical card read had an invalid CVV, dCVV, or authorization request
+	// cryptogram.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	// The 3DS cardholder authentication verification value was invalid.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	// An internal Visa error occurred. Visa uses this reason code for certain expected
+	// occurrences as well, such as Application Transaction Counter (ATC) replays.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
+	// The merchant has enabled Visa's Transaction Advisory Service and requires
+	// further authentication to perform the transaction. In practice this is often
+	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
+	// An unspecific reason for stand-in processing.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
+)
+
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther:
 		return true
 	}
 	return false
