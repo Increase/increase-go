@@ -228,11 +228,14 @@ const (
 	// The check was deposited to the wrong payee and the depositing institution has
 	// reimbursed the funds with a Wrong Payee Credit.
 	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
+	// The check was deposited with a different amount than what was written on the
+	// check.
+	InboundCheckDepositAdjustmentsReasonAdjustedAmount InboundCheckDepositAdjustmentsReason = "adjusted_amount"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit:
+	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonAdjustedAmount:
 		return true
 	}
 	return false
