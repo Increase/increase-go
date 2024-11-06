@@ -247,6 +247,8 @@ type CardDisputeStatus string
 const (
 	// The Card Dispute is pending review.
 	CardDisputeStatusPendingReviewing CardDisputeStatus = "pending_reviewing"
+	// Increase has requested more information related to the Card Dispute from you.
+	CardDisputeStatusPendingUserInformation CardDisputeStatus = "pending_user_information"
 	// The Card Dispute has been accepted and your funds have been returned. The card
 	// dispute will eventually transition into `won` or `lost` depending on the
 	// outcome.
@@ -262,7 +264,7 @@ const (
 
 func (r CardDisputeStatus) IsKnown() bool {
 	switch r {
-	case CardDisputeStatusPendingReviewing, CardDisputeStatusAccepted, CardDisputeStatusRejected, CardDisputeStatusLost, CardDisputeStatusWon:
+	case CardDisputeStatusPendingReviewing, CardDisputeStatusPendingUserInformation, CardDisputeStatusAccepted, CardDisputeStatusRejected, CardDisputeStatusLost, CardDisputeStatusWon:
 		return true
 	}
 	return false
@@ -396,6 +398,8 @@ type CardDisputeListParamsStatusIn string
 const (
 	// The Card Dispute is pending review.
 	CardDisputeListParamsStatusInPendingReviewing CardDisputeListParamsStatusIn = "pending_reviewing"
+	// Increase has requested more information related to the Card Dispute from you.
+	CardDisputeListParamsStatusInPendingUserInformation CardDisputeListParamsStatusIn = "pending_user_information"
 	// The Card Dispute has been accepted and your funds have been returned. The card
 	// dispute will eventually transition into `won` or `lost` depending on the
 	// outcome.
@@ -411,7 +415,7 @@ const (
 
 func (r CardDisputeListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case CardDisputeListParamsStatusInPendingReviewing, CardDisputeListParamsStatusInAccepted, CardDisputeListParamsStatusInRejected, CardDisputeListParamsStatusInLost, CardDisputeListParamsStatusInWon:
+	case CardDisputeListParamsStatusInPendingReviewing, CardDisputeListParamsStatusInPendingUserInformation, CardDisputeListParamsStatusInAccepted, CardDisputeListParamsStatusInRejected, CardDisputeListParamsStatusInLost, CardDisputeListParamsStatusInWon:
 		return true
 	}
 	return false
