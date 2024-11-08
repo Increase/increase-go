@@ -38,6 +38,7 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		MerchantCity:               increase.F("New York"),
 		MerchantCountry:            increase.F("US"),
 		MerchantDescriptor:         increase.F("AMAZON.COM"),
+		MerchantState:              increase.F("NY"),
 		PhysicalCardID:             increase.F("physical_card_id"),
 		TerminalID:                 increase.F("x"),
 	})
