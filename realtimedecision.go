@@ -283,6 +283,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
 	SettlementCurrency string `json:"settlement_currency,required"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// The identifier of the Card Payment this authorization will belong to. Available
 	// in the API once the card authorization has completed.
 	UpcomingCardPaymentID string `json:"upcoming_card_payment_id,required"`
@@ -316,6 +319,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	RequestDetails        apijson.Field
 	SettlementAmount      apijson.Field
 	SettlementCurrency    apijson.Field
+	TerminalID            apijson.Field
 	UpcomingCardPaymentID apijson.Field
 	Verification          apijson.Field
 	raw                   string

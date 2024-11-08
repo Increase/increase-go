@@ -130,6 +130,9 @@ type SimulationCardAuthorizationNewParams struct {
 	MerchantDescriptor param.Field[string] `json:"merchant_descriptor"`
 	// The identifier of the Physical Card to be authorized.
 	PhysicalCardID param.Field[string] `json:"physical_card_id"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID param.Field[string] `json:"terminal_id"`
 }
 
 func (r SimulationCardAuthorizationNewParams) MarshalJSON() (data []byte, err error) {
