@@ -403,6 +403,9 @@ type PendingTransactionSourceCardAuthorization struct {
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
 	Type PendingTransactionSourceCardAuthorizationType `json:"type,required"`
@@ -438,6 +441,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	PresentmentCurrency  apijson.Field
 	ProcessingCategory   apijson.Field
 	RealTimeDecisionID   apijson.Field
+	TerminalID           apijson.Field
 	Type                 apijson.Field
 	Verification         apijson.Field
 	raw                  string
