@@ -128,6 +128,8 @@ type SimulationCardAuthorizationNewParams struct {
 	MerchantCountry param.Field[string] `json:"merchant_country"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor param.Field[string] `json:"merchant_descriptor"`
+	// The state the merchant resides in.
+	MerchantState param.Field[string] `json:"merchant_state"`
 	// The identifier of the Physical Card to be authorized.
 	PhysicalCardID param.Field[string] `json:"physical_card_id"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
