@@ -253,6 +253,9 @@ type CardPaymentElementsCardAuthorization struct {
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
 	Type CardPaymentElementsCardAuthorizationType `json:"type,required"`
@@ -288,6 +291,7 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 	PresentmentCurrency  apijson.Field
 	ProcessingCategory   apijson.Field
 	RealTimeDecisionID   apijson.Field
+	TerminalID           apijson.Field
 	Type                 apijson.Field
 	Verification         apijson.Field
 	raw                  string
@@ -944,6 +948,9 @@ type CardPaymentElementsCardDecline struct {
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
 	// Why the transaction was declined.
 	Reason CardPaymentElementsCardDeclineReason `json:"reason,required"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardDeclineVerification `json:"verification,required"`
 	JSON         cardPaymentElementsCardDeclineJSON         `json:"-"`
@@ -976,6 +983,7 @@ type cardPaymentElementsCardDeclineJSON struct {
 	ProcessingCategory    apijson.Field
 	RealTimeDecisionID    apijson.Field
 	Reason                apijson.Field
+	TerminalID            apijson.Field
 	Verification          apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
@@ -2711,6 +2719,9 @@ type CardPaymentElementsCardReversal struct {
 	ReversalAmount int64 `json:"reversal_amount,required"`
 	// Why this reversal was initiated.
 	ReversalReason CardPaymentElementsCardReversalReversalReason `json:"reversal_reason,required,nullable"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_reversal`.
 	Type CardPaymentElementsCardReversalType `json:"type,required"`
@@ -2738,6 +2749,7 @@ type cardPaymentElementsCardReversalJSON struct {
 	PendingTransactionID       apijson.Field
 	ReversalAmount             apijson.Field
 	ReversalReason             apijson.Field
+	TerminalID                 apijson.Field
 	Type                       apijson.Field
 	UpdatedAuthorizationAmount apijson.Field
 	raw                        string
@@ -3778,6 +3790,9 @@ type CardPaymentElementsCardValidation struct {
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_validation`.
 	Type CardPaymentElementsCardValidationType `json:"type,required"`
@@ -3806,6 +3821,7 @@ type cardPaymentElementsCardValidationJSON struct {
 	NetworkRiskScore     apijson.Field
 	PhysicalCardID       apijson.Field
 	RealTimeDecisionID   apijson.Field
+	TerminalID           apijson.Field
 	Type                 apijson.Field
 	Verification         apijson.Field
 	raw                  string
