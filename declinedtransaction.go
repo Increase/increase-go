@@ -426,6 +426,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
 	// Why the transaction was declined.
 	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
 	// Fields related to verification of cardholder-provided values.
 	Verification DeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
 	JSON         declinedTransactionSourceCardDeclineJSON         `json:"-"`
@@ -458,6 +461,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	ProcessingCategory    apijson.Field
 	RealTimeDecisionID    apijson.Field
 	Reason                apijson.Field
+	TerminalID            apijson.Field
 	Verification          apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
