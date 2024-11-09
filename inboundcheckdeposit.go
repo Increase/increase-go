@@ -142,6 +142,9 @@ type InboundCheckDeposit struct {
 	DepositReturn InboundCheckDepositDepositReturn `json:"deposit_return,required,nullable"`
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	// Whether the details on the check match the recipient name of the check transfer.
+	// This is an optional feature, contact sales to enable.
+	PayeeNameAnalysis InboundCheckDepositPayeeNameAnalysis `json:"payee_name_analysis,required"`
 	// The status of the Inbound Check Deposit.
 	Status InboundCheckDepositStatus `json:"status,required"`
 	// If the deposit attempt has been accepted, the identifier of the Transaction
@@ -172,6 +175,7 @@ type inboundCheckDepositJSON struct {
 	DeclinedTransactionID           apijson.Field
 	DepositReturn                   apijson.Field
 	FrontImageFileID                apijson.Field
+	PayeeNameAnalysis               apijson.Field
 	Status                          apijson.Field
 	TransactionID                   apijson.Field
 	Type                            apijson.Field
@@ -316,6 +320,27 @@ const (
 func (r InboundCheckDepositDepositReturnReason) IsKnown() bool {
 	switch r {
 	case InboundCheckDepositDepositReturnReasonAlteredOrFictitious, InboundCheckDepositDepositReturnReasonNotAuthorized, InboundCheckDepositDepositReturnReasonDuplicatePresentment, InboundCheckDepositDepositReturnReasonEndorsementMissing, InboundCheckDepositDepositReturnReasonEndorsementIrregular:
+		return true
+	}
+	return false
+}
+
+// Whether the details on the check match the recipient name of the check transfer.
+// This is an optional feature, contact sales to enable.
+type InboundCheckDepositPayeeNameAnalysis string
+
+const (
+	// The details on the check match the recipient name of the check transfer.
+	InboundCheckDepositPayeeNameAnalysisNameMatches InboundCheckDepositPayeeNameAnalysis = "name_matches"
+	// The details on the check do not match the recipient name of the check transfer.
+	InboundCheckDepositPayeeNameAnalysisDoesNotMatch InboundCheckDepositPayeeNameAnalysis = "does_not_match"
+	// The payee name analysis was not evaluated.
+	InboundCheckDepositPayeeNameAnalysisNotEvaluated InboundCheckDepositPayeeNameAnalysis = "not_evaluated"
+)
+
+func (r InboundCheckDepositPayeeNameAnalysis) IsKnown() bool {
+	switch r {
+	case InboundCheckDepositPayeeNameAnalysisNameMatches, InboundCheckDepositPayeeNameAnalysisDoesNotMatch, InboundCheckDepositPayeeNameAnalysisNotEvaluated:
 		return true
 	}
 	return false
