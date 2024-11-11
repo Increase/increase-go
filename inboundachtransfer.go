@@ -129,6 +129,9 @@ type InboundACHTransfer struct {
 	Decline InboundACHTransferDecline `json:"decline,required,nullable"`
 	// The direction of the transfer.
 	Direction InboundACHTransferDirection `json:"direction,required"`
+	// The effective date of the transfer. This is sent by the sending bank and is a
+	// factor in determining funds availability.
+	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
 	// The settlement schedule the transfer is expected to follow.
 	ExpectedSettlementSchedule InboundACHTransferExpectedSettlementSchedule `json:"expected_settlement_schedule,required"`
 	// If the Inbound ACH Transfer has a Standard Entry Class Code of IAT, this will
@@ -180,6 +183,7 @@ type inboundACHTransferJSON struct {
 	AutomaticallyResolvesAt            apijson.Field
 	Decline                            apijson.Field
 	Direction                          apijson.Field
+	EffectiveDate                      apijson.Field
 	ExpectedSettlementSchedule         apijson.Field
 	InternationalAddenda               apijson.Field
 	NotificationOfChange               apijson.Field
