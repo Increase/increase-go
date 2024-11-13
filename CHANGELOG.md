@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.149.0 (2024-11-13)
+
+Full Changelog: [v0.148.0...v0.149.0](https://github.com/Increase/increase-go/compare/v0.148.0...v0.149.0)
+
+### Features
+
+* **api:** api update ([#635](https://github.com/Increase/increase-go/issues/635)) ([991d494](https://github.com/Increase/increase-go/commit/991d49477e2dfc9bf9bb249844c234972458e402))
+
 ## 0.148.0 (2024-11-13)
 
 Full Changelog: [v0.147.0...v0.148.0](https://github.com/Increase/increase-go/compare/v0.147.0...v0.148.0)
