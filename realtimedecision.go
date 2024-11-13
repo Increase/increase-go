@@ -1168,6 +1168,9 @@ func (r RealTimeDecisionActionParamsCardAuthenticationChallengeResult) IsKnown()
 type RealTimeDecisionActionParamsCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
 	Decision param.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
+	// The reason the card authorization was declined. This translates to a specific
+	// decline code that is sent to the card network.
+	DeclineReason param.Field[RealTimeDecisionActionParamsCardAuthorizationDeclineReason] `json:"decline_reason"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byte, err error) {
@@ -1187,6 +1190,39 @@ const (
 func (r RealTimeDecisionActionParamsCardAuthorizationDecision) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionActionParamsCardAuthorizationDecisionApprove, RealTimeDecisionActionParamsCardAuthorizationDecisionDecline:
+		return true
+	}
+	return false
+}
+
+// The reason the card authorization was declined. This translates to a specific
+// decline code that is sent to the card network.
+type RealTimeDecisionActionParamsCardAuthorizationDeclineReason string
+
+const (
+	// The cardholder does not have sufficient funds to cover the transaction. The
+	// merchant may attempt to process the transaction again.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "insufficient_funds"
+	// This type of transaction is not allowed for this card. This transaction should
+	// not be retried.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "transaction_never_allowed"
+	// The transaction amount exceeds the cardholder's approval limit. The merchant may
+	// attempt to process the transaction again.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "exceeds_approval_limit"
+	// The card has been temporarily disabled or not yet activated. The merchant may
+	// attempt to process the transaction again.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "card_temporarily_disabled"
+	// The transaction is suspected to be fraudulent. The merchant may attempt to
+	// process the transaction again.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "suspected_fraud"
+	// The transaction was declined for another reason. The merchant may attempt to
+	// process the transaction again. This should be used sparingly.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "other"
+)
+
+func (r RealTimeDecisionActionParamsCardAuthorizationDeclineReason) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther:
 		return true
 	}
 	return false
