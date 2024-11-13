@@ -220,7 +220,7 @@ type CardPaymentElementsCardAuthorization struct {
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The merchant descriptor of the merchant the card is transacting with.
@@ -915,7 +915,7 @@ type CardPaymentElementsCardDecline struct {
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The merchant descriptor of the merchant the card is transacting with.
@@ -3773,7 +3773,7 @@ type CardPaymentElementsCardValidation struct {
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The merchant descriptor of the merchant the card is transacting with.
