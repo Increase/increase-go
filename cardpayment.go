@@ -1850,6 +1850,8 @@ type CardPaymentElementsCardRefund struct {
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name,required"`
+	// The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
+	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
@@ -1883,6 +1885,7 @@ type cardPaymentElementsCardRefundJSON struct {
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
+	MerchantPostalCode   apijson.Field
 	MerchantState        apijson.Field
 	NetworkIdentifiers   apijson.Field
 	PresentmentAmount    apijson.Field
@@ -2907,6 +2910,8 @@ type CardPaymentElementsCardSettlement struct {
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name,required"`
+	// The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
+	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
@@ -2943,6 +2948,7 @@ type cardPaymentElementsCardSettlementJSON struct {
 	MerchantCity         apijson.Field
 	MerchantCountry      apijson.Field
 	MerchantName         apijson.Field
+	MerchantPostalCode   apijson.Field
 	MerchantState        apijson.Field
 	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
