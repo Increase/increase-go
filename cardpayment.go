@@ -1845,7 +1845,7 @@ type CardPaymentElementsCardRefund struct {
 	// The 4-digit MCC describing the merchant's business.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city,required"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
@@ -2905,7 +2905,7 @@ type CardPaymentElementsCardSettlement struct {
 	// The 4-digit MCC describing the merchant's business.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city,required"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
