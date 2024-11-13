@@ -370,7 +370,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	// card is transacting with.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city,required"`
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The merchant descriptor of the merchant the card is transacting with.
