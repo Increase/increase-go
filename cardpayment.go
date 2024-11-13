@@ -1841,7 +1841,7 @@ type CardPaymentElementsCardRefund struct {
 	Interchange CardPaymentElementsCardRefundInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
 	// The 4-digit MCC describing the merchant's business.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
@@ -1849,7 +1849,7 @@ type CardPaymentElementsCardRefund struct {
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required,nullable"`
+	MerchantName string `json:"merchant_name,required"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
@@ -2898,7 +2898,7 @@ type CardPaymentElementsCardSettlement struct {
 	Interchange CardPaymentElementsCardSettlementInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required,nullable"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
 	// The 4-digit MCC describing the merchant's business.
 	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
@@ -2906,7 +2906,7 @@ type CardPaymentElementsCardSettlement struct {
 	// The country the merchant resides in.
 	MerchantCountry string `json:"merchant_country,required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required,nullable"`
+	MerchantName string `json:"merchant_name,required"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
 	// Network-specific identifiers for this refund.
