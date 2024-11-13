@@ -368,11 +368,11 @@ type PendingTransactionSourceCardAuthorization struct {
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required,nullable"`
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
 	// The city the merchant resides in.
 	MerchantCity string `json:"merchant_city,required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required,nullable"`
+	MerchantCountry string `json:"merchant_country,required"`
 	// The merchant descriptor of the merchant the card is transacting with.
 	MerchantDescriptor string `json:"merchant_descriptor,required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
