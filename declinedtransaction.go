@@ -424,6 +424,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// This is present if a specific decline reason was given in the real-time
+	// decision.
+	RealTimeDecisionReason DeclinedTransactionSourceCardDeclineRealTimeDecisionReason `json:"real_time_decision_reason,required,nullable"`
 	// Why the transaction was declined.
 	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
@@ -437,34 +440,35 @@ type DeclinedTransactionSourceCardDecline struct {
 // declinedTransactionSourceCardDeclineJSON contains the JSON metadata for the
 // struct [DeclinedTransactionSourceCardDecline]
 type declinedTransactionSourceCardDeclineJSON struct {
-	ID                    apijson.Field
-	Actioner              apijson.Field
-	Amount                apijson.Field
-	CardPaymentID         apijson.Field
-	Currency              apijson.Field
-	DeclinedTransactionID apijson.Field
-	DigitalWalletTokenID  apijson.Field
-	Direction             apijson.Field
-	MerchantAcceptorID    apijson.Field
-	MerchantCategoryCode  apijson.Field
-	MerchantCity          apijson.Field
-	MerchantCountry       apijson.Field
-	MerchantDescriptor    apijson.Field
-	MerchantPostalCode    apijson.Field
-	MerchantState         apijson.Field
-	NetworkDetails        apijson.Field
-	NetworkIdentifiers    apijson.Field
-	NetworkRiskScore      apijson.Field
-	PhysicalCardID        apijson.Field
-	PresentmentAmount     apijson.Field
-	PresentmentCurrency   apijson.Field
-	ProcessingCategory    apijson.Field
-	RealTimeDecisionID    apijson.Field
-	Reason                apijson.Field
-	TerminalID            apijson.Field
-	Verification          apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	ID                     apijson.Field
+	Actioner               apijson.Field
+	Amount                 apijson.Field
+	CardPaymentID          apijson.Field
+	Currency               apijson.Field
+	DeclinedTransactionID  apijson.Field
+	DigitalWalletTokenID   apijson.Field
+	Direction              apijson.Field
+	MerchantAcceptorID     apijson.Field
+	MerchantCategoryCode   apijson.Field
+	MerchantCity           apijson.Field
+	MerchantCountry        apijson.Field
+	MerchantDescriptor     apijson.Field
+	MerchantPostalCode     apijson.Field
+	MerchantState          apijson.Field
+	NetworkDetails         apijson.Field
+	NetworkIdentifiers     apijson.Field
+	NetworkRiskScore       apijson.Field
+	PhysicalCardID         apijson.Field
+	PresentmentAmount      apijson.Field
+	PresentmentCurrency    apijson.Field
+	ProcessingCategory     apijson.Field
+	RealTimeDecisionID     apijson.Field
+	RealTimeDecisionReason apijson.Field
+	Reason                 apijson.Field
+	TerminalID             apijson.Field
+	Verification           apijson.Field
+	raw                    string
+	ExtraFields            map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceCardDecline) UnmarshalJSON(data []byte) (err error) {
@@ -794,6 +798,39 @@ const (
 func (r DeclinedTransactionSourceCardDeclineProcessingCategory) IsKnown() bool {
 	switch r {
 	case DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding, DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser, DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment, DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase, DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash, DeclinedTransactionSourceCardDeclineProcessingCategoryRefund:
+		return true
+	}
+	return false
+}
+
+// This is present if a specific decline reason was given in the real-time
+// decision.
+type DeclinedTransactionSourceCardDeclineRealTimeDecisionReason string
+
+const (
+	// The cardholder does not have sufficient funds to cover the transaction. The
+	// merchant may attempt to process the transaction again.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "insufficient_funds"
+	// This type of transaction is not allowed for this card. This transaction should
+	// not be retried.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
+	// The transaction amount exceeds the cardholder's approval limit. The merchant may
+	// attempt to process the transaction again.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
+	// The card has been temporarily disabled or not yet activated. The merchant may
+	// attempt to process the transaction again.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
+	// The transaction is suspected to be fraudulent. The merchant may attempt to
+	// process the transaction again.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "suspected_fraud"
+	// The transaction was declined for another reason. The merchant may attempt to
+	// process the transaction again. This should be used sparingly.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "other"
+)
+
+func (r DeclinedTransactionSourceCardDeclineRealTimeDecisionReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther:
 		return true
 	}
 	return false
