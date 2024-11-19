@@ -85,7 +85,7 @@ func TestCardDisputeListWithOptionalParams(t *testing.T) {
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.CardDisputeListParamsStatus{
-			In: increase.F([]increase.CardDisputeListParamsStatusIn{increase.CardDisputeListParamsStatusInPendingReviewing, increase.CardDisputeListParamsStatusInPendingUserInformation, increase.CardDisputeListParamsStatusInAccepted}),
+			In: increase.F([]increase.CardDisputeListParamsStatusIn{increase.CardDisputeListParamsStatusInPendingReviewing}),
 		}),
 	})
 	if err != nil {

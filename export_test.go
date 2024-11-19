@@ -58,7 +58,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 		}),
 		EntityCsv: increase.F(increase.ExportNewParamsEntityCsv{
 			Status: increase.F(increase.ExportNewParamsEntityCsvStatus{
-				In: increase.F([]increase.ExportNewParamsEntityCsvStatusIn{increase.ExportNewParamsEntityCsvStatusInActive, increase.ExportNewParamsEntityCsvStatusInArchived, increase.ExportNewParamsEntityCsvStatusInDisabled}),
+				In: increase.F([]increase.ExportNewParamsEntityCsvStatusIn{increase.ExportNewParamsEntityCsvStatusInActive}),
 			}),
 		}),
 		TransactionCsv: increase.F(increase.ExportNewParamsTransactionCsv{
@@ -118,7 +118,7 @@ func TestExportListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Exports.List(context.TODO(), increase.ExportListParams{
 		Category: increase.F(increase.ExportListParamsCategory{
-			In: increase.F([]increase.ExportListParamsCategoryIn{increase.ExportListParamsCategoryInAccountStatementOfx, increase.ExportListParamsCategoryInTransactionCsv, increase.ExportListParamsCategoryInBalanceCsv}),
+			In: increase.F([]increase.ExportListParamsCategoryIn{increase.ExportListParamsCategoryInAccountStatementOfx}),
 		}),
 		CreatedAt: increase.F(increase.ExportListParamsCreatedAt{
 			After:      increase.F(time.Now()),
@@ -130,7 +130,7 @@ func TestExportListWithOptionalParams(t *testing.T) {
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.ExportListParamsStatus{
-			In: increase.F([]increase.ExportListParamsStatusIn{increase.ExportListParamsStatusInPending, increase.ExportListParamsStatusInComplete, increase.ExportListParamsStatusInFailed}),
+			In: increase.F([]increase.ExportListParamsStatusIn{increase.ExportListParamsStatusInPending}),
 		}),
 	})
 	if err != nil {
