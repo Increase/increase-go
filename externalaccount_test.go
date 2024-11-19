@@ -112,7 +112,7 @@ func TestExternalAccountListWithOptionalParams(t *testing.T) {
 		Limit:          increase.F(int64(1)),
 		RoutingNumber:  increase.F("xxxxxxxxx"),
 		Status: increase.F(increase.ExternalAccountListParamsStatus{
-			In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive, increase.ExternalAccountListParamsStatusInArchived}),
+			In: increase.F([]increase.ExternalAccountListParamsStatusIn{increase.ExternalAccountListParamsStatusInActive}),
 		}),
 	})
 	if err != nil {

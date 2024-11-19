@@ -50,7 +50,7 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Documents.List(context.TODO(), increase.DocumentListParams{
 		Category: increase.F(increase.DocumentListParamsCategory{
-			In: increase.F([]increase.DocumentListParamsCategoryIn{increase.DocumentListParamsCategoryInForm1099Int, increase.DocumentListParamsCategoryInProofOfAuthorization, increase.DocumentListParamsCategoryInCompanyInformation}),
+			In: increase.F([]increase.DocumentListParamsCategoryIn{increase.DocumentListParamsCategoryInForm1099Int}),
 		}),
 		CreatedAt: increase.F(increase.DocumentListParamsCreatedAt{
 			After:      increase.F(time.Now()),

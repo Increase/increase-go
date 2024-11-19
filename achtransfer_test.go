@@ -36,20 +36,10 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 			Freeform: increase.F(increase.ACHTransferNewParamsAddendaFreeform{
 				Entries: increase.F([]increase.ACHTransferNewParamsAddendaFreeformEntry{{
 					PaymentRelatedInformation: increase.F("x"),
-				}, {
-					PaymentRelatedInformation: increase.F("x"),
-				}, {
-					PaymentRelatedInformation: increase.F("x"),
 				}}),
 			}),
 			PaymentOrderRemittanceAdvice: increase.F(increase.ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice{
 				Invoices: increase.F([]increase.ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice{{
-					InvoiceNumber: increase.F("x"),
-					PaidAmount:    increase.F(int64(0)),
-				}, {
-					InvoiceNumber: increase.F("x"),
-					PaidAmount:    increase.F(int64(0)),
-				}, {
 					InvoiceNumber: increase.F("x"),
 					PaidAmount:    increase.F(int64(0)),
 				}}),
