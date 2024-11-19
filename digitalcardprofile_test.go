@@ -88,7 +88,7 @@ func TestDigitalCardProfileListWithOptionalParams(t *testing.T) {
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.DigitalCardProfileListParamsStatus{
-			In: increase.F([]increase.DigitalCardProfileListParamsStatusIn{increase.DigitalCardProfileListParamsStatusInPending, increase.DigitalCardProfileListParamsStatusInRejected, increase.DigitalCardProfileListParamsStatusInActive}),
+			In: increase.F([]increase.DigitalCardProfileListParamsStatusIn{increase.DigitalCardProfileListParamsStatusInPending}),
 		}),
 	})
 	if err != nil {

@@ -78,7 +78,7 @@ func TestIntrafiAccountEnrollmentListWithOptionalParams(t *testing.T) {
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.IntrafiAccountEnrollmentListParamsStatus{
-			In: increase.F([]increase.IntrafiAccountEnrollmentListParamsStatusIn{increase.IntrafiAccountEnrollmentListParamsStatusInPendingEnrolling, increase.IntrafiAccountEnrollmentListParamsStatusInEnrolled, increase.IntrafiAccountEnrollmentListParamsStatusInPendingUnenrolling}),
+			In: increase.F([]increase.IntrafiAccountEnrollmentListParamsStatusIn{increase.IntrafiAccountEnrollmentListParamsStatusInPendingEnrolling}),
 		}),
 	})
 	if err != nil {

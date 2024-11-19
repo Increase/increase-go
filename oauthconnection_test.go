@@ -51,7 +51,7 @@ func TestOAuthConnectionListWithOptionalParams(t *testing.T) {
 		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 		Status: increase.F(increase.OAuthConnectionListParamsStatus{
-			In: increase.F([]increase.OAuthConnectionListParamsStatusIn{increase.OAuthConnectionListParamsStatusInActive, increase.OAuthConnectionListParamsStatusInInactive}),
+			In: increase.F([]increase.OAuthConnectionListParamsStatusIn{increase.OAuthConnectionListParamsStatusInActive}),
 		}),
 	})
 	if err != nil {

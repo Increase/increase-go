@@ -51,7 +51,7 @@ func TestEventListWithOptionalParams(t *testing.T) {
 	_, err := client.Events.List(context.TODO(), increase.EventListParams{
 		AssociatedObjectID: increase.F("associated_object_id"),
 		Category: increase.F(increase.EventListParamsCategory{
-			In: increase.F([]increase.EventListParamsCategoryIn{increase.EventListParamsCategoryInAccountCreated, increase.EventListParamsCategoryInAccountUpdated, increase.EventListParamsCategoryInAccountNumberCreated}),
+			In: increase.F([]increase.EventListParamsCategoryIn{increase.EventListParamsCategoryInAccountCreated}),
 		}),
 		CreatedAt: increase.F(increase.EventListParamsCreatedAt{
 			After:      increase.F(time.Now()),
