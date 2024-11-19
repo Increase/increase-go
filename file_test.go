@@ -87,7 +87,7 @@ func TestFileListWithOptionalParams(t *testing.T) {
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Purpose: increase.F(increase.FileListParamsPurpose{
-			In: increase.F([]increase.FileListParamsPurposeIn{increase.FileListParamsPurposeInCheckImageFront, increase.FileListParamsPurposeInCheckImageBack, increase.FileListParamsPurposeInProcessedCheckImageFront}),
+			In: increase.F([]increase.FileListParamsPurposeIn{increase.FileListParamsPurposeInCheckImageFront}),
 		}),
 	})
 	if err != nil {

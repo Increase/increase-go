@@ -51,7 +51,7 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 	_, err := client.PendingTransactions.List(context.TODO(), increase.PendingTransactionListParams{
 		AccountID: increase.F("account_id"),
 		Category: increase.F(increase.PendingTransactionListParamsCategory{
-			In: increase.F([]increase.PendingTransactionListParamsCategoryIn{increase.PendingTransactionListParamsCategoryInAccountTransferInstruction, increase.PendingTransactionListParamsCategoryInACHTransferInstruction, increase.PendingTransactionListParamsCategoryInCardAuthorization}),
+			In: increase.F([]increase.PendingTransactionListParamsCategoryIn{increase.PendingTransactionListParamsCategoryInAccountTransferInstruction}),
 		}),
 		CreatedAt: increase.F(increase.PendingTransactionListParamsCreatedAt{
 			After:      increase.F(time.Now()),
@@ -63,7 +63,7 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 		Limit:   increase.F(int64(1)),
 		RouteID: increase.F("route_id"),
 		Status: increase.F(increase.PendingTransactionListParamsStatus{
-			In: increase.F([]increase.PendingTransactionListParamsStatusIn{increase.PendingTransactionListParamsStatusInPending, increase.PendingTransactionListParamsStatusInComplete}),
+			In: increase.F([]increase.PendingTransactionListParamsStatusIn{increase.PendingTransactionListParamsStatusInPending}),
 		}),
 	})
 	if err != nil {
