@@ -244,15 +244,15 @@ func (r AccountCurrency) IsKnown() bool {
 type AccountStatus string
 
 const (
-	// Open Accounts that are ready to use.
-	AccountStatusOpen AccountStatus = "open"
 	// Closed Accounts on which no new activity can occur.
 	AccountStatusClosed AccountStatus = "closed"
+	// Open Accounts that are ready to use.
+	AccountStatusOpen AccountStatus = "open"
 )
 
 func (r AccountStatus) IsKnown() bool {
 	switch r {
-	case AccountStatusOpen, AccountStatusClosed:
+	case AccountStatusClosed, AccountStatusOpen:
 		return true
 	}
 	return false
@@ -409,15 +409,15 @@ func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
 type AccountListParamsStatus string
 
 const (
-	// Open Accounts that are ready to use.
-	AccountListParamsStatusOpen AccountListParamsStatus = "open"
 	// Closed Accounts on which no new activity can occur.
 	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
+	// Open Accounts that are ready to use.
+	AccountListParamsStatusOpen AccountListParamsStatus = "open"
 )
 
 func (r AccountListParamsStatus) IsKnown() bool {
 	switch r {
-	case AccountListParamsStatusOpen, AccountListParamsStatusClosed:
+	case AccountListParamsStatusClosed, AccountListParamsStatusOpen:
 		return true
 	}
 	return false
