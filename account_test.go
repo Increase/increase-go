@@ -116,7 +116,7 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 		InformationalEntityID: increase.F("informational_entity_id"),
 		Limit:                 increase.F(int64(1)),
 		ProgramID:             increase.F("program_id"),
-		Status:                increase.F(increase.AccountListParamsStatusOpen),
+		Status:                increase.F(increase.AccountListParamsStatusClosed),
 	})
 	if err != nil {
 		var apierr *increase.Error
