@@ -87,6 +87,9 @@ type RealTimePaymentsTransfer struct {
 	ID string `json:"id,required"`
 	// The Account from which the transfer was sent.
 	AccountID string `json:"account_id,required"`
+	// If the transfer is acknowledged by the recipient bank, this will contain
+	// supplemental details.
+	Acknowledgement RealTimePaymentsTransferAcknowledgement `json:"acknowledgement,required,nullable"`
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// If your account requires approvals for transfers and the transfer was approved,
@@ -156,6 +159,7 @@ type RealTimePaymentsTransfer struct {
 type realTimePaymentsTransferJSON struct {
 	ID                       apijson.Field
 	AccountID                apijson.Field
+	Acknowledgement          apijson.Field
 	Amount                   apijson.Field
 	Approval                 apijson.Field
 	Cancellation             apijson.Field
@@ -187,6 +191,30 @@ func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r realTimePaymentsTransferJSON) RawJSON() string {
+	return r.raw
+}
+
+// If the transfer is acknowledged by the recipient bank, this will contain
+// supplemental details.
+type RealTimePaymentsTransferAcknowledgement struct {
+	// When the transfer was acknowledged.
+	AcknowledgedAt time.Time                                   `json:"acknowledged_at,required" format:"date-time"`
+	JSON           realTimePaymentsTransferAcknowledgementJSON `json:"-"`
+}
+
+// realTimePaymentsTransferAcknowledgementJSON contains the JSON metadata for the
+// struct [RealTimePaymentsTransferAcknowledgement]
+type realTimePaymentsTransferAcknowledgementJSON struct {
+	AcknowledgedAt apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *RealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferAcknowledgementJSON) RawJSON() string {
 	return r.raw
 }
 
