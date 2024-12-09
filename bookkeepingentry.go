@@ -131,6 +131,8 @@ func (r BookkeepingEntryType) IsKnown() bool {
 }
 
 type BookkeepingEntryListParams struct {
+	// The identifier for the Bookkeeping Account to filter by.
+	AccountID param.Field[string] `query:"account_id"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
