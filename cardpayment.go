@@ -1871,6 +1871,9 @@ type CardPaymentElementsCardRefund struct {
 	Amount int64 `json:"amount,required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required"`
+	// Cashback debited for this transaction, if eligible. Cashback is paid out in
+	// aggregate, monthly.
+	Cashback CardPaymentElementsCardRefundCashback `json:"cashback,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency CardPaymentElementsCardRefundCurrency `json:"currency,required"`
@@ -1915,6 +1918,7 @@ type cardPaymentElementsCardRefundJSON struct {
 	ID                   apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
+	Cashback             apijson.Field
 	Currency             apijson.Field
 	Interchange          apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -1940,6 +1944,61 @@ func (r *CardPaymentElementsCardRefund) UnmarshalJSON(data []byte) (err error) {
 
 func (r cardPaymentElementsCardRefundJSON) RawJSON() string {
 	return r.raw
+}
+
+// Cashback debited for this transaction, if eligible. Cashback is paid out in
+// aggregate, monthly.
+type CardPaymentElementsCardRefundCashback struct {
+	// The cashback amount given as a string containing a decimal number. The amount is
+	// a positive number if it will be credited to you (e.g., settlements) and a
+	// negative number if it will be debited (e.g., refunds).
+	Amount string `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
+	Currency CardPaymentElementsCardRefundCashbackCurrency `json:"currency,required"`
+	JSON     cardPaymentElementsCardRefundCashbackJSON     `json:"-"`
+}
+
+// cardPaymentElementsCardRefundCashbackJSON contains the JSON metadata for the
+// struct [CardPaymentElementsCardRefundCashback]
+type cardPaymentElementsCardRefundCashbackJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardRefundCashback) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundCashbackJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
+type CardPaymentElementsCardRefundCashbackCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	CardPaymentElementsCardRefundCashbackCurrencyCad CardPaymentElementsCardRefundCashbackCurrency = "CAD"
+	// Swiss Franc (CHF)
+	CardPaymentElementsCardRefundCashbackCurrencyChf CardPaymentElementsCardRefundCashbackCurrency = "CHF"
+	// Euro (EUR)
+	CardPaymentElementsCardRefundCashbackCurrencyEur CardPaymentElementsCardRefundCashbackCurrency = "EUR"
+	// British Pound (GBP)
+	CardPaymentElementsCardRefundCashbackCurrencyGbp CardPaymentElementsCardRefundCashbackCurrency = "GBP"
+	// Japanese Yen (JPY)
+	CardPaymentElementsCardRefundCashbackCurrencyJpy CardPaymentElementsCardRefundCashbackCurrency = "JPY"
+	// US Dollar (USD)
+	CardPaymentElementsCardRefundCashbackCurrencyUsd CardPaymentElementsCardRefundCashbackCurrency = "USD"
+)
+
+func (r CardPaymentElementsCardRefundCashbackCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundCashbackCurrencyCad, CardPaymentElementsCardRefundCashbackCurrencyChf, CardPaymentElementsCardRefundCashbackCurrencyEur, CardPaymentElementsCardRefundCashbackCurrencyGbp, CardPaymentElementsCardRefundCashbackCurrencyJpy, CardPaymentElementsCardRefundCashbackCurrencyUsd:
+		return true
+	}
+	return false
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -2931,6 +2990,9 @@ type CardPaymentElementsCardSettlement struct {
 	CardAuthorization string `json:"card_authorization,required,nullable"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id,required"`
+	// Cashback earned on this transaction, if eligible. Cashback is paid out in
+	// aggregate, monthly.
+	Cashback CardPaymentElementsCardSettlementCashback `json:"cashback,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency CardPaymentElementsCardSettlementCurrency `json:"currency,required"`
@@ -2978,6 +3040,7 @@ type cardPaymentElementsCardSettlementJSON struct {
 	Amount               apijson.Field
 	CardAuthorization    apijson.Field
 	CardPaymentID        apijson.Field
+	Cashback             apijson.Field
 	Currency             apijson.Field
 	Interchange          apijson.Field
 	MerchantAcceptorID   apijson.Field
@@ -3004,6 +3067,61 @@ func (r *CardPaymentElementsCardSettlement) UnmarshalJSON(data []byte) (err erro
 
 func (r cardPaymentElementsCardSettlementJSON) RawJSON() string {
 	return r.raw
+}
+
+// Cashback earned on this transaction, if eligible. Cashback is paid out in
+// aggregate, monthly.
+type CardPaymentElementsCardSettlementCashback struct {
+	// The cashback amount given as a string containing a decimal number. The amount is
+	// a positive number if it will be credited to you (e.g., settlements) and a
+	// negative number if it will be debited (e.g., refunds).
+	Amount string `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
+	Currency CardPaymentElementsCardSettlementCashbackCurrency `json:"currency,required"`
+	JSON     cardPaymentElementsCardSettlementCashbackJSON     `json:"-"`
+}
+
+// cardPaymentElementsCardSettlementCashbackJSON contains the JSON metadata for the
+// struct [CardPaymentElementsCardSettlementCashback]
+type cardPaymentElementsCardSettlementCashbackJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardSettlementCashback) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementCashbackJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
+type CardPaymentElementsCardSettlementCashbackCurrency string
+
+const (
+	// Canadian Dollar (CAD)
+	CardPaymentElementsCardSettlementCashbackCurrencyCad CardPaymentElementsCardSettlementCashbackCurrency = "CAD"
+	// Swiss Franc (CHF)
+	CardPaymentElementsCardSettlementCashbackCurrencyChf CardPaymentElementsCardSettlementCashbackCurrency = "CHF"
+	// Euro (EUR)
+	CardPaymentElementsCardSettlementCashbackCurrencyEur CardPaymentElementsCardSettlementCashbackCurrency = "EUR"
+	// British Pound (GBP)
+	CardPaymentElementsCardSettlementCashbackCurrencyGbp CardPaymentElementsCardSettlementCashbackCurrency = "GBP"
+	// Japanese Yen (JPY)
+	CardPaymentElementsCardSettlementCashbackCurrencyJpy CardPaymentElementsCardSettlementCashbackCurrency = "JPY"
+	// US Dollar (USD)
+	CardPaymentElementsCardSettlementCashbackCurrencyUsd CardPaymentElementsCardSettlementCashbackCurrency = "USD"
+)
+
+func (r CardPaymentElementsCardSettlementCashbackCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardSettlementCashbackCurrencyCad, CardPaymentElementsCardSettlementCashbackCurrencyChf, CardPaymentElementsCardSettlementCashbackCurrencyEur, CardPaymentElementsCardSettlementCashbackCurrencyGbp, CardPaymentElementsCardSettlementCashbackCurrencyJpy, CardPaymentElementsCardSettlementCashbackCurrencyUsd:
+		return true
+	}
+	return false
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
