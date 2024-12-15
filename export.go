@@ -151,11 +151,14 @@ const (
 	ExportCategoryEntityCsv ExportCategory = "entity_csv"
 	// Export a CSV of vendors added to the third-party risk management dashboard.
 	ExportCategoryVendorCsv ExportCategory = "vendor_csv"
+	// Certain dashboard tables are available as CSV exports. This export cannot be
+	// created via the API.
+	ExportCategoryDashboardTableCsv ExportCategory = "dashboard_table_csv"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv:
+	case ExportCategoryAccountStatementOfx, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv:
 		return true
 	}
 	return false
@@ -482,11 +485,14 @@ const (
 	ExportListParamsCategoryInEntityCsv ExportListParamsCategoryIn = "entity_csv"
 	// Export a CSV of vendors added to the third-party risk management dashboard.
 	ExportListParamsCategoryInVendorCsv ExportListParamsCategoryIn = "vendor_csv"
+	// Certain dashboard tables are available as CSV exports. This export cannot be
+	// created via the API.
+	ExportListParamsCategoryInDashboardTableCsv ExportListParamsCategoryIn = "dashboard_table_csv"
 )
 
 func (r ExportListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv:
+	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv, ExportListParamsCategoryInDashboardTableCsv:
 		return true
 	}
 	return false
