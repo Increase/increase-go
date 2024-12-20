@@ -126,7 +126,7 @@ const (
 	InboundMailItemRejectionReasonNoMatchingLockbox InboundMailItemRejectionReason = "no_matching_lockbox"
 	// The mail item does not contain a check.
 	InboundMailItemRejectionReasonNoCheck InboundMailItemRejectionReason = "no_check"
-	// The Lockbox or its associataed Account is not active.
+	// The Lockbox or its associated Account is not active.
 	InboundMailItemRejectionReasonLockboxNotActive InboundMailItemRejectionReason = "lockbox_not_active"
 )
 
