@@ -1755,7 +1755,7 @@ type TransactionSourceCardSettlement struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency TransactionSourceCardSettlementCurrency `json:"currency,required"`
-	// Interchange assessed as a part of this transaciton.
+	// Interchange assessed as a part of this transaction.
 	Interchange TransactionSourceCardSettlementInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -1910,7 +1910,7 @@ func (r TransactionSourceCardSettlementCurrency) IsKnown() bool {
 	return false
 }
 
-// Interchange assessed as a part of this transaciton.
+// Interchange assessed as a part of this transaction.
 type TransactionSourceCardSettlementInterchange struct {
 	// The interchange amount given as a string containing a decimal number. The amount
 	// is a positive number if it is credited to Increase (e.g., settlements) and a
