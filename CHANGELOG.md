@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.164.0 (2024-12-20)
+
+Full Changelog: [v0.163.0...v0.164.0](https://github.com/Increase/increase-go/compare/v0.163.0...v0.164.0)
+
+### Features
+
+* **api:** api update ([#682](https://github.com/Increase/increase-go/issues/682)) ([b2bf777](https://github.com/Increase/increase-go/commit/b2bf7777a02d3116ddf12eb0fcbded077d50e8d2))
+
+
+### Chores
+
+* **internal:** codegen related update ([#680](https://github.com/Increase/increase-go/issues/680)) ([2987cfb](https://github.com/Increase/increase-go/commit/2987cfb38e7a4b1f5d8d3dadd2586cdbf529303e))
+
 ## 0.163.0 (2024-12-15)
 
 Full Changelog: [v0.162.0...v0.163.0](https://github.com/Increase/increase-go/compare/v0.162.0...v0.163.0)
