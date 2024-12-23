@@ -40,8 +40,9 @@ func (r *GroupService) Get(ctx context.Context, opts ...option.RequestOption) (r
 }
 
 // Groups represent organizations using Increase. You can retrieve information
-// about your own organization via the API, or (more commonly) OAuth platforms can
+// about your own organization via the API. More commonly, OAuth platforms can
 // retrieve information about the organizations that have granted them access.
+// Learn more about OAuth [here](https://increase.com/documentation/oauth).
 type Group struct {
 	// The Group identifier.
 	ID string `json:"id,required"`
