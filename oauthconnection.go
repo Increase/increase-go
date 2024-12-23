@@ -86,6 +86,8 @@ type OAuthConnection struct {
 	DeletedAt time.Time `json:"deleted_at,required,nullable" format:"date-time"`
 	// The identifier of the Group that has authorized your OAuth application.
 	GroupID string `json:"group_id,required"`
+	// The identifier of the OAuth application this connection is for.
+	OAuthApplicationID string `json:"oauth_application_id,required"`
 	// Whether the connection is active.
 	Status OAuthConnectionStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -96,14 +98,15 @@ type OAuthConnection struct {
 
 // oauthConnectionJSON contains the JSON metadata for the struct [OAuthConnection]
 type oauthConnectionJSON struct {
-	ID          apijson.Field
-	CreatedAt   apijson.Field
-	DeletedAt   apijson.Field
-	GroupID     apijson.Field
-	Status      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID                 apijson.Field
+	CreatedAt          apijson.Field
+	DeletedAt          apijson.Field
+	GroupID            apijson.Field
+	OAuthApplicationID apijson.Field
+	Status             apijson.Field
+	Type               apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *OAuthConnection) UnmarshalJSON(data []byte) (err error) {
@@ -153,8 +156,10 @@ type OAuthConnectionListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                           `query:"limit"`
-	Status param.Field[OAuthConnectionListParamsStatus] `query:"status"`
+	Limit param.Field[int64] `query:"limit"`
+	// The identifier of the OAuth Application to filter by.
+	OAuthApplicationID param.Field[string]                          `query:"oauth_application_id"`
+	Status             param.Field[OAuthConnectionListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [OAuthConnectionListParams]'s query parameters as

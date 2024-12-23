@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestOAuthConnectionGet(t *testing.T) {
+func TestOAuthApplicationGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,7 @@ func TestOAuthConnectionGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.OAuthConnections.Get(context.TODO(), "connection_dauknoksyr4wilz4e6my")
+	_, err := client.OAuthApplications.Get(context.TODO(), "application_gj9ufmpgh5i56k4vyriy")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -35,7 +35,7 @@ func TestOAuthConnectionGet(t *testing.T) {
 	}
 }
 
-func TestOAuthConnectionListWithOptionalParams(t *testing.T) {
+func TestOAuthApplicationListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -47,13 +47,9 @@ func TestOAuthConnectionListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.OAuthConnections.List(context.TODO(), increase.OAuthConnectionListParams{
-		Cursor:             increase.F("cursor"),
-		Limit:              increase.F(int64(1)),
-		OAuthApplicationID: increase.F("oauth_application_id"),
-		Status: increase.F(increase.OAuthConnectionListParamsStatus{
-			In: increase.F([]increase.OAuthConnectionListParamsStatusIn{increase.OAuthConnectionListParamsStatusInActive}),
-		}),
+	_, err := client.OAuthApplications.List(context.TODO(), increase.OAuthApplicationListParams{
+		Cursor: increase.F("cursor"),
+		Limit:  increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error
