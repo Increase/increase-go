@@ -7,6 +7,7 @@ import (
 	"errors"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/Increase/increase-go"
 	"github.com/Increase/increase-go/internal/testutil"
@@ -48,8 +49,17 @@ func TestOAuthApplicationListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.OAuthApplications.List(context.TODO(), increase.OAuthApplicationListParams{
+		CreatedAt: increase.F(increase.OAuthApplicationListParamsCreatedAt{
+			After:      increase.F(time.Now()),
+			Before:     increase.F(time.Now()),
+			OnOrAfter:  increase.F(time.Now()),
+			OnOrBefore: increase.F(time.Now()),
+		}),
 		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
+		Status: increase.F(increase.OAuthApplicationListParamsStatus{
+			In: increase.F([]increase.OAuthApplicationListParamsStatusIn{increase.OAuthApplicationListParamsStatusInActive}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

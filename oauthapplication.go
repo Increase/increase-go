@@ -153,11 +153,13 @@ func (r OAuthApplicationType) IsKnown() bool {
 }
 
 type OAuthApplicationListParams struct {
+	CreatedAt param.Field[OAuthApplicationListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                            `query:"limit"`
+	Status param.Field[OAuthApplicationListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [OAuthApplicationListParams]'s query parameters as
@@ -167,4 +169,60 @@ func (r OAuthApplicationListParams) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type OAuthApplicationListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [OAuthApplicationListParamsCreatedAt]'s query parameters as
+// `url.Values`.
+func (r OAuthApplicationListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type OAuthApplicationListParamsStatus struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]OAuthApplicationListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [OAuthApplicationListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r OAuthApplicationListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type OAuthApplicationListParamsStatusIn string
+
+const (
+	// The application is active and can be used by your users.
+	OAuthApplicationListParamsStatusInActive OAuthApplicationListParamsStatusIn = "active"
+	// The application is deleted.
+	OAuthApplicationListParamsStatusInDeleted OAuthApplicationListParamsStatusIn = "deleted"
+)
+
+func (r OAuthApplicationListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case OAuthApplicationListParamsStatusInActive, OAuthApplicationListParamsStatusInDeleted:
+		return true
+	}
+	return false
 }
