@@ -565,6 +565,17 @@ Methods:
 
 - <code title="get /groups/current">client.Groups.<a href="https://pkg.go.dev/github.com/Increase/increase-go#GroupService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Group">Group</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# OAuthApplications
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplication">OAuthApplication</a>
+
+Methods:
+
+- <code title="get /oauth_applications/{oauth_application_id}">client.OAuthApplications.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplicationService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, oauthApplicationID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplication">OAuthApplication</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /oauth_applications">client.OAuthApplications.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplicationService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplicationListParams">OAuthApplicationListParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplication">OAuthApplication</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # OAuthConnections
 
 Response Types:
