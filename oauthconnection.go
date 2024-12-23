@@ -157,7 +157,8 @@ type OAuthConnectionListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// The identifier of the OAuth Application to filter by.
+	// Filter results to only include OAuth Connections for a specific OAuth
+	// Application.
 	OAuthApplicationID param.Field[string]                          `query:"oauth_application_id"`
 	Status             param.Field[OAuthConnectionListParamsStatus] `query:"status"`
 }

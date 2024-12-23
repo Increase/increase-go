@@ -72,7 +72,9 @@ func (r *OAuthApplicationService) ListAutoPaging(ctx context.Context, query OAut
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Create an OAuth Application via the Dashboard. Learn more about OAuth
+// An OAuth Application lets you build an application for others to use with their
+// Increase data. You can create an OAuth Application via the Dashboard and read
+// information about it with the API. Learn more about OAuth
 // [here](https://increase.com/documentation/oauth).
 type OAuthApplication struct {
 	// The OAuth Application's identifier.
