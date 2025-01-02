@@ -3655,7 +3655,7 @@ func (r transactionSourceInboundWireTransferJSON) RawJSON() string {
 // and only if `category` is equal to `interest_payment`.
 type TransactionSourceInterestPayment struct {
 	// The account on which the interest was accrued.
-	AccruedOnAccountID string `json:"accrued_on_account_id,required,nullable"`
+	AccruedOnAccountID string `json:"accrued_on_account_id,required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
