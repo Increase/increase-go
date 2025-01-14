@@ -161,7 +161,10 @@ type InboundACHTransfer struct {
 	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The status of the transfer.
 	Status InboundACHTransferStatus `json:"status,required"`
-	// The trace number of the transfer.
+	// A 15 digit number set by the sending bank and transmitted to the receiving bank.
+	// Along with the amount, date, and originating routing number, this can be used to
+	// identify the ACH transfer. ACH trace numbers are not unique, but are
+	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
 	TraceNumber string `json:"trace_number,required"`
 	// If your transfer is returned, this will contain details of the return.
 	TransferReturn InboundACHTransferTransferReturn `json:"transfer_return,required,nullable"`
