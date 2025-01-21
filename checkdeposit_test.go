@@ -54,7 +54,7 @@ func TestCheckDepositGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.CheckDeposits.Get(context.TODO(), "check_deposit_instruction_q2shv7x9qhevfm71kor8")
+	_, err := client.CheckDeposits.Get(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
