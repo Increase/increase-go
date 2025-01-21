@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.171.0 (2025-01-21)
+
+Full Changelog: [v0.170.0...v0.171.0](https://github.com/Increase/increase-go/compare/v0.170.0...v0.171.0)
+
+### Features
+
+* **api:** api update ([#708](https://github.com/Increase/increase-go/issues/708)) ([eef5874](https://github.com/Increase/increase-go/commit/eef5874848581998ed46b7de30b4fe228f7f8e16))
+
+
+### Bug Fixes
+
+* fix apijson.Port for embedded structs ([#704](https://github.com/Increase/increase-go/issues/704)) ([2ba4acb](https://github.com/Increase/increase-go/commit/2ba4acbb2af6ec64d3e73dac3e6f12531956e9e1))
+* fix apijson.Port for embedded structs ([#705](https://github.com/Increase/increase-go/issues/705)) ([910cb3c](https://github.com/Increase/increase-go/commit/910cb3c4d195f09cc7033c4bc1a10a63cd3bb212))
+
 ## 0.170.0 (2025-01-14)
 
 Full Changelog: [v0.169.0...v0.170.0](https://github.com/Increase/increase-go/compare/v0.169.0...v0.170.0)
