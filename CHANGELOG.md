@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.172.0 (2025-01-21)
+
+Full Changelog: [v0.171.0...v0.172.0](https://github.com/Increase/increase-go/compare/v0.171.0...v0.172.0)
+
+### Features
+
+* **api:** api update ([#712](https://github.com/Increase/increase-go/issues/712)) ([219657c](https://github.com/Increase/increase-go/commit/219657ce3e309ee8bbd19dab327dc6d3ab5584bd))
+* support deprecated markers ([#710](https://github.com/Increase/increase-go/issues/710)) ([1af282f](https://github.com/Increase/increase-go/commit/1af282f707eac5fdc77a1f9af1355cd5b9ef40b0))
+
 ## 0.171.0 (2025-01-21)
 
 Full Changelog: [v0.170.0...v0.171.0](https://github.com/Increase/increase-go/compare/v0.170.0...v0.171.0)
