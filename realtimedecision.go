@@ -1232,7 +1232,7 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDeclineReason) IsKnown() bo
 // this object contains your response to the authentication.
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
-	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+	Result  param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult]  `json:"result,required"`
 	Success param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess] `json:"success"`
 }
 
