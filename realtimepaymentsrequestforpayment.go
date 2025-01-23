@@ -172,17 +172,11 @@ func (r realTimePaymentsRequestForPaymentJSON) RawJSON() string {
 type RealTimePaymentsRequestForPaymentCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	RealTimePaymentsRequestForPaymentCurrencyCad RealTimePaymentsRequestForPaymentCurrency = "CAD"
-	// Swiss Franc (CHF)
 	RealTimePaymentsRequestForPaymentCurrencyChf RealTimePaymentsRequestForPaymentCurrency = "CHF"
-	// Euro (EUR)
 	RealTimePaymentsRequestForPaymentCurrencyEur RealTimePaymentsRequestForPaymentCurrency = "EUR"
-	// British Pound (GBP)
 	RealTimePaymentsRequestForPaymentCurrencyGbp RealTimePaymentsRequestForPaymentCurrency = "GBP"
-	// Japanese Yen (JPY)
 	RealTimePaymentsRequestForPaymentCurrencyJpy RealTimePaymentsRequestForPaymentCurrency = "JPY"
-	// US Dollar (USD)
 	RealTimePaymentsRequestForPaymentCurrencyUsd RealTimePaymentsRequestForPaymentCurrency = "USD"
 )
 
@@ -224,44 +218,19 @@ func (r realTimePaymentsRequestForPaymentRefusalJSON) RawJSON() string {
 type RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode string
 
 const (
-	// The destination account is currently blocked from receiving transactions.
-	// Corresponds to the Real-Time Payments reason code `AC06`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeAccountBlocked RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "account_blocked"
-	// Real-Time Payments transfers are not allowed to the destination account.
-	// Corresponds to the Real-Time Payments reason code `AG01`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeTransactionForbidden RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "transaction_forbidden"
-	// Real-Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real-Time Payments reason code `AG03`.
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeAccountBlocked              RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "account_blocked"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeTransactionForbidden        RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "transaction_forbidden"
 	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeTransactionTypeNotSupported RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "transaction_type_not_supported"
-	// The amount of the transfer is different than expected by the recipient.
-	// Corresponds to the Real-Time Payments reason code `AM09`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeUnexpectedAmount RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "unexpected_amount"
-	// The amount is higher than the recipient is authorized to send or receive.
-	// Corresponds to the Real-Time Payments reason code `AM14`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeAmountExceedsBankLimits RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "amount_exceeds_bank_limits"
-	// The debtor's address is required, but missing or invalid. Corresponds to the
-	// Real-Time Payments reason code `BE07`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeInvalidDebtorAddress RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "invalid_debtor_address"
-	// The creditor's address is required, but missing or invalid. Corresponds to the
-	// Real-Time Payments reason code `BE04`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeInvalidCreditorAddress RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "invalid_creditor_address"
-	// Creditor identifier incorrect. Corresponds to the Real-Time Payments reason code
-	// `CH11`.
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeUnexpectedAmount            RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "unexpected_amount"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeAmountExceedsBankLimits     RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "amount_exceeds_bank_limits"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeInvalidDebtorAddress        RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "invalid_debtor_address"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeInvalidCreditorAddress      RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "invalid_creditor_address"
 	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeCreditorIdentifierIncorrect RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "creditor_identifier_incorrect"
-	// The customer refused the request. Corresponds to the Real-Time Payments reason
-	// code `CUST`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeRequestedByCustomer RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "requested_by_customer"
-	// The order was rejected. Corresponds to the Real-Time Payments reason code
-	// `DS04`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOrderRejected RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "order_rejected"
-	// The destination account holder is deceased. Corresponds to the Real-Time
-	// Payments reason code `MD07`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeEndCustomerDeceased RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "end_customer_deceased"
-	// The customer has opted out of receiving requests for payments from this
-	// creditor. Corresponds to the Real-Time Payments reason code `SL12`.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeCustomerHasOptedOut RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "customer_has_opted_out"
-	// Some other error or issue has occurred.
-	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOther RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "other"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeRequestedByCustomer         RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "requested_by_customer"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOrderRejected               RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "order_rejected"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeEndCustomerDeceased         RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "end_customer_deceased"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeCustomerHasOptedOut         RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "customer_has_opted_out"
+	RealTimePaymentsRequestForPaymentRefusalRefusalReasonCodeOther                       RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode = "other"
 )
 
 func (r RealTimePaymentsRequestForPaymentRefusalRefusalReasonCode) IsKnown() bool {
@@ -302,68 +271,27 @@ func (r realTimePaymentsRequestForPaymentRejectionJSON) RawJSON() string {
 type RealTimePaymentsRequestForPaymentRejectionRejectReasonCode string
 
 const (
-	// The destination account is closed. Corresponds to the Real-Time Payments reason
-	// code `AC04`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAccountClosed RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "account_closed"
-	// The destination account is currently blocked from receiving transactions.
-	// Corresponds to the Real-Time Payments reason code `AC06`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAccountBlocked RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "account_blocked"
-	// The destination account is ineligible to receive Real-Time Payments transfers.
-	// Corresponds to the Real-Time Payments reason code `AC14`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAccountType RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_account_type"
-	// The destination account does not exist. Corresponds to the Real-Time Payments
-	// reason code `AC03`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAccountNumber RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_account_number"
-	// The destination routing number is invalid. Corresponds to the Real-Time Payments
-	// reason code `RC04`.
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAccountClosed                                 RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "account_closed"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAccountBlocked                                RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "account_blocked"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAccountType                    RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_account_type"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAccountNumber                  RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_account_number"
 	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_financial_institution_identifier"
-	// The destination account holder is deceased. Corresponds to the Real-Time
-	// Payments reason code `MD07`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeEndCustomerDeceased RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "end_customer_deceased"
-	// The reason is provided as narrative information in the additional information
-	// field.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeNarrative RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "narrative"
-	// Real-Time Payments transfers are not allowed to the destination account.
-	// Corresponds to the Real-Time Payments reason code `AG01`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTransactionForbidden RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "transaction_forbidden"
-	// Real-Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real-Time Payments reason code `AG03`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTransactionTypeNotSupported RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "transaction_type_not_supported"
-	// The amount of the transfer is different than expected by the recipient.
-	// Corresponds to the Real-Time Payments reason code `AM09`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnexpectedAmount RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "unexpected_amount"
-	// The amount is higher than the recipient is authorized to send or receive.
-	// Corresponds to the Real-Time Payments reason code `AM14`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAmountExceedsBankLimits RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "amount_exceeds_bank_limits"
-	// The creditor's address is required, but missing or invalid. Corresponds to the
-	// Real-Time Payments reason code `BE04`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAddress RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_address"
-	// The specified creditor is unknown. Corresponds to the Real-Time Payments reason
-	// code `BE06`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnknownEndCustomer RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "unknown_end_customer"
-	// The debtor's address is required, but missing or invalid. Corresponds to the
-	// Real-Time Payments reason code `BE07`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidDebtorAddress RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_debtor_address"
-	// There was a timeout processing the transfer. Corresponds to the Real-Time
-	// Payments reason code `DS24`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTimeout RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "timeout"
-	// Real-Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real-Time Payments reason code `NOAT`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnsupportedMessageForRecipient RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "unsupported_message_for_recipient"
-	// The destination financial institution is currently not connected to Real-Time
-	// Payments. Corresponds to the Real-Time Payments reason code `9912`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeRecipientConnectionNotAvailable RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "recipient_connection_not_available"
-	// Real-Time Payments is currently unavailable. Corresponds to the Real-Time
-	// Payments reason code `9948`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeRealTimePaymentsSuspended RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "real_time_payments_suspended"
-	// The destination financial institution is currently signed off of Real-Time
-	// Payments. Corresponds to the Real-Time Payments reason code `9910`.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInstructedAgentSignedOff RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "instructed_agent_signed_off"
-	// The transfer was rejected due to an internal Increase issue. We have been
-	// notified.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeProcessingError RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "processing_error"
-	// Some other error or issue has occurred.
-	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeOther RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "other"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeEndCustomerDeceased                           RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "end_customer_deceased"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeNarrative                                     RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "narrative"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTransactionForbidden                          RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "transaction_forbidden"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTransactionTypeNotSupported                   RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "transaction_type_not_supported"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnexpectedAmount                              RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "unexpected_amount"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeAmountExceedsBankLimits                       RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "amount_exceeds_bank_limits"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidCreditorAddress                        RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_creditor_address"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnknownEndCustomer                            RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "unknown_end_customer"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInvalidDebtorAddress                          RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "invalid_debtor_address"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeTimeout                                       RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "timeout"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeUnsupportedMessageForRecipient                RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "unsupported_message_for_recipient"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeRecipientConnectionNotAvailable               RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "recipient_connection_not_available"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeRealTimePaymentsSuspended                     RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "real_time_payments_suspended"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeInstructedAgentSignedOff                      RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "instructed_agent_signed_off"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeProcessingError                               RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "processing_error"
+	RealTimePaymentsRequestForPaymentRejectionRejectReasonCodeOther                                         RealTimePaymentsRequestForPaymentRejectionRejectReasonCode = "other"
 )
 
 func (r RealTimePaymentsRequestForPaymentRejectionRejectReasonCode) IsKnown() bool {
@@ -378,19 +306,12 @@ func (r RealTimePaymentsRequestForPaymentRejectionRejectReasonCode) IsKnown() bo
 type RealTimePaymentsRequestForPaymentStatus string
 
 const (
-	// The request for payment is queued to be submitted to Real-Time Payments.
 	RealTimePaymentsRequestForPaymentStatusPendingSubmission RealTimePaymentsRequestForPaymentStatus = "pending_submission"
-	// The request for payment has been submitted and is pending a response from
-	// Real-Time Payments.
-	RealTimePaymentsRequestForPaymentStatusPendingResponse RealTimePaymentsRequestForPaymentStatus = "pending_response"
-	// The request for payment was rejected by the network or the recipient.
-	RealTimePaymentsRequestForPaymentStatusRejected RealTimePaymentsRequestForPaymentStatus = "rejected"
-	// The request for payment was accepted by the recipient but has not yet been paid.
-	RealTimePaymentsRequestForPaymentStatusAccepted RealTimePaymentsRequestForPaymentStatus = "accepted"
-	// The request for payment was refused by the recipient.
-	RealTimePaymentsRequestForPaymentStatusRefused RealTimePaymentsRequestForPaymentStatus = "refused"
-	// The request for payment was fulfilled by the receiver.
-	RealTimePaymentsRequestForPaymentStatusFulfilled RealTimePaymentsRequestForPaymentStatus = "fulfilled"
+	RealTimePaymentsRequestForPaymentStatusPendingResponse   RealTimePaymentsRequestForPaymentStatus = "pending_response"
+	RealTimePaymentsRequestForPaymentStatusRejected          RealTimePaymentsRequestForPaymentStatus = "rejected"
+	RealTimePaymentsRequestForPaymentStatusAccepted          RealTimePaymentsRequestForPaymentStatus = "accepted"
+	RealTimePaymentsRequestForPaymentStatusRefused           RealTimePaymentsRequestForPaymentStatus = "refused"
+	RealTimePaymentsRequestForPaymentStatusFulfilled         RealTimePaymentsRequestForPaymentStatus = "fulfilled"
 )
 
 func (r RealTimePaymentsRequestForPaymentStatus) IsKnown() bool {

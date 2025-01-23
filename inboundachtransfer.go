@@ -271,7 +271,6 @@ func (r inboundACHTransferAddendaJSON) RawJSON() string {
 type InboundACHTransferAddendaCategory string
 
 const (
-	// Unstructured addendum.
 	InboundACHTransferAddendaCategoryFreeform InboundACHTransferAddendaCategory = "freeform"
 )
 
@@ -361,41 +360,23 @@ func (r inboundACHTransferDeclineJSON) RawJSON() string {
 type InboundACHTransferDeclineReason string
 
 const (
-	// The account number is canceled.
-	InboundACHTransferDeclineReasonACHRouteCanceled InboundACHTransferDeclineReason = "ach_route_canceled"
-	// The account number is disabled.
-	InboundACHTransferDeclineReasonACHRouteDisabled InboundACHTransferDeclineReason = "ach_route_disabled"
-	// The transaction would cause an Increase limit to be exceeded.
-	InboundACHTransferDeclineReasonBreachesLimit InboundACHTransferDeclineReason = "breaches_limit"
-	// The account's entity is not active.
-	InboundACHTransferDeclineReasonEntityNotActive InboundACHTransferDeclineReason = "entity_not_active"
-	// Your account is inactive.
-	InboundACHTransferDeclineReasonGroupLocked InboundACHTransferDeclineReason = "group_locked"
-	// The transaction is not allowed per Increase's terms.
-	InboundACHTransferDeclineReasonTransactionNotAllowed InboundACHTransferDeclineReason = "transaction_not_allowed"
-	// Your integration declined this transfer via the API.
-	InboundACHTransferDeclineReasonUserInitiated InboundACHTransferDeclineReason = "user_initiated"
-	// Your account contains insufficient funds.
-	InboundACHTransferDeclineReasonInsufficientFunds InboundACHTransferDeclineReason = "insufficient_funds"
-	// The originating financial institution asked for this transfer to be returned.
-	// The receiving bank is complying with the request.
-	InboundACHTransferDeclineReasonReturnedPerOdfiRequest InboundACHTransferDeclineReason = "returned_per_odfi_request"
-	// The customer no longer authorizes this transaction.
-	InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer InboundACHTransferDeclineReason = "authorization_revoked_by_customer"
-	// The customer asked for the payment to be stopped.
-	InboundACHTransferDeclineReasonPaymentStopped InboundACHTransferDeclineReason = "payment_stopped"
-	// The customer advises that the debit was unauthorized.
-	InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferDeclineReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// The payee is deceased.
+	InboundACHTransferDeclineReasonACHRouteCanceled                                            InboundACHTransferDeclineReason = "ach_route_canceled"
+	InboundACHTransferDeclineReasonACHRouteDisabled                                            InboundACHTransferDeclineReason = "ach_route_disabled"
+	InboundACHTransferDeclineReasonBreachesLimit                                               InboundACHTransferDeclineReason = "breaches_limit"
+	InboundACHTransferDeclineReasonEntityNotActive                                             InboundACHTransferDeclineReason = "entity_not_active"
+	InboundACHTransferDeclineReasonGroupLocked                                                 InboundACHTransferDeclineReason = "group_locked"
+	InboundACHTransferDeclineReasonTransactionNotAllowed                                       InboundACHTransferDeclineReason = "transaction_not_allowed"
+	InboundACHTransferDeclineReasonUserInitiated                                               InboundACHTransferDeclineReason = "user_initiated"
+	InboundACHTransferDeclineReasonInsufficientFunds                                           InboundACHTransferDeclineReason = "insufficient_funds"
+	InboundACHTransferDeclineReasonReturnedPerOdfiRequest                                      InboundACHTransferDeclineReason = "returned_per_odfi_request"
+	InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer                              InboundACHTransferDeclineReason = "authorization_revoked_by_customer"
+	InboundACHTransferDeclineReasonPaymentStopped                                              InboundACHTransferDeclineReason = "payment_stopped"
+	InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferDeclineReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	InboundACHTransferDeclineReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferDeclineReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// The account holder is deceased.
-	InboundACHTransferDeclineReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferDeclineReason = "beneficiary_or_account_holder_deceased"
-	// The customer refused a credit entry.
-	InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver InboundACHTransferDeclineReason = "credit_entry_refused_by_receiver"
-	// The account holder identified this transaction as a duplicate.
-	InboundACHTransferDeclineReasonDuplicateEntry InboundACHTransferDeclineReason = "duplicate_entry"
-	// The corporate customer no longer authorizes this transaction.
-	InboundACHTransferDeclineReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferDeclineReason = "corporate_customer_advised_not_authorized"
+	InboundACHTransferDeclineReasonBeneficiaryOrAccountHolderDeceased                          InboundACHTransferDeclineReason = "beneficiary_or_account_holder_deceased"
+	InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver                                InboundACHTransferDeclineReason = "credit_entry_refused_by_receiver"
+	InboundACHTransferDeclineReasonDuplicateEntry                                              InboundACHTransferDeclineReason = "duplicate_entry"
+	InboundACHTransferDeclineReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferDeclineReason = "corporate_customer_advised_not_authorized"
 )
 
 func (r InboundACHTransferDeclineReason) IsKnown() bool {
@@ -410,10 +391,8 @@ func (r InboundACHTransferDeclineReason) IsKnown() bool {
 type InboundACHTransferDirection string
 
 const (
-	// Credit
 	InboundACHTransferDirectionCredit InboundACHTransferDirection = "credit"
-	// Debit
-	InboundACHTransferDirectionDebit InboundACHTransferDirection = "debit"
+	InboundACHTransferDirectionDebit  InboundACHTransferDirection = "debit"
 )
 
 func (r InboundACHTransferDirection) IsKnown() bool {
@@ -428,9 +407,7 @@ func (r InboundACHTransferDirection) IsKnown() bool {
 type InboundACHTransferExpectedSettlementSchedule string
 
 const (
-	// The transfer is expected to settle same-day.
-	InboundACHTransferExpectedSettlementScheduleSameDay InboundACHTransferExpectedSettlementSchedule = "same_day"
-	// The transfer is expected to settle on a future date.
+	InboundACHTransferExpectedSettlementScheduleSameDay     InboundACHTransferExpectedSettlementSchedule = "same_day"
 	InboundACHTransferExpectedSettlementScheduleFutureDated InboundACHTransferExpectedSettlementSchedule = "future_dated"
 )
 
@@ -586,15 +563,9 @@ func (r inboundACHTransferInternationalAddendaJSON) RawJSON() string {
 type InboundACHTransferInternationalAddendaForeignExchangeIndicator string
 
 const (
-	// The originator chose an amount in their own currency. The settled amount in USD
-	// was converted using the exchange rate.
 	InboundACHTransferInternationalAddendaForeignExchangeIndicatorFixedToVariable InboundACHTransferInternationalAddendaForeignExchangeIndicator = "fixed_to_variable"
-	// The originator chose an amount to settle in USD. The originator's amount was
-	// variable; known only after the foreign exchange conversion.
 	InboundACHTransferInternationalAddendaForeignExchangeIndicatorVariableToFixed InboundACHTransferInternationalAddendaForeignExchangeIndicator = "variable_to_fixed"
-	// The amount was originated and settled as a fixed amount in USD. There is no
-	// foreign exchange conversion.
-	InboundACHTransferInternationalAddendaForeignExchangeIndicatorFixedToFixed InboundACHTransferInternationalAddendaForeignExchangeIndicator = "fixed_to_fixed"
+	InboundACHTransferInternationalAddendaForeignExchangeIndicatorFixedToFixed    InboundACHTransferInternationalAddendaForeignExchangeIndicator = "fixed_to_fixed"
 )
 
 func (r InboundACHTransferInternationalAddendaForeignExchangeIndicator) IsKnown() bool {
@@ -610,13 +581,9 @@ func (r InboundACHTransferInternationalAddendaForeignExchangeIndicator) IsKnown(
 type InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator string
 
 const (
-	// The ACH file contains a foreign exchange rate.
-	InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicatorForeignExchangeRate InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator = "foreign_exchange_rate"
-	// The ACH file contains a reference to a well-known foreign exchange rate.
+	InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicatorForeignExchangeRate            InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator = "foreign_exchange_rate"
 	InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicatorForeignExchangeReferenceNumber InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator = "foreign_exchange_reference_number"
-	// There is no foreign exchange for this transfer, so the
-	// `foreign_exchange_reference` field is blank.
-	InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicatorBlank InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator = "blank"
+	InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicatorBlank                          InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator = "blank"
 )
 
 func (r InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator) IsKnown() bool {
@@ -631,46 +598,26 @@ func (r InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator)
 type InboundACHTransferInternationalAddendaInternationalTransactionTypeCode string
 
 const (
-	// Sent as `ANN` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeAnnuity InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "annuity"
-	// Sent as `BUS` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeBusinessOrCommercial InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "business_or_commercial"
-	// Sent as `DEP` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeDeposit InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "deposit"
-	// Sent as `LOA` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeLoan InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "loan"
-	// Sent as `MIS` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeMiscellaneous InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "miscellaneous"
-	// Sent as `MOR` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeMortgage InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "mortgage"
-	// Sent as `PEN` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodePension InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "pension"
-	// Sent as `REM` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeRemittance InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "remittance"
-	// Sent as `RLS` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeRentOrLease InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "rent_or_lease"
-	// Sent as `SAL` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeSalaryOrPayroll InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "salary_or_payroll"
-	// Sent as `TAX` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeTax InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "tax"
-	// Sent as `ARC` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeAccountsReceivable InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "accounts_receivable"
-	// Sent as `BOC` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeBackOfficeConversion InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "back_office_conversion"
-	// Sent as `MTE` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeMachineTransfer InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "machine_transfer"
-	// Sent as `POP` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodePointOfPurchase InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "point_of_purchase"
-	// Sent as `POS` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodePointOfSale InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "point_of_sale"
-	// Sent as `RCK` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeRepresentedCheck InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "represented_check"
-	// Sent as `SHR` in the Nacha file.
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeAnnuity                  InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "annuity"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeBusinessOrCommercial     InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "business_or_commercial"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeDeposit                  InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "deposit"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeLoan                     InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "loan"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeMiscellaneous            InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "miscellaneous"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeMortgage                 InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "mortgage"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodePension                  InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "pension"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeRemittance               InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "remittance"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeRentOrLease              InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "rent_or_lease"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeSalaryOrPayroll          InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "salary_or_payroll"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeTax                      InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "tax"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeAccountsReceivable       InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "accounts_receivable"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeBackOfficeConversion     InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "back_office_conversion"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeMachineTransfer          InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "machine_transfer"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodePointOfPurchase          InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "point_of_purchase"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodePointOfSale              InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "point_of_sale"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeRepresentedCheck         InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "represented_check"
 	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeSharedNetworkTransaction InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "shared_network_transaction"
-	// Sent as `TEL` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeTelphoneInitiated InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "telphone_initiated"
-	// Sent as `WEB` in the Nacha file.
-	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeInternetInitiated InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "internet_initiated"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeTelphoneInitiated        InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "telphone_initiated"
+	InboundACHTransferInternationalAddendaInternationalTransactionTypeCodeInternetInitiated        InboundACHTransferInternationalAddendaInternationalTransactionTypeCode = "internet_initiated"
 )
 
 func (r InboundACHTransferInternationalAddendaInternationalTransactionTypeCode) IsKnown() bool {
@@ -686,13 +633,9 @@ func (r InboundACHTransferInternationalAddendaInternationalTransactionTypeCode) 
 type InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier string
 
 const (
-	// A domestic clearing system number. In the US, for example, this is the American
-	// Banking Association (ABA) routing number.
 	InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
-	// The SWIFT Bank Identifier Code (BIC) of the bank.
-	InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifierBicCode InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
-	// An International Bank Account Number.
-	InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifierIban InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
+	InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifierBicCode                      InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifierIban                         InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
 
 func (r InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
@@ -708,13 +651,9 @@ func (r InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInst
 type InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier string
 
 const (
-	// A domestic clearing system number. In the US, for example, this is the American
-	// Banking Association (ABA) routing number.
 	InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifierNationalClearingSystemNumber InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier = "national_clearing_system_number"
-	// The SWIFT Bank Identifier Code (BIC) of the bank.
-	InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifierBicCode InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
-	// An International Bank Account Number.
-	InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifierIban InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
+	InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifierBicCode                      InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier = "bic_code"
+	InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifierIban                         InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier = "iban"
 )
 
 func (r InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier) IsKnown() bool {
@@ -756,38 +695,22 @@ func (r inboundACHTransferNotificationOfChangeJSON) RawJSON() string {
 type InboundACHTransferStandardEntryClassCode string
 
 const (
-	// Corporate Credit and Debit (CCD).
-	InboundACHTransferStandardEntryClassCodeCorporateCreditOrDebit InboundACHTransferStandardEntryClassCode = "corporate_credit_or_debit"
-	// Corporate Trade Exchange (CTX).
-	InboundACHTransferStandardEntryClassCodeCorporateTradeExchange InboundACHTransferStandardEntryClassCode = "corporate_trade_exchange"
-	// Prearranged Payments and Deposits (PPD).
+	InboundACHTransferStandardEntryClassCodeCorporateCreditOrDebit        InboundACHTransferStandardEntryClassCode = "corporate_credit_or_debit"
+	InboundACHTransferStandardEntryClassCodeCorporateTradeExchange        InboundACHTransferStandardEntryClassCode = "corporate_trade_exchange"
 	InboundACHTransferStandardEntryClassCodePrearrangedPaymentsAndDeposit InboundACHTransferStandardEntryClassCode = "prearranged_payments_and_deposit"
-	// Internet Initiated (WEB).
-	InboundACHTransferStandardEntryClassCodeInternetInitiated InboundACHTransferStandardEntryClassCode = "internet_initiated"
-	// Point of Sale (POS).
-	InboundACHTransferStandardEntryClassCodePointOfSale InboundACHTransferStandardEntryClassCode = "point_of_sale"
-	// Telephone Initiated (TEL).
-	InboundACHTransferStandardEntryClassCodeTelephoneInitiated InboundACHTransferStandardEntryClassCode = "telephone_initiated"
-	// Customer Initiated (CIE).
-	InboundACHTransferStandardEntryClassCodeCustomerInitiated InboundACHTransferStandardEntryClassCode = "customer_initiated"
-	// Accounts Receivable (ARC).
-	InboundACHTransferStandardEntryClassCodeAccountsReceivable InboundACHTransferStandardEntryClassCode = "accounts_receivable"
-	// Machine Transfer (MTE).
-	InboundACHTransferStandardEntryClassCodeMachineTransfer InboundACHTransferStandardEntryClassCode = "machine_transfer"
-	// Shared Network Transaction (SHR).
-	InboundACHTransferStandardEntryClassCodeSharedNetworkTransaction InboundACHTransferStandardEntryClassCode = "shared_network_transaction"
-	// Represented Check (RCK).
-	InboundACHTransferStandardEntryClassCodeRepresentedCheck InboundACHTransferStandardEntryClassCode = "represented_check"
-	// Back Office Conversion (BOC).
-	InboundACHTransferStandardEntryClassCodeBackOfficeConversion InboundACHTransferStandardEntryClassCode = "back_office_conversion"
-	// Point of Purchase (POP).
-	InboundACHTransferStandardEntryClassCodePointOfPurchase InboundACHTransferStandardEntryClassCode = "point_of_purchase"
-	// Check Truncation (TRC).
-	InboundACHTransferStandardEntryClassCodeCheckTruncation InboundACHTransferStandardEntryClassCode = "check_truncation"
-	// Destroyed Check (XCK).
-	InboundACHTransferStandardEntryClassCodeDestroyedCheck InboundACHTransferStandardEntryClassCode = "destroyed_check"
-	// International ACH Transaction (IAT).
-	InboundACHTransferStandardEntryClassCodeInternationalACHTransaction InboundACHTransferStandardEntryClassCode = "international_ach_transaction"
+	InboundACHTransferStandardEntryClassCodeInternetInitiated             InboundACHTransferStandardEntryClassCode = "internet_initiated"
+	InboundACHTransferStandardEntryClassCodePointOfSale                   InboundACHTransferStandardEntryClassCode = "point_of_sale"
+	InboundACHTransferStandardEntryClassCodeTelephoneInitiated            InboundACHTransferStandardEntryClassCode = "telephone_initiated"
+	InboundACHTransferStandardEntryClassCodeCustomerInitiated             InboundACHTransferStandardEntryClassCode = "customer_initiated"
+	InboundACHTransferStandardEntryClassCodeAccountsReceivable            InboundACHTransferStandardEntryClassCode = "accounts_receivable"
+	InboundACHTransferStandardEntryClassCodeMachineTransfer               InboundACHTransferStandardEntryClassCode = "machine_transfer"
+	InboundACHTransferStandardEntryClassCodeSharedNetworkTransaction      InboundACHTransferStandardEntryClassCode = "shared_network_transaction"
+	InboundACHTransferStandardEntryClassCodeRepresentedCheck              InboundACHTransferStandardEntryClassCode = "represented_check"
+	InboundACHTransferStandardEntryClassCodeBackOfficeConversion          InboundACHTransferStandardEntryClassCode = "back_office_conversion"
+	InboundACHTransferStandardEntryClassCodePointOfPurchase               InboundACHTransferStandardEntryClassCode = "point_of_purchase"
+	InboundACHTransferStandardEntryClassCodeCheckTruncation               InboundACHTransferStandardEntryClassCode = "check_truncation"
+	InboundACHTransferStandardEntryClassCodeDestroyedCheck                InboundACHTransferStandardEntryClassCode = "destroyed_check"
+	InboundACHTransferStandardEntryClassCodeInternationalACHTransaction   InboundACHTransferStandardEntryClassCode = "international_ach_transaction"
 )
 
 func (r InboundACHTransferStandardEntryClassCode) IsKnown() bool {
@@ -802,14 +725,9 @@ func (r InboundACHTransferStandardEntryClassCode) IsKnown() bool {
 type InboundACHTransferStatus string
 
 const (
-	// The Inbound ACH Transfer is awaiting action, will transition automatically if no
-	// action is taken.
-	InboundACHTransferStatusPending InboundACHTransferStatus = "pending"
-	// The Inbound ACH Transfer has been declined.
+	InboundACHTransferStatusPending  InboundACHTransferStatus = "pending"
 	InboundACHTransferStatusDeclined InboundACHTransferStatus = "declined"
-	// The Inbound ACH Transfer is accepted.
 	InboundACHTransferStatusAccepted InboundACHTransferStatus = "accepted"
-	// The Inbound ACH Transfer has been returned.
 	InboundACHTransferStatusReturned InboundACHTransferStatus = "returned"
 )
 
@@ -854,34 +772,16 @@ func (r inboundACHTransferTransferReturnJSON) RawJSON() string {
 type InboundACHTransferTransferReturnReason string
 
 const (
-	// The customer's account has insufficient funds. This reason is only allowed for
-	// debits. The Nacha return code is R01.
-	InboundACHTransferTransferReturnReasonInsufficientFunds InboundACHTransferTransferReturnReason = "insufficient_funds"
-	// The originating financial institution asked for this transfer to be returned.
-	// The receiving bank is complying with the request. The Nacha return code is R06.
-	InboundACHTransferTransferReturnReasonReturnedPerOdfiRequest InboundACHTransferTransferReturnReason = "returned_per_odfi_request"
-	// The customer no longer authorizes this transaction. The Nacha return code is
-	// R07.
-	InboundACHTransferTransferReturnReasonAuthorizationRevokedByCustomer InboundACHTransferTransferReturnReason = "authorization_revoked_by_customer"
-	// The customer asked for the payment to be stopped. This reason is only allowed
-	// for debits. The Nacha return code is R08.
-	InboundACHTransferTransferReturnReasonPaymentStopped InboundACHTransferTransferReturnReason = "payment_stopped"
-	// The customer advises that the debit was unauthorized. The Nacha return code is
-	// R10.
-	InboundACHTransferTransferReturnReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferTransferReturnReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// The payee is deceased. The Nacha return code is R14.
+	InboundACHTransferTransferReturnReasonInsufficientFunds                                           InboundACHTransferTransferReturnReason = "insufficient_funds"
+	InboundACHTransferTransferReturnReasonReturnedPerOdfiRequest                                      InboundACHTransferTransferReturnReason = "returned_per_odfi_request"
+	InboundACHTransferTransferReturnReasonAuthorizationRevokedByCustomer                              InboundACHTransferTransferReturnReason = "authorization_revoked_by_customer"
+	InboundACHTransferTransferReturnReasonPaymentStopped                                              InboundACHTransferTransferReturnReason = "payment_stopped"
+	InboundACHTransferTransferReturnReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferTransferReturnReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	InboundACHTransferTransferReturnReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferTransferReturnReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// The account holder is deceased. The Nacha return code is R15.
-	InboundACHTransferTransferReturnReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferTransferReturnReason = "beneficiary_or_account_holder_deceased"
-	// The customer refused a credit entry. This reason is only allowed for credits.
-	// The Nacha return code is R23.
-	InboundACHTransferTransferReturnReasonCreditEntryRefusedByReceiver InboundACHTransferTransferReturnReason = "credit_entry_refused_by_receiver"
-	// The account holder identified this transaction as a duplicate. The Nacha return
-	// code is R24.
-	InboundACHTransferTransferReturnReasonDuplicateEntry InboundACHTransferTransferReturnReason = "duplicate_entry"
-	// The corporate customer no longer authorizes this transaction. The Nacha return
-	// code is R29.
-	InboundACHTransferTransferReturnReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferTransferReturnReason = "corporate_customer_advised_not_authorized"
+	InboundACHTransferTransferReturnReasonBeneficiaryOrAccountHolderDeceased                          InboundACHTransferTransferReturnReason = "beneficiary_or_account_holder_deceased"
+	InboundACHTransferTransferReturnReasonCreditEntryRefusedByReceiver                                InboundACHTransferTransferReturnReason = "credit_entry_refused_by_receiver"
+	InboundACHTransferTransferReturnReasonDuplicateEntry                                              InboundACHTransferTransferReturnReason = "duplicate_entry"
+	InboundACHTransferTransferReturnReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferTransferReturnReason = "corporate_customer_advised_not_authorized"
 )
 
 func (r InboundACHTransferTransferReturnReason) IsKnown() bool {
@@ -960,14 +860,9 @@ func (r InboundACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 type InboundACHTransferListParamsStatus string
 
 const (
-	// The Inbound ACH Transfer is awaiting action, will transition automatically if no
-	// action is taken.
-	InboundACHTransferListParamsStatusPending InboundACHTransferListParamsStatus = "pending"
-	// The Inbound ACH Transfer has been declined.
+	InboundACHTransferListParamsStatusPending  InboundACHTransferListParamsStatus = "pending"
 	InboundACHTransferListParamsStatusDeclined InboundACHTransferListParamsStatus = "declined"
-	// The Inbound ACH Transfer is accepted.
 	InboundACHTransferListParamsStatusAccepted InboundACHTransferListParamsStatus = "accepted"
-	// The Inbound ACH Transfer has been returned.
 	InboundACHTransferListParamsStatusReturned InboundACHTransferListParamsStatus = "returned"
 )
 
@@ -1007,34 +902,16 @@ func (r InboundACHTransferDeclineParams) MarshalJSON() (data []byte, err error) 
 type InboundACHTransferDeclineParamsReason string
 
 const (
-	// The customer's account has insufficient funds. This reason is only allowed for
-	// debits. The Nacha return code is R01.
-	InboundACHTransferDeclineParamsReasonInsufficientFunds InboundACHTransferDeclineParamsReason = "insufficient_funds"
-	// The originating financial institution asked for this transfer to be returned.
-	// The receiving bank is complying with the request. The Nacha return code is R06.
-	InboundACHTransferDeclineParamsReasonReturnedPerOdfiRequest InboundACHTransferDeclineParamsReason = "returned_per_odfi_request"
-	// The customer no longer authorizes this transaction. The Nacha return code is
-	// R07.
-	InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer InboundACHTransferDeclineParamsReason = "authorization_revoked_by_customer"
-	// The customer asked for the payment to be stopped. This reason is only allowed
-	// for debits. The Nacha return code is R08.
-	InboundACHTransferDeclineParamsReasonPaymentStopped InboundACHTransferDeclineParamsReason = "payment_stopped"
-	// The customer advises that the debit was unauthorized. The Nacha return code is
-	// R10.
-	InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferDeclineParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// The payee is deceased. The Nacha return code is R14.
+	InboundACHTransferDeclineParamsReasonInsufficientFunds                                           InboundACHTransferDeclineParamsReason = "insufficient_funds"
+	InboundACHTransferDeclineParamsReasonReturnedPerOdfiRequest                                      InboundACHTransferDeclineParamsReason = "returned_per_odfi_request"
+	InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer                              InboundACHTransferDeclineParamsReason = "authorization_revoked_by_customer"
+	InboundACHTransferDeclineParamsReasonPaymentStopped                                              InboundACHTransferDeclineParamsReason = "payment_stopped"
+	InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferDeclineParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	InboundACHTransferDeclineParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferDeclineParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// The account holder is deceased. The Nacha return code is R15.
-	InboundACHTransferDeclineParamsReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferDeclineParamsReason = "beneficiary_or_account_holder_deceased"
-	// The customer refused a credit entry. This reason is only allowed for credits.
-	// The Nacha return code is R23.
-	InboundACHTransferDeclineParamsReasonCreditEntryRefusedByReceiver InboundACHTransferDeclineParamsReason = "credit_entry_refused_by_receiver"
-	// The account holder identified this transaction as a duplicate. The Nacha return
-	// code is R24.
-	InboundACHTransferDeclineParamsReasonDuplicateEntry InboundACHTransferDeclineParamsReason = "duplicate_entry"
-	// The corporate customer no longer authorizes this transaction. The Nacha return
-	// code is R29.
-	InboundACHTransferDeclineParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferDeclineParamsReason = "corporate_customer_advised_not_authorized"
+	InboundACHTransferDeclineParamsReasonBeneficiaryOrAccountHolderDeceased                          InboundACHTransferDeclineParamsReason = "beneficiary_or_account_holder_deceased"
+	InboundACHTransferDeclineParamsReasonCreditEntryRefusedByReceiver                                InboundACHTransferDeclineParamsReason = "credit_entry_refused_by_receiver"
+	InboundACHTransferDeclineParamsReasonDuplicateEntry                                              InboundACHTransferDeclineParamsReason = "duplicate_entry"
+	InboundACHTransferDeclineParamsReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferDeclineParamsReason = "corporate_customer_advised_not_authorized"
 )
 
 func (r InboundACHTransferDeclineParamsReason) IsKnown() bool {
@@ -1060,34 +937,16 @@ func (r InboundACHTransferTransferReturnParams) MarshalJSON() (data []byte, err 
 type InboundACHTransferTransferReturnParamsReason string
 
 const (
-	// The customer's account has insufficient funds. This reason is only allowed for
-	// debits. The Nacha return code is R01.
-	InboundACHTransferTransferReturnParamsReasonInsufficientFunds InboundACHTransferTransferReturnParamsReason = "insufficient_funds"
-	// The originating financial institution asked for this transfer to be returned.
-	// The receiving bank is complying with the request. The Nacha return code is R06.
-	InboundACHTransferTransferReturnParamsReasonReturnedPerOdfiRequest InboundACHTransferTransferReturnParamsReason = "returned_per_odfi_request"
-	// The customer no longer authorizes this transaction. The Nacha return code is
-	// R07.
-	InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer InboundACHTransferTransferReturnParamsReason = "authorization_revoked_by_customer"
-	// The customer asked for the payment to be stopped. This reason is only allowed
-	// for debits. The Nacha return code is R08.
-	InboundACHTransferTransferReturnParamsReasonPaymentStopped InboundACHTransferTransferReturnParamsReason = "payment_stopped"
-	// The customer advises that the debit was unauthorized. The Nacha return code is
-	// R10.
-	InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete InboundACHTransferTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// The payee is deceased. The Nacha return code is R14.
+	InboundACHTransferTransferReturnParamsReasonInsufficientFunds                                           InboundACHTransferTransferReturnParamsReason = "insufficient_funds"
+	InboundACHTransferTransferReturnParamsReasonReturnedPerOdfiRequest                                      InboundACHTransferTransferReturnParamsReason = "returned_per_odfi_request"
+	InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer                              InboundACHTransferTransferReturnParamsReason = "authorization_revoked_by_customer"
+	InboundACHTransferTransferReturnParamsReasonPaymentStopped                                              InboundACHTransferTransferReturnParamsReason = "payment_stopped"
+	InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	InboundACHTransferTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity InboundACHTransferTransferReturnParamsReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// The account holder is deceased. The Nacha return code is R15.
-	InboundACHTransferTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased InboundACHTransferTransferReturnParamsReason = "beneficiary_or_account_holder_deceased"
-	// The customer refused a credit entry. This reason is only allowed for credits.
-	// The Nacha return code is R23.
-	InboundACHTransferTransferReturnParamsReasonCreditEntryRefusedByReceiver InboundACHTransferTransferReturnParamsReason = "credit_entry_refused_by_receiver"
-	// The account holder identified this transaction as a duplicate. The Nacha return
-	// code is R24.
-	InboundACHTransferTransferReturnParamsReasonDuplicateEntry InboundACHTransferTransferReturnParamsReason = "duplicate_entry"
-	// The corporate customer no longer authorizes this transaction. The Nacha return
-	// code is R29.
-	InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized InboundACHTransferTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
+	InboundACHTransferTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased                          InboundACHTransferTransferReturnParamsReason = "beneficiary_or_account_holder_deceased"
+	InboundACHTransferTransferReturnParamsReasonCreditEntryRefusedByReceiver                                InboundACHTransferTransferReturnParamsReason = "credit_entry_refused_by_receiver"
+	InboundACHTransferTransferReturnParamsReasonDuplicateEntry                                              InboundACHTransferTransferReturnParamsReason = "duplicate_entry"
+	InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized                       InboundACHTransferTransferReturnParamsReason = "corporate_customer_advised_not_authorized"
 )
 
 func (r InboundACHTransferTransferReturnParamsReason) IsKnown() bool {

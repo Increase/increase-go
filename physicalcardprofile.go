@@ -171,10 +171,8 @@ func (r physicalCardProfileJSON) RawJSON() string {
 type PhysicalCardProfileCreator string
 
 const (
-	// This Physical Card Profile was created by Increase.
 	PhysicalCardProfileCreatorIncrease PhysicalCardProfileCreator = "increase"
-	// This Physical Card Profile was created by you.
-	PhysicalCardProfileCreatorUser PhysicalCardProfileCreator = "user"
+	PhysicalCardProfileCreatorUser     PhysicalCardProfileCreator = "user"
 )
 
 func (r PhysicalCardProfileCreator) IsKnown() bool {
@@ -189,19 +187,12 @@ func (r PhysicalCardProfileCreator) IsKnown() bool {
 type PhysicalCardProfileStatus string
 
 const (
-	// The Card Profile has not yet been processed by Increase.
-	PhysicalCardProfileStatusPendingCreating PhysicalCardProfileStatus = "pending_creating"
-	// The card profile is awaiting review by Increase.
-	PhysicalCardProfileStatusPendingReviewing PhysicalCardProfileStatus = "pending_reviewing"
-	// There is an issue with the Physical Card Profile preventing it from use.
-	PhysicalCardProfileStatusRejected PhysicalCardProfileStatus = "rejected"
-	// The card profile is awaiting submission to the fulfillment provider.
+	PhysicalCardProfileStatusPendingCreating   PhysicalCardProfileStatus = "pending_creating"
+	PhysicalCardProfileStatusPendingReviewing  PhysicalCardProfileStatus = "pending_reviewing"
+	PhysicalCardProfileStatusRejected          PhysicalCardProfileStatus = "rejected"
 	PhysicalCardProfileStatusPendingSubmitting PhysicalCardProfileStatus = "pending_submitting"
-	// The Physical Card Profile has been submitted to the fulfillment provider and is
-	// ready to use.
-	PhysicalCardProfileStatusActive PhysicalCardProfileStatus = "active"
-	// The Physical Card Profile has been archived.
-	PhysicalCardProfileStatusArchived PhysicalCardProfileStatus = "archived"
+	PhysicalCardProfileStatusActive            PhysicalCardProfileStatus = "active"
+	PhysicalCardProfileStatusArchived          PhysicalCardProfileStatus = "archived"
 )
 
 func (r PhysicalCardProfileStatus) IsKnown() bool {
@@ -285,19 +276,12 @@ func (r PhysicalCardProfileListParamsStatus) URLQuery() (v url.Values) {
 type PhysicalCardProfileListParamsStatusIn string
 
 const (
-	// The Card Profile has not yet been processed by Increase.
-	PhysicalCardProfileListParamsStatusInPendingCreating PhysicalCardProfileListParamsStatusIn = "pending_creating"
-	// The card profile is awaiting review by Increase.
-	PhysicalCardProfileListParamsStatusInPendingReviewing PhysicalCardProfileListParamsStatusIn = "pending_reviewing"
-	// There is an issue with the Physical Card Profile preventing it from use.
-	PhysicalCardProfileListParamsStatusInRejected PhysicalCardProfileListParamsStatusIn = "rejected"
-	// The card profile is awaiting submission to the fulfillment provider.
+	PhysicalCardProfileListParamsStatusInPendingCreating   PhysicalCardProfileListParamsStatusIn = "pending_creating"
+	PhysicalCardProfileListParamsStatusInPendingReviewing  PhysicalCardProfileListParamsStatusIn = "pending_reviewing"
+	PhysicalCardProfileListParamsStatusInRejected          PhysicalCardProfileListParamsStatusIn = "rejected"
 	PhysicalCardProfileListParamsStatusInPendingSubmitting PhysicalCardProfileListParamsStatusIn = "pending_submitting"
-	// The Physical Card Profile has been submitted to the fulfillment provider and is
-	// ready to use.
-	PhysicalCardProfileListParamsStatusInActive PhysicalCardProfileListParamsStatusIn = "active"
-	// The Physical Card Profile has been archived.
-	PhysicalCardProfileListParamsStatusInArchived PhysicalCardProfileListParamsStatusIn = "archived"
+	PhysicalCardProfileListParamsStatusInActive            PhysicalCardProfileListParamsStatusIn = "active"
+	PhysicalCardProfileListParamsStatusInArchived          PhysicalCardProfileListParamsStatusIn = "archived"
 )
 
 func (r PhysicalCardProfileListParamsStatusIn) IsKnown() bool {

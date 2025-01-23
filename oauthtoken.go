@@ -130,10 +130,8 @@ func (r OAuthTokenNewParams) MarshalJSON() (data []byte, err error) {
 type OAuthTokenNewParamsGrantType string
 
 const (
-	// An OAuth authorization code.
 	OAuthTokenNewParamsGrantTypeAuthorizationCode OAuthTokenNewParamsGrantType = "authorization_code"
-	// An OAuth production token.
-	OAuthTokenNewParamsGrantTypeProductionToken OAuthTokenNewParamsGrantType = "production_token"
+	OAuthTokenNewParamsGrantTypeProductionToken   OAuthTokenNewParamsGrantType = "production_token"
 )
 
 func (r OAuthTokenNewParamsGrantType) IsKnown() bool {

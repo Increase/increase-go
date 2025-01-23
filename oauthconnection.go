@@ -121,9 +121,7 @@ func (r oauthConnectionJSON) RawJSON() string {
 type OAuthConnectionStatus string
 
 const (
-	// The OAuth connection is active.
-	OAuthConnectionStatusActive OAuthConnectionStatus = "active"
-	// The OAuth connection is permanently deactivated.
+	OAuthConnectionStatusActive   OAuthConnectionStatus = "active"
 	OAuthConnectionStatusInactive OAuthConnectionStatus = "inactive"
 )
 
@@ -191,9 +189,7 @@ func (r OAuthConnectionListParamsStatus) URLQuery() (v url.Values) {
 type OAuthConnectionListParamsStatusIn string
 
 const (
-	// The OAuth connection is active.
-	OAuthConnectionListParamsStatusInActive OAuthConnectionListParamsStatusIn = "active"
-	// The OAuth connection is permanently deactivated.
+	OAuthConnectionListParamsStatusInActive   OAuthConnectionListParamsStatusIn = "active"
 	OAuthConnectionListParamsStatusInInactive OAuthConnectionListParamsStatusIn = "inactive"
 )
 

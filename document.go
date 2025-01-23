@@ -116,14 +116,9 @@ func (r documentJSON) RawJSON() string {
 type DocumentCategory string
 
 const (
-	// Internal Revenue Service Form 1099-INT.
-	DocumentCategoryForm1099Int DocumentCategory = "form_1099_int"
-	// A document submitted in response to a proof of authorization request for an ACH
-	// transfer.
+	DocumentCategoryForm1099Int          DocumentCategory = "form_1099_int"
 	DocumentCategoryProofOfAuthorization DocumentCategory = "proof_of_authorization"
-	// Company information, such a policies or procedures, typically submitted during
-	// our due diligence process.
-	DocumentCategoryCompanyInformation DocumentCategory = "company_information"
+	DocumentCategoryCompanyInformation   DocumentCategory = "company_information"
 )
 
 func (r DocumentCategory) IsKnown() bool {
@@ -189,14 +184,9 @@ func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
 type DocumentListParamsCategoryIn string
 
 const (
-	// Internal Revenue Service Form 1099-INT.
-	DocumentListParamsCategoryInForm1099Int DocumentListParamsCategoryIn = "form_1099_int"
-	// A document submitted in response to a proof of authorization request for an ACH
-	// transfer.
+	DocumentListParamsCategoryInForm1099Int          DocumentListParamsCategoryIn = "form_1099_int"
 	DocumentListParamsCategoryInProofOfAuthorization DocumentListParamsCategoryIn = "proof_of_authorization"
-	// Company information, such a policies or procedures, typically submitted during
-	// our due diligence process.
-	DocumentListParamsCategoryInCompanyInformation DocumentListParamsCategoryIn = "company_information"
+	DocumentListParamsCategoryInCompanyInformation   DocumentListParamsCategoryIn = "company_information"
 )
 
 func (r DocumentListParamsCategoryIn) IsKnown() bool {

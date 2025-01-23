@@ -302,13 +302,9 @@ func (r accountTransferCreatedByAPIKeyJSON) RawJSON() string {
 type AccountTransferCreatedByCategory string
 
 const (
-	// An API key. Details will be under the `api_key` object.
-	AccountTransferCreatedByCategoryAPIKey AccountTransferCreatedByCategory = "api_key"
-	// An OAuth application you connected to Increase. Details will be under the
-	// `oauth_application` object.
+	AccountTransferCreatedByCategoryAPIKey           AccountTransferCreatedByCategory = "api_key"
 	AccountTransferCreatedByCategoryOAuthApplication AccountTransferCreatedByCategory = "oauth_application"
-	// A User in the Increase dashboard. Details will be under the `user` object.
-	AccountTransferCreatedByCategoryUser AccountTransferCreatedByCategory = "user"
+	AccountTransferCreatedByCategoryUser             AccountTransferCreatedByCategory = "user"
 )
 
 func (r AccountTransferCreatedByCategory) IsKnown() bool {
@@ -370,17 +366,11 @@ func (r accountTransferCreatedByUserJSON) RawJSON() string {
 type AccountTransferCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	AccountTransferCurrencyCad AccountTransferCurrency = "CAD"
-	// Swiss Franc (CHF)
 	AccountTransferCurrencyChf AccountTransferCurrency = "CHF"
-	// Euro (EUR)
 	AccountTransferCurrencyEur AccountTransferCurrency = "EUR"
-	// British Pound (GBP)
 	AccountTransferCurrencyGbp AccountTransferCurrency = "GBP"
-	// Japanese Yen (JPY)
 	AccountTransferCurrencyJpy AccountTransferCurrency = "JPY"
-	// US Dollar (USD)
 	AccountTransferCurrencyUsd AccountTransferCurrency = "USD"
 )
 
@@ -411,12 +401,9 @@ func (r AccountTransferNetwork) IsKnown() bool {
 type AccountTransferStatus string
 
 const (
-	// The transfer is pending approval.
 	AccountTransferStatusPendingApproval AccountTransferStatus = "pending_approval"
-	// The transfer has been canceled.
-	AccountTransferStatusCanceled AccountTransferStatus = "canceled"
-	// The transfer has been completed.
-	AccountTransferStatusComplete AccountTransferStatus = "complete"
+	AccountTransferStatusCanceled        AccountTransferStatus = "canceled"
+	AccountTransferStatusComplete        AccountTransferStatus = "complete"
 )
 
 func (r AccountTransferStatus) IsKnown() bool {

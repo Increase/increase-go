@@ -339,13 +339,9 @@ func (r wireTransferCreatedByAPIKeyJSON) RawJSON() string {
 type WireTransferCreatedByCategory string
 
 const (
-	// An API key. Details will be under the `api_key` object.
-	WireTransferCreatedByCategoryAPIKey WireTransferCreatedByCategory = "api_key"
-	// An OAuth application you connected to Increase. Details will be under the
-	// `oauth_application` object.
+	WireTransferCreatedByCategoryAPIKey           WireTransferCreatedByCategory = "api_key"
 	WireTransferCreatedByCategoryOAuthApplication WireTransferCreatedByCategory = "oauth_application"
-	// A User in the Increase dashboard. Details will be under the `user` object.
-	WireTransferCreatedByCategoryUser WireTransferCreatedByCategory = "user"
+	WireTransferCreatedByCategoryUser             WireTransferCreatedByCategory = "user"
 )
 
 func (r WireTransferCreatedByCategory) IsKnown() bool {
@@ -407,17 +403,11 @@ func (r wireTransferCreatedByUserJSON) RawJSON() string {
 type WireTransferCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	WireTransferCurrencyCad WireTransferCurrency = "CAD"
-	// Swiss Franc (CHF)
 	WireTransferCurrencyChf WireTransferCurrency = "CHF"
-	// Euro (EUR)
 	WireTransferCurrencyEur WireTransferCurrency = "EUR"
-	// British Pound (GBP)
 	WireTransferCurrencyGbp WireTransferCurrency = "GBP"
-	// Japanese Yen (JPY)
 	WireTransferCurrencyJpy WireTransferCurrency = "JPY"
-	// US Dollar (USD)
 	WireTransferCurrencyUsd WireTransferCurrency = "USD"
 )
 
@@ -524,24 +514,15 @@ func (r wireTransferReversalJSON) RawJSON() string {
 type WireTransferStatus string
 
 const (
-	// The transfer is pending approval.
-	WireTransferStatusPendingApproval WireTransferStatus = "pending_approval"
-	// The transfer has been canceled.
-	WireTransferStatusCanceled WireTransferStatus = "canceled"
-	// The transfer is pending review by Increase.
-	WireTransferStatusPendingReviewing WireTransferStatus = "pending_reviewing"
-	// The transfer has been rejected by Increase.
-	WireTransferStatusRejected WireTransferStatus = "rejected"
-	// The transfer requires attention from an Increase operator.
+	WireTransferStatusPendingApproval   WireTransferStatus = "pending_approval"
+	WireTransferStatusCanceled          WireTransferStatus = "canceled"
+	WireTransferStatusPendingReviewing  WireTransferStatus = "pending_reviewing"
+	WireTransferStatusRejected          WireTransferStatus = "rejected"
 	WireTransferStatusRequiresAttention WireTransferStatus = "requires_attention"
-	// The transfer is pending creation.
-	WireTransferStatusPendingCreating WireTransferStatus = "pending_creating"
-	// The transfer has been reversed.
-	WireTransferStatusReversed WireTransferStatus = "reversed"
-	// The transfer has been submitted to Fedwire.
-	WireTransferStatusSubmitted WireTransferStatus = "submitted"
-	// The transfer has been acknowledged by Fedwire and can be considered complete.
-	WireTransferStatusComplete WireTransferStatus = "complete"
+	WireTransferStatusPendingCreating   WireTransferStatus = "pending_creating"
+	WireTransferStatusReversed          WireTransferStatus = "reversed"
+	WireTransferStatusSubmitted         WireTransferStatus = "submitted"
+	WireTransferStatusComplete          WireTransferStatus = "complete"
 )
 
 func (r WireTransferStatus) IsKnown() bool {

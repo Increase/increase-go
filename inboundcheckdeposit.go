@@ -226,15 +226,9 @@ func (r inboundCheckDepositAdjustmentJSON) RawJSON() string {
 type InboundCheckDepositAdjustmentsReason string
 
 const (
-	// The return was initiated too late and the receiving institution has responded
-	// with a Late Return Claim.
-	InboundCheckDepositAdjustmentsReasonLateReturn InboundCheckDepositAdjustmentsReason = "late_return"
-	// The check was deposited to the wrong payee and the depositing institution has
-	// reimbursed the funds with a Wrong Payee Credit.
+	InboundCheckDepositAdjustmentsReasonLateReturn       InboundCheckDepositAdjustmentsReason = "late_return"
 	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
-	// The check was deposited with a different amount than what was written on the
-	// check.
-	InboundCheckDepositAdjustmentsReasonAdjustedAmount InboundCheckDepositAdjustmentsReason = "adjusted_amount"
+	InboundCheckDepositAdjustmentsReasonAdjustedAmount   InboundCheckDepositAdjustmentsReason = "adjusted_amount"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
@@ -249,17 +243,11 @@ func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 type InboundCheckDepositCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	InboundCheckDepositCurrencyCad InboundCheckDepositCurrency = "CAD"
-	// Swiss Franc (CHF)
 	InboundCheckDepositCurrencyChf InboundCheckDepositCurrency = "CHF"
-	// Euro (EUR)
 	InboundCheckDepositCurrencyEur InboundCheckDepositCurrency = "EUR"
-	// British Pound (GBP)
 	InboundCheckDepositCurrencyGbp InboundCheckDepositCurrency = "GBP"
-	// Japanese Yen (JPY)
 	InboundCheckDepositCurrencyJpy InboundCheckDepositCurrency = "JPY"
-	// US Dollar (USD)
 	InboundCheckDepositCurrencyUsd InboundCheckDepositCurrency = "USD"
 )
 
@@ -305,15 +293,10 @@ func (r inboundCheckDepositDepositReturnJSON) RawJSON() string {
 type InboundCheckDepositDepositReturnReason string
 
 const (
-	// The check was altered or fictitious.
-	InboundCheckDepositDepositReturnReasonAlteredOrFictitious InboundCheckDepositDepositReturnReason = "altered_or_fictitious"
-	// The check was not authorized.
-	InboundCheckDepositDepositReturnReasonNotAuthorized InboundCheckDepositDepositReturnReason = "not_authorized"
-	// The check was a duplicate presentment.
+	InboundCheckDepositDepositReturnReasonAlteredOrFictitious  InboundCheckDepositDepositReturnReason = "altered_or_fictitious"
+	InboundCheckDepositDepositReturnReasonNotAuthorized        InboundCheckDepositDepositReturnReason = "not_authorized"
 	InboundCheckDepositDepositReturnReasonDuplicatePresentment InboundCheckDepositDepositReturnReason = "duplicate_presentment"
-	// The check was not endorsed.
-	InboundCheckDepositDepositReturnReasonEndorsementMissing InboundCheckDepositDepositReturnReason = "endorsement_missing"
-	// The check was not endorsed by the payee.
+	InboundCheckDepositDepositReturnReasonEndorsementMissing   InboundCheckDepositDepositReturnReason = "endorsement_missing"
 	InboundCheckDepositDepositReturnReasonEndorsementIrregular InboundCheckDepositDepositReturnReason = "endorsement_irregular"
 )
 
@@ -330,11 +313,8 @@ func (r InboundCheckDepositDepositReturnReason) IsKnown() bool {
 type InboundCheckDepositPayeeNameAnalysis string
 
 const (
-	// The details on the check match the recipient name of the check transfer.
-	InboundCheckDepositPayeeNameAnalysisNameMatches InboundCheckDepositPayeeNameAnalysis = "name_matches"
-	// The details on the check do not match the recipient name of the check transfer.
+	InboundCheckDepositPayeeNameAnalysisNameMatches  InboundCheckDepositPayeeNameAnalysis = "name_matches"
 	InboundCheckDepositPayeeNameAnalysisDoesNotMatch InboundCheckDepositPayeeNameAnalysis = "does_not_match"
-	// The payee name analysis was not evaluated.
 	InboundCheckDepositPayeeNameAnalysisNotEvaluated InboundCheckDepositPayeeNameAnalysis = "not_evaluated"
 )
 
@@ -350,15 +330,10 @@ func (r InboundCheckDepositPayeeNameAnalysis) IsKnown() bool {
 type InboundCheckDepositStatus string
 
 const (
-	// The Inbound Check Deposit is pending.
-	InboundCheckDepositStatusPending InboundCheckDepositStatus = "pending"
-	// The Inbound Check Deposit was accepted.
-	InboundCheckDepositStatusAccepted InboundCheckDepositStatus = "accepted"
-	// The Inbound Check Deposit was rejected.
-	InboundCheckDepositStatusDeclined InboundCheckDepositStatus = "declined"
-	// The Inbound Check Deposit was returned.
-	InboundCheckDepositStatusReturned InboundCheckDepositStatus = "returned"
-	// The Inbound Check Deposit requires attention from an Increase operator.
+	InboundCheckDepositStatusPending           InboundCheckDepositStatus = "pending"
+	InboundCheckDepositStatusAccepted          InboundCheckDepositStatus = "accepted"
+	InboundCheckDepositStatusDeclined          InboundCheckDepositStatus = "declined"
+	InboundCheckDepositStatusReturned          InboundCheckDepositStatus = "returned"
 	InboundCheckDepositStatusRequiresAttention InboundCheckDepositStatus = "requires_attention"
 )
 
@@ -446,15 +421,10 @@ func (r InboundCheckDepositReturnParams) MarshalJSON() (data []byte, err error) 
 type InboundCheckDepositReturnParamsReason string
 
 const (
-	// The check was altered or fictitious.
-	InboundCheckDepositReturnParamsReasonAlteredOrFictitious InboundCheckDepositReturnParamsReason = "altered_or_fictitious"
-	// The check was not authorized.
-	InboundCheckDepositReturnParamsReasonNotAuthorized InboundCheckDepositReturnParamsReason = "not_authorized"
-	// The check was a duplicate presentment.
+	InboundCheckDepositReturnParamsReasonAlteredOrFictitious  InboundCheckDepositReturnParamsReason = "altered_or_fictitious"
+	InboundCheckDepositReturnParamsReasonNotAuthorized        InboundCheckDepositReturnParamsReason = "not_authorized"
 	InboundCheckDepositReturnParamsReasonDuplicatePresentment InboundCheckDepositReturnParamsReason = "duplicate_presentment"
-	// The check was not endorsed.
-	InboundCheckDepositReturnParamsReasonEndorsementMissing InboundCheckDepositReturnParamsReason = "endorsement_missing"
-	// The check was not endorsed by the payee.
+	InboundCheckDepositReturnParamsReasonEndorsementMissing   InboundCheckDepositReturnParamsReason = "endorsement_missing"
 	InboundCheckDepositReturnParamsReasonEndorsementIrregular InboundCheckDepositReturnParamsReason = "endorsement_irregular"
 )
 

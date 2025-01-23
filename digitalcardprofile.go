@@ -176,14 +176,9 @@ func (r digitalCardProfileJSON) RawJSON() string {
 type DigitalCardProfileStatus string
 
 const (
-	// The Card Profile is awaiting review from Increase and/or processing by card
-	// networks.
-	DigitalCardProfileStatusPending DigitalCardProfileStatus = "pending"
-	// There is an issue with the Card Profile preventing it from use.
+	DigitalCardProfileStatusPending  DigitalCardProfileStatus = "pending"
 	DigitalCardProfileStatusRejected DigitalCardProfileStatus = "rejected"
-	// The Card Profile can be assigned to Cards.
-	DigitalCardProfileStatusActive DigitalCardProfileStatus = "active"
-	// The Card Profile is no longer in use.
+	DigitalCardProfileStatusActive   DigitalCardProfileStatus = "active"
 	DigitalCardProfileStatusArchived DigitalCardProfileStatus = "archived"
 )
 
@@ -321,14 +316,9 @@ func (r DigitalCardProfileListParamsStatus) URLQuery() (v url.Values) {
 type DigitalCardProfileListParamsStatusIn string
 
 const (
-	// The Card Profile is awaiting review from Increase and/or processing by card
-	// networks.
-	DigitalCardProfileListParamsStatusInPending DigitalCardProfileListParamsStatusIn = "pending"
-	// There is an issue with the Card Profile preventing it from use.
+	DigitalCardProfileListParamsStatusInPending  DigitalCardProfileListParamsStatusIn = "pending"
 	DigitalCardProfileListParamsStatusInRejected DigitalCardProfileListParamsStatusIn = "rejected"
-	// The Card Profile can be assigned to Cards.
-	DigitalCardProfileListParamsStatusInActive DigitalCardProfileListParamsStatusIn = "active"
-	// The Card Profile is no longer in use.
+	DigitalCardProfileListParamsStatusInActive   DigitalCardProfileListParamsStatusIn = "active"
 	DigitalCardProfileListParamsStatusInArchived DigitalCardProfileListParamsStatusIn = "archived"
 )
 
