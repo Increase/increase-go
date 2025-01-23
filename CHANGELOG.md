@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.172.1 (2025-01-23)
+
+Full Changelog: [v0.172.0...v0.172.1](https://github.com/Increase/increase-go/compare/v0.172.0...v0.172.1)
+
+### Bug Fixes
+
+* prevent niche naming conflicts for string enums with different casing ([#714](https://github.com/Increase/increase-go/issues/714)) ([c1ec730](https://github.com/Increase/increase-go/commit/c1ec7300c3af7017eec593ef5f30310503380a49))
+
 ## 0.172.0 (2025-01-21)
 
 Full Changelog: [v0.171.0...v0.172.0](https://github.com/Increase/increase-go/compare/v0.171.0...v0.172.0)
