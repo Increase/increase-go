@@ -150,12 +150,9 @@ func (r intrafiExclusionJSON) RawJSON() string {
 type IntrafiExclusionStatus string
 
 const (
-	// The exclusion is being added to the IntraFi network.
-	IntrafiExclusionStatusPending IntrafiExclusionStatus = "pending"
-	// The exclusion has been added to the IntraFi network.
+	IntrafiExclusionStatusPending   IntrafiExclusionStatus = "pending"
 	IntrafiExclusionStatusCompleted IntrafiExclusionStatus = "completed"
-	// The exclusion has been removed from the IntraFi network.
-	IntrafiExclusionStatusArchived IntrafiExclusionStatus = "archived"
+	IntrafiExclusionStatusArchived  IntrafiExclusionStatus = "archived"
 )
 
 func (r IntrafiExclusionStatus) IsKnown() bool {

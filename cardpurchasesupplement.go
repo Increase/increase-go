@@ -186,12 +186,9 @@ func (r cardPurchaseSupplementInvoiceJSON) RawJSON() string {
 type CardPurchaseSupplementInvoiceDiscountTreatmentCode string
 
 const (
-	// No invoice level discount provided
-	CardPurchaseSupplementInvoiceDiscountTreatmentCodeNoInvoiceLevelDiscountProvided CardPurchaseSupplementInvoiceDiscountTreatmentCode = "no_invoice_level_discount_provided"
-	// Tax calculated on post discount invoice total
+	CardPurchaseSupplementInvoiceDiscountTreatmentCodeNoInvoiceLevelDiscountProvided          CardPurchaseSupplementInvoiceDiscountTreatmentCode = "no_invoice_level_discount_provided"
 	CardPurchaseSupplementInvoiceDiscountTreatmentCodeTaxCalculatedOnPostDiscountInvoiceTotal CardPurchaseSupplementInvoiceDiscountTreatmentCode = "tax_calculated_on_post_discount_invoice_total"
-	// Tax calculated on pre discount invoice total
-	CardPurchaseSupplementInvoiceDiscountTreatmentCodeTaxCalculatedOnPreDiscountInvoiceTotal CardPurchaseSupplementInvoiceDiscountTreatmentCode = "tax_calculated_on_pre_discount_invoice_total"
+	CardPurchaseSupplementInvoiceDiscountTreatmentCodeTaxCalculatedOnPreDiscountInvoiceTotal  CardPurchaseSupplementInvoiceDiscountTreatmentCode = "tax_calculated_on_pre_discount_invoice_total"
 )
 
 func (r CardPurchaseSupplementInvoiceDiscountTreatmentCode) IsKnown() bool {
@@ -206,16 +203,11 @@ func (r CardPurchaseSupplementInvoiceDiscountTreatmentCode) IsKnown() bool {
 type CardPurchaseSupplementInvoiceTaxTreatments string
 
 const (
-	// No tax applies
-	CardPurchaseSupplementInvoiceTaxTreatmentsNoTaxApplies CardPurchaseSupplementInvoiceTaxTreatments = "no_tax_applies"
-	// Net price line item level
-	CardPurchaseSupplementInvoiceTaxTreatmentsNetPriceLineItemLevel CardPurchaseSupplementInvoiceTaxTreatments = "net_price_line_item_level"
-	// Net price invoice level
-	CardPurchaseSupplementInvoiceTaxTreatmentsNetPriceInvoiceLevel CardPurchaseSupplementInvoiceTaxTreatments = "net_price_invoice_level"
-	// Gross price line item level
+	CardPurchaseSupplementInvoiceTaxTreatmentsNoTaxApplies            CardPurchaseSupplementInvoiceTaxTreatments = "no_tax_applies"
+	CardPurchaseSupplementInvoiceTaxTreatmentsNetPriceLineItemLevel   CardPurchaseSupplementInvoiceTaxTreatments = "net_price_line_item_level"
+	CardPurchaseSupplementInvoiceTaxTreatmentsNetPriceInvoiceLevel    CardPurchaseSupplementInvoiceTaxTreatments = "net_price_invoice_level"
 	CardPurchaseSupplementInvoiceTaxTreatmentsGrossPriceLineItemLevel CardPurchaseSupplementInvoiceTaxTreatments = "gross_price_line_item_level"
-	// Gross price invoice level
-	CardPurchaseSupplementInvoiceTaxTreatmentsGrossPriceInvoiceLevel CardPurchaseSupplementInvoiceTaxTreatments = "gross_price_invoice_level"
+	CardPurchaseSupplementInvoiceTaxTreatmentsGrossPriceInvoiceLevel  CardPurchaseSupplementInvoiceTaxTreatments = "gross_price_invoice_level"
 )
 
 func (r CardPurchaseSupplementInvoiceTaxTreatments) IsKnown() bool {
@@ -302,11 +294,8 @@ func (r cardPurchaseSupplementLineItemJSON) RawJSON() string {
 type CardPurchaseSupplementLineItemsDetailIndicator string
 
 const (
-	// Normal
-	CardPurchaseSupplementLineItemsDetailIndicatorNormal CardPurchaseSupplementLineItemsDetailIndicator = "normal"
-	// Credit
-	CardPurchaseSupplementLineItemsDetailIndicatorCredit CardPurchaseSupplementLineItemsDetailIndicator = "credit"
-	// Purchase
+	CardPurchaseSupplementLineItemsDetailIndicatorNormal  CardPurchaseSupplementLineItemsDetailIndicator = "normal"
+	CardPurchaseSupplementLineItemsDetailIndicatorCredit  CardPurchaseSupplementLineItemsDetailIndicator = "credit"
 	CardPurchaseSupplementLineItemsDetailIndicatorPayment CardPurchaseSupplementLineItemsDetailIndicator = "payment"
 )
 
@@ -322,12 +311,9 @@ func (r CardPurchaseSupplementLineItemsDetailIndicator) IsKnown() bool {
 type CardPurchaseSupplementLineItemsDiscountTreatmentCode string
 
 const (
-	// No line item level discount provided
-	CardPurchaseSupplementLineItemsDiscountTreatmentCodeNoLineItemLevelDiscountProvided CardPurchaseSupplementLineItemsDiscountTreatmentCode = "no_line_item_level_discount_provided"
-	// Tax calculated on post discount line item total
+	CardPurchaseSupplementLineItemsDiscountTreatmentCodeNoLineItemLevelDiscountProvided          CardPurchaseSupplementLineItemsDiscountTreatmentCode = "no_line_item_level_discount_provided"
 	CardPurchaseSupplementLineItemsDiscountTreatmentCodeTaxCalculatedOnPostDiscountLineItemTotal CardPurchaseSupplementLineItemsDiscountTreatmentCode = "tax_calculated_on_post_discount_line_item_total"
-	// Tax calculated on pre discount line item total
-	CardPurchaseSupplementLineItemsDiscountTreatmentCodeTaxCalculatedOnPreDiscountLineItemTotal CardPurchaseSupplementLineItemsDiscountTreatmentCode = "tax_calculated_on_pre_discount_line_item_total"
+	CardPurchaseSupplementLineItemsDiscountTreatmentCodeTaxCalculatedOnPreDiscountLineItemTotal  CardPurchaseSupplementLineItemsDiscountTreatmentCode = "tax_calculated_on_pre_discount_line_item_total"
 )
 
 func (r CardPurchaseSupplementLineItemsDiscountTreatmentCode) IsKnown() bool {

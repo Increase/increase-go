@@ -249,12 +249,9 @@ func (r physicalCardShipmentAddressJSON) RawJSON() string {
 type PhysicalCardShipmentMethod string
 
 const (
-	// USPS Post with tracking.
-	PhysicalCardShipmentMethodUsps PhysicalCardShipmentMethod = "usps"
-	// FedEx Priority Overnight, no signature.
+	PhysicalCardShipmentMethodUsps                   PhysicalCardShipmentMethod = "usps"
 	PhysicalCardShipmentMethodFedexPriorityOvernight PhysicalCardShipmentMethod = "fedex_priority_overnight"
-	// FedEx 2-day.
-	PhysicalCardShipmentMethodFedex2Day PhysicalCardShipmentMethod = "fedex_2_day"
+	PhysicalCardShipmentMethodFedex2Day              PhysicalCardShipmentMethod = "fedex_2_day"
 )
 
 func (r PhysicalCardShipmentMethod) IsKnown() bool {
@@ -269,22 +266,13 @@ func (r PhysicalCardShipmentMethod) IsKnown() bool {
 type PhysicalCardShipmentStatus string
 
 const (
-	// The physical card has not yet been shipped.
-	PhysicalCardShipmentStatusPending PhysicalCardShipmentStatus = "pending"
-	// The physical card shipment was canceled prior to submission.
-	PhysicalCardShipmentStatusCanceled PhysicalCardShipmentStatus = "canceled"
-	// The physical card shipment has been submitted to the card fulfillment provider.
-	PhysicalCardShipmentStatusSubmitted PhysicalCardShipmentStatus = "submitted"
-	// The physical card shipment has been acknowledged by the card fulfillment
-	// provider and will be processed in their next batch.
+	PhysicalCardShipmentStatusPending      PhysicalCardShipmentStatus = "pending"
+	PhysicalCardShipmentStatusCanceled     PhysicalCardShipmentStatus = "canceled"
+	PhysicalCardShipmentStatusSubmitted    PhysicalCardShipmentStatus = "submitted"
 	PhysicalCardShipmentStatusAcknowledged PhysicalCardShipmentStatus = "acknowledged"
-	// The physical card shipment was rejected by the card printer due to an error.
-	PhysicalCardShipmentStatusRejected PhysicalCardShipmentStatus = "rejected"
-	// The physical card has been shipped.
-	PhysicalCardShipmentStatusShipped PhysicalCardShipmentStatus = "shipped"
-	// The physical card shipment was returned to the sender and destroyed by the
-	// production facility.
-	PhysicalCardShipmentStatusReturned PhysicalCardShipmentStatus = "returned"
+	PhysicalCardShipmentStatusRejected     PhysicalCardShipmentStatus = "rejected"
+	PhysicalCardShipmentStatusShipped      PhysicalCardShipmentStatus = "shipped"
+	PhysicalCardShipmentStatusReturned     PhysicalCardShipmentStatus = "returned"
 )
 
 func (r PhysicalCardShipmentStatus) IsKnown() bool {
@@ -333,11 +321,8 @@ func (r physicalCardShipmentTrackingJSON) RawJSON() string {
 type PhysicalCardStatus string
 
 const (
-	// The physical card is active.
-	PhysicalCardStatusActive PhysicalCardStatus = "active"
-	// The physical card is temporarily disabled.
+	PhysicalCardStatusActive   PhysicalCardStatus = "active"
 	PhysicalCardStatusDisabled PhysicalCardStatus = "disabled"
-	// The physical card is permanently canceled.
 	PhysicalCardStatusCanceled PhysicalCardStatus = "canceled"
 )
 
@@ -433,12 +418,9 @@ func (r PhysicalCardNewParamsShipmentAddress) MarshalJSON() (data []byte, err er
 type PhysicalCardNewParamsShipmentMethod string
 
 const (
-	// USPS Post with tracking.
-	PhysicalCardNewParamsShipmentMethodUsps PhysicalCardNewParamsShipmentMethod = "usps"
-	// FedEx Priority Overnight, no signature.
+	PhysicalCardNewParamsShipmentMethodUsps                   PhysicalCardNewParamsShipmentMethod = "usps"
 	PhysicalCardNewParamsShipmentMethodFedexPriorityOvernight PhysicalCardNewParamsShipmentMethod = "fedex_priority_overnight"
-	// FedEx 2-day.
-	PhysicalCardNewParamsShipmentMethodFedex2Day PhysicalCardNewParamsShipmentMethod = "fedex_2_day"
+	PhysicalCardNewParamsShipmentMethodFedex2Day              PhysicalCardNewParamsShipmentMethod = "fedex_2_day"
 )
 
 func (r PhysicalCardNewParamsShipmentMethod) IsKnown() bool {
@@ -462,11 +444,8 @@ func (r PhysicalCardUpdateParams) MarshalJSON() (data []byte, err error) {
 type PhysicalCardUpdateParamsStatus string
 
 const (
-	// The physical card is active.
-	PhysicalCardUpdateParamsStatusActive PhysicalCardUpdateParamsStatus = "active"
-	// The physical card is temporarily disabled.
+	PhysicalCardUpdateParamsStatusActive   PhysicalCardUpdateParamsStatus = "active"
 	PhysicalCardUpdateParamsStatusDisabled PhysicalCardUpdateParamsStatus = "disabled"
-	// The physical card is permanently canceled.
 	PhysicalCardUpdateParamsStatusCanceled PhysicalCardUpdateParamsStatus = "canceled"
 )
 

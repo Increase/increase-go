@@ -124,9 +124,7 @@ func (r oauthApplicationJSON) RawJSON() string {
 type OAuthApplicationStatus string
 
 const (
-	// The application is active and can be used by your users.
-	OAuthApplicationStatusActive OAuthApplicationStatus = "active"
-	// The application is deleted.
+	OAuthApplicationStatusActive  OAuthApplicationStatus = "active"
 	OAuthApplicationStatusDeleted OAuthApplicationStatus = "deleted"
 )
 
@@ -215,9 +213,7 @@ func (r OAuthApplicationListParamsStatus) URLQuery() (v url.Values) {
 type OAuthApplicationListParamsStatusIn string
 
 const (
-	// The application is active and can be used by your users.
-	OAuthApplicationListParamsStatusInActive OAuthApplicationListParamsStatusIn = "active"
-	// The application is deleted.
+	OAuthApplicationListParamsStatusInActive  OAuthApplicationListParamsStatusIn = "active"
 	OAuthApplicationListParamsStatusInDeleted OAuthApplicationListParamsStatusIn = "deleted"
 )
 

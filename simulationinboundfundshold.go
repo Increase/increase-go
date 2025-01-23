@@ -107,17 +107,11 @@ func (r simulationInboundFundsHoldReleaseResponseJSON) RawJSON() string {
 type SimulationInboundFundsHoldReleaseResponseCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	SimulationInboundFundsHoldReleaseResponseCurrencyCad SimulationInboundFundsHoldReleaseResponseCurrency = "CAD"
-	// Swiss Franc (CHF)
 	SimulationInboundFundsHoldReleaseResponseCurrencyChf SimulationInboundFundsHoldReleaseResponseCurrency = "CHF"
-	// Euro (EUR)
 	SimulationInboundFundsHoldReleaseResponseCurrencyEur SimulationInboundFundsHoldReleaseResponseCurrency = "EUR"
-	// British Pound (GBP)
 	SimulationInboundFundsHoldReleaseResponseCurrencyGbp SimulationInboundFundsHoldReleaseResponseCurrency = "GBP"
-	// Japanese Yen (JPY)
 	SimulationInboundFundsHoldReleaseResponseCurrencyJpy SimulationInboundFundsHoldReleaseResponseCurrency = "JPY"
-	// US Dollar (USD)
 	SimulationInboundFundsHoldReleaseResponseCurrencyUsd SimulationInboundFundsHoldReleaseResponseCurrency = "USD"
 )
 
@@ -133,9 +127,7 @@ func (r SimulationInboundFundsHoldReleaseResponseCurrency) IsKnown() bool {
 type SimulationInboundFundsHoldReleaseResponseStatus string
 
 const (
-	// Funds are still being held.
-	SimulationInboundFundsHoldReleaseResponseStatusHeld SimulationInboundFundsHoldReleaseResponseStatus = "held"
-	// Funds have been released.
+	SimulationInboundFundsHoldReleaseResponseStatusHeld     SimulationInboundFundsHoldReleaseResponseStatus = "held"
 	SimulationInboundFundsHoldReleaseResponseStatusComplete SimulationInboundFundsHoldReleaseResponseStatus = "complete"
 )
 

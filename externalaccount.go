@@ -153,12 +153,9 @@ func (r externalAccountJSON) RawJSON() string {
 type ExternalAccountAccountHolder string
 
 const (
-	// The External Account is owned by a business.
-	ExternalAccountAccountHolderBusiness ExternalAccountAccountHolder = "business"
-	// The External Account is owned by an individual.
+	ExternalAccountAccountHolderBusiness   ExternalAccountAccountHolder = "business"
 	ExternalAccountAccountHolderIndividual ExternalAccountAccountHolder = "individual"
-	// It's unknown what kind of entity owns the External Account.
-	ExternalAccountAccountHolderUnknown ExternalAccountAccountHolder = "unknown"
+	ExternalAccountAccountHolderUnknown    ExternalAccountAccountHolder = "unknown"
 )
 
 func (r ExternalAccountAccountHolder) IsKnown() bool {
@@ -173,12 +170,9 @@ func (r ExternalAccountAccountHolder) IsKnown() bool {
 type ExternalAccountFunding string
 
 const (
-	// A checking account.
 	ExternalAccountFundingChecking ExternalAccountFunding = "checking"
-	// A savings account.
-	ExternalAccountFundingSavings ExternalAccountFunding = "savings"
-	// A different type of account.
-	ExternalAccountFundingOther ExternalAccountFunding = "other"
+	ExternalAccountFundingSavings  ExternalAccountFunding = "savings"
+	ExternalAccountFundingOther    ExternalAccountFunding = "other"
 )
 
 func (r ExternalAccountFunding) IsKnown() bool {
@@ -193,9 +187,7 @@ func (r ExternalAccountFunding) IsKnown() bool {
 type ExternalAccountStatus string
 
 const (
-	// The External Account is active.
-	ExternalAccountStatusActive ExternalAccountStatus = "active"
-	// The External Account is archived and won't appear in the dashboard.
+	ExternalAccountStatusActive   ExternalAccountStatus = "active"
 	ExternalAccountStatusArchived ExternalAccountStatus = "archived"
 )
 
@@ -227,12 +219,9 @@ func (r ExternalAccountType) IsKnown() bool {
 type ExternalAccountVerificationStatus string
 
 const (
-	// The External Account has not been verified.
 	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
-	// The External Account is in the process of being verified.
-	ExternalAccountVerificationStatusPending ExternalAccountVerificationStatus = "pending"
-	// The External Account is verified.
-	ExternalAccountVerificationStatusVerified ExternalAccountVerificationStatus = "verified"
+	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
+	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
 )
 
 func (r ExternalAccountVerificationStatus) IsKnown() bool {
@@ -265,12 +254,9 @@ func (r ExternalAccountNewParams) MarshalJSON() (data []byte, err error) {
 type ExternalAccountNewParamsAccountHolder string
 
 const (
-	// The External Account is owned by a business.
-	ExternalAccountNewParamsAccountHolderBusiness ExternalAccountNewParamsAccountHolder = "business"
-	// The External Account is owned by an individual.
+	ExternalAccountNewParamsAccountHolderBusiness   ExternalAccountNewParamsAccountHolder = "business"
 	ExternalAccountNewParamsAccountHolderIndividual ExternalAccountNewParamsAccountHolder = "individual"
-	// It's unknown what kind of entity owns the External Account.
-	ExternalAccountNewParamsAccountHolderUnknown ExternalAccountNewParamsAccountHolder = "unknown"
+	ExternalAccountNewParamsAccountHolderUnknown    ExternalAccountNewParamsAccountHolder = "unknown"
 )
 
 func (r ExternalAccountNewParamsAccountHolder) IsKnown() bool {
@@ -285,12 +271,9 @@ func (r ExternalAccountNewParamsAccountHolder) IsKnown() bool {
 type ExternalAccountNewParamsFunding string
 
 const (
-	// A checking account.
 	ExternalAccountNewParamsFundingChecking ExternalAccountNewParamsFunding = "checking"
-	// A savings account.
-	ExternalAccountNewParamsFundingSavings ExternalAccountNewParamsFunding = "savings"
-	// A different type of account.
-	ExternalAccountNewParamsFundingOther ExternalAccountNewParamsFunding = "other"
+	ExternalAccountNewParamsFundingSavings  ExternalAccountNewParamsFunding = "savings"
+	ExternalAccountNewParamsFundingOther    ExternalAccountNewParamsFunding = "other"
 )
 
 func (r ExternalAccountNewParamsFunding) IsKnown() bool {
@@ -320,9 +303,7 @@ func (r ExternalAccountUpdateParams) MarshalJSON() (data []byte, err error) {
 type ExternalAccountUpdateParamsAccountHolder string
 
 const (
-	// The External Account is owned by a business.
-	ExternalAccountUpdateParamsAccountHolderBusiness ExternalAccountUpdateParamsAccountHolder = "business"
-	// The External Account is owned by an individual.
+	ExternalAccountUpdateParamsAccountHolderBusiness   ExternalAccountUpdateParamsAccountHolder = "business"
 	ExternalAccountUpdateParamsAccountHolderIndividual ExternalAccountUpdateParamsAccountHolder = "individual"
 )
 
@@ -338,12 +319,9 @@ func (r ExternalAccountUpdateParamsAccountHolder) IsKnown() bool {
 type ExternalAccountUpdateParamsFunding string
 
 const (
-	// A checking account.
 	ExternalAccountUpdateParamsFundingChecking ExternalAccountUpdateParamsFunding = "checking"
-	// A savings account.
-	ExternalAccountUpdateParamsFundingSavings ExternalAccountUpdateParamsFunding = "savings"
-	// A different type of account.
-	ExternalAccountUpdateParamsFundingOther ExternalAccountUpdateParamsFunding = "other"
+	ExternalAccountUpdateParamsFundingSavings  ExternalAccountUpdateParamsFunding = "savings"
+	ExternalAccountUpdateParamsFundingOther    ExternalAccountUpdateParamsFunding = "other"
 )
 
 func (r ExternalAccountUpdateParamsFunding) IsKnown() bool {
@@ -358,9 +336,7 @@ func (r ExternalAccountUpdateParamsFunding) IsKnown() bool {
 type ExternalAccountUpdateParamsStatus string
 
 const (
-	// The External Account is active.
-	ExternalAccountUpdateParamsStatusActive ExternalAccountUpdateParamsStatus = "active"
-	// The External Account is archived and won't appear in the dashboard.
+	ExternalAccountUpdateParamsStatusActive   ExternalAccountUpdateParamsStatus = "active"
 	ExternalAccountUpdateParamsStatusArchived ExternalAccountUpdateParamsStatus = "archived"
 )
 
@@ -416,9 +392,7 @@ func (r ExternalAccountListParamsStatus) URLQuery() (v url.Values) {
 type ExternalAccountListParamsStatusIn string
 
 const (
-	// The External Account is active.
-	ExternalAccountListParamsStatusInActive ExternalAccountListParamsStatusIn = "active"
-	// The External Account is archived and won't appear in the dashboard.
+	ExternalAccountListParamsStatusInActive   ExternalAccountListParamsStatusIn = "active"
 	ExternalAccountListParamsStatusInArchived ExternalAccountListParamsStatusIn = "archived"
 )
 

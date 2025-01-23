@@ -154,12 +154,9 @@ func (r realTimeDecisionCardAuthenticationJSON) RawJSON() string {
 type RealTimeDecisionCardAuthenticationDecision string
 
 const (
-	// Approve the authentication attempt without triggering a challenge.
-	RealTimeDecisionCardAuthenticationDecisionApprove RealTimeDecisionCardAuthenticationDecision = "approve"
-	// Request further validation before approving the authentication attempt.
+	RealTimeDecisionCardAuthenticationDecisionApprove   RealTimeDecisionCardAuthenticationDecision = "approve"
 	RealTimeDecisionCardAuthenticationDecisionChallenge RealTimeDecisionCardAuthenticationDecision = "challenge"
-	// Deny the authentication attempt.
-	RealTimeDecisionCardAuthenticationDecisionDeny RealTimeDecisionCardAuthenticationDecision = "deny"
+	RealTimeDecisionCardAuthenticationDecisionDeny      RealTimeDecisionCardAuthenticationDecision = "deny"
 )
 
 func (r RealTimeDecisionCardAuthenticationDecision) IsKnown() bool {
@@ -210,9 +207,7 @@ func (r realTimeDecisionCardAuthenticationChallengeJSON) RawJSON() string {
 type RealTimeDecisionCardAuthenticationChallengeResult string
 
 const (
-	// Your application successfully delivered the one-time code to the cardholder.
 	RealTimeDecisionCardAuthenticationChallengeResultSuccess RealTimeDecisionCardAuthenticationChallengeResult = "success"
-	// Your application was unable to deliver the one-time code to the cardholder.
 	RealTimeDecisionCardAuthenticationChallengeResultFailure RealTimeDecisionCardAuthenticationChallengeResult = "failure"
 )
 
@@ -338,9 +333,7 @@ func (r realTimeDecisionCardAuthorizationJSON) RawJSON() string {
 type RealTimeDecisionCardAuthorizationDecision string
 
 const (
-	// Approve the authorization.
 	RealTimeDecisionCardAuthorizationDecisionApprove RealTimeDecisionCardAuthorizationDecision = "approve"
-	// Decline the authorization.
 	RealTimeDecisionCardAuthorizationDecisionDecline RealTimeDecisionCardAuthorizationDecision = "decline"
 )
 
@@ -357,11 +350,8 @@ func (r RealTimeDecisionCardAuthorizationDecision) IsKnown() bool {
 type RealTimeDecisionCardAuthorizationDirection string
 
 const (
-	// A regular card authorization where funds are debited from the cardholder.
 	RealTimeDecisionCardAuthorizationDirectionSettlement RealTimeDecisionCardAuthorizationDirection = "settlement"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	RealTimeDecisionCardAuthorizationDirectionRefund RealTimeDecisionCardAuthorizationDirection = "refund"
+	RealTimeDecisionCardAuthorizationDirectionRefund     RealTimeDecisionCardAuthorizationDirection = "refund"
 )
 
 func (r RealTimeDecisionCardAuthorizationDirection) IsKnown() bool {
@@ -402,7 +392,6 @@ func (r realTimeDecisionCardAuthorizationNetworkDetailsJSON) RawJSON() string {
 type RealTimeDecisionCardAuthorizationNetworkDetailsCategory string
 
 const (
-	// Visa
 	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "visa"
 )
 
@@ -453,40 +442,14 @@ func (r realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON) RawJSON() strin
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	// Single transaction of a mail/phone order: Use to indicate that the transaction
-	// is a mail/phone order purchase, not a recurring transaction or installment
-	// payment. For domestic transactions in the US region, this value may also
-	// indicate one bill payment transaction in the card-present or card-absent
-	// environments.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	// Recurring transaction: Payment indicator used to indicate a recurring
-	// transaction that originates from an acquirer in the US region.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	// Installment payment: Payment indicator used to indicate one purchase of goods or
-	// services that is billed to the account in multiple charges over a period of time
-	// agreed upon by the cardholder and merchant from transactions that originate from
-	// an acquirer in the US region.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	// Unknown classification: other mail order: Use to indicate that the type of
-	// mail/telephone order is unknown.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	// Secure electronic commerce transaction: Use to indicate that the electronic
-	// commerce transaction has been authenticated using e.g., 3-D Secure
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
-	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
-	// identify an electronic commerce transaction where the merchant attempted to
-	// authenticate the cardholder using 3-D Secure, but was unable to complete the
-	// authentication because the issuer or cardholder does not participate in the 3-D
-	// Secure program.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	// Non-authenticated security transaction: Use to identify an electronic commerce
-	// transaction that uses data encryption for security however , cardholder
-	// authentication is not performed using 3-D Secure.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	// Non-secure transaction: Use to identify an electronic commerce transaction that
-	// has no data protection.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
@@ -502,25 +465,15 @@ func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceInd
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
-	// Unknown
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
-	// Manual key entry
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
-	// Magnetic stripe read, without card verification value
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	// Optical code
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
-	// Contact chip card
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
-	// Contactless read of chip card
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
-	// Transaction initiated using a credential that has previously been stored on file
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
-	// Magnetic stripe read
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
-	// Contactless read of magnetic stripe data
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	// Contact chip card, without card verification value
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual                     RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless                RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
 
@@ -537,22 +490,12 @@ func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMo
 type RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason string
 
 const (
-	// Increase failed to process the authorization in a timely manner.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
-	// The physical card read had an invalid CVV, dCVV, or authorization request
-	// cryptogram.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
-	// The 3DS cardholder authentication verification value was invalid.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
-	// An internal Visa error occurred. Visa uses this reason code for certain expected
-	// occurrences as well, such as Application Transaction Counter (ATC) replays.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
-	// The merchant has enabled Visa's Transaction Advisory Service and requires
-	// further authentication to perform the transaction. In practice this is often
-	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError                                              RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
-	// An unspecific reason for stand-in processing.
-	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther                                                    RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
 )
 
 func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
@@ -601,23 +544,12 @@ func (r realTimeDecisionCardAuthorizationNetworkIdentifiersJSON) RawJSON() strin
 type RealTimeDecisionCardAuthorizationProcessingCategory string
 
 const (
-	// Account funding transactions are transactions used to e.g., fund an account or
-	// transfer funds between accounts.
-	RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding RealTimeDecisionCardAuthorizationProcessingCategory = "account_funding"
-	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
-	// prior to the actual transaction amount being known. They are followed by an
-	// advice message that updates the amount of the pending transaction.
+	RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding         RealTimeDecisionCardAuthorizationProcessingCategory = "account_funding"
 	RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser RealTimeDecisionCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
-	// A transaction used to pay a bill.
-	RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment RealTimeDecisionCardAuthorizationProcessingCategory = "bill_payment"
-	// A regular purchase.
-	RealTimeDecisionCardAuthorizationProcessingCategoryPurchase RealTimeDecisionCardAuthorizationProcessingCategory = "purchase"
-	// Quasi-cash transactions represent purchases of items which may be convertible to
-	// cash.
-	RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash RealTimeDecisionCardAuthorizationProcessingCategory = "quasi_cash"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	RealTimeDecisionCardAuthorizationProcessingCategoryRefund RealTimeDecisionCardAuthorizationProcessingCategory = "refund"
+	RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment            RealTimeDecisionCardAuthorizationProcessingCategory = "bill_payment"
+	RealTimeDecisionCardAuthorizationProcessingCategoryPurchase               RealTimeDecisionCardAuthorizationProcessingCategory = "purchase"
+	RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash              RealTimeDecisionCardAuthorizationProcessingCategory = "quasi_cash"
+	RealTimeDecisionCardAuthorizationProcessingCategoryRefund                 RealTimeDecisionCardAuthorizationProcessingCategory = "refund"
 )
 
 func (r RealTimeDecisionCardAuthorizationProcessingCategory) IsKnown() bool {
@@ -663,9 +595,7 @@ func (r realTimeDecisionCardAuthorizationRequestDetailsJSON) RawJSON() string {
 type RealTimeDecisionCardAuthorizationRequestDetailsCategory string
 
 const (
-	// A regular, standalone authorization.
-	RealTimeDecisionCardAuthorizationRequestDetailsCategoryInitialAuthorization RealTimeDecisionCardAuthorizationRequestDetailsCategory = "initial_authorization"
-	// An incremental request to increase the amount of an existing authorization.
+	RealTimeDecisionCardAuthorizationRequestDetailsCategoryInitialAuthorization     RealTimeDecisionCardAuthorizationRequestDetailsCategory = "initial_authorization"
 	RealTimeDecisionCardAuthorizationRequestDetailsCategoryIncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsCategory = "incremental_authorization"
 )
 
@@ -762,12 +692,9 @@ func (r realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON) R
 type RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult string
 
 const (
-	// No card verification code was provided in the authorization request.
 	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNotChecked RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "not_checked"
-	// The card verification code matched the one on file.
-	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultMatch RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "match"
-	// The card verification code did not match the one on file.
-	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNoMatch RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
+	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultMatch      RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "match"
+	RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResultNoMatch    RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
 )
 
 func (r RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult) IsKnown() bool {
@@ -820,18 +747,12 @@ func (r realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON) RawJ
 type RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult string
 
 const (
-	// No adress was provided in the authorization request.
-	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "not_checked"
-	// Postal code matches, but the street address was not verified.
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked                       RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "not_checked"
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match.
-	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches.
-	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
-	// Postal code and street address match.
-	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "match"
-	// Postal code and street address do not match.
-	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "no_match"
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch                            RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "match"
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch                          RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "no_match"
 )
 
 func (r RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
@@ -846,16 +767,10 @@ func (r RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult) Is
 type RealTimeDecisionCategory string
 
 const (
-	// A card is being authorized.
-	RealTimeDecisionCategoryCardAuthorizationRequested RealTimeDecisionCategory = "card_authorization_requested"
-	// 3DS authentication is requested.
-	RealTimeDecisionCategoryCardAuthenticationRequested RealTimeDecisionCategory = "card_authentication_requested"
-	// 3DS authentication challenge requires cardholder involvement.
+	RealTimeDecisionCategoryCardAuthorizationRequested           RealTimeDecisionCategory = "card_authorization_requested"
+	RealTimeDecisionCategoryCardAuthenticationRequested          RealTimeDecisionCategory = "card_authentication_requested"
 	RealTimeDecisionCategoryCardAuthenticationChallengeRequested RealTimeDecisionCategory = "card_authentication_challenge_requested"
-	// A card is being loaded into a digital wallet.
-	RealTimeDecisionCategoryDigitalWalletTokenRequested RealTimeDecisionCategory = "digital_wallet_token_requested"
-	// A card is being loaded into a digital wallet and requires cardholder
-	// authentication.
+	RealTimeDecisionCategoryDigitalWalletTokenRequested          RealTimeDecisionCategory = "digital_wallet_token_requested"
 	RealTimeDecisionCategoryDigitalWalletAuthenticationRequested RealTimeDecisionCategory = "digital_wallet_authentication_requested"
 )
 
@@ -913,9 +828,7 @@ func (r realTimeDecisionDigitalWalletAuthenticationJSON) RawJSON() string {
 type RealTimeDecisionDigitalWalletAuthenticationChannel string
 
 const (
-	// Send one-time passcodes over SMS.
-	RealTimeDecisionDigitalWalletAuthenticationChannelSMS RealTimeDecisionDigitalWalletAuthenticationChannel = "sms"
-	// Send one-time passcodes over email.
+	RealTimeDecisionDigitalWalletAuthenticationChannelSMS   RealTimeDecisionDigitalWalletAuthenticationChannel = "sms"
 	RealTimeDecisionDigitalWalletAuthenticationChannelEmail RealTimeDecisionDigitalWalletAuthenticationChannel = "email"
 )
 
@@ -931,14 +844,10 @@ func (r RealTimeDecisionDigitalWalletAuthenticationChannel) IsKnown() bool {
 type RealTimeDecisionDigitalWalletAuthenticationDigitalWallet string
 
 const (
-	// Apple Pay
-	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "apple_pay"
-	// Google Pay
-	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "google_pay"
-	// Samsung Pay
+	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletApplePay   RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "apple_pay"
+	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletGooglePay  RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "google_pay"
 	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletSamsungPay RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "samsung_pay"
-	// Unknown
-	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "unknown"
+	RealTimeDecisionDigitalWalletAuthenticationDigitalWalletUnknown    RealTimeDecisionDigitalWalletAuthenticationDigitalWallet = "unknown"
 )
 
 func (r RealTimeDecisionDigitalWalletAuthenticationDigitalWallet) IsKnown() bool {
@@ -953,9 +862,7 @@ func (r RealTimeDecisionDigitalWalletAuthenticationDigitalWallet) IsKnown() bool
 type RealTimeDecisionDigitalWalletAuthenticationResult string
 
 const (
-	// Your application successfully delivered the one-time passcode to the cardholder.
 	RealTimeDecisionDigitalWalletAuthenticationResultSuccess RealTimeDecisionDigitalWalletAuthenticationResult = "success"
-	// Your application failed to deliver the one-time passcode to the cardholder.
 	RealTimeDecisionDigitalWalletAuthenticationResultFailure RealTimeDecisionDigitalWalletAuthenticationResult = "failure"
 )
 
@@ -1007,9 +914,7 @@ func (r realTimeDecisionDigitalWalletTokenJSON) RawJSON() string {
 type RealTimeDecisionDigitalWalletTokenDecision string
 
 const (
-	// Approve the provisioning request.
 	RealTimeDecisionDigitalWalletTokenDecisionApprove RealTimeDecisionDigitalWalletTokenDecision = "approve"
-	// Decline the provisioning request.
 	RealTimeDecisionDigitalWalletTokenDecisionDecline RealTimeDecisionDigitalWalletTokenDecision = "decline"
 )
 
@@ -1025,14 +930,10 @@ func (r RealTimeDecisionDigitalWalletTokenDecision) IsKnown() bool {
 type RealTimeDecisionDigitalWalletTokenDigitalWallet string
 
 const (
-	// Apple Pay
-	RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "apple_pay"
-	// Google Pay
-	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
-	// Samsung Pay
+	RealTimeDecisionDigitalWalletTokenDigitalWalletApplePay   RealTimeDecisionDigitalWalletTokenDigitalWallet = "apple_pay"
+	RealTimeDecisionDigitalWalletTokenDigitalWalletGooglePay  RealTimeDecisionDigitalWalletTokenDigitalWallet = "google_pay"
 	RealTimeDecisionDigitalWalletTokenDigitalWalletSamsungPay RealTimeDecisionDigitalWalletTokenDigitalWallet = "samsung_pay"
-	// Unknown
-	RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown RealTimeDecisionDigitalWalletTokenDigitalWallet = "unknown"
+	RealTimeDecisionDigitalWalletTokenDigitalWalletUnknown    RealTimeDecisionDigitalWalletTokenDigitalWallet = "unknown"
 )
 
 func (r RealTimeDecisionDigitalWalletTokenDigitalWallet) IsKnown() bool {
@@ -1047,12 +948,9 @@ func (r RealTimeDecisionDigitalWalletTokenDigitalWallet) IsKnown() bool {
 type RealTimeDecisionStatus string
 
 const (
-	// The decision is pending action via real-time webhook.
-	RealTimeDecisionStatusPending RealTimeDecisionStatus = "pending"
-	// Your webhook actioned the real-time decision.
+	RealTimeDecisionStatusPending   RealTimeDecisionStatus = "pending"
 	RealTimeDecisionStatusResponded RealTimeDecisionStatus = "responded"
-	// Your webhook failed to respond to the authorization in time.
-	RealTimeDecisionStatusTimedOut RealTimeDecisionStatus = "timed_out"
+	RealTimeDecisionStatusTimedOut  RealTimeDecisionStatus = "timed_out"
 )
 
 func (r RealTimeDecisionStatus) IsKnown() bool {
@@ -1116,12 +1014,9 @@ func (r RealTimeDecisionActionParamsCardAuthentication) MarshalJSON() (data []by
 type RealTimeDecisionActionParamsCardAuthenticationDecision string
 
 const (
-	// Approve the authentication attempt without triggering a challenge.
-	RealTimeDecisionActionParamsCardAuthenticationDecisionApprove RealTimeDecisionActionParamsCardAuthenticationDecision = "approve"
-	// Request further validation before approving the authentication attempt.
+	RealTimeDecisionActionParamsCardAuthenticationDecisionApprove   RealTimeDecisionActionParamsCardAuthenticationDecision = "approve"
 	RealTimeDecisionActionParamsCardAuthenticationDecisionChallenge RealTimeDecisionActionParamsCardAuthenticationDecision = "challenge"
-	// Deny the authentication attempt.
-	RealTimeDecisionActionParamsCardAuthenticationDecisionDeny RealTimeDecisionActionParamsCardAuthenticationDecision = "deny"
+	RealTimeDecisionActionParamsCardAuthenticationDecisionDeny      RealTimeDecisionActionParamsCardAuthenticationDecision = "deny"
 )
 
 func (r RealTimeDecisionActionParamsCardAuthenticationDecision) IsKnown() bool {
@@ -1149,9 +1044,7 @@ func (r RealTimeDecisionActionParamsCardAuthenticationChallenge) MarshalJSON() (
 type RealTimeDecisionActionParamsCardAuthenticationChallengeResult string
 
 const (
-	// Your application successfully delivered the one-time code to the cardholder.
 	RealTimeDecisionActionParamsCardAuthenticationChallengeResultSuccess RealTimeDecisionActionParamsCardAuthenticationChallengeResult = "success"
-	// Your application was unable to deliver the one-time code to the cardholder.
 	RealTimeDecisionActionParamsCardAuthenticationChallengeResultFailure RealTimeDecisionActionParamsCardAuthenticationChallengeResult = "failure"
 )
 
@@ -1181,9 +1074,7 @@ func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byt
 type RealTimeDecisionActionParamsCardAuthorizationDecision string
 
 const (
-	// Approve the authorization.
 	RealTimeDecisionActionParamsCardAuthorizationDecisionApprove RealTimeDecisionActionParamsCardAuthorizationDecision = "approve"
-	// Decline the authorization.
 	RealTimeDecisionActionParamsCardAuthorizationDecisionDecline RealTimeDecisionActionParamsCardAuthorizationDecision = "decline"
 )
 
@@ -1200,24 +1091,12 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDecision) IsKnown() bool {
 type RealTimeDecisionActionParamsCardAuthorizationDeclineReason string
 
 const (
-	// The cardholder does not have sufficient funds to cover the transaction. The
-	// merchant may attempt to process the transaction again.
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "insufficient_funds"
-	// This type of transaction is not allowed for this card. This transaction should
-	// not be retried.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds       RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "insufficient_funds"
 	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "transaction_never_allowed"
-	// The transaction amount exceeds the cardholder's approval limit. The merchant may
-	// attempt to process the transaction again.
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "exceeds_approval_limit"
-	// The card has been temporarily disabled or not yet activated. The merchant may
-	// attempt to process the transaction again.
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit    RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "exceeds_approval_limit"
 	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "card_temporarily_disabled"
-	// The transaction is suspected to be fraudulent. The merchant may attempt to
-	// process the transaction again.
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "suspected_fraud"
-	// The transaction was declined for another reason. The merchant may attempt to
-	// process the transaction again. This should be used sparingly.
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "other"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud          RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "suspected_fraud"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther                   RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "other"
 )
 
 func (r RealTimeDecisionActionParamsCardAuthorizationDeclineReason) IsKnown() bool {
@@ -1244,9 +1123,7 @@ func (r RealTimeDecisionActionParamsDigitalWalletAuthentication) MarshalJSON() (
 type RealTimeDecisionActionParamsDigitalWalletAuthenticationResult string
 
 const (
-	// Your application successfully delivered the one-time passcode to the cardholder.
 	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "success"
-	// Your application failed to deliver the one-time passcode to the cardholder.
 	RealTimeDecisionActionParamsDigitalWalletAuthenticationResultFailure RealTimeDecisionActionParamsDigitalWalletAuthenticationResult = "failure"
 )
 

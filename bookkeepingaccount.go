@@ -142,9 +142,7 @@ func (r bookkeepingAccountJSON) RawJSON() string {
 type BookkeepingAccountComplianceCategory string
 
 const (
-	// A cash in an commingled Increase Account.
-	BookkeepingAccountComplianceCategoryCommingledCash BookkeepingAccountComplianceCategory = "commingled_cash"
-	// A customer balance.
+	BookkeepingAccountComplianceCategoryCommingledCash  BookkeepingAccountComplianceCategory = "commingled_cash"
 	BookkeepingAccountComplianceCategoryCustomerBalance BookkeepingAccountComplianceCategory = "customer_balance"
 )
 
@@ -239,9 +237,7 @@ func (r BookkeepingAccountNewParams) MarshalJSON() (data []byte, err error) {
 type BookkeepingAccountNewParamsComplianceCategory string
 
 const (
-	// A cash in an commingled Increase Account.
-	BookkeepingAccountNewParamsComplianceCategoryCommingledCash BookkeepingAccountNewParamsComplianceCategory = "commingled_cash"
-	// A customer balance.
+	BookkeepingAccountNewParamsComplianceCategoryCommingledCash  BookkeepingAccountNewParamsComplianceCategory = "commingled_cash"
 	BookkeepingAccountNewParamsComplianceCategoryCustomerBalance BookkeepingAccountNewParamsComplianceCategory = "customer_balance"
 )
 

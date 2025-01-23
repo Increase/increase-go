@@ -145,16 +145,11 @@ func (r intrafiAccountEnrollmentJSON) RawJSON() string {
 type IntrafiAccountEnrollmentStatus string
 
 const (
-	// The account is being added to the IntraFi network.
-	IntrafiAccountEnrollmentStatusPendingEnrolling IntrafiAccountEnrollmentStatus = "pending_enrolling"
-	// The account has been enrolled with IntraFi.
-	IntrafiAccountEnrollmentStatusEnrolled IntrafiAccountEnrollmentStatus = "enrolled"
-	// The account is being unenrolled from IntraFi's deposit sweep.
+	IntrafiAccountEnrollmentStatusPendingEnrolling   IntrafiAccountEnrollmentStatus = "pending_enrolling"
+	IntrafiAccountEnrollmentStatusEnrolled           IntrafiAccountEnrollmentStatus = "enrolled"
 	IntrafiAccountEnrollmentStatusPendingUnenrolling IntrafiAccountEnrollmentStatus = "pending_unenrolling"
-	// The account was once enrolled, but is no longer enrolled at IntraFi.
-	IntrafiAccountEnrollmentStatusUnenrolled IntrafiAccountEnrollmentStatus = "unenrolled"
-	// Something unexpected happened with this account. Contact Increase support.
-	IntrafiAccountEnrollmentStatusRequiresAttention IntrafiAccountEnrollmentStatus = "requires_attention"
+	IntrafiAccountEnrollmentStatusUnenrolled         IntrafiAccountEnrollmentStatus = "unenrolled"
+	IntrafiAccountEnrollmentStatusRequiresAttention  IntrafiAccountEnrollmentStatus = "requires_attention"
 )
 
 func (r IntrafiAccountEnrollmentStatus) IsKnown() bool {
@@ -236,16 +231,11 @@ func (r IntrafiAccountEnrollmentListParamsStatus) URLQuery() (v url.Values) {
 type IntrafiAccountEnrollmentListParamsStatusIn string
 
 const (
-	// The account is being added to the IntraFi network.
-	IntrafiAccountEnrollmentListParamsStatusInPendingEnrolling IntrafiAccountEnrollmentListParamsStatusIn = "pending_enrolling"
-	// The account has been enrolled with IntraFi.
-	IntrafiAccountEnrollmentListParamsStatusInEnrolled IntrafiAccountEnrollmentListParamsStatusIn = "enrolled"
-	// The account is being unenrolled from IntraFi's deposit sweep.
+	IntrafiAccountEnrollmentListParamsStatusInPendingEnrolling   IntrafiAccountEnrollmentListParamsStatusIn = "pending_enrolling"
+	IntrafiAccountEnrollmentListParamsStatusInEnrolled           IntrafiAccountEnrollmentListParamsStatusIn = "enrolled"
 	IntrafiAccountEnrollmentListParamsStatusInPendingUnenrolling IntrafiAccountEnrollmentListParamsStatusIn = "pending_unenrolling"
-	// The account was once enrolled, but is no longer enrolled at IntraFi.
-	IntrafiAccountEnrollmentListParamsStatusInUnenrolled IntrafiAccountEnrollmentListParamsStatusIn = "unenrolled"
-	// Something unexpected happened with this account. Contact Increase support.
-	IntrafiAccountEnrollmentListParamsStatusInRequiresAttention IntrafiAccountEnrollmentListParamsStatusIn = "requires_attention"
+	IntrafiAccountEnrollmentListParamsStatusInUnenrolled         IntrafiAccountEnrollmentListParamsStatusIn = "unenrolled"
+	IntrafiAccountEnrollmentListParamsStatusInRequiresAttention  IntrafiAccountEnrollmentListParamsStatusIn = "requires_attention"
 )
 
 func (r IntrafiAccountEnrollmentListParamsStatusIn) IsKnown() bool {

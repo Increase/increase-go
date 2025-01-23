@@ -175,17 +175,11 @@ func (r inboundRealTimePaymentsTransferConfirmationJSON) RawJSON() string {
 type InboundRealTimePaymentsTransferCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	InboundRealTimePaymentsTransferCurrencyCad InboundRealTimePaymentsTransferCurrency = "CAD"
-	// Swiss Franc (CHF)
 	InboundRealTimePaymentsTransferCurrencyChf InboundRealTimePaymentsTransferCurrency = "CHF"
-	// Euro (EUR)
 	InboundRealTimePaymentsTransferCurrencyEur InboundRealTimePaymentsTransferCurrency = "EUR"
-	// British Pound (GBP)
 	InboundRealTimePaymentsTransferCurrencyGbp InboundRealTimePaymentsTransferCurrency = "GBP"
-	// Japanese Yen (JPY)
 	InboundRealTimePaymentsTransferCurrencyJpy InboundRealTimePaymentsTransferCurrency = "JPY"
-	// US Dollar (USD)
 	InboundRealTimePaymentsTransferCurrencyUsd InboundRealTimePaymentsTransferCurrency = "USD"
 )
 
@@ -230,17 +224,11 @@ func (r inboundRealTimePaymentsTransferDeclineJSON) RawJSON() string {
 type InboundRealTimePaymentsTransferDeclineReason string
 
 const (
-	// The account number is canceled.
-	InboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled InboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	// The account number is disabled.
-	InboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled InboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	// Your account is restricted.
-	InboundRealTimePaymentsTransferDeclineReasonAccountRestricted InboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	// Your account is inactive.
-	InboundRealTimePaymentsTransferDeclineReasonGroupLocked InboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	// The account's entity is not active.
-	InboundRealTimePaymentsTransferDeclineReasonEntityNotActive InboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real-Time Payments transfers.
+	InboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      InboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	InboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      InboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	InboundRealTimePaymentsTransferDeclineReasonAccountRestricted          InboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	InboundRealTimePaymentsTransferDeclineReasonGroupLocked                InboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	InboundRealTimePaymentsTransferDeclineReasonEntityNotActive            InboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
 	InboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled InboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -256,14 +244,10 @@ func (r InboundRealTimePaymentsTransferDeclineReason) IsKnown() bool {
 type InboundRealTimePaymentsTransferStatus string
 
 const (
-	// The transfer is pending confirmation.
 	InboundRealTimePaymentsTransferStatusPendingConfirming InboundRealTimePaymentsTransferStatus = "pending_confirming"
-	// The transfer was not responded to in time.
-	InboundRealTimePaymentsTransferStatusTimedOut InboundRealTimePaymentsTransferStatus = "timed_out"
-	// The transfer has been received successfully and is confirmed.
-	InboundRealTimePaymentsTransferStatusConfirmed InboundRealTimePaymentsTransferStatus = "confirmed"
-	// The transfer has been declined.
-	InboundRealTimePaymentsTransferStatusDeclined InboundRealTimePaymentsTransferStatus = "declined"
+	InboundRealTimePaymentsTransferStatusTimedOut          InboundRealTimePaymentsTransferStatus = "timed_out"
+	InboundRealTimePaymentsTransferStatusConfirmed         InboundRealTimePaymentsTransferStatus = "confirmed"
+	InboundRealTimePaymentsTransferStatusDeclined          InboundRealTimePaymentsTransferStatus = "declined"
 )
 
 func (r InboundRealTimePaymentsTransferStatus) IsKnown() bool {

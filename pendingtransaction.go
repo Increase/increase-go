@@ -147,17 +147,11 @@ func (r pendingTransactionJSON) RawJSON() string {
 type PendingTransactionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	PendingTransactionCurrencyCad PendingTransactionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	PendingTransactionCurrencyChf PendingTransactionCurrency = "CHF"
-	// Euro (EUR)
 	PendingTransactionCurrencyEur PendingTransactionCurrency = "EUR"
-	// British Pound (GBP)
 	PendingTransactionCurrencyGbp PendingTransactionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	PendingTransactionCurrencyJpy PendingTransactionCurrency = "JPY"
-	// US Dollar (USD)
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
 )
 
@@ -173,12 +167,9 @@ func (r PendingTransactionCurrency) IsKnown() bool {
 type PendingTransactionRouteType string
 
 const (
-	// An Account Number.
 	PendingTransactionRouteTypeAccountNumber PendingTransactionRouteType = "account_number"
-	// A Card.
-	PendingTransactionRouteTypeCard PendingTransactionRouteType = "card"
-	// A Lockbox.
-	PendingTransactionRouteTypeLockbox PendingTransactionRouteType = "lockbox"
+	PendingTransactionRouteTypeCard          PendingTransactionRouteType = "card"
+	PendingTransactionRouteTypeLockbox       PendingTransactionRouteType = "lockbox"
 )
 
 func (r PendingTransactionRouteType) IsKnown() bool {
@@ -289,17 +280,11 @@ func (r pendingTransactionSourceAccountTransferInstructionJSON) RawJSON() string
 type PendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	PendingTransactionSourceAccountTransferInstructionCurrencyCad PendingTransactionSourceAccountTransferInstructionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	PendingTransactionSourceAccountTransferInstructionCurrencyChf PendingTransactionSourceAccountTransferInstructionCurrency = "CHF"
-	// Euro (EUR)
 	PendingTransactionSourceAccountTransferInstructionCurrencyEur PendingTransactionSourceAccountTransferInstructionCurrency = "EUR"
-	// British Pound (GBP)
 	PendingTransactionSourceAccountTransferInstructionCurrencyGbp PendingTransactionSourceAccountTransferInstructionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	PendingTransactionSourceAccountTransferInstructionCurrencyJpy PendingTransactionSourceAccountTransferInstructionCurrency = "JPY"
-	// US Dollar (USD)
 	PendingTransactionSourceAccountTransferInstructionCurrencyUsd PendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
@@ -461,12 +446,9 @@ func (r pendingTransactionSourceCardAuthorizationJSON) RawJSON() string {
 type PendingTransactionSourceCardAuthorizationActioner string
 
 const (
-	// This object was actioned by the user through a real-time decision.
-	PendingTransactionSourceCardAuthorizationActionerUser PendingTransactionSourceCardAuthorizationActioner = "user"
-	// This object was actioned by Increase without user intervention.
+	PendingTransactionSourceCardAuthorizationActionerUser     PendingTransactionSourceCardAuthorizationActioner = "user"
 	PendingTransactionSourceCardAuthorizationActionerIncrease PendingTransactionSourceCardAuthorizationActioner = "increase"
-	// This object was actioned by the network, through stand-in processing.
-	PendingTransactionSourceCardAuthorizationActionerNetwork PendingTransactionSourceCardAuthorizationActioner = "network"
+	PendingTransactionSourceCardAuthorizationActionerNetwork  PendingTransactionSourceCardAuthorizationActioner = "network"
 )
 
 func (r PendingTransactionSourceCardAuthorizationActioner) IsKnown() bool {
@@ -482,17 +464,11 @@ func (r PendingTransactionSourceCardAuthorizationActioner) IsKnown() bool {
 type PendingTransactionSourceCardAuthorizationCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	PendingTransactionSourceCardAuthorizationCurrencyCad PendingTransactionSourceCardAuthorizationCurrency = "CAD"
-	// Swiss Franc (CHF)
 	PendingTransactionSourceCardAuthorizationCurrencyChf PendingTransactionSourceCardAuthorizationCurrency = "CHF"
-	// Euro (EUR)
 	PendingTransactionSourceCardAuthorizationCurrencyEur PendingTransactionSourceCardAuthorizationCurrency = "EUR"
-	// British Pound (GBP)
 	PendingTransactionSourceCardAuthorizationCurrencyGbp PendingTransactionSourceCardAuthorizationCurrency = "GBP"
-	// Japanese Yen (JPY)
 	PendingTransactionSourceCardAuthorizationCurrencyJpy PendingTransactionSourceCardAuthorizationCurrency = "JPY"
-	// US Dollar (USD)
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
@@ -509,11 +485,8 @@ func (r PendingTransactionSourceCardAuthorizationCurrency) IsKnown() bool {
 type PendingTransactionSourceCardAuthorizationDirection string
 
 const (
-	// A regular card authorization where funds are debited from the cardholder.
 	PendingTransactionSourceCardAuthorizationDirectionSettlement PendingTransactionSourceCardAuthorizationDirection = "settlement"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	PendingTransactionSourceCardAuthorizationDirectionRefund PendingTransactionSourceCardAuthorizationDirection = "refund"
+	PendingTransactionSourceCardAuthorizationDirectionRefund     PendingTransactionSourceCardAuthorizationDirection = "refund"
 )
 
 func (r PendingTransactionSourceCardAuthorizationDirection) IsKnown() bool {
@@ -555,7 +528,6 @@ func (r pendingTransactionSourceCardAuthorizationNetworkDetailsJSON) RawJSON() s
 type PendingTransactionSourceCardAuthorizationNetworkDetailsCategory string
 
 const (
-	// Visa
 	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "visa"
 )
 
@@ -607,40 +579,14 @@ func (r pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON) RawJSON
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	// Single transaction of a mail/phone order: Use to indicate that the transaction
-	// is a mail/phone order purchase, not a recurring transaction or installment
-	// payment. For domestic transactions in the US region, this value may also
-	// indicate one bill payment transaction in the card-present or card-absent
-	// environments.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	// Recurring transaction: Payment indicator used to indicate a recurring
-	// transaction that originates from an acquirer in the US region.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	// Installment payment: Payment indicator used to indicate one purchase of goods or
-	// services that is billed to the account in multiple charges over a period of time
-	// agreed upon by the cardholder and merchant from transactions that originate from
-	// an acquirer in the US region.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	// Unknown classification: other mail order: Use to indicate that the type of
-	// mail/telephone order is unknown.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	// Secure electronic commerce transaction: Use to indicate that the electronic
-	// commerce transaction has been authenticated using e.g., 3-D Secure
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
-	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
-	// identify an electronic commerce transaction where the merchant attempted to
-	// authenticate the cardholder using 3-D Secure, but was unable to complete the
-	// authentication because the issuer or cardholder does not participate in the 3-D
-	// Secure program.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	// Non-authenticated security transaction: Use to identify an electronic commerce
-	// transaction that uses data encryption for security however , cardholder
-	// authentication is not performed using 3-D Secure.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	// Non-secure transaction: Use to identify an electronic commerce transaction that
-	// has no data protection.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
@@ -656,25 +602,15 @@ func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCom
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
-	// Unknown
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
-	// Manual key entry
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
-	// Magnetic stripe read, without card verification value
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	// Optical code
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
-	// Contact chip card
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
-	// Contactless read of chip card
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
-	// Transaction initiated using a credential that has previously been stored on file
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
-	// Magnetic stripe read
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
-	// Contactless read of magnetic stripe data
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	// Contact chip card, without card verification value
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual                     PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless                PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
 
@@ -691,22 +627,12 @@ func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServic
 type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason string
 
 const (
-	// Increase failed to process the authorization in a timely manner.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
-	// The physical card read had an invalid CVV, dCVV, or authorization request
-	// cryptogram.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
-	// The 3DS cardholder authentication verification value was invalid.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
-	// An internal Visa error occurred. Visa uses this reason code for certain expected
-	// occurrences as well, such as Application Transaction Counter (ATC) replays.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
-	// The merchant has enabled Visa's Transaction Advisory Service and requires
-	// further authentication to perform the transaction. In practice this is often
-	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError                                              PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
-	// An unspecific reason for stand-in processing.
-	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther                                                    PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
 )
 
 func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
@@ -756,23 +682,12 @@ func (r pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON) RawJSON
 type PendingTransactionSourceCardAuthorizationProcessingCategory string
 
 const (
-	// Account funding transactions are transactions used to e.g., fund an account or
-	// transfer funds between accounts.
-	PendingTransactionSourceCardAuthorizationProcessingCategoryAccountFunding PendingTransactionSourceCardAuthorizationProcessingCategory = "account_funding"
-	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
-	// prior to the actual transaction amount being known. They are followed by an
-	// advice message that updates the amount of the pending transaction.
+	PendingTransactionSourceCardAuthorizationProcessingCategoryAccountFunding         PendingTransactionSourceCardAuthorizationProcessingCategory = "account_funding"
 	PendingTransactionSourceCardAuthorizationProcessingCategoryAutomaticFuelDispenser PendingTransactionSourceCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
-	// A transaction used to pay a bill.
-	PendingTransactionSourceCardAuthorizationProcessingCategoryBillPayment PendingTransactionSourceCardAuthorizationProcessingCategory = "bill_payment"
-	// A regular purchase.
-	PendingTransactionSourceCardAuthorizationProcessingCategoryPurchase PendingTransactionSourceCardAuthorizationProcessingCategory = "purchase"
-	// Quasi-cash transactions represent purchases of items which may be convertible to
-	// cash.
-	PendingTransactionSourceCardAuthorizationProcessingCategoryQuasiCash PendingTransactionSourceCardAuthorizationProcessingCategory = "quasi_cash"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	PendingTransactionSourceCardAuthorizationProcessingCategoryRefund PendingTransactionSourceCardAuthorizationProcessingCategory = "refund"
+	PendingTransactionSourceCardAuthorizationProcessingCategoryBillPayment            PendingTransactionSourceCardAuthorizationProcessingCategory = "bill_payment"
+	PendingTransactionSourceCardAuthorizationProcessingCategoryPurchase               PendingTransactionSourceCardAuthorizationProcessingCategory = "purchase"
+	PendingTransactionSourceCardAuthorizationProcessingCategoryQuasiCash              PendingTransactionSourceCardAuthorizationProcessingCategory = "quasi_cash"
+	PendingTransactionSourceCardAuthorizationProcessingCategoryRefund                 PendingTransactionSourceCardAuthorizationProcessingCategory = "refund"
 )
 
 func (r PendingTransactionSourceCardAuthorizationProcessingCategory) IsKnown() bool {
@@ -856,12 +771,9 @@ func (r pendingTransactionSourceCardAuthorizationVerificationCardVerificationCod
 type PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult string
 
 const (
-	// No card verification code was provided in the authorization request.
 	PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultNotChecked PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult = "not_checked"
-	// The card verification code matched the one on file.
-	PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultMatch PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult = "match"
-	// The card verification code did not match the one on file.
-	PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultNoMatch PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
+	PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultMatch      PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult = "match"
+	PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResultNoMatch    PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
 )
 
 func (r PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult) IsKnown() bool {
@@ -914,18 +826,12 @@ func (r pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJS
 type PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult string
 
 const (
-	// No adress was provided in the authorization request.
-	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNotChecked PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "not_checked"
-	// Postal code matches, but the street address was not verified.
+	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNotChecked                       PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "not_checked"
 	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match.
-	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches.
-	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
-	// Postal code and street address match.
-	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultMatch PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "match"
-	// Postal code and street address do not match.
-	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNoMatch PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "no_match"
+	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultMatch                            PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "match"
+	PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResultNoMatch                          PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult = "no_match"
 )
 
 func (r PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
@@ -941,33 +847,16 @@ func (r PendingTransactionSourceCardAuthorizationVerificationCardholderAddressRe
 type PendingTransactionSourceCategory string
 
 const (
-	// Account Transfer Instruction: details will be under the
-	// `account_transfer_instruction` object.
-	PendingTransactionSourceCategoryAccountTransferInstruction PendingTransactionSourceCategory = "account_transfer_instruction"
-	// ACH Transfer Instruction: details will be under the `ach_transfer_instruction`
-	// object.
-	PendingTransactionSourceCategoryACHTransferInstruction PendingTransactionSourceCategory = "ach_transfer_instruction"
-	// Card Authorization: details will be under the `card_authorization` object.
-	PendingTransactionSourceCategoryCardAuthorization PendingTransactionSourceCategory = "card_authorization"
-	// Check Deposit Instruction: details will be under the `check_deposit_instruction`
-	// object.
-	PendingTransactionSourceCategoryCheckDepositInstruction PendingTransactionSourceCategory = "check_deposit_instruction"
-	// Check Transfer Instruction: details will be under the
-	// `check_transfer_instruction` object.
-	PendingTransactionSourceCategoryCheckTransferInstruction PendingTransactionSourceCategory = "check_transfer_instruction"
-	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
-	PendingTransactionSourceCategoryInboundFundsHold PendingTransactionSourceCategory = "inbound_funds_hold"
-	// Real-Time Payments Transfer Instruction: details will be under the
-	// `real_time_payments_transfer_instruction` object.
+	PendingTransactionSourceCategoryAccountTransferInstruction          PendingTransactionSourceCategory = "account_transfer_instruction"
+	PendingTransactionSourceCategoryACHTransferInstruction              PendingTransactionSourceCategory = "ach_transfer_instruction"
+	PendingTransactionSourceCategoryCardAuthorization                   PendingTransactionSourceCategory = "card_authorization"
+	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
+	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
+	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
-	// object.
-	PendingTransactionSourceCategoryWireTransferInstruction PendingTransactionSourceCategory = "wire_transfer_instruction"
-	// Inbound Wire Transfer Reversal: details will be under the
-	// `inbound_wire_transfer_reversal` object.
-	PendingTransactionSourceCategoryInboundWireTransferReversal PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
-	// The Pending Transaction was made for an undocumented or deprecated reason.
-	PendingTransactionSourceCategoryOther PendingTransactionSourceCategory = "other"
+	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
+	PendingTransactionSourceCategoryInboundWireTransferReversal         PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
+	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
 )
 
 func (r PendingTransactionSourceCategory) IsKnown() bool {
@@ -1022,17 +911,11 @@ func (r pendingTransactionSourceCheckDepositInstructionJSON) RawJSON() string {
 type PendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	PendingTransactionSourceCheckDepositInstructionCurrencyCad PendingTransactionSourceCheckDepositInstructionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	PendingTransactionSourceCheckDepositInstructionCurrencyChf PendingTransactionSourceCheckDepositInstructionCurrency = "CHF"
-	// Euro (EUR)
 	PendingTransactionSourceCheckDepositInstructionCurrencyEur PendingTransactionSourceCheckDepositInstructionCurrency = "EUR"
-	// British Pound (GBP)
 	PendingTransactionSourceCheckDepositInstructionCurrencyGbp PendingTransactionSourceCheckDepositInstructionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	PendingTransactionSourceCheckDepositInstructionCurrencyJpy PendingTransactionSourceCheckDepositInstructionCurrency = "JPY"
-	// US Dollar (USD)
 	PendingTransactionSourceCheckDepositInstructionCurrencyUsd PendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
@@ -1080,17 +963,11 @@ func (r pendingTransactionSourceCheckTransferInstructionJSON) RawJSON() string {
 type PendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	PendingTransactionSourceCheckTransferInstructionCurrencyCad PendingTransactionSourceCheckTransferInstructionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	PendingTransactionSourceCheckTransferInstructionCurrencyChf PendingTransactionSourceCheckTransferInstructionCurrency = "CHF"
-	// Euro (EUR)
 	PendingTransactionSourceCheckTransferInstructionCurrencyEur PendingTransactionSourceCheckTransferInstructionCurrency = "EUR"
-	// British Pound (GBP)
 	PendingTransactionSourceCheckTransferInstructionCurrencyGbp PendingTransactionSourceCheckTransferInstructionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	PendingTransactionSourceCheckTransferInstructionCurrencyJpy PendingTransactionSourceCheckTransferInstructionCurrency = "JPY"
-	// US Dollar (USD)
 	PendingTransactionSourceCheckTransferInstructionCurrencyUsd PendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
@@ -1163,17 +1040,11 @@ func (r pendingTransactionSourceInboundFundsHoldJSON) RawJSON() string {
 type PendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	PendingTransactionSourceInboundFundsHoldCurrencyCad PendingTransactionSourceInboundFundsHoldCurrency = "CAD"
-	// Swiss Franc (CHF)
 	PendingTransactionSourceInboundFundsHoldCurrencyChf PendingTransactionSourceInboundFundsHoldCurrency = "CHF"
-	// Euro (EUR)
 	PendingTransactionSourceInboundFundsHoldCurrencyEur PendingTransactionSourceInboundFundsHoldCurrency = "EUR"
-	// British Pound (GBP)
 	PendingTransactionSourceInboundFundsHoldCurrencyGbp PendingTransactionSourceInboundFundsHoldCurrency = "GBP"
-	// Japanese Yen (JPY)
 	PendingTransactionSourceInboundFundsHoldCurrencyJpy PendingTransactionSourceInboundFundsHoldCurrency = "JPY"
-	// US Dollar (USD)
 	PendingTransactionSourceInboundFundsHoldCurrencyUsd PendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
@@ -1189,9 +1060,7 @@ func (r PendingTransactionSourceInboundFundsHoldCurrency) IsKnown() bool {
 type PendingTransactionSourceInboundFundsHoldStatus string
 
 const (
-	// Funds are still being held.
-	PendingTransactionSourceInboundFundsHoldStatusHeld PendingTransactionSourceInboundFundsHoldStatus = "held"
-	// Funds have been released.
+	PendingTransactionSourceInboundFundsHoldStatusHeld     PendingTransactionSourceInboundFundsHoldStatus = "held"
 	PendingTransactionSourceInboundFundsHoldStatusComplete PendingTransactionSourceInboundFundsHoldStatus = "complete"
 )
 
@@ -1291,11 +1160,7 @@ func (r pendingTransactionSourceWireTransferInstructionJSON) RawJSON() string {
 type PendingTransactionStatus string
 
 const (
-	// The Pending Transaction is still awaiting confirmation.
-	PendingTransactionStatusPending PendingTransactionStatus = "pending"
-	// The Pending Transaction is confirmed. An associated Transaction exists for this
-	// object. The Pending Transaction will no longer count against your balance and
-	// can generally be hidden from UIs, etc.
+	PendingTransactionStatusPending  PendingTransactionStatus = "pending"
 	PendingTransactionStatusComplete PendingTransactionStatus = "complete"
 )
 
@@ -1365,33 +1230,16 @@ func (r PendingTransactionListParamsCategory) URLQuery() (v url.Values) {
 type PendingTransactionListParamsCategoryIn string
 
 const (
-	// Account Transfer Instruction: details will be under the
-	// `account_transfer_instruction` object.
-	PendingTransactionListParamsCategoryInAccountTransferInstruction PendingTransactionListParamsCategoryIn = "account_transfer_instruction"
-	// ACH Transfer Instruction: details will be under the `ach_transfer_instruction`
-	// object.
-	PendingTransactionListParamsCategoryInACHTransferInstruction PendingTransactionListParamsCategoryIn = "ach_transfer_instruction"
-	// Card Authorization: details will be under the `card_authorization` object.
-	PendingTransactionListParamsCategoryInCardAuthorization PendingTransactionListParamsCategoryIn = "card_authorization"
-	// Check Deposit Instruction: details will be under the `check_deposit_instruction`
-	// object.
-	PendingTransactionListParamsCategoryInCheckDepositInstruction PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
-	// Check Transfer Instruction: details will be under the
-	// `check_transfer_instruction` object.
-	PendingTransactionListParamsCategoryInCheckTransferInstruction PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
-	// Inbound Funds Hold: details will be under the `inbound_funds_hold` object.
-	PendingTransactionListParamsCategoryInInboundFundsHold PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
-	// Real-Time Payments Transfer Instruction: details will be under the
-	// `real_time_payments_transfer_instruction` object.
+	PendingTransactionListParamsCategoryInAccountTransferInstruction          PendingTransactionListParamsCategoryIn = "account_transfer_instruction"
+	PendingTransactionListParamsCategoryInACHTransferInstruction              PendingTransactionListParamsCategoryIn = "ach_transfer_instruction"
+	PendingTransactionListParamsCategoryInCardAuthorization                   PendingTransactionListParamsCategoryIn = "card_authorization"
+	PendingTransactionListParamsCategoryInCheckDepositInstruction             PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
+	PendingTransactionListParamsCategoryInCheckTransferInstruction            PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
+	PendingTransactionListParamsCategoryInInboundFundsHold                    PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
 	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
-	// Wire Transfer Instruction: details will be under the `wire_transfer_instruction`
-	// object.
-	PendingTransactionListParamsCategoryInWireTransferInstruction PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
-	// Inbound Wire Transfer Reversal: details will be under the
-	// `inbound_wire_transfer_reversal` object.
-	PendingTransactionListParamsCategoryInInboundWireTransferReversal PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
-	// The Pending Transaction was made for an undocumented or deprecated reason.
-	PendingTransactionListParamsCategoryInOther PendingTransactionListParamsCategoryIn = "other"
+	PendingTransactionListParamsCategoryInWireTransferInstruction             PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
+	PendingTransactionListParamsCategoryInInboundWireTransferReversal         PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
+	PendingTransactionListParamsCategoryInOther                               PendingTransactionListParamsCategoryIn = "other"
 )
 
 func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
@@ -1446,11 +1294,7 @@ func (r PendingTransactionListParamsStatus) URLQuery() (v url.Values) {
 type PendingTransactionListParamsStatusIn string
 
 const (
-	// The Pending Transaction is still awaiting confirmation.
-	PendingTransactionListParamsStatusInPending PendingTransactionListParamsStatusIn = "pending"
-	// The Pending Transaction is confirmed. An associated Transaction exists for this
-	// object. The Pending Transaction will no longer count against your balance and
-	// can generally be hidden from UIs, etc.
+	PendingTransactionListParamsStatusInPending  PendingTransactionListParamsStatusIn = "pending"
 	PendingTransactionListParamsStatusInComplete PendingTransactionListParamsStatusIn = "complete"
 )
 
