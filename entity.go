@@ -454,16 +454,11 @@ func (r entityCorporationBeneficialOwnersIndividualIdentificationJSON) RawJSON()
 type EntityCorporationBeneficialOwnersIndividualIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber                   EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number"
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
+	EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport                               EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
+	EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
+	EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther                                  EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
 func (r EntityCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown() bool {
@@ -478,10 +473,8 @@ func (r EntityCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown
 type EntityCorporationBeneficialOwnersProng string
 
 const (
-	// A person with 25% or greater direct or indirect ownership of the entity.
 	EntityCorporationBeneficialOwnersProngOwnership EntityCorporationBeneficialOwnersProng = "ownership"
-	// A person who manages, directs, or has significant control of the entity.
-	EntityCorporationBeneficialOwnersProngControl EntityCorporationBeneficialOwnersProng = "control"
+	EntityCorporationBeneficialOwnersProngControl   EntityCorporationBeneficialOwnersProng = "control"
 )
 
 func (r EntityCorporationBeneficialOwnersProng) IsKnown() bool {
@@ -596,7 +589,6 @@ func (r entityGovernmentAuthorityAuthorizedPersonJSON) RawJSON() string {
 type EntityGovernmentAuthorityCategory string
 
 const (
-	// The Public Entity is a Municipality.
 	EntityGovernmentAuthorityCategoryMunicipality EntityGovernmentAuthorityCategory = "municipality"
 )
 
@@ -731,16 +723,11 @@ func (r entityJointIndividualsIdentificationJSON) RawJSON() string {
 type EntityJointIndividualsIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityJointIndividualsIdentificationMethodSocialSecurityNumber EntityJointIndividualsIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityJointIndividualsIdentificationMethodSocialSecurityNumber                   EntityJointIndividualsIdentificationMethod = "social_security_number"
 	EntityJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber EntityJointIndividualsIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityJointIndividualsIdentificationMethodPassport EntityJointIndividualsIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityJointIndividualsIdentificationMethodDriversLicense EntityJointIndividualsIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityJointIndividualsIdentificationMethodOther EntityJointIndividualsIdentificationMethod = "other"
+	EntityJointIndividualsIdentificationMethodPassport                               EntityJointIndividualsIdentificationMethod = "passport"
+	EntityJointIndividualsIdentificationMethodDriversLicense                         EntityJointIndividualsIdentificationMethod = "drivers_license"
+	EntityJointIndividualsIdentificationMethodOther                                  EntityJointIndividualsIdentificationMethod = "other"
 )
 
 func (r EntityJointIndividualsIdentificationMethod) IsKnown() bool {
@@ -851,16 +838,11 @@ func (r entityNaturalPersonIdentificationJSON) RawJSON() string {
 type EntityNaturalPersonIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNaturalPersonIdentificationMethodSocialSecurityNumber EntityNaturalPersonIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNaturalPersonIdentificationMethodSocialSecurityNumber                   EntityNaturalPersonIdentificationMethod = "social_security_number"
 	EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNaturalPersonIdentificationMethodPassport EntityNaturalPersonIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNaturalPersonIdentificationMethodDriversLicense EntityNaturalPersonIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNaturalPersonIdentificationMethodOther EntityNaturalPersonIdentificationMethod = "other"
+	EntityNaturalPersonIdentificationMethodPassport                               EntityNaturalPersonIdentificationMethod = "passport"
+	EntityNaturalPersonIdentificationMethodDriversLicense                         EntityNaturalPersonIdentificationMethod = "drivers_license"
+	EntityNaturalPersonIdentificationMethodOther                                  EntityNaturalPersonIdentificationMethod = "other"
 )
 
 func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
@@ -875,11 +857,8 @@ func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
 type EntityStatus string
 
 const (
-	// The entity is active.
-	EntityStatusActive EntityStatus = "active"
-	// The entity is archived, and can no longer be used to create accounts.
+	EntityStatusActive   EntityStatus = "active"
 	EntityStatusArchived EntityStatus = "archived"
-	// The entity is temporarily disabled and cannot be used for financial activity.
 	EntityStatusDisabled EntityStatus = "disabled"
 )
 
@@ -895,15 +874,10 @@ func (r EntityStatus) IsKnown() bool {
 type EntityStructure string
 
 const (
-	// A corporation.
-	EntityStructureCorporation EntityStructure = "corporation"
-	// An individual person.
-	EntityStructureNaturalPerson EntityStructure = "natural_person"
-	// Multiple individual people.
-	EntityStructureJoint EntityStructure = "joint"
-	// A trust.
-	EntityStructureTrust EntityStructure = "trust"
-	// A government authority.
+	EntityStructureCorporation         EntityStructure = "corporation"
+	EntityStructureNaturalPerson       EntityStructure = "natural_person"
+	EntityStructureJoint               EntityStructure = "joint"
+	EntityStructureTrust               EntityStructure = "trust"
 	EntityStructureGovernmentAuthority EntityStructure = "government_authority"
 )
 
@@ -946,9 +920,7 @@ func (r entityThirdPartyVerificationJSON) RawJSON() string {
 type EntityThirdPartyVerificationVendor string
 
 const (
-	// Alloy. See https://alloy.com for more information.
-	EntityThirdPartyVerificationVendorAlloy EntityThirdPartyVerificationVendor = "alloy"
-	// Middesk. See https://middesk.com for more information.
+	EntityThirdPartyVerificationVendorAlloy   EntityThirdPartyVerificationVendor = "alloy"
 	EntityThirdPartyVerificationVendorMiddesk EntityThirdPartyVerificationVendor = "middesk"
 )
 
@@ -1044,9 +1016,7 @@ func (r entityTrustAddressJSON) RawJSON() string {
 type EntityTrustCategory string
 
 const (
-	// The trust is revocable by the grantor.
-	EntityTrustCategoryRevocable EntityTrustCategory = "revocable"
-	// The trust cannot be revoked.
+	EntityTrustCategoryRevocable   EntityTrustCategory = "revocable"
 	EntityTrustCategoryIrrevocable EntityTrustCategory = "irrevocable"
 )
 
@@ -1157,16 +1127,11 @@ func (r entityTrustGrantorIdentificationJSON) RawJSON() string {
 type EntityTrustGrantorIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityTrustGrantorIdentificationMethodSocialSecurityNumber EntityTrustGrantorIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityTrustGrantorIdentificationMethodSocialSecurityNumber                   EntityTrustGrantorIdentificationMethod = "social_security_number"
 	EntityTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber EntityTrustGrantorIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityTrustGrantorIdentificationMethodPassport EntityTrustGrantorIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityTrustGrantorIdentificationMethodDriversLicense EntityTrustGrantorIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityTrustGrantorIdentificationMethodOther EntityTrustGrantorIdentificationMethod = "other"
+	EntityTrustGrantorIdentificationMethodPassport                               EntityTrustGrantorIdentificationMethod = "passport"
+	EntityTrustGrantorIdentificationMethodDriversLicense                         EntityTrustGrantorIdentificationMethod = "drivers_license"
+	EntityTrustGrantorIdentificationMethodOther                                  EntityTrustGrantorIdentificationMethod = "other"
 )
 
 func (r EntityTrustGrantorIdentificationMethod) IsKnown() bool {
@@ -1303,16 +1268,11 @@ func (r entityTrustTrusteesIndividualIdentificationJSON) RawJSON() string {
 type EntityTrustTrusteesIndividualIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber EntityTrustTrusteesIndividualIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber                   EntityTrustTrusteesIndividualIdentificationMethod = "social_security_number"
 	EntityTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityTrustTrusteesIndividualIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityTrustTrusteesIndividualIdentificationMethodPassport EntityTrustTrusteesIndividualIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityTrustTrusteesIndividualIdentificationMethodDriversLicense EntityTrustTrusteesIndividualIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityTrustTrusteesIndividualIdentificationMethodOther EntityTrustTrusteesIndividualIdentificationMethod = "other"
+	EntityTrustTrusteesIndividualIdentificationMethodPassport                               EntityTrustTrusteesIndividualIdentificationMethod = "passport"
+	EntityTrustTrusteesIndividualIdentificationMethodDriversLicense                         EntityTrustTrusteesIndividualIdentificationMethod = "drivers_license"
+	EntityTrustTrusteesIndividualIdentificationMethodOther                                  EntityTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
 func (r EntityTrustTrusteesIndividualIdentificationMethod) IsKnown() bool {
@@ -1327,7 +1287,6 @@ func (r EntityTrustTrusteesIndividualIdentificationMethod) IsKnown() bool {
 type EntityTrustTrusteesStructure string
 
 const (
-	// The trustee is an individual.
 	EntityTrustTrusteesStructureIndividual EntityTrustTrusteesStructure = "individual"
 )
 
@@ -1392,15 +1351,10 @@ func (r EntityNewParams) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsStructure string
 
 const (
-	// A corporation.
-	EntityNewParamsStructureCorporation EntityNewParamsStructure = "corporation"
-	// An individual person.
-	EntityNewParamsStructureNaturalPerson EntityNewParamsStructure = "natural_person"
-	// Multiple individual people.
-	EntityNewParamsStructureJoint EntityNewParamsStructure = "joint"
-	// A trust.
-	EntityNewParamsStructureTrust EntityNewParamsStructure = "trust"
-	// A government authority.
+	EntityNewParamsStructureCorporation         EntityNewParamsStructure = "corporation"
+	EntityNewParamsStructureNaturalPerson       EntityNewParamsStructure = "natural_person"
+	EntityNewParamsStructureJoint               EntityNewParamsStructure = "joint"
+	EntityNewParamsStructureTrust               EntityNewParamsStructure = "trust"
 	EntityNewParamsStructureGovernmentAuthority EntityNewParamsStructure = "government_authority"
 )
 
@@ -1544,16 +1498,11 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentification) Mars
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber                   EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number"
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodPassport EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
+	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodPassport                               EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
+	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
+	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther                                  EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "other"
 )
 
 func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown() bool {
@@ -1620,10 +1569,8 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPasspo
 type EntityNewParamsCorporationBeneficialOwnersProng string
 
 const (
-	// A person with 25% or greater direct or indirect ownership of the entity.
 	EntityNewParamsCorporationBeneficialOwnersProngOwnership EntityNewParamsCorporationBeneficialOwnersProng = "ownership"
-	// A person who manages, directs, or has significant control of the entity.
-	EntityNewParamsCorporationBeneficialOwnersProngControl EntityNewParamsCorporationBeneficialOwnersProng = "control"
+	EntityNewParamsCorporationBeneficialOwnersProngControl   EntityNewParamsCorporationBeneficialOwnersProng = "control"
 )
 
 func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
@@ -1689,7 +1636,6 @@ func (r EntityNewParamsGovernmentAuthorityAuthorizedPerson) MarshalJSON() (data 
 type EntityNewParamsGovernmentAuthorityCategory string
 
 const (
-	// The Public Entity is a Municipality.
 	EntityNewParamsGovernmentAuthorityCategoryMunicipality EntityNewParamsGovernmentAuthorityCategory = "municipality"
 )
 
@@ -1781,16 +1727,11 @@ func (r EntityNewParamsJointIndividualsIdentification) MarshalJSON() (data []byt
 type EntityNewParamsJointIndividualsIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNewParamsJointIndividualsIdentificationMethodSocialSecurityNumber EntityNewParamsJointIndividualsIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNewParamsJointIndividualsIdentificationMethodSocialSecurityNumber                   EntityNewParamsJointIndividualsIdentificationMethod = "social_security_number"
 	EntityNewParamsJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsJointIndividualsIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNewParamsJointIndividualsIdentificationMethodPassport EntityNewParamsJointIndividualsIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNewParamsJointIndividualsIdentificationMethodDriversLicense EntityNewParamsJointIndividualsIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNewParamsJointIndividualsIdentificationMethodOther EntityNewParamsJointIndividualsIdentificationMethod = "other"
+	EntityNewParamsJointIndividualsIdentificationMethodPassport                               EntityNewParamsJointIndividualsIdentificationMethod = "passport"
+	EntityNewParamsJointIndividualsIdentificationMethodDriversLicense                         EntityNewParamsJointIndividualsIdentificationMethod = "drivers_license"
+	EntityNewParamsJointIndividualsIdentificationMethodOther                                  EntityNewParamsJointIndividualsIdentificationMethod = "other"
 )
 
 func (r EntityNewParamsJointIndividualsIdentificationMethod) IsKnown() bool {
@@ -1925,16 +1866,11 @@ func (r EntityNewParamsNaturalPersonIdentification) MarshalJSON() (data []byte, 
 type EntityNewParamsNaturalPersonIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNewParamsNaturalPersonIdentificationMethodSocialSecurityNumber EntityNewParamsNaturalPersonIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNewParamsNaturalPersonIdentificationMethodSocialSecurityNumber                   EntityNewParamsNaturalPersonIdentificationMethod = "social_security_number"
 	EntityNewParamsNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNewParamsNaturalPersonIdentificationMethodPassport EntityNewParamsNaturalPersonIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNewParamsNaturalPersonIdentificationMethodDriversLicense EntityNewParamsNaturalPersonIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNewParamsNaturalPersonIdentificationMethodOther EntityNewParamsNaturalPersonIdentificationMethod = "other"
+	EntityNewParamsNaturalPersonIdentificationMethodPassport                               EntityNewParamsNaturalPersonIdentificationMethod = "passport"
+	EntityNewParamsNaturalPersonIdentificationMethodDriversLicense                         EntityNewParamsNaturalPersonIdentificationMethod = "drivers_license"
+	EntityNewParamsNaturalPersonIdentificationMethodOther                                  EntityNewParamsNaturalPersonIdentificationMethod = "other"
 )
 
 func (r EntityNewParamsNaturalPersonIdentificationMethod) IsKnown() bool {
@@ -2024,9 +1960,7 @@ func (r EntityNewParamsThirdPartyVerification) MarshalJSON() (data []byte, err e
 type EntityNewParamsThirdPartyVerificationVendor string
 
 const (
-	// Alloy. See https://alloy.com for more information.
-	EntityNewParamsThirdPartyVerificationVendorAlloy EntityNewParamsThirdPartyVerificationVendor = "alloy"
-	// Middesk. See https://middesk.com for more information.
+	EntityNewParamsThirdPartyVerificationVendorAlloy   EntityNewParamsThirdPartyVerificationVendor = "alloy"
 	EntityNewParamsThirdPartyVerificationVendorMiddesk EntityNewParamsThirdPartyVerificationVendor = "middesk"
 )
 
@@ -2094,9 +2028,7 @@ func (r EntityNewParamsTrustAddress) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsTrustCategory string
 
 const (
-	// The trust is revocable by the grantor.
-	EntityNewParamsTrustCategoryRevocable EntityNewParamsTrustCategory = "revocable"
-	// The trust cannot be revoked.
+	EntityNewParamsTrustCategoryRevocable   EntityNewParamsTrustCategory = "revocable"
 	EntityNewParamsTrustCategoryIrrevocable EntityNewParamsTrustCategory = "irrevocable"
 )
 
@@ -2124,7 +2056,6 @@ func (r EntityNewParamsTrustTrustee) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsTrustTrusteesStructure string
 
 const (
-	// The trustee is an individual.
 	EntityNewParamsTrustTrusteesStructureIndividual EntityNewParamsTrustTrusteesStructure = "individual"
 )
 
@@ -2205,16 +2136,11 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentification) MarshalJSON() (dat
 type EntityNewParamsTrustTrusteesIndividualIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNewParamsTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNewParamsTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber                   EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "social_security_number"
 	EntityNewParamsTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNewParamsTrustTrusteesIndividualIdentificationMethodPassport EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNewParamsTrustTrusteesIndividualIdentificationMethodDriversLicense EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNewParamsTrustTrusteesIndividualIdentificationMethodOther EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "other"
+	EntityNewParamsTrustTrusteesIndividualIdentificationMethodPassport                               EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "passport"
+	EntityNewParamsTrustTrusteesIndividualIdentificationMethodDriversLicense                         EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "drivers_license"
+	EntityNewParamsTrustTrusteesIndividualIdentificationMethodOther                                  EntityNewParamsTrustTrusteesIndividualIdentificationMethod = "other"
 )
 
 func (r EntityNewParamsTrustTrusteesIndividualIdentificationMethod) IsKnown() bool {
@@ -2346,16 +2272,11 @@ func (r EntityNewParamsTrustGrantorIdentification) MarshalJSON() (data []byte, e
 type EntityNewParamsTrustGrantorIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNewParamsTrustGrantorIdentificationMethodSocialSecurityNumber EntityNewParamsTrustGrantorIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNewParamsTrustGrantorIdentificationMethodSocialSecurityNumber                   EntityNewParamsTrustGrantorIdentificationMethod = "social_security_number"
 	EntityNewParamsTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsTrustGrantorIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNewParamsTrustGrantorIdentificationMethodPassport EntityNewParamsTrustGrantorIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNewParamsTrustGrantorIdentificationMethodDriversLicense EntityNewParamsTrustGrantorIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNewParamsTrustGrantorIdentificationMethodOther EntityNewParamsTrustGrantorIdentificationMethod = "other"
+	EntityNewParamsTrustGrantorIdentificationMethodPassport                               EntityNewParamsTrustGrantorIdentificationMethod = "passport"
+	EntityNewParamsTrustGrantorIdentificationMethodDriversLicense                         EntityNewParamsTrustGrantorIdentificationMethod = "drivers_license"
+	EntityNewParamsTrustGrantorIdentificationMethodOther                                  EntityNewParamsTrustGrantorIdentificationMethod = "other"
 )
 
 func (r EntityNewParamsTrustGrantorIdentificationMethod) IsKnown() bool {
@@ -2484,11 +2405,8 @@ func (r EntityListParamsStatus) URLQuery() (v url.Values) {
 type EntityListParamsStatusIn string
 
 const (
-	// The entity is active.
-	EntityListParamsStatusInActive EntityListParamsStatusIn = "active"
-	// The entity is archived, and can no longer be used to create accounts.
+	EntityListParamsStatusInActive   EntityListParamsStatusIn = "active"
 	EntityListParamsStatusInArchived EntityListParamsStatusIn = "archived"
-	// The entity is temporarily disabled and cannot be used for financial activity.
 	EntityListParamsStatusInDisabled EntityListParamsStatusIn = "disabled"
 )
 
@@ -2615,16 +2533,11 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification) M
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod string
 
 const (
-	// A social security number.
-	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "social_security_number"
-	// An individual taxpayer identification number (ITIN).
+	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodSocialSecurityNumber                   EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "social_security_number"
 	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "individual_taxpayer_identification_number"
-	// A passport number.
-	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodPassport EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "passport"
-	// A driver's license number.
-	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodDriversLicense EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "drivers_license"
-	// Another identifying document.
-	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodOther EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "other"
+	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodPassport                               EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "passport"
+	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodDriversLicense                         EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "drivers_license"
+	EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethodOther                                  EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod = "other"
 )
 
 func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod) IsKnown() bool {
@@ -2691,10 +2604,8 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPas
 type EntityNewBeneficialOwnerParamsBeneficialOwnerProng string
 
 const (
-	// A person with 25% or greater direct or indirect ownership of the entity.
 	EntityNewBeneficialOwnerParamsBeneficialOwnerProngOwnership EntityNewBeneficialOwnerParamsBeneficialOwnerProng = "ownership"
-	// A person who manages, directs, or has significant control of the entity.
-	EntityNewBeneficialOwnerParamsBeneficialOwnerProngControl EntityNewBeneficialOwnerParamsBeneficialOwnerProng = "control"
+	EntityNewBeneficialOwnerParamsBeneficialOwnerProngControl   EntityNewBeneficialOwnerParamsBeneficialOwnerProng = "control"
 )
 
 func (r EntityNewBeneficialOwnerParamsBeneficialOwnerProng) IsKnown() bool {

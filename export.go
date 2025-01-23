@@ -138,22 +138,13 @@ func (r exportJSON) RawJSON() string {
 type ExportCategory string
 
 const (
-	// Export an Open Financial Exchange (OFX) file of transactions and balances for a
-	// given time range and Account.
-	ExportCategoryAccountStatementOfx ExportCategory = "account_statement_ofx"
-	// Export a CSV of all transactions for a given time range.
-	ExportCategoryTransactionCsv ExportCategory = "transaction_csv"
-	// Export a CSV of account balances for the dates in a given range.
-	ExportCategoryBalanceCsv ExportCategory = "balance_csv"
-	// Export a CSV of bookkeeping account balances for the dates in a given range.
+	ExportCategoryAccountStatementOfx          ExportCategory = "account_statement_ofx"
+	ExportCategoryTransactionCsv               ExportCategory = "transaction_csv"
+	ExportCategoryBalanceCsv                   ExportCategory = "balance_csv"
 	ExportCategoryBookkeepingAccountBalanceCsv ExportCategory = "bookkeeping_account_balance_csv"
-	// Export a CSV of entities with a given status.
-	ExportCategoryEntityCsv ExportCategory = "entity_csv"
-	// Export a CSV of vendors added to the third-party risk management dashboard.
-	ExportCategoryVendorCsv ExportCategory = "vendor_csv"
-	// Certain dashboard tables are available as CSV exports. This export cannot be
-	// created via the API.
-	ExportCategoryDashboardTableCsv ExportCategory = "dashboard_table_csv"
+	ExportCategoryEntityCsv                    ExportCategory = "entity_csv"
+	ExportCategoryVendorCsv                    ExportCategory = "vendor_csv"
+	ExportCategoryDashboardTableCsv            ExportCategory = "dashboard_table_csv"
 )
 
 func (r ExportCategory) IsKnown() bool {
@@ -168,13 +159,9 @@ func (r ExportCategory) IsKnown() bool {
 type ExportStatus string
 
 const (
-	// Increase is generating the export.
-	ExportStatusPending ExportStatus = "pending"
-	// The export has been successfully generated.
+	ExportStatusPending  ExportStatus = "pending"
 	ExportStatusComplete ExportStatus = "complete"
-	// The export failed to generate. Increase will reach out to you to resolve the
-	// issue.
-	ExportStatusFailed ExportStatus = "failed"
+	ExportStatusFailed   ExportStatus = "failed"
 )
 
 func (r ExportStatus) IsKnown() bool {
@@ -230,19 +217,12 @@ func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
 type ExportNewParamsCategory string
 
 const (
-	// Export an Open Financial Exchange (OFX) file of transactions and balances for a
-	// given time range and Account.
-	ExportNewParamsCategoryAccountStatementOfx ExportNewParamsCategory = "account_statement_ofx"
-	// Export a CSV of all transactions for a given time range.
-	ExportNewParamsCategoryTransactionCsv ExportNewParamsCategory = "transaction_csv"
-	// Export a CSV of account balances for the dates in a given range.
-	ExportNewParamsCategoryBalanceCsv ExportNewParamsCategory = "balance_csv"
-	// Export a CSV of bookkeeping account balances for the dates in a given range.
+	ExportNewParamsCategoryAccountStatementOfx          ExportNewParamsCategory = "account_statement_ofx"
+	ExportNewParamsCategoryTransactionCsv               ExportNewParamsCategory = "transaction_csv"
+	ExportNewParamsCategoryBalanceCsv                   ExportNewParamsCategory = "balance_csv"
 	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
-	// Export a CSV of entities with a given status.
-	ExportNewParamsCategoryEntityCsv ExportNewParamsCategory = "entity_csv"
-	// Export a CSV of vendors added to the third-party risk management dashboard.
-	ExportNewParamsCategoryVendorCsv ExportNewParamsCategory = "vendor_csv"
+	ExportNewParamsCategoryEntityCsv                    ExportNewParamsCategory = "entity_csv"
+	ExportNewParamsCategoryVendorCsv                    ExportNewParamsCategory = "vendor_csv"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
@@ -378,11 +358,8 @@ func (r ExportNewParamsEntityCsvStatus) MarshalJSON() (data []byte, err error) {
 type ExportNewParamsEntityCsvStatusIn string
 
 const (
-	// The entity is active.
-	ExportNewParamsEntityCsvStatusInActive ExportNewParamsEntityCsvStatusIn = "active"
-	// The entity is archived, and can no longer be used to create accounts.
+	ExportNewParamsEntityCsvStatusInActive   ExportNewParamsEntityCsvStatusIn = "active"
 	ExportNewParamsEntityCsvStatusInArchived ExportNewParamsEntityCsvStatusIn = "archived"
-	// The entity is temporarily disabled and cannot be used for financial activity.
 	ExportNewParamsEntityCsvStatusInDisabled ExportNewParamsEntityCsvStatusIn = "disabled"
 )
 
@@ -472,22 +449,13 @@ func (r ExportListParamsCategory) URLQuery() (v url.Values) {
 type ExportListParamsCategoryIn string
 
 const (
-	// Export an Open Financial Exchange (OFX) file of transactions and balances for a
-	// given time range and Account.
-	ExportListParamsCategoryInAccountStatementOfx ExportListParamsCategoryIn = "account_statement_ofx"
-	// Export a CSV of all transactions for a given time range.
-	ExportListParamsCategoryInTransactionCsv ExportListParamsCategoryIn = "transaction_csv"
-	// Export a CSV of account balances for the dates in a given range.
-	ExportListParamsCategoryInBalanceCsv ExportListParamsCategoryIn = "balance_csv"
-	// Export a CSV of bookkeeping account balances for the dates in a given range.
+	ExportListParamsCategoryInAccountStatementOfx          ExportListParamsCategoryIn = "account_statement_ofx"
+	ExportListParamsCategoryInTransactionCsv               ExportListParamsCategoryIn = "transaction_csv"
+	ExportListParamsCategoryInBalanceCsv                   ExportListParamsCategoryIn = "balance_csv"
 	ExportListParamsCategoryInBookkeepingAccountBalanceCsv ExportListParamsCategoryIn = "bookkeeping_account_balance_csv"
-	// Export a CSV of entities with a given status.
-	ExportListParamsCategoryInEntityCsv ExportListParamsCategoryIn = "entity_csv"
-	// Export a CSV of vendors added to the third-party risk management dashboard.
-	ExportListParamsCategoryInVendorCsv ExportListParamsCategoryIn = "vendor_csv"
-	// Certain dashboard tables are available as CSV exports. This export cannot be
-	// created via the API.
-	ExportListParamsCategoryInDashboardTableCsv ExportListParamsCategoryIn = "dashboard_table_csv"
+	ExportListParamsCategoryInEntityCsv                    ExportListParamsCategoryIn = "entity_csv"
+	ExportListParamsCategoryInVendorCsv                    ExportListParamsCategoryIn = "vendor_csv"
+	ExportListParamsCategoryInDashboardTableCsv            ExportListParamsCategoryIn = "dashboard_table_csv"
 )
 
 func (r ExportListParamsCategoryIn) IsKnown() bool {
@@ -540,13 +508,9 @@ func (r ExportListParamsStatus) URLQuery() (v url.Values) {
 type ExportListParamsStatusIn string
 
 const (
-	// Increase is generating the export.
-	ExportListParamsStatusInPending ExportListParamsStatusIn = "pending"
-	// The export has been successfully generated.
+	ExportListParamsStatusInPending  ExportListParamsStatusIn = "pending"
 	ExportListParamsStatusInComplete ExportListParamsStatusIn = "complete"
-	// The export failed to generate. Increase will reach out to you to resolve the
-	// issue.
-	ExportListParamsStatusInFailed ExportListParamsStatusIn = "failed"
+	ExportListParamsStatusInFailed   ExportListParamsStatusIn = "failed"
 )
 
 func (r ExportListParamsStatusIn) IsKnown() bool {

@@ -72,16 +72,11 @@ func (r *Error) DumpResponse(body bool) []byte {
 type ErrorReason string
 
 const (
-	// deleted_credential
 	ErrorReasonDeletedCredential ErrorReason = "deleted_credential"
-	// expired_credential
 	ErrorReasonExpiredCredential ErrorReason = "expired_credential"
-	// no_credential
-	ErrorReasonNoCredential ErrorReason = "no_credential"
-	// no_header
-	ErrorReasonNoHeader ErrorReason = "no_header"
-	// wrong_environment
-	ErrorReasonWrongEnvironment ErrorReason = "wrong_environment"
+	ErrorReasonNoCredential      ErrorReason = "no_credential"
+	ErrorReasonNoHeader          ErrorReason = "no_header"
+	ErrorReasonWrongEnvironment  ErrorReason = "wrong_environment"
 )
 
 func (r ErrorReason) IsKnown() bool {

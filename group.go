@@ -82,10 +82,8 @@ func (r groupJSON) RawJSON() string {
 type GroupACHDebitStatus string
 
 const (
-	// The Group cannot make ACH debits.
 	GroupACHDebitStatusDisabled GroupACHDebitStatus = "disabled"
-	// The Group can make ACH debits.
-	GroupACHDebitStatusEnabled GroupACHDebitStatus = "enabled"
+	GroupACHDebitStatusEnabled  GroupACHDebitStatus = "enabled"
 )
 
 func (r GroupACHDebitStatus) IsKnown() bool {
@@ -100,10 +98,8 @@ func (r GroupACHDebitStatus) IsKnown() bool {
 type GroupActivationStatus string
 
 const (
-	// The Group is not activated.
 	GroupActivationStatusUnactivated GroupActivationStatus = "unactivated"
-	// The Group is activated.
-	GroupActivationStatusActivated GroupActivationStatus = "activated"
+	GroupActivationStatusActivated   GroupActivationStatus = "activated"
 )
 
 func (r GroupActivationStatus) IsKnown() bool {

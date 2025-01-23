@@ -155,17 +155,11 @@ func (r intrafiBalanceBalancesBankLocationJSON) RawJSON() string {
 type IntrafiBalanceCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	IntrafiBalanceCurrencyCad IntrafiBalanceCurrency = "CAD"
-	// Swiss Franc (CHF)
 	IntrafiBalanceCurrencyChf IntrafiBalanceCurrency = "CHF"
-	// Euro (EUR)
 	IntrafiBalanceCurrencyEur IntrafiBalanceCurrency = "EUR"
-	// British Pound (GBP)
 	IntrafiBalanceCurrencyGbp IntrafiBalanceCurrency = "GBP"
-	// Japanese Yen (JPY)
 	IntrafiBalanceCurrencyJpy IntrafiBalanceCurrency = "JPY"
-	// US Dollar (USD)
 	IntrafiBalanceCurrencyUsd IntrafiBalanceCurrency = "USD"
 )
 

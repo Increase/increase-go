@@ -311,12 +311,9 @@ func (r cardPaymentElementsCardAuthorizationJSON) RawJSON() string {
 type CardPaymentElementsCardAuthorizationActioner string
 
 const (
-	// This object was actioned by the user through a real-time decision.
-	CardPaymentElementsCardAuthorizationActionerUser CardPaymentElementsCardAuthorizationActioner = "user"
-	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardAuthorizationActionerUser     CardPaymentElementsCardAuthorizationActioner = "user"
 	CardPaymentElementsCardAuthorizationActionerIncrease CardPaymentElementsCardAuthorizationActioner = "increase"
-	// This object was actioned by the network, through stand-in processing.
-	CardPaymentElementsCardAuthorizationActionerNetwork CardPaymentElementsCardAuthorizationActioner = "network"
+	CardPaymentElementsCardAuthorizationActionerNetwork  CardPaymentElementsCardAuthorizationActioner = "network"
 )
 
 func (r CardPaymentElementsCardAuthorizationActioner) IsKnown() bool {
@@ -332,17 +329,11 @@ func (r CardPaymentElementsCardAuthorizationActioner) IsKnown() bool {
 type CardPaymentElementsCardAuthorizationCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardAuthorizationCurrencyCad CardPaymentElementsCardAuthorizationCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardAuthorizationCurrencyChf CardPaymentElementsCardAuthorizationCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardAuthorizationCurrencyEur CardPaymentElementsCardAuthorizationCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardAuthorizationCurrencyGbp CardPaymentElementsCardAuthorizationCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardAuthorizationCurrencyJpy CardPaymentElementsCardAuthorizationCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardAuthorizationCurrencyUsd CardPaymentElementsCardAuthorizationCurrency = "USD"
 )
 
@@ -359,11 +350,8 @@ func (r CardPaymentElementsCardAuthorizationCurrency) IsKnown() bool {
 type CardPaymentElementsCardAuthorizationDirection string
 
 const (
-	// A regular card authorization where funds are debited from the cardholder.
 	CardPaymentElementsCardAuthorizationDirectionSettlement CardPaymentElementsCardAuthorizationDirection = "settlement"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	CardPaymentElementsCardAuthorizationDirectionRefund CardPaymentElementsCardAuthorizationDirection = "refund"
+	CardPaymentElementsCardAuthorizationDirectionRefund     CardPaymentElementsCardAuthorizationDirection = "refund"
 )
 
 func (r CardPaymentElementsCardAuthorizationDirection) IsKnown() bool {
@@ -404,7 +392,6 @@ func (r cardPaymentElementsCardAuthorizationNetworkDetailsJSON) RawJSON() string
 type CardPaymentElementsCardAuthorizationNetworkDetailsCategory string
 
 const (
-	// Visa
 	CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa CardPaymentElementsCardAuthorizationNetworkDetailsCategory = "visa"
 )
 
@@ -455,40 +442,14 @@ func (r cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON) RawJSON() st
 type CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	// Single transaction of a mail/phone order: Use to indicate that the transaction
-	// is a mail/phone order purchase, not a recurring transaction or installment
-	// payment. For domestic transactions in the US region, this value may also
-	// indicate one bill payment transaction in the card-present or card-absent
-	// environments.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	// Recurring transaction: Payment indicator used to indicate a recurring
-	// transaction that originates from an acquirer in the US region.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	// Installment payment: Payment indicator used to indicate one purchase of goods or
-	// services that is billed to the account in multiple charges over a period of time
-	// agreed upon by the cardholder and merchant from transactions that originate from
-	// an acquirer in the US region.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	// Unknown classification: other mail order: Use to indicate that the type of
-	// mail/telephone order is unknown.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	// Secure electronic commerce transaction: Use to indicate that the electronic
-	// commerce transaction has been authenticated using e.g., 3-D Secure
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
-	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
-	// identify an electronic commerce transaction where the merchant attempted to
-	// authenticate the cardholder using 3-D Secure, but was unable to complete the
-	// authentication because the issuer or cardholder does not participate in the 3-D
-	// Secure program.
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
 	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	// Non-authenticated security transaction: Use to identify an electronic commerce
-	// transaction that uses data encryption for security however , cardholder
-	// authentication is not performed using 3-D Secure.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	// Non-secure transaction: Use to identify an electronic commerce transaction that
-	// has no data protection.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
@@ -504,25 +465,15 @@ func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerce
 type CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
-	// Unknown
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
-	// Manual key entry
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
-	// Magnetic stripe read, without card verification value
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	// Optical code
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
-	// Contact chip card
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
-	// Contactless read of chip card
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
-	// Transaction initiated using a credential that has previously been stored on file
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
-	// Magnetic stripe read
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
-	// Contactless read of magnetic stripe data
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	// Contact chip card, without card verification value
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeUnknown                    CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeManual                     CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactless                CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
 	CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
 
@@ -539,22 +490,12 @@ func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntr
 type CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason string
 
 const (
-	// Increase failed to process the authorization in a timely manner.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
-	// The physical card read had an invalid CVV, dCVV, or authorization request
-	// cryptogram.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
-	// The 3DS cardholder authentication verification value was invalid.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
-	// An internal Visa error occurred. Visa uses this reason code for certain expected
-	// occurrences as well, such as Application Transaction Counter (ATC) replays.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
-	// The merchant has enabled Visa's Transaction Advisory Service and requires
-	// further authentication to perform the transaction. In practice this is often
-	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError                                              CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
-	// An unspecific reason for stand-in processing.
-	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
+	CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther                                                    CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason = "other"
 )
 
 func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
@@ -603,23 +544,12 @@ func (r cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON) RawJSON() st
 type CardPaymentElementsCardAuthorizationProcessingCategory string
 
 const (
-	// Account funding transactions are transactions used to e.g., fund an account or
-	// transfer funds between accounts.
-	CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding CardPaymentElementsCardAuthorizationProcessingCategory = "account_funding"
-	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
-	// prior to the actual transaction amount being known. They are followed by an
-	// advice message that updates the amount of the pending transaction.
+	CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding         CardPaymentElementsCardAuthorizationProcessingCategory = "account_funding"
 	CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser CardPaymentElementsCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
-	// A transaction used to pay a bill.
-	CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment CardPaymentElementsCardAuthorizationProcessingCategory = "bill_payment"
-	// A regular purchase.
-	CardPaymentElementsCardAuthorizationProcessingCategoryPurchase CardPaymentElementsCardAuthorizationProcessingCategory = "purchase"
-	// Quasi-cash transactions represent purchases of items which may be convertible to
-	// cash.
-	CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash CardPaymentElementsCardAuthorizationProcessingCategory = "quasi_cash"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	CardPaymentElementsCardAuthorizationProcessingCategoryRefund CardPaymentElementsCardAuthorizationProcessingCategory = "refund"
+	CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment            CardPaymentElementsCardAuthorizationProcessingCategory = "bill_payment"
+	CardPaymentElementsCardAuthorizationProcessingCategoryPurchase               CardPaymentElementsCardAuthorizationProcessingCategory = "purchase"
+	CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash              CardPaymentElementsCardAuthorizationProcessingCategory = "quasi_cash"
+	CardPaymentElementsCardAuthorizationProcessingCategoryRefund                 CardPaymentElementsCardAuthorizationProcessingCategory = "refund"
 )
 
 func (r CardPaymentElementsCardAuthorizationProcessingCategory) IsKnown() bool {
@@ -703,12 +633,9 @@ func (r cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON
 type CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult string
 
 const (
-	// No card verification code was provided in the authorization request.
 	CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultNotChecked CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult = "not_checked"
-	// The card verification code matched the one on file.
-	CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultMatch CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult = "match"
-	// The card verification code did not match the one on file.
-	CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultNoMatch CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
+	CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultMatch      CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult = "match"
+	CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResultNoMatch    CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult = "no_match"
 )
 
 func (r CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult) IsKnown() bool {
@@ -761,18 +688,12 @@ func (r cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON) R
 type CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult string
 
 const (
-	// No adress was provided in the authorization request.
-	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNotChecked CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "not_checked"
-	// Postal code matches, but the street address was not verified.
+	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNotChecked                       CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "not_checked"
 	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match.
-	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches.
-	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
-	// Postal code and street address match.
-	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultMatch CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "match"
-	// Postal code and street address do not match.
-	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNoMatch CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "no_match"
+	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultMatch                            CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "match"
+	CardPaymentElementsCardAuthorizationVerificationCardholderAddressResultNoMatch                          CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult = "no_match"
 )
 
 func (r CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
@@ -830,17 +751,11 @@ func (r cardPaymentElementsCardAuthorizationExpirationJSON) RawJSON() string {
 type CardPaymentElementsCardAuthorizationExpirationCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardAuthorizationExpirationCurrencyCad CardPaymentElementsCardAuthorizationExpirationCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardAuthorizationExpirationCurrencyChf CardPaymentElementsCardAuthorizationExpirationCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardAuthorizationExpirationCurrencyEur CardPaymentElementsCardAuthorizationExpirationCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardAuthorizationExpirationCurrencyGbp CardPaymentElementsCardAuthorizationExpirationCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardAuthorizationExpirationCurrencyJpy CardPaymentElementsCardAuthorizationExpirationCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardAuthorizationExpirationCurrencyUsd CardPaymentElementsCardAuthorizationExpirationCurrency = "USD"
 )
 
@@ -856,7 +771,6 @@ func (r CardPaymentElementsCardAuthorizationExpirationCurrency) IsKnown() bool {
 type CardPaymentElementsCardAuthorizationExpirationNetwork string
 
 const (
-	// Visa
 	CardPaymentElementsCardAuthorizationExpirationNetworkVisa CardPaymentElementsCardAuthorizationExpirationNetwork = "visa"
 )
 
@@ -1006,12 +920,9 @@ func (r cardPaymentElementsCardDeclineJSON) RawJSON() string {
 type CardPaymentElementsCardDeclineActioner string
 
 const (
-	// This object was actioned by the user through a real-time decision.
-	CardPaymentElementsCardDeclineActionerUser CardPaymentElementsCardDeclineActioner = "user"
-	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardDeclineActionerUser     CardPaymentElementsCardDeclineActioner = "user"
 	CardPaymentElementsCardDeclineActionerIncrease CardPaymentElementsCardDeclineActioner = "increase"
-	// This object was actioned by the network, through stand-in processing.
-	CardPaymentElementsCardDeclineActionerNetwork CardPaymentElementsCardDeclineActioner = "network"
+	CardPaymentElementsCardDeclineActionerNetwork  CardPaymentElementsCardDeclineActioner = "network"
 )
 
 func (r CardPaymentElementsCardDeclineActioner) IsKnown() bool {
@@ -1027,17 +938,11 @@ func (r CardPaymentElementsCardDeclineActioner) IsKnown() bool {
 type CardPaymentElementsCardDeclineCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardDeclineCurrencyCad CardPaymentElementsCardDeclineCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardDeclineCurrencyChf CardPaymentElementsCardDeclineCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardDeclineCurrencyEur CardPaymentElementsCardDeclineCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardDeclineCurrencyGbp CardPaymentElementsCardDeclineCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardDeclineCurrencyJpy CardPaymentElementsCardDeclineCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardDeclineCurrencyUsd CardPaymentElementsCardDeclineCurrency = "USD"
 )
 
@@ -1054,11 +959,8 @@ func (r CardPaymentElementsCardDeclineCurrency) IsKnown() bool {
 type CardPaymentElementsCardDeclineDirection string
 
 const (
-	// A regular card authorization where funds are debited from the cardholder.
 	CardPaymentElementsCardDeclineDirectionSettlement CardPaymentElementsCardDeclineDirection = "settlement"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	CardPaymentElementsCardDeclineDirectionRefund CardPaymentElementsCardDeclineDirection = "refund"
+	CardPaymentElementsCardDeclineDirectionRefund     CardPaymentElementsCardDeclineDirection = "refund"
 )
 
 func (r CardPaymentElementsCardDeclineDirection) IsKnown() bool {
@@ -1099,7 +1001,6 @@ func (r cardPaymentElementsCardDeclineNetworkDetailsJSON) RawJSON() string {
 type CardPaymentElementsCardDeclineNetworkDetailsCategory string
 
 const (
-	// Visa
 	CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa CardPaymentElementsCardDeclineNetworkDetailsCategory = "visa"
 )
 
@@ -1150,40 +1051,14 @@ func (r cardPaymentElementsCardDeclineNetworkDetailsVisaJSON) RawJSON() string {
 type CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	// Single transaction of a mail/phone order: Use to indicate that the transaction
-	// is a mail/phone order purchase, not a recurring transaction or installment
-	// payment. For domestic transactions in the US region, this value may also
-	// indicate one bill payment transaction in the card-present or card-absent
-	// environments.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	// Recurring transaction: Payment indicator used to indicate a recurring
-	// transaction that originates from an acquirer in the US region.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	// Installment payment: Payment indicator used to indicate one purchase of goods or
-	// services that is billed to the account in multiple charges over a period of time
-	// agreed upon by the cardholder and merchant from transactions that originate from
-	// an acquirer in the US region.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	// Unknown classification: other mail order: Use to indicate that the type of
-	// mail/telephone order is unknown.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	// Secure electronic commerce transaction: Use to indicate that the electronic
-	// commerce transaction has been authenticated using e.g., 3-D Secure
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
-	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
-	// identify an electronic commerce transaction where the merchant attempted to
-	// authenticate the cardholder using 3-D Secure, but was unable to complete the
-	// authentication because the issuer or cardholder does not participate in the 3-D
-	// Secure program.
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
 	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	// Non-authenticated security transaction: Use to identify an electronic commerce
-	// transaction that uses data encryption for security however , cardholder
-	// authentication is not performed using 3-D Secure.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	// Non-secure transaction: Use to identify an electronic commerce transaction that
-	// has no data protection.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 func (r CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
@@ -1199,25 +1074,15 @@ func (r CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndica
 type CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
-	// Unknown
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
-	// Manual key entry
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
-	// Magnetic stripe read, without card verification value
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	// Optical code
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
-	// Contact chip card
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
-	// Contactless read of chip card
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
-	// Transaction initiated using a credential that has previously been stored on file
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
-	// Magnetic stripe read
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
-	// Contactless read of magnetic stripe data
-	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	// Contact chip card, without card verification value
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown                    CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual                     CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless                CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
 	CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
 
@@ -1234,22 +1099,12 @@ func (r CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode)
 type CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason string
 
 const (
-	// Increase failed to process the authorization in a timely manner.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonIssuerError CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "issuer_error"
-	// The physical card read had an invalid CVV, dCVV, or authorization request
-	// cryptogram.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
-	// The 3DS cardholder authentication verification value was invalid.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
-	// An internal Visa error occurred. Visa uses this reason code for certain expected
-	// occurrences as well, such as Application Transaction Counter (ATC) replays.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonInternalVisaError CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
-	// The merchant has enabled Visa's Transaction Advisory Service and requires
-	// further authentication to perform the transaction. In practice this is often
-	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonIssuerError                                              CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
-	// An unspecific reason for stand-in processing.
-	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonOther CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "other"
+	CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReasonOther                                                    CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason = "other"
 )
 
 func (r CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
@@ -1298,23 +1153,12 @@ func (r cardPaymentElementsCardDeclineNetworkIdentifiersJSON) RawJSON() string {
 type CardPaymentElementsCardDeclineProcessingCategory string
 
 const (
-	// Account funding transactions are transactions used to e.g., fund an account or
-	// transfer funds between accounts.
-	CardPaymentElementsCardDeclineProcessingCategoryAccountFunding CardPaymentElementsCardDeclineProcessingCategory = "account_funding"
-	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
-	// prior to the actual transaction amount being known. They are followed by an
-	// advice message that updates the amount of the pending transaction.
+	CardPaymentElementsCardDeclineProcessingCategoryAccountFunding         CardPaymentElementsCardDeclineProcessingCategory = "account_funding"
 	CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser CardPaymentElementsCardDeclineProcessingCategory = "automatic_fuel_dispenser"
-	// A transaction used to pay a bill.
-	CardPaymentElementsCardDeclineProcessingCategoryBillPayment CardPaymentElementsCardDeclineProcessingCategory = "bill_payment"
-	// A regular purchase.
-	CardPaymentElementsCardDeclineProcessingCategoryPurchase CardPaymentElementsCardDeclineProcessingCategory = "purchase"
-	// Quasi-cash transactions represent purchases of items which may be convertible to
-	// cash.
-	CardPaymentElementsCardDeclineProcessingCategoryQuasiCash CardPaymentElementsCardDeclineProcessingCategory = "quasi_cash"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	CardPaymentElementsCardDeclineProcessingCategoryRefund CardPaymentElementsCardDeclineProcessingCategory = "refund"
+	CardPaymentElementsCardDeclineProcessingCategoryBillPayment            CardPaymentElementsCardDeclineProcessingCategory = "bill_payment"
+	CardPaymentElementsCardDeclineProcessingCategoryPurchase               CardPaymentElementsCardDeclineProcessingCategory = "purchase"
+	CardPaymentElementsCardDeclineProcessingCategoryQuasiCash              CardPaymentElementsCardDeclineProcessingCategory = "quasi_cash"
+	CardPaymentElementsCardDeclineProcessingCategoryRefund                 CardPaymentElementsCardDeclineProcessingCategory = "refund"
 )
 
 func (r CardPaymentElementsCardDeclineProcessingCategory) IsKnown() bool {
@@ -1330,24 +1174,12 @@ func (r CardPaymentElementsCardDeclineProcessingCategory) IsKnown() bool {
 type CardPaymentElementsCardDeclineRealTimeDecisionReason string
 
 const (
-	// The cardholder does not have sufficient funds to cover the transaction. The
-	// merchant may attempt to process the transaction again.
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonInsufficientFunds CardPaymentElementsCardDeclineRealTimeDecisionReason = "insufficient_funds"
-	// This type of transaction is not allowed for this card. This transaction should
-	// not be retried.
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonInsufficientFunds       CardPaymentElementsCardDeclineRealTimeDecisionReason = "insufficient_funds"
 	CardPaymentElementsCardDeclineRealTimeDecisionReasonTransactionNeverAllowed CardPaymentElementsCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
-	// The transaction amount exceeds the cardholder's approval limit. The merchant may
-	// attempt to process the transaction again.
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonExceedsApprovalLimit CardPaymentElementsCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
-	// The card has been temporarily disabled or not yet activated. The merchant may
-	// attempt to process the transaction again.
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonExceedsApprovalLimit    CardPaymentElementsCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
 	CardPaymentElementsCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled CardPaymentElementsCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
-	// The transaction is suspected to be fraudulent. The merchant may attempt to
-	// process the transaction again.
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonSuspectedFraud CardPaymentElementsCardDeclineRealTimeDecisionReason = "suspected_fraud"
-	// The transaction was declined for another reason. The merchant may attempt to
-	// process the transaction again. This should be used sparingly.
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonOther CardPaymentElementsCardDeclineRealTimeDecisionReason = "other"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonSuspectedFraud          CardPaymentElementsCardDeclineRealTimeDecisionReason = "suspected_fraud"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonOther                   CardPaymentElementsCardDeclineRealTimeDecisionReason = "other"
 )
 
 func (r CardPaymentElementsCardDeclineRealTimeDecisionReason) IsKnown() bool {
@@ -1362,39 +1194,21 @@ func (r CardPaymentElementsCardDeclineRealTimeDecisionReason) IsKnown() bool {
 type CardPaymentElementsCardDeclineReason string
 
 const (
-	// The Card was not active.
-	CardPaymentElementsCardDeclineReasonCardNotActive CardPaymentElementsCardDeclineReason = "card_not_active"
-	// The Physical Card was not active.
-	CardPaymentElementsCardDeclineReasonPhysicalCardNotActive CardPaymentElementsCardDeclineReason = "physical_card_not_active"
-	// The account's entity was not active.
-	CardPaymentElementsCardDeclineReasonEntityNotActive CardPaymentElementsCardDeclineReason = "entity_not_active"
-	// The account was inactive.
-	CardPaymentElementsCardDeclineReasonGroupLocked CardPaymentElementsCardDeclineReason = "group_locked"
-	// The Card's Account did not have a sufficient available balance.
-	CardPaymentElementsCardDeclineReasonInsufficientFunds CardPaymentElementsCardDeclineReason = "insufficient_funds"
-	// The given CVV2 did not match the card's value.
-	CardPaymentElementsCardDeclineReasonCvv2Mismatch CardPaymentElementsCardDeclineReason = "cvv2_mismatch"
-	// The given expiration date did not match the card's value. Only applies when a
-	// CVV2 is present.
-	CardPaymentElementsCardDeclineReasonCardExpirationMismatch CardPaymentElementsCardDeclineReason = "card_expiration_mismatch"
-	// The attempted card transaction is not allowed per Increase's terms.
-	CardPaymentElementsCardDeclineReasonTransactionNotAllowed CardPaymentElementsCardDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by a Limit.
-	CardPaymentElementsCardDeclineReasonBreachesLimit CardPaymentElementsCardDeclineReason = "breaches_limit"
-	// Your application declined the transaction via webhook.
-	CardPaymentElementsCardDeclineReasonWebhookDeclined CardPaymentElementsCardDeclineReason = "webhook_declined"
-	// Your application webhook did not respond without the required timeout.
-	CardPaymentElementsCardDeclineReasonWebhookTimedOut CardPaymentElementsCardDeclineReason = "webhook_timed_out"
-	// Declined by stand-in processing.
-	CardPaymentElementsCardDeclineReasonDeclinedByStandInProcessing CardPaymentElementsCardDeclineReason = "declined_by_stand_in_processing"
-	// The card read had an invalid CVV, dCVV, or authorization request cryptogram.
-	CardPaymentElementsCardDeclineReasonInvalidPhysicalCard CardPaymentElementsCardDeclineReason = "invalid_physical_card"
-	// The original card authorization for this incremental authorization does not
-	// exist.
+	CardPaymentElementsCardDeclineReasonCardNotActive                CardPaymentElementsCardDeclineReason = "card_not_active"
+	CardPaymentElementsCardDeclineReasonPhysicalCardNotActive        CardPaymentElementsCardDeclineReason = "physical_card_not_active"
+	CardPaymentElementsCardDeclineReasonEntityNotActive              CardPaymentElementsCardDeclineReason = "entity_not_active"
+	CardPaymentElementsCardDeclineReasonGroupLocked                  CardPaymentElementsCardDeclineReason = "group_locked"
+	CardPaymentElementsCardDeclineReasonInsufficientFunds            CardPaymentElementsCardDeclineReason = "insufficient_funds"
+	CardPaymentElementsCardDeclineReasonCvv2Mismatch                 CardPaymentElementsCardDeclineReason = "cvv2_mismatch"
+	CardPaymentElementsCardDeclineReasonCardExpirationMismatch       CardPaymentElementsCardDeclineReason = "card_expiration_mismatch"
+	CardPaymentElementsCardDeclineReasonTransactionNotAllowed        CardPaymentElementsCardDeclineReason = "transaction_not_allowed"
+	CardPaymentElementsCardDeclineReasonBreachesLimit                CardPaymentElementsCardDeclineReason = "breaches_limit"
+	CardPaymentElementsCardDeclineReasonWebhookDeclined              CardPaymentElementsCardDeclineReason = "webhook_declined"
+	CardPaymentElementsCardDeclineReasonWebhookTimedOut              CardPaymentElementsCardDeclineReason = "webhook_timed_out"
+	CardPaymentElementsCardDeclineReasonDeclinedByStandInProcessing  CardPaymentElementsCardDeclineReason = "declined_by_stand_in_processing"
+	CardPaymentElementsCardDeclineReasonInvalidPhysicalCard          CardPaymentElementsCardDeclineReason = "invalid_physical_card"
 	CardPaymentElementsCardDeclineReasonMissingOriginalAuthorization CardPaymentElementsCardDeclineReason = "missing_original_authorization"
-	// The transaction was suspected to be fraudulent. Please reach out to
-	// support@increase.com for more information.
-	CardPaymentElementsCardDeclineReasonSuspectedFraud CardPaymentElementsCardDeclineReason = "suspected_fraud"
+	CardPaymentElementsCardDeclineReasonSuspectedFraud               CardPaymentElementsCardDeclineReason = "suspected_fraud"
 )
 
 func (r CardPaymentElementsCardDeclineReason) IsKnown() bool {
@@ -1462,12 +1276,9 @@ func (r cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON) RawJ
 type CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult string
 
 const (
-	// No card verification code was provided in the authorization request.
 	CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultNotChecked CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult = "not_checked"
-	// The card verification code matched the one on file.
-	CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultMatch CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult = "match"
-	// The card verification code did not match the one on file.
-	CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultNoMatch CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult = "no_match"
+	CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultMatch      CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult = "match"
+	CardPaymentElementsCardDeclineVerificationCardVerificationCodeResultNoMatch    CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult = "no_match"
 )
 
 func (r CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult) IsKnown() bool {
@@ -1520,18 +1331,12 @@ func (r cardPaymentElementsCardDeclineVerificationCardholderAddressJSON) RawJSON
 type CardPaymentElementsCardDeclineVerificationCardholderAddressResult string
 
 const (
-	// No adress was provided in the authorization request.
-	CardPaymentElementsCardDeclineVerificationCardholderAddressResultNotChecked CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "not_checked"
-	// Postal code matches, but the street address was not verified.
+	CardPaymentElementsCardDeclineVerificationCardholderAddressResultNotChecked                       CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "not_checked"
 	CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match.
-	CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches.
-	CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
-	// Postal code and street address match.
-	CardPaymentElementsCardDeclineVerificationCardholderAddressResultMatch CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "match"
-	// Postal code and street address do not match.
-	CardPaymentElementsCardDeclineVerificationCardholderAddressResultNoMatch CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "no_match"
+	CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	CardPaymentElementsCardDeclineVerificationCardholderAddressResultMatch                            CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "match"
+	CardPaymentElementsCardDeclineVerificationCardholderAddressResultNoMatch                          CardPaymentElementsCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
 func (r CardPaymentElementsCardDeclineVerificationCardholderAddressResult) IsKnown() bool {
@@ -1596,17 +1401,11 @@ func (r cardPaymentElementsCardFuelConfirmationJSON) RawJSON() string {
 type CardPaymentElementsCardFuelConfirmationCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardFuelConfirmationCurrencyCad CardPaymentElementsCardFuelConfirmationCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardFuelConfirmationCurrencyChf CardPaymentElementsCardFuelConfirmationCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardFuelConfirmationCurrencyEur CardPaymentElementsCardFuelConfirmationCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardFuelConfirmationCurrencyGbp CardPaymentElementsCardFuelConfirmationCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardFuelConfirmationCurrencyJpy CardPaymentElementsCardFuelConfirmationCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardFuelConfirmationCurrencyUsd CardPaymentElementsCardFuelConfirmationCurrency = "USD"
 )
 
@@ -1622,7 +1421,6 @@ func (r CardPaymentElementsCardFuelConfirmationCurrency) IsKnown() bool {
 type CardPaymentElementsCardFuelConfirmationNetwork string
 
 const (
-	// Visa
 	CardPaymentElementsCardFuelConfirmationNetworkVisa CardPaymentElementsCardFuelConfirmationNetwork = "visa"
 )
 
@@ -1753,12 +1551,9 @@ func (r cardPaymentElementsCardIncrementJSON) RawJSON() string {
 type CardPaymentElementsCardIncrementActioner string
 
 const (
-	// This object was actioned by the user through a real-time decision.
-	CardPaymentElementsCardIncrementActionerUser CardPaymentElementsCardIncrementActioner = "user"
-	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardIncrementActionerUser     CardPaymentElementsCardIncrementActioner = "user"
 	CardPaymentElementsCardIncrementActionerIncrease CardPaymentElementsCardIncrementActioner = "increase"
-	// This object was actioned by the network, through stand-in processing.
-	CardPaymentElementsCardIncrementActionerNetwork CardPaymentElementsCardIncrementActioner = "network"
+	CardPaymentElementsCardIncrementActionerNetwork  CardPaymentElementsCardIncrementActioner = "network"
 )
 
 func (r CardPaymentElementsCardIncrementActioner) IsKnown() bool {
@@ -1774,17 +1569,11 @@ func (r CardPaymentElementsCardIncrementActioner) IsKnown() bool {
 type CardPaymentElementsCardIncrementCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardIncrementCurrencyCad CardPaymentElementsCardIncrementCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardIncrementCurrencyChf CardPaymentElementsCardIncrementCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardIncrementCurrencyEur CardPaymentElementsCardIncrementCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardIncrementCurrencyGbp CardPaymentElementsCardIncrementCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardIncrementCurrencyJpy CardPaymentElementsCardIncrementCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardIncrementCurrencyUsd CardPaymentElementsCardIncrementCurrency = "USD"
 )
 
@@ -1800,7 +1589,6 @@ func (r CardPaymentElementsCardIncrementCurrency) IsKnown() bool {
 type CardPaymentElementsCardIncrementNetwork string
 
 const (
-	// Visa
 	CardPaymentElementsCardIncrementNetworkVisa CardPaymentElementsCardIncrementNetwork = "visa"
 )
 
@@ -1979,17 +1767,11 @@ func (r cardPaymentElementsCardRefundCashbackJSON) RawJSON() string {
 type CardPaymentElementsCardRefundCashbackCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardRefundCashbackCurrencyCad CardPaymentElementsCardRefundCashbackCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardRefundCashbackCurrencyChf CardPaymentElementsCardRefundCashbackCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardRefundCashbackCurrencyEur CardPaymentElementsCardRefundCashbackCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardRefundCashbackCurrencyGbp CardPaymentElementsCardRefundCashbackCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardRefundCashbackCurrencyJpy CardPaymentElementsCardRefundCashbackCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardRefundCashbackCurrencyUsd CardPaymentElementsCardRefundCashbackCurrency = "USD"
 )
 
@@ -2006,17 +1788,11 @@ func (r CardPaymentElementsCardRefundCashbackCurrency) IsKnown() bool {
 type CardPaymentElementsCardRefundCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardRefundCurrencyCad CardPaymentElementsCardRefundCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardRefundCurrencyChf CardPaymentElementsCardRefundCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardRefundCurrencyEur CardPaymentElementsCardRefundCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardRefundCurrencyGbp CardPaymentElementsCardRefundCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardRefundCurrencyJpy CardPaymentElementsCardRefundCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardRefundCurrencyUsd CardPaymentElementsCardRefundCurrency = "USD"
 )
 
@@ -2065,17 +1841,11 @@ func (r cardPaymentElementsCardRefundInterchangeJSON) RawJSON() string {
 type CardPaymentElementsCardRefundInterchangeCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardRefundInterchangeCurrencyCad CardPaymentElementsCardRefundInterchangeCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardRefundInterchangeCurrencyChf CardPaymentElementsCardRefundInterchangeCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardRefundInterchangeCurrencyEur CardPaymentElementsCardRefundInterchangeCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardRefundInterchangeCurrencyGbp CardPaymentElementsCardRefundInterchangeCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardRefundInterchangeCurrencyJpy CardPaymentElementsCardRefundInterchangeCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardRefundInterchangeCurrencyUsd CardPaymentElementsCardRefundInterchangeCurrency = "USD"
 )
 
@@ -2251,17 +2021,11 @@ func (r cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON) RawJSON() str
 type CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges string
 
 const (
-	// No extra charge
-	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
-	// Gas
-	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesGas CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "gas"
-	// Extra mileage
-	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
-	// Late return
-	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "late_return"
-	// One way service fee
+	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge    CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesGas              CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "gas"
+	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage     CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn       CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "late_return"
 	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesOneWayServiceFee CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
-	// Parking violation
 	CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
@@ -2278,9 +2042,7 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges) IsKno
 type CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator string
 
 const (
-	// Not applicable
-	CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
-	// No show for specialized vehicle
+	CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable               CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
 	CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
 
@@ -2371,20 +2133,13 @@ func (r cardPaymentElementsCardRefundPurchaseDetailsLodgingJSON) RawJSON() strin
 type CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges string
 
 const (
-	// No extra charge
 	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesNoExtraCharge CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
-	// Restaurant
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesRestaurant CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "restaurant"
-	// Gift shop
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesGiftShop CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "gift_shop"
-	// Mini bar
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesMiniBar CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "mini_bar"
-	// Telephone
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesTelephone CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "telephone"
-	// Other
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesOther CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "other"
-	// Laundry
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesLaundry CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesRestaurant    CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "restaurant"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesGiftShop      CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesMiniBar       CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesTelephone     CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "telephone"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesOther         CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "other"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraChargesLaundry       CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
@@ -2400,10 +2155,8 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges) IsKnown
 type CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator string
 
 const (
-	// Not applicable
 	CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicatorNotApplicable CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
-	// No show
-	CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
+	CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow        CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
@@ -2418,16 +2171,11 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator) IsKn
 type CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat string
 
 const (
-	// Free text
-	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "free_text"
-	// Order number
-	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "order_number"
-	// Rental agreement number
+	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText              CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber           CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "order_number"
 	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
-	// Hotel folio number
-	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
-	// Invoice number
-	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber      CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber         CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
@@ -2536,14 +2284,10 @@ func (r cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON) RawJSON
 type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator string
 
 const (
-	// No credit
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit                                                        CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Other
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther                                                           CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
@@ -2584,54 +2328,30 @@ func (r cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON) 
 type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory string
 
 const (
-	// None
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "none"
-	// Bundled service
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
-	// Baggage fee
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
-	// Change fee
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
-	// Cargo
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
-	// Carbon offset
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
-	// Frequent flyer
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
-	// Gift card
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
-	// Ground transport
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
-	// In-flight entertainment
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone                  CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService        CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee            CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee             CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo                 CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset          CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer         CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard              CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport       CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
 	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
-	// Lounge
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
-	// Medical
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "medical"
-	// Meal beverage
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
-	// Other
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "other"
-	// Passenger assist fee
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
-	// Pets
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "pets"
-	// Seat fees
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
-	// Standby
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "standby"
-	// Service fee
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
-	// Store
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "store"
-	// Travel service
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
-	// Unaccompanied travel
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
-	// Upgrades
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
-	// Wi-fi
-	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge                CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical               CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage          CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther                 CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee    CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets                  CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees              CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby               CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee            CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore                 CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService         CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel   CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades              CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi                  CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
@@ -2646,18 +2366,12 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCateg
 type CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator string
 
 const (
-	// No credit
-	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit                                                        CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket cancellation
-	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
-	// Other
-	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "other"
-	// Partial refund of airline ticket
-	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation                                       CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther                                                           CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "other"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket                                    CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
@@ -2672,9 +2386,7 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator)
 type CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator string
 
 const (
-	// No restrictions
-	CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
-	// Restricted non-refundable ticket
+	CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions                CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
 	CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
 
@@ -2690,12 +2402,9 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndica
 type CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator string
 
 const (
-	// None
-	CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator = "none"
-	// Change to existing ticket
+	CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone                   CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator = "none"
 	CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
-	// New ticket
-	CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket              CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
 
 func (r CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
@@ -2748,11 +2457,8 @@ func (r cardPaymentElementsCardRefundPurchaseDetailsTravelTripLegJSON) RawJSON()
 type CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode string
 
 const (
-	// None
-	CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "none"
-	// Stop over allowed
-	CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
-	// Stop over not allowed
+	CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone               CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed    CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
 	CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
@@ -2868,17 +2574,11 @@ func (r cardPaymentElementsCardReversalJSON) RawJSON() string {
 type CardPaymentElementsCardReversalCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardReversalCurrencyCad CardPaymentElementsCardReversalCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardReversalCurrencyChf CardPaymentElementsCardReversalCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardReversalCurrencyEur CardPaymentElementsCardReversalCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardReversalCurrencyGbp CardPaymentElementsCardReversalCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardReversalCurrencyJpy CardPaymentElementsCardReversalCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardReversalCurrencyUsd CardPaymentElementsCardReversalCurrency = "USD"
 )
 
@@ -2894,7 +2594,6 @@ func (r CardPaymentElementsCardReversalCurrency) IsKnown() bool {
 type CardPaymentElementsCardReversalNetwork string
 
 const (
-	// Visa
 	CardPaymentElementsCardReversalNetworkVisa CardPaymentElementsCardReversalNetwork = "visa"
 )
 
@@ -2943,14 +2642,10 @@ func (r cardPaymentElementsCardReversalNetworkIdentifiersJSON) RawJSON() string 
 type CardPaymentElementsCardReversalReversalReason string
 
 const (
-	// The Card Reversal was initiated at the customer's request.
-	CardPaymentElementsCardReversalReversalReasonReversedByCustomer CardPaymentElementsCardReversalReversalReason = "reversed_by_customer"
-	// The Card Reversal was initiated by the network or acquirer.
+	CardPaymentElementsCardReversalReversalReasonReversedByCustomer          CardPaymentElementsCardReversalReversalReason = "reversed_by_customer"
 	CardPaymentElementsCardReversalReversalReasonReversedByNetworkOrAcquirer CardPaymentElementsCardReversalReversalReason = "reversed_by_network_or_acquirer"
-	// The Card Reversal was initiated by the point of sale device.
-	CardPaymentElementsCardReversalReversalReasonReversedByPointOfSale CardPaymentElementsCardReversalReversalReason = "reversed_by_point_of_sale"
-	// The Card Reversal was a partial reversal, for any reason.
-	CardPaymentElementsCardReversalReversalReasonPartialReversal CardPaymentElementsCardReversalReversalReason = "partial_reversal"
+	CardPaymentElementsCardReversalReversalReasonReversedByPointOfSale       CardPaymentElementsCardReversalReversalReason = "reversed_by_point_of_sale"
+	CardPaymentElementsCardReversalReversalReasonPartialReversal             CardPaymentElementsCardReversalReversalReason = "partial_reversal"
 )
 
 func (r CardPaymentElementsCardReversalReversalReason) IsKnown() bool {
@@ -3102,17 +2797,11 @@ func (r cardPaymentElementsCardSettlementCashbackJSON) RawJSON() string {
 type CardPaymentElementsCardSettlementCashbackCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardSettlementCashbackCurrencyCad CardPaymentElementsCardSettlementCashbackCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardSettlementCashbackCurrencyChf CardPaymentElementsCardSettlementCashbackCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardSettlementCashbackCurrencyEur CardPaymentElementsCardSettlementCashbackCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardSettlementCashbackCurrencyGbp CardPaymentElementsCardSettlementCashbackCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardSettlementCashbackCurrencyJpy CardPaymentElementsCardSettlementCashbackCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardSettlementCashbackCurrencyUsd CardPaymentElementsCardSettlementCashbackCurrency = "USD"
 )
 
@@ -3129,17 +2818,11 @@ func (r CardPaymentElementsCardSettlementCashbackCurrency) IsKnown() bool {
 type CardPaymentElementsCardSettlementCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardSettlementCurrencyCad CardPaymentElementsCardSettlementCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardSettlementCurrencyChf CardPaymentElementsCardSettlementCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardSettlementCurrencyEur CardPaymentElementsCardSettlementCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardSettlementCurrencyGbp CardPaymentElementsCardSettlementCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardSettlementCurrencyJpy CardPaymentElementsCardSettlementCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardSettlementCurrencyUsd CardPaymentElementsCardSettlementCurrency = "USD"
 )
 
@@ -3188,17 +2871,11 @@ func (r cardPaymentElementsCardSettlementInterchangeJSON) RawJSON() string {
 type CardPaymentElementsCardSettlementInterchangeCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardSettlementInterchangeCurrencyCad CardPaymentElementsCardSettlementInterchangeCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardSettlementInterchangeCurrencyChf CardPaymentElementsCardSettlementInterchangeCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardSettlementInterchangeCurrencyEur CardPaymentElementsCardSettlementInterchangeCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardSettlementInterchangeCurrencyGbp CardPaymentElementsCardSettlementInterchangeCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardSettlementInterchangeCurrencyJpy CardPaymentElementsCardSettlementInterchangeCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardSettlementInterchangeCurrencyUsd CardPaymentElementsCardSettlementInterchangeCurrency = "USD"
 )
 
@@ -3375,17 +3052,11 @@ func (r cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON) RawJSON()
 type CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges string
 
 const (
-	// No extra charge
-	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
-	// Gas
-	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesGas CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "gas"
-	// Extra mileage
-	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
-	// Late return
-	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "late_return"
-	// One way service fee
+	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge    CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesGas              CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "gas"
+	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage     CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn       CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "late_return"
 	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesOneWayServiceFee CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
-	// Parking violation
 	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
@@ -3402,9 +3073,7 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges) I
 type CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator string
 
 const (
-	// Not applicable
-	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
-	// No show for specialized vehicle
+	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable               CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
 	CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
 
@@ -3496,20 +3165,13 @@ func (r cardPaymentElementsCardSettlementPurchaseDetailsLodgingJSON) RawJSON() s
 type CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges string
 
 const (
-	// No extra charge
 	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesNoExtraCharge CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
-	// Restaurant
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "restaurant"
-	// Gift shop
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "gift_shop"
-	// Mini bar
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "mini_bar"
-	// Telephone
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesTelephone CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "telephone"
-	// Other
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesOther CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "other"
-	// Laundry
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesLaundry CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant    CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "restaurant"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop      CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar       CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesTelephone     CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "telephone"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesOther         CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "other"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraChargesLaundry       CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
@@ -3525,10 +3187,8 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges) IsK
 type CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator string
 
 const (
-	// Not applicable
 	CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicatorNotApplicable CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
-	// No show
-	CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
+	CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow        CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
@@ -3543,16 +3203,11 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator) 
 type CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat string
 
 const (
-	// Free text
-	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "free_text"
-	// Order number
-	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "order_number"
-	// Rental agreement number
+	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText              CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber           CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "order_number"
 	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
-	// Hotel folio number
-	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
-	// Invoice number
-	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber      CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber         CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
@@ -3661,14 +3316,10 @@ func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON) Raw
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator string
 
 const (
-	// No credit
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit                                                        CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Other
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther                                                           CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
@@ -3709,54 +3360,30 @@ func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJS
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory string
 
 const (
-	// None
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "none"
-	// Bundled service
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
-	// Baggage fee
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
-	// Change fee
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
-	// Cargo
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
-	// Carbon offset
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
-	// Frequent flyer
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
-	// Gift card
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
-	// Ground transport
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
-	// In-flight entertainment
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone                  CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService        CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee            CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee             CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo                 CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset          CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer         CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard              CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport       CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
-	// Lounge
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
-	// Medical
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "medical"
-	// Meal beverage
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
-	// Other
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "other"
-	// Passenger assist fee
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
-	// Pets
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "pets"
-	// Seat fees
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
-	// Standby
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "standby"
-	// Service fee
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
-	// Store
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "store"
-	// Travel service
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
-	// Unaccompanied travel
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
-	// Upgrades
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
-	// Wi-fi
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge                CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical               CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage          CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther                 CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee    CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets                  CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees              CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby               CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee            CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore                 CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService         CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel   CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades              CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi                  CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
@@ -3771,18 +3398,12 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesC
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator string
 
 const (
-	// No credit
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit                                                        CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket cancellation
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
-	// Other
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "other"
-	// Partial refund of airline ticket
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation                                       CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther                                                           CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "other"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket                                    CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
@@ -3797,9 +3418,7 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndica
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator string
 
 const (
-	// No restrictions
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
-	// Restricted non-refundable ticket
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions                CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
 
@@ -3815,12 +3434,9 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIn
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator string
 
 const (
-	// None
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "none"
-	// Change to existing ticket
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone                   CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "none"
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
-	// New ticket
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket              CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
 
 func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
@@ -3873,11 +3489,8 @@ func (r cardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegJSON) RawJS
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode string
 
 const (
-	// None
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "none"
-	// Stop over allowed
-	CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
-	// Stop over not allowed
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone               CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed    CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
 	CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
@@ -4002,12 +3615,9 @@ func (r cardPaymentElementsCardValidationJSON) RawJSON() string {
 type CardPaymentElementsCardValidationActioner string
 
 const (
-	// This object was actioned by the user through a real-time decision.
-	CardPaymentElementsCardValidationActionerUser CardPaymentElementsCardValidationActioner = "user"
-	// This object was actioned by Increase without user intervention.
+	CardPaymentElementsCardValidationActionerUser     CardPaymentElementsCardValidationActioner = "user"
 	CardPaymentElementsCardValidationActionerIncrease CardPaymentElementsCardValidationActioner = "increase"
-	// This object was actioned by the network, through stand-in processing.
-	CardPaymentElementsCardValidationActionerNetwork CardPaymentElementsCardValidationActioner = "network"
+	CardPaymentElementsCardValidationActionerNetwork  CardPaymentElementsCardValidationActioner = "network"
 )
 
 func (r CardPaymentElementsCardValidationActioner) IsKnown() bool {
@@ -4023,17 +3633,11 @@ func (r CardPaymentElementsCardValidationActioner) IsKnown() bool {
 type CardPaymentElementsCardValidationCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CardPaymentElementsCardValidationCurrencyCad CardPaymentElementsCardValidationCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CardPaymentElementsCardValidationCurrencyChf CardPaymentElementsCardValidationCurrency = "CHF"
-	// Euro (EUR)
 	CardPaymentElementsCardValidationCurrencyEur CardPaymentElementsCardValidationCurrency = "EUR"
-	// British Pound (GBP)
 	CardPaymentElementsCardValidationCurrencyGbp CardPaymentElementsCardValidationCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CardPaymentElementsCardValidationCurrencyJpy CardPaymentElementsCardValidationCurrency = "JPY"
-	// US Dollar (USD)
 	CardPaymentElementsCardValidationCurrencyUsd CardPaymentElementsCardValidationCurrency = "USD"
 )
 
@@ -4075,7 +3679,6 @@ func (r cardPaymentElementsCardValidationNetworkDetailsJSON) RawJSON() string {
 type CardPaymentElementsCardValidationNetworkDetailsCategory string
 
 const (
-	// Visa
 	CardPaymentElementsCardValidationNetworkDetailsCategoryVisa CardPaymentElementsCardValidationNetworkDetailsCategory = "visa"
 )
 
@@ -4126,40 +3729,14 @@ func (r cardPaymentElementsCardValidationNetworkDetailsVisaJSON) RawJSON() strin
 type CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	// Single transaction of a mail/phone order: Use to indicate that the transaction
-	// is a mail/phone order purchase, not a recurring transaction or installment
-	// payment. For domestic transactions in the US region, this value may also
-	// indicate one bill payment transaction in the card-present or card-absent
-	// environments.
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	// Recurring transaction: Payment indicator used to indicate a recurring
-	// transaction that originates from an acquirer in the US region.
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorRecurring CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	// Installment payment: Payment indicator used to indicate one purchase of goods or
-	// services that is billed to the account in multiple charges over a period of time
-	// agreed upon by the cardholder and merchant from transactions that originate from
-	// an acquirer in the US region.
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorInstallment CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	// Unknown classification: other mail order: Use to indicate that the type of
-	// mail/telephone order is unknown.
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	// Secure electronic commerce transaction: Use to indicate that the electronic
-	// commerce transaction has been authenticated using e.g., 3-D Secure
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
-	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
-	// identify an electronic commerce transaction where the merchant attempted to
-	// authenticate the cardholder using 3-D Secure, but was unable to complete the
-	// authentication because the issuer or cardholder does not participate in the 3-D
-	// Secure program.
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
 	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	// Non-authenticated security transaction: Use to identify an electronic commerce
-	// transaction that uses data encryption for security however , cardholder
-	// authentication is not performed using 3-D Secure.
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	// Non-secure transaction: Use to identify an electronic commerce transaction that
-	// has no data protection.
-	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 func (r CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
@@ -4175,25 +3752,15 @@ func (r CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceInd
 type CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
-	// Unknown
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeUnknown CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
-	// Manual key entry
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeManual CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
-	// Magnetic stripe read, without card verification value
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	// Optical code
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
-	// Contact chip card
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
-	// Contactless read of chip card
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeContactless CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
-	// Transaction initiated using a credential that has previously been stored on file
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
-	// Magnetic stripe read
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
-	// Contactless read of magnetic stripe data
-	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	// Contact chip card, without card verification value
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeUnknown                    CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeManual                     CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeContactless                CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
 	CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
 
@@ -4210,22 +3777,12 @@ func (r CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMo
 type CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason string
 
 const (
-	// Increase failed to process the authorization in a timely manner.
-	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonIssuerError CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
-	// The physical card read had an invalid CVV, dCVV, or authorization request
-	// cryptogram.
-	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
-	// The 3DS cardholder authentication verification value was invalid.
-	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
-	// An internal Visa error occurred. Visa uses this reason code for certain expected
-	// occurrences as well, such as Application Transaction Counter (ATC) replays.
-	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonInternalVisaError CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
-	// The merchant has enabled Visa's Transaction Advisory Service and requires
-	// further authentication to perform the transaction. In practice this is often
-	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonIssuerError                                              CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
-	// An unspecific reason for stand-in processing.
-	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonOther CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "other"
+	CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReasonOther                                                    CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason = "other"
 )
 
 func (r CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
@@ -4342,12 +3899,9 @@ func (r cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON) R
 type CardPaymentElementsCardValidationVerificationCardVerificationCodeResult string
 
 const (
-	// No card verification code was provided in the authorization request.
 	CardPaymentElementsCardValidationVerificationCardVerificationCodeResultNotChecked CardPaymentElementsCardValidationVerificationCardVerificationCodeResult = "not_checked"
-	// The card verification code matched the one on file.
-	CardPaymentElementsCardValidationVerificationCardVerificationCodeResultMatch CardPaymentElementsCardValidationVerificationCardVerificationCodeResult = "match"
-	// The card verification code did not match the one on file.
-	CardPaymentElementsCardValidationVerificationCardVerificationCodeResultNoMatch CardPaymentElementsCardValidationVerificationCardVerificationCodeResult = "no_match"
+	CardPaymentElementsCardValidationVerificationCardVerificationCodeResultMatch      CardPaymentElementsCardValidationVerificationCardVerificationCodeResult = "match"
+	CardPaymentElementsCardValidationVerificationCardVerificationCodeResultNoMatch    CardPaymentElementsCardValidationVerificationCardVerificationCodeResult = "no_match"
 )
 
 func (r CardPaymentElementsCardValidationVerificationCardVerificationCodeResult) IsKnown() bool {
@@ -4400,18 +3954,12 @@ func (r cardPaymentElementsCardValidationVerificationCardholderAddressJSON) RawJ
 type CardPaymentElementsCardValidationVerificationCardholderAddressResult string
 
 const (
-	// No adress was provided in the authorization request.
-	CardPaymentElementsCardValidationVerificationCardholderAddressResultNotChecked CardPaymentElementsCardValidationVerificationCardholderAddressResult = "not_checked"
-	// Postal code matches, but the street address was not verified.
+	CardPaymentElementsCardValidationVerificationCardholderAddressResultNotChecked                       CardPaymentElementsCardValidationVerificationCardholderAddressResult = "not_checked"
 	CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardValidationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match.
-	CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch CardPaymentElementsCardValidationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches.
-	CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch CardPaymentElementsCardValidationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
-	// Postal code and street address match.
-	CardPaymentElementsCardValidationVerificationCardholderAddressResultMatch CardPaymentElementsCardValidationVerificationCardholderAddressResult = "match"
-	// Postal code and street address do not match.
-	CardPaymentElementsCardValidationVerificationCardholderAddressResultNoMatch CardPaymentElementsCardValidationVerificationCardholderAddressResult = "no_match"
+	CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    CardPaymentElementsCardValidationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	CardPaymentElementsCardValidationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    CardPaymentElementsCardValidationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	CardPaymentElementsCardValidationVerificationCardholderAddressResultMatch                            CardPaymentElementsCardValidationVerificationCardholderAddressResult = "match"
+	CardPaymentElementsCardValidationVerificationCardholderAddressResultNoMatch                          CardPaymentElementsCardValidationVerificationCardholderAddressResult = "no_match"
 )
 
 func (r CardPaymentElementsCardValidationVerificationCardholderAddressResult) IsKnown() bool {
@@ -4427,30 +3975,17 @@ func (r CardPaymentElementsCardValidationVerificationCardholderAddressResult) Is
 type CardPaymentElementsCategory string
 
 const (
-	// Card Authorization: details will be under the `card_authorization` object.
-	CardPaymentElementsCategoryCardAuthorization CardPaymentElementsCategory = "card_authorization"
-	// Card Authentication: details will be under the `card_authentication` object.
-	CardPaymentElementsCategoryCardAuthentication CardPaymentElementsCategory = "card_authentication"
-	// Card Validation: details will be under the `card_validation` object.
-	CardPaymentElementsCategoryCardValidation CardPaymentElementsCategory = "card_validation"
-	// Card Decline: details will be under the `card_decline` object.
-	CardPaymentElementsCategoryCardDecline CardPaymentElementsCategory = "card_decline"
-	// Card Reversal: details will be under the `card_reversal` object.
-	CardPaymentElementsCategoryCardReversal CardPaymentElementsCategory = "card_reversal"
-	// Card Authorization Expiration: details will be under the
-	// `card_authorization_expiration` object.
+	CardPaymentElementsCategoryCardAuthorization           CardPaymentElementsCategory = "card_authorization"
+	CardPaymentElementsCategoryCardAuthentication          CardPaymentElementsCategory = "card_authentication"
+	CardPaymentElementsCategoryCardValidation              CardPaymentElementsCategory = "card_validation"
+	CardPaymentElementsCategoryCardDecline                 CardPaymentElementsCategory = "card_decline"
+	CardPaymentElementsCategoryCardReversal                CardPaymentElementsCategory = "card_reversal"
 	CardPaymentElementsCategoryCardAuthorizationExpiration CardPaymentElementsCategory = "card_authorization_expiration"
-	// Card Increment: details will be under the `card_increment` object.
-	CardPaymentElementsCategoryCardIncrement CardPaymentElementsCategory = "card_increment"
-	// Card Settlement: details will be under the `card_settlement` object.
-	CardPaymentElementsCategoryCardSettlement CardPaymentElementsCategory = "card_settlement"
-	// Card Refund: details will be under the `card_refund` object.
-	CardPaymentElementsCategoryCardRefund CardPaymentElementsCategory = "card_refund"
-	// Card Fuel Confirmation: details will be under the `card_fuel_confirmation`
-	// object.
-	CardPaymentElementsCategoryCardFuelConfirmation CardPaymentElementsCategory = "card_fuel_confirmation"
-	// Unknown card payment element.
-	CardPaymentElementsCategoryOther CardPaymentElementsCategory = "other"
+	CardPaymentElementsCategoryCardIncrement               CardPaymentElementsCategory = "card_increment"
+	CardPaymentElementsCategoryCardSettlement              CardPaymentElementsCategory = "card_settlement"
+	CardPaymentElementsCategoryCardRefund                  CardPaymentElementsCategory = "card_refund"
+	CardPaymentElementsCategoryCardFuelConfirmation        CardPaymentElementsCategory = "card_fuel_confirmation"
+	CardPaymentElementsCategoryOther                       CardPaymentElementsCategory = "other"
 )
 
 func (r CardPaymentElementsCategory) IsKnown() bool {

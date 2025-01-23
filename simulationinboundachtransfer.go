@@ -85,38 +85,22 @@ func (r SimulationInboundACHTransferNewParams) MarshalJSON() (data []byte, err e
 type SimulationInboundACHTransferNewParamsStandardEntryClassCode string
 
 const (
-	// Corporate Credit and Debit (CCD).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit SimulationInboundACHTransferNewParamsStandardEntryClassCode = "corporate_credit_or_debit"
-	// Corporate Trade Exchange (CTX).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCorporateTradeExchange SimulationInboundACHTransferNewParamsStandardEntryClassCode = "corporate_trade_exchange"
-	// Prearranged Payments and Deposits (PPD).
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit        SimulationInboundACHTransferNewParamsStandardEntryClassCode = "corporate_credit_or_debit"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCorporateTradeExchange        SimulationInboundACHTransferNewParamsStandardEntryClassCode = "corporate_trade_exchange"
 	SimulationInboundACHTransferNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit SimulationInboundACHTransferNewParamsStandardEntryClassCode = "prearranged_payments_and_deposit"
-	// Internet Initiated (WEB).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeInternetInitiated SimulationInboundACHTransferNewParamsStandardEntryClassCode = "internet_initiated"
-	// Point of Sale (POS).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodePointOfSale SimulationInboundACHTransferNewParamsStandardEntryClassCode = "point_of_sale"
-	// Telephone Initiated (TEL).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeTelephoneInitiated SimulationInboundACHTransferNewParamsStandardEntryClassCode = "telephone_initiated"
-	// Customer Initiated (CIE).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCustomerInitiated SimulationInboundACHTransferNewParamsStandardEntryClassCode = "customer_initiated"
-	// Accounts Receivable (ARC).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeAccountsReceivable SimulationInboundACHTransferNewParamsStandardEntryClassCode = "accounts_receivable"
-	// Machine Transfer (MTE).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeMachineTransfer SimulationInboundACHTransferNewParamsStandardEntryClassCode = "machine_transfer"
-	// Shared Network Transaction (SHR).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeSharedNetworkTransaction SimulationInboundACHTransferNewParamsStandardEntryClassCode = "shared_network_transaction"
-	// Represented Check (RCK).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeRepresentedCheck SimulationInboundACHTransferNewParamsStandardEntryClassCode = "represented_check"
-	// Back Office Conversion (BOC).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeBackOfficeConversion SimulationInboundACHTransferNewParamsStandardEntryClassCode = "back_office_conversion"
-	// Point of Purchase (POP).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodePointOfPurchase SimulationInboundACHTransferNewParamsStandardEntryClassCode = "point_of_purchase"
-	// Check Truncation (TRC).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCheckTruncation SimulationInboundACHTransferNewParamsStandardEntryClassCode = "check_truncation"
-	// Destroyed Check (XCK).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeDestroyedCheck SimulationInboundACHTransferNewParamsStandardEntryClassCode = "destroyed_check"
-	// International ACH Transaction (IAT).
-	SimulationInboundACHTransferNewParamsStandardEntryClassCodeInternationalACHTransaction SimulationInboundACHTransferNewParamsStandardEntryClassCode = "international_ach_transaction"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeInternetInitiated             SimulationInboundACHTransferNewParamsStandardEntryClassCode = "internet_initiated"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodePointOfSale                   SimulationInboundACHTransferNewParamsStandardEntryClassCode = "point_of_sale"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeTelephoneInitiated            SimulationInboundACHTransferNewParamsStandardEntryClassCode = "telephone_initiated"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCustomerInitiated             SimulationInboundACHTransferNewParamsStandardEntryClassCode = "customer_initiated"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeAccountsReceivable            SimulationInboundACHTransferNewParamsStandardEntryClassCode = "accounts_receivable"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeMachineTransfer               SimulationInboundACHTransferNewParamsStandardEntryClassCode = "machine_transfer"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeSharedNetworkTransaction      SimulationInboundACHTransferNewParamsStandardEntryClassCode = "shared_network_transaction"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeRepresentedCheck              SimulationInboundACHTransferNewParamsStandardEntryClassCode = "represented_check"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeBackOfficeConversion          SimulationInboundACHTransferNewParamsStandardEntryClassCode = "back_office_conversion"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodePointOfPurchase               SimulationInboundACHTransferNewParamsStandardEntryClassCode = "point_of_purchase"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeCheckTruncation               SimulationInboundACHTransferNewParamsStandardEntryClassCode = "check_truncation"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeDestroyedCheck                SimulationInboundACHTransferNewParamsStandardEntryClassCode = "destroyed_check"
+	SimulationInboundACHTransferNewParamsStandardEntryClassCodeInternationalACHTransaction   SimulationInboundACHTransferNewParamsStandardEntryClassCode = "international_ach_transaction"
 )
 
 func (r SimulationInboundACHTransferNewParamsStandardEntryClassCode) IsKnown() bool {

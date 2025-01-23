@@ -245,21 +245,12 @@ func (r cardDisputeRejectionJSON) RawJSON() string {
 type CardDisputeStatus string
 
 const (
-	// The Card Dispute is pending review.
-	CardDisputeStatusPendingReviewing CardDisputeStatus = "pending_reviewing"
-	// Increase has requested more information related to the Card Dispute from you.
+	CardDisputeStatusPendingReviewing       CardDisputeStatus = "pending_reviewing"
 	CardDisputeStatusPendingUserInformation CardDisputeStatus = "pending_user_information"
-	// The Card Dispute has been accepted and your funds have been returned. The card
-	// dispute will eventually transition into `won` or `lost` depending on the
-	// outcome.
-	CardDisputeStatusAccepted CardDisputeStatus = "accepted"
-	// The Card Dispute has been rejected.
-	CardDisputeStatusRejected CardDisputeStatus = "rejected"
-	// The Card Dispute has been lost and funds previously credited from the acceptance
-	// have been debited.
-	CardDisputeStatusLost CardDisputeStatus = "lost"
-	// The Card Dispute has been won and no further action can be taken.
-	CardDisputeStatusWon CardDisputeStatus = "won"
+	CardDisputeStatusAccepted               CardDisputeStatus = "accepted"
+	CardDisputeStatusRejected               CardDisputeStatus = "rejected"
+	CardDisputeStatusLost                   CardDisputeStatus = "lost"
+	CardDisputeStatusWon                    CardDisputeStatus = "won"
 )
 
 func (r CardDisputeStatus) IsKnown() bool {
@@ -396,21 +387,12 @@ func (r CardDisputeListParamsStatus) URLQuery() (v url.Values) {
 type CardDisputeListParamsStatusIn string
 
 const (
-	// The Card Dispute is pending review.
-	CardDisputeListParamsStatusInPendingReviewing CardDisputeListParamsStatusIn = "pending_reviewing"
-	// Increase has requested more information related to the Card Dispute from you.
+	CardDisputeListParamsStatusInPendingReviewing       CardDisputeListParamsStatusIn = "pending_reviewing"
 	CardDisputeListParamsStatusInPendingUserInformation CardDisputeListParamsStatusIn = "pending_user_information"
-	// The Card Dispute has been accepted and your funds have been returned. The card
-	// dispute will eventually transition into `won` or `lost` depending on the
-	// outcome.
-	CardDisputeListParamsStatusInAccepted CardDisputeListParamsStatusIn = "accepted"
-	// The Card Dispute has been rejected.
-	CardDisputeListParamsStatusInRejected CardDisputeListParamsStatusIn = "rejected"
-	// The Card Dispute has been lost and funds previously credited from the acceptance
-	// have been debited.
-	CardDisputeListParamsStatusInLost CardDisputeListParamsStatusIn = "lost"
-	// The Card Dispute has been won and no further action can be taken.
-	CardDisputeListParamsStatusInWon CardDisputeListParamsStatusIn = "won"
+	CardDisputeListParamsStatusInAccepted               CardDisputeListParamsStatusIn = "accepted"
+	CardDisputeListParamsStatusInRejected               CardDisputeListParamsStatusIn = "rejected"
+	CardDisputeListParamsStatusInLost                   CardDisputeListParamsStatusIn = "lost"
+	CardDisputeListParamsStatusInWon                    CardDisputeListParamsStatusIn = "won"
 )
 
 func (r CardDisputeListParamsStatusIn) IsKnown() bool {

@@ -163,17 +163,11 @@ func (r proofOfAuthorizationRequestSubmissionJSON) RawJSON() string {
 type ProofOfAuthorizationRequestSubmissionStatus string
 
 const (
-	// The proof of authorization request submission is pending review.
-	ProofOfAuthorizationRequestSubmissionStatusPendingReview ProofOfAuthorizationRequestSubmissionStatus = "pending_review"
-	// The proof of authorization request submission was rejected.
-	ProofOfAuthorizationRequestSubmissionStatusRejected ProofOfAuthorizationRequestSubmissionStatus = "rejected"
-	// The proof of authorization request submission was canceled and replaced with
-	// another.
-	ProofOfAuthorizationRequestSubmissionStatusCanceled ProofOfAuthorizationRequestSubmissionStatus = "canceled"
-	// The proof of authorization request submission is pending sending.
+	ProofOfAuthorizationRequestSubmissionStatusPendingReview  ProofOfAuthorizationRequestSubmissionStatus = "pending_review"
+	ProofOfAuthorizationRequestSubmissionStatusRejected       ProofOfAuthorizationRequestSubmissionStatus = "rejected"
+	ProofOfAuthorizationRequestSubmissionStatusCanceled       ProofOfAuthorizationRequestSubmissionStatus = "canceled"
 	ProofOfAuthorizationRequestSubmissionStatusPendingSending ProofOfAuthorizationRequestSubmissionStatus = "pending_sending"
-	// The proof of authorization request submission was sent.
-	ProofOfAuthorizationRequestSubmissionStatusSent ProofOfAuthorizationRequestSubmissionStatus = "sent"
+	ProofOfAuthorizationRequestSubmissionStatusSent           ProofOfAuthorizationRequestSubmissionStatus = "sent"
 )
 
 func (r ProofOfAuthorizationRequestSubmissionStatus) IsKnown() bool {
