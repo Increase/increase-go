@@ -146,39 +146,21 @@ func (r SimulationCardAuthorizationNewParams) MarshalJSON() (data []byte, err er
 type SimulationCardAuthorizationNewParamsDeclineReason string
 
 const (
-	// The Card was not active.
-	SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive SimulationCardAuthorizationNewParamsDeclineReason = "card_not_active"
-	// The Physical Card was not active.
-	SimulationCardAuthorizationNewParamsDeclineReasonPhysicalCardNotActive SimulationCardAuthorizationNewParamsDeclineReason = "physical_card_not_active"
-	// The account's entity was not active.
-	SimulationCardAuthorizationNewParamsDeclineReasonEntityNotActive SimulationCardAuthorizationNewParamsDeclineReason = "entity_not_active"
-	// The account was inactive.
-	SimulationCardAuthorizationNewParamsDeclineReasonGroupLocked SimulationCardAuthorizationNewParamsDeclineReason = "group_locked"
-	// The Card's Account did not have a sufficient available balance.
-	SimulationCardAuthorizationNewParamsDeclineReasonInsufficientFunds SimulationCardAuthorizationNewParamsDeclineReason = "insufficient_funds"
-	// The given CVV2 did not match the card's value.
-	SimulationCardAuthorizationNewParamsDeclineReasonCvv2Mismatch SimulationCardAuthorizationNewParamsDeclineReason = "cvv2_mismatch"
-	// The given expiration date did not match the card's value. Only applies when a
-	// CVV2 is present.
-	SimulationCardAuthorizationNewParamsDeclineReasonCardExpirationMismatch SimulationCardAuthorizationNewParamsDeclineReason = "card_expiration_mismatch"
-	// The attempted card transaction is not allowed per Increase's terms.
-	SimulationCardAuthorizationNewParamsDeclineReasonTransactionNotAllowed SimulationCardAuthorizationNewParamsDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by a Limit.
-	SimulationCardAuthorizationNewParamsDeclineReasonBreachesLimit SimulationCardAuthorizationNewParamsDeclineReason = "breaches_limit"
-	// Your application declined the transaction via webhook.
-	SimulationCardAuthorizationNewParamsDeclineReasonWebhookDeclined SimulationCardAuthorizationNewParamsDeclineReason = "webhook_declined"
-	// Your application webhook did not respond without the required timeout.
-	SimulationCardAuthorizationNewParamsDeclineReasonWebhookTimedOut SimulationCardAuthorizationNewParamsDeclineReason = "webhook_timed_out"
-	// Declined by stand-in processing.
-	SimulationCardAuthorizationNewParamsDeclineReasonDeclinedByStandInProcessing SimulationCardAuthorizationNewParamsDeclineReason = "declined_by_stand_in_processing"
-	// The card read had an invalid CVV, dCVV, or authorization request cryptogram.
-	SimulationCardAuthorizationNewParamsDeclineReasonInvalidPhysicalCard SimulationCardAuthorizationNewParamsDeclineReason = "invalid_physical_card"
-	// The original card authorization for this incremental authorization does not
-	// exist.
+	SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive                SimulationCardAuthorizationNewParamsDeclineReason = "card_not_active"
+	SimulationCardAuthorizationNewParamsDeclineReasonPhysicalCardNotActive        SimulationCardAuthorizationNewParamsDeclineReason = "physical_card_not_active"
+	SimulationCardAuthorizationNewParamsDeclineReasonEntityNotActive              SimulationCardAuthorizationNewParamsDeclineReason = "entity_not_active"
+	SimulationCardAuthorizationNewParamsDeclineReasonGroupLocked                  SimulationCardAuthorizationNewParamsDeclineReason = "group_locked"
+	SimulationCardAuthorizationNewParamsDeclineReasonInsufficientFunds            SimulationCardAuthorizationNewParamsDeclineReason = "insufficient_funds"
+	SimulationCardAuthorizationNewParamsDeclineReasonCvv2Mismatch                 SimulationCardAuthorizationNewParamsDeclineReason = "cvv2_mismatch"
+	SimulationCardAuthorizationNewParamsDeclineReasonCardExpirationMismatch       SimulationCardAuthorizationNewParamsDeclineReason = "card_expiration_mismatch"
+	SimulationCardAuthorizationNewParamsDeclineReasonTransactionNotAllowed        SimulationCardAuthorizationNewParamsDeclineReason = "transaction_not_allowed"
+	SimulationCardAuthorizationNewParamsDeclineReasonBreachesLimit                SimulationCardAuthorizationNewParamsDeclineReason = "breaches_limit"
+	SimulationCardAuthorizationNewParamsDeclineReasonWebhookDeclined              SimulationCardAuthorizationNewParamsDeclineReason = "webhook_declined"
+	SimulationCardAuthorizationNewParamsDeclineReasonWebhookTimedOut              SimulationCardAuthorizationNewParamsDeclineReason = "webhook_timed_out"
+	SimulationCardAuthorizationNewParamsDeclineReasonDeclinedByStandInProcessing  SimulationCardAuthorizationNewParamsDeclineReason = "declined_by_stand_in_processing"
+	SimulationCardAuthorizationNewParamsDeclineReasonInvalidPhysicalCard          SimulationCardAuthorizationNewParamsDeclineReason = "invalid_physical_card"
 	SimulationCardAuthorizationNewParamsDeclineReasonMissingOriginalAuthorization SimulationCardAuthorizationNewParamsDeclineReason = "missing_original_authorization"
-	// The transaction was suspected to be fraudulent. Please reach out to
-	// support@increase.com for more information.
-	SimulationCardAuthorizationNewParamsDeclineReasonSuspectedFraud SimulationCardAuthorizationNewParamsDeclineReason = "suspected_fraud"
+	SimulationCardAuthorizationNewParamsDeclineReasonSuspectedFraud               SimulationCardAuthorizationNewParamsDeclineReason = "suspected_fraud"
 )
 
 func (r SimulationCardAuthorizationNewParamsDeclineReason) IsKnown() bool {
@@ -194,11 +176,8 @@ func (r SimulationCardAuthorizationNewParamsDeclineReason) IsKnown() bool {
 type SimulationCardAuthorizationNewParamsDirection string
 
 const (
-	// A regular card authorization where funds are debited from the cardholder.
 	SimulationCardAuthorizationNewParamsDirectionSettlement SimulationCardAuthorizationNewParamsDirection = "settlement"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	SimulationCardAuthorizationNewParamsDirectionRefund SimulationCardAuthorizationNewParamsDirection = "refund"
+	SimulationCardAuthorizationNewParamsDirectionRefund     SimulationCardAuthorizationNewParamsDirection = "refund"
 )
 
 func (r SimulationCardAuthorizationNewParamsDirection) IsKnown() bool {

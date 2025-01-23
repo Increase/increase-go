@@ -197,12 +197,9 @@ func (r accountJSON) RawJSON() string {
 type AccountBank string
 
 const (
-	// Blue Ridge Bank, N.A.
-	AccountBankBlueRidgeBank AccountBank = "blue_ridge_bank"
-	// First Internet Bank of Indiana
+	AccountBankBlueRidgeBank     AccountBank = "blue_ridge_bank"
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
-	// Grasshopper Bank
-	AccountBankGrasshopperBank AccountBank = "grasshopper_bank"
+	AccountBankGrasshopperBank   AccountBank = "grasshopper_bank"
 )
 
 func (r AccountBank) IsKnown() bool {
@@ -218,17 +215,11 @@ func (r AccountBank) IsKnown() bool {
 type AccountCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	AccountCurrencyCad AccountCurrency = "CAD"
-	// Swiss Franc (CHF)
 	AccountCurrencyChf AccountCurrency = "CHF"
-	// Euro (EUR)
 	AccountCurrencyEur AccountCurrency = "EUR"
-	// British Pound (GBP)
 	AccountCurrencyGbp AccountCurrency = "GBP"
-	// Japanese Yen (JPY)
 	AccountCurrencyJpy AccountCurrency = "JPY"
-	// US Dollar (USD)
 	AccountCurrencyUsd AccountCurrency = "USD"
 )
 
@@ -244,10 +235,8 @@ func (r AccountCurrency) IsKnown() bool {
 type AccountStatus string
 
 const (
-	// Closed Accounts on which no new activity can occur.
 	AccountStatusClosed AccountStatus = "closed"
-	// Open Accounts that are ready to use.
-	AccountStatusOpen AccountStatus = "open"
+	AccountStatusOpen   AccountStatus = "open"
 )
 
 func (r AccountStatus) IsKnown() bool {
@@ -409,10 +398,8 @@ func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
 type AccountListParamsStatus string
 
 const (
-	// Closed Accounts on which no new activity can occur.
 	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
-	// Open Accounts that are ready to use.
-	AccountListParamsStatusOpen AccountListParamsStatus = "open"
+	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
 )
 
 func (r AccountListParamsStatus) IsKnown() bool {

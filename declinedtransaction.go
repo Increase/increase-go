@@ -140,17 +140,11 @@ func (r declinedTransactionJSON) RawJSON() string {
 type DeclinedTransactionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	DeclinedTransactionCurrencyCad DeclinedTransactionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	DeclinedTransactionCurrencyChf DeclinedTransactionCurrency = "CHF"
-	// Euro (EUR)
 	DeclinedTransactionCurrencyEur DeclinedTransactionCurrency = "EUR"
-	// British Pound (GBP)
 	DeclinedTransactionCurrencyGbp DeclinedTransactionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	DeclinedTransactionCurrencyJpy DeclinedTransactionCurrency = "JPY"
-	// US Dollar (USD)
 	DeclinedTransactionCurrencyUsd DeclinedTransactionCurrency = "USD"
 )
 
@@ -166,12 +160,9 @@ func (r DeclinedTransactionCurrency) IsKnown() bool {
 type DeclinedTransactionRouteType string
 
 const (
-	// An Account Number.
 	DeclinedTransactionRouteTypeAccountNumber DeclinedTransactionRouteType = "account_number"
-	// A Card.
-	DeclinedTransactionRouteTypeCard DeclinedTransactionRouteType = "card"
-	// A Lockbox.
-	DeclinedTransactionRouteTypeLockbox DeclinedTransactionRouteType = "lockbox"
+	DeclinedTransactionRouteTypeCard          DeclinedTransactionRouteType = "card"
+	DeclinedTransactionRouteTypeLockbox       DeclinedTransactionRouteType = "lockbox"
 )
 
 func (r DeclinedTransactionRouteType) IsKnown() bool {
@@ -301,41 +292,23 @@ func (r declinedTransactionSourceACHDeclineJSON) RawJSON() string {
 type DeclinedTransactionSourceACHDeclineReason string
 
 const (
-	// The account number is canceled.
-	DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled DeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
-	// The account number is disabled.
-	DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled DeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
-	// The transaction would cause an Increase limit to be exceeded.
-	DeclinedTransactionSourceACHDeclineReasonBreachesLimit DeclinedTransactionSourceACHDeclineReason = "breaches_limit"
-	// The account's entity is not active.
-	DeclinedTransactionSourceACHDeclineReasonEntityNotActive DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
-	// Your account is inactive.
-	DeclinedTransactionSourceACHDeclineReasonGroupLocked DeclinedTransactionSourceACHDeclineReason = "group_locked"
-	// The transaction is not allowed per Increase's terms.
-	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
-	// Your integration declined this transfer via the API.
-	DeclinedTransactionSourceACHDeclineReasonUserInitiated DeclinedTransactionSourceACHDeclineReason = "user_initiated"
-	// Your account contains insufficient funds.
-	DeclinedTransactionSourceACHDeclineReasonInsufficientFunds DeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
-	// The originating financial institution asked for this transfer to be returned.
-	// The receiving bank is complying with the request.
-	DeclinedTransactionSourceACHDeclineReasonReturnedPerOdfiRequest DeclinedTransactionSourceACHDeclineReason = "returned_per_odfi_request"
-	// The customer no longer authorizes this transaction.
-	DeclinedTransactionSourceACHDeclineReasonAuthorizationRevokedByCustomer DeclinedTransactionSourceACHDeclineReason = "authorization_revoked_by_customer"
-	// The customer asked for the payment to be stopped.
-	DeclinedTransactionSourceACHDeclineReasonPaymentStopped DeclinedTransactionSourceACHDeclineReason = "payment_stopped"
-	// The customer advises that the debit was unauthorized.
-	DeclinedTransactionSourceACHDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete DeclinedTransactionSourceACHDeclineReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// The payee is deceased.
+	DeclinedTransactionSourceACHDeclineReasonACHRouteCanceled                                            DeclinedTransactionSourceACHDeclineReason = "ach_route_canceled"
+	DeclinedTransactionSourceACHDeclineReasonACHRouteDisabled                                            DeclinedTransactionSourceACHDeclineReason = "ach_route_disabled"
+	DeclinedTransactionSourceACHDeclineReasonBreachesLimit                                               DeclinedTransactionSourceACHDeclineReason = "breaches_limit"
+	DeclinedTransactionSourceACHDeclineReasonEntityNotActive                                             DeclinedTransactionSourceACHDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceACHDeclineReasonGroupLocked                                                 DeclinedTransactionSourceACHDeclineReason = "group_locked"
+	DeclinedTransactionSourceACHDeclineReasonTransactionNotAllowed                                       DeclinedTransactionSourceACHDeclineReason = "transaction_not_allowed"
+	DeclinedTransactionSourceACHDeclineReasonUserInitiated                                               DeclinedTransactionSourceACHDeclineReason = "user_initiated"
+	DeclinedTransactionSourceACHDeclineReasonInsufficientFunds                                           DeclinedTransactionSourceACHDeclineReason = "insufficient_funds"
+	DeclinedTransactionSourceACHDeclineReasonReturnedPerOdfiRequest                                      DeclinedTransactionSourceACHDeclineReason = "returned_per_odfi_request"
+	DeclinedTransactionSourceACHDeclineReasonAuthorizationRevokedByCustomer                              DeclinedTransactionSourceACHDeclineReason = "authorization_revoked_by_customer"
+	DeclinedTransactionSourceACHDeclineReasonPaymentStopped                                              DeclinedTransactionSourceACHDeclineReason = "payment_stopped"
+	DeclinedTransactionSourceACHDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   DeclinedTransactionSourceACHDeclineReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
 	DeclinedTransactionSourceACHDeclineReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity DeclinedTransactionSourceACHDeclineReason = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// The account holder is deceased.
-	DeclinedTransactionSourceACHDeclineReasonBeneficiaryOrAccountHolderDeceased DeclinedTransactionSourceACHDeclineReason = "beneficiary_or_account_holder_deceased"
-	// The customer refused a credit entry.
-	DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver DeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
-	// The account holder identified this transaction as a duplicate.
-	DeclinedTransactionSourceACHDeclineReasonDuplicateEntry DeclinedTransactionSourceACHDeclineReason = "duplicate_entry"
-	// The corporate customer no longer authorizes this transaction.
-	DeclinedTransactionSourceACHDeclineReasonCorporateCustomerAdvisedNotAuthorized DeclinedTransactionSourceACHDeclineReason = "corporate_customer_advised_not_authorized"
+	DeclinedTransactionSourceACHDeclineReasonBeneficiaryOrAccountHolderDeceased                          DeclinedTransactionSourceACHDeclineReason = "beneficiary_or_account_holder_deceased"
+	DeclinedTransactionSourceACHDeclineReasonCreditEntryRefusedByReceiver                                DeclinedTransactionSourceACHDeclineReason = "credit_entry_refused_by_receiver"
+	DeclinedTransactionSourceACHDeclineReasonDuplicateEntry                                              DeclinedTransactionSourceACHDeclineReason = "duplicate_entry"
+	DeclinedTransactionSourceACHDeclineReasonCorporateCustomerAdvisedNotAuthorized                       DeclinedTransactionSourceACHDeclineReason = "corporate_customer_advised_not_authorized"
 )
 
 func (r DeclinedTransactionSourceACHDeclineReason) IsKnown() bool {
@@ -484,12 +457,9 @@ func (r declinedTransactionSourceCardDeclineJSON) RawJSON() string {
 type DeclinedTransactionSourceCardDeclineActioner string
 
 const (
-	// This object was actioned by the user through a real-time decision.
-	DeclinedTransactionSourceCardDeclineActionerUser DeclinedTransactionSourceCardDeclineActioner = "user"
-	// This object was actioned by Increase without user intervention.
+	DeclinedTransactionSourceCardDeclineActionerUser     DeclinedTransactionSourceCardDeclineActioner = "user"
 	DeclinedTransactionSourceCardDeclineActionerIncrease DeclinedTransactionSourceCardDeclineActioner = "increase"
-	// This object was actioned by the network, through stand-in processing.
-	DeclinedTransactionSourceCardDeclineActionerNetwork DeclinedTransactionSourceCardDeclineActioner = "network"
+	DeclinedTransactionSourceCardDeclineActionerNetwork  DeclinedTransactionSourceCardDeclineActioner = "network"
 )
 
 func (r DeclinedTransactionSourceCardDeclineActioner) IsKnown() bool {
@@ -505,17 +475,11 @@ func (r DeclinedTransactionSourceCardDeclineActioner) IsKnown() bool {
 type DeclinedTransactionSourceCardDeclineCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	DeclinedTransactionSourceCardDeclineCurrencyCad DeclinedTransactionSourceCardDeclineCurrency = "CAD"
-	// Swiss Franc (CHF)
 	DeclinedTransactionSourceCardDeclineCurrencyChf DeclinedTransactionSourceCardDeclineCurrency = "CHF"
-	// Euro (EUR)
 	DeclinedTransactionSourceCardDeclineCurrencyEur DeclinedTransactionSourceCardDeclineCurrency = "EUR"
-	// British Pound (GBP)
 	DeclinedTransactionSourceCardDeclineCurrencyGbp DeclinedTransactionSourceCardDeclineCurrency = "GBP"
-	// Japanese Yen (JPY)
 	DeclinedTransactionSourceCardDeclineCurrencyJpy DeclinedTransactionSourceCardDeclineCurrency = "JPY"
-	// US Dollar (USD)
 	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
@@ -532,11 +496,8 @@ func (r DeclinedTransactionSourceCardDeclineCurrency) IsKnown() bool {
 type DeclinedTransactionSourceCardDeclineDirection string
 
 const (
-	// A regular card authorization where funds are debited from the cardholder.
 	DeclinedTransactionSourceCardDeclineDirectionSettlement DeclinedTransactionSourceCardDeclineDirection = "settlement"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	DeclinedTransactionSourceCardDeclineDirectionRefund DeclinedTransactionSourceCardDeclineDirection = "refund"
+	DeclinedTransactionSourceCardDeclineDirectionRefund     DeclinedTransactionSourceCardDeclineDirection = "refund"
 )
 
 func (r DeclinedTransactionSourceCardDeclineDirection) IsKnown() bool {
@@ -577,7 +538,6 @@ func (r declinedTransactionSourceCardDeclineNetworkDetailsJSON) RawJSON() string
 type DeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
 
 const (
-	// Visa
 	DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa DeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
 )
 
@@ -628,40 +588,14 @@ func (r declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON) RawJSON() st
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator string
 
 const (
-	// Single transaction of a mail/phone order: Use to indicate that the transaction
-	// is a mail/phone order purchase, not a recurring transaction or installment
-	// payment. For domestic transactions in the US region, this value may also
-	// indicate one bill payment transaction in the card-present or card-absent
-	// environments.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
-	// Recurring transaction: Payment indicator used to indicate a recurring
-	// transaction that originates from an acquirer in the US region.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
-	// Installment payment: Payment indicator used to indicate one purchase of goods or
-	// services that is billed to the account in multiple charges over a period of time
-	// agreed upon by the cardholder and merchant from transactions that originate from
-	// an acquirer in the US region.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
-	// Unknown classification: other mail order: Use to indicate that the type of
-	// mail/telephone order is unknown.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
-	// Secure electronic commerce transaction: Use to indicate that the electronic
-	// commerce transaction has been authenticated using e.g., 3-D Secure
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
-	// Non-authenticated security transaction at a 3-D Secure-capable merchant, and
-	// merchant attempted to authenticate the cardholder using 3-D Secure: Use to
-	// identify an electronic commerce transaction where the merchant attempted to
-	// authenticate the cardholder using 3-D Secure, but was unable to complete the
-	// authentication because the issuer or cardholder does not participate in the 3-D
-	// Secure program.
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
-	// Non-authenticated security transaction: Use to identify an electronic commerce
-	// transaction that uses data encryption for security however , cardholder
-	// authentication is not performed using 3-D Secure.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
-	// Non-secure transaction: Use to identify an electronic commerce transaction that
-	// has no data protection.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
 )
 
 func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
@@ -677,25 +611,15 @@ func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerce
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode string
 
 const (
-	// Unknown
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
-	// Manual key entry
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
-	// Magnetic stripe read, without card verification value
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
-	// Optical code
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
-	// Contact chip card
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
-	// Contactless read of chip card
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
-	// Transaction initiated using a credential that has previously been stored on file
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
-	// Magnetic stripe read
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
-	// Contactless read of magnetic stripe data
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
-	// Contact chip card, without card verification value
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeUnknown                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeManual                     DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactless                DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
 )
 
@@ -712,22 +636,12 @@ func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntr
 type DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason string
 
 const (
-	// Increase failed to process the authorization in a timely manner.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonIssuerError DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "issuer_error"
-	// The physical card read had an invalid CVV, dCVV, or authorization request
-	// cryptogram.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
-	// The 3DS cardholder authentication verification value was invalid.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
-	// An internal Visa error occurred. Visa uses this reason code for certain expected
-	// occurrences as well, such as Application Transaction Counter (ATC) replays.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonInternalVisaError DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
-	// The merchant has enabled Visa's Transaction Advisory Service and requires
-	// further authentication to perform the transaction. In practice this is often
-	// utilized at fuel pumps to tell the cardholder to see the cashier.
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonIssuerError                                              DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
-	// An unspecific reason for stand-in processing.
-	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonOther DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "other"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReasonOther                                                    DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason = "other"
 )
 
 func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
@@ -776,23 +690,12 @@ func (r declinedTransactionSourceCardDeclineNetworkIdentifiersJSON) RawJSON() st
 type DeclinedTransactionSourceCardDeclineProcessingCategory string
 
 const (
-	// Account funding transactions are transactions used to e.g., fund an account or
-	// transfer funds between accounts.
-	DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding DeclinedTransactionSourceCardDeclineProcessingCategory = "account_funding"
-	// Automatic fuel dispenser authorizations occur when a card is used at a gas pump,
-	// prior to the actual transaction amount being known. They are followed by an
-	// advice message that updates the amount of the pending transaction.
+	DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding         DeclinedTransactionSourceCardDeclineProcessingCategory = "account_funding"
 	DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser DeclinedTransactionSourceCardDeclineProcessingCategory = "automatic_fuel_dispenser"
-	// A transaction used to pay a bill.
-	DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment DeclinedTransactionSourceCardDeclineProcessingCategory = "bill_payment"
-	// A regular purchase.
-	DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase DeclinedTransactionSourceCardDeclineProcessingCategory = "purchase"
-	// Quasi-cash transactions represent purchases of items which may be convertible to
-	// cash.
-	DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash DeclinedTransactionSourceCardDeclineProcessingCategory = "quasi_cash"
-	// A refund card authorization, sometimes referred to as a credit voucher
-	// authorization, where funds are credited to the cardholder.
-	DeclinedTransactionSourceCardDeclineProcessingCategoryRefund DeclinedTransactionSourceCardDeclineProcessingCategory = "refund"
+	DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment            DeclinedTransactionSourceCardDeclineProcessingCategory = "bill_payment"
+	DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase               DeclinedTransactionSourceCardDeclineProcessingCategory = "purchase"
+	DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash              DeclinedTransactionSourceCardDeclineProcessingCategory = "quasi_cash"
+	DeclinedTransactionSourceCardDeclineProcessingCategoryRefund                 DeclinedTransactionSourceCardDeclineProcessingCategory = "refund"
 )
 
 func (r DeclinedTransactionSourceCardDeclineProcessingCategory) IsKnown() bool {
@@ -808,24 +711,12 @@ func (r DeclinedTransactionSourceCardDeclineProcessingCategory) IsKnown() bool {
 type DeclinedTransactionSourceCardDeclineRealTimeDecisionReason string
 
 const (
-	// The cardholder does not have sufficient funds to cover the transaction. The
-	// merchant may attempt to process the transaction again.
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "insufficient_funds"
-	// This type of transaction is not allowed for this card. This transaction should
-	// not be retried.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds       DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "insufficient_funds"
 	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
-	// The transaction amount exceeds the cardholder's approval limit. The merchant may
-	// attempt to process the transaction again.
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
-	// The card has been temporarily disabled or not yet activated. The merchant may
-	// attempt to process the transaction again.
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit    DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
 	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
-	// The transaction is suspected to be fraudulent. The merchant may attempt to
-	// process the transaction again.
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "suspected_fraud"
-	// The transaction was declined for another reason. The merchant may attempt to
-	// process the transaction again. This should be used sparingly.
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "other"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud          DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "suspected_fraud"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther                   DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "other"
 )
 
 func (r DeclinedTransactionSourceCardDeclineRealTimeDecisionReason) IsKnown() bool {
@@ -840,39 +731,21 @@ func (r DeclinedTransactionSourceCardDeclineRealTimeDecisionReason) IsKnown() bo
 type DeclinedTransactionSourceCardDeclineReason string
 
 const (
-	// The Card was not active.
-	DeclinedTransactionSourceCardDeclineReasonCardNotActive DeclinedTransactionSourceCardDeclineReason = "card_not_active"
-	// The Physical Card was not active.
-	DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive DeclinedTransactionSourceCardDeclineReason = "physical_card_not_active"
-	// The account's entity was not active.
-	DeclinedTransactionSourceCardDeclineReasonEntityNotActive DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
-	// The account was inactive.
-	DeclinedTransactionSourceCardDeclineReasonGroupLocked DeclinedTransactionSourceCardDeclineReason = "group_locked"
-	// The Card's Account did not have a sufficient available balance.
-	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
-	// The given CVV2 did not match the card's value.
-	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
-	// The given expiration date did not match the card's value. Only applies when a
-	// CVV2 is present.
-	DeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch DeclinedTransactionSourceCardDeclineReason = "card_expiration_mismatch"
-	// The attempted card transaction is not allowed per Increase's terms.
-	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
-	// The transaction was blocked by a Limit.
-	DeclinedTransactionSourceCardDeclineReasonBreachesLimit DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
-	// Your application declined the transaction via webhook.
-	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
-	// Your application webhook did not respond without the required timeout.
-	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
-	// Declined by stand-in processing.
-	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
-	// The card read had an invalid CVV, dCVV, or authorization request cryptogram.
-	DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard DeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
-	// The original card authorization for this incremental authorization does not
-	// exist.
+	DeclinedTransactionSourceCardDeclineReasonCardNotActive                DeclinedTransactionSourceCardDeclineReason = "card_not_active"
+	DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive        DeclinedTransactionSourceCardDeclineReason = "physical_card_not_active"
+	DeclinedTransactionSourceCardDeclineReasonEntityNotActive              DeclinedTransactionSourceCardDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceCardDeclineReasonGroupLocked                  DeclinedTransactionSourceCardDeclineReason = "group_locked"
+	DeclinedTransactionSourceCardDeclineReasonInsufficientFunds            DeclinedTransactionSourceCardDeclineReason = "insufficient_funds"
+	DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch                 DeclinedTransactionSourceCardDeclineReason = "cvv2_mismatch"
+	DeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch       DeclinedTransactionSourceCardDeclineReason = "card_expiration_mismatch"
+	DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed        DeclinedTransactionSourceCardDeclineReason = "transaction_not_allowed"
+	DeclinedTransactionSourceCardDeclineReasonBreachesLimit                DeclinedTransactionSourceCardDeclineReason = "breaches_limit"
+	DeclinedTransactionSourceCardDeclineReasonWebhookDeclined              DeclinedTransactionSourceCardDeclineReason = "webhook_declined"
+	DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut              DeclinedTransactionSourceCardDeclineReason = "webhook_timed_out"
+	DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing  DeclinedTransactionSourceCardDeclineReason = "declined_by_stand_in_processing"
+	DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard          DeclinedTransactionSourceCardDeclineReason = "invalid_physical_card"
 	DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization DeclinedTransactionSourceCardDeclineReason = "missing_original_authorization"
-	// The transaction was suspected to be fraudulent. Please reach out to
-	// support@increase.com for more information.
-	DeclinedTransactionSourceCardDeclineReasonSuspectedFraud DeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
+	DeclinedTransactionSourceCardDeclineReasonSuspectedFraud               DeclinedTransactionSourceCardDeclineReason = "suspected_fraud"
 )
 
 func (r DeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
@@ -940,12 +813,9 @@ func (r declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON
 type DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult string
 
 const (
-	// No card verification code was provided in the authorization request.
 	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNotChecked DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "not_checked"
-	// The card verification code matched the one on file.
-	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultMatch DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "match"
-	// The card verification code did not match the one on file.
-	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "no_match"
+	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultMatch      DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "match"
+	DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResultNoMatch    DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult = "no_match"
 )
 
 func (r DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult) IsKnown() bool {
@@ -998,18 +868,12 @@ func (r declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON) R
 type DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult string
 
 const (
-	// No adress was provided in the authorization request.
-	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNotChecked DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "not_checked"
-	// Postal code matches, but the street address was not verified.
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNotChecked                       DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "not_checked"
 	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
-	// Postal code matches, but the street address does not match.
-	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
-	// Postal code does not match, but the street address matches.
-	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
-	// Postal code and street address match.
-	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "match"
-	// Postal code and street address do not match.
-	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "no_match"
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultMatch                            DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "match"
+	DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResultNoMatch                          DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult = "no_match"
 )
 
 func (r DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult) IsKnown() bool {
@@ -1025,22 +889,13 @@ func (r DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult)
 type DeclinedTransactionSourceCategory string
 
 const (
-	// ACH Decline: details will be under the `ach_decline` object.
-	DeclinedTransactionSourceCategoryACHDecline DeclinedTransactionSourceCategory = "ach_decline"
-	// Card Decline: details will be under the `card_decline` object.
-	DeclinedTransactionSourceCategoryCardDecline DeclinedTransactionSourceCategory = "card_decline"
-	// Check Decline: details will be under the `check_decline` object.
-	DeclinedTransactionSourceCategoryCheckDecline DeclinedTransactionSourceCategory = "check_decline"
-	// Inbound Real-Time Payments Transfer Decline: details will be under the
-	// `inbound_real_time_payments_transfer_decline` object.
+	DeclinedTransactionSourceCategoryACHDecline                             DeclinedTransactionSourceCategory = "ach_decline"
+	DeclinedTransactionSourceCategoryCardDecline                            DeclinedTransactionSourceCategory = "card_decline"
+	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
 	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	// Wire Decline: details will be under the `wire_decline` object.
-	DeclinedTransactionSourceCategoryWireDecline DeclinedTransactionSourceCategory = "wire_decline"
-	// Check Deposit Rejection: details will be under the `check_deposit_rejection`
-	// object.
-	DeclinedTransactionSourceCategoryCheckDepositRejection DeclinedTransactionSourceCategory = "check_deposit_rejection"
-	// The Declined Transaction was made for an undocumented or deprecated reason.
-	DeclinedTransactionSourceCategoryOther DeclinedTransactionSourceCategory = "other"
+	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
+	DeclinedTransactionSourceCategoryCheckDepositRejection                  DeclinedTransactionSourceCategory = "check_deposit_rejection"
+	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
 )
 
 func (r DeclinedTransactionSourceCategory) IsKnown() bool {
@@ -1101,41 +956,23 @@ func (r declinedTransactionSourceCheckDeclineJSON) RawJSON() string {
 type DeclinedTransactionSourceCheckDeclineReason string
 
 const (
-	// The account number is disabled.
-	DeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled DeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
-	// The account number is canceled.
-	DeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled DeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
-	// The deposited check was altered or fictitious.
-	DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious DeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
-	// The transaction would cause a limit to be exceeded.
-	DeclinedTransactionSourceCheckDeclineReasonBreachesLimit DeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
-	// The check was not endorsed by the payee.
+	DeclinedTransactionSourceCheckDeclineReasonACHRouteDisabled     DeclinedTransactionSourceCheckDeclineReason = "ach_route_disabled"
+	DeclinedTransactionSourceCheckDeclineReasonACHRouteCanceled     DeclinedTransactionSourceCheckDeclineReason = "ach_route_canceled"
+	DeclinedTransactionSourceCheckDeclineReasonAlteredOrFictitious  DeclinedTransactionSourceCheckDeclineReason = "altered_or_fictitious"
+	DeclinedTransactionSourceCheckDeclineReasonBreachesLimit        DeclinedTransactionSourceCheckDeclineReason = "breaches_limit"
 	DeclinedTransactionSourceCheckDeclineReasonEndorsementIrregular DeclinedTransactionSourceCheckDeclineReason = "endorsement_irregular"
-	// The account's entity is not active.
-	DeclinedTransactionSourceCheckDeclineReasonEntityNotActive DeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
-	// Your account is inactive.
-	DeclinedTransactionSourceCheckDeclineReasonGroupLocked DeclinedTransactionSourceCheckDeclineReason = "group_locked"
-	// Your account contains insufficient funds.
-	DeclinedTransactionSourceCheckDeclineReasonInsufficientFunds DeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
-	// Stop payment requested for this check.
+	DeclinedTransactionSourceCheckDeclineReasonEntityNotActive      DeclinedTransactionSourceCheckDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceCheckDeclineReasonGroupLocked          DeclinedTransactionSourceCheckDeclineReason = "group_locked"
+	DeclinedTransactionSourceCheckDeclineReasonInsufficientFunds    DeclinedTransactionSourceCheckDeclineReason = "insufficient_funds"
 	DeclinedTransactionSourceCheckDeclineReasonStopPaymentRequested DeclinedTransactionSourceCheckDeclineReason = "stop_payment_requested"
-	// The check was a duplicate deposit.
 	DeclinedTransactionSourceCheckDeclineReasonDuplicatePresentment DeclinedTransactionSourceCheckDeclineReason = "duplicate_presentment"
-	// The check was not authorized.
-	DeclinedTransactionSourceCheckDeclineReasonNotAuthorized DeclinedTransactionSourceCheckDeclineReason = "not_authorized"
-	// The amount the receiving bank is attempting to deposit does not match the amount
-	// on the check.
-	DeclinedTransactionSourceCheckDeclineReasonAmountMismatch DeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
-	// The check attempting to be deposited does not belong to Increase.
-	DeclinedTransactionSourceCheckDeclineReasonNotOurItem DeclinedTransactionSourceCheckDeclineReason = "not_our_item"
-	// The account number on the check does not exist at Increase.
+	DeclinedTransactionSourceCheckDeclineReasonNotAuthorized        DeclinedTransactionSourceCheckDeclineReason = "not_authorized"
+	DeclinedTransactionSourceCheckDeclineReasonAmountMismatch       DeclinedTransactionSourceCheckDeclineReason = "amount_mismatch"
+	DeclinedTransactionSourceCheckDeclineReasonNotOurItem           DeclinedTransactionSourceCheckDeclineReason = "not_our_item"
 	DeclinedTransactionSourceCheckDeclineReasonNoAccountNumberFound DeclinedTransactionSourceCheckDeclineReason = "no_account_number_found"
-	// The check is not readable. Please refer to the image.
-	DeclinedTransactionSourceCheckDeclineReasonReferToImage DeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
-	// The check cannot be processed. This is rare: please contact support.
-	DeclinedTransactionSourceCheckDeclineReasonUnableToProcess DeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
-	// Your integration declined this check via the API.
-	DeclinedTransactionSourceCheckDeclineReasonUserInitiated DeclinedTransactionSourceCheckDeclineReason = "user_initiated"
+	DeclinedTransactionSourceCheckDeclineReasonReferToImage         DeclinedTransactionSourceCheckDeclineReason = "refer_to_image"
+	DeclinedTransactionSourceCheckDeclineReasonUnableToProcess      DeclinedTransactionSourceCheckDeclineReason = "unable_to_process"
+	DeclinedTransactionSourceCheckDeclineReasonUserInitiated        DeclinedTransactionSourceCheckDeclineReason = "user_initiated"
 )
 
 func (r DeclinedTransactionSourceCheckDeclineReason) IsKnown() bool {
@@ -1193,17 +1030,11 @@ func (r declinedTransactionSourceCheckDepositRejectionJSON) RawJSON() string {
 type DeclinedTransactionSourceCheckDepositRejectionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyCad DeclinedTransactionSourceCheckDepositRejectionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyChf DeclinedTransactionSourceCheckDepositRejectionCurrency = "CHF"
-	// Euro (EUR)
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyEur DeclinedTransactionSourceCheckDepositRejectionCurrency = "EUR"
-	// British Pound (GBP)
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyGbp DeclinedTransactionSourceCheckDepositRejectionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyJpy DeclinedTransactionSourceCheckDepositRejectionCurrency = "JPY"
-	// US Dollar (USD)
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyUsd DeclinedTransactionSourceCheckDepositRejectionCurrency = "USD"
 )
 
@@ -1219,28 +1050,17 @@ func (r DeclinedTransactionSourceCheckDepositRejectionCurrency) IsKnown() bool {
 type DeclinedTransactionSourceCheckDepositRejectionReason string
 
 const (
-	// The check's image is incomplete.
-	DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage DeclinedTransactionSourceCheckDepositRejectionReason = "incomplete_image"
-	// This is a duplicate check submission.
-	DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate DeclinedTransactionSourceCheckDepositRejectionReason = "duplicate"
-	// This check has poor image quality.
-	DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality DeclinedTransactionSourceCheckDepositRejectionReason = "poor_image_quality"
-	// The check was deposited with the incorrect amount.
-	DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount DeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_amount"
-	// The check is made out to someone other than the account holder.
-	DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient DeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_recipient"
-	// This check was not eligible for mobile deposit.
+	DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage             DeclinedTransactionSourceCheckDepositRejectionReason = "incomplete_image"
+	DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate                   DeclinedTransactionSourceCheckDepositRejectionReason = "duplicate"
+	DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality            DeclinedTransactionSourceCheckDepositRejectionReason = "poor_image_quality"
+	DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount             DeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_amount"
+	DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient          DeclinedTransactionSourceCheckDepositRejectionReason = "incorrect_recipient"
 	DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit DeclinedTransactionSourceCheckDepositRejectionReason = "not_eligible_for_mobile_deposit"
-	// This check is missing at least one required field.
 	DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements DeclinedTransactionSourceCheckDepositRejectionReason = "missing_required_data_elements"
-	// This check is suspected to be fraudulent.
-	DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud DeclinedTransactionSourceCheckDepositRejectionReason = "suspected_fraud"
-	// This check's deposit window has expired.
-	DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired DeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
-	// The check was rejected at the user's request.
-	DeclinedTransactionSourceCheckDepositRejectionReasonRequestedByUser DeclinedTransactionSourceCheckDepositRejectionReason = "requested_by_user"
-	// The check was rejected for an unknown reason.
-	DeclinedTransactionSourceCheckDepositRejectionReasonUnknown DeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
+	DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud              DeclinedTransactionSourceCheckDepositRejectionReason = "suspected_fraud"
+	DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired        DeclinedTransactionSourceCheckDepositRejectionReason = "deposit_window_expired"
+	DeclinedTransactionSourceCheckDepositRejectionReasonRequestedByUser             DeclinedTransactionSourceCheckDepositRejectionReason = "requested_by_user"
+	DeclinedTransactionSourceCheckDepositRejectionReasonUnknown                     DeclinedTransactionSourceCheckDepositRejectionReason = "unknown"
 )
 
 func (r DeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
@@ -1313,17 +1133,11 @@ func (r declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON) Raw
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
-	// Swiss Franc (CHF)
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
-	// Euro (EUR)
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
-	// British Pound (GBP)
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
-	// Japanese Yen (JPY)
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
-	// US Dollar (USD)
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
@@ -1339,17 +1153,11 @@ func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency)
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
-	// The account number is canceled.
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	// The account number is disabled.
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	// Your account is restricted.
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	// Your account is inactive.
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	// The account's entity is not active.
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real-Time Payments transfers.
+	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -1392,17 +1200,11 @@ func (r declinedTransactionSourceWireDeclineJSON) RawJSON() string {
 type DeclinedTransactionSourceWireDeclineReason string
 
 const (
-	// The account number is canceled.
 	DeclinedTransactionSourceWireDeclineReasonAccountNumberCanceled DeclinedTransactionSourceWireDeclineReason = "account_number_canceled"
-	// The account number is disabled.
 	DeclinedTransactionSourceWireDeclineReasonAccountNumberDisabled DeclinedTransactionSourceWireDeclineReason = "account_number_disabled"
-	// The account's entity is not active.
-	DeclinedTransactionSourceWireDeclineReasonEntityNotActive DeclinedTransactionSourceWireDeclineReason = "entity_not_active"
-	// Your account is inactive.
-	DeclinedTransactionSourceWireDeclineReasonGroupLocked DeclinedTransactionSourceWireDeclineReason = "group_locked"
-	// The beneficiary account number does not exist.
-	DeclinedTransactionSourceWireDeclineReasonNoAccountNumber DeclinedTransactionSourceWireDeclineReason = "no_account_number"
-	// The transaction is not allowed per Increase's terms.
+	DeclinedTransactionSourceWireDeclineReasonEntityNotActive       DeclinedTransactionSourceWireDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceWireDeclineReasonGroupLocked           DeclinedTransactionSourceWireDeclineReason = "group_locked"
+	DeclinedTransactionSourceWireDeclineReasonNoAccountNumber       DeclinedTransactionSourceWireDeclineReason = "no_account_number"
 	DeclinedTransactionSourceWireDeclineReasonTransactionNotAllowed DeclinedTransactionSourceWireDeclineReason = "transaction_not_allowed"
 )
 
@@ -1471,22 +1273,13 @@ func (r DeclinedTransactionListParamsCategory) URLQuery() (v url.Values) {
 type DeclinedTransactionListParamsCategoryIn string
 
 const (
-	// ACH Decline: details will be under the `ach_decline` object.
-	DeclinedTransactionListParamsCategoryInACHDecline DeclinedTransactionListParamsCategoryIn = "ach_decline"
-	// Card Decline: details will be under the `card_decline` object.
-	DeclinedTransactionListParamsCategoryInCardDecline DeclinedTransactionListParamsCategoryIn = "card_decline"
-	// Check Decline: details will be under the `check_decline` object.
-	DeclinedTransactionListParamsCategoryInCheckDecline DeclinedTransactionListParamsCategoryIn = "check_decline"
-	// Inbound Real-Time Payments Transfer Decline: details will be under the
-	// `inbound_real_time_payments_transfer_decline` object.
+	DeclinedTransactionListParamsCategoryInACHDecline                             DeclinedTransactionListParamsCategoryIn = "ach_decline"
+	DeclinedTransactionListParamsCategoryInCardDecline                            DeclinedTransactionListParamsCategoryIn = "card_decline"
+	DeclinedTransactionListParamsCategoryInCheckDecline                           DeclinedTransactionListParamsCategoryIn = "check_decline"
 	DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline DeclinedTransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_decline"
-	// Wire Decline: details will be under the `wire_decline` object.
-	DeclinedTransactionListParamsCategoryInWireDecline DeclinedTransactionListParamsCategoryIn = "wire_decline"
-	// Check Deposit Rejection: details will be under the `check_deposit_rejection`
-	// object.
-	DeclinedTransactionListParamsCategoryInCheckDepositRejection DeclinedTransactionListParamsCategoryIn = "check_deposit_rejection"
-	// The Declined Transaction was made for an undocumented or deprecated reason.
-	DeclinedTransactionListParamsCategoryInOther DeclinedTransactionListParamsCategoryIn = "other"
+	DeclinedTransactionListParamsCategoryInWireDecline                            DeclinedTransactionListParamsCategoryIn = "wire_decline"
+	DeclinedTransactionListParamsCategoryInCheckDepositRejection                  DeclinedTransactionListParamsCategoryIn = "check_deposit_rejection"
+	DeclinedTransactionListParamsCategoryInOther                                  DeclinedTransactionListParamsCategoryIn = "other"
 )
 
 func (r DeclinedTransactionListParamsCategoryIn) IsKnown() bool {

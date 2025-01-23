@@ -189,9 +189,7 @@ func (r lockboxAddressJSON) RawJSON() string {
 type LockboxStatus string
 
 const (
-	// This Lockbox is active. Checks mailed to it will be deposited automatically.
-	LockboxStatusActive LockboxStatus = "active"
-	// This Lockbox is inactive. Checks mailed to it will not be deposited.
+	LockboxStatusActive   LockboxStatus = "active"
 	LockboxStatusInactive LockboxStatus = "inactive"
 )
 
@@ -249,9 +247,7 @@ func (r LockboxUpdateParams) MarshalJSON() (data []byte, err error) {
 type LockboxUpdateParamsStatus string
 
 const (
-	// This Lockbox is active. Checks mailed to it will be deposited automatically.
-	LockboxUpdateParamsStatusActive LockboxUpdateParamsStatus = "active"
-	// This Lockbox is inactive. Checks mailed to it will not be deposited.
+	LockboxUpdateParamsStatusActive   LockboxUpdateParamsStatus = "active"
 	LockboxUpdateParamsStatusInactive LockboxUpdateParamsStatus = "inactive"
 )
 

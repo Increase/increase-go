@@ -172,14 +172,10 @@ func (r wireDrawdownRequestJSON) RawJSON() string {
 type WireDrawdownRequestStatus string
 
 const (
-	// The drawdown request is queued to be submitted to Fedwire.
 	WireDrawdownRequestStatusPendingSubmission WireDrawdownRequestStatus = "pending_submission"
-	// The drawdown request has been sent and the recipient should respond in some way.
-	WireDrawdownRequestStatusPendingResponse WireDrawdownRequestStatus = "pending_response"
-	// The drawdown request has been fulfilled by the recipient.
-	WireDrawdownRequestStatusFulfilled WireDrawdownRequestStatus = "fulfilled"
-	// The drawdown request has been refused by the recipient.
-	WireDrawdownRequestStatusRefused WireDrawdownRequestStatus = "refused"
+	WireDrawdownRequestStatusPendingResponse   WireDrawdownRequestStatus = "pending_response"
+	WireDrawdownRequestStatusFulfilled         WireDrawdownRequestStatus = "fulfilled"
+	WireDrawdownRequestStatusRefused           WireDrawdownRequestStatus = "refused"
 )
 
 func (r WireDrawdownRequestStatus) IsKnown() bool {
@@ -300,14 +296,10 @@ func (r WireDrawdownRequestListParams) URLQuery() (v url.Values) {
 type WireDrawdownRequestListParamsStatus string
 
 const (
-	// The drawdown request is queued to be submitted to Fedwire.
 	WireDrawdownRequestListParamsStatusPendingSubmission WireDrawdownRequestListParamsStatus = "pending_submission"
-	// The drawdown request has been sent and the recipient should respond in some way.
-	WireDrawdownRequestListParamsStatusPendingResponse WireDrawdownRequestListParamsStatus = "pending_response"
-	// The drawdown request has been fulfilled by the recipient.
-	WireDrawdownRequestListParamsStatusFulfilled WireDrawdownRequestListParamsStatus = "fulfilled"
-	// The drawdown request has been refused by the recipient.
-	WireDrawdownRequestListParamsStatusRefused WireDrawdownRequestListParamsStatus = "refused"
+	WireDrawdownRequestListParamsStatusPendingResponse   WireDrawdownRequestListParamsStatus = "pending_response"
+	WireDrawdownRequestListParamsStatusFulfilled         WireDrawdownRequestListParamsStatus = "fulfilled"
+	WireDrawdownRequestListParamsStatusRefused           WireDrawdownRequestListParamsStatus = "refused"
 )
 
 func (r WireDrawdownRequestListParamsStatus) IsKnown() bool {

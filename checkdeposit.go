@@ -215,17 +215,11 @@ func (r checkDepositDepositAcceptanceJSON) RawJSON() string {
 type CheckDepositDepositAcceptanceCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CheckDepositDepositAcceptanceCurrencyCad CheckDepositDepositAcceptanceCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CheckDepositDepositAcceptanceCurrencyChf CheckDepositDepositAcceptanceCurrency = "CHF"
-	// Euro (EUR)
 	CheckDepositDepositAcceptanceCurrencyEur CheckDepositDepositAcceptanceCurrency = "EUR"
-	// British Pound (GBP)
 	CheckDepositDepositAcceptanceCurrencyGbp CheckDepositDepositAcceptanceCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CheckDepositDepositAcceptanceCurrencyJpy CheckDepositDepositAcceptanceCurrency = "JPY"
-	// US Dollar (USD)
 	CheckDepositDepositAcceptanceCurrencyUsd CheckDepositDepositAcceptanceCurrency = "USD"
 )
 
@@ -284,17 +278,11 @@ func (r checkDepositDepositRejectionJSON) RawJSON() string {
 type CheckDepositDepositRejectionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CheckDepositDepositRejectionCurrencyCad CheckDepositDepositRejectionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CheckDepositDepositRejectionCurrencyChf CheckDepositDepositRejectionCurrency = "CHF"
-	// Euro (EUR)
 	CheckDepositDepositRejectionCurrencyEur CheckDepositDepositRejectionCurrency = "EUR"
-	// British Pound (GBP)
 	CheckDepositDepositRejectionCurrencyGbp CheckDepositDepositRejectionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CheckDepositDepositRejectionCurrencyJpy CheckDepositDepositRejectionCurrency = "JPY"
-	// US Dollar (USD)
 	CheckDepositDepositRejectionCurrencyUsd CheckDepositDepositRejectionCurrency = "USD"
 )
 
@@ -310,28 +298,17 @@ func (r CheckDepositDepositRejectionCurrency) IsKnown() bool {
 type CheckDepositDepositRejectionReason string
 
 const (
-	// The check's image is incomplete.
-	CheckDepositDepositRejectionReasonIncompleteImage CheckDepositDepositRejectionReason = "incomplete_image"
-	// This is a duplicate check submission.
-	CheckDepositDepositRejectionReasonDuplicate CheckDepositDepositRejectionReason = "duplicate"
-	// This check has poor image quality.
-	CheckDepositDepositRejectionReasonPoorImageQuality CheckDepositDepositRejectionReason = "poor_image_quality"
-	// The check was deposited with the incorrect amount.
-	CheckDepositDepositRejectionReasonIncorrectAmount CheckDepositDepositRejectionReason = "incorrect_amount"
-	// The check is made out to someone other than the account holder.
-	CheckDepositDepositRejectionReasonIncorrectRecipient CheckDepositDepositRejectionReason = "incorrect_recipient"
-	// This check was not eligible for mobile deposit.
+	CheckDepositDepositRejectionReasonIncompleteImage             CheckDepositDepositRejectionReason = "incomplete_image"
+	CheckDepositDepositRejectionReasonDuplicate                   CheckDepositDepositRejectionReason = "duplicate"
+	CheckDepositDepositRejectionReasonPoorImageQuality            CheckDepositDepositRejectionReason = "poor_image_quality"
+	CheckDepositDepositRejectionReasonIncorrectAmount             CheckDepositDepositRejectionReason = "incorrect_amount"
+	CheckDepositDepositRejectionReasonIncorrectRecipient          CheckDepositDepositRejectionReason = "incorrect_recipient"
 	CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit CheckDepositDepositRejectionReason = "not_eligible_for_mobile_deposit"
-	// This check is missing at least one required field.
 	CheckDepositDepositRejectionReasonMissingRequiredDataElements CheckDepositDepositRejectionReason = "missing_required_data_elements"
-	// This check is suspected to be fraudulent.
-	CheckDepositDepositRejectionReasonSuspectedFraud CheckDepositDepositRejectionReason = "suspected_fraud"
-	// This check's deposit window has expired.
-	CheckDepositDepositRejectionReasonDepositWindowExpired CheckDepositDepositRejectionReason = "deposit_window_expired"
-	// The check was rejected at the user's request.
-	CheckDepositDepositRejectionReasonRequestedByUser CheckDepositDepositRejectionReason = "requested_by_user"
-	// The check was rejected for an unknown reason.
-	CheckDepositDepositRejectionReasonUnknown CheckDepositDepositRejectionReason = "unknown"
+	CheckDepositDepositRejectionReasonSuspectedFraud              CheckDepositDepositRejectionReason = "suspected_fraud"
+	CheckDepositDepositRejectionReasonDepositWindowExpired        CheckDepositDepositRejectionReason = "deposit_window_expired"
+	CheckDepositDepositRejectionReasonRequestedByUser             CheckDepositDepositRejectionReason = "requested_by_user"
+	CheckDepositDepositRejectionReasonUnknown                     CheckDepositDepositRejectionReason = "unknown"
 )
 
 func (r CheckDepositDepositRejectionReason) IsKnown() bool {
@@ -390,17 +367,11 @@ func (r checkDepositDepositReturnJSON) RawJSON() string {
 type CheckDepositDepositReturnCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CheckDepositDepositReturnCurrencyCad CheckDepositDepositReturnCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CheckDepositDepositReturnCurrencyChf CheckDepositDepositReturnCurrency = "CHF"
-	// Euro (EUR)
 	CheckDepositDepositReturnCurrencyEur CheckDepositDepositReturnCurrency = "EUR"
-	// British Pound (GBP)
 	CheckDepositDepositReturnCurrencyGbp CheckDepositDepositReturnCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CheckDepositDepositReturnCurrencyJpy CheckDepositDepositReturnCurrency = "JPY"
-	// US Dollar (USD)
 	CheckDepositDepositReturnCurrencyUsd CheckDepositDepositReturnCurrency = "USD"
 )
 
@@ -417,58 +388,32 @@ func (r CheckDepositDepositReturnCurrency) IsKnown() bool {
 type CheckDepositDepositReturnReturnReason string
 
 const (
-	// The check doesn't allow ACH conversion.
 	CheckDepositDepositReturnReturnReasonACHConversionNotSupported CheckDepositDepositReturnReturnReason = "ach_conversion_not_supported"
-	// The account is closed.
-	CheckDepositDepositReturnReturnReasonClosedAccount CheckDepositDepositReturnReturnReason = "closed_account"
-	// The check has already been deposited.
-	CheckDepositDepositReturnReturnReasonDuplicateSubmission CheckDepositDepositReturnReturnReason = "duplicate_submission"
-	// Insufficient funds
-	CheckDepositDepositReturnReturnReasonInsufficientFunds CheckDepositDepositReturnReturnReason = "insufficient_funds"
-	// No account was found matching the check details.
-	CheckDepositDepositReturnReturnReasonNoAccount CheckDepositDepositReturnReturnReason = "no_account"
-	// The check was not authorized.
-	CheckDepositDepositReturnReturnReasonNotAuthorized CheckDepositDepositReturnReturnReason = "not_authorized"
-	// The check is too old.
-	CheckDepositDepositReturnReturnReasonStaleDated CheckDepositDepositReturnReturnReason = "stale_dated"
-	// The payment has been stopped by the account holder.
-	CheckDepositDepositReturnReturnReasonStopPayment CheckDepositDepositReturnReturnReason = "stop_payment"
-	// The reason for the return is unknown.
-	CheckDepositDepositReturnReturnReasonUnknownReason CheckDepositDepositReturnReturnReason = "unknown_reason"
-	// The image doesn't match the details submitted.
-	CheckDepositDepositReturnReturnReasonUnmatchedDetails CheckDepositDepositReturnReturnReason = "unmatched_details"
-	// The image could not be read.
-	CheckDepositDepositReturnReturnReasonUnreadableImage CheckDepositDepositReturnReturnReason = "unreadable_image"
-	// The check endorsement was irregular.
-	CheckDepositDepositReturnReturnReasonEndorsementIrregular CheckDepositDepositReturnReturnReason = "endorsement_irregular"
-	// The check present was either altered or fake.
-	CheckDepositDepositReturnReturnReasonAlteredOrFictitiousItem CheckDepositDepositReturnReturnReason = "altered_or_fictitious_item"
-	// The account this check is drawn on is frozen.
-	CheckDepositDepositReturnReturnReasonFrozenOrBlockedAccount CheckDepositDepositReturnReturnReason = "frozen_or_blocked_account"
-	// The check is post dated.
-	CheckDepositDepositReturnReturnReasonPostDated CheckDepositDepositReturnReturnReason = "post_dated"
-	// The endorsement was missing.
-	CheckDepositDepositReturnReturnReasonEndorsementMissing CheckDepositDepositReturnReturnReason = "endorsement_missing"
-	// The check signature was missing.
-	CheckDepositDepositReturnReturnReasonSignatureMissing CheckDepositDepositReturnReturnReason = "signature_missing"
-	// The bank suspects a stop payment will be placed.
-	CheckDepositDepositReturnReturnReasonStopPaymentSuspect CheckDepositDepositReturnReturnReason = "stop_payment_suspect"
-	// The bank cannot read the image.
-	CheckDepositDepositReturnReturnReasonUnusableImage CheckDepositDepositReturnReturnReason = "unusable_image"
-	// The check image fails the bank's security check.
-	CheckDepositDepositReturnReturnReasonImageFailsSecurityCheck CheckDepositDepositReturnReturnReason = "image_fails_security_check"
-	// The bank cannot determine the amount.
-	CheckDepositDepositReturnReturnReasonCannotDetermineAmount CheckDepositDepositReturnReturnReason = "cannot_determine_amount"
-	// The signature is inconsistent with prior signatures.
-	CheckDepositDepositReturnReturnReasonSignatureIrregular CheckDepositDepositReturnReturnReason = "signature_irregular"
-	// The check is a non-cash item and cannot be drawn against the account.
-	CheckDepositDepositReturnReturnReasonNonCashItem CheckDepositDepositReturnReturnReason = "non_cash_item"
-	// The bank is unable to process this check.
-	CheckDepositDepositReturnReturnReasonUnableToProcess CheckDepositDepositReturnReturnReason = "unable_to_process"
-	// The check exceeds the bank or customer's limit.
-	CheckDepositDepositReturnReturnReasonItemExceedsDollarLimit CheckDepositDepositReturnReturnReason = "item_exceeds_dollar_limit"
-	// The bank sold this account and no longer services this customer.
-	CheckDepositDepositReturnReturnReasonBranchOrAccountSold CheckDepositDepositReturnReturnReason = "branch_or_account_sold"
+	CheckDepositDepositReturnReturnReasonClosedAccount             CheckDepositDepositReturnReturnReason = "closed_account"
+	CheckDepositDepositReturnReturnReasonDuplicateSubmission       CheckDepositDepositReturnReturnReason = "duplicate_submission"
+	CheckDepositDepositReturnReturnReasonInsufficientFunds         CheckDepositDepositReturnReturnReason = "insufficient_funds"
+	CheckDepositDepositReturnReturnReasonNoAccount                 CheckDepositDepositReturnReturnReason = "no_account"
+	CheckDepositDepositReturnReturnReasonNotAuthorized             CheckDepositDepositReturnReturnReason = "not_authorized"
+	CheckDepositDepositReturnReturnReasonStaleDated                CheckDepositDepositReturnReturnReason = "stale_dated"
+	CheckDepositDepositReturnReturnReasonStopPayment               CheckDepositDepositReturnReturnReason = "stop_payment"
+	CheckDepositDepositReturnReturnReasonUnknownReason             CheckDepositDepositReturnReturnReason = "unknown_reason"
+	CheckDepositDepositReturnReturnReasonUnmatchedDetails          CheckDepositDepositReturnReturnReason = "unmatched_details"
+	CheckDepositDepositReturnReturnReasonUnreadableImage           CheckDepositDepositReturnReturnReason = "unreadable_image"
+	CheckDepositDepositReturnReturnReasonEndorsementIrregular      CheckDepositDepositReturnReturnReason = "endorsement_irregular"
+	CheckDepositDepositReturnReturnReasonAlteredOrFictitiousItem   CheckDepositDepositReturnReturnReason = "altered_or_fictitious_item"
+	CheckDepositDepositReturnReturnReasonFrozenOrBlockedAccount    CheckDepositDepositReturnReturnReason = "frozen_or_blocked_account"
+	CheckDepositDepositReturnReturnReasonPostDated                 CheckDepositDepositReturnReturnReason = "post_dated"
+	CheckDepositDepositReturnReturnReasonEndorsementMissing        CheckDepositDepositReturnReturnReason = "endorsement_missing"
+	CheckDepositDepositReturnReturnReasonSignatureMissing          CheckDepositDepositReturnReturnReason = "signature_missing"
+	CheckDepositDepositReturnReturnReasonStopPaymentSuspect        CheckDepositDepositReturnReturnReason = "stop_payment_suspect"
+	CheckDepositDepositReturnReturnReasonUnusableImage             CheckDepositDepositReturnReturnReason = "unusable_image"
+	CheckDepositDepositReturnReturnReasonImageFailsSecurityCheck   CheckDepositDepositReturnReturnReason = "image_fails_security_check"
+	CheckDepositDepositReturnReturnReasonCannotDetermineAmount     CheckDepositDepositReturnReturnReason = "cannot_determine_amount"
+	CheckDepositDepositReturnReturnReasonSignatureIrregular        CheckDepositDepositReturnReturnReason = "signature_irregular"
+	CheckDepositDepositReturnReturnReasonNonCashItem               CheckDepositDepositReturnReturnReason = "non_cash_item"
+	CheckDepositDepositReturnReturnReasonUnableToProcess           CheckDepositDepositReturnReturnReason = "unable_to_process"
+	CheckDepositDepositReturnReturnReasonItemExceedsDollarLimit    CheckDepositDepositReturnReturnReason = "item_exceeds_dollar_limit"
+	CheckDepositDepositReturnReturnReasonBranchOrAccountSold       CheckDepositDepositReturnReturnReason = "branch_or_account_sold"
 )
 
 func (r CheckDepositDepositReturnReturnReason) IsKnown() bool {
@@ -574,17 +519,11 @@ func (r checkDepositInboundFundsHoldJSON) RawJSON() string {
 type CheckDepositInboundFundsHoldCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CheckDepositInboundFundsHoldCurrencyCad CheckDepositInboundFundsHoldCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CheckDepositInboundFundsHoldCurrencyChf CheckDepositInboundFundsHoldCurrency = "CHF"
-	// Euro (EUR)
 	CheckDepositInboundFundsHoldCurrencyEur CheckDepositInboundFundsHoldCurrency = "EUR"
-	// British Pound (GBP)
 	CheckDepositInboundFundsHoldCurrencyGbp CheckDepositInboundFundsHoldCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CheckDepositInboundFundsHoldCurrencyJpy CheckDepositInboundFundsHoldCurrency = "JPY"
-	// US Dollar (USD)
 	CheckDepositInboundFundsHoldCurrencyUsd CheckDepositInboundFundsHoldCurrency = "USD"
 )
 
@@ -600,9 +539,7 @@ func (r CheckDepositInboundFundsHoldCurrency) IsKnown() bool {
 type CheckDepositInboundFundsHoldStatus string
 
 const (
-	// Funds are still being held.
-	CheckDepositInboundFundsHoldStatusHeld CheckDepositInboundFundsHoldStatus = "held"
-	// Funds have been released.
+	CheckDepositInboundFundsHoldStatusHeld     CheckDepositInboundFundsHoldStatus = "held"
 	CheckDepositInboundFundsHoldStatusComplete CheckDepositInboundFundsHoldStatus = "complete"
 )
 
@@ -634,14 +571,10 @@ func (r CheckDepositInboundFundsHoldType) IsKnown() bool {
 type CheckDepositStatus string
 
 const (
-	// The Check Deposit is pending review.
-	CheckDepositStatusPending CheckDepositStatus = "pending"
-	// The Check Deposit has been deposited.
+	CheckDepositStatusPending   CheckDepositStatus = "pending"
 	CheckDepositStatusSubmitted CheckDepositStatus = "submitted"
-	// The Check Deposit has been rejected.
-	CheckDepositStatusRejected CheckDepositStatus = "rejected"
-	// The Check Deposit has been returned.
-	CheckDepositStatusReturned CheckDepositStatus = "returned"
+	CheckDepositStatusRejected  CheckDepositStatus = "rejected"
+	CheckDepositStatusReturned  CheckDepositStatus = "returned"
 )
 
 func (r CheckDepositStatus) IsKnown() bool {

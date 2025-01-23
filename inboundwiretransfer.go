@@ -173,14 +173,9 @@ func (r inboundWireTransferJSON) RawJSON() string {
 type InboundWireTransferStatus string
 
 const (
-	// The Inbound Wire Transfer is awaiting action, will transition automatically if
-	// no action is taken.
-	InboundWireTransferStatusPending InboundWireTransferStatus = "pending"
-	// The Inbound Wire Transfer is accepted.
+	InboundWireTransferStatusPending  InboundWireTransferStatus = "pending"
 	InboundWireTransferStatusAccepted InboundWireTransferStatus = "accepted"
-	// The Inbound Wire Transfer was declined.
 	InboundWireTransferStatusDeclined InboundWireTransferStatus = "declined"
-	// The Inbound Wire Transfer was reversed.
 	InboundWireTransferStatusReversed InboundWireTransferStatus = "reversed"
 )
 
@@ -260,14 +255,9 @@ func (r InboundWireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 type InboundWireTransferListParamsStatus string
 
 const (
-	// The Inbound Wire Transfer is awaiting action, will transition automatically if
-	// no action is taken.
-	InboundWireTransferListParamsStatusPending InboundWireTransferListParamsStatus = "pending"
-	// The Inbound Wire Transfer is accepted.
+	InboundWireTransferListParamsStatusPending  InboundWireTransferListParamsStatus = "pending"
 	InboundWireTransferListParamsStatusAccepted InboundWireTransferListParamsStatus = "accepted"
-	// The Inbound Wire Transfer was declined.
 	InboundWireTransferListParamsStatusDeclined InboundWireTransferListParamsStatus = "declined"
-	// The Inbound Wire Transfer was reversed.
 	InboundWireTransferListParamsStatusReversed InboundWireTransferListParamsStatus = "reversed"
 )
 

@@ -72,68 +72,27 @@ func (r SimulationRealTimePaymentsTransferCompleteParamsRejection) MarshalJSON()
 type SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode string
 
 const (
-	// The destination account is closed. Corresponds to the Real-Time Payments reason
-	// code `AC04`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountClosed SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_closed"
-	// The destination account is currently blocked from receiving transactions.
-	// Corresponds to the Real-Time Payments reason code `AC06`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountBlocked SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_blocked"
-	// The destination account is ineligible to receive Real-Time Payments transfers.
-	// Corresponds to the Real-Time Payments reason code `AC14`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountType SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_type"
-	// The destination account does not exist. Corresponds to the Real-Time Payments
-	// reason code `AC03`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountNumber SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_number"
-	// The destination routing number is invalid. Corresponds to the Real-Time Payments
-	// reason code `RC04`.
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountClosed                                 SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_closed"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAccountBlocked                                SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "account_blocked"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountType                    SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_type"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAccountNumber                  SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_account_number"
 	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorFinancialInstitutionIdentifier SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_financial_institution_identifier"
-	// The destination account holder is deceased. Corresponds to the Real-Time
-	// Payments reason code `MD07`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeEndCustomerDeceased SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "end_customer_deceased"
-	// The reason is provided as narrative information in the additional information
-	// field.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeNarrative SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "narrative"
-	// Real-Time Payments transfers are not allowed to the destination account.
-	// Corresponds to the Real-Time Payments reason code `AG01`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionForbidden SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_forbidden"
-	// Real-Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real-Time Payments reason code `AG03`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionTypeNotSupported SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_type_not_supported"
-	// The amount of the transfer is different than expected by the recipient.
-	// Corresponds to the Real-Time Payments reason code `AM09`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnexpectedAmount SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unexpected_amount"
-	// The amount is higher than the recipient is authorized to send or receive.
-	// Corresponds to the Real-Time Payments reason code `AM14`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAmountExceedsBankLimits SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "amount_exceeds_bank_limits"
-	// The creditor's address is required, but missing or invalid. Corresponds to the
-	// Real-Time Payments reason code `BE04`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAddress SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_address"
-	// The specified creditor is unknown. Corresponds to the Real-Time Payments reason
-	// code `BE06`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnknownEndCustomer SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unknown_end_customer"
-	// The debtor's address is required, but missing or invalid. Corresponds to the
-	// Real-Time Payments reason code `BE07`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidDebtorAddress SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_debtor_address"
-	// There was a timeout processing the transfer. Corresponds to the Real-Time
-	// Payments reason code `DS24`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTimeout SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "timeout"
-	// Real-Time Payments transfers are not enabled for the destination account.
-	// Corresponds to the Real-Time Payments reason code `NOAT`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnsupportedMessageForRecipient SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unsupported_message_for_recipient"
-	// The destination financial institution is currently not connected to Real-Time
-	// Payments. Corresponds to the Real-Time Payments reason code `9912`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRecipientConnectionNotAvailable SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "recipient_connection_not_available"
-	// Real-Time Payments is currently unavailable. Corresponds to the Real-Time
-	// Payments reason code `9948`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRealTimePaymentsSuspended SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "real_time_payments_suspended"
-	// The destination financial institution is currently signed off of Real-Time
-	// Payments. Corresponds to the Real-Time Payments reason code `9910`.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInstructedAgentSignedOff SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "instructed_agent_signed_off"
-	// The transfer was rejected due to an internal Increase issue. We have been
-	// notified.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeProcessingError SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "processing_error"
-	// Some other error or issue has occurred.
-	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeOther SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "other"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeEndCustomerDeceased                           SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "end_customer_deceased"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeNarrative                                     SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "narrative"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionForbidden                          SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_forbidden"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTransactionTypeNotSupported                   SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "transaction_type_not_supported"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnexpectedAmount                              SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unexpected_amount"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeAmountExceedsBankLimits                       SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "amount_exceeds_bank_limits"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidCreditorAddress                        SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_creditor_address"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnknownEndCustomer                            SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unknown_end_customer"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInvalidDebtorAddress                          SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "invalid_debtor_address"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeTimeout                                       SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "timeout"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeUnsupportedMessageForRecipient                SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "unsupported_message_for_recipient"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRecipientConnectionNotAvailable               SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "recipient_connection_not_available"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeRealTimePaymentsSuspended                     SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "real_time_payments_suspended"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeInstructedAgentSignedOff                      SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "instructed_agent_signed_off"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeProcessingError                               SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "processing_error"
+	SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCodeOther                                         SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode = "other"
 )
 
 func (r SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode) IsKnown() bool {

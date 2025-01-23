@@ -122,12 +122,9 @@ func (r inboundMailItemJSON) RawJSON() string {
 type InboundMailItemRejectionReason string
 
 const (
-	// The mail item does not match any lockbox.
 	InboundMailItemRejectionReasonNoMatchingLockbox InboundMailItemRejectionReason = "no_matching_lockbox"
-	// The mail item does not contain a check.
-	InboundMailItemRejectionReasonNoCheck InboundMailItemRejectionReason = "no_check"
-	// The Lockbox or its associated Account is not active.
-	InboundMailItemRejectionReasonLockboxNotActive InboundMailItemRejectionReason = "lockbox_not_active"
+	InboundMailItemRejectionReasonNoCheck           InboundMailItemRejectionReason = "no_check"
+	InboundMailItemRejectionReasonLockboxNotActive  InboundMailItemRejectionReason = "lockbox_not_active"
 )
 
 func (r InboundMailItemRejectionReason) IsKnown() bool {
@@ -142,12 +139,9 @@ func (r InboundMailItemRejectionReason) IsKnown() bool {
 type InboundMailItemStatus string
 
 const (
-	// The mail item is pending processing.
-	InboundMailItemStatusPending InboundMailItemStatus = "pending"
-	// The mail item has been processed.
+	InboundMailItemStatusPending   InboundMailItemStatus = "pending"
 	InboundMailItemStatusProcessed InboundMailItemStatus = "processed"
-	// The mail item has been rejected.
-	InboundMailItemStatusRejected InboundMailItemStatus = "rejected"
+	InboundMailItemStatusRejected  InboundMailItemStatus = "rejected"
 )
 
 func (r InboundMailItemStatus) IsKnown() bool {

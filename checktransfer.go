@@ -338,13 +338,9 @@ func (r checkTransferCreatedByAPIKeyJSON) RawJSON() string {
 type CheckTransferCreatedByCategory string
 
 const (
-	// An API key. Details will be under the `api_key` object.
-	CheckTransferCreatedByCategoryAPIKey CheckTransferCreatedByCategory = "api_key"
-	// An OAuth application you connected to Increase. Details will be under the
-	// `oauth_application` object.
+	CheckTransferCreatedByCategoryAPIKey           CheckTransferCreatedByCategory = "api_key"
 	CheckTransferCreatedByCategoryOAuthApplication CheckTransferCreatedByCategory = "oauth_application"
-	// A User in the Increase dashboard. Details will be under the `user` object.
-	CheckTransferCreatedByCategoryUser CheckTransferCreatedByCategory = "user"
+	CheckTransferCreatedByCategoryUser             CheckTransferCreatedByCategory = "user"
 )
 
 func (r CheckTransferCreatedByCategory) IsKnown() bool {
@@ -406,17 +402,11 @@ func (r checkTransferCreatedByUserJSON) RawJSON() string {
 type CheckTransferCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	CheckTransferCurrencyCad CheckTransferCurrency = "CAD"
-	// Swiss Franc (CHF)
 	CheckTransferCurrencyChf CheckTransferCurrency = "CHF"
-	// Euro (EUR)
 	CheckTransferCurrencyEur CheckTransferCurrency = "EUR"
-	// British Pound (GBP)
 	CheckTransferCurrencyGbp CheckTransferCurrency = "GBP"
-	// Japanese Yen (JPY)
 	CheckTransferCurrencyJpy CheckTransferCurrency = "JPY"
-	// US Dollar (USD)
 	CheckTransferCurrencyUsd CheckTransferCurrency = "USD"
 )
 
@@ -432,12 +422,8 @@ func (r CheckTransferCurrency) IsKnown() bool {
 type CheckTransferFulfillmentMethod string
 
 const (
-	// Increase will print and mail a physical check.
 	CheckTransferFulfillmentMethodPhysicalCheck CheckTransferFulfillmentMethod = "physical_check"
-	// Increase will not print a check; you are responsible for printing and mailing a
-	// check with the provided account number, routing number, check number, and
-	// amount.
-	CheckTransferFulfillmentMethodThirdParty CheckTransferFulfillmentMethod = "third_party"
+	CheckTransferFulfillmentMethodThirdParty    CheckTransferFulfillmentMethod = "third_party"
 )
 
 func (r CheckTransferFulfillmentMethod) IsKnown() bool {
@@ -629,14 +615,10 @@ func (r checkTransferPhysicalCheckTrackingUpdateJSON) RawJSON() string {
 type CheckTransferPhysicalCheckTrackingUpdatesCategory string
 
 const (
-	// The check is in transit.
-	CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit CheckTransferPhysicalCheckTrackingUpdatesCategory = "in_transit"
-	// The check has been processed for delivery.
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit            CheckTransferPhysicalCheckTrackingUpdatesCategory = "in_transit"
 	CheckTransferPhysicalCheckTrackingUpdatesCategoryProcessedForDelivery CheckTransferPhysicalCheckTrackingUpdatesCategory = "processed_for_delivery"
-	// The check has been delivered.
-	CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered CheckTransferPhysicalCheckTrackingUpdatesCategory = "delivered"
-	// Delivery failed and the check was returned to sender.
-	CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender CheckTransferPhysicalCheckTrackingUpdatesCategory = "returned_to_sender"
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered            CheckTransferPhysicalCheckTrackingUpdatesCategory = "delivered"
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender     CheckTransferPhysicalCheckTrackingUpdatesCategory = "returned_to_sender"
 )
 
 func (r CheckTransferPhysicalCheckTrackingUpdatesCategory) IsKnown() bool {
@@ -651,26 +633,16 @@ func (r CheckTransferPhysicalCheckTrackingUpdatesCategory) IsKnown() bool {
 type CheckTransferStatus string
 
 const (
-	// The transfer is awaiting approval.
-	CheckTransferStatusPendingApproval CheckTransferStatus = "pending_approval"
-	// The transfer has been canceled.
-	CheckTransferStatusCanceled CheckTransferStatus = "canceled"
-	// The transfer is pending submission.
+	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
+	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
 	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	// The transfer requires attention from an Increase operator.
 	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
-	// The transfer has been rejected.
-	CheckTransferStatusRejected CheckTransferStatus = "rejected"
-	// The check is queued for mailing.
-	CheckTransferStatusPendingMailing CheckTransferStatus = "pending_mailing"
-	// The check has been mailed.
-	CheckTransferStatusMailed CheckTransferStatus = "mailed"
-	// The check has been deposited.
-	CheckTransferStatusDeposited CheckTransferStatus = "deposited"
-	// A stop-payment was requested for this check.
-	CheckTransferStatusStopped CheckTransferStatus = "stopped"
-	// The transfer has been returned.
-	CheckTransferStatusReturned CheckTransferStatus = "returned"
+	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
+	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
+	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
+	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
+	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
+	CheckTransferStatusReturned          CheckTransferStatus = "returned"
 )
 
 func (r CheckTransferStatus) IsKnown() bool {
@@ -719,15 +691,10 @@ func (r checkTransferStopPaymentRequestJSON) RawJSON() string {
 type CheckTransferStopPaymentRequestReason string
 
 const (
-	// The check could not be delivered.
 	CheckTransferStopPaymentRequestReasonMailDeliveryFailed CheckTransferStopPaymentRequestReason = "mail_delivery_failed"
-	// The check was canceled by an Increase operator who will provide details
-	// out-of-band.
 	CheckTransferStopPaymentRequestReasonRejectedByIncrease CheckTransferStopPaymentRequestReason = "rejected_by_increase"
-	// The check was not authorized.
-	CheckTransferStopPaymentRequestReasonNotAuthorized CheckTransferStopPaymentRequestReason = "not_authorized"
-	// The check was stopped for another reason.
-	CheckTransferStopPaymentRequestReasonUnknown CheckTransferStopPaymentRequestReason = "unknown"
+	CheckTransferStopPaymentRequestReasonNotAuthorized      CheckTransferStopPaymentRequestReason = "not_authorized"
+	CheckTransferStopPaymentRequestReasonUnknown            CheckTransferStopPaymentRequestReason = "unknown"
 )
 
 func (r CheckTransferStopPaymentRequestReason) IsKnown() bool {
@@ -847,12 +814,8 @@ func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {
 type CheckTransferNewParamsFulfillmentMethod string
 
 const (
-	// Increase will print and mail a physical check.
 	CheckTransferNewParamsFulfillmentMethodPhysicalCheck CheckTransferNewParamsFulfillmentMethod = "physical_check"
-	// Increase will not print a check; you are responsible for printing and mailing a
-	// check with the provided account number, routing number, check number, and
-	// amount.
-	CheckTransferNewParamsFulfillmentMethodThirdParty CheckTransferNewParamsFulfillmentMethod = "third_party"
+	CheckTransferNewParamsFulfillmentMethodThirdParty    CheckTransferNewParamsFulfillmentMethod = "third_party"
 )
 
 func (r CheckTransferNewParamsFulfillmentMethod) IsKnown() bool {
@@ -1007,12 +970,9 @@ func (r CheckTransferStopPaymentParams) MarshalJSON() (data []byte, err error) {
 type CheckTransferStopPaymentParamsReason string
 
 const (
-	// The check could not be delivered.
 	CheckTransferStopPaymentParamsReasonMailDeliveryFailed CheckTransferStopPaymentParamsReason = "mail_delivery_failed"
-	// The check was not authorized.
-	CheckTransferStopPaymentParamsReasonNotAuthorized CheckTransferStopPaymentParamsReason = "not_authorized"
-	// The check was stopped for another reason.
-	CheckTransferStopPaymentParamsReasonUnknown CheckTransferStopPaymentParamsReason = "unknown"
+	CheckTransferStopPaymentParamsReasonNotAuthorized      CheckTransferStopPaymentParamsReason = "not_authorized"
+	CheckTransferStopPaymentParamsReasonUnknown            CheckTransferStopPaymentParamsReason = "unknown"
 )
 
 func (r CheckTransferStopPaymentParamsReason) IsKnown() bool {

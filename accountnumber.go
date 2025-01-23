@@ -182,9 +182,7 @@ func (r accountNumberInboundACHJSON) RawJSON() string {
 type AccountNumberInboundACHDebitStatus string
 
 const (
-	// ACH Debits are allowed.
 	AccountNumberInboundACHDebitStatusAllowed AccountNumberInboundACHDebitStatus = "allowed"
-	// ACH Debits are blocked.
 	AccountNumberInboundACHDebitStatusBlocked AccountNumberInboundACHDebitStatus = "blocked"
 )
 
@@ -224,11 +222,7 @@ func (r accountNumberInboundChecksJSON) RawJSON() string {
 type AccountNumberInboundChecksStatus string
 
 const (
-	// Checks with this Account Number will be processed even if they are not
-	// associated with a Check Transfer.
-	AccountNumberInboundChecksStatusAllowed AccountNumberInboundChecksStatus = "allowed"
-	// Checks with this Account Number will be processed only if they can be matched to
-	// an existing Check Transfer.
+	AccountNumberInboundChecksStatusAllowed            AccountNumberInboundChecksStatus = "allowed"
 	AccountNumberInboundChecksStatusCheckTransfersOnly AccountNumberInboundChecksStatus = "check_transfers_only"
 )
 
@@ -244,11 +238,8 @@ func (r AccountNumberInboundChecksStatus) IsKnown() bool {
 type AccountNumberStatus string
 
 const (
-	// The account number is active.
-	AccountNumberStatusActive AccountNumberStatus = "active"
-	// The account number is temporarily disabled.
+	AccountNumberStatusActive   AccountNumberStatus = "active"
 	AccountNumberStatusDisabled AccountNumberStatus = "disabled"
-	// The account number is permanently disabled.
 	AccountNumberStatusCanceled AccountNumberStatus = "canceled"
 )
 
@@ -310,9 +301,7 @@ func (r AccountNumberNewParamsInboundACH) MarshalJSON() (data []byte, err error)
 type AccountNumberNewParamsInboundACHDebitStatus string
 
 const (
-	// ACH Debits are allowed.
 	AccountNumberNewParamsInboundACHDebitStatusAllowed AccountNumberNewParamsInboundACHDebitStatus = "allowed"
-	// ACH Debits are blocked.
 	AccountNumberNewParamsInboundACHDebitStatusBlocked AccountNumberNewParamsInboundACHDebitStatus = "blocked"
 )
 
@@ -341,11 +330,7 @@ func (r AccountNumberNewParamsInboundChecks) MarshalJSON() (data []byte, err err
 type AccountNumberNewParamsInboundChecksStatus string
 
 const (
-	// Checks with this Account Number will be processed even if they are not
-	// associated with a Check Transfer.
-	AccountNumberNewParamsInboundChecksStatusAllowed AccountNumberNewParamsInboundChecksStatus = "allowed"
-	// Checks with this Account Number will be processed only if they can be matched to
-	// an existing Check Transfer.
+	AccountNumberNewParamsInboundChecksStatusAllowed            AccountNumberNewParamsInboundChecksStatus = "allowed"
 	AccountNumberNewParamsInboundChecksStatusCheckTransfersOnly AccountNumberNewParamsInboundChecksStatus = "check_transfers_only"
 )
 
@@ -389,9 +374,7 @@ func (r AccountNumberUpdateParamsInboundACH) MarshalJSON() (data []byte, err err
 type AccountNumberUpdateParamsInboundACHDebitStatus string
 
 const (
-	// ACH Debits are allowed.
 	AccountNumberUpdateParamsInboundACHDebitStatusAllowed AccountNumberUpdateParamsInboundACHDebitStatus = "allowed"
-	// ACH Debits are blocked.
 	AccountNumberUpdateParamsInboundACHDebitStatusBlocked AccountNumberUpdateParamsInboundACHDebitStatus = "blocked"
 )
 
@@ -418,11 +401,7 @@ func (r AccountNumberUpdateParamsInboundChecks) MarshalJSON() (data []byte, err 
 type AccountNumberUpdateParamsInboundChecksStatus string
 
 const (
-	// Checks with this Account Number will be processed even if they are not
-	// associated with a Check Transfer.
-	AccountNumberUpdateParamsInboundChecksStatusAllowed AccountNumberUpdateParamsInboundChecksStatus = "allowed"
-	// Checks with this Account Number will be processed only if they can be matched to
-	// an existing Check Transfer.
+	AccountNumberUpdateParamsInboundChecksStatusAllowed            AccountNumberUpdateParamsInboundChecksStatus = "allowed"
 	AccountNumberUpdateParamsInboundChecksStatusCheckTransfersOnly AccountNumberUpdateParamsInboundChecksStatus = "check_transfers_only"
 )
 
@@ -438,11 +417,8 @@ func (r AccountNumberUpdateParamsInboundChecksStatus) IsKnown() bool {
 type AccountNumberUpdateParamsStatus string
 
 const (
-	// The account number is active.
-	AccountNumberUpdateParamsStatusActive AccountNumberUpdateParamsStatus = "active"
-	// The account number is temporarily disabled.
+	AccountNumberUpdateParamsStatusActive   AccountNumberUpdateParamsStatus = "active"
 	AccountNumberUpdateParamsStatusDisabled AccountNumberUpdateParamsStatus = "disabled"
-	// The account number is permanently disabled.
 	AccountNumberUpdateParamsStatusCanceled AccountNumberUpdateParamsStatus = "canceled"
 )
 
@@ -487,9 +463,7 @@ func (r AccountNumberListParams) URLQuery() (v url.Values) {
 type AccountNumberListParamsACHDebitStatus string
 
 const (
-	// ACH Debits are allowed.
 	AccountNumberListParamsACHDebitStatusAllowed AccountNumberListParamsACHDebitStatus = "allowed"
-	// ACH Debits are blocked.
 	AccountNumberListParamsACHDebitStatusBlocked AccountNumberListParamsACHDebitStatus = "blocked"
 )
 
@@ -529,11 +503,8 @@ func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 type AccountNumberListParamsStatus string
 
 const (
-	// The account number is active.
-	AccountNumberListParamsStatusActive AccountNumberListParamsStatus = "active"
-	// The account number is temporarily disabled.
+	AccountNumberListParamsStatusActive   AccountNumberListParamsStatus = "active"
 	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
-	// The account number is permanently disabled.
 	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
 )
 

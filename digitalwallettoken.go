@@ -118,14 +118,9 @@ func (r digitalWalletTokenJSON) RawJSON() string {
 type DigitalWalletTokenStatus string
 
 const (
-	// The digital wallet token is active.
-	DigitalWalletTokenStatusActive DigitalWalletTokenStatus = "active"
-	// The digital wallet token has been created but not successfully activated via
-	// two-factor authentication yet.
-	DigitalWalletTokenStatusInactive DigitalWalletTokenStatus = "inactive"
-	// The digital wallet token has been temporarily paused.
-	DigitalWalletTokenStatusSuspended DigitalWalletTokenStatus = "suspended"
-	// The digital wallet token has been permanently canceled.
+	DigitalWalletTokenStatusActive      DigitalWalletTokenStatus = "active"
+	DigitalWalletTokenStatusInactive    DigitalWalletTokenStatus = "inactive"
+	DigitalWalletTokenStatusSuspended   DigitalWalletTokenStatus = "suspended"
 	DigitalWalletTokenStatusDeactivated DigitalWalletTokenStatus = "deactivated"
 )
 
@@ -141,14 +136,10 @@ func (r DigitalWalletTokenStatus) IsKnown() bool {
 type DigitalWalletTokenTokenRequestor string
 
 const (
-	// Apple Pay
-	DigitalWalletTokenTokenRequestorApplePay DigitalWalletTokenTokenRequestor = "apple_pay"
-	// Google Pay
-	DigitalWalletTokenTokenRequestorGooglePay DigitalWalletTokenTokenRequestor = "google_pay"
-	// Samsung Pay
+	DigitalWalletTokenTokenRequestorApplePay   DigitalWalletTokenTokenRequestor = "apple_pay"
+	DigitalWalletTokenTokenRequestorGooglePay  DigitalWalletTokenTokenRequestor = "google_pay"
 	DigitalWalletTokenTokenRequestorSamsungPay DigitalWalletTokenTokenRequestor = "samsung_pay"
-	// Unknown
-	DigitalWalletTokenTokenRequestorUnknown DigitalWalletTokenTokenRequestor = "unknown"
+	DigitalWalletTokenTokenRequestorUnknown    DigitalWalletTokenTokenRequestor = "unknown"
 )
 
 func (r DigitalWalletTokenTokenRequestor) IsKnown() bool {

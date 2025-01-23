@@ -139,17 +139,11 @@ func (r transactionJSON) RawJSON() string {
 type TransactionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionCurrencyCad TransactionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionCurrencyChf TransactionCurrency = "CHF"
-	// Euro (EUR)
 	TransactionCurrencyEur TransactionCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionCurrencyGbp TransactionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionCurrencyJpy TransactionCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionCurrencyUsd TransactionCurrency = "USD"
 )
 
@@ -165,12 +159,9 @@ func (r TransactionCurrency) IsKnown() bool {
 type TransactionRouteType string
 
 const (
-	// An Account Number.
 	TransactionRouteTypeAccountNumber TransactionRouteType = "account_number"
-	// A Card.
-	TransactionRouteTypeCard TransactionRouteType = "card"
-	// A Lockbox.
-	TransactionRouteTypeLockbox TransactionRouteType = "lockbox"
+	TransactionRouteTypeCard          TransactionRouteType = "card"
+	TransactionRouteTypeLockbox       TransactionRouteType = "lockbox"
 )
 
 func (r TransactionRouteType) IsKnown() bool {
@@ -357,17 +348,11 @@ func (r transactionSourceAccountTransferIntentionJSON) RawJSON() string {
 type TransactionSourceAccountTransferIntentionCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceAccountTransferIntentionCurrencyCad TransactionSourceAccountTransferIntentionCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceAccountTransferIntentionCurrencyChf TransactionSourceAccountTransferIntentionCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceAccountTransferIntentionCurrencyEur TransactionSourceAccountTransferIntentionCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceAccountTransferIntentionCurrencyGbp TransactionSourceAccountTransferIntentionCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceAccountTransferIntentionCurrencyJpy TransactionSourceAccountTransferIntentionCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceAccountTransferIntentionCurrencyUsd TransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
@@ -490,191 +475,76 @@ func (r transactionSourceACHTransferReturnJSON) RawJSON() string {
 type TransactionSourceACHTransferReturnReturnReasonCode string
 
 const (
-	// Code R01. Insufficient funds in the receiving account. Sometimes abbreviated to
-	// NSF.
-	TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund TransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
-	// Code R03. The account does not exist or the receiving bank was unable to locate
-	// it.
-	TransactionSourceACHTransferReturnReturnReasonCodeNoAccount TransactionSourceACHTransferReturnReturnReasonCode = "no_account"
-	// Code R02. The account is closed at the receiving bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed TransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
-	// Code R04. The account number is invalid at the receiving bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure TransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
-	// Code R16. The account at the receiving bank was frozen per the Office of Foreign
-	// Assets Control.
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction TransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
-	// Code R23. The receiving bank account refused a credit transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver TransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
-	// Code R05. The receiving bank rejected because of an incorrect Standard Entry
-	// Class code.
-	TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode TransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
-	// Code R29. The corporate customer at the receiving bank reversed the transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized TransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
-	// Code R08. The receiving bank stopped payment on this transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped TransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
-	// Code R20. The receiving bank account does not perform transfers.
-	TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount TransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
-	// Code R09. The receiving bank account does not have enough available balance for
-	// the transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds TransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
-	// Code R28. The routing number is incorrect.
-	TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError TransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
-	// Code R10. The customer at the receiving bank reversed the transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
-	// Code R19. The amount field is incorrect or too large.
-	TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError TransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
-	// Code R07. The customer at the receiving institution informed their bank that
-	// they have revoked authorization for a previously authorized transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer TransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
-	// Code R13. The routing number is invalid.
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber TransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
-	// Code R17. The receiving bank is unable to process a field in the transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria TransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
-	// Code R45. The individual name field was invalid.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
-	// Code R06. The originating financial institution asked for this transfer to be
-	// returned. The receiving bank is complying with the request.
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
-	// Code R34. The receiving bank's regulatory supervisor has limited their
-	// participation in the ACH network.
-	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
-	// Code R85. The outbound international ACH transfer was incorrect.
-	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
-	// Code R12. A rare return reason. The account was sold to another bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
-	// Code R25. The addenda record is incorrect or missing.
-	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
-	// Code R15. A rare return reason. The account holder is deceased.
-	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
-	// Code R11. A rare return reason. The customer authorized some payment to the
-	// sender, but this payment was not in error.
-	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
-	// Code R74. A rare return reason. Sent in response to a return that was returned
-	// with code `field_error`. The latest return should include the corrected
-	// field(s).
-	TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn TransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
-	// Code R24. A rare return reason. The receiving bank received an exact duplicate
-	// entry with the same trace number and amount.
-	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
-	// Code R67. A rare return reason. The return this message refers to was a
-	// duplicate.
-	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
-	// Code R47. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment TransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
-	// Code R43. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
-	// Code R44. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
-	// Code R46. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
-	// Code R41. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
-	// Code R40. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry TransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
-	// Code R42. A rare return reason. Only used for US Government agency non-monetary
-	// automatic enrollment messages.
-	TransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError TransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
-	// Code R84. A rare return reason. The International ACH Transfer cannot be
-	// processed by the gateway.
-	TransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway TransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
-	// Code R69. A rare return reason. One or more of the fields in the ACH were
-	// malformed.
-	TransactionSourceACHTransferReturnReturnReasonCodeFieldError TransactionSourceACHTransferReturnReturnReasonCode = "field_error"
-	// Code R83. A rare return reason. The Foreign receiving bank was unable to settle
-	// this ACH transfer.
-	TransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle TransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
-	// Code R80. A rare return reason. The International ACH Transfer is malformed.
-	TransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError TransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
-	// Code R18. A rare return reason. The ACH has an improper effective entry date
-	// field.
-	TransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate TransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
-	// Code R39. A rare return reason. The source document related to this ACH, usually
-	// an ACH check conversion, was presented to the bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented TransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
-	// Code R21. A rare return reason. The Company ID field of the ACH was invalid.
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID TransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
-	// Code R82. A rare return reason. The foreign receiving bank identifier for an
-	// International ACH Transfer was invalid.
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification TransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
-	// Code R22. A rare return reason. The Individual ID number field of the ACH was
-	// invalid.
-	TransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber TransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
-	// Code R53. A rare return reason. Both the Represented Check ("RCK") entry and the
-	// original check were presented to the bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment TransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
-	// Code R51. A rare return reason. The Represented Check ("RCK") entry is
-	// ineligible.
-	TransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible TransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
-	// Code R26. A rare return reason. The ACH is missing a required field.
-	TransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError TransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
-	// Code R71. A rare return reason. The receiving bank does not recognize the
-	// routing number in a dishonored return entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
-	// Code R61. A rare return reason. The receiving bank does not recognize the
-	// routing number in a return entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
-	// Code R76. A rare return reason. Sent in response to a return, the bank does not
-	// find the errors alleged by the returning bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound TransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
-	// Code R77. A rare return reason. The receiving bank does not accept the return of
-	// the erroneous debit. The funds are not available at the receiving bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn TransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
-	// Code R81. A rare return reason. The receiving bank does not accept International
-	// ACH Transfers.
-	TransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram TransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
-	// Code R31. A rare return reason. A return that has been agreed to be accepted by
-	// the receiving bank, despite falling outside of the usual return timeframe.
-	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
-	// Code R70. A rare return reason. The receiving bank had not approved this return.
-	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
-	// Code R32. A rare return reason. The receiving bank could not settle this
-	// transaction.
-	TransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
-	// Code R30. A rare return reason. The receiving bank does not accept Check
-	// Truncation ACH transfers.
-	TransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
-	// Code R14. A rare return reason. The payee is deceased.
+	TransactionSourceACHTransferReturnReturnReasonCodeInsufficientFund                                            TransactionSourceACHTransferReturnReturnReasonCode = "insufficient_fund"
+	TransactionSourceACHTransferReturnReturnReasonCodeNoAccount                                                   TransactionSourceACHTransferReturnReturnReasonCode = "no_account"
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountClosed                                               TransactionSourceACHTransferReturnReturnReasonCode = "account_closed"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidAccountNumberStructure                               TransactionSourceACHTransferReturnReturnReasonCode = "invalid_account_number_structure"
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountFrozenEntryReturnedPerOfacInstruction                TransactionSourceACHTransferReturnReturnReasonCode = "account_frozen_entry_returned_per_ofac_instruction"
+	TransactionSourceACHTransferReturnReturnReasonCodeCreditEntryRefusedByReceiver                                TransactionSourceACHTransferReturnReturnReasonCode = "credit_entry_refused_by_receiver"
+	TransactionSourceACHTransferReturnReturnReasonCodeUnauthorizedDebitToConsumerAccountUsingCorporateSecCode     TransactionSourceACHTransferReturnReturnReasonCode = "unauthorized_debit_to_consumer_account_using_corporate_sec_code"
+	TransactionSourceACHTransferReturnReturnReasonCodeCorporateCustomerAdvisedNotAuthorized                       TransactionSourceACHTransferReturnReturnReasonCode = "corporate_customer_advised_not_authorized"
+	TransactionSourceACHTransferReturnReturnReasonCodePaymentStopped                                              TransactionSourceACHTransferReturnReturnReasonCode = "payment_stopped"
+	TransactionSourceACHTransferReturnReturnReasonCodeNonTransactionAccount                                       TransactionSourceACHTransferReturnReturnReasonCode = "non_transaction_account"
+	TransactionSourceACHTransferReturnReturnReasonCodeUncollectedFunds                                            TransactionSourceACHTransferReturnReturnReasonCode = "uncollected_funds"
+	TransactionSourceACHTransferReturnReturnReasonCodeRoutingNumberCheckDigitError                                TransactionSourceACHTransferReturnReturnReasonCode = "routing_number_check_digit_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
+	TransactionSourceACHTransferReturnReturnReasonCodeAmountFieldError                                            TransactionSourceACHTransferReturnReturnReasonCode = "amount_field_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeAuthorizationRevokedByCustomer                              TransactionSourceACHTransferReturnReturnReasonCode = "authorization_revoked_by_customer"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidACHRoutingNumber                                     TransactionSourceACHTransferReturnReturnReasonCode = "invalid_ach_routing_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeFileRecordEditCriteria                                      TransactionSourceACHTransferReturnReturnReasonCode = "file_record_edit_criteria"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualName                                    TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_name"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnedPerOdfiRequest                                      TransactionSourceACHTransferReturnReturnReasonCode = "returned_per_odfi_request"
+	TransactionSourceACHTransferReturnReturnReasonCodeLimitedParticipationDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "limited_participation_dfi"
+	TransactionSourceACHTransferReturnReturnReasonCodeIncorrectlyCodedOutboundInternationalPayment                TransactionSourceACHTransferReturnReturnReasonCode = "incorrectly_coded_outbound_international_payment"
+	TransactionSourceACHTransferReturnReturnReasonCodeAccountSoldToAnotherDfi                                     TransactionSourceACHTransferReturnReturnReasonCode = "account_sold_to_another_dfi"
+	TransactionSourceACHTransferReturnReturnReasonCodeAddendaError                                                TransactionSourceACHTransferReturnReturnReasonCode = "addenda_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeBeneficiaryOrAccountHolderDeceased                          TransactionSourceACHTransferReturnReturnReasonCode = "beneficiary_or_account_holder_deceased"
+	TransactionSourceACHTransferReturnReturnReasonCodeCustomerAdvisedNotWithinAuthorizationTerms                  TransactionSourceACHTransferReturnReturnReasonCode = "customer_advised_not_within_authorization_terms"
+	TransactionSourceACHTransferReturnReturnReasonCodeCorrectedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "corrected_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateEntry                                              TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeDuplicateReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "duplicate_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrDuplicateEnrollment                                      TransactionSourceACHTransferReturnReturnReasonCode = "enr_duplicate_enrollment"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidDfiAccountNumber                                  TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_dfi_account_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidIndividualIDNumber                                TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_individual_id_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidRepresentativePayeeIndicator                      TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_representative_payee_indicator"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrInvalidTransactionCode                                   TransactionSourceACHTransferReturnReturnReasonCode = "enr_invalid_transaction_code"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrReturnOfEnrEntry                                         TransactionSourceACHTransferReturnReturnReasonCode = "enr_return_of_enr_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeEnrRoutingNumberCheckDigitError                             TransactionSourceACHTransferReturnReturnReasonCode = "enr_routing_number_check_digit_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeEntryNotProcessedByGateway                                  TransactionSourceACHTransferReturnReturnReasonCode = "entry_not_processed_by_gateway"
+	TransactionSourceACHTransferReturnReturnReasonCodeFieldError                                                  TransactionSourceACHTransferReturnReturnReasonCode = "field_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeForeignReceivingDfiUnableToSettle                           TransactionSourceACHTransferReturnReturnReasonCode = "foreign_receiving_dfi_unable_to_settle"
+	TransactionSourceACHTransferReturnReturnReasonCodeIatEntryCodingError                                         TransactionSourceACHTransferReturnReturnReasonCode = "iat_entry_coding_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeImproperEffectiveEntryDate                                  TransactionSourceACHTransferReturnReturnReasonCode = "improper_effective_entry_date"
+	TransactionSourceACHTransferReturnReturnReasonCodeImproperSourceDocumentSourceDocumentPresented               TransactionSourceACHTransferReturnReturnReasonCode = "improper_source_document_source_document_presented"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidCompanyID                                            TransactionSourceACHTransferReturnReturnReasonCode = "invalid_company_id"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidForeignReceivingDfiIdentification                    TransactionSourceACHTransferReturnReturnReasonCode = "invalid_foreign_receiving_dfi_identification"
+	TransactionSourceACHTransferReturnReturnReasonCodeInvalidIndividualIDNumber                                   TransactionSourceACHTransferReturnReturnReasonCode = "invalid_individual_id_number"
+	TransactionSourceACHTransferReturnReturnReasonCodeItemAndRckEntryPresentedForPayment                          TransactionSourceACHTransferReturnReturnReasonCode = "item_and_rck_entry_presented_for_payment"
+	TransactionSourceACHTransferReturnReturnReasonCodeItemRelatedToRckEntryIsIneligible                           TransactionSourceACHTransferReturnReturnReasonCode = "item_related_to_rck_entry_is_ineligible"
+	TransactionSourceACHTransferReturnReturnReasonCodeMandatoryFieldError                                         TransactionSourceACHTransferReturnReturnReasonCode = "mandatory_field_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedDishonoredReturn                                   TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_dishonored_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeMisroutedReturn                                             TransactionSourceACHTransferReturnReturnReasonCode = "misrouted_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeNoErrorsFound                                               TransactionSourceACHTransferReturnReturnReasonCode = "no_errors_found"
+	TransactionSourceACHTransferReturnReturnReasonCodeNonAcceptanceOfR62DishonoredReturn                          TransactionSourceACHTransferReturnReturnReasonCode = "non_acceptance_of_r62_dishonored_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeNonParticipantInIatProgram                                  TransactionSourceACHTransferReturnReturnReasonCode = "non_participant_in_iat_program"
+	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntry                                      TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodePermissibleReturnEntryNotAccepted                           TransactionSourceACHTransferReturnReturnReasonCode = "permissible_return_entry_not_accepted"
+	TransactionSourceACHTransferReturnReturnReasonCodeRdfiNonSettlement                                           TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_non_settlement"
+	TransactionSourceACHTransferReturnReturnReasonCodeRdfiParticipantInCheckTruncationProgram                     TransactionSourceACHTransferReturnReturnReasonCode = "rdfi_participant_in_check_truncation_program"
 	TransactionSourceACHTransferReturnReturnReasonCodeRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity TransactionSourceACHTransferReturnReturnReasonCode = "representative_payee_deceased_or_unable_to_continue_in_that_capacity"
-	// Code R75. A rare return reason. The originating bank disputes that an earlier
-	// `duplicate_entry` return was actually a duplicate.
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate TransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
-	// Code R62. A rare return reason. The originating financial institution made a
-	// mistake and this return corrects it.
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit TransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
-	// Code R36. A rare return reason. Return of a malformed credit entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
-	// Code R35. A rare return reason. Return of a malformed debit entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
-	// Code R33. A rare return reason. Return of a Destroyed Check ("XKC") entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry TransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
-	// Code R37. A rare return reason. The source document related to this ACH, usually
-	// an ACH check conversion, was presented to the bank.
-	TransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment TransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
-	// Code R50. A rare return reason. State law prevents the bank from accepting the
-	// Represented Check ("RCK") entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance TransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
-	// Code R52. A rare return reason. A stop payment was issued on a Represented Check
-	// ("RCK") entry.
-	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
-	// Code R38. A rare return reason. The source attached to the ACH, usually an ACH
-	// check conversion, includes a stop payment.
-	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
-	// Code R73. A rare return reason. The bank receiving an `untimely_return` believes
-	// it was on time.
-	TransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn TransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
-	// Code R27. A rare return reason. An ACH return's trace number does not match an
-	// originated ACH.
-	TransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError TransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
-	// Code R72. A rare return reason. The dishonored return was sent too late.
-	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn TransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
-	// Code R68. A rare return reason. The return was sent too late.
-	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn TransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnNotADuplicate                                         TransactionSourceACHTransferReturnReturnReasonCode = "return_not_a_duplicate"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfErroneousOrReversingDebit                           TransactionSourceACHTransferReturnReturnReasonCode = "return_of_erroneous_or_reversing_debit"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperCreditEntry                                 TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_credit_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfImproperDebitEntry                                  TransactionSourceACHTransferReturnReturnReasonCode = "return_of_improper_debit_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeReturnOfXckEntry                                            TransactionSourceACHTransferReturnReturnReasonCode = "return_of_xck_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeSourceDocumentPresentedForPayment                           TransactionSourceACHTransferReturnReturnReasonCode = "source_document_presented_for_payment"
+	TransactionSourceACHTransferReturnReturnReasonCodeStateLawAffectingRckAcceptance                              TransactionSourceACHTransferReturnReturnReasonCode = "state_law_affecting_rck_acceptance"
+	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnItemRelatedToRckEntry                          TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_item_related_to_rck_entry"
+	TransactionSourceACHTransferReturnReturnReasonCodeStopPaymentOnSourceDocument                                 TransactionSourceACHTransferReturnReturnReasonCode = "stop_payment_on_source_document"
+	TransactionSourceACHTransferReturnReturnReasonCodeTimelyOriginalReturn                                        TransactionSourceACHTransferReturnReturnReasonCode = "timely_original_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeTraceNumberError                                            TransactionSourceACHTransferReturnReturnReasonCode = "trace_number_error"
+	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyDishonoredReturn                                    TransactionSourceACHTransferReturnReturnReasonCode = "untimely_dishonored_return"
+	TransactionSourceACHTransferReturnReturnReasonCodeUntimelyReturn                                              TransactionSourceACHTransferReturnReturnReasonCode = "untimely_return"
 )
 
 func (r TransactionSourceACHTransferReturnReturnReasonCode) IsKnown() bool {
@@ -870,17 +740,11 @@ func (r transactionSourceCardRefundCashbackJSON) RawJSON() string {
 type TransactionSourceCardRefundCashbackCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardRefundCashbackCurrencyCad TransactionSourceCardRefundCashbackCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardRefundCashbackCurrencyChf TransactionSourceCardRefundCashbackCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardRefundCashbackCurrencyEur TransactionSourceCardRefundCashbackCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardRefundCashbackCurrencyGbp TransactionSourceCardRefundCashbackCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardRefundCashbackCurrencyJpy TransactionSourceCardRefundCashbackCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardRefundCashbackCurrencyUsd TransactionSourceCardRefundCashbackCurrency = "USD"
 )
 
@@ -897,17 +761,11 @@ func (r TransactionSourceCardRefundCashbackCurrency) IsKnown() bool {
 type TransactionSourceCardRefundCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardRefundCurrencyCad TransactionSourceCardRefundCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardRefundCurrencyChf TransactionSourceCardRefundCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardRefundCurrencyEur TransactionSourceCardRefundCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardRefundCurrencyGbp TransactionSourceCardRefundCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardRefundCurrencyJpy TransactionSourceCardRefundCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardRefundCurrencyUsd TransactionSourceCardRefundCurrency = "USD"
 )
 
@@ -956,17 +814,11 @@ func (r transactionSourceCardRefundInterchangeJSON) RawJSON() string {
 type TransactionSourceCardRefundInterchangeCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardRefundInterchangeCurrencyCad TransactionSourceCardRefundInterchangeCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardRefundInterchangeCurrencyChf TransactionSourceCardRefundInterchangeCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardRefundInterchangeCurrencyEur TransactionSourceCardRefundInterchangeCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardRefundInterchangeCurrencyGbp TransactionSourceCardRefundInterchangeCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardRefundInterchangeCurrencyJpy TransactionSourceCardRefundInterchangeCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardRefundInterchangeCurrencyUsd TransactionSourceCardRefundInterchangeCurrency = "USD"
 )
 
@@ -1142,17 +994,11 @@ func (r transactionSourceCardRefundPurchaseDetailsCarRentalJSON) RawJSON() strin
 type TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges string
 
 const (
-	// No extra charge
-	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
-	// Gas
-	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesGas TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "gas"
-	// Extra mileage
-	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
-	// Late return
-	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "late_return"
-	// One way service fee
+	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesNoExtraCharge    TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesGas              TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "gas"
+	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesExtraMileage     TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesLateReturn       TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "late_return"
 	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesOneWayServiceFee TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
-	// Parking violation
 	TransactionSourceCardRefundPurchaseDetailsCarRentalExtraChargesParkingViolation TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
@@ -1169,9 +1015,7 @@ func (r TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges) IsKnown
 type TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator string
 
 const (
-	// Not applicable
-	TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
-	// No show for specialized vehicle
+	TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable               TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
 	TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
 
@@ -1262,20 +1106,13 @@ func (r transactionSourceCardRefundPurchaseDetailsLodgingJSON) RawJSON() string 
 type TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges string
 
 const (
-	// No extra charge
 	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesNoExtraCharge TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
-	// Restaurant
-	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesRestaurant TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "restaurant"
-	// Gift shop
-	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesGiftShop TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "gift_shop"
-	// Mini bar
-	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesMiniBar TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "mini_bar"
-	// Telephone
-	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesTelephone TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "telephone"
-	// Other
-	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesOther TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "other"
-	// Laundry
-	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesLaundry TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
+	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesRestaurant    TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "restaurant"
+	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesGiftShop      TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesMiniBar       TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesTelephone     TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "telephone"
+	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesOther         TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "other"
+	TransactionSourceCardRefundPurchaseDetailsLodgingExtraChargesLaundry       TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
@@ -1291,10 +1128,8 @@ func (r TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges) IsKnown()
 type TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator string
 
 const (
-	// Not applicable
 	TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNotApplicable TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
-	// No show
-	TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
+	TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicatorNoShow        TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
@@ -1309,16 +1144,11 @@ func (r TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator) IsKnow
 type TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat string
 
 const (
-	// Free text
-	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "free_text"
-	// Order number
-	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "order_number"
-	// Rental agreement number
+	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatFreeText              TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatOrderNumber           TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "order_number"
 	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
-	// Hotel folio number
-	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
-	// Invoice number
-	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber      TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber         TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
@@ -1427,14 +1257,10 @@ func (r transactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON) RawJSON()
 type TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator string
 
 const (
-	// No credit
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit                                                        TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Other
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther                                                           TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
@@ -1475,54 +1301,30 @@ func (r transactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON) Ra
 type TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory string
 
 const (
-	// None
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "none"
-	// Bundled service
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
-	// Baggage fee
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
-	// Change fee
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
-	// Cargo
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
-	// Carbon offset
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
-	// Frequent flyer
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
-	// Gift card
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
-	// Ground transport
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
-	// In-flight entertainment
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryNone                  TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBundledService        TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee            TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryChangeFee             TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCargo                 TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset          TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer         TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGiftCard              TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport       TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
 	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
-	// Lounge
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
-	// Medical
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "medical"
-	// Meal beverage
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
-	// Other
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "other"
-	// Passenger assist fee
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
-	// Pets
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "pets"
-	// Seat fees
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
-	// Standby
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "standby"
-	// Service fee
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
-	// Store
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "store"
-	// Travel service
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
-	// Unaccompanied travel
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
-	// Upgrades
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
-	// Wi-fi
-	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryLounge                TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMedical               TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage          TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryOther                 TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee    TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryPets                  TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategorySeatFees              TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStandby               TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryServiceFee            TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryStore                 TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryTravelService         TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel   TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryUpgrades              TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategoryWifi                  TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
@@ -1537,18 +1339,12 @@ func (r TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategor
 type TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator string
 
 const (
-	// No credit
-	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorNoCredit                                                        TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket cancellation
-	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
-	// Other
-	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "other"
-	// Partial refund of airline ticket
-	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation                                       TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorOther                                                           TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "other"
+	TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket                                    TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
@@ -1563,9 +1359,7 @@ func (r TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator) I
 type TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator string
 
 const (
-	// No restrictions
-	TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
-	// Restricted non-refundable ticket
+	TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions                TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
 	TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
 
@@ -1581,12 +1375,9 @@ func (r TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicato
 type TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator string
 
 const (
-	// None
-	TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "none"
-	// Change to existing ticket
+	TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNone                   TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "none"
 	TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
-	// New ticket
-	TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+	TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicatorNewTicket              TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
 
 func (r TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
@@ -1639,11 +1430,8 @@ func (r transactionSourceCardRefundPurchaseDetailsTravelTripLegJSON) RawJSON() s
 type TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode string
 
 const (
-	// None
-	TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "none"
-	// Stop over allowed
-	TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
-	// Stop over not allowed
+	TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeNone               TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed    TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
 	TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
@@ -1714,17 +1502,11 @@ func (r transactionSourceCardRevenuePaymentJSON) RawJSON() string {
 type TransactionSourceCardRevenuePaymentCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardRevenuePaymentCurrencyCad TransactionSourceCardRevenuePaymentCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardRevenuePaymentCurrencyChf TransactionSourceCardRevenuePaymentCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardRevenuePaymentCurrencyEur TransactionSourceCardRevenuePaymentCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardRevenuePaymentCurrencyGbp TransactionSourceCardRevenuePaymentCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardRevenuePaymentCurrencyJpy TransactionSourceCardRevenuePaymentCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardRevenuePaymentCurrencyUsd TransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
@@ -1861,17 +1643,11 @@ func (r transactionSourceCardSettlementCashbackJSON) RawJSON() string {
 type TransactionSourceCardSettlementCashbackCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardSettlementCashbackCurrencyCad TransactionSourceCardSettlementCashbackCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardSettlementCashbackCurrencyChf TransactionSourceCardSettlementCashbackCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardSettlementCashbackCurrencyEur TransactionSourceCardSettlementCashbackCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardSettlementCashbackCurrencyGbp TransactionSourceCardSettlementCashbackCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardSettlementCashbackCurrencyJpy TransactionSourceCardSettlementCashbackCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardSettlementCashbackCurrencyUsd TransactionSourceCardSettlementCashbackCurrency = "USD"
 )
 
@@ -1888,17 +1664,11 @@ func (r TransactionSourceCardSettlementCashbackCurrency) IsKnown() bool {
 type TransactionSourceCardSettlementCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardSettlementCurrencyCad TransactionSourceCardSettlementCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardSettlementCurrencyChf TransactionSourceCardSettlementCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardSettlementCurrencyEur TransactionSourceCardSettlementCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardSettlementCurrencyGbp TransactionSourceCardSettlementCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardSettlementCurrencyJpy TransactionSourceCardSettlementCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardSettlementCurrencyUsd TransactionSourceCardSettlementCurrency = "USD"
 )
 
@@ -1947,17 +1717,11 @@ func (r transactionSourceCardSettlementInterchangeJSON) RawJSON() string {
 type TransactionSourceCardSettlementInterchangeCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCardSettlementInterchangeCurrencyCad TransactionSourceCardSettlementInterchangeCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCardSettlementInterchangeCurrencyChf TransactionSourceCardSettlementInterchangeCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCardSettlementInterchangeCurrencyEur TransactionSourceCardSettlementInterchangeCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCardSettlementInterchangeCurrencyGbp TransactionSourceCardSettlementInterchangeCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCardSettlementInterchangeCurrencyJpy TransactionSourceCardSettlementInterchangeCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCardSettlementInterchangeCurrencyUsd TransactionSourceCardSettlementInterchangeCurrency = "USD"
 )
 
@@ -2134,17 +1898,11 @@ func (r transactionSourceCardSettlementPurchaseDetailsCarRentalJSON) RawJSON() s
 type TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges string
 
 const (
-	// No extra charge
-	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
-	// Gas
-	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesGas TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "gas"
-	// Extra mileage
-	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
-	// Late return
-	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "late_return"
-	// One way service fee
+	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesNoExtraCharge    TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "no_extra_charge"
+	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesGas              TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "gas"
+	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesExtraMileage     TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "extra_mileage"
+	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesLateReturn       TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "late_return"
 	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesOneWayServiceFee TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "one_way_service_fee"
-	// Parking violation
 	TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraChargesParkingViolation TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges = "parking_violation"
 )
 
@@ -2161,9 +1919,7 @@ func (r TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges) IsK
 type TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator string
 
 const (
-	// Not applicable
-	TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
-	// No show for specialized vehicle
+	TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable               TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "not_applicable"
 	TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator = "no_show_for_specialized_vehicle"
 )
 
@@ -2254,20 +2010,13 @@ func (r transactionSourceCardSettlementPurchaseDetailsLodgingJSON) RawJSON() str
 type TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges string
 
 const (
-	// No extra charge
 	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesNoExtraCharge TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "no_extra_charge"
-	// Restaurant
-	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "restaurant"
-	// Gift shop
-	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "gift_shop"
-	// Mini bar
-	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "mini_bar"
-	// Telephone
-	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesTelephone TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "telephone"
-	// Other
-	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesOther TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "other"
-	// Laundry
-	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesLaundry TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesRestaurant    TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "restaurant"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesGiftShop      TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "gift_shop"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesMiniBar       TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "mini_bar"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesTelephone     TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "telephone"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesOther         TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "other"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingExtraChargesLaundry       TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges = "laundry"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges) IsKnown() bool {
@@ -2283,10 +2032,8 @@ func (r TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges) IsKno
 type TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator string
 
 const (
-	// Not applicable
 	TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNotApplicable TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "not_applicable"
-	// No show
-	TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
+	TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicatorNoShow        TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator = "no_show"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator) IsKnown() bool {
@@ -2301,16 +2048,11 @@ func (r TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator) Is
 type TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat string
 
 const (
-	// Free text
-	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "free_text"
-	// Order number
-	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "order_number"
-	// Rental agreement number
+	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatFreeText              TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "free_text"
+	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatOrderNumber           TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "order_number"
 	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatRentalAgreementNumber TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "rental_agreement_number"
-	// Hotel folio number
-	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
-	// Invoice number
-	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
+	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatHotelFolioNumber      TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "hotel_folio_number"
+	TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormatInvoiceNumber         TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat = "invoice_number"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat) IsKnown() bool {
@@ -2419,14 +2161,10 @@ func (r transactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON) RawJS
 type TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator string
 
 const (
-	// No credit
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorNoCredit                                                        TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "no_credit"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Other
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicatorOther                                                           TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator = "other"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator) IsKnown() bool {
@@ -2467,54 +2205,30 @@ func (r transactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON
 type TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory string
 
 const (
-	// None
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "none"
-	// Bundled service
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
-	// Baggage fee
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
-	// Change fee
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
-	// Cargo
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
-	// Carbon offset
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
-	// Frequent flyer
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
-	// Gift card
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
-	// Ground transport
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
-	// In-flight entertainment
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryNone                  TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "none"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBundledService        TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "bundled_service"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryBaggageFee            TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "baggage_fee"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryChangeFee             TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "change_fee"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCargo                 TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "cargo"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryCarbonOffset          TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "carbon_offset"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryFrequentFlyer         TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "frequent_flyer"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGiftCard              TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "gift_card"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryGroundTransport       TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "ground_transport"
 	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryInFlightEntertainment TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "in_flight_entertainment"
-	// Lounge
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
-	// Medical
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "medical"
-	// Meal beverage
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
-	// Other
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "other"
-	// Passenger assist fee
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
-	// Pets
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "pets"
-	// Seat fees
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
-	// Standby
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "standby"
-	// Service fee
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
-	// Store
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "store"
-	// Travel service
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
-	// Unaccompanied travel
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
-	// Upgrades
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
-	// Wi-fi
-	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryLounge                TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "lounge"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMedical               TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "medical"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryMealBeverage          TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "meal_beverage"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryOther                 TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "other"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPassengerAssistFee    TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "passenger_assist_fee"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryPets                  TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "pets"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategorySeatFees              TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "seat_fees"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStandby               TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "standby"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryServiceFee            TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "service_fee"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryStore                 TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "store"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryTravelService         TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "travel_service"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUnaccompaniedTravel   TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "unaccompanied_travel"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryUpgrades              TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "upgrades"
+	TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategoryWifi                  TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory = "wifi"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory) IsKnown() bool {
@@ -2529,18 +2243,12 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCat
 type TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator string
 
 const (
-	// No credit
-	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
-	// Passenger transport ancillary purchase cancellation
-	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket and passenger transport ancillary purchase cancellation
+	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorNoCredit                                                        TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "no_credit"
+	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPassengerTransportAncillaryPurchaseCancellation                 TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "passenger_transport_ancillary_purchase_cancellation"
 	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketAndPassengerTransportAncillaryPurchaseCancellation TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_and_passenger_transport_ancillary_purchase_cancellation"
-	// Airline ticket cancellation
-	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
-	// Other
-	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "other"
-	// Partial refund of airline ticket
-	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
+	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorAirlineTicketCancellation                                       TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "airline_ticket_cancellation"
+	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorOther                                                           TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "other"
+	TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicatorPartialRefundOfAirlineTicket                                    TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator = "partial_refund_of_airline_ticket"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator) IsKnown() bool {
@@ -2555,9 +2263,7 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicato
 type TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator string
 
 const (
-	// No restrictions
-	TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
-	// Restricted non-refundable ticket
+	TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorNoRestrictions                TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "no_restrictions"
 	TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicatorRestrictedNonRefundableTicket TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator = "restricted_non_refundable_ticket"
 )
 
@@ -2573,12 +2279,9 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndi
 type TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator string
 
 const (
-	// None
-	TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "none"
-	// Change to existing ticket
+	TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNone                   TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "none"
 	TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorChangeToExistingTicket TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "change_to_existing_ticket"
-	// New ticket
-	TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
+	TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicatorNewTicket              TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator = "new_ticket"
 )
 
 func (r TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator) IsKnown() bool {
@@ -2631,11 +2334,8 @@ func (r transactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON) RawJSON
 type TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode string
 
 const (
-	// None
-	TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "none"
-	// Stop over allowed
-	TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
-	// Stop over not allowed
+	TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeNone               TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "none"
+	TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverAllowed    TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_allowed"
 	TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCodeStopOverNotAllowed TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode = "stop_over_not_allowed"
 )
 
@@ -2706,17 +2406,11 @@ func (r transactionSourceCashbackPaymentJSON) RawJSON() string {
 type TransactionSourceCashbackPaymentCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCashbackPaymentCurrencyCad TransactionSourceCashbackPaymentCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCashbackPaymentCurrencyChf TransactionSourceCashbackPaymentCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCashbackPaymentCurrencyEur TransactionSourceCashbackPaymentCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCashbackPaymentCurrencyGbp TransactionSourceCashbackPaymentCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCashbackPaymentCurrencyJpy TransactionSourceCashbackPaymentCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCashbackPaymentCurrencyUsd TransactionSourceCashbackPaymentCurrency = "USD"
 )
 
@@ -2733,80 +2427,35 @@ func (r TransactionSourceCashbackPaymentCurrency) IsKnown() bool {
 type TransactionSourceCategory string
 
 const (
-	// Account Transfer Intention: details will be under the
-	// `account_transfer_intention` object.
-	TransactionSourceCategoryAccountTransferIntention TransactionSourceCategory = "account_transfer_intention"
-	// ACH Transfer Intention: details will be under the `ach_transfer_intention`
-	// object.
-	TransactionSourceCategoryACHTransferIntention TransactionSourceCategory = "ach_transfer_intention"
-	// ACH Transfer Rejection: details will be under the `ach_transfer_rejection`
-	// object.
-	TransactionSourceCategoryACHTransferRejection TransactionSourceCategory = "ach_transfer_rejection"
-	// ACH Transfer Return: details will be under the `ach_transfer_return` object.
-	TransactionSourceCategoryACHTransferReturn TransactionSourceCategory = "ach_transfer_return"
-	// Cashback Payment: details will be under the `cashback_payment` object.
-	TransactionSourceCategoryCashbackPayment TransactionSourceCategory = "cashback_payment"
-	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
-	// object.
-	TransactionSourceCategoryCardDisputeAcceptance TransactionSourceCategory = "card_dispute_acceptance"
-	// Card Dispute Loss: details will be under the `card_dispute_loss` object.
-	TransactionSourceCategoryCardDisputeLoss TransactionSourceCategory = "card_dispute_loss"
-	// Card Refund: details will be under the `card_refund` object.
-	TransactionSourceCategoryCardRefund TransactionSourceCategory = "card_refund"
-	// Card Settlement: details will be under the `card_settlement` object.
-	TransactionSourceCategoryCardSettlement TransactionSourceCategory = "card_settlement"
-	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
-	TransactionSourceCategoryCardRevenuePayment TransactionSourceCategory = "card_revenue_payment"
-	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
-	// object.
-	TransactionSourceCategoryCheckDepositAcceptance TransactionSourceCategory = "check_deposit_acceptance"
-	// Check Deposit Return: details will be under the `check_deposit_return` object.
-	TransactionSourceCategoryCheckDepositReturn TransactionSourceCategory = "check_deposit_return"
-	// Check Transfer Deposit: details will be under the `check_transfer_deposit`
-	// object.
-	TransactionSourceCategoryCheckTransferDeposit TransactionSourceCategory = "check_transfer_deposit"
-	// Fee Payment: details will be under the `fee_payment` object.
-	TransactionSourceCategoryFeePayment TransactionSourceCategory = "fee_payment"
-	// Inbound ACH Transfer Intention: details will be under the `inbound_ach_transfer`
-	// object.
-	TransactionSourceCategoryInboundACHTransfer TransactionSourceCategory = "inbound_ach_transfer"
-	// Inbound ACH Transfer Return Intention: details will be under the
-	// `inbound_ach_transfer_return_intention` object.
-	TransactionSourceCategoryInboundACHTransferReturnIntention TransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	// Inbound Check Deposit Return Intention: details will be under the
-	// `inbound_check_deposit_return_intention` object.
-	TransactionSourceCategoryInboundCheckDepositReturnIntention TransactionSourceCategory = "inbound_check_deposit_return_intention"
-	// Inbound Check Adjustment: details will be under the `inbound_check_adjustment`
-	// object.
-	TransactionSourceCategoryInboundCheckAdjustment TransactionSourceCategory = "inbound_check_adjustment"
-	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
-	// `inbound_real_time_payments_transfer_confirmation` object.
+	TransactionSourceCategoryAccountTransferIntention                    TransactionSourceCategory = "account_transfer_intention"
+	TransactionSourceCategoryACHTransferIntention                        TransactionSourceCategory = "ach_transfer_intention"
+	TransactionSourceCategoryACHTransferRejection                        TransactionSourceCategory = "ach_transfer_rejection"
+	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
+	TransactionSourceCategoryCashbackPayment                             TransactionSourceCategory = "cashback_payment"
+	TransactionSourceCategoryCardDisputeAcceptance                       TransactionSourceCategory = "card_dispute_acceptance"
+	TransactionSourceCategoryCardDisputeLoss                             TransactionSourceCategory = "card_dispute_loss"
+	TransactionSourceCategoryCardRefund                                  TransactionSourceCategory = "card_refund"
+	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
+	TransactionSourceCategoryCardRevenuePayment                          TransactionSourceCategory = "card_revenue_payment"
+	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
+	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
+	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
+	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
+	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
+	TransactionSourceCategoryInboundACHTransferReturnIntention           TransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	TransactionSourceCategoryInboundCheckDepositReturnIntention          TransactionSourceCategory = "inbound_check_deposit_return_intention"
+	TransactionSourceCategoryInboundCheckAdjustment                      TransactionSourceCategory = "inbound_check_adjustment"
 	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Real-Time Payments Transfer Decline: details will be under the
-	// `inbound_real_time_payments_transfer_decline` object.
-	TransactionSourceCategoryInboundRealTimePaymentsTransferDecline TransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
-	TransactionSourceCategoryInboundWireReversal TransactionSourceCategory = "inbound_wire_reversal"
-	// Inbound Wire Transfer Intention: details will be under the
-	// `inbound_wire_transfer` object.
-	TransactionSourceCategoryInboundWireTransfer TransactionSourceCategory = "inbound_wire_transfer"
-	// Inbound Wire Transfer Reversal Intention: details will be under the
-	// `inbound_wire_transfer_reversal` object.
-	TransactionSourceCategoryInboundWireTransferReversal TransactionSourceCategory = "inbound_wire_transfer_reversal"
-	// Interest Payment: details will be under the `interest_payment` object.
-	TransactionSourceCategoryInterestPayment TransactionSourceCategory = "interest_payment"
-	// Internal Source: details will be under the `internal_source` object.
-	TransactionSourceCategoryInternalSource TransactionSourceCategory = "internal_source"
-	// Real-Time Payments Transfer Acknowledgement: details will be under the
-	// `real_time_payments_transfer_acknowledgement` object.
-	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	// Sample Funds: details will be under the `sample_funds` object.
-	TransactionSourceCategorySampleFunds TransactionSourceCategory = "sample_funds"
-	// Wire Transfer Intention: details will be under the `wire_transfer_intention`
-	// object.
-	TransactionSourceCategoryWireTransferIntention TransactionSourceCategory = "wire_transfer_intention"
-	// The Transaction was made for an undocumented or deprecated reason.
-	TransactionSourceCategoryOther TransactionSourceCategory = "other"
+	TransactionSourceCategoryInboundRealTimePaymentsTransferDecline      TransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
+	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
+	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
+	TransactionSourceCategoryInboundWireTransferReversal                 TransactionSourceCategory = "inbound_wire_transfer_reversal"
+	TransactionSourceCategoryInterestPayment                             TransactionSourceCategory = "interest_payment"
+	TransactionSourceCategoryInternalSource                              TransactionSourceCategory = "internal_source"
+	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	TransactionSourceCategorySampleFunds                                 TransactionSourceCategory = "sample_funds"
+	TransactionSourceCategoryWireTransferIntention                       TransactionSourceCategory = "wire_transfer_intention"
+	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
 )
 
 func (r TransactionSourceCategory) IsKnown() bool {
@@ -2868,17 +2517,11 @@ func (r transactionSourceCheckDepositAcceptanceJSON) RawJSON() string {
 type TransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCheckDepositAcceptanceCurrencyCad TransactionSourceCheckDepositAcceptanceCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCheckDepositAcceptanceCurrencyChf TransactionSourceCheckDepositAcceptanceCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCheckDepositAcceptanceCurrencyEur TransactionSourceCheckDepositAcceptanceCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCheckDepositAcceptanceCurrencyGbp TransactionSourceCheckDepositAcceptanceCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCheckDepositAcceptanceCurrencyJpy TransactionSourceCheckDepositAcceptanceCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCheckDepositAcceptanceCurrencyUsd TransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
@@ -2938,17 +2581,11 @@ func (r transactionSourceCheckDepositReturnJSON) RawJSON() string {
 type TransactionSourceCheckDepositReturnCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceCheckDepositReturnCurrencyCad TransactionSourceCheckDepositReturnCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceCheckDepositReturnCurrencyChf TransactionSourceCheckDepositReturnCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceCheckDepositReturnCurrencyEur TransactionSourceCheckDepositReturnCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceCheckDepositReturnCurrencyGbp TransactionSourceCheckDepositReturnCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceCheckDepositReturnCurrencyJpy TransactionSourceCheckDepositReturnCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceCheckDepositReturnCurrencyUsd TransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
@@ -2965,58 +2602,32 @@ func (r TransactionSourceCheckDepositReturnCurrency) IsKnown() bool {
 type TransactionSourceCheckDepositReturnReturnReason string
 
 const (
-	// The check doesn't allow ACH conversion.
 	TransactionSourceCheckDepositReturnReturnReasonACHConversionNotSupported TransactionSourceCheckDepositReturnReturnReason = "ach_conversion_not_supported"
-	// The account is closed.
-	TransactionSourceCheckDepositReturnReturnReasonClosedAccount TransactionSourceCheckDepositReturnReturnReason = "closed_account"
-	// The check has already been deposited.
-	TransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission TransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
-	// Insufficient funds
-	TransactionSourceCheckDepositReturnReturnReasonInsufficientFunds TransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
-	// No account was found matching the check details.
-	TransactionSourceCheckDepositReturnReturnReasonNoAccount TransactionSourceCheckDepositReturnReturnReason = "no_account"
-	// The check was not authorized.
-	TransactionSourceCheckDepositReturnReturnReasonNotAuthorized TransactionSourceCheckDepositReturnReturnReason = "not_authorized"
-	// The check is too old.
-	TransactionSourceCheckDepositReturnReturnReasonStaleDated TransactionSourceCheckDepositReturnReturnReason = "stale_dated"
-	// The payment has been stopped by the account holder.
-	TransactionSourceCheckDepositReturnReturnReasonStopPayment TransactionSourceCheckDepositReturnReturnReason = "stop_payment"
-	// The reason for the return is unknown.
-	TransactionSourceCheckDepositReturnReturnReasonUnknownReason TransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
-	// The image doesn't match the details submitted.
-	TransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails TransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
-	// The image could not be read.
-	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
-	// The check endorsement was irregular.
-	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
-	// The check present was either altered or fake.
-	TransactionSourceCheckDepositReturnReturnReasonAlteredOrFictitiousItem TransactionSourceCheckDepositReturnReturnReason = "altered_or_fictitious_item"
-	// The account this check is drawn on is frozen.
-	TransactionSourceCheckDepositReturnReturnReasonFrozenOrBlockedAccount TransactionSourceCheckDepositReturnReturnReason = "frozen_or_blocked_account"
-	// The check is post dated.
-	TransactionSourceCheckDepositReturnReturnReasonPostDated TransactionSourceCheckDepositReturnReturnReason = "post_dated"
-	// The endorsement was missing.
-	TransactionSourceCheckDepositReturnReturnReasonEndorsementMissing TransactionSourceCheckDepositReturnReturnReason = "endorsement_missing"
-	// The check signature was missing.
-	TransactionSourceCheckDepositReturnReturnReasonSignatureMissing TransactionSourceCheckDepositReturnReturnReason = "signature_missing"
-	// The bank suspects a stop payment will be placed.
-	TransactionSourceCheckDepositReturnReturnReasonStopPaymentSuspect TransactionSourceCheckDepositReturnReturnReason = "stop_payment_suspect"
-	// The bank cannot read the image.
-	TransactionSourceCheckDepositReturnReturnReasonUnusableImage TransactionSourceCheckDepositReturnReturnReason = "unusable_image"
-	// The check image fails the bank's security check.
-	TransactionSourceCheckDepositReturnReturnReasonImageFailsSecurityCheck TransactionSourceCheckDepositReturnReturnReason = "image_fails_security_check"
-	// The bank cannot determine the amount.
-	TransactionSourceCheckDepositReturnReturnReasonCannotDetermineAmount TransactionSourceCheckDepositReturnReturnReason = "cannot_determine_amount"
-	// The signature is inconsistent with prior signatures.
-	TransactionSourceCheckDepositReturnReturnReasonSignatureIrregular TransactionSourceCheckDepositReturnReturnReason = "signature_irregular"
-	// The check is a non-cash item and cannot be drawn against the account.
-	TransactionSourceCheckDepositReturnReturnReasonNonCashItem TransactionSourceCheckDepositReturnReturnReason = "non_cash_item"
-	// The bank is unable to process this check.
-	TransactionSourceCheckDepositReturnReturnReasonUnableToProcess TransactionSourceCheckDepositReturnReturnReason = "unable_to_process"
-	// The check exceeds the bank or customer's limit.
-	TransactionSourceCheckDepositReturnReturnReasonItemExceedsDollarLimit TransactionSourceCheckDepositReturnReturnReason = "item_exceeds_dollar_limit"
-	// The bank sold this account and no longer services this customer.
-	TransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold TransactionSourceCheckDepositReturnReturnReason = "branch_or_account_sold"
+	TransactionSourceCheckDepositReturnReturnReasonClosedAccount             TransactionSourceCheckDepositReturnReturnReason = "closed_account"
+	TransactionSourceCheckDepositReturnReturnReasonDuplicateSubmission       TransactionSourceCheckDepositReturnReturnReason = "duplicate_submission"
+	TransactionSourceCheckDepositReturnReturnReasonInsufficientFunds         TransactionSourceCheckDepositReturnReturnReason = "insufficient_funds"
+	TransactionSourceCheckDepositReturnReturnReasonNoAccount                 TransactionSourceCheckDepositReturnReturnReason = "no_account"
+	TransactionSourceCheckDepositReturnReturnReasonNotAuthorized             TransactionSourceCheckDepositReturnReturnReason = "not_authorized"
+	TransactionSourceCheckDepositReturnReturnReasonStaleDated                TransactionSourceCheckDepositReturnReturnReason = "stale_dated"
+	TransactionSourceCheckDepositReturnReturnReasonStopPayment               TransactionSourceCheckDepositReturnReturnReason = "stop_payment"
+	TransactionSourceCheckDepositReturnReturnReasonUnknownReason             TransactionSourceCheckDepositReturnReturnReason = "unknown_reason"
+	TransactionSourceCheckDepositReturnReturnReasonUnmatchedDetails          TransactionSourceCheckDepositReturnReturnReason = "unmatched_details"
+	TransactionSourceCheckDepositReturnReturnReasonUnreadableImage           TransactionSourceCheckDepositReturnReturnReason = "unreadable_image"
+	TransactionSourceCheckDepositReturnReturnReasonEndorsementIrregular      TransactionSourceCheckDepositReturnReturnReason = "endorsement_irregular"
+	TransactionSourceCheckDepositReturnReturnReasonAlteredOrFictitiousItem   TransactionSourceCheckDepositReturnReturnReason = "altered_or_fictitious_item"
+	TransactionSourceCheckDepositReturnReturnReasonFrozenOrBlockedAccount    TransactionSourceCheckDepositReturnReturnReason = "frozen_or_blocked_account"
+	TransactionSourceCheckDepositReturnReturnReasonPostDated                 TransactionSourceCheckDepositReturnReturnReason = "post_dated"
+	TransactionSourceCheckDepositReturnReturnReasonEndorsementMissing        TransactionSourceCheckDepositReturnReturnReason = "endorsement_missing"
+	TransactionSourceCheckDepositReturnReturnReasonSignatureMissing          TransactionSourceCheckDepositReturnReturnReason = "signature_missing"
+	TransactionSourceCheckDepositReturnReturnReasonStopPaymentSuspect        TransactionSourceCheckDepositReturnReturnReason = "stop_payment_suspect"
+	TransactionSourceCheckDepositReturnReturnReasonUnusableImage             TransactionSourceCheckDepositReturnReturnReason = "unusable_image"
+	TransactionSourceCheckDepositReturnReturnReasonImageFailsSecurityCheck   TransactionSourceCheckDepositReturnReturnReason = "image_fails_security_check"
+	TransactionSourceCheckDepositReturnReturnReasonCannotDetermineAmount     TransactionSourceCheckDepositReturnReturnReason = "cannot_determine_amount"
+	TransactionSourceCheckDepositReturnReturnReasonSignatureIrregular        TransactionSourceCheckDepositReturnReturnReason = "signature_irregular"
+	TransactionSourceCheckDepositReturnReturnReasonNonCashItem               TransactionSourceCheckDepositReturnReturnReason = "non_cash_item"
+	TransactionSourceCheckDepositReturnReturnReasonUnableToProcess           TransactionSourceCheckDepositReturnReturnReason = "unable_to_process"
+	TransactionSourceCheckDepositReturnReturnReasonItemExceedsDollarLimit    TransactionSourceCheckDepositReturnReturnReason = "item_exceeds_dollar_limit"
+	TransactionSourceCheckDepositReturnReturnReasonBranchOrAccountSold       TransactionSourceCheckDepositReturnReturnReason = "branch_or_account_sold"
 )
 
 func (r TransactionSourceCheckDepositReturnReturnReason) IsKnown() bool {
@@ -3134,17 +2745,11 @@ func (r transactionSourceFeePaymentJSON) RawJSON() string {
 type TransactionSourceFeePaymentCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceFeePaymentCurrencyCad TransactionSourceFeePaymentCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceFeePaymentCurrencyChf TransactionSourceFeePaymentCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceFeePaymentCurrencyEur TransactionSourceFeePaymentCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceFeePaymentCurrencyGbp TransactionSourceFeePaymentCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceFeePaymentCurrencyJpy TransactionSourceFeePaymentCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceFeePaymentCurrencyUsd TransactionSourceFeePaymentCurrency = "USD"
 )
 
@@ -3246,7 +2851,6 @@ func (r transactionSourceInboundACHTransferAddendaJSON) RawJSON() string {
 type TransactionSourceInboundACHTransferAddendaCategory string
 
 const (
-	// Unstructured addendum.
 	TransactionSourceInboundACHTransferAddendaCategoryFreeform TransactionSourceInboundACHTransferAddendaCategory = "freeform"
 )
 
@@ -3361,17 +2965,11 @@ func (r transactionSourceInboundRealTimePaymentsTransferConfirmationJSON) RawJSO
 type TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
@@ -3445,17 +3043,11 @@ func (r transactionSourceInboundRealTimePaymentsTransferDeclineJSON) RawJSON() s
 type TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
@@ -3471,17 +3063,11 @@ func (r TransactionSourceInboundRealTimePaymentsTransferDeclineCurrency) IsKnown
 type TransactionSourceInboundRealTimePaymentsTransferDeclineReason string
 
 const (
-	// The account number is canceled.
-	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
-	// The account number is disabled.
-	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
-	// Your account is restricted.
-	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
-	// Your account is inactive.
-	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
-	// The account's entity is not active.
-	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
-	// Your account is not enabled to receive Real-Time Payments transfers.
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberCanceled      TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_canceled"
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountNumberDisabled      TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_number_disabled"
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonAccountRestricted          TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "account_restricted"
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonGroupLocked                TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "group_locked"
+	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonEntityNotActive            TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "entity_not_active"
 	TransactionSourceInboundRealTimePaymentsTransferDeclineReasonRealTimePaymentsNotEnabled TransactionSourceInboundRealTimePaymentsTransferDeclineReason = "real_time_payments_not_enabled"
 )
 
@@ -3694,17 +3280,11 @@ func (r transactionSourceInterestPaymentJSON) RawJSON() string {
 type TransactionSourceInterestPaymentCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceInterestPaymentCurrencyCad TransactionSourceInterestPaymentCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceInterestPaymentCurrencyChf TransactionSourceInterestPaymentCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceInterestPaymentCurrencyEur TransactionSourceInterestPaymentCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceInterestPaymentCurrencyGbp TransactionSourceInterestPaymentCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceInterestPaymentCurrencyJpy TransactionSourceInterestPaymentCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceInterestPaymentCurrencyUsd TransactionSourceInterestPaymentCurrency = "USD"
 )
 
@@ -3754,17 +3334,11 @@ func (r transactionSourceInternalSourceJSON) RawJSON() string {
 type TransactionSourceInternalSourceCurrency string
 
 const (
-	// Canadian Dollar (CAD)
 	TransactionSourceInternalSourceCurrencyCad TransactionSourceInternalSourceCurrency = "CAD"
-	// Swiss Franc (CHF)
 	TransactionSourceInternalSourceCurrencyChf TransactionSourceInternalSourceCurrency = "CHF"
-	// Euro (EUR)
 	TransactionSourceInternalSourceCurrencyEur TransactionSourceInternalSourceCurrency = "EUR"
-	// British Pound (GBP)
 	TransactionSourceInternalSourceCurrencyGbp TransactionSourceInternalSourceCurrency = "GBP"
-	// Japanese Yen (JPY)
 	TransactionSourceInternalSourceCurrencyJpy TransactionSourceInternalSourceCurrency = "JPY"
-	// US Dollar (USD)
 	TransactionSourceInternalSourceCurrencyUsd TransactionSourceInternalSourceCurrency = "USD"
 )
 
@@ -3781,36 +3355,21 @@ func (r TransactionSourceInternalSourceCurrency) IsKnown() bool {
 type TransactionSourceInternalSourceReason string
 
 const (
-	// Account closure
-	TransactionSourceInternalSourceReasonAccountClosure TransactionSourceInternalSourceReason = "account_closure"
-	// Bank-drawn check
-	TransactionSourceInternalSourceReasonBankDrawnCheck TransactionSourceInternalSourceReason = "bank_drawn_check"
-	// Bank-drawn check credit
-	TransactionSourceInternalSourceReasonBankDrawnCheckCredit TransactionSourceInternalSourceReason = "bank_drawn_check_credit"
-	// Bank migration
-	TransactionSourceInternalSourceReasonBankMigration TransactionSourceInternalSourceReason = "bank_migration"
-	// Check adjustment
-	TransactionSourceInternalSourceReasonCheckAdjustment TransactionSourceInternalSourceReason = "check_adjustment"
-	// Collection payment
-	TransactionSourceInternalSourceReasonCollectionPayment TransactionSourceInternalSourceReason = "collection_payment"
-	// Collection receivable
-	TransactionSourceInternalSourceReasonCollectionReceivable TransactionSourceInternalSourceReason = "collection_receivable"
-	// Empyreal adjustment
-	TransactionSourceInternalSourceReasonEmpyrealAdjustment TransactionSourceInternalSourceReason = "empyreal_adjustment"
-	// Error
-	TransactionSourceInternalSourceReasonError TransactionSourceInternalSourceReason = "error"
-	// Error correction
-	TransactionSourceInternalSourceReasonErrorCorrection TransactionSourceInternalSourceReason = "error_correction"
-	// Fees
-	TransactionSourceInternalSourceReasonFees TransactionSourceInternalSourceReason = "fees"
-	// Interest
-	TransactionSourceInternalSourceReasonInterest TransactionSourceInternalSourceReason = "interest"
-	// Negative balance forgiveness
+	TransactionSourceInternalSourceReasonAccountClosure             TransactionSourceInternalSourceReason = "account_closure"
+	TransactionSourceInternalSourceReasonBankDrawnCheck             TransactionSourceInternalSourceReason = "bank_drawn_check"
+	TransactionSourceInternalSourceReasonBankDrawnCheckCredit       TransactionSourceInternalSourceReason = "bank_drawn_check_credit"
+	TransactionSourceInternalSourceReasonBankMigration              TransactionSourceInternalSourceReason = "bank_migration"
+	TransactionSourceInternalSourceReasonCheckAdjustment            TransactionSourceInternalSourceReason = "check_adjustment"
+	TransactionSourceInternalSourceReasonCollectionPayment          TransactionSourceInternalSourceReason = "collection_payment"
+	TransactionSourceInternalSourceReasonCollectionReceivable       TransactionSourceInternalSourceReason = "collection_receivable"
+	TransactionSourceInternalSourceReasonEmpyrealAdjustment         TransactionSourceInternalSourceReason = "empyreal_adjustment"
+	TransactionSourceInternalSourceReasonError                      TransactionSourceInternalSourceReason = "error"
+	TransactionSourceInternalSourceReasonErrorCorrection            TransactionSourceInternalSourceReason = "error_correction"
+	TransactionSourceInternalSourceReasonFees                       TransactionSourceInternalSourceReason = "fees"
+	TransactionSourceInternalSourceReasonInterest                   TransactionSourceInternalSourceReason = "interest"
 	TransactionSourceInternalSourceReasonNegativeBalanceForgiveness TransactionSourceInternalSourceReason = "negative_balance_forgiveness"
-	// Sample funds
-	TransactionSourceInternalSourceReasonSampleFunds TransactionSourceInternalSourceReason = "sample_funds"
-	// Sample funds return
-	TransactionSourceInternalSourceReasonSampleFundsReturn TransactionSourceInternalSourceReason = "sample_funds_return"
+	TransactionSourceInternalSourceReasonSampleFunds                TransactionSourceInternalSourceReason = "sample_funds"
+	TransactionSourceInternalSourceReasonSampleFundsReturn          TransactionSourceInternalSourceReason = "sample_funds_return"
 )
 
 func (r TransactionSourceInternalSourceReason) IsKnown() bool {
@@ -3976,80 +3535,35 @@ func (r TransactionListParamsCategory) URLQuery() (v url.Values) {
 type TransactionListParamsCategoryIn string
 
 const (
-	// Account Transfer Intention: details will be under the
-	// `account_transfer_intention` object.
-	TransactionListParamsCategoryInAccountTransferIntention TransactionListParamsCategoryIn = "account_transfer_intention"
-	// ACH Transfer Intention: details will be under the `ach_transfer_intention`
-	// object.
-	TransactionListParamsCategoryInACHTransferIntention TransactionListParamsCategoryIn = "ach_transfer_intention"
-	// ACH Transfer Rejection: details will be under the `ach_transfer_rejection`
-	// object.
-	TransactionListParamsCategoryInACHTransferRejection TransactionListParamsCategoryIn = "ach_transfer_rejection"
-	// ACH Transfer Return: details will be under the `ach_transfer_return` object.
-	TransactionListParamsCategoryInACHTransferReturn TransactionListParamsCategoryIn = "ach_transfer_return"
-	// Cashback Payment: details will be under the `cashback_payment` object.
-	TransactionListParamsCategoryInCashbackPayment TransactionListParamsCategoryIn = "cashback_payment"
-	// Card Dispute Acceptance: details will be under the `card_dispute_acceptance`
-	// object.
-	TransactionListParamsCategoryInCardDisputeAcceptance TransactionListParamsCategoryIn = "card_dispute_acceptance"
-	// Card Dispute Loss: details will be under the `card_dispute_loss` object.
-	TransactionListParamsCategoryInCardDisputeLoss TransactionListParamsCategoryIn = "card_dispute_loss"
-	// Card Refund: details will be under the `card_refund` object.
-	TransactionListParamsCategoryInCardRefund TransactionListParamsCategoryIn = "card_refund"
-	// Card Settlement: details will be under the `card_settlement` object.
-	TransactionListParamsCategoryInCardSettlement TransactionListParamsCategoryIn = "card_settlement"
-	// Card Revenue Payment: details will be under the `card_revenue_payment` object.
-	TransactionListParamsCategoryInCardRevenuePayment TransactionListParamsCategoryIn = "card_revenue_payment"
-	// Check Deposit Acceptance: details will be under the `check_deposit_acceptance`
-	// object.
-	TransactionListParamsCategoryInCheckDepositAcceptance TransactionListParamsCategoryIn = "check_deposit_acceptance"
-	// Check Deposit Return: details will be under the `check_deposit_return` object.
-	TransactionListParamsCategoryInCheckDepositReturn TransactionListParamsCategoryIn = "check_deposit_return"
-	// Check Transfer Deposit: details will be under the `check_transfer_deposit`
-	// object.
-	TransactionListParamsCategoryInCheckTransferDeposit TransactionListParamsCategoryIn = "check_transfer_deposit"
-	// Fee Payment: details will be under the `fee_payment` object.
-	TransactionListParamsCategoryInFeePayment TransactionListParamsCategoryIn = "fee_payment"
-	// Inbound ACH Transfer Intention: details will be under the `inbound_ach_transfer`
-	// object.
-	TransactionListParamsCategoryInInboundACHTransfer TransactionListParamsCategoryIn = "inbound_ach_transfer"
-	// Inbound ACH Transfer Return Intention: details will be under the
-	// `inbound_ach_transfer_return_intention` object.
-	TransactionListParamsCategoryInInboundACHTransferReturnIntention TransactionListParamsCategoryIn = "inbound_ach_transfer_return_intention"
-	// Inbound Check Deposit Return Intention: details will be under the
-	// `inbound_check_deposit_return_intention` object.
-	TransactionListParamsCategoryInInboundCheckDepositReturnIntention TransactionListParamsCategoryIn = "inbound_check_deposit_return_intention"
-	// Inbound Check Adjustment: details will be under the `inbound_check_adjustment`
-	// object.
-	TransactionListParamsCategoryInInboundCheckAdjustment TransactionListParamsCategoryIn = "inbound_check_adjustment"
-	// Inbound Real-Time Payments Transfer Confirmation: details will be under the
-	// `inbound_real_time_payments_transfer_confirmation` object.
+	TransactionListParamsCategoryInAccountTransferIntention                    TransactionListParamsCategoryIn = "account_transfer_intention"
+	TransactionListParamsCategoryInACHTransferIntention                        TransactionListParamsCategoryIn = "ach_transfer_intention"
+	TransactionListParamsCategoryInACHTransferRejection                        TransactionListParamsCategoryIn = "ach_transfer_rejection"
+	TransactionListParamsCategoryInACHTransferReturn                           TransactionListParamsCategoryIn = "ach_transfer_return"
+	TransactionListParamsCategoryInCashbackPayment                             TransactionListParamsCategoryIn = "cashback_payment"
+	TransactionListParamsCategoryInCardDisputeAcceptance                       TransactionListParamsCategoryIn = "card_dispute_acceptance"
+	TransactionListParamsCategoryInCardDisputeLoss                             TransactionListParamsCategoryIn = "card_dispute_loss"
+	TransactionListParamsCategoryInCardRefund                                  TransactionListParamsCategoryIn = "card_refund"
+	TransactionListParamsCategoryInCardSettlement                              TransactionListParamsCategoryIn = "card_settlement"
+	TransactionListParamsCategoryInCardRevenuePayment                          TransactionListParamsCategoryIn = "card_revenue_payment"
+	TransactionListParamsCategoryInCheckDepositAcceptance                      TransactionListParamsCategoryIn = "check_deposit_acceptance"
+	TransactionListParamsCategoryInCheckDepositReturn                          TransactionListParamsCategoryIn = "check_deposit_return"
+	TransactionListParamsCategoryInCheckTransferDeposit                        TransactionListParamsCategoryIn = "check_transfer_deposit"
+	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
+	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
+	TransactionListParamsCategoryInInboundACHTransferReturnIntention           TransactionListParamsCategoryIn = "inbound_ach_transfer_return_intention"
+	TransactionListParamsCategoryInInboundCheckDepositReturnIntention          TransactionListParamsCategoryIn = "inbound_check_deposit_return_intention"
+	TransactionListParamsCategoryInInboundCheckAdjustment                      TransactionListParamsCategoryIn = "inbound_check_adjustment"
 	TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_confirmation"
-	// Inbound Real-Time Payments Transfer Decline: details will be under the
-	// `inbound_real_time_payments_transfer_decline` object.
-	TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_decline"
-	// Inbound Wire Reversal: details will be under the `inbound_wire_reversal` object.
-	TransactionListParamsCategoryInInboundWireReversal TransactionListParamsCategoryIn = "inbound_wire_reversal"
-	// Inbound Wire Transfer Intention: details will be under the
-	// `inbound_wire_transfer` object.
-	TransactionListParamsCategoryInInboundWireTransfer TransactionListParamsCategoryIn = "inbound_wire_transfer"
-	// Inbound Wire Transfer Reversal Intention: details will be under the
-	// `inbound_wire_transfer_reversal` object.
-	TransactionListParamsCategoryInInboundWireTransferReversal TransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
-	// Interest Payment: details will be under the `interest_payment` object.
-	TransactionListParamsCategoryInInterestPayment TransactionListParamsCategoryIn = "interest_payment"
-	// Internal Source: details will be under the `internal_source` object.
-	TransactionListParamsCategoryInInternalSource TransactionListParamsCategoryIn = "internal_source"
-	// Real-Time Payments Transfer Acknowledgement: details will be under the
-	// `real_time_payments_transfer_acknowledgement` object.
-	TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement TransactionListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
-	// Sample Funds: details will be under the `sample_funds` object.
-	TransactionListParamsCategoryInSampleFunds TransactionListParamsCategoryIn = "sample_funds"
-	// Wire Transfer Intention: details will be under the `wire_transfer_intention`
-	// object.
-	TransactionListParamsCategoryInWireTransferIntention TransactionListParamsCategoryIn = "wire_transfer_intention"
-	// The Transaction was made for an undocumented or deprecated reason.
-	TransactionListParamsCategoryInOther TransactionListParamsCategoryIn = "other"
+	TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline      TransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_decline"
+	TransactionListParamsCategoryInInboundWireReversal                         TransactionListParamsCategoryIn = "inbound_wire_reversal"
+	TransactionListParamsCategoryInInboundWireTransfer                         TransactionListParamsCategoryIn = "inbound_wire_transfer"
+	TransactionListParamsCategoryInInboundWireTransferReversal                 TransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
+	TransactionListParamsCategoryInInterestPayment                             TransactionListParamsCategoryIn = "interest_payment"
+	TransactionListParamsCategoryInInternalSource                              TransactionListParamsCategoryIn = "internal_source"
+	TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement     TransactionListParamsCategoryIn = "real_time_payments_transfer_acknowledgement"
+	TransactionListParamsCategoryInSampleFunds                                 TransactionListParamsCategoryIn = "sample_funds"
+	TransactionListParamsCategoryInWireTransferIntention                       TransactionListParamsCategoryIn = "wire_transfer_intention"
+	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
 )
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {

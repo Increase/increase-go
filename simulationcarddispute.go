@@ -63,19 +63,11 @@ func (r SimulationCardDisputeActionParams) MarshalJSON() (data []byte, err error
 type SimulationCardDisputeActionParamsStatus string
 
 const (
-	// Increase has requested more information related to the Card Dispute from you.
 	SimulationCardDisputeActionParamsStatusPendingUserInformation SimulationCardDisputeActionParamsStatus = "pending_user_information"
-	// The Card Dispute has been accepted and your funds have been returned. The card
-	// dispute will eventually transition into `won` or `lost` depending on the
-	// outcome.
-	SimulationCardDisputeActionParamsStatusAccepted SimulationCardDisputeActionParamsStatus = "accepted"
-	// The Card Dispute has been rejected.
-	SimulationCardDisputeActionParamsStatusRejected SimulationCardDisputeActionParamsStatus = "rejected"
-	// The Card Dispute has been lost and funds previously credited from the acceptance
-	// have been debited.
-	SimulationCardDisputeActionParamsStatusLost SimulationCardDisputeActionParamsStatus = "lost"
-	// The Card Dispute has been won and no further action can be taken.
-	SimulationCardDisputeActionParamsStatusWon SimulationCardDisputeActionParamsStatus = "won"
+	SimulationCardDisputeActionParamsStatusAccepted               SimulationCardDisputeActionParamsStatus = "accepted"
+	SimulationCardDisputeActionParamsStatusRejected               SimulationCardDisputeActionParamsStatus = "rejected"
+	SimulationCardDisputeActionParamsStatusLost                   SimulationCardDisputeActionParamsStatus = "lost"
+	SimulationCardDisputeActionParamsStatusWon                    SimulationCardDisputeActionParamsStatus = "won"
 )
 
 func (r SimulationCardDisputeActionParamsStatus) IsKnown() bool {

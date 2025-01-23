@@ -106,9 +106,7 @@ func (r routingNumberListResponseJSON) RawJSON() string {
 type RoutingNumberListResponseACHTransfers string
 
 const (
-	// The routing number can receive this transfer type.
-	RoutingNumberListResponseACHTransfersSupported RoutingNumberListResponseACHTransfers = "supported"
-	// The routing number cannot receive this transfer type.
+	RoutingNumberListResponseACHTransfersSupported    RoutingNumberListResponseACHTransfers = "supported"
 	RoutingNumberListResponseACHTransfersNotSupported RoutingNumberListResponseACHTransfers = "not_supported"
 )
 
@@ -124,9 +122,7 @@ func (r RoutingNumberListResponseACHTransfers) IsKnown() bool {
 type RoutingNumberListResponseRealTimePaymentsTransfers string
 
 const (
-	// The routing number can receive this transfer type.
-	RoutingNumberListResponseRealTimePaymentsTransfersSupported RoutingNumberListResponseRealTimePaymentsTransfers = "supported"
-	// The routing number cannot receive this transfer type.
+	RoutingNumberListResponseRealTimePaymentsTransfersSupported    RoutingNumberListResponseRealTimePaymentsTransfers = "supported"
 	RoutingNumberListResponseRealTimePaymentsTransfersNotSupported RoutingNumberListResponseRealTimePaymentsTransfers = "not_supported"
 )
 
@@ -158,9 +154,7 @@ func (r RoutingNumberListResponseType) IsKnown() bool {
 type RoutingNumberListResponseWireTransfers string
 
 const (
-	// The routing number can receive this transfer type.
-	RoutingNumberListResponseWireTransfersSupported RoutingNumberListResponseWireTransfers = "supported"
-	// The routing number cannot receive this transfer type.
+	RoutingNumberListResponseWireTransfersSupported    RoutingNumberListResponseWireTransfers = "supported"
 	RoutingNumberListResponseWireTransfersNotSupported RoutingNumberListResponseWireTransfers = "not_supported"
 )
 

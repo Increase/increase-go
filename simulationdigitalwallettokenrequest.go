@@ -78,14 +78,10 @@ func (r simulationDigitalWalletTokenRequestNewResponseJSON) RawJSON() string {
 type SimulationDigitalWalletTokenRequestNewResponseDeclineReason string
 
 const (
-	// The card is not active.
-	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonCardNotActive SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "card_not_active"
-	// The card does not have a two-factor authentication method.
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonCardNotActive        SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "card_not_active"
 	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonNoVerificationMethod SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "no_verification_method"
-	// Your webhook timed out when evaluating the token provisioning attempt.
-	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookTimedOut SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_timed_out"
-	// Your webhook declined the token provisioning attempt.
-	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_declined"
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookTimedOut      SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_timed_out"
+	SimulationDigitalWalletTokenRequestNewResponseDeclineReasonWebhookDeclined      SimulationDigitalWalletTokenRequestNewResponseDeclineReason = "webhook_declined"
 )
 
 func (r SimulationDigitalWalletTokenRequestNewResponseDeclineReason) IsKnown() bool {

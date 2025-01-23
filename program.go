@@ -130,12 +130,9 @@ func (r programJSON) RawJSON() string {
 type ProgramBank string
 
 const (
-	// Blue Ridge Bank, N.A.
-	ProgramBankBlueRidgeBank ProgramBank = "blue_ridge_bank"
-	// First Internet Bank of Indiana
+	ProgramBankBlueRidgeBank     ProgramBank = "blue_ridge_bank"
 	ProgramBankFirstInternetBank ProgramBank = "first_internet_bank"
-	// Grasshopper Bank
-	ProgramBankGrasshopperBank ProgramBank = "grasshopper_bank"
+	ProgramBankGrasshopperBank   ProgramBank = "grasshopper_bank"
 )
 
 func (r ProgramBank) IsKnown() bool {

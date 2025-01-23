@@ -60,22 +60,13 @@ func (r SimulationPhysicalCardAdvanceShipmentParams) MarshalJSON() (data []byte,
 type SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus string
 
 const (
-	// The physical card has not yet been shipped.
-	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusPending SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "pending"
-	// The physical card shipment was canceled prior to submission.
-	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusCanceled SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "canceled"
-	// The physical card shipment has been submitted to the card fulfillment provider.
-	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusSubmitted SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "submitted"
-	// The physical card shipment has been acknowledged by the card fulfillment
-	// provider and will be processed in their next batch.
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusPending      SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "pending"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusCanceled     SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "canceled"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusSubmitted    SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "submitted"
 	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusAcknowledged SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "acknowledged"
-	// The physical card shipment was rejected by the card printer due to an error.
-	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusRejected SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "rejected"
-	// The physical card has been shipped.
-	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "shipped"
-	// The physical card shipment was returned to the sender and destroyed by the
-	// production facility.
-	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusReturned SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "returned"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusRejected     SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "rejected"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped      SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "shipped"
+	SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusReturned     SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus = "returned"
 )
 
 func (r SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus) IsKnown() bool {
