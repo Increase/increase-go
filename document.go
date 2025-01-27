@@ -117,13 +117,14 @@ type DocumentCategory string
 
 const (
 	DocumentCategoryForm1099Int          DocumentCategory = "form_1099_int"
+	DocumentCategoryForm1099Misc         DocumentCategory = "form_1099_misc"
 	DocumentCategoryProofOfAuthorization DocumentCategory = "proof_of_authorization"
 	DocumentCategoryCompanyInformation   DocumentCategory = "company_information"
 )
 
 func (r DocumentCategory) IsKnown() bool {
 	switch r {
-	case DocumentCategoryForm1099Int, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation:
+	case DocumentCategoryForm1099Int, DocumentCategoryForm1099Misc, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation:
 		return true
 	}
 	return false
@@ -185,13 +186,14 @@ type DocumentListParamsCategoryIn string
 
 const (
 	DocumentListParamsCategoryInForm1099Int          DocumentListParamsCategoryIn = "form_1099_int"
+	DocumentListParamsCategoryInForm1099Misc         DocumentListParamsCategoryIn = "form_1099_misc"
 	DocumentListParamsCategoryInProofOfAuthorization DocumentListParamsCategoryIn = "proof_of_authorization"
 	DocumentListParamsCategoryInCompanyInformation   DocumentListParamsCategoryIn = "company_information"
 )
 
 func (r DocumentListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation:
+	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInForm1099Misc, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation:
 		return true
 	}
 	return false
