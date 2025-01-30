@@ -479,6 +479,8 @@ type CheckTransferPhysicalCheck struct {
 	RecipientName string `json:"recipient_name,required"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
+	// The shipping method for the check.
+	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method,required,nullable"`
 	// The text that will appear as the signature on the check in cursive font. If
 	// blank, the check will be printed with 'No signature required'.
 	SignatureText string `json:"signature_text,required,nullable"`
@@ -495,6 +497,7 @@ type checkTransferPhysicalCheckJSON struct {
 	Note            apijson.Field
 	RecipientName   apijson.Field
 	ReturnAddress   apijson.Field
+	ShippingMethod  apijson.Field
 	SignatureText   apijson.Field
 	TrackingUpdates apijson.Field
 	raw             string
@@ -583,6 +586,22 @@ func (r *CheckTransferPhysicalCheckReturnAddress) UnmarshalJSON(data []byte) (er
 
 func (r checkTransferPhysicalCheckReturnAddressJSON) RawJSON() string {
 	return r.raw
+}
+
+// The shipping method for the check.
+type CheckTransferPhysicalCheckShippingMethod string
+
+const (
+	CheckTransferPhysicalCheckShippingMethodUspsFirstClass CheckTransferPhysicalCheckShippingMethod = "usps_first_class"
+	CheckTransferPhysicalCheckShippingMethodFedexOvernight CheckTransferPhysicalCheckShippingMethod = "fedex_overnight"
+)
+
+func (r CheckTransferPhysicalCheckShippingMethod) IsKnown() bool {
+	switch r {
+	case CheckTransferPhysicalCheckShippingMethodUspsFirstClass, CheckTransferPhysicalCheckShippingMethodFedexOvernight:
+		return true
+	}
+	return false
 }
 
 type CheckTransferPhysicalCheckTrackingUpdate struct {
