@@ -29,8 +29,8 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 	_, err := client.CheckTransfers.New(context.TODO(), increase.CheckTransferNewParams{
 		AccountID:             increase.F("account_in71c4amph0vgo2qllky"),
 		Amount:                increase.F(int64(1000)),
-		SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 		FulfillmentMethod:     increase.F(increase.CheckTransferNewParamsFulfillmentMethodPhysicalCheck),
+		SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 		PhysicalCheck: increase.F(increase.CheckTransferNewParamsPhysicalCheck{
 			MailingAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckMailingAddress{
 				City:       increase.F("New York"),
