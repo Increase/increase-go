@@ -442,17 +442,20 @@ type CheckTransferMailing struct {
 	ImageID string `json:"image_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
-	MailedAt time.Time                `json:"mailed_at,required" format:"date-time"`
-	JSON     checkTransferMailingJSON `json:"-"`
+	MailedAt time.Time `json:"mailed_at,required" format:"date-time"`
+	// The tracking number of the shipment, if available for the shipping method.
+	TrackingNumber string                   `json:"tracking_number,required,nullable"`
+	JSON           checkTransferMailingJSON `json:"-"`
 }
 
 // checkTransferMailingJSON contains the JSON metadata for the struct
 // [CheckTransferMailing]
 type checkTransferMailingJSON struct {
-	ImageID     apijson.Field
-	MailedAt    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ImageID        apijson.Field
+	MailedAt       apijson.Field
+	TrackingNumber apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *CheckTransferMailing) UnmarshalJSON(data []byte) (err error) {
