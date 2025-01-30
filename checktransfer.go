@@ -811,11 +811,11 @@ type CheckTransferNewParams struct {
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The transfer amount in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
+	// Whether Increase will print and mail the check or if you will do it yourself.
+	FulfillmentMethod param.Field[CheckTransferNewParamsFulfillmentMethod] `json:"fulfillment_method,required"`
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
-	// Whether Increase will print and mail the check or if you will do it yourself.
-	FulfillmentMethod param.Field[CheckTransferNewParamsFulfillmentMethod] `json:"fulfillment_method"`
 	// Details relating to the physical check that Increase will print and mail. This
 	// is required if `fulfillment_method` is equal to `physical_check`. It must not be
 	// included if any other `fulfillment_method` is provided.
