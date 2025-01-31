@@ -122,6 +122,9 @@ func (r cardPaymentJSON) RawJSON() string {
 }
 
 type CardPaymentElement struct {
+	// A Card Authentication object. This field will be present in the JSON response if
+	// and only if `category` is equal to `card_authentication`.
+	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication,required,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`.
 	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization,required,nullable"`
@@ -164,6 +167,7 @@ type CardPaymentElement struct {
 // cardPaymentElementJSON contains the JSON metadata for the struct
 // [CardPaymentElement]
 type cardPaymentElementJSON struct {
+	CardAuthentication          apijson.Field
 	CardAuthorization           apijson.Field
 	CardAuthorizationExpiration apijson.Field
 	CardDecline                 apijson.Field
@@ -186,6 +190,272 @@ func (r *CardPaymentElement) UnmarshalJSON(data []byte) (err error) {
 
 func (r cardPaymentElementJSON) RawJSON() string {
 	return r.raw
+}
+
+// A Card Authentication object. This field will be present in the JSON response if
+// and only if `category` is equal to `card_authentication`.
+type CardPaymentElementsCardAuthentication struct {
+	// The Card Authentication identifier.
+	ID string `json:"id,required"`
+	// The identifier of the Card.
+	CardID string `json:"card_id,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required"`
+	// The category of the card authentication attempt.
+	Category CardPaymentElementsCardAuthenticationCategory `json:"category,required,nullable"`
+	// Details about the challenge, if one was requested.
+	Challenge CardPaymentElementsCardAuthenticationChallenge `json:"challenge,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
+	// Authentication was attempted.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The reason why this authentication attempt was denied, if it was.
+	DenyReason CardPaymentElementsCardAuthenticationDenyReason `json:"deny_reason,required,nullable"`
+	// The device channel of the card authentication attempt.
+	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel,required,nullable"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The name of the merchant.
+	MerchantName string `json:"merchant_name,required"`
+	// The purchase amount in minor units.
+	PurchaseAmount int64 `json:"purchase_amount,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// authentication attempt's purchase currency.
+	PurchaseCurrency string `json:"purchase_currency,required,nullable"`
+	// The identifier of the Real-Time Decision sent to approve or decline this
+	// authentication attempt.
+	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// The status of the card authentication.
+	Status CardPaymentElementsCardAuthenticationStatus `json:"status,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `card_authentication`.
+	Type CardPaymentElementsCardAuthenticationType `json:"type,required"`
+	JSON cardPaymentElementsCardAuthenticationJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationJSON contains the JSON metadata for the
+// struct [CardPaymentElementsCardAuthentication]
+type cardPaymentElementsCardAuthenticationJSON struct {
+	ID                   apijson.Field
+	CardID               apijson.Field
+	CardPaymentID        apijson.Field
+	Category             apijson.Field
+	Challenge            apijson.Field
+	CreatedAt            apijson.Field
+	DenyReason           apijson.Field
+	DeviceChannel        apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantName         apijson.Field
+	PurchaseAmount       apijson.Field
+	PurchaseCurrency     apijson.Field
+	RealTimeDecisionID   apijson.Field
+	Status               apijson.Field
+	Type                 apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthentication) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the card authentication attempt.
+type CardPaymentElementsCardAuthenticationCategory string
+
+const (
+	CardPaymentElementsCardAuthenticationCategoryPaymentAuthentication    CardPaymentElementsCardAuthenticationCategory = "payment_authentication"
+	CardPaymentElementsCardAuthenticationCategoryNonPaymentAuthentication CardPaymentElementsCardAuthenticationCategory = "non_payment_authentication"
+)
+
+func (r CardPaymentElementsCardAuthenticationCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationCategoryPaymentAuthentication, CardPaymentElementsCardAuthenticationCategoryNonPaymentAuthentication:
+		return true
+	}
+	return false
+}
+
+// Details about the challenge, if one was requested.
+type CardPaymentElementsCardAuthenticationChallenge struct {
+	// Details about the challenge verification attempts, if any happened.
+	Attempts []CardPaymentElementsCardAuthenticationChallengeAttempt `json:"attempts,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
+	// Authentication Challenge was started.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The one-time code used for the Card Authentication Challenge.
+	OneTimeCode string `json:"one_time_code,required"`
+	// The method used to verify the Card Authentication Challenge.
+	VerificationMethod CardPaymentElementsCardAuthenticationChallengeVerificationMethod `json:"verification_method,required"`
+	// E.g., the email address or phone number used for the Card Authentication
+	// Challenge.
+	VerificationValue string                                             `json:"verification_value,required,nullable"`
+	JSON              cardPaymentElementsCardAuthenticationChallengeJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationChallengeJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardAuthenticationChallenge]
+type cardPaymentElementsCardAuthenticationChallengeJSON struct {
+	Attempts           apijson.Field
+	CreatedAt          apijson.Field
+	OneTimeCode        apijson.Field
+	VerificationMethod apijson.Field
+	VerificationValue  apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationChallenge) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationChallengeJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardPaymentElementsCardAuthenticationChallengeAttempt struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time of the Card
+	// Authentication Challenge Attempt.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The outcome of the Card Authentication Challenge Attempt.
+	Outcome CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome `json:"outcome,required"`
+	JSON    cardPaymentElementsCardAuthenticationChallengeAttemptJSON     `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationChallengeAttemptJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardAuthenticationChallengeAttempt]
+type cardPaymentElementsCardAuthenticationChallengeAttemptJSON struct {
+	CreatedAt   apijson.Field
+	Outcome     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationChallengeAttempt) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationChallengeAttemptJSON) RawJSON() string {
+	return r.raw
+}
+
+// The outcome of the Card Authentication Challenge Attempt.
+type CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome string
+
+const (
+	CardPaymentElementsCardAuthenticationChallengeAttemptsOutcomeSuccessful CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome = "successful"
+	CardPaymentElementsCardAuthenticationChallengeAttemptsOutcomeFailed     CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome = "failed"
+)
+
+func (r CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationChallengeAttemptsOutcomeSuccessful, CardPaymentElementsCardAuthenticationChallengeAttemptsOutcomeFailed:
+		return true
+	}
+	return false
+}
+
+// The method used to verify the Card Authentication Challenge.
+type CardPaymentElementsCardAuthenticationChallengeVerificationMethod string
+
+const (
+	CardPaymentElementsCardAuthenticationChallengeVerificationMethodTextMessage   CardPaymentElementsCardAuthenticationChallengeVerificationMethod = "text_message"
+	CardPaymentElementsCardAuthenticationChallengeVerificationMethodEmail         CardPaymentElementsCardAuthenticationChallengeVerificationMethod = "email"
+	CardPaymentElementsCardAuthenticationChallengeVerificationMethodNoneAvailable CardPaymentElementsCardAuthenticationChallengeVerificationMethod = "none_available"
+)
+
+func (r CardPaymentElementsCardAuthenticationChallengeVerificationMethod) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationChallengeVerificationMethodTextMessage, CardPaymentElementsCardAuthenticationChallengeVerificationMethodEmail, CardPaymentElementsCardAuthenticationChallengeVerificationMethodNoneAvailable:
+		return true
+	}
+	return false
+}
+
+// The reason why this authentication attempt was denied, if it was.
+type CardPaymentElementsCardAuthenticationDenyReason string
+
+const (
+	CardPaymentElementsCardAuthenticationDenyReasonGroupLocked           CardPaymentElementsCardAuthenticationDenyReason = "group_locked"
+	CardPaymentElementsCardAuthenticationDenyReasonCardNotActive         CardPaymentElementsCardAuthenticationDenyReason = "card_not_active"
+	CardPaymentElementsCardAuthenticationDenyReasonEntityNotActive       CardPaymentElementsCardAuthenticationDenyReason = "entity_not_active"
+	CardPaymentElementsCardAuthenticationDenyReasonTransactionNotAllowed CardPaymentElementsCardAuthenticationDenyReason = "transaction_not_allowed"
+	CardPaymentElementsCardAuthenticationDenyReasonWebhookDenied         CardPaymentElementsCardAuthenticationDenyReason = "webhook_denied"
+	CardPaymentElementsCardAuthenticationDenyReasonWebhookTimedOut       CardPaymentElementsCardAuthenticationDenyReason = "webhook_timed_out"
+)
+
+func (r CardPaymentElementsCardAuthenticationDenyReason) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationDenyReasonGroupLocked, CardPaymentElementsCardAuthenticationDenyReasonCardNotActive, CardPaymentElementsCardAuthenticationDenyReasonEntityNotActive, CardPaymentElementsCardAuthenticationDenyReasonTransactionNotAllowed, CardPaymentElementsCardAuthenticationDenyReasonWebhookDenied, CardPaymentElementsCardAuthenticationDenyReasonWebhookTimedOut:
+		return true
+	}
+	return false
+}
+
+// The device channel of the card authentication attempt.
+type CardPaymentElementsCardAuthenticationDeviceChannel string
+
+const (
+	CardPaymentElementsCardAuthenticationDeviceChannelApp                       CardPaymentElementsCardAuthenticationDeviceChannel = "app"
+	CardPaymentElementsCardAuthenticationDeviceChannelBrowser                   CardPaymentElementsCardAuthenticationDeviceChannel = "browser"
+	CardPaymentElementsCardAuthenticationDeviceChannelThreeDSRequestorInitiated CardPaymentElementsCardAuthenticationDeviceChannel = "three_ds_requestor_initiated"
+)
+
+func (r CardPaymentElementsCardAuthenticationDeviceChannel) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationDeviceChannelApp, CardPaymentElementsCardAuthenticationDeviceChannelBrowser, CardPaymentElementsCardAuthenticationDeviceChannelThreeDSRequestorInitiated:
+		return true
+	}
+	return false
+}
+
+// The status of the card authentication.
+type CardPaymentElementsCardAuthenticationStatus string
+
+const (
+	CardPaymentElementsCardAuthenticationStatusDenied                        CardPaymentElementsCardAuthenticationStatus = "denied"
+	CardPaymentElementsCardAuthenticationStatusAuthenticatedWithChallenge    CardPaymentElementsCardAuthenticationStatus = "authenticated_with_challenge"
+	CardPaymentElementsCardAuthenticationStatusAuthenticatedWithoutChallenge CardPaymentElementsCardAuthenticationStatus = "authenticated_without_challenge"
+	CardPaymentElementsCardAuthenticationStatusAwaitingChallenge             CardPaymentElementsCardAuthenticationStatus = "awaiting_challenge"
+	CardPaymentElementsCardAuthenticationStatusValidatingChallenge           CardPaymentElementsCardAuthenticationStatus = "validating_challenge"
+	CardPaymentElementsCardAuthenticationStatusCanceled                      CardPaymentElementsCardAuthenticationStatus = "canceled"
+	CardPaymentElementsCardAuthenticationStatusTimedOutAwaitingChallenge     CardPaymentElementsCardAuthenticationStatus = "timed_out_awaiting_challenge"
+	CardPaymentElementsCardAuthenticationStatusErrored                       CardPaymentElementsCardAuthenticationStatus = "errored"
+	CardPaymentElementsCardAuthenticationStatusExceededAttemptThreshold      CardPaymentElementsCardAuthenticationStatus = "exceeded_attempt_threshold"
+)
+
+func (r CardPaymentElementsCardAuthenticationStatus) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationStatusDenied, CardPaymentElementsCardAuthenticationStatusAuthenticatedWithChallenge, CardPaymentElementsCardAuthenticationStatusAuthenticatedWithoutChallenge, CardPaymentElementsCardAuthenticationStatusAwaitingChallenge, CardPaymentElementsCardAuthenticationStatusValidatingChallenge, CardPaymentElementsCardAuthenticationStatusCanceled, CardPaymentElementsCardAuthenticationStatusTimedOutAwaitingChallenge, CardPaymentElementsCardAuthenticationStatusErrored, CardPaymentElementsCardAuthenticationStatusExceededAttemptThreshold:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `card_authentication`.
+type CardPaymentElementsCardAuthenticationType string
+
+const (
+	CardPaymentElementsCardAuthenticationTypeCardAuthentication CardPaymentElementsCardAuthenticationType = "card_authentication"
+)
+
+func (r CardPaymentElementsCardAuthenticationType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationTypeCardAuthentication:
+		return true
+	}
+	return false
 }
 
 // A Card Authorization object. This field will be present in the JSON response if

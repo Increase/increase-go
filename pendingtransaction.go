@@ -205,6 +205,9 @@ type PendingTransactionSource struct {
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`.
 	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
+	// An Inbound Wire Transfer Reversal object. This field will be present in the JSON
+	// response if and only if `category` is equal to `inbound_wire_transfer_reversal`.
+	InboundWireTransferReversal PendingTransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,required,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
 	Other interface{} `json:"other,required,nullable"`
@@ -228,6 +231,7 @@ type pendingTransactionSourceJSON struct {
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
 	InboundFundsHold                    apijson.Field
+	InboundWireTransferReversal         apijson.Field
 	Other                               apijson.Field
 	RealTimePaymentsTransferInstruction apijson.Field
 	WireTransferInstruction             apijson.Field
@@ -1087,6 +1091,30 @@ func (r PendingTransactionSourceInboundFundsHoldType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// An Inbound Wire Transfer Reversal object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_wire_transfer_reversal`.
+type PendingTransactionSourceInboundWireTransferReversal struct {
+	// The ID of the Inbound Wire Transfer that is being reversed.
+	InboundWireTransferID string                                                  `json:"inbound_wire_transfer_id,required"`
+	JSON                  pendingTransactionSourceInboundWireTransferReversalJSON `json:"-"`
+}
+
+// pendingTransactionSourceInboundWireTransferReversalJSON contains the JSON
+// metadata for the struct [PendingTransactionSourceInboundWireTransferReversal]
+type pendingTransactionSourceInboundWireTransferReversalJSON struct {
+	InboundWireTransferID apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceInboundWireTransferReversal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceInboundWireTransferReversalJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Real-Time Payments Transfer Instruction object. This field will be present in
