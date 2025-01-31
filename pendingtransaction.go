@@ -191,7 +191,9 @@ type PendingTransactionSource struct {
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
 	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction,required,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_authorization`.
+	// and only if `category` is equal to `card_authorization`. Card Authorizations are
+	// temporary holds placed on a customers funds with the intent to later clear a
+	// transaction.
 	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
@@ -203,10 +205,14 @@ type PendingTransactionSource struct {
 	// response if and only if `category` is equal to `check_transfer_instruction`.
 	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,required,nullable"`
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
-	// and only if `category` is equal to `inbound_funds_hold`.
+	// and only if `category` is equal to `inbound_funds_hold`. We hold funds for
+	// certain transaction types to account for return windows where funds might still
+	// be clawed back by the sending institution.
 	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
 	// An Inbound Wire Transfer Reversal object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_transfer_reversal`.
+	// An Inbound Wire Transfer Reversal is created when Increase has received a wire
+	// and the User requests that it be reversed.
 	InboundWireTransferReversal PendingTransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,required,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
@@ -328,7 +334,9 @@ func (r pendingTransactionSourceACHTransferInstructionJSON) RawJSON() string {
 }
 
 // A Card Authorization object. This field will be present in the JSON response if
-// and only if `category` is equal to `card_authorization`.
+// and only if `category` is equal to `card_authorization`. Card Authorizations are
+// temporary holds placed on a customers funds with the intent to later clear a
+// transaction.
 type PendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
@@ -985,7 +993,9 @@ func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool
 }
 
 // An Inbound Funds Hold object. This field will be present in the JSON response if
-// and only if `category` is equal to `inbound_funds_hold`.
+// and only if `category` is equal to `inbound_funds_hold`. We hold funds for
+// certain transaction types to account for return windows where funds might still
+// be clawed back by the sending institution.
 type PendingTransactionSourceInboundFundsHold struct {
 	// The Inbound Funds Hold identifier.
 	ID string `json:"id,required"`
@@ -1095,6 +1105,8 @@ func (r PendingTransactionSourceInboundFundsHoldType) IsKnown() bool {
 
 // An Inbound Wire Transfer Reversal object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_wire_transfer_reversal`.
+// An Inbound Wire Transfer Reversal is created when Increase has received a wire
+// and the User requests that it be reversed.
 type PendingTransactionSourceInboundWireTransferReversal struct {
 	// The ID of the Inbound Wire Transfer that is being reversed.
 	InboundWireTransferID string                                                  `json:"inbound_wire_transfer_id,required"`
