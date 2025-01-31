@@ -178,100 +178,155 @@ func (r TransactionRouteType) IsKnown() bool {
 // deprecated and will be removed in the future.
 type TransactionSource struct {
 	// An Account Transfer Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to `account_transfer_intention`.
+	// response if and only if `category` is equal to `account_transfer_intention`. Two
+	// Account Transfer Intentions are created from each Account Transfer. One
+	// decrements the source account, and the other increments the destination account.
 	AccountTransferIntention TransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
 	// An ACH Transfer Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to `ach_transfer_intention`.
+	// response if and only if `category` is equal to `ach_transfer_intention`. An ACH
+	// Transfer Intention is created from an ACH Transfer. It reflects the intention to
+	// move money into or out of an Increase account via the ACH network.
 	ACHTransferIntention TransactionSourceACHTransferIntention `json:"ach_transfer_intention,required,nullable"`
 	// An ACH Transfer Rejection object. This field will be present in the JSON
-	// response if and only if `category` is equal to `ach_transfer_rejection`.
+	// response if and only if `category` is equal to `ach_transfer_rejection`. An ACH
+	// Transfer Rejection is created when an ACH Transfer is rejected by Increase. It
+	// offsets the ACH Transfer Intention. These rejections are rare.
 	ACHTransferRejection TransactionSourceACHTransferRejection `json:"ach_transfer_rejection,required,nullable"`
 	// An ACH Transfer Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `ach_transfer_return`.
+	// if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer
+	// Return is created when an ACH Transfer is returned by the receiving bank. It
+	// offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
+	// the first two business days after the transfer is initiated, but can occur much
+	// later.
 	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return,required,nullable"`
 	// A Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
+	// Contains the details of a successful Card Dispute.
 	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,required,nullable"`
 	// A Card Dispute Loss object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_dispute_loss`.
+	// and only if `category` is equal to `card_dispute_loss`. Contains the details of
+	// a lost Card Dispute.
 	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss,required,nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_refund`.
+	// only if `category` is equal to `card_refund`. Card Refunds move money back to
+	// the cardholder. While they are usually connected to a Card Settlement an
+	// acquirer can also refund money directly to a card without relation to a
+	// transaction.
 	CardRefund TransactionSourceCardRefund `json:"card_refund,required,nullable"`
 	// A Card Revenue Payment object. This field will be present in the JSON response
-	// if and only if `category` is equal to `card_revenue_payment`.
+	// if and only if `category` is equal to `card_revenue_payment`. Card Revenue
+	// Payments reflect earnings from fees on card transactions.
 	CardRevenuePayment TransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
 	// A Card Settlement object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_settlement`.
+	// only if `category` is equal to `card_settlement`. Card Settlements are card
+	// transactions that have cleared and settled. While a settlement is usually
+	// preceded by an authorization, an acquirer can also directly clear a transaction
+	// without first authorizing it.
 	CardSettlement TransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
 	// A Cashback Payment object. This field will be present in the JSON response if
-	// and only if `category` is equal to `cashback_payment`.
+	// and only if `category` is equal to `cashback_payment`. A Cashback Payment
+	// represents the cashback paid to a cardholder for a given period. Cashback is
+	// usually paid monthly for the prior month's transactions.
 	CashbackPayment TransactionSourceCashbackPayment `json:"cashback_payment,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
 	Category TransactionSourceCategory `json:"category,required"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
-	// response if and only if `category` is equal to `check_deposit_acceptance`.
+	// response if and only if `category` is equal to `check_deposit_acceptance`. A
+	// Check Deposit Acceptance is created when a Check Deposit is processed and its
+	// details confirmed. Check Deposits may be returned by the receiving bank, which
+	// will appear as a Check Deposit Return.
 	CheckDepositAcceptance TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
 	// A Check Deposit Return object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_deposit_return`.
+	// if and only if `category` is equal to `check_deposit_return`. A Check Deposit
+	// Return is created when a Check Deposit is returned by the bank holding the
+	// account it was drawn against. Check Deposits may be returned for a variety of
+	// reasons, including insufficient funds or a mismatched account number. Usually,
+	// checks are returned within the first 7 days after the deposit is made.
 	CheckDepositReturn TransactionSourceCheckDepositReturn `json:"check_deposit_return,required,nullable"`
 	// A Check Transfer Deposit object. This field will be present in the JSON response
-	// if and only if `category` is equal to `check_transfer_deposit`.
+	// if and only if `category` is equal to `check_transfer_deposit`. An Inbound Check
+	// is a check drawn on an Increase account that has been deposited by an external
+	// bank account. These types of checks are not pre-registered.
 	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
-	// only if `category` is equal to `fee_payment`.
+	// only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
+	// made to Increase.
 	FeePayment TransactionSourceFeePayment `json:"fee_payment,required,nullable"`
 	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to `inbound_ach_transfer`.
+	// response if and only if `category` is equal to `inbound_ach_transfer`. An
+	// Inbound ACH Transfer Intention is created when an ACH transfer is initiated at
+	// another bank and received by Increase.
 	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
 	// An Inbound ACH Transfer Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
-	// `inbound_ach_transfer_return_intention`.
+	// `inbound_ach_transfer_return_intention`. An Inbound ACH Transfer Return
+	// Intention is created when an ACH transfer is initiated at another bank and
+	// returned by Increase.
 	InboundACHTransferReturnIntention TransactionSourceInboundACHTransferReturnIntention `json:"inbound_ach_transfer_return_intention,required,nullable"`
 	// An Inbound Check Adjustment object. This field will be present in the JSON
-	// response if and only if `category` is equal to `inbound_check_adjustment`.
+	// response if and only if `category` is equal to `inbound_check_adjustment`. An
+	// Inbound Check Adjustment is created when Increase receives an adjustment for a
+	// check or return deposited through Check21.
 	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment,required,nullable"`
 	// An Inbound Check Deposit Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
-	// `inbound_check_deposit_return_intention`.
+	// `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return
+	// Intention is created when Increase receives an Inbound Check and the User
+	// requests that it be returned.
 	InboundCheckDepositReturnIntention TransactionSourceInboundCheckDepositReturnIntention `json:"inbound_check_deposit_return_intention,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
-	// `inbound_real_time_payments_transfer_confirmation`.
+	// `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time
+	// Payments Transfer Confirmation is created when a Real-Time Payments transfer is
+	// initiated at another bank and received by Increase.
 	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
 	InboundRealTimePaymentsTransferDecline TransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
-	// if and only if `category` is equal to `inbound_wire_reversal`.
+	// if and only if `category` is equal to `inbound_wire_reversal`. An Inbound Wire
+	// Reversal represents a reversal of a wire transfer that was initiated via
+	// Increase. The other bank is sending the money back. This most often happens when
+	// the original destination account details were incorrect.
 	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
 	// An Inbound Wire Transfer Intention object. This field will be present in the
-	// JSON response if and only if `category` is equal to `inbound_wire_transfer`.
+	// JSON response if and only if `category` is equal to `inbound_wire_transfer`. An
+	// Inbound Wire Transfer Intention is created when a wire transfer is initiated at
+	// another bank and received by Increase.
 	InboundWireTransfer TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,required,nullable"`
 	// An Inbound Wire Transfer Reversal Intention object. This field will be present
 	// in the JSON response if and only if `category` is equal to
-	// `inbound_wire_transfer_reversal`.
+	// `inbound_wire_transfer_reversal`. An Inbound Wire Transfer Reversal Intention is
+	// created when Increase has received a wire and the User requests that it be
+	// reversed.
 	InboundWireTransferReversal TransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,required,nullable"`
 	// An Interest Payment object. This field will be present in the JSON response if
-	// and only if `category` is equal to `interest_payment`.
+	// and only if `category` is equal to `interest_payment`. An Interest Payment
+	// represents a payment of interest on an account. Interest is usually paid
+	// monthly.
 	InterestPayment TransactionSourceInterestPayment `json:"interest_payment,required,nullable"`
 	// An Internal Source object. This field will be present in the JSON response if
-	// and only if `category` is equal to `internal_source`.
+	// and only if `category` is equal to `internal_source`. A transaction between the
+	// user and Increase. See the `reason` attribute for more information.
 	InternalSource TransactionSourceInternalSource `json:"internal_source,required,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
 	Other interface{} `json:"other,required,nullable"`
 	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
-	// `real_time_payments_transfer_acknowledgement`.
+	// `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
+	// Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
+	// is acknowledged by the receiving bank.
 	RealTimePaymentsTransferAcknowledgement TransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
 	// A Sample Funds object. This field will be present in the JSON response if and
-	// only if `category` is equal to `sample_funds`.
+	// only if `category` is equal to `sample_funds`. Sample funds for testing
+	// purposes.
 	SampleFunds TransactionSourceSampleFunds `json:"sample_funds,required,nullable"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
-	// response if and only if `category` is equal to `wire_transfer_intention`.
+	// response if and only if `category` is equal to `wire_transfer_intention`. A Wire
+	// Transfer initiated via Increase and sent to a different bank.
 	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,required,nullable"`
 	JSON                  transactionSourceJSON                  `json:"-"`
 }
@@ -322,7 +377,9 @@ func (r transactionSourceJSON) RawJSON() string {
 }
 
 // An Account Transfer Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to `account_transfer_intention`.
+// response if and only if `category` is equal to `account_transfer_intention`. Two
+// Account Transfer Intentions are created from each Account Transfer. One
+// decrements the source account, and the other increments the destination account.
 type TransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -384,7 +441,9 @@ func (r TransactionSourceAccountTransferIntentionCurrency) IsKnown() bool {
 }
 
 // An ACH Transfer Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to `ach_transfer_intention`.
+// response if and only if `category` is equal to `ach_transfer_intention`. An ACH
+// Transfer Intention is created from an ACH Transfer. It reflects the intention to
+// move money into or out of an Increase account via the ACH network.
 type TransactionSourceACHTransferIntention struct {
 	// The account number for the destination account.
 	AccountNumber string `json:"account_number,required"`
@@ -422,7 +481,9 @@ func (r transactionSourceACHTransferIntentionJSON) RawJSON() string {
 }
 
 // An ACH Transfer Rejection object. This field will be present in the JSON
-// response if and only if `category` is equal to `ach_transfer_rejection`.
+// response if and only if `category` is equal to `ach_transfer_rejection`. An ACH
+// Transfer Rejection is created when an ACH Transfer is rejected by Increase. It
+// offsets the ACH Transfer Intention. These rejections are rare.
 type TransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID string                                    `json:"transfer_id,required"`
@@ -446,7 +507,11 @@ func (r transactionSourceACHTransferRejectionJSON) RawJSON() string {
 }
 
 // An ACH Transfer Return object. This field will be present in the JSON response
-// if and only if `category` is equal to `ach_transfer_return`.
+// if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer
+// Return is created when an ACH Transfer is returned by the receiving bank. It
+// offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
+// the first two business days after the transfer is initiated, but can occur much
+// later.
 type TransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -576,6 +641,7 @@ func (r TransactionSourceACHTransferReturnReturnReasonCode) IsKnown() bool {
 
 // A Card Dispute Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_dispute_acceptance`.
+// Contains the details of a successful Card Dispute.
 type TransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
@@ -607,7 +673,8 @@ func (r transactionSourceCardDisputeAcceptanceJSON) RawJSON() string {
 }
 
 // A Card Dispute Loss object. This field will be present in the JSON response if
-// and only if `category` is equal to `card_dispute_loss`.
+// and only if `category` is equal to `card_dispute_loss`. Contains the details of
+// a lost Card Dispute.
 type TransactionSourceCardDisputeLoss struct {
 	// The identifier of the Card Dispute that was lost.
 	CardDisputeID string `json:"card_dispute_id,required"`
@@ -642,7 +709,10 @@ func (r transactionSourceCardDisputeLossJSON) RawJSON() string {
 }
 
 // A Card Refund object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_refund`.
+// only if `category` is equal to `card_refund`. Card Refunds move money back to
+// the cardholder. While they are usually connected to a Card Settlement an
+// acquirer can also refund money directly to a card without relation to a
+// transaction.
 type TransactionSourceCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
@@ -1479,7 +1549,8 @@ func (r TransactionSourceCardRefundType) IsKnown() bool {
 }
 
 // A Card Revenue Payment object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_revenue_payment`.
+// if and only if `category` is equal to `card_revenue_payment`. Card Revenue
+// Payments reflect earnings from fees on card transactions.
 type TransactionSourceCardRevenuePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -1538,7 +1609,10 @@ func (r TransactionSourceCardRevenuePaymentCurrency) IsKnown() bool {
 }
 
 // A Card Settlement object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_settlement`.
+// only if `category` is equal to `card_settlement`. Card Settlements are card
+// transactions that have cleared and settled. While a settlement is usually
+// preceded by an authorization, an acquirer can also directly clear a transaction
+// without first authorizing it.
 type TransactionSourceCardSettlement struct {
 	// The Card Settlement identifier.
 	ID string `json:"id,required"`
@@ -2383,7 +2457,9 @@ func (r TransactionSourceCardSettlementType) IsKnown() bool {
 }
 
 // A Cashback Payment object. This field will be present in the JSON response if
-// and only if `category` is equal to `cashback_payment`.
+// and only if `category` is equal to `cashback_payment`. A Cashback Payment
+// represents the cashback paid to a cardholder for a given period. Cashback is
+// usually paid monthly for the prior month's transactions.
 type TransactionSourceCashbackPayment struct {
 	// The card on which the cashback was accrued.
 	AccruedOnCardID string `json:"accrued_on_card_id,required,nullable"`
@@ -2486,7 +2562,10 @@ func (r TransactionSourceCategory) IsKnown() bool {
 }
 
 // A Check Deposit Acceptance object. This field will be present in the JSON
-// response if and only if `category` is equal to `check_deposit_acceptance`.
+// response if and only if `category` is equal to `check_deposit_acceptance`. A
+// Check Deposit Acceptance is created when a Check Deposit is processed and its
+// details confirmed. Check Deposits may be returned by the receiving bank, which
+// will appear as a Check Deposit Return.
 type TransactionSourceCheckDepositAcceptance struct {
 	// The account number printed on the check.
 	AccountNumber string `json:"account_number,required"`
@@ -2553,7 +2632,11 @@ func (r TransactionSourceCheckDepositAcceptanceCurrency) IsKnown() bool {
 }
 
 // A Check Deposit Return object. This field will be present in the JSON response
-// if and only if `category` is equal to `check_deposit_return`.
+// if and only if `category` is equal to `check_deposit_return`. A Check Deposit
+// Return is created when a Check Deposit is returned by the bank holding the
+// account it was drawn against. Check Deposits may be returned for a variety of
+// reasons, including insufficient funds or a mismatched account number. Usually,
+// checks are returned within the first 7 days after the deposit is made.
 type TransactionSourceCheckDepositReturn struct {
 	// The returned amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -2658,7 +2741,9 @@ func (r TransactionSourceCheckDepositReturnReturnReason) IsKnown() bool {
 }
 
 // A Check Transfer Deposit object. This field will be present in the JSON response
-// if and only if `category` is equal to `check_transfer_deposit`.
+// if and only if `category` is equal to `check_transfer_deposit`. An Inbound Check
+// is a check drawn on an Increase account that has been deposited by an external
+// bank account. These types of checks are not pre-registered.
 type TransactionSourceCheckTransferDeposit struct {
 	// The identifier of the API File object containing an image of the back of the
 	// deposited check.
@@ -2725,7 +2810,8 @@ func (r TransactionSourceCheckTransferDepositType) IsKnown() bool {
 }
 
 // A Fee Payment object. This field will be present in the JSON response if and
-// only if `category` is equal to `fee_payment`.
+// only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
+// made to Increase.
 type TransactionSourceFeePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -2781,7 +2867,9 @@ func (r TransactionSourceFeePaymentCurrency) IsKnown() bool {
 }
 
 // An Inbound ACH Transfer Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to `inbound_ach_transfer`.
+// response if and only if `category` is equal to `inbound_ach_transfer`. An
+// Inbound ACH Transfer Intention is created when an ACH transfer is initiated at
+// another bank and received by Increase.
 type TransactionSourceInboundACHTransfer struct {
 	// Additional information sent from the originator.
 	Addenda TransactionSourceInboundACHTransferAddenda `json:"addenda,required,nullable"`
@@ -2929,7 +3017,9 @@ func (r transactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() s
 
 // An Inbound ACH Transfer Return Intention object. This field will be present in
 // the JSON response if and only if `category` is equal to
-// `inbound_ach_transfer_return_intention`.
+// `inbound_ach_transfer_return_intention`. An Inbound ACH Transfer Return
+// Intention is created when an ACH transfer is initiated at another bank and
+// returned by Increase.
 type TransactionSourceInboundACHTransferReturnIntention struct {
 	// The ID of the Inbound ACH Transfer that is being returned.
 	InboundACHTransferID string                                                 `json:"inbound_ach_transfer_id,required"`
@@ -2953,7 +3043,9 @@ func (r transactionSourceInboundACHTransferReturnIntentionJSON) RawJSON() string
 }
 
 // An Inbound Check Adjustment object. This field will be present in the JSON
-// response if and only if `category` is equal to `inbound_check_adjustment`.
+// response if and only if `category` is equal to `inbound_check_adjustment`. An
+// Inbound Check Adjustment is created when Increase receives an adjustment for a
+// check or return deposited through Check21.
 type TransactionSourceInboundCheckAdjustment struct {
 	// The ID of the transaction that was adjusted.
 	AdjustedTransactionID string `json:"adjusted_transaction_id,required"`
@@ -3001,7 +3093,9 @@ func (r TransactionSourceInboundCheckAdjustmentReason) IsKnown() bool {
 
 // An Inbound Check Deposit Return Intention object. This field will be present in
 // the JSON response if and only if `category` is equal to
-// `inbound_check_deposit_return_intention`.
+// `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return
+// Intention is created when Increase receives an Inbound Check and the User
+// requests that it be returned.
 type TransactionSourceInboundCheckDepositReturnIntention struct {
 	// The ID of the Inbound Check Deposit that is being returned.
 	InboundCheckDepositID string `json:"inbound_check_deposit_id,required"`
@@ -3029,7 +3123,9 @@ func (r transactionSourceInboundCheckDepositReturnIntentionJSON) RawJSON() strin
 
 // An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
-// `inbound_real_time_payments_transfer_confirmation`.
+// `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time
+// Payments Transfer Confirmation is created when a Real-Time Payments transfer is
+// initiated at another bank and received by Increase.
 type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
@@ -3199,7 +3295,10 @@ func (r TransactionSourceInboundRealTimePaymentsTransferDeclineReason) IsKnown()
 }
 
 // An Inbound Wire Reversal object. This field will be present in the JSON response
-// if and only if `category` is equal to `inbound_wire_reversal`.
+// if and only if `category` is equal to `inbound_wire_reversal`. An Inbound Wire
+// Reversal represents a reversal of a wire transfer that was initiated via
+// Increase. The other bank is sending the money back. This most often happens when
+// the original destination account details were incorrect.
 type TransactionSourceInboundWireReversal struct {
 	// The amount that was reversed in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -3276,7 +3375,9 @@ func (r transactionSourceInboundWireReversalJSON) RawJSON() string {
 }
 
 // An Inbound Wire Transfer Intention object. This field will be present in the
-// JSON response if and only if `category` is equal to `inbound_wire_transfer`.
+// JSON response if and only if `category` is equal to `inbound_wire_transfer`. An
+// Inbound Wire Transfer Intention is created when a wire transfer is initiated at
+// another bank and received by Increase.
 type TransactionSourceInboundWireTransfer struct {
 	// The amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -3358,7 +3459,9 @@ func (r transactionSourceInboundWireTransferJSON) RawJSON() string {
 
 // An Inbound Wire Transfer Reversal Intention object. This field will be present
 // in the JSON response if and only if `category` is equal to
-// `inbound_wire_transfer_reversal`.
+// `inbound_wire_transfer_reversal`. An Inbound Wire Transfer Reversal Intention is
+// created when Increase has received a wire and the User requests that it be
+// reversed.
 type TransactionSourceInboundWireTransferReversal struct {
 	// The ID of the Inbound Wire Transfer that is being reversed.
 	InboundWireTransferID string                                           `json:"inbound_wire_transfer_id,required"`
@@ -3382,7 +3485,9 @@ func (r transactionSourceInboundWireTransferReversalJSON) RawJSON() string {
 }
 
 // An Interest Payment object. This field will be present in the JSON response if
-// and only if `category` is equal to `interest_payment`.
+// and only if `category` is equal to `interest_payment`. An Interest Payment
+// represents a payment of interest on an account. Interest is usually paid
+// monthly.
 type TransactionSourceInterestPayment struct {
 	// The account on which the interest was accrued.
 	AccruedOnAccountID string `json:"accrued_on_account_id,required"`
@@ -3441,7 +3546,8 @@ func (r TransactionSourceInterestPaymentCurrency) IsKnown() bool {
 }
 
 // An Internal Source object. This field will be present in the JSON response if
-// and only if `category` is equal to `internal_source`.
+// and only if `category` is equal to `internal_source`. A transaction between the
+// user and Increase. See the `reason` attribute for more information.
 type TransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
@@ -3526,7 +3632,9 @@ func (r TransactionSourceInternalSourceReason) IsKnown() bool {
 
 // A Real-Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
-// `real_time_payments_transfer_acknowledgement`.
+// `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
+// Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
+// is acknowledged by the receiving bank.
 type TransactionSourceRealTimePaymentsTransferAcknowledgement struct {
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
@@ -3563,7 +3671,8 @@ func (r transactionSourceRealTimePaymentsTransferAcknowledgementJSON) RawJSON() 
 }
 
 // A Sample Funds object. This field will be present in the JSON response if and
-// only if `category` is equal to `sample_funds`.
+// only if `category` is equal to `sample_funds`. Sample funds for testing
+// purposes.
 type TransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
 	Originator string                           `json:"originator,required"`
@@ -3587,7 +3696,8 @@ func (r transactionSourceSampleFundsJSON) RawJSON() string {
 }
 
 // A Wire Transfer Intention object. This field will be present in the JSON
-// response if and only if `category` is equal to `wire_transfer_intention`.
+// response if and only if `category` is equal to `wire_transfer_intention`. A Wire
+// Transfer initiated via Increase and sent to a different bank.
 type TransactionSourceWireTransferIntention struct {
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
