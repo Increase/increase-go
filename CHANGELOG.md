@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.177.1 (2025-01-31)
+
+Full Changelog: [v0.177.0...v0.177.1](https://github.com/Increase/increase-go/compare/v0.177.0...v0.177.1)
+
+### Bug Fixes
+
+* fix unicode encoding for json ([#733](https://github.com/Increase/increase-go/issues/733)) ([0a246d2](https://github.com/Increase/increase-go/commit/0a246d2ccc0bbb28125e3a21e8e7b1e200fedf53))
+
 ## 0.177.0 (2025-01-30)
 
 Full Changelog: [v0.176.0...v0.177.0](https://github.com/Increase/increase-go/compare/v0.176.0...v0.177.0)
