@@ -1,5 +1,1480 @@
 # Changelog
 
+## 0.179.0 (2025-01-31)
+
+Full Changelog: [v0.178.0...v0.179.0](https://github.com/Increase/increase-go/compare/v0.178.0...v0.179.0)
+
+### Features
+
+* **api:** api update ([#739](https://github.com/Increase/increase-go/issues/739)) ([7ee644a](https://github.com/Increase/increase-go/commit/7ee644a1ce91c1e94c09faaf889b3166aec540d3))
+
+## 0.178.0 (2025-01-31)
+
+Full Changelog: [v0.177.1...v0.178.0](https://github.com/Increase/increase-go/compare/v0.177.1...v0.178.0)
+
+### Features
+
+* **api:** api update ([#736](https://github.com/Increase/increase-go/issues/736)) ([26db288](https://github.com/Increase/increase-go/commit/26db2883cdc54fa76a412f7b312a505287ac6057))
+
+## 0.177.1 (2025-01-31)
+
+Full Changelog: [v0.177.0...v0.177.1](https://github.com/Increase/increase-go/compare/v0.177.0...v0.177.1)
+
+### Bug Fixes
+
+* fix unicode encoding for json ([#733](https://github.com/Increase/increase-go/issues/733)) ([0a246d2](https://github.com/Increase/increase-go/commit/0a246d2ccc0bbb28125e3a21e8e7b1e200fedf53))
+
+## 0.177.0 (2025-01-30)
+
+Full Changelog: [v0.176.0...v0.177.0](https://github.com/Increase/increase-go/compare/v0.176.0...v0.177.0)
+
+### Features
+
+* **api:** api update ([#730](https://github.com/Increase/increase-go/issues/730)) ([24d9f60](https://github.com/Increase/increase-go/commit/24d9f60ac08128782b4be3ebc902bc2d9589766c))
+
+## 0.176.0 (2025-01-30)
+
+Full Changelog: [v0.175.0...v0.176.0](https://github.com/Increase/increase-go/compare/v0.175.0...v0.176.0)
+
+### Features
+
+* **api:** api update ([#728](https://github.com/Increase/increase-go/issues/728)) ([c16a04e](https://github.com/Increase/increase-go/commit/c16a04ead4c8efa2c95d8221046de5a517c5132d))
+
+
+### Chores
+
+* **internal:** codegen related update ([#726](https://github.com/Increase/increase-go/issues/726)) ([66ca7c6](https://github.com/Increase/increase-go/commit/66ca7c649923cb7ea1732493f4f5e91faed2f401))
+
+## 0.175.0 (2025-01-30)
+
+Full Changelog: [v0.174.0...v0.175.0](https://github.com/Increase/increase-go/compare/v0.174.0...v0.175.0)
+
+### Features
+
+* **api:** api update ([#723](https://github.com/Increase/increase-go/issues/723)) ([d2578a1](https://github.com/Increase/increase-go/commit/d2578a1134258728b77c8848ea523c17187fca82))
+
+## 0.174.0 (2025-01-27)
+
+Full Changelog: [v0.173.0...v0.174.0](https://github.com/Increase/increase-go/compare/v0.173.0...v0.174.0)
+
+### Features
+
+* **api:** api update ([#720](https://github.com/Increase/increase-go/issues/720)) ([0de47f0](https://github.com/Increase/increase-go/commit/0de47f01ca74c7f6f2ad6e6de49dccd25221140b))
+
+## 0.173.0 (2025-01-27)
+
+Full Changelog: [v0.172.1...v0.173.0](https://github.com/Increase/increase-go/compare/v0.172.1...v0.173.0)
+
+### Features
+
+* **api:** api update ([#717](https://github.com/Increase/increase-go/issues/717)) ([b8cfc1d](https://github.com/Increase/increase-go/commit/b8cfc1d2d8c92a8d615d7b078e3988b913512482))
+
+## 0.172.1 (2025-01-23)
+
+Full Changelog: [v0.172.0...v0.172.1](https://github.com/Increase/increase-go/compare/v0.172.0...v0.172.1)
+
+### Bug Fixes
+
+* prevent niche naming conflicts for string enums with different casing ([#714](https://github.com/Increase/increase-go/issues/714)) ([c1ec730](https://github.com/Increase/increase-go/commit/c1ec7300c3af7017eec593ef5f30310503380a49))
+
+## 0.172.0 (2025-01-21)
+
+Full Changelog: [v0.171.0...v0.172.0](https://github.com/Increase/increase-go/compare/v0.171.0...v0.172.0)
+
+### Features
+
+* **api:** api update ([#712](https://github.com/Increase/increase-go/issues/712)) ([219657c](https://github.com/Increase/increase-go/commit/219657ce3e309ee8bbd19dab327dc6d3ab5584bd))
+* support deprecated markers ([#710](https://github.com/Increase/increase-go/issues/710)) ([1af282f](https://github.com/Increase/increase-go/commit/1af282f707eac5fdc77a1f9af1355cd5b9ef40b0))
+
+## 0.171.0 (2025-01-21)
+
+Full Changelog: [v0.170.0...v0.171.0](https://github.com/Increase/increase-go/compare/v0.170.0...v0.171.0)
+
+### Features
+
+* **api:** api update ([#708](https://github.com/Increase/increase-go/issues/708)) ([eef5874](https://github.com/Increase/increase-go/commit/eef5874848581998ed46b7de30b4fe228f7f8e16))
+
+
+### Bug Fixes
+
+* fix apijson.Port for embedded structs ([#704](https://github.com/Increase/increase-go/issues/704)) ([2ba4acb](https://github.com/Increase/increase-go/commit/2ba4acbb2af6ec64d3e73dac3e6f12531956e9e1))
+* fix apijson.Port for embedded structs ([#705](https://github.com/Increase/increase-go/issues/705)) ([910cb3c](https://github.com/Increase/increase-go/commit/910cb3c4d195f09cc7033c4bc1a10a63cd3bb212))
+
+## 0.170.0 (2025-01-14)
+
+Full Changelog: [v0.169.0...v0.170.0](https://github.com/Increase/increase-go/compare/v0.169.0...v0.170.0)
+
+### Features
+
+* **api:** api update ([#702](https://github.com/Increase/increase-go/issues/702)) ([8d5a1cf](https://github.com/Increase/increase-go/commit/8d5a1cfc4055684e044ba16b9415ba101ca37fbf))
+
+
+### Chores
+
+* **internal:** codegen related update ([#700](https://github.com/Increase/increase-go/issues/700)) ([b1b300c](https://github.com/Increase/increase-go/commit/b1b300c56f9c5b1a44935db0c9052d695f269307))
+
+## 0.169.0 (2025-01-02)
+
+Full Changelog: [v0.168.0...v0.169.0](https://github.com/Increase/increase-go/compare/v0.168.0...v0.169.0)
+
+### Features
+
+* **api:** api update ([#698](https://github.com/Increase/increase-go/issues/698)) ([e91291e](https://github.com/Increase/increase-go/commit/e91291eb8e384cd41da0edd7939cf607dab0af24))
+
+
+### Chores
+
+* **internal:** codegen related update ([#696](https://github.com/Increase/increase-go/issues/696)) ([f99a808](https://github.com/Increase/increase-go/commit/f99a808d3af3942d4fdeefb3e8a5289ac3c17ec2))
+
+## 0.168.0 (2024-12-23)
+
+Full Changelog: [v0.167.0...v0.168.0](https://github.com/Increase/increase-go/compare/v0.167.0...v0.168.0)
+
+### Features
+
+* **api:** api update ([#693](https://github.com/Increase/increase-go/issues/693)) ([af2bb03](https://github.com/Increase/increase-go/commit/af2bb032b07e6b9c159d57c8045760b99bb1f1d4))
+
+## 0.167.0 (2024-12-23)
+
+Full Changelog: [v0.166.0...v0.167.0](https://github.com/Increase/increase-go/compare/v0.166.0...v0.167.0)
+
+### Features
+
+* **api:** api update ([#690](https://github.com/Increase/increase-go/issues/690)) ([f94f4bc](https://github.com/Increase/increase-go/commit/f94f4bcb1522899ff6511a9d821124b1c8263070))
+
+## 0.166.0 (2024-12-23)
+
+Full Changelog: [v0.165.0...v0.166.0](https://github.com/Increase/increase-go/compare/v0.165.0...v0.166.0)
+
+### Features
+
+* **api:** api update ([#687](https://github.com/Increase/increase-go/issues/687)) ([dbb037f](https://github.com/Increase/increase-go/commit/dbb037fdc0d13d34b5e1fd5723fe969205370257))
+
+## 0.165.0 (2024-12-20)
+
+Full Changelog: [v0.164.0...v0.165.0](https://github.com/Increase/increase-go/compare/v0.164.0...v0.165.0)
+
+### Features
+
+* **api:** api update ([#684](https://github.com/Increase/increase-go/issues/684)) ([be7c187](https://github.com/Increase/increase-go/commit/be7c187e70d66902ee71adf5b8caf285a3b8bdd0))
+
+## 0.164.0 (2024-12-20)
+
+Full Changelog: [v0.163.0...v0.164.0](https://github.com/Increase/increase-go/compare/v0.163.0...v0.164.0)
+
+### Features
+
+* **api:** api update ([#682](https://github.com/Increase/increase-go/issues/682)) ([b2bf777](https://github.com/Increase/increase-go/commit/b2bf7777a02d3116ddf12eb0fcbded077d50e8d2))
+
+
+### Chores
+
+* **internal:** codegen related update ([#680](https://github.com/Increase/increase-go/issues/680)) ([2987cfb](https://github.com/Increase/increase-go/commit/2987cfb38e7a4b1f5d8d3dadd2586cdbf529303e))
+
+## 0.163.0 (2024-12-15)
+
+Full Changelog: [v0.162.0...v0.163.0](https://github.com/Increase/increase-go/compare/v0.162.0...v0.163.0)
+
+### Features
+
+* **api:** api update ([#677](https://github.com/Increase/increase-go/issues/677)) ([8a69cae](https://github.com/Increase/increase-go/commit/8a69caecb1e90f8bb84bb14d8209aead9596a26e))
+
+## 0.162.0 (2024-12-12)
+
+Full Changelog: [v0.161.0...v0.162.0](https://github.com/Increase/increase-go/compare/v0.161.0...v0.162.0)
+
+### Features
+
+* **api:** api update ([#674](https://github.com/Increase/increase-go/issues/674)) ([ad2dcaa](https://github.com/Increase/increase-go/commit/ad2dcaa9c5d1f3f03d8e5f709e439a39b7acdd34))
+
+## 0.161.0 (2024-12-09)
+
+Full Changelog: [v0.160.0...v0.161.0](https://github.com/Increase/increase-go/compare/v0.160.0...v0.161.0)
+
+### Features
+
+* **api:** api update ([#671](https://github.com/Increase/increase-go/issues/671)) ([e3f5f11](https://github.com/Increase/increase-go/commit/e3f5f115bbc3ed12b9c2b9757df676a6e4caac7e))
+
+## 0.160.0 (2024-12-04)
+
+Full Changelog: [v0.159.0...v0.160.0](https://github.com/Increase/increase-go/compare/v0.159.0...v0.160.0)
+
+### Features
+
+* **api:** api update ([#668](https://github.com/Increase/increase-go/issues/668)) ([57874de](https://github.com/Increase/increase-go/commit/57874de8829f1f33b475b59a37cde3f7a7df8dc6))
+
+## 0.159.0 (2024-11-22)
+
+Full Changelog: [v0.158.0...v0.159.0](https://github.com/Increase/increase-go/compare/v0.158.0...v0.159.0)
+
+### Features
+
+* **api:** api update ([#666](https://github.com/Increase/increase-go/issues/666)) ([d2ada56](https://github.com/Increase/increase-go/commit/d2ada56a91af55dfde32a9016b29b3131e5c74db))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#664](https://github.com/Increase/increase-go/issues/664)) ([f05d136](https://github.com/Increase/increase-go/commit/f05d13617644e3217c01dd463acbdeb80ce07966))
+
+## 0.158.0 (2024-11-14)
+
+Full Changelog: [v0.157.0...v0.158.0](https://github.com/Increase/increase-go/compare/v0.157.0...v0.158.0)
+
+### Features
+
+* **api:** api update ([#661](https://github.com/Increase/increase-go/issues/661)) ([51a55b1](https://github.com/Increase/increase-go/commit/51a55b146377f41a555a97209062aabb76299ea2))
+
+## 0.157.0 (2024-11-14)
+
+Full Changelog: [v0.156.0...v0.157.0](https://github.com/Increase/increase-go/compare/v0.156.0...v0.157.0)
+
+### Features
+
+* **api:** api update ([#658](https://github.com/Increase/increase-go/issues/658)) ([4eca121](https://github.com/Increase/increase-go/commit/4eca1210fc7b2b6967d06f9ecd959f50f4b44dd7))
+
+## 0.156.0 (2024-11-14)
+
+Full Changelog: [v0.155.0...v0.156.0](https://github.com/Increase/increase-go/compare/v0.155.0...v0.156.0)
+
+### Features
+
+* **api:** api update ([#655](https://github.com/Increase/increase-go/issues/655)) ([f1c151c](https://github.com/Increase/increase-go/commit/f1c151cfc6aef9c4ff3ea6211e6b7167360854ed))
+
+## 0.155.0 (2024-11-14)
+
+Full Changelog: [v0.154.0...v0.155.0](https://github.com/Increase/increase-go/compare/v0.154.0...v0.155.0)
+
+### Features
+
+* **api:** api update ([#652](https://github.com/Increase/increase-go/issues/652)) ([838c61a](https://github.com/Increase/increase-go/commit/838c61aee0b6c71b89707d1be423a0d7bbd932ff))
+
+## 0.154.0 (2024-11-13)
+
+Full Changelog: [v0.153.0...v0.154.0](https://github.com/Increase/increase-go/compare/v0.153.0...v0.154.0)
+
+### Features
+
+* **api:** api update ([#649](https://github.com/Increase/increase-go/issues/649)) ([93d6895](https://github.com/Increase/increase-go/commit/93d68950ea6af120551042827c98ad7023d0cc4c))
+
+## 0.153.0 (2024-11-13)
+
+Full Changelog: [v0.152.0...v0.153.0](https://github.com/Increase/increase-go/compare/v0.152.0...v0.153.0)
+
+### Features
+
+* **api:** api update ([#646](https://github.com/Increase/increase-go/issues/646)) ([26100fb](https://github.com/Increase/increase-go/commit/26100fbbb4baa2a30d89b5d1a016a05f3fad89c2))
+
+## 0.152.0 (2024-11-13)
+
+Full Changelog: [v0.151.0...v0.152.0](https://github.com/Increase/increase-go/compare/v0.151.0...v0.152.0)
+
+### Features
+
+* **api:** api update ([#644](https://github.com/Increase/increase-go/issues/644)) ([67d6362](https://github.com/Increase/increase-go/commit/67d63621db864b84825c5dea347209e26e2a0cfa))
+
+## 0.151.0 (2024-11-13)
+
+Full Changelog: [v0.150.0...v0.151.0](https://github.com/Increase/increase-go/compare/v0.150.0...v0.151.0)
+
+### Features
+
+* **api:** api update ([#641](https://github.com/Increase/increase-go/issues/641)) ([5c906f0](https://github.com/Increase/increase-go/commit/5c906f05592650422ea28ac7ca48b9f26353e0f3))
+
+## 0.150.0 (2024-11-13)
+
+Full Changelog: [v0.149.0...v0.150.0](https://github.com/Increase/increase-go/compare/v0.149.0...v0.150.0)
+
+### Features
+
+* **api:** api update ([#638](https://github.com/Increase/increase-go/issues/638)) ([2ebcb2b](https://github.com/Increase/increase-go/commit/2ebcb2b1197ed5ecf20431740212e413a8b33125))
+
+## 0.149.0 (2024-11-13)
+
+Full Changelog: [v0.148.0...v0.149.0](https://github.com/Increase/increase-go/compare/v0.148.0...v0.149.0)
+
+### Features
+
+* **api:** api update ([#635](https://github.com/Increase/increase-go/issues/635)) ([991d494](https://github.com/Increase/increase-go/commit/991d49477e2dfc9bf9bb249844c234972458e402))
+
+## 0.148.0 (2024-11-13)
+
+Full Changelog: [v0.147.0...v0.148.0](https://github.com/Increase/increase-go/compare/v0.147.0...v0.148.0)
+
+### Features
+
+* **api:** api update ([#633](https://github.com/Increase/increase-go/issues/633)) ([26460ff](https://github.com/Increase/increase-go/commit/26460ffc3ec563c5f34d1f883df5df7a2f593e97))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#631](https://github.com/Increase/increase-go/issues/631)) ([8187f06](https://github.com/Increase/increase-go/commit/8187f06a88f4d4814cdbd21b8ec0030f216abb39))
+
+## 0.147.0 (2024-11-11)
+
+Full Changelog: [v0.146.0...v0.147.0](https://github.com/Increase/increase-go/compare/v0.146.0...v0.147.0)
+
+### Features
+
+* **api:** api update ([#628](https://github.com/Increase/increase-go/issues/628)) ([1a7bf0c](https://github.com/Increase/increase-go/commit/1a7bf0cec0187015f734ec96255029da1730713e))
+
+## 0.146.0 (2024-11-09)
+
+Full Changelog: [v0.145.0...v0.146.0](https://github.com/Increase/increase-go/compare/v0.145.0...v0.146.0)
+
+### Features
+
+* **api:** api update ([#626](https://github.com/Increase/increase-go/issues/626)) ([4dc3daa](https://github.com/Increase/increase-go/commit/4dc3daa6a65093f88dd9b56ce8a8823b325c224a))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#624](https://github.com/Increase/increase-go/issues/624)) ([51b48b4](https://github.com/Increase/increase-go/commit/51b48b454cc79367111550310f0ddd719089579e))
+
+## 0.145.0 (2024-11-08)
+
+Full Changelog: [v0.144.0...v0.145.0](https://github.com/Increase/increase-go/compare/v0.144.0...v0.145.0)
+
+### Features
+
+* **api:** api update ([#621](https://github.com/Increase/increase-go/issues/621)) ([689b59d](https://github.com/Increase/increase-go/commit/689b59d7089d84893c6f46b354bf8570386fc0a6))
+
+## 0.144.0 (2024-11-08)
+
+Full Changelog: [v0.143.0...v0.144.0](https://github.com/Increase/increase-go/compare/v0.143.0...v0.144.0)
+
+### Features
+
+* **api:** api update ([#618](https://github.com/Increase/increase-go/issues/618)) ([3a9b6ce](https://github.com/Increase/increase-go/commit/3a9b6ce111f261d1edfb1eabd4c96cac1b42d104))
+
+## 0.143.0 (2024-11-06)
+
+Full Changelog: [v0.142.0...v0.143.0](https://github.com/Increase/increase-go/compare/v0.142.0...v0.143.0)
+
+### Features
+
+* **api:** api update ([#615](https://github.com/Increase/increase-go/issues/615)) ([79c4a14](https://github.com/Increase/increase-go/commit/79c4a140421c1eea2770cd11b47ec991986e8f75))
+
+## 0.142.0 (2024-11-05)
+
+Full Changelog: [v0.141.0...v0.142.0](https://github.com/Increase/increase-go/compare/v0.141.0...v0.142.0)
+
+### Features
+
+* **api:** api update ([#612](https://github.com/Increase/increase-go/issues/612)) ([8d99350](https://github.com/Increase/increase-go/commit/8d99350e5b858091e154a41a9ac16103d7885646))
+
+## 0.141.0 (2024-11-04)
+
+Full Changelog: [v0.140.0...v0.141.0](https://github.com/Increase/increase-go/compare/v0.140.0...v0.141.0)
+
+### Features
+
+* **api:** api update ([#609](https://github.com/Increase/increase-go/issues/609)) ([39a0cdb](https://github.com/Increase/increase-go/commit/39a0cdb25d7cef4f975578a4306dfd99b86b9cb1))
+
+## 0.140.0 (2024-11-01)
+
+Full Changelog: [v0.139.0...v0.140.0](https://github.com/Increase/increase-go/compare/v0.139.0...v0.140.0)
+
+### Features
+
+* **api:** api update ([#606](https://github.com/Increase/increase-go/issues/606)) ([22b04fc](https://github.com/Increase/increase-go/commit/22b04fc93df10d0356bf0bacf4ae8239993de0f5))
+
+## 0.139.0 (2024-10-31)
+
+Full Changelog: [v0.138.0...v0.139.0](https://github.com/Increase/increase-go/compare/v0.138.0...v0.139.0)
+
+### Features
+
+* **api:** api update ([#603](https://github.com/Increase/increase-go/issues/603)) ([1013838](https://github.com/Increase/increase-go/commit/1013838d37e38d79a1346e6f3b34c97dd2eda5af))
+
+## 0.138.0 (2024-10-22)
+
+Full Changelog: [v0.137.0...v0.138.0](https://github.com/Increase/increase-go/compare/v0.137.0...v0.138.0)
+
+### Features
+
+* **api:** api update ([#600](https://github.com/Increase/increase-go/issues/600)) ([4322800](https://github.com/Increase/increase-go/commit/43228002bdbc8231c0159fb48077e8a12cd94d78))
+
+## 0.137.0 (2024-10-22)
+
+Full Changelog: [v0.136.0...v0.137.0](https://github.com/Increase/increase-go/compare/v0.136.0...v0.137.0)
+
+### Features
+
+* **api:** api update ([#597](https://github.com/Increase/increase-go/issues/597)) ([3abc923](https://github.com/Increase/increase-go/commit/3abc923225840db95a3102a621119a1e618b1113))
+
+## 0.136.0 (2024-10-21)
+
+Full Changelog: [v0.135.0...v0.136.0](https://github.com/Increase/increase-go/compare/v0.135.0...v0.136.0)
+
+### Features
+
+* **api:** api update ([#594](https://github.com/Increase/increase-go/issues/594)) ([3fba842](https://github.com/Increase/increase-go/commit/3fba8425fe7fb9d5805cb617d3950d72c1691914))
+
+## 0.135.0 (2024-10-17)
+
+Full Changelog: [v0.134.0...v0.135.0](https://github.com/Increase/increase-go/compare/v0.134.0...v0.135.0)
+
+### Features
+
+* **api:** api update ([#591](https://github.com/Increase/increase-go/issues/591)) ([605ecb9](https://github.com/Increase/increase-go/commit/605ecb9c303c7a9436371139a9086d1720391bd7))
+
+## 0.134.0 (2024-10-17)
+
+Full Changelog: [v0.133.0...v0.134.0](https://github.com/Increase/increase-go/compare/v0.133.0...v0.134.0)
+
+### Features
+
+* **api:** api update ([#588](https://github.com/Increase/increase-go/issues/588)) ([24434be](https://github.com/Increase/increase-go/commit/24434be185e4c6197add81333906b2f674e2ed39))
+
+## 0.133.0 (2024-10-17)
+
+Full Changelog: [v0.132.0...v0.133.0](https://github.com/Increase/increase-go/compare/v0.132.0...v0.133.0)
+
+### Features
+
+* **api:** api update ([#585](https://github.com/Increase/increase-go/issues/585)) ([5a48d69](https://github.com/Increase/increase-go/commit/5a48d697f79cb42c0af18db8c28f1dfd2c7ca56c))
+
+## 0.132.0 (2024-10-16)
+
+Full Changelog: [v0.131.0...v0.132.0](https://github.com/Increase/increase-go/compare/v0.131.0...v0.132.0)
+
+### Features
+
+* **api:** api update ([#582](https://github.com/Increase/increase-go/issues/582)) ([f3abc1c](https://github.com/Increase/increase-go/commit/f3abc1c3c6a9d888fdd1bd398fc159e0ee9ce09a))
+
+## 0.131.0 (2024-10-16)
+
+Full Changelog: [v0.130.0...v0.131.0](https://github.com/Increase/increase-go/compare/v0.130.0...v0.131.0)
+
+### Features
+
+* **api:** api update ([#579](https://github.com/Increase/increase-go/issues/579)) ([0da26cc](https://github.com/Increase/increase-go/commit/0da26cc0bf82cc81b6c2d8ed45d281c72f2b235e))
+
+## 0.130.0 (2024-10-16)
+
+Full Changelog: [v0.129.0...v0.130.0](https://github.com/Increase/increase-go/compare/v0.129.0...v0.130.0)
+
+### Features
+
+* **api:** api update ([#576](https://github.com/Increase/increase-go/issues/576)) ([ae730bd](https://github.com/Increase/increase-go/commit/ae730bd772826a034c8e332e57a1c81dfed93edc))
+
+## 0.129.0 (2024-10-16)
+
+Full Changelog: [v0.128.0...v0.129.0](https://github.com/Increase/increase-go/compare/v0.128.0...v0.129.0)
+
+### Features
+
+* **api:** api update ([#573](https://github.com/Increase/increase-go/issues/573)) ([8ad546d](https://github.com/Increase/increase-go/commit/8ad546d1d62e76c1df8506bee31df202fe5d0a43))
+
+## 0.128.0 (2024-10-15)
+
+Full Changelog: [v0.127.0...v0.128.0](https://github.com/Increase/increase-go/compare/v0.127.0...v0.128.0)
+
+### Features
+
+* **api:** api update ([#570](https://github.com/Increase/increase-go/issues/570)) ([7550875](https://github.com/Increase/increase-go/commit/75508756b9c3a98a49a245882f947df4d7ad5277))
+
+## 0.127.0 (2024-10-14)
+
+Full Changelog: [v0.126.0...v0.127.0](https://github.com/Increase/increase-go/compare/v0.126.0...v0.127.0)
+
+### Features
+
+* **api:** api update ([#567](https://github.com/Increase/increase-go/issues/567)) ([a32f07f](https://github.com/Increase/increase-go/commit/a32f07f9c2dcdcdd3f49db48d91f53d99cf66abc))
+
+## 0.126.0 (2024-10-11)
+
+Full Changelog: [v0.125.0...v0.126.0](https://github.com/Increase/increase-go/compare/v0.125.0...v0.126.0)
+
+### Features
+
+* **api:** api update ([#564](https://github.com/Increase/increase-go/issues/564)) ([7da20de](https://github.com/Increase/increase-go/commit/7da20de751a92d877dc9e938e19f623fa2bdad7f))
+
+## 0.125.0 (2024-10-11)
+
+Full Changelog: [v0.124.0...v0.125.0](https://github.com/Increase/increase-go/compare/v0.124.0...v0.125.0)
+
+### Features
+
+* **api:** api update ([#561](https://github.com/Increase/increase-go/issues/561)) ([853e5a6](https://github.com/Increase/increase-go/commit/853e5a6efeb1e0b765c045611c6c1495c3bf0793))
+
+## 0.124.0 (2024-10-10)
+
+Full Changelog: [v0.123.0...v0.124.0](https://github.com/Increase/increase-go/compare/v0.123.0...v0.124.0)
+
+### Features
+
+* **api:** api update ([#558](https://github.com/Increase/increase-go/issues/558)) ([fea8e88](https://github.com/Increase/increase-go/commit/fea8e882d7484c8cf1a3cedd32d446c9391e6418))
+
+## 0.123.0 (2024-10-10)
+
+Full Changelog: [v0.122.0...v0.123.0](https://github.com/Increase/increase-go/compare/v0.122.0...v0.123.0)
+
+### Features
+
+* **api:** api update ([#555](https://github.com/Increase/increase-go/issues/555)) ([8da16d6](https://github.com/Increase/increase-go/commit/8da16d643c38f737891c6be5938e5815240fbcf8))
+
+## 0.122.0 (2024-10-10)
+
+Full Changelog: [v0.121.0...v0.122.0](https://github.com/Increase/increase-go/compare/v0.121.0...v0.122.0)
+
+### Features
+
+* **api:** api update ([#552](https://github.com/Increase/increase-go/issues/552)) ([e5cfecb](https://github.com/Increase/increase-go/commit/e5cfecb0173f1abf727cc6654102a047ad09cdb3))
+
+## 0.121.0 (2024-10-07)
+
+Full Changelog: [v0.120.0...v0.121.0](https://github.com/Increase/increase-go/compare/v0.120.0...v0.121.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#549](https://github.com/Increase/increase-go/issues/549)) ([f913434](https://github.com/Increase/increase-go/commit/f9134342e63038f5149bbdc2f71cfef59ff9ef48))
+
+## 0.120.0 (2024-10-07)
+
+Full Changelog: [v0.119.0...v0.120.0](https://github.com/Increase/increase-go/compare/v0.119.0...v0.120.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#546](https://github.com/Increase/increase-go/issues/546)) ([3d99b27](https://github.com/Increase/increase-go/commit/3d99b27865bb90ef8a881f95b12af75a0d293899))
+
+## 0.119.0 (2024-10-07)
+
+Full Changelog: [v0.118.0...v0.119.0](https://github.com/Increase/increase-go/compare/v0.118.0...v0.119.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#543](https://github.com/Increase/increase-go/issues/543)) ([adc9ca8](https://github.com/Increase/increase-go/commit/adc9ca886aebf8143f24aa78e1a7ff9fa5869f24))
+
+## 0.118.0 (2024-10-03)
+
+Full Changelog: [v0.117.0...v0.118.0](https://github.com/Increase/increase-go/compare/v0.117.0...v0.118.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#540](https://github.com/Increase/increase-go/issues/540)) ([8815d2a](https://github.com/Increase/increase-go/commit/8815d2a68baa6eef06e35ca4f523419cbb68e77e))
+
+## 0.117.0 (2024-10-03)
+
+Full Changelog: [v0.116.0...v0.117.0](https://github.com/Increase/increase-go/compare/v0.116.0...v0.117.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#537](https://github.com/Increase/increase-go/issues/537)) ([510539d](https://github.com/Increase/increase-go/commit/510539d0cb682f13402b06ef9b44696131298324))
+
+## 0.116.0 (2024-10-02)
+
+Full Changelog: [v0.115.0...v0.116.0](https://github.com/Increase/increase-go/compare/v0.115.0...v0.116.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#534](https://github.com/Increase/increase-go/issues/534)) ([9be4908](https://github.com/Increase/increase-go/commit/9be49080c014a36d904428402563977b23b94b5f))
+
+## 0.115.0 (2024-10-02)
+
+Full Changelog: [v0.114.0...v0.115.0](https://github.com/Increase/increase-go/compare/v0.114.0...v0.115.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#532](https://github.com/Increase/increase-go/issues/532)) ([27c1a97](https://github.com/Increase/increase-go/commit/27c1a973ea85347f72e1dc9909e6c7508ae8cbd0))
+
+
+### Chores
+
+* **internal:** codegen related update ([#530](https://github.com/Increase/increase-go/issues/530)) ([bec4c52](https://github.com/Increase/increase-go/commit/bec4c52a70de79c81db91e1af61f398ad3d7faa4))
+
+## 0.114.0 (2024-10-02)
+
+Full Changelog: [v0.113.0...v0.114.0](https://github.com/Increase/increase-go/compare/v0.113.0...v0.114.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#527](https://github.com/Increase/increase-go/issues/527)) ([9627fb3](https://github.com/Increase/increase-go/commit/9627fb3826aacd679a9512044bd8e9f5662c5051))
+
+## 0.113.0 (2024-09-26)
+
+Full Changelog: [v0.112.0...v0.113.0](https://github.com/Increase/increase-go/compare/v0.112.0...v0.113.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#525](https://github.com/Increase/increase-go/issues/525)) ([a17bdb7](https://github.com/Increase/increase-go/commit/a17bdb77c95dd9cc84059f11de837b438e8ad123))
+
+
+### Chores
+
+* **internal:** codegen related update ([#523](https://github.com/Increase/increase-go/issues/523)) ([73a07e8](https://github.com/Increase/increase-go/commit/73a07e8424d7eb58ffceb8f0d69b02a9d63375a3))
+
+## 0.112.0 (2024-09-25)
+
+Full Changelog: [v0.111.0...v0.112.0](https://github.com/Increase/increase-go/compare/v0.111.0...v0.112.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#519](https://github.com/Increase/increase-go/issues/519)) ([09316a9](https://github.com/Increase/increase-go/commit/09316a902b586065b69a6eb682e20fbabff933ba))
+
+## 0.111.0 (2024-09-24)
+
+Full Changelog: [v0.110.0...v0.111.0](https://github.com/Increase/increase-go/compare/v0.110.0...v0.111.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#516](https://github.com/Increase/increase-go/issues/516)) ([7c7b9ff](https://github.com/Increase/increase-go/commit/7c7b9ff93ac45200f1298d8d0dab555035e80c6e))
+
+## 0.110.0 (2024-09-24)
+
+Full Changelog: [v0.109.0...v0.110.0](https://github.com/Increase/increase-go/compare/v0.109.0...v0.110.0)
+
+### Features
+
+* **api:** manual updates ([#513](https://github.com/Increase/increase-go/issues/513)) ([4597ccf](https://github.com/Increase/increase-go/commit/4597ccff8785b7d0dacb0836bebd48ba20411006))
+
+## 0.109.0 (2024-09-23)
+
+Full Changelog: [v0.108.0...v0.109.0](https://github.com/Increase/increase-go/compare/v0.108.0...v0.109.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#510](https://github.com/Increase/increase-go/issues/510)) ([a95b624](https://github.com/Increase/increase-go/commit/a95b624dc9274c4c40e236fdbcb2942cc05a5c1d))
+
+## 0.108.0 (2024-09-23)
+
+Full Changelog: [v0.107.0...v0.108.0](https://github.com/Increase/increase-go/compare/v0.107.0...v0.108.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#507](https://github.com/Increase/increase-go/issues/507)) ([776fc12](https://github.com/Increase/increase-go/commit/776fc12004a99073887bef769166417a9abc270b))
+
+## 0.107.0 (2024-09-19)
+
+Full Changelog: [v0.106.0...v0.107.0](https://github.com/Increase/increase-go/compare/v0.106.0...v0.107.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#504](https://github.com/Increase/increase-go/issues/504)) ([9bc1504](https://github.com/Increase/increase-go/commit/9bc15048f1bf1c21d7487dda53f6a02be6bb9699))
+
+## 0.106.0 (2024-09-18)
+
+Full Changelog: [v0.105.0...v0.106.0](https://github.com/Increase/increase-go/compare/v0.105.0...v0.106.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#502](https://github.com/Increase/increase-go/issues/502)) ([52287c1](https://github.com/Increase/increase-go/commit/52287c10b439f98e32e75a678ae4048c780510e0))
+
+
+### Chores
+
+* **internal:** codegen related update ([#499](https://github.com/Increase/increase-go/issues/499)) ([05665d3](https://github.com/Increase/increase-go/commit/05665d35a443d4e150272bb7210b567302e71a86))
+
+
+### Documentation
+
+* update CONTRIBUTING.md ([#501](https://github.com/Increase/increase-go/issues/501)) ([3b12338](https://github.com/Increase/increase-go/commit/3b123380e25b7577d108e1fca7e916ffd7e21788))
+
+## 0.105.0 (2024-09-17)
+
+Full Changelog: [v0.104.0...v0.105.0](https://github.com/Increase/increase-go/compare/v0.104.0...v0.105.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#495](https://github.com/Increase/increase-go/issues/495)) ([666ebb0](https://github.com/Increase/increase-go/commit/666ebb0ef143087ac01d003275c06b51e147c2d4))
+
+## 0.104.0 (2024-09-09)
+
+Full Changelog: [v0.103.0...v0.104.0](https://github.com/Increase/increase-go/compare/v0.103.0...v0.104.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#491](https://github.com/Increase/increase-go/issues/491)) ([8b053e2](https://github.com/Increase/increase-go/commit/8b053e220e7470b94db98aa622b78e2f84bb1f4a))
+
+## 0.104.0 (2024-09-09)
+
+Full Changelog: [v0.103.0...v0.104.0](https://github.com/Increase/increase-go/compare/v0.103.0...v0.104.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#488](https://github.com/Increase/increase-go/issues/488)) ([09a4a7b](https://github.com/Increase/increase-go/commit/09a4a7bc59a95b2e0d5c556edc77a965b289be36))
+
+## 0.103.0 (2024-09-09)
+
+Full Changelog: [v0.102.0...v0.103.0](https://github.com/Increase/increase-go/compare/v0.102.0...v0.103.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#485](https://github.com/Increase/increase-go/issues/485)) ([7607d29](https://github.com/Increase/increase-go/commit/7607d2911d3e3d6cfdf727948ce7b28957e4e999))
+
+## 0.102.0 (2024-09-09)
+
+Full Changelog: [v0.101.1...v0.102.0](https://github.com/Increase/increase-go/compare/v0.101.1...v0.102.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#481](https://github.com/Increase/increase-go/issues/481)) ([4c32cdb](https://github.com/Increase/increase-go/commit/4c32cdb527dc62c8fd03c556ed2220366751ac2d))
+
+## 0.101.1 (2024-09-09)
+
+Full Changelog: [v0.101.0...v0.101.1](https://github.com/Increase/increase-go/compare/v0.101.0...v0.101.1)
+
+### Bug Fixes
+
+* casing in imports ([64c2d9c](https://github.com/Increase/increase-go/commit/64c2d9c4715482154ec181b502e919ea192360ef))
+
+## 0.101.0 (2024-09-09)
+
+Full Changelog: [v0.100.0...v0.101.0](https://github.com/Increase/increase-go/compare/v0.100.0...v0.101.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#477](https://github.com/Increase/increase-go/issues/477)) ([a71afcb](https://github.com/Increase/increase-go/commit/a71afcb2642d3614974588257a8305016e9fc627))
+
+## 0.100.0 (2024-09-09)
+
+Full Changelog: [v0.99.0...v0.100.0](https://github.com/Increase/increase-go/compare/v0.99.0...v0.100.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#474](https://github.com/Increase/increase-go/issues/474)) ([e2f8c0c](https://github.com/Increase/increase-go/commit/e2f8c0c60e2bc6e60ebb0dbef0ba79e8aba42da0))
+
+## 0.99.0 (2024-09-06)
+
+Full Changelog: [v0.98.0...v0.99.0](https://github.com/Increase/increase-go/compare/v0.98.0...v0.99.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#471](https://github.com/Increase/increase-go/issues/471)) ([ebd7b29](https://github.com/Increase/increase-go/commit/ebd7b2968924fcb7e92620d0e92b39171d2b1689))
+
+## 0.98.0 (2024-09-06)
+
+Full Changelog: [v0.97.0...v0.98.0](https://github.com/Increase/increase-go/compare/v0.97.0...v0.98.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#468](https://github.com/Increase/increase-go/issues/468)) ([4a45fa8](https://github.com/Increase/increase-go/commit/4a45fa81072d5a778319dedd59921fb453614305))
+
+## 0.97.0 (2024-09-05)
+
+Full Changelog: [v0.96.0...v0.97.0](https://github.com/Increase/increase-go/compare/v0.96.0...v0.97.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#465](https://github.com/Increase/increase-go/issues/465)) ([19502a8](https://github.com/Increase/increase-go/commit/19502a86079200dbd0c09e48963f21d45f7966aa))
+
+## 0.96.0 (2024-09-05)
+
+Full Changelog: [v0.95.0...v0.96.0](https://github.com/Increase/increase-go/compare/v0.95.0...v0.96.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#462](https://github.com/Increase/increase-go/issues/462)) ([35458f1](https://github.com/Increase/increase-go/commit/35458f1181d57ce967eb9b0b9970c9ecae62396b))
+
+## 0.95.0 (2024-09-05)
+
+Full Changelog: [v0.94.0...v0.95.0](https://github.com/Increase/increase-go/compare/v0.94.0...v0.95.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#459](https://github.com/Increase/increase-go/issues/459)) ([dd7fd1c](https://github.com/Increase/increase-go/commit/dd7fd1cde8060c48852f4f04cc6067f3ac6819d8))
+
+## 0.94.0 (2024-09-04)
+
+Full Changelog: [v0.93.0...v0.94.0](https://github.com/Increase/increase-go/compare/v0.93.0...v0.94.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#456](https://github.com/Increase/increase-go/issues/456)) ([b083c89](https://github.com/Increase/increase-go/commit/b083c894bddd34d0bb540414829cc0167fbac9ff))
+
+## 0.93.0 (2024-09-04)
+
+Full Changelog: [v0.92.0...v0.93.0](https://github.com/Increase/increase-go/compare/v0.92.0...v0.93.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#454](https://github.com/Increase/increase-go/issues/454)) ([164222d](https://github.com/Increase/increase-go/commit/164222dcd270985c3c638b147062158f3d774a40))
+
+
+### Chores
+
+* **internal:** codegen related update ([#452](https://github.com/Increase/increase-go/issues/452)) ([3d89507](https://github.com/Increase/increase-go/commit/3d895075d79f563b6cd88e02006409018bed4a42))
+
+## 0.92.0 (2024-08-30)
+
+Full Changelog: [v0.91.0...v0.92.0](https://github.com/Increase/increase-go/compare/v0.91.0...v0.92.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#449](https://github.com/Increase/increase-go/issues/449)) ([9e72421](https://github.com/Increase/increase-go/commit/9e724215ab188a49995472a38676d1a431fb73a6))
+
+## 0.91.0 (2024-08-27)
+
+Full Changelog: [v0.90.0...v0.91.0](https://github.com/Increase/increase-go/compare/v0.90.0...v0.91.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#446](https://github.com/Increase/increase-go/issues/446)) ([08430aa](https://github.com/Increase/increase-go/commit/08430aaf3838e2c0fbb9201ddfbb3472fa4b9afc))
+
+## 0.90.0 (2024-08-26)
+
+Full Changelog: [v0.89.0...v0.90.0](https://github.com/Increase/increase-go/compare/v0.89.0...v0.90.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#443](https://github.com/Increase/increase-go/issues/443)) ([8195e30](https://github.com/Increase/increase-go/commit/8195e305f2bac1b104a01ccee60eb43c2ec0bfa8))
+
+## 0.89.0 (2024-08-26)
+
+Full Changelog: [v0.88.0...v0.89.0](https://github.com/Increase/increase-go/compare/v0.88.0...v0.89.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#440](https://github.com/Increase/increase-go/issues/440)) ([a4738fe](https://github.com/Increase/increase-go/commit/a4738fe61cb9f8c47f7927eb7bdf00d55adeb2ea))
+
+## 0.88.0 (2024-08-21)
+
+Full Changelog: [v0.87.0...v0.88.0](https://github.com/Increase/increase-go/compare/v0.87.0...v0.88.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#437](https://github.com/Increase/increase-go/issues/437)) ([830e74a](https://github.com/Increase/increase-go/commit/830e74a9bccce6e2fc87cfb5e61ac97fb1cd2746))
+
+## 0.87.0 (2024-08-21)
+
+Full Changelog: [v0.86.0...v0.87.0](https://github.com/Increase/increase-go/compare/v0.86.0...v0.87.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#434](https://github.com/Increase/increase-go/issues/434)) ([23911a8](https://github.com/Increase/increase-go/commit/23911a88e63368e1ce923307861c816568530e4f))
+
+## 0.86.0 (2024-08-20)
+
+Full Changelog: [v0.85.0...v0.86.0](https://github.com/Increase/increase-go/compare/v0.85.0...v0.86.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#431](https://github.com/Increase/increase-go/issues/431)) ([3dc88f4](https://github.com/Increase/increase-go/commit/3dc88f43935e6471f5f1371eedc85aab75678fd7))
+
+## 0.85.0 (2024-08-20)
+
+Full Changelog: [v0.84.0...v0.85.0](https://github.com/Increase/increase-go/compare/v0.84.0...v0.85.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#428](https://github.com/Increase/increase-go/issues/428)) ([aa6977b](https://github.com/Increase/increase-go/commit/aa6977ba440e9180901ed7c562447cd89a20fe3c))
+
+## 0.84.0 (2024-08-20)
+
+Full Changelog: [v0.83.0...v0.84.0](https://github.com/Increase/increase-go/compare/v0.83.0...v0.84.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#425](https://github.com/Increase/increase-go/issues/425)) ([60bbdee](https://github.com/Increase/increase-go/commit/60bbdee2abc0ad06d97ed96ea4b4b6da1682930d))
+
+## 0.83.0 (2024-08-20)
+
+Full Changelog: [v0.82.0...v0.83.0](https://github.com/Increase/increase-go/compare/v0.82.0...v0.83.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#422](https://github.com/Increase/increase-go/issues/422)) ([9acfb1d](https://github.com/Increase/increase-go/commit/9acfb1db6c693c50a0f64f228180a510605419a0))
+
+## 0.82.0 (2024-08-19)
+
+Full Changelog: [v0.81.0...v0.82.0](https://github.com/Increase/increase-go/compare/v0.81.0...v0.82.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#419](https://github.com/Increase/increase-go/issues/419)) ([889d65b](https://github.com/Increase/increase-go/commit/889d65bbe2498d28a36c47c92193a1391595d8af))
+
+## 0.81.0 (2024-08-19)
+
+Full Changelog: [v0.80.0...v0.81.0](https://github.com/Increase/increase-go/compare/v0.80.0...v0.81.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#416](https://github.com/Increase/increase-go/issues/416)) ([1c367c9](https://github.com/Increase/increase-go/commit/1c367c91eaff9e0a9fe75ec26a45cc30beb3b7db))
+
+## 0.80.0 (2024-08-19)
+
+Full Changelog: [v0.79.0...v0.80.0](https://github.com/Increase/increase-go/compare/v0.79.0...v0.80.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#412](https://github.com/Increase/increase-go/issues/412)) ([e9299a3](https://github.com/Increase/increase-go/commit/e9299a37ea3e38f66a460675bed53fc2e765df21))
+
+## 0.79.0 (2024-08-16)
+
+Full Changelog: [v0.78.0...v0.79.0](https://github.com/Increase/increase-go/compare/v0.78.0...v0.79.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#409](https://github.com/Increase/increase-go/issues/409)) ([b45d68b](https://github.com/Increase/increase-go/commit/b45d68b19b12816cc92aeaab95d6f68c09c4c5e8))
+
+## 0.78.0 (2024-08-16)
+
+Full Changelog: [v0.77.0...v0.78.0](https://github.com/Increase/increase-go/compare/v0.77.0...v0.78.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#406](https://github.com/Increase/increase-go/issues/406)) ([92dba82](https://github.com/Increase/increase-go/commit/92dba821f57a8215dd80f19ac1d39a034194ca51))
+
+## 0.77.0 (2024-08-15)
+
+Full Changelog: [v0.76.0...v0.77.0](https://github.com/Increase/increase-go/compare/v0.76.0...v0.77.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#403](https://github.com/Increase/increase-go/issues/403)) ([47830a3](https://github.com/Increase/increase-go/commit/47830a3e75b1de508154c4068b47d0f173d3e71b))
+
+## 0.76.0 (2024-08-15)
+
+Full Changelog: [v0.75.0...v0.76.0](https://github.com/Increase/increase-go/compare/v0.75.0...v0.76.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#400](https://github.com/Increase/increase-go/issues/400)) ([4f5f5d3](https://github.com/Increase/increase-go/commit/4f5f5d3de53fc6da57a369e366cea51be00e602d))
+
+## 0.75.0 (2024-08-14)
+
+Full Changelog: [v0.74.0...v0.75.0](https://github.com/Increase/increase-go/compare/v0.74.0...v0.75.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#397](https://github.com/Increase/increase-go/issues/397)) ([c6cf0d6](https://github.com/Increase/increase-go/commit/c6cf0d60fbb9e48bcd097ee74d5a272e6cc8c2b6))
+
+## 0.74.0 (2024-08-13)
+
+Full Changelog: [v0.73.0...v0.74.0](https://github.com/Increase/increase-go/compare/v0.73.0...v0.74.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#394](https://github.com/Increase/increase-go/issues/394)) ([d6e282a](https://github.com/Increase/increase-go/commit/d6e282a4fedddd9bbd126318115ba9f1019b9731))
+
+## 0.73.0 (2024-08-13)
+
+Full Changelog: [v0.72.0...v0.73.0](https://github.com/Increase/increase-go/compare/v0.72.0...v0.73.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#391](https://github.com/Increase/increase-go/issues/391)) ([44773cb](https://github.com/Increase/increase-go/commit/44773cb7e51868a8e375c26d53b064fded385f82))
+
+## 0.72.0 (2024-08-13)
+
+Full Changelog: [v0.71.1...v0.72.0](https://github.com/Increase/increase-go/compare/v0.71.1...v0.72.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#388](https://github.com/Increase/increase-go/issues/388)) ([93830c5](https://github.com/Increase/increase-go/commit/93830c54246f9571b6b451dff12a41b070c53db5))
+
+## 0.71.1 (2024-08-09)
+
+Full Changelog: [v0.71.0...v0.71.1](https://github.com/Increase/increase-go/compare/v0.71.0...v0.71.1)
+
+### Bug Fixes
+
+* deserialization of struct unions that implement json.Unmarshaler ([#386](https://github.com/Increase/increase-go/issues/386)) ([be0c8b2](https://github.com/Increase/increase-go/commit/be0c8b231c49d49f19aa5cebdae12423ff7367f7))
+
+
+### Chores
+
+* **ci:** bump prism mock server version ([#384](https://github.com/Increase/increase-go/issues/384)) ([54d1c1f](https://github.com/Increase/increase-go/commit/54d1c1f5afa9cc0643b4c5ba0001a454ad519386))
+
+## 0.71.0 (2024-08-09)
+
+Full Changelog: [v0.70.0...v0.71.0](https://github.com/Increase/increase-go/compare/v0.70.0...v0.71.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#381](https://github.com/Increase/increase-go/issues/381)) ([259915e](https://github.com/Increase/increase-go/commit/259915e4a407556b41f47f8bb57b7a168cee466c))
+
+## 0.70.0 (2024-08-08)
+
+Full Changelog: [v0.69.0...v0.70.0](https://github.com/Increase/increase-go/compare/v0.69.0...v0.70.0)
+
+### Features
+
+* **api:** api updates ([#376](https://github.com/Increase/increase-go/issues/376)) ([57202a5](https://github.com/Increase/increase-go/commit/57202a569dcf3084dd5ace28ce7095285acb4c70))
+* **api:** OpenAPI spec update via Stainless API ([#378](https://github.com/Increase/increase-go/issues/378)) ([659f33c](https://github.com/Increase/increase-go/commit/659f33c3c4e1d6745fdf6280a9dacd02cccb99f1))
+* **api:** OpenAPI spec update via Stainless API ([#379](https://github.com/Increase/increase-go/issues/379)) ([909636b](https://github.com/Increase/increase-go/commit/909636b394668f113aece2ab3dc0b1d1e831c141))
+
+
+### Chores
+
+* **internal:** capitalize github org name ([#377](https://github.com/Increase/increase-go/issues/377)) ([bff7aca](https://github.com/Increase/increase-go/commit/bff7aca5248d06b86bf4f0bcc3c7f015fd6827b6))
+* **internal:** codegen related update ([#374](https://github.com/Increase/increase-go/issues/374)) ([34bdf97](https://github.com/Increase/increase-go/commit/34bdf97b61dad305aba7a03bbb3403135dba674b))
+
+## 0.69.0 (2024-08-01)
+
+Full Changelog: [v0.68.0...v0.69.0](https://github.com/Increase/increase-go/compare/v0.68.0...v0.69.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#370](https://github.com/Increase/increase-go/issues/370)) ([85ddcb4](https://github.com/Increase/increase-go/commit/85ddcb4fb3b36821026eca5db8c7c2adf23fedbf))
+* **api:** OpenAPI spec update via Stainless API ([#372](https://github.com/Increase/increase-go/issues/372)) ([b17de3c](https://github.com/Increase/increase-go/commit/b17de3c447a0a09f0c69a50dc473a413a5d8ec54))
+
+## 0.68.0 (2024-07-25)
+
+Full Changelog: [v0.67.0...v0.68.0](https://github.com/Increase/increase-go/compare/v0.67.0...v0.68.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#367](https://github.com/Increase/increase-go/issues/367)) ([c123795](https://github.com/Increase/increase-go/commit/c123795d1af6aa0ddbfc07b705cff5cfdd7032c4))
+
+## 0.67.0 (2024-07-25)
+
+Full Changelog: [v0.66.0...v0.67.0](https://github.com/Increase/increase-go/compare/v0.66.0...v0.67.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#364](https://github.com/Increase/increase-go/issues/364)) ([d74bce5](https://github.com/Increase/increase-go/commit/d74bce5d0f006609b82afd73625a232a84b6e50a))
+
+## 0.66.0 (2024-07-25)
+
+Full Changelog: [v0.65.0...v0.66.0](https://github.com/Increase/increase-go/compare/v0.65.0...v0.66.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#361](https://github.com/Increase/increase-go/issues/361)) ([f0ee2a3](https://github.com/Increase/increase-go/commit/f0ee2a3c83c317bb329baae474c27c19e76c7b7d))
+
+## 0.65.0 (2024-07-25)
+
+Full Changelog: [v0.64.0...v0.65.0](https://github.com/Increase/increase-go/compare/v0.64.0...v0.65.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#358](https://github.com/Increase/increase-go/issues/358)) ([7db3d38](https://github.com/Increase/increase-go/commit/7db3d381a76681957bf7543babe3f8c38a59920e))
+
+## 0.64.0 (2024-07-23)
+
+Full Changelog: [v0.63.0...v0.64.0](https://github.com/Increase/increase-go/compare/v0.63.0...v0.64.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#356](https://github.com/Increase/increase-go/issues/356)) ([a4edfe2](https://github.com/Increase/increase-go/commit/a4edfe276e7ac728407abe7d6762244c0f89ef7f))
+
+
+### Chores
+
+* **ci:** remove unused release doctor ([#353](https://github.com/Increase/increase-go/issues/353)) ([1302e04](https://github.com/Increase/increase-go/commit/1302e040936996f549f966fa262ff06a478702d1))
+* **tests:** update prism version ([#355](https://github.com/Increase/increase-go/issues/355)) ([d289ce4](https://github.com/Increase/increase-go/commit/d289ce440dc56781ab2806e53fab965e0c362971))
+
+## 0.63.0 (2024-07-23)
+
+Full Changelog: [v0.62.0...v0.63.0](https://github.com/Increase/increase-go/compare/v0.62.0...v0.63.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#350](https://github.com/Increase/increase-go/issues/350)) ([5f9e52c](https://github.com/Increase/increase-go/commit/5f9e52cd96cf49b195f4b01a45d6341ab0ff6b88))
+
+## 0.62.0 (2024-07-18)
+
+Full Changelog: [v0.61.0...v0.62.0](https://github.com/Increase/increase-go/compare/v0.61.0...v0.62.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#347](https://github.com/Increase/increase-go/issues/347)) ([4062b73](https://github.com/Increase/increase-go/commit/4062b732eae00d3d9ab119bfd94db95af6f9b3ea))
+
+## 0.61.0 (2024-07-17)
+
+Full Changelog: [v0.60.0...v0.61.0](https://github.com/Increase/increase-go/compare/v0.60.0...v0.61.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#344](https://github.com/Increase/increase-go/issues/344)) ([d52b36e](https://github.com/Increase/increase-go/commit/d52b36e3b0faa10d15b62ecae11e051f250ec2c4))
+
+## 0.60.0 (2024-07-15)
+
+Full Changelog: [v0.59.0...v0.60.0](https://github.com/Increase/increase-go/compare/v0.59.0...v0.60.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#342](https://github.com/Increase/increase-go/issues/342)) ([a485012](https://github.com/Increase/increase-go/commit/a4850129927d4eb37c197191c10e8a79bbac39f3))
+
+
+### Chores
+
+* sync changes ([#340](https://github.com/Increase/increase-go/issues/340)) ([ec40995](https://github.com/Increase/increase-go/commit/ec409953c05aef6c5b84e6120646e5dd6193aea1))
+
+## 0.59.0 (2024-07-14)
+
+Full Changelog: [v0.58.0...v0.59.0](https://github.com/Increase/increase-go/compare/v0.58.0...v0.59.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#333](https://github.com/Increase/increase-go/issues/333)) ([9c9a3ef](https://github.com/Increase/increase-go/commit/9c9a3ef851306aa729fd8f2f76d767e289f8e6f6))
+* **api:** OpenAPI spec update via Stainless API ([#334](https://github.com/Increase/increase-go/issues/334)) ([2dbdb52](https://github.com/Increase/increase-go/commit/2dbdb526978b6fac35693d2f8d60cad75ba7b16d))
+* **api:** OpenAPI spec update via Stainless API ([#335](https://github.com/Increase/increase-go/issues/335)) ([b82903c](https://github.com/Increase/increase-go/commit/b82903c781ec80d7d81f3e665bce9f3cee6dfa36))
+
+## 0.58.0 (2024-07-14)
+
+Full Changelog: [v0.57.1...v0.58.0](https://github.com/Increase/increase-go/compare/v0.57.1...v0.58.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#329](https://github.com/Increase/increase-go/issues/329)) ([dcd1814](https://github.com/Increase/increase-go/commit/dcd1814e1d77a2fb48200673bd076c0c6cafbe8c))
+* **api:** OpenAPI spec update via Stainless API ([#331](https://github.com/Increase/increase-go/issues/331)) ([84170dd](https://github.com/Increase/increase-go/commit/84170dd3dbc3fdb73c7de2f7f35837850a553659))
+
+## 0.57.1 (2024-07-11)
+
+Full Changelog: [v0.57.0...v0.57.1](https://github.com/Increase/increase-go/compare/v0.57.0...v0.57.1)
+
+### Bug Fixes
+
+* **internal:** fix MarshalJSON logic for interface elemnets ([#325](https://github.com/Increase/increase-go/issues/325)) ([e461394](https://github.com/Increase/increase-go/commit/e4613944b54e1a600678319782312efdf323bcc7))
+
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#327](https://github.com/Increase/increase-go/issues/327)) ([24ede29](https://github.com/Increase/increase-go/commit/24ede2971bc38c56e6a2c5010e41779923a20aeb))
+
+
+### Documentation
+
+* **examples:** update example values ([#328](https://github.com/Increase/increase-go/issues/328)) ([c3635e4](https://github.com/Increase/increase-go/commit/c3635e48cc921252d5f5ca5940544abf59335319))
+
+## 0.57.0 (2024-07-04)
+
+Full Changelog: [v0.56.1...v0.57.0](https://github.com/Increase/increase-go/compare/v0.56.1...v0.57.0)
+
+### Features
+
+* **api:** add property 'receiver identification number' to 'originator company entry description' ([#324](https://github.com/Increase/increase-go/issues/324)) ([1e2bf92](https://github.com/Increase/increase-go/commit/1e2bf927207149838acc79ba2ade75c5982d6a64))
+
+
+### Chores
+
+* **internal:** improve deserialization of embedded structs ([#322](https://github.com/Increase/increase-go/issues/322)) ([5e83b4c](https://github.com/Increase/increase-go/commit/5e83b4c790625109867e04457698b7b7ed7c6371))
+
+## 0.56.1 (2024-07-02)
+
+Full Changelog: [v0.56.0...v0.56.1](https://github.com/Increase/increase-go/compare/v0.56.0...v0.56.1)
+
+### Bug Fixes
+
+* use slice instead of appending to r.Options ([#320](https://github.com/Increase/increase-go/issues/320)) ([5968421](https://github.com/Increase/increase-go/commit/5968421610a93adafd7c3e425bae089a27674f40))
+
+## 0.56.0 (2024-07-02)
+
+Full Changelog: [v0.55.0...v0.56.0](https://github.com/Increase/increase-go/compare/v0.55.0...v0.56.0)
+
+### Features
+
+* **api:** add deposit return property to inbound check deposit model ([#318](https://github.com/Increase/increase-go/issues/318)) ([179c2bf](https://github.com/Increase/increase-go/commit/179c2bf5235bda03be8f9fd9b08f8c70ec3a1e60))
+
+## 0.55.0 (2024-07-01)
+
+Full Changelog: [v0.54.0...v0.55.0](https://github.com/Increase/increase-go/compare/v0.54.0...v0.55.0)
+
+### Features
+
+* **api:** add method to simulate international ACH transfers ([#316](https://github.com/Increase/increase-go/issues/316)) ([fef8cce](https://github.com/Increase/increase-go/commit/fef8ccea9793451207efefaa3e2ee167e51d113e))
+
+## 0.54.0 (2024-06-28)
+
+Full Changelog: [v0.53.2...v0.54.0](https://github.com/Increase/increase-go/compare/v0.53.2...v0.54.0)
+
+### Features
+
+* **api:** updates ([#315](https://github.com/Increase/increase-go/issues/315)) ([29e9044](https://github.com/Increase/increase-go/commit/29e9044af8e9f6fba08382ca8b831281b4f960ab))
+
+
+### Chores
+
+* gitignore test server logs ([#313](https://github.com/Increase/increase-go/issues/313)) ([df89522](https://github.com/Increase/increase-go/commit/df8952242cbf7b1c708aeda3c517261c018a7e7d))
+
+## 0.53.2 (2024-06-21)
+
+Full Changelog: [v0.53.1...v0.53.2](https://github.com/Increase/increase-go/compare/v0.53.1...v0.53.2)
+
+### Bug Fixes
+
+* fix ExtraFields serialization / deserialization ([#311](https://github.com/Increase/increase-go/issues/311)) ([84c304c](https://github.com/Increase/increase-go/commit/84c304c2a39493eaf8bf4675886a38f5e306bea0))
+
+## 0.53.1 (2024-06-06)
+
+Full Changelog: [v0.53.0...v0.53.1](https://github.com/Increase/increase-go/compare/v0.53.0...v0.53.1)
+
+### Bug Fixes
+
+* fix port function for interface{} types ([#309](https://github.com/Increase/increase-go/issues/309)) ([80273bc](https://github.com/Increase/increase-go/commit/80273bc2174b86fcf47d8e20eeb07d04859fc4cc))
+
+## 0.53.0 (2024-06-04)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/Increase/increase-go/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **api:** add `default_digital_card_profile_id` property ([#307](https://github.com/Increase/increase-go/issues/307)) ([1c28ad7](https://github.com/Increase/increase-go/commit/1c28ad75bb135888b79b2d1a2f736f35f03c971d))
+
+## 0.52.0 (2024-06-03)
+
+Full Changelog: [v0.51.1...v0.52.0](https://github.com/Increase/increase-go/compare/v0.51.1...v0.52.0)
+
+### Features
+
+* **api:** updates ([#305](https://github.com/Increase/increase-go/issues/305)) ([bf9032f](https://github.com/Increase/increase-go/commit/bf9032f94bf65e5d629b6344ea4401b8cd605ae4))
+
+## 0.51.1 (2024-06-03)
+
+Full Changelog: [v0.51.0...v0.51.1](https://github.com/Increase/increase-go/compare/v0.51.0...v0.51.1)
+
+### Bug Fixes
+
+* **internal:** fix the way that unions are deserialized in nested arrays ([#303](https://github.com/Increase/increase-go/issues/303)) ([aea5704](https://github.com/Increase/increase-go/commit/aea5704d3ad86c46c3013d0ad3cee75fa509bd87))
+
+## 0.51.0 (2024-05-29)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/Increase/increase-go/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** add trace number to ach transfer returns ([#302](https://github.com/Increase/increase-go/issues/302)) ([31211ca](https://github.com/Increase/increase-go/commit/31211ca06a01cbe782657eca448f5ff55d63aa4b))
+* better validation of path params ([#299](https://github.com/Increase/increase-go/issues/299)) ([4b349cd](https://github.com/Increase/increase-go/commit/4b349cd7cab4deaf7b09a202bcc88d53b2315104))
+
+
+### Chores
+
+* **internal:** fix format script ([#301](https://github.com/Increase/increase-go/issues/301)) ([fb2596f](https://github.com/Increase/increase-go/commit/fb2596f6af6c3c26477a19cf39eb5767f81e7bb5))
+
+## 0.50.0 (2024-05-23)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/Increase/increase-go/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** realtime decision updates ([#297](https://github.com/Increase/increase-go/issues/297)) ([b02c6bb](https://github.com/Increase/increase-go/commit/b02c6bbadba44e65c51b0bd1878dcaadb896f8c9))
+
+## 0.49.0 (2024-05-22)
+
+Full Changelog: [v0.48.1...v0.49.0](https://github.com/Increase/increase-go/compare/v0.48.1...v0.49.0)
+
+### Features
+
+* export `ErrorType` and `ErrorStatus` types ([#296](https://github.com/Increase/increase-go/issues/296)) ([d8fd9c3](https://github.com/Increase/increase-go/commit/d8fd9c3884fa7772c4389fb049b1b3aa756f6ef0))
+
+
+### Bug Fixes
+
+* **api:** better handling of enum renaming ([d8fd9c3](https://github.com/Increase/increase-go/commit/d8fd9c3884fa7772c4389fb049b1b3aa756f6ef0))
+
+
+### Chores
+
+* **internal:** support parsing other json content types ([#294](https://github.com/Increase/increase-go/issues/294)) ([762051c](https://github.com/Increase/increase-go/commit/762051c3a08214ac746a5be9a216b8c2e2a38f40))
+
+## 0.48.1 (2024-05-15)
+
+Full Changelog: [v0.48.0...v0.48.1](https://github.com/Increase/increase-go/compare/v0.48.0...v0.48.1)
+
+### Bug Fixes
+
+* fix reading the error body more than once ([#292](https://github.com/Increase/increase-go/issues/292)) ([e1c828a](https://github.com/Increase/increase-go/commit/e1c828a2e202f968e820dfb7397b03206c44c7af))
+
+## 0.48.0 (2024-05-15)
+
+Full Changelog: [v0.47.0...v0.48.0](https://github.com/Increase/increase-go/compare/v0.47.0...v0.48.0)
+
+### Features
+
+* **api:** updates ([#291](https://github.com/Increase/increase-go/issues/291)) ([dc2958a](https://github.com/Increase/increase-go/commit/dc2958a13c8140f7ee37c1b0b11652d30d7d4f5f))
+
+
+### Chores
+
+* **docs:** add SECURITY.md ([#287](https://github.com/Increase/increase-go/issues/287)) ([6fc5be4](https://github.com/Increase/increase-go/commit/6fc5be42150e1fb1e2f5e8228e67000555031169))
+* **internal:** add slightly better logging to scripts ([#290](https://github.com/Increase/increase-go/issues/290)) ([8e2829b](https://github.com/Increase/increase-go/commit/8e2829b77902c73b94d114a20c977ef52a64f703))
+
+
+### Documentation
+
+* **api:** update examples & docstrings ([#289](https://github.com/Increase/increase-go/issues/289)) ([af75c44](https://github.com/Increase/increase-go/commit/af75c446f8a853dff7747ab397836a1353ca5c2a))
+
+## 0.47.0 (2024-05-10)
+
+Full Changelog: [v0.46.0...v0.47.0](https://github.com/Increase/increase-go/compare/v0.46.0...v0.47.0)
+
+### Features
+
+* **api:** enhance API with extended transaction details and new entity types ([#286](https://github.com/Increase/increase-go/issues/286)) ([afad2fe](https://github.com/Increase/increase-go/commit/afad2fe14c07142c0029baf955b370fc13db0fd7))
+* propagate resource description field from stainless config to SDK docs ([#285](https://github.com/Increase/increase-go/issues/285)) ([4f506f1](https://github.com/Increase/increase-go/commit/4f506f12babc9f5c1459bf16ee06a22e3164f364))
+
+
+### Chores
+
+* **internal:** fix bootstrap script ([#282](https://github.com/Increase/increase-go/issues/282)) ([05cf453](https://github.com/Increase/increase-go/commit/05cf453bea31167fae8ad815deed8c11ae0f8218))
+
+## 0.46.0 (2024-05-01)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/Increase/increase-go/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** updates ([#281](https://github.com/Increase/increase-go/issues/281)) ([bccec8f](https://github.com/Increase/increase-go/commit/bccec8fae768f3687814220fc2b99c6d2b58a60e))
+
+
+### Bug Fixes
+
+* **test:** fix test github actions job ([#280](https://github.com/Increase/increase-go/issues/280)) ([4b926b9](https://github.com/Increase/increase-go/commit/4b926b94b55613287aa088cb1752af2ddb3170cd))
+
+
+### Chores
+
+* **internal:** add link to openapi spec ([#277](https://github.com/Increase/increase-go/issues/277)) ([bb98d60](https://github.com/Increase/increase-go/commit/bb98d60eedc632f53a59f77dd1bd86c5726b5819))
+* **internal:** add scripts/test, scripts/mock and add ci job ([#279](https://github.com/Increase/increase-go/issues/279)) ([f2ff6c9](https://github.com/Increase/increase-go/commit/f2ff6c9ef52eb40e6de95979848fcaa3bdf915fe))
+
+## 0.45.0 (2024-04-25)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/Increase/increase-go/compare/v0.44.0...v0.45.0)
+
+### ⚠ BREAKING CHANGES
+
+* require account ID for creating an ACH prenotification ([#276](https://github.com/Increase/increase-go/issues/276))
+
+### Bug Fixes
+
+* require account ID for creating an ACH prenotification ([#276](https://github.com/Increase/increase-go/issues/276)) ([2b79f11](https://github.com/Increase/increase-go/commit/2b79f112f0560ee67334fa51471b0613a36fe78e))
+
+
+### Chores
+
+* **internal:** fix Port function for number and boolean enums ([#275](https://github.com/Increase/increase-go/issues/275)) ([0231358](https://github.com/Increase/increase-go/commit/0231358231699ff8910c263c9fe76dd301b20d45))
+* **internal:** use actions/checkout@v4 for codeflow ([#273](https://github.com/Increase/increase-go/issues/273)) ([fa8a81e](https://github.com/Increase/increase-go/commit/fa8a81e4a0bb110ba5680c0044e81bb3738474f0))
+
+## 0.44.0 (2024-04-23)
+
+Full Changelog: [v0.43.0...v0.44.0](https://github.com/Increase/increase-go/compare/v0.43.0...v0.44.0)
+
+### Features
+
+* **api:** remove inbound_wire_drawdown_payment_reversal ([#271](https://github.com/Increase/increase-go/issues/271)) ([c8c5cb5](https://github.com/Increase/increase-go/commit/c8c5cb5ca9adab482582da6652e7b0f72246b5bc))
+
+## 0.43.0 (2024-04-19)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/Increase/increase-go/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** add account_id param to ach_prenotification and third_party to check_transfer ([#269](https://github.com/Increase/increase-go/issues/269)) ([41ca668](https://github.com/Increase/increase-go/commit/41ca668d6fbafcbcb745f274d94f1daa0bafba2d))
+
+## 0.42.0 (2024-04-18)
+
+Full Changelog: [v0.41.0...v0.42.0](https://github.com/Increase/increase-go/compare/v0.41.0...v0.42.0)
+
+### Features
+
+* **api:** add inbound_check_deposits decline endpoint ([#267](https://github.com/Increase/increase-go/issues/267)) ([31f1457](https://github.com/Increase/increase-go/commit/31f14570b15b5720b3678193d4d30872f2273028))
+
+## 0.41.0 (2024-04-17)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/Increase/increase-go/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* **api:** add altered_or_fictitious check decline reason ([#265](https://github.com/Increase/increase-go/issues/265)) ([959f491](https://github.com/Increase/increase-go/commit/959f491b46682695b9859082cb212368f541a77e))
+
+## 0.40.0 (2024-04-16)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/Increase/increase-go/compare/v0.39.0...v0.40.0)
+
+### Features
+
+* **api:** remove deposit field from check transfer ([#264](https://github.com/Increase/increase-go/issues/264)) ([f9fffb0](https://github.com/Increase/increase-go/commit/f9fffb064fd5b1962f8dbdbbc0b25b8a8ca3809f))
+
+
+### Build System
+
+* configure UTF-8 locale in devcontainer ([#262](https://github.com/Increase/increase-go/issues/262)) ([d3f39fc](https://github.com/Increase/increase-go/commit/d3f39fce996a1229d56aa1cd43fadc35e2f9737a))
+
+## 0.39.0 (2024-04-16)
+
+Full Changelog: [v0.38.1...v0.39.0](https://github.com/Increase/increase-go/compare/v0.38.1...v0.39.0)
+
+### Features
+
+* **api:** add /inbound_check_deposits endpoints ([#261](https://github.com/Increase/increase-go/issues/261)) ([8e43705](https://github.com/Increase/increase-go/commit/8e43705c495753a38d266dade61f63c4a1486bf2))
+* **option:** add option to provide a raw request body ([#260](https://github.com/Increase/increase-go/issues/260)) ([63a11e4](https://github.com/Increase/increase-go/commit/63a11e48728d17d457463aa58111ea2a7fbaca8b))
+
+
+### Chores
+
+* **internal:** formatting ([#258](https://github.com/Increase/increase-go/issues/258)) ([8579856](https://github.com/Increase/increase-go/commit/8579856012fc52e3c2432d69a20d04ce0f597487))
+
+## 0.38.1 (2024-04-11)
+
+Full Changelog: [v0.38.0...v0.38.1](https://github.com/Increase/increase-go/compare/v0.38.0...v0.38.1)
+
+### Bug Fixes
+
+* **types:** mark physical card cardholder as required ([#256](https://github.com/Increase/increase-go/issues/256)) ([c3381f3](https://github.com/Increase/increase-go/commit/c3381f3cfd7cd63746520199d64bcb0f4a57f203))
+
+## 0.38.0 (2024-04-10)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/Increase/increase-go/compare/v0.37.0...v0.38.0)
+
+### Features
+
+* **api:** updates ([#255](https://github.com/Increase/increase-go/issues/255)) ([391aa46](https://github.com/Increase/increase-go/commit/391aa46e6a8f6e8824effdaa0aa1c64e48a8080c))
+
+
+### Documentation
+
+* **api:** update links to NAICS classification codes ([#253](https://github.com/Increase/increase-go/issues/253)) ([b14327a](https://github.com/Increase/increase-go/commit/b14327a8eaa42a86bc51709bbc326b52ed80e07e))
+
+## 0.37.0 (2024-04-05)
+
+Full Changelog: [v0.36.0...v0.37.0](https://github.com/Increase/increase-go/compare/v0.36.0...v0.37.0)
+
+### Features
+
+* **api:** add inbound check deposit return intention ([#252](https://github.com/Increase/increase-go/issues/252)) ([2f13b6d](https://github.com/Increase/increase-go/commit/2f13b6da5aa79926bac833d890fefdbf09042021))
+
+
+### Chores
+
+* **internal:** implement Port function in apijson ([#250](https://github.com/Increase/increase-go/issues/250)) ([a83c771](https://github.com/Increase/increase-go/commit/a83c7716c84b4778a14c3c6b5600075bf239106f))
+
+## 0.36.0 (2024-04-04)
+
+Full Changelog: [v0.35.0...v0.36.0](https://github.com/Increase/increase-go/compare/v0.35.0...v0.36.0)
+
+### Features
+
+* **api:** remove inbound_check category, rename check_deposit_mail_item, add inbound_mail_item ([#248](https://github.com/Increase/increase-go/issues/248)) ([9ad814c](https://github.com/Increase/increase-go/commit/9ad814cf62af777e12b1d6215acb1ef5101fd285))
+
+## 0.35.0 (2024-04-02)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/Increase/increase-go/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** filter OAuth connections by their status ([#247](https://github.com/Increase/increase-go/issues/247)) ([fae446a](https://github.com/Increase/increase-go/commit/fae446a7fc244ae9cf693af514ee519cd2d54901))
+
+
+### Chores
+
+* **internal:** use a time zone less likely to conflict with the local one ([#245](https://github.com/Increase/increase-go/issues/245)) ([f9e753b](https://github.com/Increase/increase-go/commit/f9e753bb708aae301b169235c18990cf48d05f15))
+
+## 0.34.0 (2024-03-29)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/Increase/increase-go/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** remove check transfer intention ([#242](https://github.com/Increase/increase-go/issues/242)) ([dfb36c5](https://github.com/Increase/increase-go/commit/dfb36c554e8ed5af467b6fcffe298e8646a8340c))
+
+## 0.33.0 (2024-03-29)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/Increase/increase-go/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** updates ([#241](https://github.com/Increase/increase-go/issues/241)) ([c9c6fe5](https://github.com/Increase/increase-go/commit/c9c6fe5df5a385b0c0c19b4c04dedcdfcf37d942))
+* **client:** implement raw requests methods on client ([#239](https://github.com/Increase/increase-go/issues/239)) ([21d9580](https://github.com/Increase/increase-go/commit/21d9580bc07fd52945486ce641ea73c64477f11d))
+
+
+### Chores
+
+* **internal:** move pagination types to pagination package ([#240](https://github.com/Increase/increase-go/issues/240)) ([d488ccc](https://github.com/Increase/increase-go/commit/d488ccc9466ffbc6d484a98bc49852dcf4d5ec2c))
+* revert temporary commit ([4e4af18](https://github.com/Increase/increase-go/commit/4e4af18cf56b195f40fb03fcfcdd7408b47bc7fa))
+* temporary commit ([#237](https://github.com/Increase/increase-go/issues/237)) ([57884fe](https://github.com/Increase/increase-go/commit/57884fee40abc00424dccabe118e45a758e646c8))
+
 ## 0.32.0 (2024-03-27)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/Increase/increase-go/compare/v0.31.0...v0.32.0)
