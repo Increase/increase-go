@@ -123,34 +123,51 @@ func (r cardPaymentJSON) RawJSON() string {
 
 type CardPaymentElement struct {
 	// A Card Authentication object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_authentication`.
+	// and only if `category` is equal to `card_authentication`. Card Authentications
+	// are attempts to authenticate a transaction or a card with 3DS.
 	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication,required,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_authorization`.
+	// and only if `category` is equal to `card_authorization`. Card Authorizations are
+	// temporary holds placed on a customers funds with the intent to later clear a
+	// transaction.
 	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization,required,nullable"`
 	// A Card Authorization Expiration object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_authorization_expiration`.
+	// Card Authorization Expirations are cancellations of authorizations that were
+	// never settled by the acquirer.
 	CardAuthorizationExpiration CardPaymentElementsCardAuthorizationExpiration `json:"card_authorization_expiration,required,nullable"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
 	CardDecline CardPaymentElementsCardDecline `json:"card_decline,required,nullable"`
 	// A Card Fuel Confirmation object. This field will be present in the JSON response
-	// if and only if `category` is equal to `card_fuel_confirmation`.
+	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
+	// Confirmations update the amount of a Card Authorization after a fuel pump
+	// transaction is completed.
 	CardFuelConfirmation CardPaymentElementsCardFuelConfirmation `json:"card_fuel_confirmation,required,nullable"`
 	// A Card Increment object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_increment`.
+	// only if `category` is equal to `card_increment`. Card Increments increase the
+	// pending amount of an authorized transaction.
 	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment,required,nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_refund`.
+	// only if `category` is equal to `card_refund`. Card Refunds move money back to
+	// the cardholder. While they are usually connected to a Card Settlement an
+	// acquirer can also refund money directly to a card without relation to a
+	// transaction.
 	CardRefund CardPaymentElementsCardRefund `json:"card_refund,required,nullable"`
 	// A Card Reversal object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_reversal`.
+	// only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
+	// or the entirety of an existing Card Authorization.
 	CardReversal CardPaymentElementsCardReversal `json:"card_reversal,required,nullable"`
 	// A Card Settlement object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_settlement`.
+	// only if `category` is equal to `card_settlement`. Card Settlements are card
+	// transactions that have cleared and settled. While a settlement is usually
+	// preceded by an authorization, an acquirer can also directly clear a transaction
+	// without first authorizing it.
 	CardSettlement CardPaymentElementsCardSettlement `json:"card_settlement,required,nullable"`
 	// A Card Validation object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_validation`.
+	// only if `category` is equal to `card_validation`. Card Validations are requests
+	// from a merchant to verify that a card number and optionally its address and/or
+	// Card Verification Value are valid.
 	CardValidation CardPaymentElementsCardValidation `json:"card_validation,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
@@ -193,7 +210,8 @@ func (r cardPaymentElementJSON) RawJSON() string {
 }
 
 // A Card Authentication object. This field will be present in the JSON response if
-// and only if `category` is equal to `card_authentication`.
+// and only if `category` is equal to `card_authentication`. Card Authentications
+// are attempts to authenticate a transaction or a card with 3DS.
 type CardPaymentElementsCardAuthentication struct {
 	// The Card Authentication identifier.
 	ID string `json:"id,required"`
@@ -459,7 +477,9 @@ func (r CardPaymentElementsCardAuthenticationType) IsKnown() bool {
 }
 
 // A Card Authorization object. This field will be present in the JSON response if
-// and only if `category` is equal to `card_authorization`.
+// and only if `category` is equal to `card_authorization`. Card Authorizations are
+// temporary holds placed on a customers funds with the intent to later clear a
+// transaction.
 type CardPaymentElementsCardAuthorization struct {
 	// The Card Authorization identifier.
 	ID string `json:"id,required"`
@@ -977,6 +997,8 @@ func (r CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult)
 
 // A Card Authorization Expiration object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_authorization_expiration`.
+// Card Authorization Expirations are cancellations of authorizations that were
+// never settled by the acquirer.
 type CardPaymentElementsCardAuthorizationExpiration struct {
 	// The Card Authorization Expiration identifier.
 	ID string `json:"id,required"`
@@ -1620,7 +1642,9 @@ func (r CardPaymentElementsCardDeclineVerificationCardholderAddressResult) IsKno
 }
 
 // A Card Fuel Confirmation object. This field will be present in the JSON response
-// if and only if `category` is equal to `card_fuel_confirmation`.
+// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
+// Confirmations update the amount of a Card Authorization after a fuel pump
+// transaction is completed.
 type CardPaymentElementsCardFuelConfirmation struct {
 	// The Card Fuel Confirmation identifier.
 	ID string `json:"id,required"`
@@ -1755,7 +1779,8 @@ func (r CardPaymentElementsCardFuelConfirmationType) IsKnown() bool {
 }
 
 // A Card Increment object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_increment`.
+// only if `category` is equal to `card_increment`. Card Increments increase the
+// pending amount of an authorized transaction.
 type CardPaymentElementsCardIncrement struct {
 	// The Card Increment identifier.
 	ID string `json:"id,required"`
@@ -1922,7 +1947,10 @@ func (r CardPaymentElementsCardIncrementType) IsKnown() bool {
 }
 
 // A Card Refund object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_refund`.
+// only if `category` is equal to `card_refund`. Card Refunds move money back to
+// the cardholder. While they are usually connected to a Card Settlement an
+// acquirer can also refund money directly to a card without relation to a
+// transaction.
 type CardPaymentElementsCardRefund struct {
 	// The Card Refund identifier.
 	ID string `json:"id,required"`
@@ -2759,7 +2787,8 @@ func (r CardPaymentElementsCardRefundType) IsKnown() bool {
 }
 
 // A Card Reversal object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_reversal`.
+// only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
+// or the entirety of an existing Card Authorization.
 type CardPaymentElementsCardReversal struct {
 	// The Card Reversal identifier.
 	ID string `json:"id,required"`
@@ -2945,7 +2974,10 @@ func (r CardPaymentElementsCardReversalType) IsKnown() bool {
 }
 
 // A Card Settlement object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_settlement`.
+// only if `category` is equal to `card_settlement`. Card Settlements are card
+// transactions that have cleared and settled. While a settlement is usually
+// preceded by an authorization, an acquirer can also directly clear a transaction
+// without first authorizing it.
 type CardPaymentElementsCardSettlement struct {
 	// The Card Settlement identifier.
 	ID string `json:"id,required"`
@@ -3791,7 +3823,9 @@ func (r CardPaymentElementsCardSettlementType) IsKnown() bool {
 }
 
 // A Card Validation object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_validation`.
+// only if `category` is equal to `card_validation`. Card Validations are requests
+// from a merchant to verify that a card number and optionally its address and/or
+// Card Verification Value are valid.
 type CardPaymentElementsCardValidation struct {
 	// The Card Validation identifier.
 	ID string `json:"id,required"`
