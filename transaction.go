@@ -225,6 +225,17 @@ type TransactionSource struct {
 	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_ach_transfer`.
 	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
+	// An Inbound ACH Transfer Return Intention object. This field will be present in
+	// the JSON response if and only if `category` is equal to
+	// `inbound_ach_transfer_return_intention`.
+	InboundACHTransferReturnIntention TransactionSourceInboundACHTransferReturnIntention `json:"inbound_ach_transfer_return_intention,required,nullable"`
+	// An Inbound Check Adjustment object. This field will be present in the JSON
+	// response if and only if `category` is equal to `inbound_check_adjustment`.
+	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment,required,nullable"`
+	// An Inbound Check Deposit Return Intention object. This field will be present in
+	// the JSON response if and only if `category` is equal to
+	// `inbound_check_deposit_return_intention`.
+	InboundCheckDepositReturnIntention TransactionSourceInboundCheckDepositReturnIntention `json:"inbound_check_deposit_return_intention,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`.
@@ -239,6 +250,10 @@ type TransactionSource struct {
 	// An Inbound Wire Transfer Intention object. This field will be present in the
 	// JSON response if and only if `category` is equal to `inbound_wire_transfer`.
 	InboundWireTransfer TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,required,nullable"`
+	// An Inbound Wire Transfer Reversal Intention object. This field will be present
+	// in the JSON response if and only if `category` is equal to
+	// `inbound_wire_transfer_reversal`.
+	InboundWireTransferReversal TransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,required,nullable"`
 	// An Interest Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `interest_payment`.
 	InterestPayment TransactionSourceInterestPayment `json:"interest_payment,required,nullable"`
@@ -280,10 +295,14 @@ type transactionSourceJSON struct {
 	CheckTransferDeposit                        apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
+	InboundACHTransferReturnIntention           apijson.Field
+	InboundCheckAdjustment                      apijson.Field
+	InboundCheckDepositReturnIntention          apijson.Field
 	InboundRealTimePaymentsTransferConfirmation apijson.Field
 	InboundRealTimePaymentsTransferDecline      apijson.Field
 	InboundWireReversal                         apijson.Field
 	InboundWireTransfer                         apijson.Field
+	InboundWireTransferReversal                 apijson.Field
 	InterestPayment                             apijson.Field
 	InternalSource                              apijson.Field
 	Other                                       apijson.Field
@@ -2908,6 +2927,106 @@ func (r transactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() s
 	return r.raw
 }
 
+// An Inbound ACH Transfer Return Intention object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `inbound_ach_transfer_return_intention`.
+type TransactionSourceInboundACHTransferReturnIntention struct {
+	// The ID of the Inbound ACH Transfer that is being returned.
+	InboundACHTransferID string                                                 `json:"inbound_ach_transfer_id,required"`
+	JSON                 transactionSourceInboundACHTransferReturnIntentionJSON `json:"-"`
+}
+
+// transactionSourceInboundACHTransferReturnIntentionJSON contains the JSON
+// metadata for the struct [TransactionSourceInboundACHTransferReturnIntention]
+type transactionSourceInboundACHTransferReturnIntentionJSON struct {
+	InboundACHTransferID apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundACHTransferReturnIntention) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceInboundACHTransferReturnIntentionJSON) RawJSON() string {
+	return r.raw
+}
+
+// An Inbound Check Adjustment object. This field will be present in the JSON
+// response if and only if `category` is equal to `inbound_check_adjustment`.
+type TransactionSourceInboundCheckAdjustment struct {
+	// The ID of the transaction that was adjusted.
+	AdjustedTransactionID string `json:"adjusted_transaction_id,required"`
+	// The amount of the check adjustment.
+	Amount int64 `json:"amount,required"`
+	// The reason for the adjustment.
+	Reason TransactionSourceInboundCheckAdjustmentReason `json:"reason,required"`
+	JSON   transactionSourceInboundCheckAdjustmentJSON   `json:"-"`
+}
+
+// transactionSourceInboundCheckAdjustmentJSON contains the JSON metadata for the
+// struct [TransactionSourceInboundCheckAdjustment]
+type transactionSourceInboundCheckAdjustmentJSON struct {
+	AdjustedTransactionID apijson.Field
+	Amount                apijson.Field
+	Reason                apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundCheckAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceInboundCheckAdjustmentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason for the adjustment.
+type TransactionSourceInboundCheckAdjustmentReason string
+
+const (
+	TransactionSourceInboundCheckAdjustmentReasonLateReturn       TransactionSourceInboundCheckAdjustmentReason = "late_return"
+	TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit TransactionSourceInboundCheckAdjustmentReason = "wrong_payee_credit"
+	TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount   TransactionSourceInboundCheckAdjustmentReason = "adjusted_amount"
+)
+
+func (r TransactionSourceInboundCheckAdjustmentReason) IsKnown() bool {
+	switch r {
+	case TransactionSourceInboundCheckAdjustmentReasonLateReturn, TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit, TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount:
+		return true
+	}
+	return false
+}
+
+// An Inbound Check Deposit Return Intention object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `inbound_check_deposit_return_intention`.
+type TransactionSourceInboundCheckDepositReturnIntention struct {
+	// The ID of the Inbound Check Deposit that is being returned.
+	InboundCheckDepositID string `json:"inbound_check_deposit_id,required"`
+	// The identifier of the Check Transfer object that was deposited.
+	TransferID string                                                  `json:"transfer_id,required,nullable"`
+	JSON       transactionSourceInboundCheckDepositReturnIntentionJSON `json:"-"`
+}
+
+// transactionSourceInboundCheckDepositReturnIntentionJSON contains the JSON
+// metadata for the struct [TransactionSourceInboundCheckDepositReturnIntention]
+type transactionSourceInboundCheckDepositReturnIntentionJSON struct {
+	InboundCheckDepositID apijson.Field
+	TransferID            apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundCheckDepositReturnIntention) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceInboundCheckDepositReturnIntentionJSON) RawJSON() string {
+	return r.raw
+}
+
 // An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `inbound_real_time_payments_transfer_confirmation`.
@@ -3234,6 +3353,31 @@ func (r *TransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err e
 }
 
 func (r transactionSourceInboundWireTransferJSON) RawJSON() string {
+	return r.raw
+}
+
+// An Inbound Wire Transfer Reversal Intention object. This field will be present
+// in the JSON response if and only if `category` is equal to
+// `inbound_wire_transfer_reversal`.
+type TransactionSourceInboundWireTransferReversal struct {
+	// The ID of the Inbound Wire Transfer that is being reversed.
+	InboundWireTransferID string                                           `json:"inbound_wire_transfer_id,required"`
+	JSON                  transactionSourceInboundWireTransferReversalJSON `json:"-"`
+}
+
+// transactionSourceInboundWireTransferReversalJSON contains the JSON metadata for
+// the struct [TransactionSourceInboundWireTransferReversal]
+type transactionSourceInboundWireTransferReversalJSON struct {
+	InboundWireTransferID apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *TransactionSourceInboundWireTransferReversal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceInboundWireTransferReversalJSON) RawJSON() string {
 	return r.raw
 }
 
