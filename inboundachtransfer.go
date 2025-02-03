@@ -125,6 +125,9 @@ type InboundACHTransfer struct {
 	Amount int64 `json:"amount,required"`
 	// The time at which the transfer will be automatically resolved.
 	AutomaticallyResolvesAt time.Time `json:"automatically_resolves_at,required" format:"date-time"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the inbound ACH transfer was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// If your transfer is declined, this will contain details of the decline.
 	Decline InboundACHTransferDecline `json:"decline,required,nullable"`
 	// The direction of the transfer.
@@ -184,6 +187,7 @@ type inboundACHTransferJSON struct {
 	Addenda                            apijson.Field
 	Amount                             apijson.Field
 	AutomaticallyResolvesAt            apijson.Field
+	CreatedAt                          apijson.Field
 	Decline                            apijson.Field
 	Direction                          apijson.Field
 	EffectiveDate                      apijson.Field
