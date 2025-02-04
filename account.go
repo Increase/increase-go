@@ -198,13 +198,14 @@ type AccountBank string
 
 const (
 	AccountBankBlueRidgeBank     AccountBank = "blue_ridge_bank"
+	AccountBankCoreBank          AccountBank = "core_bank"
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
 	AccountBankGrasshopperBank   AccountBank = "grasshopper_bank"
 )
 
 func (r AccountBank) IsKnown() bool {
 	switch r {
-	case AccountBankBlueRidgeBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
+	case AccountBankBlueRidgeBank, AccountBankCoreBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
 		return true
 	}
 	return false
