@@ -131,13 +131,14 @@ type ProgramBank string
 
 const (
 	ProgramBankBlueRidgeBank     ProgramBank = "blue_ridge_bank"
+	ProgramBankCoreBank          ProgramBank = "core_bank"
 	ProgramBankFirstInternetBank ProgramBank = "first_internet_bank"
 	ProgramBankGrasshopperBank   ProgramBank = "grasshopper_bank"
 )
 
 func (r ProgramBank) IsKnown() bool {
 	switch r {
-	case ProgramBankBlueRidgeBank, ProgramBankFirstInternetBank, ProgramBankGrasshopperBank:
+	case ProgramBankBlueRidgeBank, ProgramBankCoreBank, ProgramBankFirstInternetBank, ProgramBankGrasshopperBank:
 		return true
 	}
 	return false
