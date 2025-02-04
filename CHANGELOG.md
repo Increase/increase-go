@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.181.0 (2025-02-04)
+
+Full Changelog: [v0.180.0...v0.181.0](https://github.com/Increase/increase-go/compare/v0.180.0...v0.181.0)
+
+### Features
+
+* **api:** api update ([#749](https://github.com/Increase/increase-go/issues/749)) ([bb16d1b](https://github.com/Increase/increase-go/commit/bb16d1b1351dc384eae3c199295b8a495e01925c))
+* **client:** send `X-Stainless-Timeout` header ([#747](https://github.com/Increase/increase-go/issues/747)) ([70cedcb](https://github.com/Increase/increase-go/commit/70cedcb216d98085c10bce7cfce462c58f40a1c1))
+
 ## 0.180.0 (2025-02-03)
 
 Full Changelog: [v0.179.0...v0.180.0](https://github.com/Increase/increase-go/compare/v0.179.0...v0.180.0)
