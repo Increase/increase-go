@@ -101,6 +101,9 @@ type IntrafiExclusion struct {
 	ID string `json:"id,required"`
 	// The name of the excluded institution.
 	BankName string `json:"bank_name,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the exclusion was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The entity for which this institution is excluded.
 	EntityID string `json:"entity_id,required"`
 	// When this was exclusion was confirmed by IntraFi.
@@ -127,6 +130,7 @@ type IntrafiExclusion struct {
 type intrafiExclusionJSON struct {
 	ID                    apijson.Field
 	BankName              apijson.Field
+	CreatedAt             apijson.Field
 	EntityID              apijson.Field
 	ExcludedAt            apijson.Field
 	FdicCertificateNumber apijson.Field

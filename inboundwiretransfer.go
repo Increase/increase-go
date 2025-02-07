@@ -93,6 +93,9 @@ type InboundWireTransfer struct {
 	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
 	// A free-form reference string set by the sender, to help identify the transfer.
 	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the inbound wire transfer was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// An Increase-constructed description of the transfer.
 	Description string `json:"description,required"`
 	// A unique identifier available to the originating and receiving banks, commonly
@@ -142,6 +145,7 @@ type inboundWireTransferJSON struct {
 	BeneficiaryAddressLine3                 apijson.Field
 	BeneficiaryName                         apijson.Field
 	BeneficiaryReference                    apijson.Field
+	CreatedAt                               apijson.Field
 	Description                             apijson.Field
 	InputMessageAccountabilityData          apijson.Field
 	OriginatorAddressLine1                  apijson.Field

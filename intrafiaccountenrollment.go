@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/apiquery"
@@ -103,6 +104,9 @@ type IntrafiAccountEnrollment struct {
 	ID string `json:"id,required"`
 	// The identifier of the Increase Account being swept into the network.
 	AccountID string `json:"account_id,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the enrollment was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -124,6 +128,7 @@ type IntrafiAccountEnrollment struct {
 type intrafiAccountEnrollmentJSON struct {
 	ID             apijson.Field
 	AccountID      apijson.Field
+	CreatedAt      apijson.Field
 	IdempotencyKey apijson.Field
 	IntrafiID      apijson.Field
 	Status         apijson.Field

@@ -34,13 +34,13 @@ func NewIntrafiBalanceService(opts ...option.RequestOption) (r *IntrafiBalanceSe
 }
 
 // Get IntraFi balances by bank
-func (r *IntrafiBalanceService) Get(ctx context.Context, accountID string, opts ...option.RequestOption) (res *IntrafiBalance, err error) {
+func (r *IntrafiBalanceService) IntrafiBalance(ctx context.Context, accountID string, opts ...option.RequestOption) (res *IntrafiBalance, err error) {
 	opts = append(r.Options[:], opts...)
 	if accountID == "" {
 		err = errors.New("missing required account_id parameter")
 		return
 	}
-	path := fmt.Sprintf("intrafi_balances/%s", accountID)
+	path := fmt.Sprintf("accounts/%s/intrafi_balance", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
