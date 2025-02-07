@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.181.1 (2025-02-07)
+
+Full Changelog: [v0.181.0...v0.181.1](https://github.com/Increase/increase-go/compare/v0.181.0...v0.181.1)
+
+### Bug Fixes
+
+* fix early cancel when RequestTimeout is provided for streaming requests ([#753](https://github.com/Increase/increase-go/issues/753)) ([216db84](https://github.com/Increase/increase-go/commit/216db844544adeef50663ae314ba10b42e5666cd))
+
+
+### Chores
+
+* add UnionUnmarshaler for responses that are interfaces ([#751](https://github.com/Increase/increase-go/issues/751)) ([af94939](https://github.com/Increase/increase-go/commit/af9493975cb2aececeef5cc138cf632e9992bae7))
+
 ## 0.181.0 (2025-02-04)
 
 Full Changelog: [v0.180.0...v0.181.0](https://github.com/Increase/increase-go/compare/v0.180.0...v0.181.0)
