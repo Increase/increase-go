@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestIntrafiBalanceGet(t *testing.T) {
+func TestIntrafiBalanceIntrafiBalance(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,7 @@ func TestIntrafiBalanceGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.IntrafiBalances.Get(context.TODO(), "account_in71c4amph0vgo2qllky")
+	_, err := client.IntrafiBalances.IntrafiBalance(context.TODO(), "account_in71c4amph0vgo2qllky")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

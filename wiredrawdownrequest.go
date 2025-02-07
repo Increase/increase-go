@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/apiquery"
@@ -90,6 +91,9 @@ type WireDrawdownRequest struct {
 	AccountNumberID string `json:"account_number_id,required"`
 	// The amount being requested in cents.
 	Amount int64 `json:"amount,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the wire drawdown request was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
 	Currency string `json:"currency,required"`
@@ -139,6 +143,7 @@ type wireDrawdownRequestJSON struct {
 	ID                               apijson.Field
 	AccountNumberID                  apijson.Field
 	Amount                           apijson.Field
+	CreatedAt                        apijson.Field
 	Currency                         apijson.Field
 	FulfillmentInboundWireTransferID apijson.Field
 	IdempotencyKey                   apijson.Field
