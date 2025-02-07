@@ -620,7 +620,7 @@ Response Types:
 
 Methods:
 
-- <code title="get /intrafi_balances/{account_id}">client.IntrafiBalances.<a href="https://pkg.go.dev/github.com/Increase/increase-go#IntrafiBalanceService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, accountID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#IntrafiBalance">IntrafiBalance</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /accounts/{account_id}/intrafi_balance">client.IntrafiBalances.<a href="https://pkg.go.dev/github.com/Increase/increase-go#IntrafiBalanceService.IntrafiBalance">IntrafiBalance</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, accountID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#IntrafiBalance">IntrafiBalance</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # IntrafiExclusions
 
