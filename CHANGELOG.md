@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.182.1 (2025-02-10)
+
+Full Changelog: [v0.182.0...v0.182.1](https://github.com/Increase/increase-go/compare/v0.182.0...v0.182.1)
+
+### Bug Fixes
+
+* do not call path.Base on ContentType ([#758](https://github.com/Increase/increase-go/issues/758)) ([53b15a5](https://github.com/Increase/increase-go/commit/53b15a5e1fa95afd8348a7c9dc7233884a56c69d))
+
 ## 0.182.0 (2025-02-07)
 
 Full Changelog: [v0.181.1...v0.182.0](https://github.com/Increase/increase-go/compare/v0.181.1...v0.182.0)
