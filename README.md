@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/Increase/increase-go@v0.182.0'
+go get -u 'github.com/Increase/increase-go@v0.182.1'
 ```
 
 <!-- x-release-please-end -->
