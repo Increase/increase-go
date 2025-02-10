@@ -92,7 +92,8 @@ func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListPa
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Retrieve an Account Balance
+// Retrieve the current and available balances for an account in minor units of the
+// account's currency. Learn more about [account balances](/documentation/balance).
 func (r *AccountService) Balance(ctx context.Context, accountID string, query AccountBalanceParams, opts ...option.RequestOption) (res *BalanceLookup, err error) {
 	opts = append(r.Options[:], opts...)
 	if accountID == "" {
