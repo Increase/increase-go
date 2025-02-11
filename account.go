@@ -198,7 +198,6 @@ func (r accountJSON) RawJSON() string {
 type AccountBank string
 
 const (
-	AccountBankBlueRidgeBank     AccountBank = "blue_ridge_bank"
 	AccountBankCoreBank          AccountBank = "core_bank"
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
 	AccountBankGrasshopperBank   AccountBank = "grasshopper_bank"
@@ -206,7 +205,7 @@ const (
 
 func (r AccountBank) IsKnown() bool {
 	switch r {
-	case AccountBankBlueRidgeBank, AccountBankCoreBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
+	case AccountBankCoreBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
 		return true
 	}
 	return false
