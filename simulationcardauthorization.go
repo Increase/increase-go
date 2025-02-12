@@ -130,6 +130,8 @@ type SimulationCardAuthorizationNewParams struct {
 	MerchantDescriptor param.Field[string] `json:"merchant_descriptor"`
 	// The state the merchant resides in.
 	MerchantState param.Field[string] `json:"merchant_state"`
+	// Fields specific to a given card network.
+	NetworkDetails param.Field[SimulationCardAuthorizationNewParamsNetworkDetails] `json:"network_details"`
 	// The identifier of the Physical Card to be authorized.
 	PhysicalCardID param.Field[string] `json:"physical_card_id"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
@@ -183,6 +185,47 @@ const (
 func (r SimulationCardAuthorizationNewParamsDirection) IsKnown() bool {
 	switch r {
 	case SimulationCardAuthorizationNewParamsDirectionSettlement, SimulationCardAuthorizationNewParamsDirectionRefund:
+		return true
+	}
+	return false
+}
+
+// Fields specific to a given card network.
+type SimulationCardAuthorizationNewParamsNetworkDetails struct {
+	// Fields specific to the Visa network.
+	Visa param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisa] `json:"visa,required"`
+}
+
+func (r SimulationCardAuthorizationNewParamsNetworkDetails) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Fields specific to the Visa network.
+type SimulationCardAuthorizationNewParamsNetworkDetailsVisa struct {
+	// The reason code for the stand-in processing.
+	StandInProcessingReason param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason] `json:"stand_in_processing_reason"`
+}
+
+func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The reason code for the stand-in processing.
+type SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason string
+
+const (
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError                                              SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock                      SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "payment_fraud_disruption_acquirer_block"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonOther                                                    SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason = "other"
+)
+
+func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInternalVisaError, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonOther:
 		return true
 	}
 	return false
