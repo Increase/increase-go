@@ -39,8 +39,13 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		MerchantCountry:            increase.F("US"),
 		MerchantDescriptor:         increase.F("AMAZON.COM"),
 		MerchantState:              increase.F("NY"),
-		PhysicalCardID:             increase.F("physical_card_id"),
-		TerminalID:                 increase.F("x"),
+		NetworkDetails: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetails{
+			Visa: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisa{
+				StandInProcessingReason: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError),
+			}),
+		}),
+		PhysicalCardID: increase.F("physical_card_id"),
+		TerminalID:     increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
