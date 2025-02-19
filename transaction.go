@@ -3078,14 +3078,15 @@ func (r transactionSourceInboundCheckAdjustmentJSON) RawJSON() string {
 type TransactionSourceInboundCheckAdjustmentReason string
 
 const (
-	TransactionSourceInboundCheckAdjustmentReasonLateReturn       TransactionSourceInboundCheckAdjustmentReason = "late_return"
-	TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit TransactionSourceInboundCheckAdjustmentReason = "wrong_payee_credit"
-	TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount   TransactionSourceInboundCheckAdjustmentReason = "adjusted_amount"
+	TransactionSourceInboundCheckAdjustmentReasonLateReturn        TransactionSourceInboundCheckAdjustmentReason = "late_return"
+	TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit  TransactionSourceInboundCheckAdjustmentReason = "wrong_payee_credit"
+	TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount    TransactionSourceInboundCheckAdjustmentReason = "adjusted_amount"
+	TransactionSourceInboundCheckAdjustmentReasonNonConformingItem TransactionSourceInboundCheckAdjustmentReason = "non_conforming_item"
 )
 
 func (r TransactionSourceInboundCheckAdjustmentReason) IsKnown() bool {
 	switch r {
-	case TransactionSourceInboundCheckAdjustmentReasonLateReturn, TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit, TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount:
+	case TransactionSourceInboundCheckAdjustmentReasonLateReturn, TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit, TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount, TransactionSourceInboundCheckAdjustmentReasonNonConformingItem:
 		return true
 	}
 	return false
