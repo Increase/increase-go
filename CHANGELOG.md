@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.186.1 (2025-02-19)
+
+Full Changelog: [v0.186.0...v0.186.1](https://github.com/Increase/increase-go/compare/v0.186.0...v0.186.1)
+
+### Bug Fixes
+
+* **client:** don't truncate manually specified filenames ([#773](https://github.com/Increase/increase-go/issues/773)) ([7e9fbc8](https://github.com/Increase/increase-go/commit/7e9fbc8e132cd4da9869c331bed08f379f406282))
+
 ## 0.186.0 (2025-02-19)
 
 Full Changelog: [v0.185.0...v0.186.0](https://github.com/Increase/increase-go/compare/v0.185.0...v0.186.0)
