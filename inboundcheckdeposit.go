@@ -226,14 +226,15 @@ func (r inboundCheckDepositAdjustmentJSON) RawJSON() string {
 type InboundCheckDepositAdjustmentsReason string
 
 const (
-	InboundCheckDepositAdjustmentsReasonLateReturn       InboundCheckDepositAdjustmentsReason = "late_return"
-	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
-	InboundCheckDepositAdjustmentsReasonAdjustedAmount   InboundCheckDepositAdjustmentsReason = "adjusted_amount"
+	InboundCheckDepositAdjustmentsReasonLateReturn        InboundCheckDepositAdjustmentsReason = "late_return"
+	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit  InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
+	InboundCheckDepositAdjustmentsReasonAdjustedAmount    InboundCheckDepositAdjustmentsReason = "adjusted_amount"
+	InboundCheckDepositAdjustmentsReasonNonConformingItem InboundCheckDepositAdjustmentsReason = "non_conforming_item"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonAdjustedAmount:
+	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonAdjustedAmount, InboundCheckDepositAdjustmentsReasonNonConformingItem:
 		return true
 	}
 	return false
