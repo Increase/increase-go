@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.186.2 (2025-02-21)
+
+Full Changelog: [v0.186.1...v0.186.2](https://github.com/Increase/increase-go/compare/v0.186.1...v0.186.2)
+
+### Chores
+
+* **internal:** fix devcontainers setup ([#776](https://github.com/Increase/increase-go/issues/776)) ([ee44208](https://github.com/Increase/increase-go/commit/ee44208cfe0d3c83266dc4dee54ce76584c63fd0))
+
 ## 0.186.1 (2025-02-19)
 
 Full Changelog: [v0.186.0...v0.186.1](https://github.com/Increase/increase-go/compare/v0.186.0...v0.186.1)
