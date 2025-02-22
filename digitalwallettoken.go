@@ -81,7 +81,7 @@ type DigitalWalletToken struct {
 	// The identifier for the Card this Digital Wallet Token belongs to.
 	CardID string `json:"card_id,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the Card was created.
+	// the Digital Wallet Token was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// This indicates if payments can be made with the Digital Wallet Token.
 	Status DigitalWalletTokenStatus `json:"status,required"`
@@ -90,7 +90,9 @@ type DigitalWalletToken struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
 	Type DigitalWalletTokenType `json:"type,required"`
-	JSON digitalWalletTokenJSON `json:"-"`
+	// Updates to the Digital Wallet Token.
+	Updates []DigitalWalletTokenUpdate `json:"updates,required"`
+	JSON    digitalWalletTokenJSON     `json:"-"`
 }
 
 // digitalWalletTokenJSON contains the JSON metadata for the struct
@@ -102,6 +104,7 @@ type digitalWalletTokenJSON struct {
 	Status         apijson.Field
 	TokenRequestor apijson.Field
 	Type           apijson.Field
+	Updates        apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -161,6 +164,50 @@ const (
 func (r DigitalWalletTokenType) IsKnown() bool {
 	switch r {
 	case DigitalWalletTokenTypeDigitalWalletToken:
+		return true
+	}
+	return false
+}
+
+type DigitalWalletTokenUpdate struct {
+	// The status the update changed this Digital Wallet Token to.
+	Status DigitalWalletTokenUpdatesStatus `json:"status,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the update happened.
+	Timestamp time.Time                    `json:"timestamp,required" format:"date-time"`
+	JSON      digitalWalletTokenUpdateJSON `json:"-"`
+}
+
+// digitalWalletTokenUpdateJSON contains the JSON metadata for the struct
+// [DigitalWalletTokenUpdate]
+type digitalWalletTokenUpdateJSON struct {
+	Status      apijson.Field
+	Timestamp   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenUpdate) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenUpdateJSON) RawJSON() string {
+	return r.raw
+}
+
+// The status the update changed this Digital Wallet Token to.
+type DigitalWalletTokenUpdatesStatus string
+
+const (
+	DigitalWalletTokenUpdatesStatusActive      DigitalWalletTokenUpdatesStatus = "active"
+	DigitalWalletTokenUpdatesStatusInactive    DigitalWalletTokenUpdatesStatus = "inactive"
+	DigitalWalletTokenUpdatesStatusSuspended   DigitalWalletTokenUpdatesStatus = "suspended"
+	DigitalWalletTokenUpdatesStatusDeactivated DigitalWalletTokenUpdatesStatus = "deactivated"
+)
+
+func (r DigitalWalletTokenUpdatesStatus) IsKnown() bool {
+	switch r {
+	case DigitalWalletTokenUpdatesStatusActive, DigitalWalletTokenUpdatesStatusInactive, DigitalWalletTokenUpdatesStatusSuspended, DigitalWalletTokenUpdatesStatusDeactivated:
 		return true
 	}
 	return false
