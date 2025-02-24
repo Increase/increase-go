@@ -29,7 +29,7 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		Amount:                     increase.F(int64(1000)),
 		AuthenticatedCardPaymentID: increase.F("authenticated_card_payment_id"),
 		CardID:                     increase.F("card_oubs0hwk5rn6knuecxg2"),
-		DeclineReason:              increase.F(increase.SimulationCardAuthorizationNewParamsDeclineReasonCardNotActive),
+		DeclineReason:              increase.F(increase.SimulationCardAuthorizationNewParamsDeclineReasonAccountClosed),
 		DigitalWalletTokenID:       increase.F("digital_wallet_token_id"),
 		Direction:                  increase.F(increase.SimulationCardAuthorizationNewParamsDirectionSettlement),
 		EventSubscriptionID:        increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
