@@ -27,7 +27,7 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.EventSubscriptions.New(context.TODO(), increase.EventSubscriptionNewParams{
 		URL:                   increase.F("https://website.com/webhooks"),
-		OAuthConnectionID:     increase.F("oauth_connection_id"),
+		OAuthConnectionID:     increase.F("x"),
 		SelectedEventCategory: increase.F(increase.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated),
 		SharedSecret:          increase.F("x"),
 	})
