@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.190.0 (2025-02-28)
+
+Full Changelog: [v0.189.0...v0.190.0](https://github.com/Increase/increase-go/compare/v0.189.0...v0.190.0)
+
+### Features
+
+* **api:** api update ([#788](https://github.com/Increase/increase-go/issues/788)) ([9bb2841](https://github.com/Increase/increase-go/commit/9bb28412cd8bd1275e9985a1e3f2a08910d16305))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#786](https://github.com/Increase/increase-go/issues/786)) ([9ade5a8](https://github.com/Increase/increase-go/commit/9ade5a8d85689eadfe173a96907996aa5566c36d))
+
 ## 0.189.0 (2025-02-26)
 
 Full Changelog: [v0.188.0...v0.189.0](https://github.com/Increase/increase-go/compare/v0.188.0...v0.189.0)
