@@ -358,9 +358,8 @@ type AccountListParams struct {
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
 	// Filter Accounts for those in a specific Program.
-	ProgramID param.Field[string] `query:"program_id"`
-	// Filter Accounts for those with the specified status.
-	Status param.Field[AccountListParamsStatus] `query:"status"`
+	ProgramID param.Field[string]                  `query:"program_id"`
+	Status    param.Field[AccountListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [AccountListParams]'s query parameters as `url.Values`.
@@ -395,17 +394,31 @@ func (r AccountListParamsCreatedAt) URLQuery() (v url.Values) {
 	})
 }
 
-// Filter Accounts for those with the specified status.
-type AccountListParamsStatus string
+type AccountListParamsStatus struct {
+	// Filter Accounts for those with the specified status. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]AccountListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [AccountListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r AccountListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type AccountListParamsStatusIn string
 
 const (
-	AccountListParamsStatusClosed AccountListParamsStatus = "closed"
-	AccountListParamsStatusOpen   AccountListParamsStatus = "open"
+	AccountListParamsStatusInClosed AccountListParamsStatusIn = "closed"
+	AccountListParamsStatusInOpen   AccountListParamsStatusIn = "open"
 )
 
-func (r AccountListParamsStatus) IsKnown() bool {
+func (r AccountListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case AccountListParamsStatusClosed, AccountListParamsStatusOpen:
+	case AccountListParamsStatusInClosed, AccountListParamsStatusInOpen:
 		return true
 	}
 	return false
