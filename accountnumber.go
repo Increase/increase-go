@@ -432,7 +432,8 @@ func (r AccountNumberUpdateParamsStatus) IsKnown() bool {
 
 type AccountNumberListParams struct {
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID      param.Field[string]                                `query:"account_id"`
+	AccountID param.Field[string] `query:"account_id"`
+	// The ACH Debit status to retrieve Account Numbers for.
 	ACHDebitStatus param.Field[AccountNumberListParamsACHDebitStatus] `query:"ach_debit_status"`
 	CreatedAt      param.Field[AccountNumberListParamsCreatedAt]      `query:"created_at"`
 	// Return the page of entries after this one.
@@ -444,7 +445,8 @@ type AccountNumberListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                         `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
+	// The status to retrieve Account Numbers for.
 	Status param.Field[AccountNumberListParamsStatus] `query:"status"`
 }
 
@@ -457,31 +459,17 @@ func (r AccountNumberListParams) URLQuery() (v url.Values) {
 	})
 }
 
-type AccountNumberListParamsACHDebitStatus struct {
-	// The ACH Debit status to retrieve Account Numbers for. For GET requests, this
-	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In param.Field[[]AccountNumberListParamsACHDebitStatusIn] `query:"in"`
-}
-
-// URLQuery serializes [AccountNumberListParamsACHDebitStatus]'s query parameters
-// as `url.Values`.
-func (r AccountNumberListParamsACHDebitStatus) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type AccountNumberListParamsACHDebitStatusIn string
+// The ACH Debit status to retrieve Account Numbers for.
+type AccountNumberListParamsACHDebitStatus string
 
 const (
-	AccountNumberListParamsACHDebitStatusInAllowed AccountNumberListParamsACHDebitStatusIn = "allowed"
-	AccountNumberListParamsACHDebitStatusInBlocked AccountNumberListParamsACHDebitStatusIn = "blocked"
+	AccountNumberListParamsACHDebitStatusAllowed AccountNumberListParamsACHDebitStatus = "allowed"
+	AccountNumberListParamsACHDebitStatusBlocked AccountNumberListParamsACHDebitStatus = "blocked"
 )
 
-func (r AccountNumberListParamsACHDebitStatusIn) IsKnown() bool {
+func (r AccountNumberListParamsACHDebitStatus) IsKnown() bool {
 	switch r {
-	case AccountNumberListParamsACHDebitStatusInAllowed, AccountNumberListParamsACHDebitStatusInBlocked:
+	case AccountNumberListParamsACHDebitStatusAllowed, AccountNumberListParamsACHDebitStatusBlocked:
 		return true
 	}
 	return false
@@ -511,32 +499,18 @@ func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 	})
 }
 
-type AccountNumberListParamsStatus struct {
-	// The status to retrieve Account Numbers for. For GET requests, this should be
-	// encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In param.Field[[]AccountNumberListParamsStatusIn] `query:"in"`
-}
-
-// URLQuery serializes [AccountNumberListParamsStatus]'s query parameters as
-// `url.Values`.
-func (r AccountNumberListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type AccountNumberListParamsStatusIn string
+// The status to retrieve Account Numbers for.
+type AccountNumberListParamsStatus string
 
 const (
-	AccountNumberListParamsStatusInActive   AccountNumberListParamsStatusIn = "active"
-	AccountNumberListParamsStatusInDisabled AccountNumberListParamsStatusIn = "disabled"
-	AccountNumberListParamsStatusInCanceled AccountNumberListParamsStatusIn = "canceled"
+	AccountNumberListParamsStatusActive   AccountNumberListParamsStatus = "active"
+	AccountNumberListParamsStatusDisabled AccountNumberListParamsStatus = "disabled"
+	AccountNumberListParamsStatusCanceled AccountNumberListParamsStatus = "canceled"
 )
 
-func (r AccountNumberListParamsStatusIn) IsKnown() bool {
+func (r AccountNumberListParamsStatus) IsKnown() bool {
 	switch r {
-	case AccountNumberListParamsStatusInActive, AccountNumberListParamsStatusInDisabled, AccountNumberListParamsStatusInCanceled:
+	case AccountNumberListParamsStatusActive, AccountNumberListParamsStatusDisabled, AccountNumberListParamsStatusCanceled:
 		return true
 	}
 	return false

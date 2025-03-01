@@ -283,7 +283,8 @@ type WireDrawdownRequestListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                               `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
+	// Filter Wire Drawdown Requests for those with the specified status.
 	Status param.Field[WireDrawdownRequestListParamsStatus] `query:"status"`
 }
 
@@ -296,34 +297,19 @@ func (r WireDrawdownRequestListParams) URLQuery() (v url.Values) {
 	})
 }
 
-type WireDrawdownRequestListParamsStatus struct {
-	// Filter Wire Drawdown Requests for those with the specified status. For GET
-	// requests, this should be encoded as a comma-delimited string, such as
-	// `?in=one,two,three`.
-	In param.Field[[]WireDrawdownRequestListParamsStatusIn] `query:"in"`
-}
-
-// URLQuery serializes [WireDrawdownRequestListParamsStatus]'s query parameters as
-// `url.Values`.
-func (r WireDrawdownRequestListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type WireDrawdownRequestListParamsStatusIn string
+// Filter Wire Drawdown Requests for those with the specified status.
+type WireDrawdownRequestListParamsStatus string
 
 const (
-	WireDrawdownRequestListParamsStatusInPendingSubmission WireDrawdownRequestListParamsStatusIn = "pending_submission"
-	WireDrawdownRequestListParamsStatusInPendingResponse   WireDrawdownRequestListParamsStatusIn = "pending_response"
-	WireDrawdownRequestListParamsStatusInFulfilled         WireDrawdownRequestListParamsStatusIn = "fulfilled"
-	WireDrawdownRequestListParamsStatusInRefused           WireDrawdownRequestListParamsStatusIn = "refused"
+	WireDrawdownRequestListParamsStatusPendingSubmission WireDrawdownRequestListParamsStatus = "pending_submission"
+	WireDrawdownRequestListParamsStatusPendingResponse   WireDrawdownRequestListParamsStatus = "pending_response"
+	WireDrawdownRequestListParamsStatusFulfilled         WireDrawdownRequestListParamsStatus = "fulfilled"
+	WireDrawdownRequestListParamsStatusRefused           WireDrawdownRequestListParamsStatus = "refused"
 )
 
-func (r WireDrawdownRequestListParamsStatusIn) IsKnown() bool {
+func (r WireDrawdownRequestListParamsStatus) IsKnown() bool {
 	switch r {
-	case WireDrawdownRequestListParamsStatusInPendingSubmission, WireDrawdownRequestListParamsStatusInPendingResponse, WireDrawdownRequestListParamsStatusInFulfilled, WireDrawdownRequestListParamsStatusInRefused:
+	case WireDrawdownRequestListParamsStatusPendingSubmission, WireDrawdownRequestListParamsStatusPendingResponse, WireDrawdownRequestListParamsStatusFulfilled, WireDrawdownRequestListParamsStatusRefused:
 		return true
 	}
 	return false

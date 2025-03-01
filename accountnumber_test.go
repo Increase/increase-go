@@ -115,10 +115,8 @@ func TestAccountNumberListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountNumbers.List(context.TODO(), increase.AccountNumberListParams{
-		AccountID: increase.F("account_id"),
-		ACHDebitStatus: increase.F(increase.AccountNumberListParamsACHDebitStatus{
-			In: increase.F([]increase.AccountNumberListParamsACHDebitStatusIn{increase.AccountNumberListParamsACHDebitStatusInAllowed}),
-		}),
+		AccountID:      increase.F("account_id"),
+		ACHDebitStatus: increase.F(increase.AccountNumberListParamsACHDebitStatusAllowed),
 		CreatedAt: increase.F(increase.AccountNumberListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
@@ -128,9 +126,7 @@ func TestAccountNumberListWithOptionalParams(t *testing.T) {
 		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
-		Status: increase.F(increase.AccountNumberListParamsStatus{
-			In: increase.F([]increase.AccountNumberListParamsStatusIn{increase.AccountNumberListParamsStatusInActive}),
-		}),
+		Status:         increase.F(increase.AccountNumberListParamsStatusActive),
 	})
 	if err != nil {
 		var apierr *increase.Error
