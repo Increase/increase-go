@@ -208,17 +208,16 @@ func (r InboundWireTransferType) IsKnown() bool {
 }
 
 type InboundWireTransferListParams struct {
-	// Filter Inbound Wire Tranfers to ones belonging to the specified Account.
+	// Filter Inbound Wire Transfers to ones belonging to the specified Account.
 	AccountID param.Field[string] `query:"account_id"`
-	// Filter Inbound Wire Tranfers to ones belonging to the specified Account Number.
+	// Filter Inbound Wire Transfers to ones belonging to the specified Account Number.
 	AccountNumberID param.Field[string]                                 `query:"account_number_id"`
 	CreatedAt       param.Field[InboundWireTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
-	// Filter Inbound Wire Transfers to those with the specified status.
+	Limit  param.Field[int64]                               `query:"limit"`
 	Status param.Field[InboundWireTransferListParamsStatus] `query:"status"`
 }
 
@@ -255,19 +254,34 @@ func (r InboundWireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	})
 }
 
-// Filter Inbound Wire Transfers to those with the specified status.
-type InboundWireTransferListParamsStatus string
+type InboundWireTransferListParamsStatus struct {
+	// Filter Inbound Wire Transfers to those with the specified status. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]InboundWireTransferListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [InboundWireTransferListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r InboundWireTransferListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type InboundWireTransferListParamsStatusIn string
 
 const (
-	InboundWireTransferListParamsStatusPending  InboundWireTransferListParamsStatus = "pending"
-	InboundWireTransferListParamsStatusAccepted InboundWireTransferListParamsStatus = "accepted"
-	InboundWireTransferListParamsStatusDeclined InboundWireTransferListParamsStatus = "declined"
-	InboundWireTransferListParamsStatusReversed InboundWireTransferListParamsStatus = "reversed"
+	InboundWireTransferListParamsStatusInPending  InboundWireTransferListParamsStatusIn = "pending"
+	InboundWireTransferListParamsStatusInAccepted InboundWireTransferListParamsStatusIn = "accepted"
+	InboundWireTransferListParamsStatusInDeclined InboundWireTransferListParamsStatusIn = "declined"
+	InboundWireTransferListParamsStatusInReversed InboundWireTransferListParamsStatusIn = "reversed"
 )
 
-func (r InboundWireTransferListParamsStatus) IsKnown() bool {
+func (r InboundWireTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case InboundWireTransferListParamsStatusPending, InboundWireTransferListParamsStatusAccepted, InboundWireTransferListParamsStatusDeclined, InboundWireTransferListParamsStatusReversed:
+	case InboundWireTransferListParamsStatusInPending, InboundWireTransferListParamsStatusInAccepted, InboundWireTransferListParamsStatusInDeclined, InboundWireTransferListParamsStatusInReversed:
 		return true
 	}
 	return false
