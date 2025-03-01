@@ -813,16 +813,17 @@ func (r InboundACHTransferType) IsKnown() bool {
 }
 
 type InboundACHTransferListParams struct {
-	// Filter Inbound ACH Transfers to ones belonging to the specified Account.
+	// Filter Inbound ACH Tranfers to ones belonging to the specified Account.
 	AccountID param.Field[string] `query:"account_id"`
-	// Filter Inbound ACH Transfers to ones belonging to the specified Account Number.
+	// Filter Inbound ACH Tranfers to ones belonging to the specified Account Number.
 	AccountNumberID param.Field[string]                                `query:"account_number_id"`
 	CreatedAt       param.Field[InboundACHTransferListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                              `query:"limit"`
+	Limit param.Field[int64] `query:"limit"`
+	// Filter Inbound ACH Transfers to those with the specified status.
 	Status param.Field[InboundACHTransferListParamsStatus] `query:"status"`
 }
 
@@ -859,34 +860,19 @@ func (r InboundACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 	})
 }
 
-type InboundACHTransferListParamsStatus struct {
-	// Filter Inbound ACH Transfers to those with the specified status. For GET
-	// requests, this should be encoded as a comma-delimited string, such as
-	// `?in=one,two,three`.
-	In param.Field[[]InboundACHTransferListParamsStatusIn] `query:"in"`
-}
-
-// URLQuery serializes [InboundACHTransferListParamsStatus]'s query parameters as
-// `url.Values`.
-func (r InboundACHTransferListParamsStatus) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type InboundACHTransferListParamsStatusIn string
+// Filter Inbound ACH Transfers to those with the specified status.
+type InboundACHTransferListParamsStatus string
 
 const (
-	InboundACHTransferListParamsStatusInPending  InboundACHTransferListParamsStatusIn = "pending"
-	InboundACHTransferListParamsStatusInDeclined InboundACHTransferListParamsStatusIn = "declined"
-	InboundACHTransferListParamsStatusInAccepted InboundACHTransferListParamsStatusIn = "accepted"
-	InboundACHTransferListParamsStatusInReturned InboundACHTransferListParamsStatusIn = "returned"
+	InboundACHTransferListParamsStatusPending  InboundACHTransferListParamsStatus = "pending"
+	InboundACHTransferListParamsStatusDeclined InboundACHTransferListParamsStatus = "declined"
+	InboundACHTransferListParamsStatusAccepted InboundACHTransferListParamsStatus = "accepted"
+	InboundACHTransferListParamsStatusReturned InboundACHTransferListParamsStatus = "returned"
 )
 
-func (r InboundACHTransferListParamsStatusIn) IsKnown() bool {
+func (r InboundACHTransferListParamsStatus) IsKnown() bool {
 	switch r {
-	case InboundACHTransferListParamsStatusInPending, InboundACHTransferListParamsStatusInDeclined, InboundACHTransferListParamsStatusInAccepted, InboundACHTransferListParamsStatusInReturned:
+	case InboundACHTransferListParamsStatusPending, InboundACHTransferListParamsStatusDeclined, InboundACHTransferListParamsStatusAccepted, InboundACHTransferListParamsStatusReturned:
 		return true
 	}
 	return false
