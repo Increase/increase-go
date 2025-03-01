@@ -87,9 +87,7 @@ func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
-		Status: increase.F(increase.WireDrawdownRequestListParamsStatus{
-			In: increase.F([]increase.WireDrawdownRequestListParamsStatusIn{increase.WireDrawdownRequestListParamsStatusInPendingSubmission}),
-		}),
+		Status:         increase.F(increase.WireDrawdownRequestListParamsStatusPendingSubmission),
 	})
 	if err != nil {
 		var apierr *increase.Error
