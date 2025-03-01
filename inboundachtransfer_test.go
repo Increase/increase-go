@@ -59,7 +59,9 @@ func TestInboundACHTransferListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
-		Status: increase.F(increase.InboundACHTransferListParamsStatusPending),
+		Status: increase.F(increase.InboundACHTransferListParamsStatus{
+			In: increase.F([]increase.InboundACHTransferListParamsStatusIn{increase.InboundACHTransferListParamsStatusInPending}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
