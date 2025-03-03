@@ -475,7 +475,8 @@ type CardListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                `query:"limit"`
+	Status param.Field[CardListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [CardListParams]'s query parameters as `url.Values`.
@@ -508,4 +509,34 @@ func (r CardListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type CardListParamsStatus struct {
+	// Filter Cards by status. For GET requests, this should be encoded as a
+	// comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]CardListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [CardListParamsStatus]'s query parameters as `url.Values`.
+func (r CardListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type CardListParamsStatusIn string
+
+const (
+	CardListParamsStatusInActive   CardListParamsStatusIn = "active"
+	CardListParamsStatusInDisabled CardListParamsStatusIn = "disabled"
+	CardListParamsStatusInCanceled CardListParamsStatusIn = "canceled"
+)
+
+func (r CardListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case CardListParamsStatusInActive, CardListParamsStatusInDisabled, CardListParamsStatusInCanceled:
+		return true
+	}
+	return false
 }
