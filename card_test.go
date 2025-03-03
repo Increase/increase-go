@@ -139,6 +139,9 @@ func TestCardListWithOptionalParams(t *testing.T) {
 		Cursor:         increase.F("cursor"),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
+		Status: increase.F(increase.CardListParamsStatus{
+			In: increase.F([]increase.CardListParamsStatusIn{increase.CardListParamsStatusInActive}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
