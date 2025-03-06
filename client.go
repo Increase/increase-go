@@ -69,7 +69,6 @@ type Client struct {
 	IntrafiAccountEnrollments              *IntrafiAccountEnrollmentService
 	IntrafiBalances                        *IntrafiBalanceService
 	IntrafiExclusions                      *IntrafiExclusionService
-	RealTimePaymentsRequestForPayments     *RealTimePaymentsRequestForPaymentService
 	Simulations                            *SimulationService
 }
 
@@ -142,7 +141,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.IntrafiAccountEnrollments = NewIntrafiAccountEnrollmentService(opts...)
 	r.IntrafiBalances = NewIntrafiBalanceService(opts...)
 	r.IntrafiExclusions = NewIntrafiExclusionService(opts...)
-	r.RealTimePaymentsRequestForPayments = NewRealTimePaymentsRequestForPaymentService(opts...)
 	r.Simulations = NewSimulationService(opts...)
 
 	return
