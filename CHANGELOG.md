@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.198.0 (2025-03-08)
+
+Full Changelog: [v0.197.0...v0.198.0](https://github.com/Increase/increase-go/compare/v0.197.0...v0.198.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#813](https://github.com/Increase/increase-go/issues/813)) ([7f08bb8](https://github.com/Increase/increase-go/commit/7f08bb846f7465bdccc42f7712b9e7f79b980b63))
+* **client:** allow custom baseurls without trailing slash ([#811](https://github.com/Increase/increase-go/issues/811)) ([2440c8b](https://github.com/Increase/increase-go/commit/2440c8b00d251e38fdd851766719acc8a4265088))
+
 ## 0.197.0 (2025-03-06)
 
 Full Changelog: [v0.196.0...v0.197.0](https://github.com/Increase/increase-go/compare/v0.196.0...v0.197.0)
