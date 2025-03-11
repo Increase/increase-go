@@ -858,6 +858,10 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	Memo param.Field[string] `json:"memo,required"`
 	// The name that will be printed on the check in the 'To:' field.
 	RecipientName param.Field[string] `json:"recipient_name,required"`
+	// The check number Increase should print on the check. This should not contain
+	// leading zeroes and must be unique across the `source_account_number`. If this is
+	// omitted, Increase will generate a check number for you.
+	CheckNumber param.Field[string] `json:"check_number"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
 	// The return address to be printed on the check. If omitted this will default to
