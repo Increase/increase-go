@@ -41,6 +41,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			}),
 			Memo:          increase.F("Check payment"),
 			RecipientName: increase.F("Ian Crease"),
+			CheckNumber:   increase.F("x"),
 			Note:          increase.F("x"),
 			ReturnAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckReturnAddress{
 				City:       increase.F("x"),
