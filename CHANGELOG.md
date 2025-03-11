@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.198.0 (2025-03-11)
+
+Full Changelog: [v0.197.0...v0.198.0](https://github.com/Increase/increase-go/compare/v0.197.0...v0.198.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#813](https://github.com/Increase/increase-go/issues/813)) ([7f08bb8](https://github.com/Increase/increase-go/commit/7f08bb846f7465bdccc42f7712b9e7f79b980b63))
+* **api:** api update ([#816](https://github.com/Increase/increase-go/issues/816)) ([e215618](https://github.com/Increase/increase-go/commit/e2156189992af3f4037b1ec7b98edf5f77a35208))
+* **client:** accept RFC6838 JSON content types ([#814](https://github.com/Increase/increase-go/issues/814)) ([ca32c6e](https://github.com/Increase/increase-go/commit/ca32c6e4b054ec6bd71a22e894a2ddd2a70dda99))
+* **client:** allow custom baseurls without trailing slash ([#811](https://github.com/Increase/increase-go/issues/811)) ([2440c8b](https://github.com/Increase/increase-go/commit/2440c8b00d251e38fdd851766719acc8a4265088))
+
+
+### Refactors
+
+* tidy up dependencies ([#815](https://github.com/Increase/increase-go/issues/815)) ([6385920](https://github.com/Increase/increase-go/commit/6385920992a1c3375b1ac4008b24a50280b2ca89))
+
 ## 0.197.0 (2025-03-06)
 
 Full Changelog: [v0.196.0...v0.197.0](https://github.com/Increase/increase-go/compare/v0.196.0...v0.197.0)
