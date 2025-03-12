@@ -944,7 +944,8 @@ type CheckTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                         `query:"limit"`
+	Status param.Field[CheckTransferListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [CheckTransferListParams]'s query parameters as
@@ -978,6 +979,45 @@ func (r CheckTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type CheckTransferListParamsStatus struct {
+	// Filter Check Transfers to those that have the specified status. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]CheckTransferListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [CheckTransferListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r CheckTransferListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type CheckTransferListParamsStatusIn string
+
+const (
+	CheckTransferListParamsStatusInPendingApproval   CheckTransferListParamsStatusIn = "pending_approval"
+	CheckTransferListParamsStatusInCanceled          CheckTransferListParamsStatusIn = "canceled"
+	CheckTransferListParamsStatusInPendingSubmission CheckTransferListParamsStatusIn = "pending_submission"
+	CheckTransferListParamsStatusInRequiresAttention CheckTransferListParamsStatusIn = "requires_attention"
+	CheckTransferListParamsStatusInRejected          CheckTransferListParamsStatusIn = "rejected"
+	CheckTransferListParamsStatusInPendingMailing    CheckTransferListParamsStatusIn = "pending_mailing"
+	CheckTransferListParamsStatusInMailed            CheckTransferListParamsStatusIn = "mailed"
+	CheckTransferListParamsStatusInDeposited         CheckTransferListParamsStatusIn = "deposited"
+	CheckTransferListParamsStatusInStopped           CheckTransferListParamsStatusIn = "stopped"
+	CheckTransferListParamsStatusInReturned          CheckTransferListParamsStatusIn = "returned"
+)
+
+func (r CheckTransferListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case CheckTransferListParamsStatusInPendingApproval, CheckTransferListParamsStatusInCanceled, CheckTransferListParamsStatusInPendingSubmission, CheckTransferListParamsStatusInRequiresAttention, CheckTransferListParamsStatusInRejected, CheckTransferListParamsStatusInPendingMailing, CheckTransferListParamsStatusInMailed, CheckTransferListParamsStatusInDeposited, CheckTransferListParamsStatusInStopped, CheckTransferListParamsStatusInReturned:
+		return true
+	}
+	return false
 }
 
 type CheckTransferStopPaymentParams struct {
