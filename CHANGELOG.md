@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.200.0 (2025-03-13)
+
+Full Changelog: [v0.199.0...v0.200.0](https://github.com/Increase/increase-go/compare/v0.199.0...v0.200.0)
+
+### Features
+
+* **api:** api update ([#824](https://github.com/Increase/increase-go/issues/824)) ([b0d2145](https://github.com/Increase/increase-go/commit/b0d2145699771a06fa93cd1d7e76359531adaabd))
+* **client:** improve default client options support ([#821](https://github.com/Increase/increase-go/issues/821)) ([a532621](https://github.com/Increase/increase-go/commit/a532621b309348cc70aa424798a2fc8d1777b03c))
+
+
+### Chores
+
+* **internal:** remove extra empty newlines ([#823](https://github.com/Increase/increase-go/issues/823)) ([5e924ff](https://github.com/Increase/increase-go/commit/5e924ffd38b0424fdcbb33c61f99ec0cd2f3126c))
+
 ## 0.199.0 (2025-03-12)
 
 Full Changelog: [v0.198.0...v0.199.0](https://github.com/Increase/increase-go/compare/v0.198.0...v0.199.0)
