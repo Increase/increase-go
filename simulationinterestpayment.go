@@ -42,10 +42,12 @@ func (r *SimulationInterestPaymentService) New(ctx context.Context, body Simulat
 }
 
 type SimulationInterestPaymentNewParams struct {
-	// The identifier of the Account Number the Interest Payment is for.
+	// The identifier of the Account the Interest Payment should be paid to is for.
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The interest amount in cents. Must be positive.
 	Amount param.Field[int64] `json:"amount,required"`
+	// The identifier of the Account the Interest accrued on. Defaults to `account_id`.
+	AccruedOnAccountID param.Field[string] `json:"accrued_on_account_id"`
 	// The end of the interest period. If not provided, defaults to the current time.
 	PeriodEnd param.Field[time.Time] `json:"period_end" format:"date-time"`
 	// The start of the interest period. If not provided, defaults to the current time.
