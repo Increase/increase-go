@@ -89,6 +89,8 @@ func (r *ProofOfAuthorizationRequestSubmissionService) ListAutoPaging(ctx contex
 type ProofOfAuthorizationRequestSubmission struct {
 	// The Proof of Authorization Request Submission identifier.
 	ID string `json:"id,required"`
+	// File containing additional evidence.
+	AdditionalEvidenceFileID string `json:"additional_evidence_file_id,required,nullable"`
 	// Terms of authorization.
 	AuthorizationTerms string `json:"authorization_terms,required"`
 	// Time of authorization.
@@ -131,6 +133,7 @@ type ProofOfAuthorizationRequestSubmission struct {
 // struct [ProofOfAuthorizationRequestSubmission]
 type proofOfAuthorizationRequestSubmissionJSON struct {
 	ID                                            apijson.Field
+	AdditionalEvidenceFileID                      apijson.Field
 	AuthorizationTerms                            apijson.Field
 	AuthorizedAt                                  apijson.Field
 	AuthorizerCompany                             apijson.Field
@@ -213,6 +216,8 @@ type ProofOfAuthorizationRequestSubmissionNewParams struct {
 	ValidatedAccountOwnershipWithAccountStatement param.Field[bool] `json:"validated_account_ownership_with_account_statement,required"`
 	// Whether the account ownership was validated with a microdeposit.
 	ValidatedAccountOwnershipWithMicrodeposit param.Field[bool] `json:"validated_account_ownership_with_microdeposit,required"`
+	// The File containing the check's front image.
+	AdditionalEvidenceFileID param.Field[string] `json:"additional_evidence_file_id"`
 	// Company of the authorizer.
 	AuthorizerCompany param.Field[string] `json:"authorizer_company"`
 	// IP address of the authorizer.
