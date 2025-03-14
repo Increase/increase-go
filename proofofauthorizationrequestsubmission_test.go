@@ -36,6 +36,7 @@ func TestProofOfAuthorizationRequestSubmissionNewWithOptionalParams(t *testing.T
 		ValidatedAccountOwnershipViaCredential:        increase.F(true),
 		ValidatedAccountOwnershipWithAccountStatement: increase.F(true),
 		ValidatedAccountOwnershipWithMicrodeposit:     increase.F(true),
+		AdditionalEvidenceFileID:                      increase.F("file_makxrc67oh9l6sg7w9yc"),
 		AuthorizerCompany:                             increase.F("National Phonograph Company"),
 		AuthorizerIPAddress:                           increase.F("x"),
 	})
