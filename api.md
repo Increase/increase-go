@@ -460,6 +460,18 @@ Methods:
 - <code title="get /files/{file_id}">client.Files.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, fileID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#File">File</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /files">client.Files.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileListParams">FileListParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#File">File</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# FileLinks
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLink">FileLink</a>
+
+Methods:
+
+- <code title="post /file_links">client.FileLinks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkNewParams">FileLinkNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLink">FileLink</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /file_links/{file_link_id}">client.FileLinks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, fileLinkID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLink">FileLink</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /file_links">client.FileLinks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkListParams">FileLinkListParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLink">FileLink</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # Documents
 
 Response Types:
