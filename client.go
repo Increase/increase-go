@@ -53,6 +53,7 @@ type Client struct {
 	ProofOfAuthorizationRequestSubmissions *ProofOfAuthorizationRequestSubmissionService
 	AccountStatements                      *AccountStatementService
 	Files                                  *FileService
+	FileLinks                              *FileLinkService
 	Documents                              *DocumentService
 	Exports                                *ExportService
 	Events                                 *EventService
@@ -131,6 +132,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.ProofOfAuthorizationRequestSubmissions = NewProofOfAuthorizationRequestSubmissionService(opts...)
 	r.AccountStatements = NewAccountStatementService(opts...)
 	r.Files = NewFileService(opts...)
+	r.FileLinks = NewFileLinkService(opts...)
 	r.Documents = NewDocumentService(opts...)
 	r.Exports = NewExportService(opts...)
 	r.Events = NewEventService(opts...)
