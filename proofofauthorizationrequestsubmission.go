@@ -216,7 +216,7 @@ type ProofOfAuthorizationRequestSubmissionNewParams struct {
 	ValidatedAccountOwnershipWithAccountStatement param.Field[bool] `json:"validated_account_ownership_with_account_statement,required"`
 	// Whether the account ownership was validated with a microdeposit.
 	ValidatedAccountOwnershipWithMicrodeposit param.Field[bool] `json:"validated_account_ownership_with_microdeposit,required"`
-	// The File containing the check's front image.
+	// File containing additional evidence.
 	AdditionalEvidenceFileID param.Field[string] `json:"additional_evidence_file_id"`
 	// Company of the authorizer.
 	AuthorizerCompany param.Field[string] `json:"authorizer_company"`
