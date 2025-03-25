@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.206.1 (2025-03-25)
+
+Full Changelog: [v0.206.0...v0.206.1](https://github.com/Increase/increase-go/compare/v0.206.0...v0.206.1)
+
+### Bug Fixes
+
+* **test:** return early after test failure ([#847](https://github.com/Increase/increase-go/issues/847)) ([6e910db](https://github.com/Increase/increase-go/commit/6e910db84122acfb88df7580cb8c7b04d7dfb786))
+
+
+### Chores
+
+* add request options to client tests ([#846](https://github.com/Increase/increase-go/issues/846)) ([c38933e](https://github.com/Increase/increase-go/commit/c38933e94eeddc95b77dbb814634d54c87d3b54b))
+* **docs:** improve security documentation ([#844](https://github.com/Increase/increase-go/issues/844)) ([b929e38](https://github.com/Increase/increase-go/commit/b929e38afafb5b855c3919a28a6d465bb387e647))
+
 ## 0.206.0 (2025-03-22)
 
 Full Changelog: [v0.205.0...v0.206.0](https://github.com/Increase/increase-go/compare/v0.205.0...v0.206.0)
