@@ -118,6 +118,9 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 		ExternalAccountID: increase.F("external_account_id"),
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
+		Status: increase.F(increase.ACHTransferListParamsStatus{
+			In: increase.F([]increase.ACHTransferListParamsStatusIn{increase.ACHTransferListParamsStatusInPendingApproval}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
