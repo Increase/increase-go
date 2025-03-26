@@ -1428,7 +1428,8 @@ type ACHTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                       `query:"limit"`
+	Status param.Field[ACHTransferListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [ACHTransferListParams]'s query parameters as `url.Values`.
@@ -1461,4 +1462,41 @@ func (r ACHTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type ACHTransferListParamsStatus struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]ACHTransferListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [ACHTransferListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r ACHTransferListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type ACHTransferListParamsStatusIn string
+
+const (
+	ACHTransferListParamsStatusInPendingApproval                    ACHTransferListParamsStatusIn = "pending_approval"
+	ACHTransferListParamsStatusInPendingTransferSessionConfirmation ACHTransferListParamsStatusIn = "pending_transfer_session_confirmation"
+	ACHTransferListParamsStatusInCanceled                           ACHTransferListParamsStatusIn = "canceled"
+	ACHTransferListParamsStatusInPendingSubmission                  ACHTransferListParamsStatusIn = "pending_submission"
+	ACHTransferListParamsStatusInPendingReviewing                   ACHTransferListParamsStatusIn = "pending_reviewing"
+	ACHTransferListParamsStatusInRequiresAttention                  ACHTransferListParamsStatusIn = "requires_attention"
+	ACHTransferListParamsStatusInRejected                           ACHTransferListParamsStatusIn = "rejected"
+	ACHTransferListParamsStatusInSubmitted                          ACHTransferListParamsStatusIn = "submitted"
+	ACHTransferListParamsStatusInReturned                           ACHTransferListParamsStatusIn = "returned"
+)
+
+func (r ACHTransferListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case ACHTransferListParamsStatusInPendingApproval, ACHTransferListParamsStatusInPendingTransferSessionConfirmation, ACHTransferListParamsStatusInCanceled, ACHTransferListParamsStatusInPendingSubmission, ACHTransferListParamsStatusInPendingReviewing, ACHTransferListParamsStatusInRequiresAttention, ACHTransferListParamsStatusInRejected, ACHTransferListParamsStatusInSubmitted, ACHTransferListParamsStatusInReturned:
+		return true
+	}
+	return false
 }
