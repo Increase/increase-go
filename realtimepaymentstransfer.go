@@ -602,7 +602,8 @@ type RealTimePaymentsTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                                    `query:"limit"`
+	Status param.Field[RealTimePaymentsTransferListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [RealTimePaymentsTransferListParams]'s query parameters as
@@ -636,4 +637,40 @@ func (r RealTimePaymentsTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type RealTimePaymentsTransferListParamsStatus struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]RealTimePaymentsTransferListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [RealTimePaymentsTransferListParamsStatus]'s query
+// parameters as `url.Values`.
+func (r RealTimePaymentsTransferListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type RealTimePaymentsTransferListParamsStatusIn string
+
+const (
+	RealTimePaymentsTransferListParamsStatusInPendingApproval   RealTimePaymentsTransferListParamsStatusIn = "pending_approval"
+	RealTimePaymentsTransferListParamsStatusInCanceled          RealTimePaymentsTransferListParamsStatusIn = "canceled"
+	RealTimePaymentsTransferListParamsStatusInPendingReviewing  RealTimePaymentsTransferListParamsStatusIn = "pending_reviewing"
+	RealTimePaymentsTransferListParamsStatusInRequiresAttention RealTimePaymentsTransferListParamsStatusIn = "requires_attention"
+	RealTimePaymentsTransferListParamsStatusInRejected          RealTimePaymentsTransferListParamsStatusIn = "rejected"
+	RealTimePaymentsTransferListParamsStatusInPendingSubmission RealTimePaymentsTransferListParamsStatusIn = "pending_submission"
+	RealTimePaymentsTransferListParamsStatusInSubmitted         RealTimePaymentsTransferListParamsStatusIn = "submitted"
+	RealTimePaymentsTransferListParamsStatusInComplete          RealTimePaymentsTransferListParamsStatusIn = "complete"
+)
+
+func (r RealTimePaymentsTransferListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferListParamsStatusInPendingApproval, RealTimePaymentsTransferListParamsStatusInCanceled, RealTimePaymentsTransferListParamsStatusInPendingReviewing, RealTimePaymentsTransferListParamsStatusInRequiresAttention, RealTimePaymentsTransferListParamsStatusInRejected, RealTimePaymentsTransferListParamsStatusInPendingSubmission, RealTimePaymentsTransferListParamsStatusInSubmitted, RealTimePaymentsTransferListParamsStatusInComplete:
+		return true
+	}
+	return false
 }
