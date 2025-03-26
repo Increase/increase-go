@@ -94,6 +94,9 @@ func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
 		ExternalAccountID: increase.F("external_account_id"),
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
+		Status: increase.F(increase.RealTimePaymentsTransferListParamsStatus{
+			In: increase.F([]increase.RealTimePaymentsTransferListParamsStatusIn{increase.RealTimePaymentsTransferListParamsStatusInPendingApproval}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
