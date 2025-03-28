@@ -925,6 +925,10 @@ type CheckTransferNewParamsThirdParty struct {
 	// zeroes. If this is omitted, Increase will generate a check number for you; you
 	// should inspect the response and use that check number.
 	CheckNumber param.Field[string] `json:"check_number"`
+	// The pay-to name you will print on the check. If provided, this is used for
+	// [Positive Pay](/documentation/positive-pay). If this is omitted, Increase will
+	// be unable to validate the payee name when the check is deposited.
+	RecipientName param.Field[string] `json:"recipient_name"`
 }
 
 func (r CheckTransferNewParamsThirdParty) MarshalJSON() (data []byte, err error) {
