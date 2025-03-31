@@ -769,17 +769,20 @@ func (r checkTransferSubmissionJSON) RawJSON() string {
 // Details relating to the custom fulfillment you will perform. Will be present if
 // and only if `fulfillment_method` is equal to `third_party`.
 type CheckTransferThirdParty struct {
-	// The check number that will be printed on the check.
-	CheckNumber string                      `json:"check_number,required,nullable"`
-	JSON        checkTransferThirdPartyJSON `json:"-"`
+	// The check number that you will print on the check.
+	CheckNumber string `json:"check_number,required,nullable"`
+	// The name that you will print on the check.
+	RecipientName string                      `json:"recipient_name,required,nullable"`
+	JSON          checkTransferThirdPartyJSON `json:"-"`
 }
 
 // checkTransferThirdPartyJSON contains the JSON metadata for the struct
 // [CheckTransferThirdParty]
 type checkTransferThirdPartyJSON struct {
-	CheckNumber apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	CheckNumber   apijson.Field
+	RecipientName apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *CheckTransferThirdParty) UnmarshalJSON(data []byte) (err error) {
