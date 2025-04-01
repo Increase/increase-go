@@ -44,8 +44,9 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 				StandInProcessingReason: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError),
 			}),
 		}),
-		PhysicalCardID: increase.F("physical_card_id"),
-		TerminalID:     increase.F("x"),
+		NetworkRiskScore: increase.F(int64(0)),
+		PhysicalCardID:   increase.F("physical_card_id"),
+		TerminalID:       increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
