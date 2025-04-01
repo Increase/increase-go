@@ -388,17 +388,19 @@ func (r entityCorporationBeneficialOwnersIndividualJSON) RawJSON() string {
 
 // The person's address.
 type EntityCorporationBeneficialOwnersIndividualAddress struct {
-	// The city of the address.
-	City string `json:"city,required"`
+	// The city, district, town, or village of the address.
+	City string `json:"city,required,nullable"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country string `json:"country,required"`
 	// The first line of the address.
 	Line1 string `json:"line1,required"`
 	// The second line of the address.
 	Line2 string `json:"line2,required,nullable"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State string `json:"state,required"`
-	// The ZIP code of the address.
-	Zip  string                                                 `json:"zip,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address.
+	State string `json:"state,required,nullable"`
+	// The ZIP or postal code of the address.
+	Zip  string                                                 `json:"zip,required,nullable"`
 	JSON entityCorporationBeneficialOwnersIndividualAddressJSON `json:"-"`
 }
 
@@ -406,6 +408,7 @@ type EntityCorporationBeneficialOwnersIndividualAddress struct {
 // metadata for the struct [EntityCorporationBeneficialOwnersIndividualAddress]
 type entityCorporationBeneficialOwnersIndividualAddressJSON struct {
 	City        apijson.Field
+	Country     apijson.Field
 	Line1       apijson.Field
 	Line2       apijson.Field
 	State       apijson.Field
@@ -1455,17 +1458,20 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividual) MarshalJSON() (dat
 // The individual's physical address. Mail receiving locations like PO Boxes and
 // PMB's are disallowed.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
-	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country,required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1,required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state,required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	// The city, district, town, or village of the address. Required in certain
+	// countries.
+	City param.Field[string] `json:"city"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
 }
 
 func (r EntityNewParamsCorporationBeneficialOwnersIndividualAddress) MarshalJSON() (data []byte, err error) {
@@ -2490,17 +2496,20 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual) MarshalJSON() (
 // The individual's physical address. Mail receiving locations like PO Boxes and
 // PMB's are disallowed.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress struct {
-	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country,required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1,required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state,required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	// The city, district, town, or village of the address. Required in certain
+	// countries.
+	City param.Field[string] `json:"city"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
 }
 
 func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress) MarshalJSON() (data []byte, err error) {
@@ -2662,17 +2671,20 @@ func (r EntityUpdateBeneficialOwnerAddressParams) MarshalJSON() (data []byte, er
 // The individual's physical address. Mail receiving locations like PO Boxes and
 // PMB's are disallowed.
 type EntityUpdateBeneficialOwnerAddressParamsAddress struct {
-	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country,required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1,required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state,required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	// The city, district, town, or village of the address. Required in certain
+	// countries.
+	City param.Field[string] `json:"city"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
 }
 
 func (r EntityUpdateBeneficialOwnerAddressParamsAddress) MarshalJSON() (data []byte, err error) {
