@@ -39,11 +39,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			BeneficialOwners: increase.F([]increase.EntityNewParamsCorporationBeneficialOwner{{
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Address: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualAddress{
-						City:  increase.F("New York"),
-						Line1: increase.F("33 Liberty Street"),
-						State: increase.F("NY"),
-						Zip:   increase.F("10045"),
-						Line2: increase.F("x"),
+						Country: increase.F("x"),
+						Line1:   increase.F("33 Liberty Street"),
+						City:    increase.F("New York"),
+						Line2:   increase.F("x"),
+						State:   increase.F("NY"),
+						Zip:     increase.F("10045"),
 					}),
 					DateOfBirth: increase.F(time.Now()),
 					Identification: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentification{
@@ -424,11 +425,12 @@ func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
 			BeneficialOwner: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwner{
 				Individual: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual{
 					Address: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress{
-						City:  increase.F("New York"),
-						Line1: increase.F("33 Liberty Street"),
-						State: increase.F("NY"),
-						Zip:   increase.F("10045"),
-						Line2: increase.F("x"),
+						Country: increase.F("US"),
+						Line1:   increase.F("33 Liberty Street"),
+						City:    increase.F("New York"),
+						Line2:   increase.F("x"),
+						State:   increase.F("NY"),
+						Zip:     increase.F("10045"),
 					}),
 					DateOfBirth: increase.F(time.Now()),
 					Identification: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification{
@@ -521,11 +523,12 @@ func TestEntityUpdateBeneficialOwnerAddressWithOptionalParams(t *testing.T) {
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntityUpdateBeneficialOwnerAddressParams{
 			Address: increase.F(increase.EntityUpdateBeneficialOwnerAddressParamsAddress{
-				City:  increase.F("New York"),
-				Line1: increase.F("33 Liberty Street"),
-				State: increase.F("NY"),
-				Zip:   increase.F("10045"),
-				Line2: increase.F("Unit 2"),
+				Country: increase.F("US"),
+				Line1:   increase.F("33 Liberty Street"),
+				City:    increase.F("New York"),
+				Line2:   increase.F("Unit 2"),
+				State:   increase.F("NY"),
+				Zip:     increase.F("10045"),
 			}),
 			BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
 		},
