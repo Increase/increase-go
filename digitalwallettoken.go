@@ -80,9 +80,13 @@ type DigitalWalletToken struct {
 	ID string `json:"id,required"`
 	// The identifier for the Card this Digital Wallet Token belongs to.
 	CardID string `json:"card_id,required"`
+	// The cardholder information given when the Digital Wallet Token was created.
+	Cardholder DigitalWalletTokenCardholder `json:"cardholder,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Digital Wallet Token was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The device that was used to create the Digital Wallet Token.
+	Device DigitalWalletTokenDevice `json:"device,required"`
 	// This indicates if payments can be made with the Digital Wallet Token.
 	Status DigitalWalletTokenStatus `json:"status,required"`
 	// The digital wallet app being used.
@@ -100,7 +104,9 @@ type DigitalWalletToken struct {
 type digitalWalletTokenJSON struct {
 	ID             apijson.Field
 	CardID         apijson.Field
+	Cardholder     apijson.Field
 	CreatedAt      apijson.Field
+	Device         apijson.Field
 	Status         apijson.Field
 	TokenRequestor apijson.Field
 	Type           apijson.Field
@@ -115,6 +121,84 @@ func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
 
 func (r digitalWalletTokenJSON) RawJSON() string {
 	return r.raw
+}
+
+// The cardholder information given when the Digital Wallet Token was created.
+type DigitalWalletTokenCardholder struct {
+	// Name of the cardholder, for example "John Smith".
+	Name string                           `json:"name,required,nullable"`
+	JSON digitalWalletTokenCardholderJSON `json:"-"`
+}
+
+// digitalWalletTokenCardholderJSON contains the JSON metadata for the struct
+// [DigitalWalletTokenCardholder]
+type digitalWalletTokenCardholderJSON struct {
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenCardholder) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenCardholderJSON) RawJSON() string {
+	return r.raw
+}
+
+// The device that was used to create the Digital Wallet Token.
+type DigitalWalletTokenDevice struct {
+	// Device type.
+	DeviceType DigitalWalletTokenDeviceDeviceType `json:"device_type,required,nullable"`
+	// ID assigned to the device by the digital wallet provider.
+	Identifier string `json:"identifier,required,nullable"`
+	// IP address of the device.
+	IPAddress string `json:"ip_address,required,nullable"`
+	// Name of the device, for example "My Work Phone".
+	Name string                       `json:"name,required,nullable"`
+	JSON digitalWalletTokenDeviceJSON `json:"-"`
+}
+
+// digitalWalletTokenDeviceJSON contains the JSON metadata for the struct
+// [DigitalWalletTokenDevice]
+type digitalWalletTokenDeviceJSON struct {
+	DeviceType  apijson.Field
+	Identifier  apijson.Field
+	IPAddress   apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenDevice) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenDeviceJSON) RawJSON() string {
+	return r.raw
+}
+
+// Device type.
+type DigitalWalletTokenDeviceDeviceType string
+
+const (
+	DigitalWalletTokenDeviceDeviceTypeUnknown             DigitalWalletTokenDeviceDeviceType = "unknown"
+	DigitalWalletTokenDeviceDeviceTypeMobilePhone         DigitalWalletTokenDeviceDeviceType = "mobile_phone"
+	DigitalWalletTokenDeviceDeviceTypeTablet              DigitalWalletTokenDeviceDeviceType = "tablet"
+	DigitalWalletTokenDeviceDeviceTypeWatch               DigitalWalletTokenDeviceDeviceType = "watch"
+	DigitalWalletTokenDeviceDeviceTypeMobilephoneOrTablet DigitalWalletTokenDeviceDeviceType = "mobilephone_or_tablet"
+	DigitalWalletTokenDeviceDeviceTypePc                  DigitalWalletTokenDeviceDeviceType = "pc"
+	DigitalWalletTokenDeviceDeviceTypeHouseholdDevice     DigitalWalletTokenDeviceDeviceType = "household_device"
+	DigitalWalletTokenDeviceDeviceTypeWearableDevice      DigitalWalletTokenDeviceDeviceType = "wearable_device"
+	DigitalWalletTokenDeviceDeviceTypeAutomobileDevice    DigitalWalletTokenDeviceDeviceType = "automobile_device"
+)
+
+func (r DigitalWalletTokenDeviceDeviceType) IsKnown() bool {
+	switch r {
+	case DigitalWalletTokenDeviceDeviceTypeUnknown, DigitalWalletTokenDeviceDeviceTypeMobilePhone, DigitalWalletTokenDeviceDeviceTypeTablet, DigitalWalletTokenDeviceDeviceTypeWatch, DigitalWalletTokenDeviceDeviceTypeMobilephoneOrTablet, DigitalWalletTokenDeviceDeviceTypePc, DigitalWalletTokenDeviceDeviceTypeHouseholdDevice, DigitalWalletTokenDeviceDeviceTypeWearableDevice, DigitalWalletTokenDeviceDeviceTypeAutomobileDevice:
+		return true
+	}
+	return false
 }
 
 // This indicates if payments can be made with the Digital Wallet Token.
