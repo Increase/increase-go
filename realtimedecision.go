@@ -886,6 +886,8 @@ type RealTimeDecisionDigitalWalletToken struct {
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
 	Decision RealTimeDecisionDigitalWalletTokenDecision `json:"decision,required,nullable"`
+	// Device that is being used to provision the digital wallet token.
+	Device RealTimeDecisionDigitalWalletTokenDevice `json:"device,required"`
 	// The digital wallet app being used.
 	DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet,required"`
 	JSON          realTimeDecisionDigitalWalletTokenJSON          `json:"-"`
@@ -897,6 +899,7 @@ type realTimeDecisionDigitalWalletTokenJSON struct {
 	CardID        apijson.Field
 	CardProfileID apijson.Field
 	Decision      apijson.Field
+	Device        apijson.Field
 	DigitalWallet apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -925,6 +928,29 @@ func (r RealTimeDecisionDigitalWalletTokenDecision) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Device that is being used to provision the digital wallet token.
+type RealTimeDecisionDigitalWalletTokenDevice struct {
+	// ID assigned to the device by the digital wallet provider.
+	Identifier string                                       `json:"identifier,required,nullable"`
+	JSON       realTimeDecisionDigitalWalletTokenDeviceJSON `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenDeviceJSON contains the JSON metadata for the
+// struct [RealTimeDecisionDigitalWalletTokenDevice]
+type realTimeDecisionDigitalWalletTokenDeviceJSON struct {
+	Identifier  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenDevice) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenDeviceJSON) RawJSON() string {
+	return r.raw
 }
 
 // The digital wallet app being used.
