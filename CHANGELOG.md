@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.212.1 (2025-04-02)
+
+Full Changelog: [v0.212.0...v0.212.1](https://github.com/Increase/increase-go/compare/v0.212.0...v0.212.1)
+
+### Bug Fixes
+
+* **client:** return error on bad custom url instead of panic ([#868](https://github.com/Increase/increase-go/issues/868)) ([b8e2923](https://github.com/Increase/increase-go/commit/b8e2923a2999cfa0e07df3e8332392abfd42a339))
+
 ## 0.212.0 (2025-04-01)
 
 Full Changelog: [v0.211.0...v0.212.0](https://github.com/Increase/increase-go/compare/v0.211.0...v0.212.0)
