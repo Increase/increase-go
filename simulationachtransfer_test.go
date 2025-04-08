@@ -51,7 +51,7 @@ func TestSimulationACHTransferNewNotificationOfChange(t *testing.T) {
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
 		increase.SimulationACHTransferNewNotificationOfChangeParams{
-			ChangeCode:    increase.F(increase.SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectAccountNumber),
+			ChangeCode:    increase.F(increase.SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumber),
 			CorrectedData: increase.F("123456789"),
 		},
 	)

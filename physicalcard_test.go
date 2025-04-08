@@ -94,7 +94,7 @@ func TestPhysicalCardUpdate(t *testing.T) {
 		context.TODO(),
 		"physical_card_ode8duyq5v2ynhjoharl",
 		increase.PhysicalCardUpdateParams{
-			Status: increase.F(increase.PhysicalCardUpdateParamsStatusActive),
+			Status: increase.F(increase.PhysicalCardUpdateParamsStatusDisabled),
 		},
 	)
 	if err != nil {
