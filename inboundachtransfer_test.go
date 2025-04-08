@@ -117,7 +117,7 @@ func TestInboundACHTransferDeclineWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
 		increase.InboundACHTransferDeclineParams{
-			Reason: increase.F(increase.InboundACHTransferDeclineParamsReasonInsufficientFunds),
+			Reason: increase.F(increase.InboundACHTransferDeclineParamsReasonPaymentStopped),
 		},
 	)
 	if err != nil {
@@ -145,7 +145,7 @@ func TestInboundACHTransferTransferReturn(t *testing.T) {
 		context.TODO(),
 		"inbound_ach_transfer_tdrwqr3fq9gnnq49odev",
 		increase.InboundACHTransferTransferReturnParams{
-			Reason: increase.F(increase.InboundACHTransferTransferReturnParamsReasonInsufficientFunds),
+			Reason: increase.F(increase.InboundACHTransferTransferReturnParamsReasonPaymentStopped),
 		},
 	)
 	if err != nil {
