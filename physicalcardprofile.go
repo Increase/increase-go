@@ -228,6 +228,8 @@ type PhysicalCardProfileNewParams struct {
 	Description param.Field[string] `json:"description,required"`
 	// The identifier of the File containing the physical card's front image.
 	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
+	// The identifier for the Program that this Physical Card Profile falls under.
+	ProgramID param.Field[string] `json:"program_id,required"`
 }
 
 func (r PhysicalCardProfileNewParams) MarshalJSON() (data []byte, err error) {

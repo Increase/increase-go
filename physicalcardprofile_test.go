@@ -30,6 +30,7 @@ func TestPhysicalCardProfileNew(t *testing.T) {
 		ContactPhone:       increase.F("+16505046304"),
 		Description:        increase.F("My Card Profile"),
 		FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),
+		ProgramID:          increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
 		var apierr *increase.Error
