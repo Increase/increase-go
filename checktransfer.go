@@ -745,6 +745,14 @@ func (r CheckTransferStopPaymentRequestType) IsKnown() bool {
 
 // After the transfer is submitted, this will contain supplemental details.
 type CheckTransferSubmission struct {
+	// Per USPS requirements, Increase will standardize the address to USPS standards
+	// and check it against the USPS National Change of Address (NCOA) database before
+	// mailing it. This indicates what modifications, if any, were made to the address
+	// before printing and mailing the check.
+	AddressCorrectionAction CheckTransferSubmissionAddressCorrectionAction `json:"address_correction_action,required"`
+	// The address we submitted to the printer. This is what is physically printed on
+	// the check.
+	SubmittedAddress CheckTransferSubmissionSubmittedAddress `json:"submitted_address,required"`
 	// When this check transfer was submitted to our check printer.
 	SubmittedAt time.Time                   `json:"submitted_at,required" format:"date-time"`
 	JSON        checkTransferSubmissionJSON `json:"-"`
@@ -753,9 +761,11 @@ type CheckTransferSubmission struct {
 // checkTransferSubmissionJSON contains the JSON metadata for the struct
 // [CheckTransferSubmission]
 type checkTransferSubmissionJSON struct {
-	SubmittedAt apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	AddressCorrectionAction apijson.Field
+	SubmittedAddress        apijson.Field
+	SubmittedAt             apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
@@ -763,6 +773,66 @@ func (r *CheckTransferSubmission) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r checkTransferSubmissionJSON) RawJSON() string {
+	return r.raw
+}
+
+// Per USPS requirements, Increase will standardize the address to USPS standards
+// and check it against the USPS National Change of Address (NCOA) database before
+// mailing it. This indicates what modifications, if any, were made to the address
+// before printing and mailing the check.
+type CheckTransferSubmissionAddressCorrectionAction string
+
+const (
+	CheckTransferSubmissionAddressCorrectionActionNone                             CheckTransferSubmissionAddressCorrectionAction = "none"
+	CheckTransferSubmissionAddressCorrectionActionStandardization                  CheckTransferSubmissionAddressCorrectionAction = "standardization"
+	CheckTransferSubmissionAddressCorrectionActionStandardizationWithAddressChange CheckTransferSubmissionAddressCorrectionAction = "standardization_with_address_change"
+	CheckTransferSubmissionAddressCorrectionActionError                            CheckTransferSubmissionAddressCorrectionAction = "error"
+)
+
+func (r CheckTransferSubmissionAddressCorrectionAction) IsKnown() bool {
+	switch r {
+	case CheckTransferSubmissionAddressCorrectionActionNone, CheckTransferSubmissionAddressCorrectionActionStandardization, CheckTransferSubmissionAddressCorrectionActionStandardizationWithAddressChange, CheckTransferSubmissionAddressCorrectionActionError:
+		return true
+	}
+	return false
+}
+
+// The address we submitted to the printer. This is what is physically printed on
+// the check.
+type CheckTransferSubmissionSubmittedAddress struct {
+	// The submitted address city.
+	City string `json:"city,required"`
+	// The submitted address line 1.
+	Line1 string `json:"line1,required"`
+	// The submitted address line 2.
+	Line2 string `json:"line2,required,nullable"`
+	// The submitted recipient name.
+	RecipientName string `json:"recipient_name,required"`
+	// The submitted address state.
+	State string `json:"state,required"`
+	// The submitted address zip.
+	Zip  string                                      `json:"zip,required"`
+	JSON checkTransferSubmissionSubmittedAddressJSON `json:"-"`
+}
+
+// checkTransferSubmissionSubmittedAddressJSON contains the JSON metadata for the
+// struct [CheckTransferSubmissionSubmittedAddress]
+type checkTransferSubmissionSubmittedAddressJSON struct {
+	City          apijson.Field
+	Line1         apijson.Field
+	Line2         apijson.Field
+	RecipientName apijson.Field
+	State         apijson.Field
+	Zip           apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *CheckTransferSubmissionSubmittedAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferSubmissionSubmittedAddressJSON) RawJSON() string {
 	return r.raw
 }
 
