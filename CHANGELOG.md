@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.214.0 (2025-04-08)
+
+Full Changelog: [v0.213.0...v0.214.0](https://github.com/Increase/increase-go/compare/v0.213.0...v0.214.0)
+
+### Features
+
+* **api:** api update ([#877](https://github.com/Increase/increase-go/issues/877)) ([af28b60](https://github.com/Increase/increase-go/commit/af28b600f03a181e2fc054513a551b0cea6ca277))
+* **client:** support custom http clients ([#874](https://github.com/Increase/increase-go/issues/874)) ([8994fc0](https://github.com/Increase/increase-go/commit/8994fc0605197c3c078ad260a2c33a72419f6c65))
+
+
+### Chores
+
+* **tests:** improve enum examples ([#876](https://github.com/Increase/increase-go/issues/876)) ([0657fdd](https://github.com/Increase/increase-go/commit/0657fdd4c40589a828c6f7f7d55cc6e012e67921))
+
 ## 0.213.0 (2025-04-02)
 
 Full Changelog: [v0.212.1...v0.213.0](https://github.com/Increase/increase-go/compare/v0.212.1...v0.213.0)
