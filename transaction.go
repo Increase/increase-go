@@ -868,9 +868,10 @@ func (r TransactionSourceCardRefundCurrency) IsKnown() bool {
 
 // Interchange assessed as a part of this transaciton.
 type TransactionSourceCardRefundInterchange struct {
-	// The interchange amount given as a string containing a decimal number. The amount
-	// is a positive number if it is credited to Increase (e.g., settlements) and a
-	// negative number if it is debited (e.g., refunds).
+	// The interchange amount given as a string containing a decimal number in major
+	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+	// credited to Increase (e.g., settlements) and a negative number if it is debited
+	// (e.g., refunds).
 	Amount string `json:"amount,required"`
 	// The card network specific interchange code.
 	Code string `json:"code,required,nullable"`
@@ -1775,9 +1776,10 @@ func (r TransactionSourceCardSettlementCurrency) IsKnown() bool {
 
 // Interchange assessed as a part of this transaction.
 type TransactionSourceCardSettlementInterchange struct {
-	// The interchange amount given as a string containing a decimal number. The amount
-	// is a positive number if it is credited to Increase (e.g., settlements) and a
-	// negative number if it is debited (e.g., refunds).
+	// The interchange amount given as a string containing a decimal number in major
+	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+	// credited to Increase (e.g., settlements) and a negative number if it is debited
+	// (e.g., refunds).
 	Amount string `json:"amount,required"`
 	// The card network specific interchange code.
 	Code string `json:"code,required,nullable"`
