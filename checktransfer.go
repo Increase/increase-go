@@ -931,6 +931,10 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	Memo param.Field[string] `json:"memo,required"`
 	// The name that will be printed on the check in the 'To:' field.
 	RecipientName param.Field[string] `json:"recipient_name,required"`
+	// The ID of a File to be attached to the check. This must have
+	// `purpose: check_attachment`. For details on pricing and restrictions, see
+	// https://increase.com/documentation/originating-checks#printing-checks .
+	AttachmentFileID param.Field[string] `json:"attachment_file_id"`
 	// The check number Increase should print on the check. This should not contain
 	// leading zeroes and must be unique across the `source_account_number`. If this is
 	// omitted, Increase will generate a check number for you.
@@ -941,6 +945,9 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// an Increase-owned address that will mark checks as delivery failed and shred
 	// them.
 	ReturnAddress param.Field[CheckTransferNewParamsPhysicalCheckReturnAddress] `json:"return_address"`
+	// How to ship the check. For details on pricing, timing, and restrictions, see
+	// https://increase.com/documentation/originating-checks#printing-checks .
+	ShippingMethod param.Field[CheckTransferNewParamsPhysicalCheckShippingMethod] `json:"shipping_method"`
 	// The text that will appear as the signature on the check in cursive font. If not
 	// provided, the check will be printed with 'No signature required'.
 	SignatureText param.Field[string] `json:"signature_text"`
@@ -988,6 +995,23 @@ type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 
 func (r CheckTransferNewParamsPhysicalCheckReturnAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// How to ship the check. For details on pricing, timing, and restrictions, see
+// https://increase.com/documentation/originating-checks#printing-checks .
+type CheckTransferNewParamsPhysicalCheckShippingMethod string
+
+const (
+	CheckTransferNewParamsPhysicalCheckShippingMethodUspsFirstClass CheckTransferNewParamsPhysicalCheckShippingMethod = "usps_first_class"
+	CheckTransferNewParamsPhysicalCheckShippingMethodFedexOvernight CheckTransferNewParamsPhysicalCheckShippingMethod = "fedex_overnight"
+)
+
+func (r CheckTransferNewParamsPhysicalCheckShippingMethod) IsKnown() bool {
+	switch r {
+	case CheckTransferNewParamsPhysicalCheckShippingMethodUspsFirstClass, CheckTransferNewParamsPhysicalCheckShippingMethodFedexOvernight:
+		return true
+	}
+	return false
 }
 
 // Details relating to the custom fulfillment you will perform. This is required if
