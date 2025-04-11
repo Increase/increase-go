@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.216.0 (2025-04-11)
+
+Full Changelog: [v0.215.0...v0.216.0](https://github.com/Increase/increase-go/compare/v0.215.0...v0.216.0)
+
+### Features
+
+* **api:** api update ([72c9b03](https://github.com/Increase/increase-go/commit/72c9b0307cd341298b4fd4a4fd91b165a33270f4))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([#880](https://github.com/Increase/increase-go/issues/880)) ([b9b4e5d](https://github.com/Increase/increase-go/commit/b9b4e5d58556a666b79ee7fa6787b8b1b462deee))
+* **internal:** reduce CI branch coverage ([ab7d991](https://github.com/Increase/increase-go/commit/ab7d9911a22a7971ecde5a35b3a865f274e54446))
+
 ## 0.215.0 (2025-04-08)
 
 Full Changelog: [v0.214.0...v0.215.0](https://github.com/Increase/increase-go/compare/v0.214.0...v0.215.0)
