@@ -839,8 +839,6 @@ func (r checkTransferSubmissionSubmittedAddressJSON) RawJSON() string {
 // Details relating to the custom fulfillment you will perform. Will be present if
 // and only if `fulfillment_method` is equal to `third_party`.
 type CheckTransferThirdParty struct {
-	// The check number that you will print on the check.
-	CheckNumber string `json:"check_number,required,nullable"`
 	// The name that you will print on the check.
 	RecipientName string                      `json:"recipient_name,required,nullable"`
 	JSON          checkTransferThirdPartyJSON `json:"-"`
@@ -849,7 +847,6 @@ type CheckTransferThirdParty struct {
 // checkTransferThirdPartyJSON contains the JSON metadata for the struct
 // [CheckTransferThirdParty]
 type checkTransferThirdPartyJSON struct {
-	CheckNumber   apijson.Field
 	RecipientName apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -1018,10 +1015,6 @@ func (r CheckTransferNewParamsPhysicalCheckShippingMethod) IsKnown() bool {
 // `fulfillment_method` is equal to `third_party`. It must not be included if any
 // other `fulfillment_method` is provided.
 type CheckTransferNewParamsThirdParty struct {
-	// The check number you will print on the check. This should not contain leading
-	// zeroes. If this is omitted, Increase will generate a check number for you; you
-	// should inspect the response and use that check number.
-	CheckNumber param.Field[string] `json:"check_number"`
 	// The pay-to name you will print on the check. If provided, this is used for
 	// [Positive Pay](/documentation/positive-pay). If this is omitted, Increase will
 	// be unable to validate the payee name when the check is deposited.
