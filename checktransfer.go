@@ -469,6 +469,8 @@ func (r checkTransferMailingJSON) RawJSON() string {
 // Details relating to the physical check that Increase will print and mail. Will
 // be present if and only if `fulfillment_method` is equal to `physical_check`.
 type CheckTransferPhysicalCheck struct {
+	// The ID of the file for the check attachment.
+	AttachmentFileID string `json:"attachment_file_id,required,nullable"`
 	// Details for where Increase will mail the check.
 	MailingAddress CheckTransferPhysicalCheckMailingAddress `json:"mailing_address,required"`
 	// The descriptor that will be printed on the memo field on the check.
@@ -492,16 +494,17 @@ type CheckTransferPhysicalCheck struct {
 // checkTransferPhysicalCheckJSON contains the JSON metadata for the struct
 // [CheckTransferPhysicalCheck]
 type checkTransferPhysicalCheckJSON struct {
-	MailingAddress  apijson.Field
-	Memo            apijson.Field
-	Note            apijson.Field
-	RecipientName   apijson.Field
-	ReturnAddress   apijson.Field
-	ShippingMethod  apijson.Field
-	SignatureText   apijson.Field
-	TrackingUpdates apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+	AttachmentFileID apijson.Field
+	MailingAddress   apijson.Field
+	Memo             apijson.Field
+	Note             apijson.Field
+	RecipientName    apijson.Field
+	ReturnAddress    apijson.Field
+	ShippingMethod   apijson.Field
+	SignatureText    apijson.Field
+	TrackingUpdates  apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *CheckTransferPhysicalCheck) UnmarshalJSON(data []byte) (err error) {
