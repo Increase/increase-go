@@ -132,6 +132,8 @@ type PhysicalCardProfile struct {
 	// Whether this Physical Card Profile is the default for all cards in its Increase
 	// group.
 	IsDefault bool `json:"is_default,required"`
+	// The identifier for the Program this Physical Card Profile belongs to.
+	ProgramID string `json:"program_id,required"`
 	// The status of the Physical Card Profile.
 	Status PhysicalCardProfileStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -153,6 +155,7 @@ type physicalCardProfileJSON struct {
 	FrontImageFileID   apijson.Field
 	IdempotencyKey     apijson.Field
 	IsDefault          apijson.Field
+	ProgramID          apijson.Field
 	Status             apijson.Field
 	Type               apijson.Field
 	raw                string
