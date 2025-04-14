@@ -135,6 +135,8 @@ type ACHTransfer struct {
 	CompanyDiscretionaryData string `json:"company_discretionary_data,required,nullable"`
 	// The description of the transfer you set to be shown to the recipient.
 	CompanyEntryDescription string `json:"company_entry_description,required,nullable"`
+	// The company ID associated with the transfer.
+	CompanyID string `json:"company_id,required"`
 	// The name by which the recipient knows you.
 	CompanyName string `json:"company_name,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -219,6 +221,7 @@ type achTransferJSON struct {
 	CompanyDescriptiveDate   apijson.Field
 	CompanyDiscretionaryData apijson.Field
 	CompanyEntryDescription  apijson.Field
+	CompanyID                apijson.Field
 	CompanyName              apijson.Field
 	CreatedAt                apijson.Field
 	CreatedBy                apijson.Field
