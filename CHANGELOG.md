@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.220.0 (2025-04-17)
+
+Full Changelog: [v0.219.0...v0.220.0](https://github.com/Increase/increase-go/compare/v0.219.0...v0.220.0)
+
+### Features
+
+* **api:** api update ([6f3b767](https://github.com/Increase/increase-go/commit/6f3b767a95e737921f3c7af72beba5c13dd1ba68))
+* **client:** add support for reading base URL from environment variable ([8369532](https://github.com/Increase/increase-go/commit/83695325cb307de040c61b7905324a8647a1880d))
+
+
+### Chores
+
+* **docs:** document pre-request options ([e4a2af3](https://github.com/Increase/increase-go/commit/e4a2af320c78a04fa3dd2853a1885ece26919b99))
+
 ## 0.219.0 (2025-04-14)
 
 Full Changelog: [v0.218.0...v0.219.0](https://github.com/Increase/increase-go/compare/v0.218.0...v0.219.0)
