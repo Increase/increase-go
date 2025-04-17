@@ -89,8 +89,8 @@ func (r *ProofOfAuthorizationRequestSubmissionService) ListAutoPaging(ctx contex
 type ProofOfAuthorizationRequestSubmission struct {
 	// The Proof of Authorization Request Submission identifier.
 	ID string `json:"id,required"`
-	// File containing additional evidence.
-	AdditionalEvidenceFileID string `json:"additional_evidence_file_id,required,nullable"`
+	// Files containing additional evidence.
+	AdditionalEvidenceFiles []ProofOfAuthorizationRequestSubmissionAdditionalEvidenceFile `json:"additional_evidence_files,required"`
 	// Terms of authorization.
 	AuthorizationTerms string `json:"authorization_terms,required"`
 	// Time of authorization.
@@ -133,7 +133,7 @@ type ProofOfAuthorizationRequestSubmission struct {
 // struct [ProofOfAuthorizationRequestSubmission]
 type proofOfAuthorizationRequestSubmissionJSON struct {
 	ID                                            apijson.Field
-	AdditionalEvidenceFileID                      apijson.Field
+	AdditionalEvidenceFiles                       apijson.Field
 	AuthorizationTerms                            apijson.Field
 	AuthorizedAt                                  apijson.Field
 	AuthorizerCompany                             apijson.Field
@@ -159,6 +159,29 @@ func (r *ProofOfAuthorizationRequestSubmission) UnmarshalJSON(data []byte) (err 
 }
 
 func (r proofOfAuthorizationRequestSubmissionJSON) RawJSON() string {
+	return r.raw
+}
+
+type ProofOfAuthorizationRequestSubmissionAdditionalEvidenceFile struct {
+	// The File identifier.
+	FileID string                                                          `json:"file_id,required"`
+	JSON   proofOfAuthorizationRequestSubmissionAdditionalEvidenceFileJSON `json:"-"`
+}
+
+// proofOfAuthorizationRequestSubmissionAdditionalEvidenceFileJSON contains the
+// JSON metadata for the struct
+// [ProofOfAuthorizationRequestSubmissionAdditionalEvidenceFile]
+type proofOfAuthorizationRequestSubmissionAdditionalEvidenceFileJSON struct {
+	FileID      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ProofOfAuthorizationRequestSubmissionAdditionalEvidenceFile) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r proofOfAuthorizationRequestSubmissionAdditionalEvidenceFileJSON) RawJSON() string {
 	return r.raw
 }
 
