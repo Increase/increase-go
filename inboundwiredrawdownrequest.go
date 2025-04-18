@@ -101,7 +101,7 @@ type InboundWireDrawdownRequest struct {
 	// A message from the drawdown request's originator.
 	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
 	// The drawdown request's originator's account number.
-	OriginatorAccountNumber string `json:"originator_account_number,required"`
+	OriginatorAccountNumber string `json:"originator_account_number,required,nullable"`
 	// Line 1 of the drawdown request's originator's address.
 	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
 	// Line 2 of the drawdown request's originator's address.
