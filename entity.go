@@ -1375,13 +1375,18 @@ type EntityNewParamsCorporation struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
 	Address param.Field[EntityNewParamsCorporationAddress] `json:"address,required"`
-	// The identifying details of anyone controlling or owning 25% or more of the
-	// corporation.
+	// The identifying details of each person who owns 25% or more of the business and
+	// one control person, like the CEO, CFO, or other executive. You can submit
+	// between 1 and 5 people to this list.
 	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwner] `json:"beneficial_owners,required"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name,required"`
 	// The Employer Identification Number (EIN) for the corporation.
 	TaxIdentifier param.Field[string] `json:"tax_identifier,required"`
+	// If the entity is exempt from the requirement to submit beneficial owners,
+	// provide the justification. If a reason is provided, you do not need to submit a
+	// list of beneficial owners.
+	BeneficialOwnershipExemptionReason param.Field[EntityNewParamsCorporationBeneficialOwnershipExemptionReason] `json:"beneficial_ownership_exemption_reason"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
 	IncorporationState param.Field[string] `json:"incorporation_state"`
@@ -1582,6 +1587,25 @@ const (
 func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 	switch r {
 	case EntityNewParamsCorporationBeneficialOwnersProngOwnership, EntityNewParamsCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
+
+// If the entity is exempt from the requirement to submit beneficial owners,
+// provide the justification. If a reason is provided, you do not need to submit a
+// list of beneficial owners.
+type EntityNewParamsCorporationBeneficialOwnershipExemptionReason string
+
+const (
+	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "regulated_financial_institution"
+	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany         EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "publicly_traded_company"
+	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPublicEntity                  EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "public_entity"
+)
+
+func (r EntityNewParamsCorporationBeneficialOwnershipExemptionReason) IsKnown() bool {
+	switch r {
+	case EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPublicEntity:
 		return true
 	}
 	return false
