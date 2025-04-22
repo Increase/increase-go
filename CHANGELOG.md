@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.222.0 (2025-04-22)
+
+Full Changelog: [v0.221.0...v0.222.0](https://github.com/Increase/increase-go/compare/v0.221.0...v0.222.0)
+
+### Features
+
+* **api:** api update ([84f3398](https://github.com/Increase/increase-go/commit/84f33988b3df903a94ee9bf258906b4c17d93736))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([05aa37d](https://github.com/Increase/increase-go/commit/05aa37d53aa5dc2076498a9d25ad308a97cdf26e))
+
 ## 0.221.0 (2025-04-18)
 
 Full Changelog: [v0.220.0...v0.221.0](https://github.com/Increase/increase-go/compare/v0.220.0...v0.221.0)
