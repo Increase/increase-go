@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.223.0 (2025-04-24)
+
+Full Changelog: [v0.222.0...v0.223.0](https://github.com/Increase/increase-go/compare/v0.222.0...v0.223.0)
+
+### Features
+
+* **api:** api update ([3bc85d1](https://github.com/Increase/increase-go/commit/3bc85d1d8ecff4eccce77977924a36a3c8844f77))
+
+
+### Chores
+
+* **ci:** only use depot for staging repos ([2c0d001](https://github.com/Increase/increase-go/commit/2c0d00107cae505bfd9355d1ea9bd4ff1e83ff28))
+* **ci:** run on more branches and use depot runners ([39023b8](https://github.com/Increase/increase-go/commit/39023b8a47ee25c7547c063e16daace18c57a4f3))
+
 ## 0.222.0 (2025-04-22)
 
 Full Changelog: [v0.221.0...v0.222.0](https://github.com/Increase/increase-go/compare/v0.221.0...v0.222.0)
