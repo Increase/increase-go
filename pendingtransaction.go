@@ -221,6 +221,9 @@ type PendingTransactionSource struct {
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
 	RealTimePaymentsTransferInstruction PendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,required,nullable"`
+	// A Swift Transfer Instruction object. This field will be present in the JSON
+	// response if and only if `category` is equal to `swift_transfer_instruction`.
+	SwiftTransferInstruction PendingTransactionSourceSwiftTransferInstruction `json:"swift_transfer_instruction,required,nullable"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
 	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,required,nullable"`
@@ -240,6 +243,7 @@ type pendingTransactionSourceJSON struct {
 	InboundWireTransferReversal         apijson.Field
 	Other                               apijson.Field
 	RealTimePaymentsTransferInstruction apijson.Field
+	SwiftTransferInstruction            apijson.Field
 	WireTransferInstruction             apijson.Field
 	raw                                 string
 	ExtraFields                         map[string]apijson.Field
@@ -869,12 +873,13 @@ const (
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
 	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
 	PendingTransactionSourceCategoryInboundWireTransferReversal         PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
+	PendingTransactionSourceCategorySwiftTransferInstruction            PendingTransactionSourceCategory = "swift_transfer_instruction"
 	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
 )
 
 func (r PendingTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategoryOther:
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1159,6 +1164,30 @@ func (r pendingTransactionSourceRealTimePaymentsTransferInstructionJSON) RawJSON
 	return r.raw
 }
 
+// A Swift Transfer Instruction object. This field will be present in the JSON
+// response if and only if `category` is equal to `swift_transfer_instruction`.
+type PendingTransactionSourceSwiftTransferInstruction struct {
+	// The identifier of the Swift Transfer that led to this Pending Transaction.
+	TransferID string                                               `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceSwiftTransferInstructionJSON `json:"-"`
+}
+
+// pendingTransactionSourceSwiftTransferInstructionJSON contains the JSON metadata
+// for the struct [PendingTransactionSourceSwiftTransferInstruction]
+type pendingTransactionSourceSwiftTransferInstructionJSON struct {
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceSwiftTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceSwiftTransferInstructionJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Wire Transfer Instruction object. This field will be present in the JSON
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type PendingTransactionSourceWireTransferInstruction struct {
@@ -1280,12 +1309,13 @@ const (
 	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
 	PendingTransactionListParamsCategoryInWireTransferInstruction             PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
 	PendingTransactionListParamsCategoryInInboundWireTransferReversal         PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
+	PendingTransactionListParamsCategoryInSwiftTransferInstruction            PendingTransactionListParamsCategoryIn = "swift_transfer_instruction"
 	PendingTransactionListParamsCategoryInOther                               PendingTransactionListParamsCategoryIn = "other"
 )
 
 func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInOther:
+	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
