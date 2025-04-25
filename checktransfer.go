@@ -889,6 +889,10 @@ type CheckTransferNewParams struct {
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	// The check number Increase should use for the check. This should not contain
+	// leading zeroes and must be unique across the `source_account_number`. If this is
+	// omitted, Increase will generate a check number for you.
+	CheckNumber param.Field[string] `json:"check_number"`
 	// Details relating to the physical check that Increase will print and mail. This
 	// is required if `fulfillment_method` is equal to `physical_check`. It must not be
 	// included if any other `fulfillment_method` is provided.
@@ -935,10 +939,6 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// `purpose: check_attachment`. For details on pricing and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
 	AttachmentFileID param.Field[string] `json:"attachment_file_id"`
-	// The check number Increase should print on the check. This should not contain
-	// leading zeroes and must be unique across the `source_account_number`. If this is
-	// omitted, Increase will generate a check number for you.
-	CheckNumber param.Field[string] `json:"check_number"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
 	// The return address to be printed on the check. If omitted this will default to
