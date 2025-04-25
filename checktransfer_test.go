@@ -31,6 +31,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 		Amount:                increase.F(int64(1000)),
 		FulfillmentMethod:     increase.F(increase.CheckTransferNewParamsFulfillmentMethodPhysicalCheck),
 		SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		CheckNumber:           increase.F("x"),
 		PhysicalCheck: increase.F(increase.CheckTransferNewParamsPhysicalCheck{
 			MailingAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckMailingAddress{
 				City:       increase.F("New York"),
@@ -42,7 +43,6 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			Memo:             increase.F("Check payment"),
 			RecipientName:    increase.F("Ian Crease"),
 			AttachmentFileID: increase.F("attachment_file_id"),
-			CheckNumber:      increase.F("x"),
 			Note:             increase.F("x"),
 			ReturnAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckReturnAddress{
 				City:       increase.F("x"),
