@@ -294,8 +294,10 @@ type PhysicalCardShipmentTracking struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the fulfillment provider marked the card as ready for pick-up by the shipment
 	// carrier.
-	ShippedAt time.Time                        `json:"shipped_at,required" format:"date-time"`
-	JSON      physicalCardShipmentTrackingJSON `json:"-"`
+	ShippedAt time.Time `json:"shipped_at,required" format:"date-time"`
+	// Tracking updates relating to the physical card's delivery.
+	Updates []PhysicalCardShipmentTrackingUpdate `json:"updates,required"`
+	JSON    physicalCardShipmentTrackingJSON     `json:"-"`
 }
 
 // physicalCardShipmentTrackingJSON contains the JSON metadata for the struct
@@ -305,6 +307,7 @@ type physicalCardShipmentTrackingJSON struct {
 	ReturnNumber apijson.Field
 	ReturnReason apijson.Field
 	ShippedAt    apijson.Field
+	Updates      apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -315,6 +318,53 @@ func (r *PhysicalCardShipmentTracking) UnmarshalJSON(data []byte) (err error) {
 
 func (r physicalCardShipmentTrackingJSON) RawJSON() string {
 	return r.raw
+}
+
+type PhysicalCardShipmentTrackingUpdate struct {
+	// The type of tracking event.
+	Category PhysicalCardShipmentTrackingUpdatesCategory `json:"category,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the tracking event took place.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The postal code where the event took place.
+	PostalCode string                                 `json:"postal_code,required"`
+	JSON       physicalCardShipmentTrackingUpdateJSON `json:"-"`
+}
+
+// physicalCardShipmentTrackingUpdateJSON contains the JSON metadata for the struct
+// [PhysicalCardShipmentTrackingUpdate]
+type physicalCardShipmentTrackingUpdateJSON struct {
+	Category    apijson.Field
+	CreatedAt   apijson.Field
+	PostalCode  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PhysicalCardShipmentTrackingUpdate) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r physicalCardShipmentTrackingUpdateJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of tracking event.
+type PhysicalCardShipmentTrackingUpdatesCategory string
+
+const (
+	PhysicalCardShipmentTrackingUpdatesCategoryInTransit            PhysicalCardShipmentTrackingUpdatesCategory = "in_transit"
+	PhysicalCardShipmentTrackingUpdatesCategoryProcessedForDelivery PhysicalCardShipmentTrackingUpdatesCategory = "processed_for_delivery"
+	PhysicalCardShipmentTrackingUpdatesCategoryDelivered            PhysicalCardShipmentTrackingUpdatesCategory = "delivered"
+	PhysicalCardShipmentTrackingUpdatesCategoryReturnedToSender     PhysicalCardShipmentTrackingUpdatesCategory = "returned_to_sender"
+)
+
+func (r PhysicalCardShipmentTrackingUpdatesCategory) IsKnown() bool {
+	switch r {
+	case PhysicalCardShipmentTrackingUpdatesCategoryInTransit, PhysicalCardShipmentTrackingUpdatesCategoryProcessedForDelivery, PhysicalCardShipmentTrackingUpdatesCategoryDelivered, PhysicalCardShipmentTrackingUpdatesCategoryReturnedToSender:
+		return true
+	}
+	return false
 }
 
 // The status of the Physical Card.
