@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.226.0 (2025-04-29)
+
+Full Changelog: [v0.225.0...v0.226.0](https://github.com/Increase/increase-go/compare/v0.225.0...v0.226.0)
+
+### Features
+
+* **api:** api update ([6769248](https://github.com/Increase/increase-go/commit/6769248599d8c4077c52badaacb6c4c2f2f23f31))
+
+
+### Bug Fixes
+
+* handle empty bodies in WithJSONSet ([c0e7ca8](https://github.com/Increase/increase-go/commit/c0e7ca800917584006d9a0acabc030cdb1b0e7ac))
+
 ## 0.225.0 (2025-04-27)
 
 Full Changelog: [v0.224.0...v0.225.0](https://github.com/Increase/increase-go/compare/v0.224.0...v0.225.0)
