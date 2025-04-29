@@ -72,6 +72,18 @@ func (r *InboundWireTransferService) ListAutoPaging(ctx context.Context, query I
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Reverse an Inbound Wire Transfer
+func (r *InboundWireTransferService) Reverse(ctx context.Context, inboundWireTransferID string, body InboundWireTransferReverseParams, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	if inboundWireTransferID == "" {
+		err = errors.New("missing required inbound_wire_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("inbound_wire_transfers/%s/reverse", inboundWireTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // An Inbound Wire Transfer is a wire transfer initiated outside of Increase to
 // your account.
 type InboundWireTransfer struct {
@@ -123,6 +135,9 @@ type InboundWireTransfer struct {
 	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
 	// A free-form message set by the wire originator.
 	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// Information about the reversal of the inbound wire transfer if it has been
+	// reversed.
+	Reversal InboundWireTransferReversal `json:"reversal,required,nullable"`
 	// The sending bank's reference number for the wire transfer.
 	SenderReference string `json:"sender_reference,required,nullable"`
 	// The status of the transfer.
@@ -158,6 +173,7 @@ type inboundWireTransferJSON struct {
 	OriginatorToBeneficiaryInformationLine2 apijson.Field
 	OriginatorToBeneficiaryInformationLine3 apijson.Field
 	OriginatorToBeneficiaryInformationLine4 apijson.Field
+	Reversal                                apijson.Field
 	SenderReference                         apijson.Field
 	Status                                  apijson.Field
 	Type                                    apijson.Field
@@ -171,6 +187,50 @@ func (r *InboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
 
 func (r inboundWireTransferJSON) RawJSON() string {
 	return r.raw
+}
+
+// Information about the reversal of the inbound wire transfer if it has been
+// reversed.
+type InboundWireTransferReversal struct {
+	// The reason for the reversal.
+	Reason InboundWireTransferReversalReason `json:"reason,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was reversed.
+	ReversedAt time.Time                       `json:"reversed_at,required" format:"date-time"`
+	JSON       inboundWireTransferReversalJSON `json:"-"`
+}
+
+// inboundWireTransferReversalJSON contains the JSON metadata for the struct
+// [InboundWireTransferReversal]
+type inboundWireTransferReversalJSON struct {
+	Reason      apijson.Field
+	ReversedAt  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InboundWireTransferReversal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundWireTransferReversalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason for the reversal.
+type InboundWireTransferReversalReason string
+
+const (
+	InboundWireTransferReversalReasonDuplicate       InboundWireTransferReversalReason = "duplicate"
+	InboundWireTransferReversalReasonCreditorRequest InboundWireTransferReversalReason = "creditor_request"
+)
+
+func (r InboundWireTransferReversalReason) IsKnown() bool {
+	switch r {
+	case InboundWireTransferReversalReasonDuplicate, InboundWireTransferReversalReasonCreditorRequest:
+		return true
+	}
+	return false
 }
 
 // The status of the transfer.
@@ -282,6 +342,31 @@ const (
 func (r InboundWireTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
 	case InboundWireTransferListParamsStatusInPending, InboundWireTransferListParamsStatusInAccepted, InboundWireTransferListParamsStatusInDeclined, InboundWireTransferListParamsStatusInReversed:
+		return true
+	}
+	return false
+}
+
+type InboundWireTransferReverseParams struct {
+	// Reason for the reversal.
+	Reason param.Field[InboundWireTransferReverseParamsReason] `json:"reason,required"`
+}
+
+func (r InboundWireTransferReverseParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Reason for the reversal.
+type InboundWireTransferReverseParamsReason string
+
+const (
+	InboundWireTransferReverseParamsReasonDuplicate       InboundWireTransferReverseParamsReason = "duplicate"
+	InboundWireTransferReverseParamsReasonCreditorRequest InboundWireTransferReverseParamsReason = "creditor_request"
+)
+
+func (r InboundWireTransferReverseParamsReason) IsKnown() bool {
+	switch r {
+	case InboundWireTransferReverseParamsReasonDuplicate, InboundWireTransferReverseParamsReasonCreditorRequest:
 		return true
 	}
 	return false
