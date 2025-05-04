@@ -323,20 +323,26 @@ func (r physicalCardShipmentTrackingJSON) RawJSON() string {
 type PhysicalCardShipmentTrackingUpdate struct {
 	// The type of tracking event.
 	Category PhysicalCardShipmentTrackingUpdatesCategory `json:"category,required"`
+	// The city where the event took place.
+	City string `json:"city,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the tracking event took place.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The postal code where the event took place.
-	PostalCode string                                 `json:"postal_code,required"`
-	JSON       physicalCardShipmentTrackingUpdateJSON `json:"-"`
+	PostalCode string `json:"postal_code,required,nullable"`
+	// The state where the event took place.
+	State string                                 `json:"state,required,nullable"`
+	JSON  physicalCardShipmentTrackingUpdateJSON `json:"-"`
 }
 
 // physicalCardShipmentTrackingUpdateJSON contains the JSON metadata for the struct
 // [PhysicalCardShipmentTrackingUpdate]
 type physicalCardShipmentTrackingUpdateJSON struct {
 	Category    apijson.Field
+	City        apijson.Field
 	CreatedAt   apijson.Field
 	PostalCode  apijson.Field
+	State       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
