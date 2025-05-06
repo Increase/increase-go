@@ -321,6 +321,9 @@ func (r physicalCardShipmentTrackingJSON) RawJSON() string {
 }
 
 type PhysicalCardShipmentTrackingUpdate struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
+	// carrier expects the card to be delivered.
+	CarrierEstimatedDeliveryAt time.Time `json:"carrier_estimated_delivery_at,required,nullable" format:"date-time"`
 	// The type of tracking event.
 	Category PhysicalCardShipmentTrackingUpdatesCategory `json:"category,required"`
 	// The city where the event took place.
@@ -338,13 +341,14 @@ type PhysicalCardShipmentTrackingUpdate struct {
 // physicalCardShipmentTrackingUpdateJSON contains the JSON metadata for the struct
 // [PhysicalCardShipmentTrackingUpdate]
 type physicalCardShipmentTrackingUpdateJSON struct {
-	Category    apijson.Field
-	City        apijson.Field
-	CreatedAt   apijson.Field
-	PostalCode  apijson.Field
-	State       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	CarrierEstimatedDeliveryAt apijson.Field
+	Category                   apijson.Field
+	City                       apijson.Field
+	CreatedAt                  apijson.Field
+	PostalCode                 apijson.Field
+	State                      apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
 }
 
 func (r *PhysicalCardShipmentTrackingUpdate) UnmarshalJSON(data []byte) (err error) {
