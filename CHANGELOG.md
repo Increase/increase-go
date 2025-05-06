@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.230.1 (2025-05-06)
+
+Full Changelog: [v0.230.0...v0.230.1](https://github.com/Increase/increase-go/compare/v0.230.0...v0.230.1)
+
+### Bug Fixes
+
+* **client:** clean up reader resources ([8953a65](https://github.com/Increase/increase-go/commit/8953a6582f87f46a61cd1807485bd115540a3676))
+* **client:** correctly update body in WithJSONSet ([9ff4a9a](https://github.com/Increase/increase-go/commit/9ff4a9a27078ca9217d299fc431bee288f43ba2d))
+
 ## 0.230.0 (2025-05-06)
 
 Full Changelog: [v0.229.0...v0.230.0](https://github.com/Increase/increase-go/compare/v0.229.0...v0.230.0)
