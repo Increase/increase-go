@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestPhysicalCardProfileNew(t *testing.T) {
+func TestPhysicalCardProfileNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -31,6 +31,10 @@ func TestPhysicalCardProfileNew(t *testing.T) {
 		Description:        increase.F("My Card Profile"),
 		FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),
 		ProgramID:          increase.F("program_i2v2os4mwza1oetokh9i"),
+		FrontText: increase.F(increase.PhysicalCardProfileNewParamsFrontText{
+			Line1: increase.F("x"),
+			Line2: increase.F("x"),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

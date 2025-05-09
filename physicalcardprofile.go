@@ -233,9 +233,27 @@ type PhysicalCardProfileNewParams struct {
 	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
 	// The identifier for the Program that this Physical Card Profile falls under.
 	ProgramID param.Field[string] `json:"program_id,required"`
+	// Text printed on the front of the card. Reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
+	FrontText param.Field[PhysicalCardProfileNewParamsFrontText] `json:"front_text"`
 }
 
 func (r PhysicalCardProfileNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Text printed on the front of the card. Reach out to
+// [support@increase.com](mailto:support@increase.com) for more information.
+type PhysicalCardProfileNewParamsFrontText struct {
+	// The first line of text on the front of the card.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The second line of text on the front of the card. Providing a second line moves
+	// the first line slightly higher and prints the second line in the spot where the
+	// first line would have otherwise been printed.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r PhysicalCardProfileNewParamsFrontText) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
