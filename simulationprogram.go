@@ -45,6 +45,8 @@ func (r *SimulationProgramService) New(ctx context.Context, body SimulationProgr
 type SimulationProgramNewParams struct {
 	// The name of the program being added.
 	Name param.Field[string] `json:"name,required"`
+	// The identifier of the Account the Program should be added to is for.
+	ReserveAccountID param.Field[string] `json:"reserve_account_id"`
 }
 
 func (r SimulationProgramNewParams) MarshalJSON() (data []byte, err error) {
