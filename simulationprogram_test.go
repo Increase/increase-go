@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationProgramNew(t *testing.T) {
+func TestSimulationProgramNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,7 +26,8 @@ func TestSimulationProgramNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.Programs.New(context.TODO(), increase.SimulationProgramNewParams{
-		Name: increase.F("For Benefit Of"),
+		Name:             increase.F("For Benefit Of"),
+		ReserveAccountID: increase.F("reserve_account_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
