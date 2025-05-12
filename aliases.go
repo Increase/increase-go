@@ -13,6 +13,7 @@ const ErrorReasonDeletedCredential = apierror.ErrorReasonDeletedCredential
 const ErrorReasonExpiredCredential = apierror.ErrorReasonExpiredCredential
 const ErrorReasonNoCredential = apierror.ErrorReasonNoCredential
 const ErrorReasonNoHeader = apierror.ErrorReasonNoHeader
+const ErrorReasonNoAPIAccess = apierror.ErrorReasonNoAPIAccess
 const ErrorReasonWrongEnvironment = apierror.ErrorReasonWrongEnvironment
 
 type ErrorStatus = apierror.ErrorStatus
