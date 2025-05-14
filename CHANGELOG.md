@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.233.0 (2025-05-14)
+
+Full Changelog: [v0.232.0...v0.233.0](https://github.com/Increase/increase-go/compare/v0.232.0...v0.233.0)
+
+### Features
+
+* **api:** api update ([737ad06](https://github.com/Increase/increase-go/commit/737ad06d4b7493e0a67c7f0d0a50b6974a1c4b8f))
+* **client:** add support for endpoint-specific base URLs in python ([b3b4e61](https://github.com/Increase/increase-go/commit/b3b4e61578e0c1f70da64eebfc102e36046d6b64))
+
 ## 0.232.0 (2025-05-12)
 
 Full Changelog: [v0.231.0...v0.232.0](https://github.com/Increase/increase-go/compare/v0.231.0...v0.232.0)
