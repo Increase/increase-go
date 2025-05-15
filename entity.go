@@ -925,11 +925,12 @@ type EntityThirdPartyVerificationVendor string
 const (
 	EntityThirdPartyVerificationVendorAlloy   EntityThirdPartyVerificationVendor = "alloy"
 	EntityThirdPartyVerificationVendorMiddesk EntityThirdPartyVerificationVendor = "middesk"
+	EntityThirdPartyVerificationVendorOscilar EntityThirdPartyVerificationVendor = "oscilar"
 )
 
 func (r EntityThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityThirdPartyVerificationVendorAlloy, EntityThirdPartyVerificationVendorMiddesk:
+	case EntityThirdPartyVerificationVendorAlloy, EntityThirdPartyVerificationVendorMiddesk, EntityThirdPartyVerificationVendorOscilar:
 		return true
 	}
 	return false
@@ -1992,11 +1993,12 @@ type EntityNewParamsThirdPartyVerificationVendor string
 const (
 	EntityNewParamsThirdPartyVerificationVendorAlloy   EntityNewParamsThirdPartyVerificationVendor = "alloy"
 	EntityNewParamsThirdPartyVerificationVendorMiddesk EntityNewParamsThirdPartyVerificationVendor = "middesk"
+	EntityNewParamsThirdPartyVerificationVendorOscilar EntityNewParamsThirdPartyVerificationVendor = "oscilar"
 )
 
 func (r EntityNewParamsThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityNewParamsThirdPartyVerificationVendorAlloy, EntityNewParamsThirdPartyVerificationVendorMiddesk:
+	case EntityNewParamsThirdPartyVerificationVendorAlloy, EntityNewParamsThirdPartyVerificationVendorMiddesk, EntityNewParamsThirdPartyVerificationVendorOscilar:
 		return true
 	}
 	return false
