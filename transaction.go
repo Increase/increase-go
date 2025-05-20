@@ -314,6 +314,12 @@ type TransactionSource struct {
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
 	Other interface{} `json:"other,required,nullable"`
+	// An Outbound Card Push Transfer Acceptance object. This field will be present in
+	// the JSON response if and only if `category` is equal to
+	// `outbound_card_push_transfer_acceptance`. An Outbound Card Push Transfer
+	// Acceptance is created when an Outbound Card Push Transfer sent from Increase is
+	// accepted by the receiving bank.
+	OutboundCardPushTransferAcceptance TransactionSourceOutboundCardPushTransferAcceptance `json:"outbound_card_push_transfer_acceptance,required,nullable"`
 	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
@@ -365,6 +371,7 @@ type transactionSourceJSON struct {
 	InterestPayment                             apijson.Field
 	InternalSource                              apijson.Field
 	Other                                       apijson.Field
+	OutboundCardPushTransferAcceptance          apijson.Field
 	RealTimePaymentsTransferAcknowledgement     apijson.Field
 	SampleFunds                                 apijson.Field
 	SwiftTransferIntention                      apijson.Field
@@ -2558,12 +2565,13 @@ const (
 	TransactionSourceCategorySampleFunds                                 TransactionSourceCategory = "sample_funds"
 	TransactionSourceCategoryWireTransferIntention                       TransactionSourceCategory = "wire_transfer_intention"
 	TransactionSourceCategorySwiftTransferIntention                      TransactionSourceCategory = "swift_transfer_intention"
+	TransactionSourceCategoryOutboundCardPushTransferAcceptance          TransactionSourceCategory = "outbound_card_push_transfer_acceptance"
 	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
 )
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategoryOutboundCardPushTransferAcceptance, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3639,6 +3647,36 @@ func (r TransactionSourceInternalSourceReason) IsKnown() bool {
 	return false
 }
 
+// An Outbound Card Push Transfer Acceptance object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `outbound_card_push_transfer_acceptance`. An Outbound Card Push Transfer
+// Acceptance is created when an Outbound Card Push Transfer sent from Increase is
+// accepted by the receiving bank.
+type TransactionSourceOutboundCardPushTransferAcceptance struct {
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// The identifier of the Outbound Card Push Transfer that led to this Transaction.
+	TransferID string                                                  `json:"transfer_id,required"`
+	JSON       transactionSourceOutboundCardPushTransferAcceptanceJSON `json:"-"`
+}
+
+// transactionSourceOutboundCardPushTransferAcceptanceJSON contains the JSON
+// metadata for the struct [TransactionSourceOutboundCardPushTransferAcceptance]
+type transactionSourceOutboundCardPushTransferAcceptanceJSON struct {
+	Amount      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceOutboundCardPushTransferAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceOutboundCardPushTransferAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Real-Time Payments Transfer Acknowledgement object. This field will be present
 // in the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
@@ -3852,12 +3890,13 @@ const (
 	TransactionListParamsCategoryInSampleFunds                                 TransactionListParamsCategoryIn = "sample_funds"
 	TransactionListParamsCategoryInWireTransferIntention                       TransactionListParamsCategoryIn = "wire_transfer_intention"
 	TransactionListParamsCategoryInSwiftTransferIntention                      TransactionListParamsCategoryIn = "swift_transfer_intention"
+	TransactionListParamsCategoryInOutboundCardPushTransferAcceptance          TransactionListParamsCategoryIn = "outbound_card_push_transfer_acceptance"
 	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
 )
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInOutboundCardPushTransferAcceptance, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
