@@ -27,8 +27,16 @@ func TestSimulationInboundACHTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.InboundACHTransfers.New(context.TODO(), increase.SimulationInboundACHTransferNewParams{
-		AccountNumberID:          increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		Amount:                   increase.F(int64(1000)),
+		AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:          increase.F(int64(1000)),
+		Addenda: increase.F(increase.SimulationInboundACHTransferNewParamsAddenda{
+			Category: increase.F(increase.SimulationInboundACHTransferNewParamsAddendaCategoryFreeform),
+			Freeform: increase.F(increase.SimulationInboundACHTransferNewParamsAddendaFreeform{
+				Entries: increase.F([]increase.SimulationInboundACHTransferNewParamsAddendaFreeformEntry{{
+					PaymentRelatedInformation: increase.F("x"),
+				}}),
+			}),
+		}),
 		CompanyDescriptiveDate:   increase.F("x"),
 		CompanyDiscretionaryData: increase.F("x"),
 		CompanyEntryDescription:  increase.F("x"),
