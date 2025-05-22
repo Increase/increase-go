@@ -694,6 +694,7 @@ const (
 	DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding         DeclinedTransactionSourceCardDeclineProcessingCategory = "account_funding"
 	DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser DeclinedTransactionSourceCardDeclineProcessingCategory = "automatic_fuel_dispenser"
 	DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment            DeclinedTransactionSourceCardDeclineProcessingCategory = "bill_payment"
+	DeclinedTransactionSourceCardDeclineProcessingCategoryOriginalCredit         DeclinedTransactionSourceCardDeclineProcessingCategory = "original_credit"
 	DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase               DeclinedTransactionSourceCardDeclineProcessingCategory = "purchase"
 	DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash              DeclinedTransactionSourceCardDeclineProcessingCategory = "quasi_cash"
 	DeclinedTransactionSourceCardDeclineProcessingCategoryRefund                 DeclinedTransactionSourceCardDeclineProcessingCategory = "refund"
@@ -701,7 +702,7 @@ const (
 
 func (r DeclinedTransactionSourceCardDeclineProcessingCategory) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding, DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser, DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment, DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase, DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash, DeclinedTransactionSourceCardDeclineProcessingCategoryRefund:
+	case DeclinedTransactionSourceCardDeclineProcessingCategoryAccountFunding, DeclinedTransactionSourceCardDeclineProcessingCategoryAutomaticFuelDispenser, DeclinedTransactionSourceCardDeclineProcessingCategoryBillPayment, DeclinedTransactionSourceCardDeclineProcessingCategoryOriginalCredit, DeclinedTransactionSourceCardDeclineProcessingCategoryPurchase, DeclinedTransactionSourceCardDeclineProcessingCategoryQuasiCash, DeclinedTransactionSourceCardDeclineProcessingCategoryRefund:
 		return true
 	}
 	return false

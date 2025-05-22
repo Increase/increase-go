@@ -548,6 +548,7 @@ const (
 	RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding         RealTimeDecisionCardAuthorizationProcessingCategory = "account_funding"
 	RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser RealTimeDecisionCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
 	RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment            RealTimeDecisionCardAuthorizationProcessingCategory = "bill_payment"
+	RealTimeDecisionCardAuthorizationProcessingCategoryOriginalCredit         RealTimeDecisionCardAuthorizationProcessingCategory = "original_credit"
 	RealTimeDecisionCardAuthorizationProcessingCategoryPurchase               RealTimeDecisionCardAuthorizationProcessingCategory = "purchase"
 	RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash              RealTimeDecisionCardAuthorizationProcessingCategory = "quasi_cash"
 	RealTimeDecisionCardAuthorizationProcessingCategoryRefund                 RealTimeDecisionCardAuthorizationProcessingCategory = "refund"
@@ -555,7 +556,7 @@ const (
 
 func (r RealTimeDecisionCardAuthorizationProcessingCategory) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding, RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser, RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment, RealTimeDecisionCardAuthorizationProcessingCategoryPurchase, RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash, RealTimeDecisionCardAuthorizationProcessingCategoryRefund:
+	case RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding, RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser, RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment, RealTimeDecisionCardAuthorizationProcessingCategoryOriginalCredit, RealTimeDecisionCardAuthorizationProcessingCategoryPurchase, RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash, RealTimeDecisionCardAuthorizationProcessingCategoryRefund:
 		return true
 	}
 	return false

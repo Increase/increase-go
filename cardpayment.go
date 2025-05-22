@@ -838,6 +838,7 @@ const (
 	CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding         CardPaymentElementsCardAuthorizationProcessingCategory = "account_funding"
 	CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser CardPaymentElementsCardAuthorizationProcessingCategory = "automatic_fuel_dispenser"
 	CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment            CardPaymentElementsCardAuthorizationProcessingCategory = "bill_payment"
+	CardPaymentElementsCardAuthorizationProcessingCategoryOriginalCredit         CardPaymentElementsCardAuthorizationProcessingCategory = "original_credit"
 	CardPaymentElementsCardAuthorizationProcessingCategoryPurchase               CardPaymentElementsCardAuthorizationProcessingCategory = "purchase"
 	CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash              CardPaymentElementsCardAuthorizationProcessingCategory = "quasi_cash"
 	CardPaymentElementsCardAuthorizationProcessingCategoryRefund                 CardPaymentElementsCardAuthorizationProcessingCategory = "refund"
@@ -845,7 +846,7 @@ const (
 
 func (r CardPaymentElementsCardAuthorizationProcessingCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding, CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment, CardPaymentElementsCardAuthorizationProcessingCategoryPurchase, CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash, CardPaymentElementsCardAuthorizationProcessingCategoryRefund:
+	case CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding, CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment, CardPaymentElementsCardAuthorizationProcessingCategoryOriginalCredit, CardPaymentElementsCardAuthorizationProcessingCategoryPurchase, CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash, CardPaymentElementsCardAuthorizationProcessingCategoryRefund:
 		return true
 	}
 	return false
@@ -1450,6 +1451,7 @@ const (
 	CardPaymentElementsCardDeclineProcessingCategoryAccountFunding         CardPaymentElementsCardDeclineProcessingCategory = "account_funding"
 	CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser CardPaymentElementsCardDeclineProcessingCategory = "automatic_fuel_dispenser"
 	CardPaymentElementsCardDeclineProcessingCategoryBillPayment            CardPaymentElementsCardDeclineProcessingCategory = "bill_payment"
+	CardPaymentElementsCardDeclineProcessingCategoryOriginalCredit         CardPaymentElementsCardDeclineProcessingCategory = "original_credit"
 	CardPaymentElementsCardDeclineProcessingCategoryPurchase               CardPaymentElementsCardDeclineProcessingCategory = "purchase"
 	CardPaymentElementsCardDeclineProcessingCategoryQuasiCash              CardPaymentElementsCardDeclineProcessingCategory = "quasi_cash"
 	CardPaymentElementsCardDeclineProcessingCategoryRefund                 CardPaymentElementsCardDeclineProcessingCategory = "refund"
@@ -1457,7 +1459,7 @@ const (
 
 func (r CardPaymentElementsCardDeclineProcessingCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardDeclineProcessingCategoryAccountFunding, CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardDeclineProcessingCategoryBillPayment, CardPaymentElementsCardDeclineProcessingCategoryPurchase, CardPaymentElementsCardDeclineProcessingCategoryQuasiCash, CardPaymentElementsCardDeclineProcessingCategoryRefund:
+	case CardPaymentElementsCardDeclineProcessingCategoryAccountFunding, CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardDeclineProcessingCategoryBillPayment, CardPaymentElementsCardDeclineProcessingCategoryOriginalCredit, CardPaymentElementsCardDeclineProcessingCategoryPurchase, CardPaymentElementsCardDeclineProcessingCategoryQuasiCash, CardPaymentElementsCardDeclineProcessingCategoryRefund:
 		return true
 	}
 	return false
