@@ -58,9 +58,10 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:   increase.F("cursor"),
-		EntityID: increase.F("entity_id"),
-		Limit:    increase.F(int64(1)),
+		Cursor:         increase.F("cursor"),
+		EntityID:       increase.F("entity_id"),
+		IdempotencyKey: increase.F("x"),
+		Limit:          increase.F(int64(1)),
 	})
 	if err != nil {
 		var apierr *increase.Error
