@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.239.1 (2025-06-01)
+
+Full Changelog: [v0.239.0...v0.239.1](https://github.com/Increase/increase-go/compare/v0.239.0...v0.239.1)
+
+### Chores
+
+* make go mod tidy continue on error ([2014078](https://github.com/Increase/increase-go/commit/20140784e6877b45c8f87bd4668b1f3e9ebbcea3))
+
 ## 0.239.0 (2025-05-28)
 
 Full Changelog: [v0.238.0...v0.239.0](https://github.com/Increase/increase-go/compare/v0.238.0...v0.239.0)
