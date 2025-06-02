@@ -86,6 +86,10 @@ type Document struct {
 	EntityID string `json:"entity_id,required,nullable"`
 	// The identifier of the File containing the Document's contents.
 	FileID string `json:"file_id,required"`
+	// The idempotency key you chose for this object. This value is unique across
+	// Increase and is used to ensure that a request is only processed once. Learn more
+	// about [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `document`.
 	Type DocumentType `json:"type,required"`
@@ -94,14 +98,15 @@ type Document struct {
 
 // documentJSON contains the JSON metadata for the struct [Document]
 type documentJSON struct {
-	ID          apijson.Field
-	Category    apijson.Field
-	CreatedAt   apijson.Field
-	EntityID    apijson.Field
-	FileID      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID             apijson.Field
+	Category       apijson.Field
+	CreatedAt      apijson.Field
+	EntityID       apijson.Field
+	FileID         apijson.Field
+	IdempotencyKey apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *Document) UnmarshalJSON(data []byte) (err error) {
@@ -116,15 +121,16 @@ func (r documentJSON) RawJSON() string {
 type DocumentCategory string
 
 const (
-	DocumentCategoryForm1099Int          DocumentCategory = "form_1099_int"
-	DocumentCategoryForm1099Misc         DocumentCategory = "form_1099_misc"
-	DocumentCategoryProofOfAuthorization DocumentCategory = "proof_of_authorization"
-	DocumentCategoryCompanyInformation   DocumentCategory = "company_information"
+	DocumentCategoryForm1099Int               DocumentCategory = "form_1099_int"
+	DocumentCategoryForm1099Misc              DocumentCategory = "form_1099_misc"
+	DocumentCategoryProofOfAuthorization      DocumentCategory = "proof_of_authorization"
+	DocumentCategoryCompanyInformation        DocumentCategory = "company_information"
+	DocumentCategoryAccountVerificationLetter DocumentCategory = "account_verification_letter"
 )
 
 func (r DocumentCategory) IsKnown() bool {
 	switch r {
-	case DocumentCategoryForm1099Int, DocumentCategoryForm1099Misc, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation:
+	case DocumentCategoryForm1099Int, DocumentCategoryForm1099Misc, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation, DocumentCategoryAccountVerificationLetter:
 		return true
 	}
 	return false
@@ -153,6 +159,11 @@ type DocumentListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter Documents to ones belonging to the specified Entity.
 	EntityID param.Field[string] `query:"entity_id"`
+	// Filter records to the one with the specified `idempotency_key` you chose for
+	// that object. This value is unique across Increase and is used to ensure that a
+	// request is only processed once. Learn more about
+	// [idempotency](https://increase.com/documentation/idempotency-keys).
+	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
@@ -185,15 +196,16 @@ func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
 type DocumentListParamsCategoryIn string
 
 const (
-	DocumentListParamsCategoryInForm1099Int          DocumentListParamsCategoryIn = "form_1099_int"
-	DocumentListParamsCategoryInForm1099Misc         DocumentListParamsCategoryIn = "form_1099_misc"
-	DocumentListParamsCategoryInProofOfAuthorization DocumentListParamsCategoryIn = "proof_of_authorization"
-	DocumentListParamsCategoryInCompanyInformation   DocumentListParamsCategoryIn = "company_information"
+	DocumentListParamsCategoryInForm1099Int               DocumentListParamsCategoryIn = "form_1099_int"
+	DocumentListParamsCategoryInForm1099Misc              DocumentListParamsCategoryIn = "form_1099_misc"
+	DocumentListParamsCategoryInProofOfAuthorization      DocumentListParamsCategoryIn = "proof_of_authorization"
+	DocumentListParamsCategoryInCompanyInformation        DocumentListParamsCategoryIn = "company_information"
+	DocumentListParamsCategoryInAccountVerificationLetter DocumentListParamsCategoryIn = "account_verification_letter"
 )
 
 func (r DocumentListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInForm1099Misc, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation:
+	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInForm1099Misc, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation, DocumentListParamsCategoryInAccountVerificationLetter:
 		return true
 	}
 	return false
