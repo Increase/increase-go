@@ -119,26 +119,23 @@ type ExternalAccount struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
 	Type ExternalAccountType `json:"type,required"`
-	// If you have verified ownership of the External Account.
-	VerificationStatus ExternalAccountVerificationStatus `json:"verification_status,required"`
-	JSON               externalAccountJSON               `json:"-"`
+	JSON externalAccountJSON `json:"-"`
 }
 
 // externalAccountJSON contains the JSON metadata for the struct [ExternalAccount]
 type externalAccountJSON struct {
-	ID                 apijson.Field
-	AccountHolder      apijson.Field
-	AccountNumber      apijson.Field
-	CreatedAt          apijson.Field
-	Description        apijson.Field
-	Funding            apijson.Field
-	IdempotencyKey     apijson.Field
-	RoutingNumber      apijson.Field
-	Status             apijson.Field
-	Type               apijson.Field
-	VerificationStatus apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
+	ID             apijson.Field
+	AccountHolder  apijson.Field
+	AccountNumber  apijson.Field
+	CreatedAt      apijson.Field
+	Description    apijson.Field
+	Funding        apijson.Field
+	IdempotencyKey apijson.Field
+	RoutingNumber  apijson.Field
+	Status         apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *ExternalAccount) UnmarshalJSON(data []byte) (err error) {
@@ -210,23 +207,6 @@ const (
 func (r ExternalAccountType) IsKnown() bool {
 	switch r {
 	case ExternalAccountTypeExternalAccount:
-		return true
-	}
-	return false
-}
-
-// If you have verified ownership of the External Account.
-type ExternalAccountVerificationStatus string
-
-const (
-	ExternalAccountVerificationStatusUnverified ExternalAccountVerificationStatus = "unverified"
-	ExternalAccountVerificationStatusPending    ExternalAccountVerificationStatus = "pending"
-	ExternalAccountVerificationStatusVerified   ExternalAccountVerificationStatus = "verified"
-)
-
-func (r ExternalAccountVerificationStatus) IsKnown() bool {
-	switch r {
-	case ExternalAccountVerificationStatusUnverified, ExternalAccountVerificationStatusPending, ExternalAccountVerificationStatusVerified:
 		return true
 	}
 	return false
