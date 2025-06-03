@@ -14,6 +14,34 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
+func TestDocumentNewWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Documents.New(context.TODO(), increase.DocumentNewParams{
+		Category: increase.F(increase.DocumentNewParamsCategoryAccountVerificationLetter),
+		AccountVerificationLetter: increase.F(increase.DocumentNewParamsAccountVerificationLetter{
+			AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+			BalanceDate:     increase.F(time.Now()),
+		}),
+	})
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestDocumentGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
