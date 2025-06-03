@@ -37,6 +37,14 @@ func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 	return
 }
 
+// Create a Document
+func (r *DocumentService) New(ctx context.Context, body DocumentNewParams, opts ...option.RequestOption) (res *Document, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "documents"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Retrieve a Document
 func (r *DocumentService) Get(ctx context.Context, documentID string, opts ...option.RequestOption) (res *Document, err error) {
 	opts = append(r.Options[:], opts...)
@@ -77,6 +85,8 @@ func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentList
 type Document struct {
 	// The Document identifier.
 	ID string `json:"id,required"`
+	// Properties of an account verification letter document.
+	AccountVerificationLetter DocumentAccountVerificationLetter `json:"account_verification_letter,required,nullable"`
 	// The type of document.
 	Category DocumentCategory `json:"category,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
@@ -98,15 +108,16 @@ type Document struct {
 
 // documentJSON contains the JSON metadata for the struct [Document]
 type documentJSON struct {
-	ID             apijson.Field
-	Category       apijson.Field
-	CreatedAt      apijson.Field
-	EntityID       apijson.Field
-	FileID         apijson.Field
-	IdempotencyKey apijson.Field
-	Type           apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	ID                        apijson.Field
+	AccountVerificationLetter apijson.Field
+	Category                  apijson.Field
+	CreatedAt                 apijson.Field
+	EntityID                  apijson.Field
+	FileID                    apijson.Field
+	IdempotencyKey            apijson.Field
+	Type                      apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *Document) UnmarshalJSON(data []byte) (err error) {
@@ -114,6 +125,29 @@ func (r *Document) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r documentJSON) RawJSON() string {
+	return r.raw
+}
+
+// Properties of an account verification letter document.
+type DocumentAccountVerificationLetter struct {
+	// The identifier of the Account Number the document was generated for.
+	AccountNumberID string                                `json:"account_number_id,required"`
+	JSON            documentAccountVerificationLetterJSON `json:"-"`
+}
+
+// documentAccountVerificationLetterJSON contains the JSON metadata for the struct
+// [DocumentAccountVerificationLetter]
+type documentAccountVerificationLetterJSON struct {
+	AccountNumberID apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *DocumentAccountVerificationLetter) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r documentAccountVerificationLetterJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -150,6 +184,44 @@ func (r DocumentType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type DocumentNewParams struct {
+	// The type of document to create.
+	Category param.Field[DocumentNewParamsCategory] `json:"category,required"`
+	// An account verification letter.
+	AccountVerificationLetter param.Field[DocumentNewParamsAccountVerificationLetter] `json:"account_verification_letter"`
+}
+
+func (r DocumentNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of document to create.
+type DocumentNewParamsCategory string
+
+const (
+	DocumentNewParamsCategoryAccountVerificationLetter DocumentNewParamsCategory = "account_verification_letter"
+)
+
+func (r DocumentNewParamsCategory) IsKnown() bool {
+	switch r {
+	case DocumentNewParamsCategoryAccountVerificationLetter:
+		return true
+	}
+	return false
+}
+
+// An account verification letter.
+type DocumentNewParamsAccountVerificationLetter struct {
+	// The Account Number the bank letter should be generated for.
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	// If provided, the letter will include the Account's balance as of the date.
+	BalanceDate param.Field[time.Time] `json:"balance_date" format:"date"`
+}
+
+func (r DocumentNewParamsAccountVerificationLetter) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type DocumentListParams struct {
