@@ -80,6 +80,30 @@ func (r *RealTimePaymentsTransferService) ListAutoPaging(ctx context.Context, qu
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Approves an Real-Time Payments Transfer in a pending_approval state.
+func (r *RealTimePaymentsTransferService) Approve(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	if realTimePaymentsTransferID == "" {
+		err = errors.New("missing required real_time_payments_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("real_time_payments_transfers/%s/approve", realTimePaymentsTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
+// Cancels an Real-Time Payments Transfer in a pending_approval state.
+func (r *RealTimePaymentsTransferService) Cancel(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
+	opts = append(r.Options[:], opts...)
+	if realTimePaymentsTransferID == "" {
+		err = errors.New("missing required real_time_payments_transfer_id parameter")
+		return
+	}
+	path := fmt.Sprintf("real_time_payments_transfers/%s/cancel", realTimePaymentsTransferID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}
+
 // Real-Time Payments transfers move funds, within seconds, between your Increase
 // account and any other account on the Real-Time Payments network.
 type RealTimePaymentsTransfer struct {
