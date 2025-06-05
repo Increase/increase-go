@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.242.0 (2025-06-05)
+
+Full Changelog: [v0.241.0...v0.242.0](https://github.com/Increase/increase-go/compare/v0.241.0...v0.242.0)
+
+### Features
+
+* **api:** api update ([80c689d](https://github.com/Increase/increase-go/commit/80c689d343424024804222e0b83aafd60e08adf6))
+
+
+### Chores
+
+* fix idempotency ([0bce33c](https://github.com/Increase/increase-go/commit/0bce33cde47368b3067f6a520e6cb98bc8e1f1bb))
+* Update SECURITY.md ([948e15b](https://github.com/Increase/increase-go/commit/948e15b326fd097a7c5c2d4b8a0d5855b343c716))
+
 ## 0.241.0 (2025-06-03)
 
 Full Changelog: [v0.240.0...v0.241.0](https://github.com/Increase/increase-go/compare/v0.240.0...v0.241.0)
