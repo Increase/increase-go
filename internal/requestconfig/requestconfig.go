@@ -150,7 +150,7 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	}
 	if method != http.MethodGet {
 		// Note this can be overridden with `WithHeader("Idempotency-Key", myIdempotencyKey)`
-		req.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
+		req.Header.Set("Idempotency-Key", "increase-go-"+uuid.New().String())
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("X-Stainless-Retry-Count", "0")
@@ -589,7 +589,7 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 		APIKey:         cfg.APIKey,
 		WebhookSecret:  cfg.WebhookSecret,
 	}
-	new.Request.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
+	new.Request.Header.Set("Idempotency-Key", "increase-go-"+uuid.New().String())
 	return new
 }
 
