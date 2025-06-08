@@ -204,6 +204,9 @@ type PendingTransactionSource struct {
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
 	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,required,nullable"`
+	// A Group Initiated Hold Source object. This field will be present in the JSON
+	// response if and only if `category` is equal to `group_initiated_hold`.
+	GroupInitiatedHold PendingTransactionSourceGroupInitiatedHold `json:"group_initiated_hold,required,nullable"`
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`. We hold funds for
 	// certain transaction types to account for return windows where funds might still
@@ -243,6 +246,7 @@ type pendingTransactionSourceJSON struct {
 	Category                            apijson.Field
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
+	GroupInitiatedHold                  apijson.Field
 	InboundFundsHold                    apijson.Field
 	InboundWireTransferReversal         apijson.Field
 	Other                               apijson.Field
@@ -876,6 +880,7 @@ const (
 	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
 	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
 	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
+	PendingTransactionSourceCategoryGroupInitiatedHold                  PendingTransactionSourceCategory = "group_initiated_hold"
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
 	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
 	PendingTransactionSourceCategoryInboundWireTransferReversal         PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
@@ -886,7 +891,7 @@ const (
 
 func (r PendingTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryOutboundCardPushTransferInstruction, PendingTransactionSourceCategoryOther:
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryGroupInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryOutboundCardPushTransferInstruction, PendingTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1002,6 +1007,30 @@ func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool
 		return true
 	}
 	return false
+}
+
+// A Group Initiated Hold Source object. This field will be present in the JSON
+// response if and only if `category` is equal to `group_initiated_hold`.
+type PendingTransactionSourceGroupInitiatedHold struct {
+	// The Group Initiated Hold identifier.
+	ID   string                                         `json:"id,required"`
+	JSON pendingTransactionSourceGroupInitiatedHoldJSON `json:"-"`
+}
+
+// pendingTransactionSourceGroupInitiatedHoldJSON contains the JSON metadata for
+// the struct [PendingTransactionSourceGroupInitiatedHold]
+type pendingTransactionSourceGroupInitiatedHoldJSON struct {
+	ID          apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceGroupInitiatedHold) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceGroupInitiatedHoldJSON) RawJSON() string {
+	return r.raw
 }
 
 // An Inbound Funds Hold object. This field will be present in the JSON response if
@@ -1343,6 +1372,7 @@ const (
 	PendingTransactionListParamsCategoryInCheckDepositInstruction             PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
 	PendingTransactionListParamsCategoryInCheckTransferInstruction            PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
 	PendingTransactionListParamsCategoryInInboundFundsHold                    PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
+	PendingTransactionListParamsCategoryInGroupInitiatedHold                  PendingTransactionListParamsCategoryIn = "group_initiated_hold"
 	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
 	PendingTransactionListParamsCategoryInWireTransferInstruction             PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
 	PendingTransactionListParamsCategoryInInboundWireTransferReversal         PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
@@ -1353,7 +1383,7 @@ const (
 
 func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInOutboundCardPushTransferInstruction, PendingTransactionListParamsCategoryInOther:
+	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInGroupInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInOutboundCardPushTransferInstruction, PendingTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
