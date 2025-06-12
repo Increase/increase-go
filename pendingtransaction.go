@@ -108,6 +108,9 @@ type PendingTransaction struct {
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
+	// How the Pending Transaction affects the balance of its Account while its status
+	// is `pending`.
+	BalanceImpact PendingTransactionBalanceImpact `json:"balance_impact,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction was completed.
 	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
@@ -143,20 +146,21 @@ type PendingTransaction struct {
 // pendingTransactionJSON contains the JSON metadata for the struct
 // [PendingTransaction]
 type pendingTransactionJSON struct {
-	ID          apijson.Field
-	AccountID   apijson.Field
-	Amount      apijson.Field
-	CompletedAt apijson.Field
-	CreatedAt   apijson.Field
-	Currency    apijson.Field
-	Description apijson.Field
-	RouteID     apijson.Field
-	RouteType   apijson.Field
-	Source      apijson.Field
-	Status      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID            apijson.Field
+	AccountID     apijson.Field
+	Amount        apijson.Field
+	BalanceImpact apijson.Field
+	CompletedAt   apijson.Field
+	CreatedAt     apijson.Field
+	Currency      apijson.Field
+	Description   apijson.Field
+	RouteID       apijson.Field
+	RouteType     apijson.Field
+	Source        apijson.Field
+	Status        apijson.Field
+	Type          apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
 }
 
 func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
@@ -165,6 +169,23 @@ func (r *PendingTransaction) UnmarshalJSON(data []byte) (err error) {
 
 func (r pendingTransactionJSON) RawJSON() string {
 	return r.raw
+}
+
+// How the Pending Transaction affects the balance of its Account while its status
+// is `pending`.
+type PendingTransactionBalanceImpact string
+
+const (
+	PendingTransactionBalanceImpactAffectsAvailableBalance PendingTransactionBalanceImpact = "affects_available_balance"
+	PendingTransactionBalanceImpactNone                    PendingTransactionBalanceImpact = "none"
+)
+
+func (r PendingTransactionBalanceImpact) IsKnown() bool {
+	switch r {
+	case PendingTransactionBalanceImpactAffectsAvailableBalance, PendingTransactionBalanceImpactNone:
+		return true
+	}
+	return false
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
