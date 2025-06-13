@@ -266,18 +266,19 @@ func (r PhysicalCardShipmentMethod) IsKnown() bool {
 type PhysicalCardShipmentStatus string
 
 const (
-	PhysicalCardShipmentStatusPending      PhysicalCardShipmentStatus = "pending"
-	PhysicalCardShipmentStatusCanceled     PhysicalCardShipmentStatus = "canceled"
-	PhysicalCardShipmentStatusSubmitted    PhysicalCardShipmentStatus = "submitted"
-	PhysicalCardShipmentStatusAcknowledged PhysicalCardShipmentStatus = "acknowledged"
-	PhysicalCardShipmentStatusRejected     PhysicalCardShipmentStatus = "rejected"
-	PhysicalCardShipmentStatusShipped      PhysicalCardShipmentStatus = "shipped"
-	PhysicalCardShipmentStatusReturned     PhysicalCardShipmentStatus = "returned"
+	PhysicalCardShipmentStatusPending           PhysicalCardShipmentStatus = "pending"
+	PhysicalCardShipmentStatusCanceled          PhysicalCardShipmentStatus = "canceled"
+	PhysicalCardShipmentStatusSubmitted         PhysicalCardShipmentStatus = "submitted"
+	PhysicalCardShipmentStatusAcknowledged      PhysicalCardShipmentStatus = "acknowledged"
+	PhysicalCardShipmentStatusRejected          PhysicalCardShipmentStatus = "rejected"
+	PhysicalCardShipmentStatusShipped           PhysicalCardShipmentStatus = "shipped"
+	PhysicalCardShipmentStatusReturned          PhysicalCardShipmentStatus = "returned"
+	PhysicalCardShipmentStatusRequiresAttention PhysicalCardShipmentStatus = "requires_attention"
 )
 
 func (r PhysicalCardShipmentStatus) IsKnown() bool {
 	switch r {
-	case PhysicalCardShipmentStatusPending, PhysicalCardShipmentStatusCanceled, PhysicalCardShipmentStatusSubmitted, PhysicalCardShipmentStatusAcknowledged, PhysicalCardShipmentStatusRejected, PhysicalCardShipmentStatusShipped, PhysicalCardShipmentStatusReturned:
+	case PhysicalCardShipmentStatusPending, PhysicalCardShipmentStatusCanceled, PhysicalCardShipmentStatusSubmitted, PhysicalCardShipmentStatusAcknowledged, PhysicalCardShipmentStatusRejected, PhysicalCardShipmentStatusShipped, PhysicalCardShipmentStatusReturned, PhysicalCardShipmentStatusRequiresAttention:
 		return true
 	}
 	return false
