@@ -164,10 +164,10 @@ type CardPaymentElement struct {
 	// preceded by an authorization, an acquirer can also directly clear a transaction
 	// without first authorizing it.
 	CardSettlement CardPaymentElementsCardSettlement `json:"card_settlement,required,nullable"`
-	// A Card Validation object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_validation`. Card Validations are requests
-	// from a merchant to verify that a card number and optionally its address and/or
-	// Card Verification Value are valid.
+	// An Inbound Card Validation object. This field will be present in the JSON
+	// response if and only if `category` is equal to `card_validation`. Inbound Card
+	// Validations are requests from a merchant to verify that a card number and
+	// optionally its address and/or Card Verification Value are valid.
 	CardValidation CardPaymentElementsCardValidation `json:"card_validation,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
@@ -3829,10 +3829,10 @@ func (r CardPaymentElementsCardSettlementType) IsKnown() bool {
 	return false
 }
 
-// A Card Validation object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_validation`. Card Validations are requests
-// from a merchant to verify that a card number and optionally its address and/or
-// Card Verification Value are valid.
+// An Inbound Card Validation object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_validation`. Inbound Card
+// Validations are requests from a merchant to verify that a card number and
+// optionally its address and/or Card Verification Value are valid.
 type CardPaymentElementsCardValidation struct {
 	// The Card Validation identifier.
 	ID string `json:"id,required"`
@@ -3881,7 +3881,7 @@ type CardPaymentElementsCardValidation struct {
 	// is transacting with.
 	TerminalID string `json:"terminal_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
-	// `card_validation`.
+	// `inbound_card_validation`.
 	Type CardPaymentElementsCardValidationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardValidationVerification `json:"verification,required"`
@@ -4141,16 +4141,16 @@ func (r cardPaymentElementsCardValidationNetworkIdentifiersJSON) RawJSON() strin
 }
 
 // A constant representing the object's type. For this resource it will always be
-// `card_validation`.
+// `inbound_card_validation`.
 type CardPaymentElementsCardValidationType string
 
 const (
-	CardPaymentElementsCardValidationTypeCardValidation CardPaymentElementsCardValidationType = "card_validation"
+	CardPaymentElementsCardValidationTypeInboundCardValidation CardPaymentElementsCardValidationType = "inbound_card_validation"
 )
 
 func (r CardPaymentElementsCardValidationType) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardValidationTypeCardValidation:
+	case CardPaymentElementsCardValidationTypeInboundCardValidation:
 		return true
 	}
 	return false
