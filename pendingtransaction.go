@@ -242,6 +242,9 @@ type PendingTransactionSource struct {
 	// temporary holds placed on a customers funds with the intent to later clear a
 	// transaction.
 	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
+	// A Card Push Transfer Instruction object. This field will be present in the JSON
+	// response if and only if `category` is equal to `card_push_transfer_instruction`.
+	CardPushTransferInstruction PendingTransactionSourceCardPushTransferInstruction `json:"card_push_transfer_instruction,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
 	Category PendingTransactionSourceCategory `json:"category,required"`
@@ -264,10 +267,6 @@ type PendingTransactionSource struct {
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
 	Other interface{} `json:"other,required,nullable"`
-	// An Outbound Card Push Transfer Instruction object. This field will be present in
-	// the JSON response if and only if `category` is equal to
-	// `outbound_card_push_transfer_instruction`.
-	OutboundCardPushTransferInstruction PendingTransactionSourceOutboundCardPushTransferInstruction `json:"outbound_card_push_transfer_instruction,required,nullable"`
 	// A Real-Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
@@ -291,13 +290,13 @@ type pendingTransactionSourceJSON struct {
 	AccountTransferInstruction          apijson.Field
 	ACHTransferInstruction              apijson.Field
 	CardAuthorization                   apijson.Field
+	CardPushTransferInstruction         apijson.Field
 	Category                            apijson.Field
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
 	InboundFundsHold                    apijson.Field
 	InboundWireTransferReversal         apijson.Field
 	Other                               apijson.Field
-	OutboundCardPushTransferInstruction apijson.Field
 	RealTimePaymentsTransferInstruction apijson.Field
 	SwiftTransferInstruction            apijson.Field
 	UserInitiatedHold                   apijson.Field
@@ -917,6 +916,33 @@ func (r PendingTransactionSourceCardAuthorizationVerificationCardholderAddressRe
 	return false
 }
 
+// A Card Push Transfer Instruction object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_push_transfer_instruction`.
+type PendingTransactionSourceCardPushTransferInstruction struct {
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount,required"`
+	// The identifier of the Card Push Transfer that led to this Pending Transaction.
+	TransferID string                                                  `json:"transfer_id,required"`
+	JSON       pendingTransactionSourceCardPushTransferInstructionJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardPushTransferInstructionJSON contains the JSON
+// metadata for the struct [PendingTransactionSourceCardPushTransferInstruction]
+type pendingTransactionSourceCardPushTransferInstructionJSON struct {
+	Amount      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardPushTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardPushTransferInstructionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of the resource. We may add additional possible values for this enum
 // over time; your application should be able to handle such additions gracefully.
 type PendingTransactionSourceCategory string
@@ -933,13 +959,13 @@ const (
 	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
 	PendingTransactionSourceCategoryInboundWireTransferReversal         PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
 	PendingTransactionSourceCategorySwiftTransferInstruction            PendingTransactionSourceCategory = "swift_transfer_instruction"
-	PendingTransactionSourceCategoryOutboundCardPushTransferInstruction PendingTransactionSourceCategory = "outbound_card_push_transfer_instruction"
+	PendingTransactionSourceCategoryCardPushTransferInstruction         PendingTransactionSourceCategory = "card_push_transfer_instruction"
 	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
 )
 
 func (r PendingTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryOutboundCardPushTransferInstruction, PendingTransactionSourceCategoryOther:
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1194,36 +1220,6 @@ func (r pendingTransactionSourceInboundWireTransferReversalJSON) RawJSON() strin
 	return r.raw
 }
 
-// An Outbound Card Push Transfer Instruction object. This field will be present in
-// the JSON response if and only if `category` is equal to
-// `outbound_card_push_transfer_instruction`.
-type PendingTransactionSourceOutboundCardPushTransferInstruction struct {
-	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
-	// The identifier of the Outbound Card Push Transfer that led to this Pending
-	// Transaction.
-	TransferID string                                                          `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceOutboundCardPushTransferInstructionJSON `json:"-"`
-}
-
-// pendingTransactionSourceOutboundCardPushTransferInstructionJSON contains the
-// JSON metadata for the struct
-// [PendingTransactionSourceOutboundCardPushTransferInstruction]
-type pendingTransactionSourceOutboundCardPushTransferInstructionJSON struct {
-	Amount      apijson.Field
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PendingTransactionSourceOutboundCardPushTransferInstruction) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r pendingTransactionSourceOutboundCardPushTransferInstructionJSON) RawJSON() string {
-	return r.raw
-}
-
 // A Real-Time Payments Transfer Instruction object. This field will be present in
 // the JSON response if and only if `category` is equal to
 // `real_time_payments_transfer_instruction`.
@@ -1416,13 +1412,13 @@ const (
 	PendingTransactionListParamsCategoryInWireTransferInstruction             PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
 	PendingTransactionListParamsCategoryInInboundWireTransferReversal         PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
 	PendingTransactionListParamsCategoryInSwiftTransferInstruction            PendingTransactionListParamsCategoryIn = "swift_transfer_instruction"
-	PendingTransactionListParamsCategoryInOutboundCardPushTransferInstruction PendingTransactionListParamsCategoryIn = "outbound_card_push_transfer_instruction"
+	PendingTransactionListParamsCategoryInCardPushTransferInstruction         PendingTransactionListParamsCategoryIn = "card_push_transfer_instruction"
 	PendingTransactionListParamsCategoryInOther                               PendingTransactionListParamsCategoryIn = "other"
 )
 
 func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInUserInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInOutboundCardPushTransferInstruction, PendingTransactionListParamsCategoryInOther:
+	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInUserInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInCardPushTransferInstruction, PendingTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
