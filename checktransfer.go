@@ -477,9 +477,9 @@ type CheckTransferPhysicalCheck struct {
 	Memo string `json:"memo,required,nullable"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note,required,nullable"`
-	// The payee of the check. This will be printed on the top-left portion of the
+	// The payer of the check. This will be printed on the top-left portion of the
 	// check and defaults to the return address if unspecified.
-	Payee []CheckTransferPhysicalCheckPayee `json:"payee,required"`
+	Payer []CheckTransferPhysicalCheckPayer `json:"payer,required"`
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name,required"`
 	// The return address to be printed on the check.
@@ -501,7 +501,7 @@ type checkTransferPhysicalCheckJSON struct {
 	MailingAddress   apijson.Field
 	Memo             apijson.Field
 	Note             apijson.Field
-	Payee            apijson.Field
+	Payer            apijson.Field
 	RecipientName    apijson.Field
 	ReturnAddress    apijson.Field
 	ShippingMethod   apijson.Field
@@ -557,25 +557,25 @@ func (r checkTransferPhysicalCheckMailingAddressJSON) RawJSON() string {
 	return r.raw
 }
 
-type CheckTransferPhysicalCheckPayee struct {
+type CheckTransferPhysicalCheckPayer struct {
 	// The contents of the line.
 	Contents string                              `json:"contents,required"`
-	JSON     checkTransferPhysicalCheckPayeeJSON `json:"-"`
+	JSON     checkTransferPhysicalCheckPayerJSON `json:"-"`
 }
 
-// checkTransferPhysicalCheckPayeeJSON contains the JSON metadata for the struct
-// [CheckTransferPhysicalCheckPayee]
-type checkTransferPhysicalCheckPayeeJSON struct {
+// checkTransferPhysicalCheckPayerJSON contains the JSON metadata for the struct
+// [CheckTransferPhysicalCheckPayer]
+type checkTransferPhysicalCheckPayerJSON struct {
 	Contents    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *CheckTransferPhysicalCheckPayee) UnmarshalJSON(data []byte) (err error) {
+func (r *CheckTransferPhysicalCheckPayer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r checkTransferPhysicalCheckPayeeJSON) RawJSON() string {
+func (r checkTransferPhysicalCheckPayerJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -967,10 +967,10 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	AttachmentFileID param.Field[string] `json:"attachment_file_id"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
-	// The payee of the check. This will be printed on the top-left portion of the
+	// The payer of the check. This will be printed on the top-left portion of the
 	// check and defaults to the return address if unspecified. This should be an array
-	// of up to 4 elements, each of which represents a line of the payee.
-	Payee param.Field[[]CheckTransferNewParamsPhysicalCheckPayee] `json:"payee"`
+	// of up to 4 elements, each of which represents a line of the payer.
+	Payer param.Field[[]CheckTransferNewParamsPhysicalCheckPayer] `json:"payer"`
 	// The return address to be printed on the check. If omitted this will default to
 	// an Increase-owned address that will mark checks as delivery failed and shred
 	// them.
@@ -1005,12 +1005,12 @@ func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data [
 	return apijson.MarshalRoot(r)
 }
 
-type CheckTransferNewParamsPhysicalCheckPayee struct {
+type CheckTransferNewParamsPhysicalCheckPayer struct {
 	// The contents of the line.
 	Contents param.Field[string] `json:"contents,required"`
 }
 
-func (r CheckTransferNewParamsPhysicalCheckPayee) MarshalJSON() (data []byte, err error) {
+func (r CheckTransferNewParamsPhysicalCheckPayer) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -1059,7 +1059,7 @@ func (r CheckTransferNewParamsPhysicalCheckShippingMethod) IsKnown() bool {
 type CheckTransferNewParamsThirdParty struct {
 	// The pay-to name you will print on the check. If provided, this is used for
 	// [Positive Pay](/documentation/positive-pay). If this is omitted, Increase will
-	// be unable to validate the payee name when the check is deposited.
+	// be unable to validate the payer name when the check is deposited.
 	RecipientName param.Field[string] `json:"recipient_name"`
 }
 
