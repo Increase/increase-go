@@ -44,6 +44,9 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			RecipientName:    increase.F("Ian Crease"),
 			AttachmentFileID: increase.F("attachment_file_id"),
 			Note:             increase.F("x"),
+			Payee: increase.F([]increase.CheckTransferNewParamsPhysicalCheckPayee{{
+				Contents: increase.F("x"),
+			}}),
 			ReturnAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckReturnAddress{
 				City:       increase.F("x"),
 				Line1:      increase.F("x"),
