@@ -477,6 +477,9 @@ type CheckTransferPhysicalCheck struct {
 	Memo string `json:"memo,required,nullable"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note,required,nullable"`
+	// The payee of the check. This will be printed on the top-left portion of the
+	// check and defaults to the return address if unspecified.
+	Payee []CheckTransferPhysicalCheckPayee `json:"payee,required"`
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name,required"`
 	// The return address to be printed on the check.
@@ -498,6 +501,7 @@ type checkTransferPhysicalCheckJSON struct {
 	MailingAddress   apijson.Field
 	Memo             apijson.Field
 	Note             apijson.Field
+	Payee            apijson.Field
 	RecipientName    apijson.Field
 	ReturnAddress    apijson.Field
 	ShippingMethod   apijson.Field
@@ -550,6 +554,28 @@ func (r *CheckTransferPhysicalCheckMailingAddress) UnmarshalJSON(data []byte) (e
 }
 
 func (r checkTransferPhysicalCheckMailingAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+type CheckTransferPhysicalCheckPayee struct {
+	// The contents of the line.
+	Contents string                              `json:"contents,required"`
+	JSON     checkTransferPhysicalCheckPayeeJSON `json:"-"`
+}
+
+// checkTransferPhysicalCheckPayeeJSON contains the JSON metadata for the struct
+// [CheckTransferPhysicalCheckPayee]
+type checkTransferPhysicalCheckPayeeJSON struct {
+	Contents    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheckPayee) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferPhysicalCheckPayeeJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -941,6 +967,9 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	AttachmentFileID param.Field[string] `json:"attachment_file_id"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
+	// The payee of the check. This will be printed on the top-left portion of the
+	// check and defaults to the return address if unspecified.
+	Payee param.Field[[]CheckTransferNewParamsPhysicalCheckPayee] `json:"payee"`
 	// The return address to be printed on the check. If omitted this will default to
 	// an Increase-owned address that will mark checks as delivery failed and shred
 	// them.
@@ -972,6 +1001,15 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 }
 
 func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CheckTransferNewParamsPhysicalCheckPayee struct {
+	// The contents of the line.
+	Contents param.Field[string] `json:"contents,required"`
+}
+
+func (r CheckTransferNewParamsPhysicalCheckPayee) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
