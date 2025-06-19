@@ -76,6 +76,8 @@ func (r *InboundMailItemService) ListAutoPaging(ctx context.Context, query Inbou
 type InboundMailItem struct {
 	// The Inbound Mail Item identifier.
 	ID string `json:"id,required"`
+	// The checks in the mail item.
+	Checks []InboundMailItemCheck `json:"checks,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Inbound
 	// Mail Item was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -99,6 +101,7 @@ type InboundMailItem struct {
 // inboundMailItemJSON contains the JSON metadata for the struct [InboundMailItem]
 type inboundMailItemJSON struct {
 	ID              apijson.Field
+	Checks          apijson.Field
 	CreatedAt       apijson.Field
 	FileID          apijson.Field
 	LockboxID       apijson.Field
@@ -115,6 +118,35 @@ func (r *InboundMailItem) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r inboundMailItemJSON) RawJSON() string {
+	return r.raw
+}
+
+// Inbound Mail Item Checks represent the checks in an Inbound Mail Item.
+type InboundMailItemCheck struct {
+	// The amount of the check.
+	Amount int64 `json:"amount,required"`
+	// The identifier for the File containing the back of the check.
+	BackFileID string `json:"back_file_id,required,nullable"`
+	// The identifier for the File containing the front of the check.
+	FrontFileID string                   `json:"front_file_id,required,nullable"`
+	JSON        inboundMailItemCheckJSON `json:"-"`
+}
+
+// inboundMailItemCheckJSON contains the JSON metadata for the struct
+// [InboundMailItemCheck]
+type inboundMailItemCheckJSON struct {
+	Amount      apijson.Field
+	BackFileID  apijson.Field
+	FrontFileID apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InboundMailItemCheck) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundMailItemCheckJSON) RawJSON() string {
 	return r.raw
 }
 
