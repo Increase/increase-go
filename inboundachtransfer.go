@@ -160,7 +160,7 @@ type InboundACHTransfer struct {
 	ReceiverName string `json:"receiver_name,required,nullable"`
 	// A subhash containing information about when and how the transfer settled at the
 	// Federal Reserve.
-	Settlement InboundACHTransferSettlement `json:"settlement,required,nullable"`
+	Settlement InboundACHTransferSettlement `json:"settlement,required"`
 	// The Standard Entry Class (SEC) code of the transfer.
 	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The status of the transfer.
