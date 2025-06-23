@@ -135,8 +135,6 @@ type InboundACHTransfer struct {
 	// The effective date of the transfer. This is sent by the sending bank and is a
 	// factor in determining funds availability.
 	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
-	// The settlement schedule the transfer is expected to follow.
-	ExpectedSettlementSchedule InboundACHTransferExpectedSettlementSchedule `json:"expected_settlement_schedule,required"`
 	// If the Inbound ACH Transfer has a Standard Entry Class Code of IAT, this will
 	// contain fields pertaining to the International ACH Transaction.
 	InternationalAddenda InboundACHTransferInternationalAddenda `json:"international_addenda,required,nullable"`
@@ -160,6 +158,9 @@ type InboundACHTransfer struct {
 	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
 	// The name of the receiver of the transfer.
 	ReceiverName string `json:"receiver_name,required,nullable"`
+	// A subhash containing information about when and how the transfer settled at the
+	// Federal Reserve.
+	Settlement InboundACHTransferSettlement `json:"settlement,required,nullable"`
 	// The Standard Entry Class (SEC) code of the transfer.
 	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The status of the transfer.
@@ -191,7 +192,6 @@ type inboundACHTransferJSON struct {
 	Decline                            apijson.Field
 	Direction                          apijson.Field
 	EffectiveDate                      apijson.Field
-	ExpectedSettlementSchedule         apijson.Field
 	InternationalAddenda               apijson.Field
 	NotificationOfChange               apijson.Field
 	OriginatorCompanyDescriptiveDate   apijson.Field
@@ -202,6 +202,7 @@ type inboundACHTransferJSON struct {
 	OriginatorRoutingNumber            apijson.Field
 	ReceiverIDNumber                   apijson.Field
 	ReceiverName                       apijson.Field
+	Settlement                         apijson.Field
 	StandardEntryClassCode             apijson.Field
 	Status                             apijson.Field
 	TraceNumber                        apijson.Field
@@ -402,22 +403,6 @@ const (
 func (r InboundACHTransferDirection) IsKnown() bool {
 	switch r {
 	case InboundACHTransferDirectionCredit, InboundACHTransferDirectionDebit:
-		return true
-	}
-	return false
-}
-
-// The settlement schedule the transfer is expected to follow.
-type InboundACHTransferExpectedSettlementSchedule string
-
-const (
-	InboundACHTransferExpectedSettlementScheduleSameDay     InboundACHTransferExpectedSettlementSchedule = "same_day"
-	InboundACHTransferExpectedSettlementScheduleFutureDated InboundACHTransferExpectedSettlementSchedule = "future_dated"
-)
-
-func (r InboundACHTransferExpectedSettlementSchedule) IsKnown() bool {
-	switch r {
-	case InboundACHTransferExpectedSettlementScheduleSameDay, InboundACHTransferExpectedSettlementScheduleFutureDated:
 		return true
 	}
 	return false
@@ -693,6 +678,50 @@ func (r *InboundACHTransferNotificationOfChange) UnmarshalJSON(data []byte) (err
 
 func (r inboundACHTransferNotificationOfChangeJSON) RawJSON() string {
 	return r.raw
+}
+
+// A subhash containing information about when and how the transfer settled at the
+// Federal Reserve.
+type InboundACHTransferSettlement struct {
+	// When the funds for this transfer settle at the recipient bank at the Federal
+	// Reserve.
+	SettledAt time.Time `json:"settled_at,required" format:"date-time"`
+	// The settlement schedule this transfer follows.
+	SettlementSchedule InboundACHTransferSettlementSettlementSchedule `json:"settlement_schedule,required"`
+	JSON               inboundACHTransferSettlementJSON               `json:"-"`
+}
+
+// inboundACHTransferSettlementJSON contains the JSON metadata for the struct
+// [InboundACHTransferSettlement]
+type inboundACHTransferSettlementJSON struct {
+	SettledAt          apijson.Field
+	SettlementSchedule apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *InboundACHTransferSettlement) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundACHTransferSettlementJSON) RawJSON() string {
+	return r.raw
+}
+
+// The settlement schedule this transfer follows.
+type InboundACHTransferSettlementSettlementSchedule string
+
+const (
+	InboundACHTransferSettlementSettlementScheduleSameDay     InboundACHTransferSettlementSettlementSchedule = "same_day"
+	InboundACHTransferSettlementSettlementScheduleFutureDated InboundACHTransferSettlementSettlementSchedule = "future_dated"
+)
+
+func (r InboundACHTransferSettlementSettlementSchedule) IsKnown() bool {
+	switch r {
+	case InboundACHTransferSettlementSettlementScheduleSameDay, InboundACHTransferSettlementSettlementScheduleFutureDated:
+		return true
+	}
+	return false
 }
 
 // The Standard Entry Class (SEC) code of the transfer.
