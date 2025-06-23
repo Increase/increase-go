@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.247.0 (2025-06-23)
+
+Full Changelog: [v0.246.0...v0.247.0](https://github.com/Increase/increase-go/compare/v0.246.0...v0.247.0)
+
+### Features
+
+* **api:** api update ([b3932f4](https://github.com/Increase/increase-go/commit/b3932f46b920ec5cdadbe63ec638ce3b6b553c8c))
+* **api:** api update ([8561c82](https://github.com/Increase/increase-go/commit/8561c82a9119a60b55664be1a18c81d56eb86861))
+* **api:** api update ([8c5f2d0](https://github.com/Increase/increase-go/commit/8c5f2d070d76b6a90b64919770aba4a1c60f1563))
+* **api:** api update ([4c19761](https://github.com/Increase/increase-go/commit/4c1976168637e8d4c65f3abd0b4c3ce5a5149de9))
+* **api:** api update ([ae76764](https://github.com/Increase/increase-go/commit/ae76764f3feaf5384fd6690cdc84c1c52cdb48fd))
+* **api:** api update ([b0022eb](https://github.com/Increase/increase-go/commit/b0022eb168167f6e4fbfacf5cddc86d20531d7fb))
+* **api:** api update ([d11f4e4](https://github.com/Increase/increase-go/commit/d11f4e4b70f318f2cb29ef4ee740f9a26fa1e660))
+* **api:** api update ([6c6b3a1](https://github.com/Increase/increase-go/commit/6c6b3a12eca727b1fd55c0a1a9cb44dd79eeea9a))
+* **client:** add debug log helper ([d15671f](https://github.com/Increase/increase-go/commit/d15671fc02199b1ccbc779cca56031040cf5c71d))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([c067dd5](https://github.com/Increase/increase-go/commit/c067dd572a490aea81bcdde66d0854d8b921d3d9))
+
 ## 0.246.0 (2025-06-13)
 
 Full Changelog: [v0.245.0...v0.246.0](https://github.com/Increase/increase-go/compare/v0.245.0...v0.246.0)
