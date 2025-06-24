@@ -96,6 +96,8 @@ type Document struct {
 	EntityID string `json:"entity_id,required,nullable"`
 	// The identifier of the File containing the Document's contents.
 	FileID string `json:"file_id,required"`
+	// Properties of a funding instructions document.
+	FundingInstructions DocumentFundingInstructions `json:"funding_instructions,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -114,6 +116,7 @@ type documentJSON struct {
 	CreatedAt                 apijson.Field
 	EntityID                  apijson.Field
 	FileID                    apijson.Field
+	FundingInstructions       apijson.Field
 	IdempotencyKey            apijson.Field
 	Type                      apijson.Field
 	raw                       string
@@ -160,14 +163,38 @@ const (
 	DocumentCategoryProofOfAuthorization      DocumentCategory = "proof_of_authorization"
 	DocumentCategoryCompanyInformation        DocumentCategory = "company_information"
 	DocumentCategoryAccountVerificationLetter DocumentCategory = "account_verification_letter"
+	DocumentCategoryFundingInstructions       DocumentCategory = "funding_instructions"
 )
 
 func (r DocumentCategory) IsKnown() bool {
 	switch r {
-	case DocumentCategoryForm1099Int, DocumentCategoryForm1099Misc, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation, DocumentCategoryAccountVerificationLetter:
+	case DocumentCategoryForm1099Int, DocumentCategoryForm1099Misc, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation, DocumentCategoryAccountVerificationLetter, DocumentCategoryFundingInstructions:
 		return true
 	}
 	return false
+}
+
+// Properties of a funding instructions document.
+type DocumentFundingInstructions struct {
+	// The identifier of the Account Number the document was generated for.
+	AccountNumberID string                          `json:"account_number_id,required"`
+	JSON            documentFundingInstructionsJSON `json:"-"`
+}
+
+// documentFundingInstructionsJSON contains the JSON metadata for the struct
+// [DocumentFundingInstructions]
+type documentFundingInstructionsJSON struct {
+	AccountNumberID apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *DocumentFundingInstructions) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r documentFundingInstructionsJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
@@ -191,6 +218,8 @@ type DocumentNewParams struct {
 	Category param.Field[DocumentNewParamsCategory] `json:"category,required"`
 	// An account verification letter.
 	AccountVerificationLetter param.Field[DocumentNewParamsAccountVerificationLetter] `json:"account_verification_letter"`
+	// Funding instructions.
+	FundingInstructions param.Field[DocumentNewParamsFundingInstructions] `json:"funding_instructions"`
 }
 
 func (r DocumentNewParams) MarshalJSON() (data []byte, err error) {
@@ -202,11 +231,12 @@ type DocumentNewParamsCategory string
 
 const (
 	DocumentNewParamsCategoryAccountVerificationLetter DocumentNewParamsCategory = "account_verification_letter"
+	DocumentNewParamsCategoryFundingInstructions       DocumentNewParamsCategory = "funding_instructions"
 )
 
 func (r DocumentNewParamsCategory) IsKnown() bool {
 	switch r {
-	case DocumentNewParamsCategoryAccountVerificationLetter:
+	case DocumentNewParamsCategoryAccountVerificationLetter, DocumentNewParamsCategoryFundingInstructions:
 		return true
 	}
 	return false
@@ -221,6 +251,16 @@ type DocumentNewParamsAccountVerificationLetter struct {
 }
 
 func (r DocumentNewParamsAccountVerificationLetter) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Funding instructions.
+type DocumentNewParamsFundingInstructions struct {
+	// The Account Number the funding instructions should be generated for.
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+}
+
+func (r DocumentNewParamsFundingInstructions) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -273,11 +313,12 @@ const (
 	DocumentListParamsCategoryInProofOfAuthorization      DocumentListParamsCategoryIn = "proof_of_authorization"
 	DocumentListParamsCategoryInCompanyInformation        DocumentListParamsCategoryIn = "company_information"
 	DocumentListParamsCategoryInAccountVerificationLetter DocumentListParamsCategoryIn = "account_verification_letter"
+	DocumentListParamsCategoryInFundingInstructions       DocumentListParamsCategoryIn = "funding_instructions"
 )
 
 func (r DocumentListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInForm1099Misc, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation, DocumentListParamsCategoryInAccountVerificationLetter:
+	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInForm1099Misc, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation, DocumentListParamsCategoryInAccountVerificationLetter, DocumentListParamsCategoryInFundingInstructions:
 		return true
 	}
 	return false
