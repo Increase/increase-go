@@ -73,7 +73,8 @@ func (r *TransactionService) ListAutoPaging(ctx context.Context, query Transacti
 }
 
 // Transactions are the immutable additions and removals of money from your bank
-// account. They're the equivalent of line items on your bank statement.
+// account. They're the equivalent of line items on your bank statement. To learn
+// more, see [Transactions and Transfers](/documentation/transactions-transfers).
 type Transaction struct {
 	// The Transaction identifier.
 	ID string `json:"id,required"`
