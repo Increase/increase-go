@@ -32,6 +32,9 @@ func TestDocumentNewWithOptionalParams(t *testing.T) {
 			AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 			BalanceDate:     increase.F(time.Now()),
 		}),
+		FundingInstructions: increase.F(increase.DocumentNewParamsFundingInstructions{
+			AccountNumberID: increase.F("account_number_id"),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
