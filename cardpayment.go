@@ -842,11 +842,13 @@ const (
 	CardPaymentElementsCardAuthorizationProcessingCategoryPurchase               CardPaymentElementsCardAuthorizationProcessingCategory = "purchase"
 	CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash              CardPaymentElementsCardAuthorizationProcessingCategory = "quasi_cash"
 	CardPaymentElementsCardAuthorizationProcessingCategoryRefund                 CardPaymentElementsCardAuthorizationProcessingCategory = "refund"
+	CardPaymentElementsCardAuthorizationProcessingCategoryCashDisbursement       CardPaymentElementsCardAuthorizationProcessingCategory = "cash_disbursement"
+	CardPaymentElementsCardAuthorizationProcessingCategoryUnknown                CardPaymentElementsCardAuthorizationProcessingCategory = "unknown"
 )
 
 func (r CardPaymentElementsCardAuthorizationProcessingCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding, CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment, CardPaymentElementsCardAuthorizationProcessingCategoryOriginalCredit, CardPaymentElementsCardAuthorizationProcessingCategoryPurchase, CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash, CardPaymentElementsCardAuthorizationProcessingCategoryRefund:
+	case CardPaymentElementsCardAuthorizationProcessingCategoryAccountFunding, CardPaymentElementsCardAuthorizationProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardAuthorizationProcessingCategoryBillPayment, CardPaymentElementsCardAuthorizationProcessingCategoryOriginalCredit, CardPaymentElementsCardAuthorizationProcessingCategoryPurchase, CardPaymentElementsCardAuthorizationProcessingCategoryQuasiCash, CardPaymentElementsCardAuthorizationProcessingCategoryRefund, CardPaymentElementsCardAuthorizationProcessingCategoryCashDisbursement, CardPaymentElementsCardAuthorizationProcessingCategoryUnknown:
 		return true
 	}
 	return false
@@ -1455,11 +1457,13 @@ const (
 	CardPaymentElementsCardDeclineProcessingCategoryPurchase               CardPaymentElementsCardDeclineProcessingCategory = "purchase"
 	CardPaymentElementsCardDeclineProcessingCategoryQuasiCash              CardPaymentElementsCardDeclineProcessingCategory = "quasi_cash"
 	CardPaymentElementsCardDeclineProcessingCategoryRefund                 CardPaymentElementsCardDeclineProcessingCategory = "refund"
+	CardPaymentElementsCardDeclineProcessingCategoryCashDisbursement       CardPaymentElementsCardDeclineProcessingCategory = "cash_disbursement"
+	CardPaymentElementsCardDeclineProcessingCategoryUnknown                CardPaymentElementsCardDeclineProcessingCategory = "unknown"
 )
 
 func (r CardPaymentElementsCardDeclineProcessingCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardDeclineProcessingCategoryAccountFunding, CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardDeclineProcessingCategoryBillPayment, CardPaymentElementsCardDeclineProcessingCategoryOriginalCredit, CardPaymentElementsCardDeclineProcessingCategoryPurchase, CardPaymentElementsCardDeclineProcessingCategoryQuasiCash, CardPaymentElementsCardDeclineProcessingCategoryRefund:
+	case CardPaymentElementsCardDeclineProcessingCategoryAccountFunding, CardPaymentElementsCardDeclineProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardDeclineProcessingCategoryBillPayment, CardPaymentElementsCardDeclineProcessingCategoryOriginalCredit, CardPaymentElementsCardDeclineProcessingCategoryPurchase, CardPaymentElementsCardDeclineProcessingCategoryQuasiCash, CardPaymentElementsCardDeclineProcessingCategoryRefund, CardPaymentElementsCardDeclineProcessingCategoryCashDisbursement, CardPaymentElementsCardDeclineProcessingCategoryUnknown:
 		return true
 	}
 	return false
