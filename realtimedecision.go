@@ -552,11 +552,13 @@ const (
 	RealTimeDecisionCardAuthorizationProcessingCategoryPurchase               RealTimeDecisionCardAuthorizationProcessingCategory = "purchase"
 	RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash              RealTimeDecisionCardAuthorizationProcessingCategory = "quasi_cash"
 	RealTimeDecisionCardAuthorizationProcessingCategoryRefund                 RealTimeDecisionCardAuthorizationProcessingCategory = "refund"
+	RealTimeDecisionCardAuthorizationProcessingCategoryCashDisbursement       RealTimeDecisionCardAuthorizationProcessingCategory = "cash_disbursement"
+	RealTimeDecisionCardAuthorizationProcessingCategoryUnknown                RealTimeDecisionCardAuthorizationProcessingCategory = "unknown"
 )
 
 func (r RealTimeDecisionCardAuthorizationProcessingCategory) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding, RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser, RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment, RealTimeDecisionCardAuthorizationProcessingCategoryOriginalCredit, RealTimeDecisionCardAuthorizationProcessingCategoryPurchase, RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash, RealTimeDecisionCardAuthorizationProcessingCategoryRefund:
+	case RealTimeDecisionCardAuthorizationProcessingCategoryAccountFunding, RealTimeDecisionCardAuthorizationProcessingCategoryAutomaticFuelDispenser, RealTimeDecisionCardAuthorizationProcessingCategoryBillPayment, RealTimeDecisionCardAuthorizationProcessingCategoryOriginalCredit, RealTimeDecisionCardAuthorizationProcessingCategoryPurchase, RealTimeDecisionCardAuthorizationProcessingCategoryQuasiCash, RealTimeDecisionCardAuthorizationProcessingCategoryRefund, RealTimeDecisionCardAuthorizationProcessingCategoryCashDisbursement, RealTimeDecisionCardAuthorizationProcessingCategoryUnknown:
 		return true
 	}
 	return false
