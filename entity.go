@@ -1546,7 +1546,7 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriver
 // equal to `other`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
@@ -1566,7 +1566,8 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther)
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport struct {
-	// The country that issued the passport.
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
@@ -1794,7 +1795,7 @@ func (r EntityNewParamsJointIndividualsIdentificationDriversLicense) MarshalJSON
 // equal to `other`.
 type EntityNewParamsJointIndividualsIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
@@ -1814,7 +1815,8 @@ func (r EntityNewParamsJointIndividualsIdentificationOther) MarshalJSON() (data 
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
 type EntityNewParamsJointIndividualsIdentificationPassport struct {
-	// The country that issued the passport.
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// passport (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
@@ -1933,7 +1935,7 @@ func (r EntityNewParamsNaturalPersonIdentificationDriversLicense) MarshalJSON() 
 // equal to `other`.
 type EntityNewParamsNaturalPersonIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
@@ -1953,7 +1955,8 @@ func (r EntityNewParamsNaturalPersonIdentificationOther) MarshalJSON() (data []b
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
 type EntityNewParamsNaturalPersonIdentificationPassport struct {
-	// The country that issued the passport.
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// passport (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
@@ -2204,7 +2207,7 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense) Mars
 // equal to `other`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
@@ -2224,7 +2227,8 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationOther) MarshalJSON()
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
-	// The country that issued the passport.
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// passport (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
@@ -2340,7 +2344,7 @@ func (r EntityNewParamsTrustGrantorIdentificationDriversLicense) MarshalJSON() (
 // equal to `other`.
 type EntityNewParamsTrustGrantorIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
@@ -2360,7 +2364,8 @@ func (r EntityNewParamsTrustGrantorIdentificationOther) MarshalJSON() (data []by
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
 type EntityNewParamsTrustGrantorIdentificationPassport struct {
-	// The country that issued the passport.
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// passport (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
@@ -2604,7 +2609,7 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationDri
 // equal to `other`.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// document.
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// A description of the document submitted.
 	Description param.Field[string] `json:"description,required"`
@@ -2624,7 +2629,8 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationOth
 // Information about the passport used for identification. Required if `method` is
 // equal to `passport`.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPassport struct {
-	// The country that issued the passport.
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country,required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
