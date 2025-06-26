@@ -143,6 +143,9 @@ type WireTransfer struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// The ID of an Inbound Wire Drawdown Request in response to which this transfer
+	// was sent.
+	InboundWireDrawdownRequestID string `json:"inbound_wire_drawdown_request_id,required,nullable"`
 	// The message that will show on the recipient's bank statement.
 	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
 	// The transfer's network.
@@ -181,37 +184,38 @@ type WireTransfer struct {
 
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
 type wireTransferJSON struct {
-	ID                      apijson.Field
-	AccountID               apijson.Field
-	AccountNumber           apijson.Field
-	Amount                  apijson.Field
-	Approval                apijson.Field
-	BeneficiaryAddressLine1 apijson.Field
-	BeneficiaryAddressLine2 apijson.Field
-	BeneficiaryAddressLine3 apijson.Field
-	BeneficiaryName         apijson.Field
-	Cancellation            apijson.Field
-	CreatedAt               apijson.Field
-	CreatedBy               apijson.Field
-	Currency                apijson.Field
-	ExternalAccountID       apijson.Field
-	IdempotencyKey          apijson.Field
-	MessageToRecipient      apijson.Field
-	Network                 apijson.Field
-	OriginatorAddressLine1  apijson.Field
-	OriginatorAddressLine2  apijson.Field
-	OriginatorAddressLine3  apijson.Field
-	OriginatorName          apijson.Field
-	PendingTransactionID    apijson.Field
-	Reversal                apijson.Field
-	RoutingNumber           apijson.Field
-	SourceAccountNumberID   apijson.Field
-	Status                  apijson.Field
-	Submission              apijson.Field
-	TransactionID           apijson.Field
-	Type                    apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
+	ID                           apijson.Field
+	AccountID                    apijson.Field
+	AccountNumber                apijson.Field
+	Amount                       apijson.Field
+	Approval                     apijson.Field
+	BeneficiaryAddressLine1      apijson.Field
+	BeneficiaryAddressLine2      apijson.Field
+	BeneficiaryAddressLine3      apijson.Field
+	BeneficiaryName              apijson.Field
+	Cancellation                 apijson.Field
+	CreatedAt                    apijson.Field
+	CreatedBy                    apijson.Field
+	Currency                     apijson.Field
+	ExternalAccountID            apijson.Field
+	IdempotencyKey               apijson.Field
+	InboundWireDrawdownRequestID apijson.Field
+	MessageToRecipient           apijson.Field
+	Network                      apijson.Field
+	OriginatorAddressLine1       apijson.Field
+	OriginatorAddressLine2       apijson.Field
+	OriginatorAddressLine3       apijson.Field
+	OriginatorName               apijson.Field
+	PendingTransactionID         apijson.Field
+	Reversal                     apijson.Field
+	RoutingNumber                apijson.Field
+	SourceAccountNumberID        apijson.Field
+	Status                       apijson.Field
+	Submission                   apijson.Field
+	TransactionID                apijson.Field
+	Type                         apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
 }
 
 func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -596,6 +600,9 @@ type WireTransferNewParams struct {
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
+	// The ID of an Inbound Wire Drawdown Request in response to which this transfer is
+	// being sent.
+	InboundWireDrawdownRequestID param.Field[string] `json:"inbound_wire_drawdown_request_id"`
 	// The originator's address line 1. This is only necessary if you're transferring
 	// from a commingled account. Otherwise, we'll use the associated entity's details.
 	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
