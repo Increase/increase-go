@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.251.2 (2025-06-27)
+
+Full Changelog: [v0.251.1...v0.251.2](https://github.com/Increase/increase-go/compare/v0.251.1...v0.251.2)
+
+### Bug Fixes
+
+* don't try to deserialize as json when ResponseBodyInto is []byte ([a2f8bf7](https://github.com/Increase/increase-go/commit/a2f8bf70370574c7eb1e7c78a3f7dbfaebad0ad9))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([fff4ac7](https://github.com/Increase/increase-go/commit/fff4ac7501163c3c32617ed1f0f9c2b1d98a0272))
+
 ## 0.251.1 (2025-06-27)
 
 Full Changelog: [v0.251.0...v0.251.1](https://github.com/Increase/increase-go/compare/v0.251.0...v0.251.1)
