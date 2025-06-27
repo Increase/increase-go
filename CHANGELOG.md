@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.251.1 (2025-06-27)
+
+Full Changelog: [v0.251.0...v0.251.1](https://github.com/Increase/increase-go/compare/v0.251.0...v0.251.1)
+
+### Bug Fixes
+
+* **pagination:** check if page data is empty in GetNextPage ([5cc28dd](https://github.com/Increase/increase-go/commit/5cc28ddf8a8fd144757322de13ec622489ccd38b))
+
 ## 0.251.0 (2025-06-26)
 
 Full Changelog: [v0.250.0...v0.251.0](https://github.com/Increase/increase-go/compare/v0.250.0...v0.251.0)
