@@ -985,7 +985,6 @@ type InboundACHTransferTransferReturnParamsReason string
 
 const (
 	InboundACHTransferTransferReturnParamsReasonInsufficientFunds                                           InboundACHTransferTransferReturnParamsReason = "insufficient_funds"
-	InboundACHTransferTransferReturnParamsReasonReturnedPerOdfiRequest                                      InboundACHTransferTransferReturnParamsReason = "returned_per_odfi_request"
 	InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer                              InboundACHTransferTransferReturnParamsReason = "authorization_revoked_by_customer"
 	InboundACHTransferTransferReturnParamsReasonPaymentStopped                                              InboundACHTransferTransferReturnParamsReason = "payment_stopped"
 	InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferTransferReturnParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
@@ -998,7 +997,7 @@ const (
 
 func (r InboundACHTransferTransferReturnParamsReason) IsKnown() bool {
 	switch r {
-	case InboundACHTransferTransferReturnParamsReasonInsufficientFunds, InboundACHTransferTransferReturnParamsReasonReturnedPerOdfiRequest, InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer, InboundACHTransferTransferReturnParamsReasonPaymentStopped, InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferTransferReturnParamsReasonCreditEntryRefusedByReceiver, InboundACHTransferTransferReturnParamsReasonDuplicateEntry, InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized:
+	case InboundACHTransferTransferReturnParamsReasonInsufficientFunds, InboundACHTransferTransferReturnParamsReasonAuthorizationRevokedByCustomer, InboundACHTransferTransferReturnParamsReasonPaymentStopped, InboundACHTransferTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferTransferReturnParamsReasonCreditEntryRefusedByReceiver, InboundACHTransferTransferReturnParamsReasonDuplicateEntry, InboundACHTransferTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized:
 		return true
 	}
 	return false
