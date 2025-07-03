@@ -445,6 +445,12 @@ type PhysicalCardNewParamsShipment struct {
 	Address param.Field[PhysicalCardNewParamsShipmentAddress] `json:"address,required"`
 	// The shipping method to use.
 	Method param.Field[PhysicalCardNewParamsShipmentMethod] `json:"method,required"`
+	// When this physical card should be produced by the card printer. The default
+	// timeline is the day after the card printer receives the order, except for
+	// `FEDEX_PRIORITY_OVERNIGHT` cards, which default to `SAME_DAY`. To use faster
+	// production methods, please reach out to
+	// [support@increase.com](mailto:support@increase.com).
+	Schedule param.Field[PhysicalCardNewParamsShipmentSchedule] `json:"schedule"`
 }
 
 func (r PhysicalCardNewParamsShipment) MarshalJSON() (data []byte, err error) {
@@ -487,6 +493,26 @@ const (
 func (r PhysicalCardNewParamsShipmentMethod) IsKnown() bool {
 	switch r {
 	case PhysicalCardNewParamsShipmentMethodUsps, PhysicalCardNewParamsShipmentMethodFedexPriorityOvernight, PhysicalCardNewParamsShipmentMethodFedex2Day:
+		return true
+	}
+	return false
+}
+
+// When this physical card should be produced by the card printer. The default
+// timeline is the day after the card printer receives the order, except for
+// `FEDEX_PRIORITY_OVERNIGHT` cards, which default to `SAME_DAY`. To use faster
+// production methods, please reach out to
+// [support@increase.com](mailto:support@increase.com).
+type PhysicalCardNewParamsShipmentSchedule string
+
+const (
+	PhysicalCardNewParamsShipmentScheduleNextDay PhysicalCardNewParamsShipmentSchedule = "next_day"
+	PhysicalCardNewParamsShipmentScheduleSameDay PhysicalCardNewParamsShipmentSchedule = "same_day"
+)
+
+func (r PhysicalCardNewParamsShipmentSchedule) IsKnown() bool {
+	switch r {
+	case PhysicalCardNewParamsShipmentScheduleNextDay, PhysicalCardNewParamsShipmentScheduleSameDay:
 		return true
 	}
 	return false

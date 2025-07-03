@@ -43,7 +43,8 @@ func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 				Line3:       increase.F("x"),
 				PhoneNumber: increase.F("x"),
 			}),
-			Method: increase.F(increase.PhysicalCardNewParamsShipmentMethodUsps),
+			Method:   increase.F(increase.PhysicalCardNewParamsShipmentMethodUsps),
+			Schedule: increase.F(increase.PhysicalCardNewParamsShipmentScheduleNextDay),
 		}),
 		PhysicalCardProfileID: increase.F("physical_card_profile_id"),
 	})
