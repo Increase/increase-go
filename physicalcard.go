@@ -178,6 +178,12 @@ type PhysicalCardShipment struct {
 	Address PhysicalCardShipmentAddress `json:"address,required"`
 	// The shipping method.
 	Method PhysicalCardShipmentMethod `json:"method,required"`
+	// When this physical card should be produced by the card printer. The default
+	// timeline is the day after the card printer receives the order, except for
+	// `FEDEX_PRIORITY_OVERNIGHT` cards, which default to `SAME_DAY`. To use faster
+	// production methods, please reach out to
+	// [support@increase.com](mailto:support@increase.com).
+	Schedule PhysicalCardShipmentSchedule `json:"schedule,required"`
 	// The status of this shipment.
 	Status PhysicalCardShipmentStatus `json:"status,required"`
 	// Tracking details for the shipment.
@@ -190,6 +196,7 @@ type PhysicalCardShipment struct {
 type physicalCardShipmentJSON struct {
 	Address     apijson.Field
 	Method      apijson.Field
+	Schedule    apijson.Field
 	Status      apijson.Field
 	Tracking    apijson.Field
 	raw         string
@@ -257,6 +264,26 @@ const (
 func (r PhysicalCardShipmentMethod) IsKnown() bool {
 	switch r {
 	case PhysicalCardShipmentMethodUsps, PhysicalCardShipmentMethodFedexPriorityOvernight, PhysicalCardShipmentMethodFedex2Day:
+		return true
+	}
+	return false
+}
+
+// When this physical card should be produced by the card printer. The default
+// timeline is the day after the card printer receives the order, except for
+// `FEDEX_PRIORITY_OVERNIGHT` cards, which default to `SAME_DAY`. To use faster
+// production methods, please reach out to
+// [support@increase.com](mailto:support@increase.com).
+type PhysicalCardShipmentSchedule string
+
+const (
+	PhysicalCardShipmentScheduleNextDay PhysicalCardShipmentSchedule = "next_day"
+	PhysicalCardShipmentScheduleSameDay PhysicalCardShipmentSchedule = "same_day"
+)
+
+func (r PhysicalCardShipmentSchedule) IsKnown() bool {
+	switch r {
+	case PhysicalCardShipmentScheduleNextDay, PhysicalCardShipmentScheduleSameDay:
 		return true
 	}
 	return false
