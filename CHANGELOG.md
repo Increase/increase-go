@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.256.0 (2025-07-08)
+
+Full Changelog: [v0.255.0...v0.256.0](https://github.com/Increase/increase-go/compare/v0.255.0...v0.256.0)
+
+### Features
+
+* **api:** api update ([9517e16](https://github.com/Increase/increase-go/commit/9517e16f4d0e3e8cc795aee31b8f588199f34e43))
+
+
+### Chores
+
+* **internal:** fix lint script for tests ([38a2e09](https://github.com/Increase/increase-go/commit/38a2e09d7d8f1624cc84e0cd6d589922b213363d))
+* lint tests ([6db6192](https://github.com/Increase/increase-go/commit/6db61929ba5a883934e7ce620f21d02b71a33866))
+
 ## 0.255.0 (2025-07-04)
 
 Full Changelog: [v0.254.0...v0.255.0](https://github.com/Increase/increase-go/compare/v0.254.0...v0.255.0)
