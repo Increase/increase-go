@@ -89,17 +89,29 @@ func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query W
 type WireDrawdownRequest struct {
 	// The Wire drawdown request identifier.
 	ID string `json:"id,required"`
-	// The Account Number to which the recipient of this request is being requested to
-	// send funds.
+	// The Account Number to which the debtor—the recipient of this request—is being
+	// requested to send funds.
 	AccountNumberID string `json:"account_number_id,required"`
 	// The amount being requested in cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the wire drawdown request was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The creditor's address.
+	CreditorAddress WireDrawdownRequestCreditorAddress `json:"creditor_address,required"`
+	// The creditor's name.
+	CreditorName string `json:"creditor_name,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
 	Currency string `json:"currency,required"`
+	// The debtor's account number.
+	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	// The debtor's address.
+	DebtorAddress WireDrawdownRequestDebtorAddress `json:"debtor_address,required"`
+	// The debtor's name.
+	DebtorName string `json:"debtor_name,required"`
+	// The debtor's routing number.
+	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
 	// If the recipient fulfills the drawdown request by sending funds, then this will
 	// be the identifier of the corresponding Transaction.
 	FulfillmentInboundWireTransferID string `json:"fulfillment_inbound_wire_transfer_id,required,nullable"`
@@ -107,28 +119,6 @@ type WireDrawdownRequest struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
-	// The message the recipient will see as part of the drawdown request.
-	MessageToRecipient string `json:"message_to_recipient,required"`
-	// The originator's address line 1.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// The originator's address line 2.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// The originator's address line 3.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The originator's name.
-	OriginatorName string `json:"originator_name,required,nullable"`
-	// The drawdown request's recipient's account number.
-	RecipientAccountNumber string `json:"recipient_account_number,required"`
-	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 string `json:"recipient_address_line1,required,nullable"`
-	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 string `json:"recipient_address_line2,required,nullable"`
-	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 string `json:"recipient_address_line3,required,nullable"`
-	// The drawdown request's recipient's name.
-	RecipientName string `json:"recipient_name,required,nullable"`
-	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber string `json:"recipient_routing_number,required"`
 	// The lifecycle status of the drawdown request.
 	Status WireDrawdownRequestStatus `json:"status,required"`
 	// After the drawdown request is submitted to Fedwire, this will contain
@@ -137,35 +127,33 @@ type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
 	Type WireDrawdownRequestType `json:"type,required"`
-	JSON wireDrawdownRequestJSON `json:"-"`
+	// Remittance information the debtor will see as part of the drawdown request.
+	UnstructuredRemittanceInformation string                  `json:"unstructured_remittance_information,required"`
+	JSON                              wireDrawdownRequestJSON `json:"-"`
 }
 
 // wireDrawdownRequestJSON contains the JSON metadata for the struct
 // [WireDrawdownRequest]
 type wireDrawdownRequestJSON struct {
-	ID                               apijson.Field
-	AccountNumberID                  apijson.Field
-	Amount                           apijson.Field
-	CreatedAt                        apijson.Field
-	Currency                         apijson.Field
-	FulfillmentInboundWireTransferID apijson.Field
-	IdempotencyKey                   apijson.Field
-	MessageToRecipient               apijson.Field
-	OriginatorAddressLine1           apijson.Field
-	OriginatorAddressLine2           apijson.Field
-	OriginatorAddressLine3           apijson.Field
-	OriginatorName                   apijson.Field
-	RecipientAccountNumber           apijson.Field
-	RecipientAddressLine1            apijson.Field
-	RecipientAddressLine2            apijson.Field
-	RecipientAddressLine3            apijson.Field
-	RecipientName                    apijson.Field
-	RecipientRoutingNumber           apijson.Field
-	Status                           apijson.Field
-	Submission                       apijson.Field
-	Type                             apijson.Field
-	raw                              string
-	ExtraFields                      map[string]apijson.Field
+	ID                                apijson.Field
+	AccountNumberID                   apijson.Field
+	Amount                            apijson.Field
+	CreatedAt                         apijson.Field
+	CreditorAddress                   apijson.Field
+	CreditorName                      apijson.Field
+	Currency                          apijson.Field
+	DebtorAccountNumber               apijson.Field
+	DebtorAddress                     apijson.Field
+	DebtorName                        apijson.Field
+	DebtorRoutingNumber               apijson.Field
+	FulfillmentInboundWireTransferID  apijson.Field
+	IdempotencyKey                    apijson.Field
+	Status                            apijson.Field
+	Submission                        apijson.Field
+	Type                              apijson.Field
+	UnstructuredRemittanceInformation apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
@@ -173,6 +161,86 @@ func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r wireDrawdownRequestJSON) RawJSON() string {
+	return r.raw
+}
+
+// The creditor's address.
+type WireDrawdownRequestCreditorAddress struct {
+	// The city, district, town, or village of the address.
+	City string `json:"city,required"`
+	// The two-letter
+	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
+	// the country of the address.
+	Country string `json:"country,required"`
+	// The first line of the address.
+	Line1 string `json:"line1,required"`
+	// The second line of the address.
+	Line2 string `json:"line2,required,nullable"`
+	// The ZIP code of the address.
+	PostalCode string `json:"postal_code,required,nullable"`
+	// The address state.
+	State string                                 `json:"state,required,nullable"`
+	JSON  wireDrawdownRequestCreditorAddressJSON `json:"-"`
+}
+
+// wireDrawdownRequestCreditorAddressJSON contains the JSON metadata for the struct
+// [WireDrawdownRequestCreditorAddress]
+type wireDrawdownRequestCreditorAddressJSON struct {
+	City        apijson.Field
+	Country     apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	PostalCode  apijson.Field
+	State       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireDrawdownRequestCreditorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireDrawdownRequestCreditorAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// The debtor's address.
+type WireDrawdownRequestDebtorAddress struct {
+	// The city, district, town, or village of the address.
+	City string `json:"city,required"`
+	// The two-letter
+	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
+	// the country of the address.
+	Country string `json:"country,required"`
+	// The first line of the address.
+	Line1 string `json:"line1,required"`
+	// The second line of the address.
+	Line2 string `json:"line2,required,nullable"`
+	// The ZIP code of the address.
+	PostalCode string `json:"postal_code,required,nullable"`
+	// The address state.
+	State string                               `json:"state,required,nullable"`
+	JSON  wireDrawdownRequestDebtorAddressJSON `json:"-"`
+}
+
+// wireDrawdownRequestDebtorAddressJSON contains the JSON metadata for the struct
+// [WireDrawdownRequestDebtorAddress]
+type wireDrawdownRequestDebtorAddressJSON struct {
+	City        apijson.Field
+	Country     apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	PostalCode  apijson.Field
+	State       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireDrawdownRequestDebtorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireDrawdownRequestDebtorAddressJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -236,43 +304,71 @@ func (r WireDrawdownRequestType) IsKnown() bool {
 }
 
 type WireDrawdownRequestNewParams struct {
-	// The Account Number to which the recipient should send funds.
+	// The Account Number to which the debtor should send funds.
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`
-	// The amount requested from the recipient, in USD cents.
+	// The amount requested from the debtor, in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
-	// A message the recipient will see as part of the request.
-	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
-	// The drawdown request's recipient's account number.
-	RecipientAccountNumber param.Field[string] `json:"recipient_account_number,required"`
-	// The drawdown request's recipient's name.
-	RecipientName param.Field[string] `json:"recipient_name,required"`
-	// The drawdown request's recipient's routing number.
-	RecipientRoutingNumber param.Field[string] `json:"recipient_routing_number,required"`
-	// The drawdown request originator's address line 1. This is only necessary if
-	// you're requesting a payment to a commingled account. Otherwise, we'll use the
-	// associated entity's details.
-	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
-	// The drawdown request originator's address line 2. This is only necessary if
-	// you're requesting a payment to a commingled account. Otherwise, we'll use the
-	// associated entity's details.
-	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
-	// The drawdown request originator's address line 3. This is only necessary if
-	// you're requesting a payment to a commingled account. Otherwise, we'll use the
-	// associated entity's details.
-	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
-	// The drawdown request originator's name. This is only necessary if you're
-	// requesting a payment to a commingled account. Otherwise, we'll use the
-	// associated entity's details.
-	OriginatorName param.Field[string] `json:"originator_name"`
-	// Line 1 of the drawdown request's recipient's address.
-	RecipientAddressLine1 param.Field[string] `json:"recipient_address_line1"`
-	// Line 2 of the drawdown request's recipient's address.
-	RecipientAddressLine2 param.Field[string] `json:"recipient_address_line2"`
-	// Line 3 of the drawdown request's recipient's address.
-	RecipientAddressLine3 param.Field[string] `json:"recipient_address_line3"`
+	// The creditor's address.
+	CreditorAddress param.Field[WireDrawdownRequestNewParamsCreditorAddress] `json:"creditor_address,required"`
+	// The creditor's name.
+	CreditorName param.Field[string] `json:"creditor_name,required"`
+	// The debtor's account number.
+	DebtorAccountNumber param.Field[string] `json:"debtor_account_number,required"`
+	// The debtor's address.
+	DebtorAddress param.Field[WireDrawdownRequestNewParamsDebtorAddress] `json:"debtor_address,required"`
+	// The debtor's name.
+	DebtorName param.Field[string] `json:"debtor_name,required"`
+	// The debtor's routing number.
+	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number,required"`
+	// Remittance information the debtor will see as part of the request.
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information,required"`
 }
 
 func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The creditor's address.
+type WireDrawdownRequestNewParamsCreditorAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city,required"`
+	// The two-letter
+	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
+	// the country of the address.
+	Country param.Field[string] `json:"country,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+	// The ZIP code of the address.
+	PostalCode param.Field[string] `json:"postal_code"`
+	// The address state.
+	State param.Field[string] `json:"state"`
+}
+
+func (r WireDrawdownRequestNewParamsCreditorAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The debtor's address.
+type WireDrawdownRequestNewParamsDebtorAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city,required"`
+	// The two-letter
+	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
+	// the country of the address.
+	Country param.Field[string] `json:"country,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+	// The ZIP code of the address.
+	PostalCode param.Field[string] `json:"postal_code"`
+	// The address state.
+	State param.Field[string] `json:"state"`
+}
+
+func (r WireDrawdownRequestNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
