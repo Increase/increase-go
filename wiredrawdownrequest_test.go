@@ -26,19 +26,29 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireDrawdownRequests.New(context.TODO(), increase.WireDrawdownRequestNewParams{
-		AccountNumberID:        increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		Amount:                 increase.F(int64(10000)),
-		MessageToRecipient:     increase.F("Invoice 29582"),
-		RecipientAccountNumber: increase.F("987654321"),
-		RecipientName:          increase.F("Ian Crease"),
-		RecipientRoutingNumber: increase.F("101050001"),
-		OriginatorAddressLine1: increase.F("x"),
-		OriginatorAddressLine2: increase.F("x"),
-		OriginatorAddressLine3: increase.F("x"),
-		OriginatorName:         increase.F("x"),
-		RecipientAddressLine1:  increase.F("33 Liberty Street"),
-		RecipientAddressLine2:  increase.F("New York, NY, 10045"),
-		RecipientAddressLine3:  increase.F("x"),
+		AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:          increase.F(int64(10000)),
+		CreditorAddress: increase.F(increase.WireDrawdownRequestNewParamsCreditorAddress{
+			City:       increase.F("New York"),
+			Country:    increase.F("US"),
+			Line1:      increase.F("33 Liberty Street"),
+			Line2:      increase.F("x"),
+			PostalCode: increase.F("10045"),
+			State:      increase.F("NY"),
+		}),
+		CreditorName:        increase.F("National Phonograph Company"),
+		DebtorAccountNumber: increase.F("987654321"),
+		DebtorAddress: increase.F(increase.WireDrawdownRequestNewParamsDebtorAddress{
+			City:       increase.F("New York"),
+			Country:    increase.F("US"),
+			Line1:      increase.F("33 Liberty Street"),
+			Line2:      increase.F("x"),
+			PostalCode: increase.F("10045"),
+			State:      increase.F("NY"),
+		}),
+		DebtorName:                        increase.F("Ian Crease"),
+		DebtorRoutingNumber:               increase.F("101050001"),
+		UnstructuredRemittanceInformation: increase.F("Invoice 29582"),
 	})
 	if err != nil {
 		var apierr *increase.Error
