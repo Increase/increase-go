@@ -279,6 +279,9 @@ type InboundWireTransferListParams struct {
 	// objects.
 	Limit  param.Field[int64]                               `query:"limit"`
 	Status param.Field[InboundWireTransferListParamsStatus] `query:"status"`
+	// Filter Inbound Wire Transfers to ones belonging to the specified Wire Drawdown
+	// Request.
+	WireDrawdownRequestID param.Field[string] `query:"wire_drawdown_request_id"`
 }
 
 // URLQuery serializes [InboundWireTransferListParams]'s query parameters as
