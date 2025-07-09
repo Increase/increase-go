@@ -62,6 +62,7 @@ func TestInboundWireTransferListWithOptionalParams(t *testing.T) {
 		Status: increase.F(increase.InboundWireTransferListParamsStatus{
 			In: increase.F([]increase.InboundWireTransferListParamsStatusIn{increase.InboundWireTransferListParamsStatusInPending}),
 		}),
+		WireDrawdownRequestID: increase.F("wire_drawdown_request_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

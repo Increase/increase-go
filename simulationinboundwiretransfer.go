@@ -89,6 +89,9 @@ type SimulationInboundWireTransferNewParams struct {
 	// The sending bank will set sender_reference in production. You can simulate any
 	// value here.
 	SenderReference param.Field[string] `json:"sender_reference"`
+	// The identifier of a Wire Drawdown Request the inbound Wire Transfer is
+	// fulfilling.
+	WireDrawdownRequestID param.Field[string] `json:"wire_drawdown_request_id"`
 }
 
 func (r SimulationInboundWireTransferNewParams) MarshalJSON() (data []byte, err error) {
