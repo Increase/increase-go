@@ -281,6 +281,8 @@ type CardDetails struct {
 	ExpirationMonth int64 `json:"expiration_month,required"`
 	// The year the card expires in YYYY format (e.g., 2025).
 	ExpirationYear int64 `json:"expiration_year,required"`
+	// The 4-digit PIN for the card, for use with ATMs.
+	Pin string `json:"pin,required"`
 	// The card number.
 	PrimaryAccountNumber string `json:"primary_account_number,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -298,6 +300,7 @@ type cardDetailsJSON struct {
 	CardID               apijson.Field
 	ExpirationMonth      apijson.Field
 	ExpirationYear       apijson.Field
+	Pin                  apijson.Field
 	PrimaryAccountNumber apijson.Field
 	Type                 apijson.Field
 	VerificationCode     apijson.Field
