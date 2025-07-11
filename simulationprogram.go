@@ -45,10 +45,31 @@ func (r *SimulationProgramService) New(ctx context.Context, body SimulationProgr
 type SimulationProgramNewParams struct {
 	// The name of the program being added.
 	Name param.Field[string] `json:"name,required"`
+	// The bank for the program's accounts, defaults to First Internet Bank.
+	Bank param.Field[SimulationProgramNewParamsBank] `json:"bank"`
 	// The identifier of the Account the Program should be added to is for.
 	ReserveAccountID param.Field[string] `json:"reserve_account_id"`
 }
 
 func (r SimulationProgramNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The bank for the program's accounts, defaults to First Internet Bank.
+type SimulationProgramNewParamsBank string
+
+const (
+	SimulationProgramNewParamsBankBlueRidgeBank         SimulationProgramNewParamsBank = "blue_ridge_bank"
+	SimulationProgramNewParamsBankCoreBank              SimulationProgramNewParamsBank = "core_bank"
+	SimulationProgramNewParamsBankFirstInternetBank     SimulationProgramNewParamsBank = "first_internet_bank"
+	SimulationProgramNewParamsBankGlobalInnovationsBank SimulationProgramNewParamsBank = "global_innovations_bank"
+	SimulationProgramNewParamsBankGrasshopperBank       SimulationProgramNewParamsBank = "grasshopper_bank"
+)
+
+func (r SimulationProgramNewParamsBank) IsKnown() bool {
+	switch r {
+	case SimulationProgramNewParamsBankBlueRidgeBank, SimulationProgramNewParamsBankCoreBank, SimulationProgramNewParamsBankFirstInternetBank, SimulationProgramNewParamsBankGlobalInnovationsBank, SimulationProgramNewParamsBankGrasshopperBank:
+		return true
+	}
+	return false
 }
