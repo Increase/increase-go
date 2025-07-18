@@ -79,7 +79,8 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
 		increase.AccountUpdateParams{
-			Name: increase.F("My renamed account"),
+			CreditLimit: increase.F(int64(0)),
+			Name:        increase.F("My renamed account"),
 		},
 	)
 	if err != nil {
