@@ -134,7 +134,6 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				Name:               increase.F("x"),
 				ConfirmedNoUsTaxID: increase.F(true),
 			}}),
-			Name: increase.F("x"),
 		}),
 		NaturalPerson: increase.F(increase.EntityNewParamsNaturalPerson{
 			Address: increase.F(increase.EntityNewParamsNaturalPersonAddress{
