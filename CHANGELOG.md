@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.263.1 (2025-07-21)
+
+Full Changelog: [v0.263.0...v0.263.1](https://github.com/Increase/increase-go/compare/v0.263.0...v0.263.1)
+
+### Bug Fixes
+
+* **client:** process custom base url ahead of time ([639b003](https://github.com/Increase/increase-go/commit/639b0035616a7cf7fa5e38994e72f2028267dc3b))
+
 ## 0.263.0 (2025-07-21)
 
 Full Changelog: [v0.262.0...v0.263.0](https://github.com/Increase/increase-go/compare/v0.262.0...v0.263.0)
