@@ -1684,8 +1684,6 @@ func (r EntityNewParamsGovernmentAuthorityCategory) IsKnown() bool {
 type EntityNewParamsJoint struct {
 	// The two individuals that share control of the entity.
 	Individuals param.Field[[]EntityNewParamsJointIndividual] `json:"individuals,required"`
-	// The name of the joint entity.
-	Name param.Field[string] `json:"name"`
 }
 
 func (r EntityNewParamsJoint) MarshalJSON() (data []byte, err error) {
