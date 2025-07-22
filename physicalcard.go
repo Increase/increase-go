@@ -215,6 +215,8 @@ func (r physicalCardShipmentJSON) RawJSON() string {
 type PhysicalCardShipmentAddress struct {
 	// The city of the shipping address.
 	City string `json:"city,required"`
+	// The country of the shipping address.
+	Country string `json:"country,required"`
 	// The first line of the shipping address.
 	Line1 string `json:"line1,required"`
 	// The second line of the shipping address.
@@ -225,7 +227,7 @@ type PhysicalCardShipmentAddress struct {
 	Name string `json:"name,required"`
 	// The postal code of the shipping address.
 	PostalCode string `json:"postal_code,required"`
-	// The US state of the shipping address.
+	// The state of the shipping address.
 	State string                          `json:"state,required"`
 	JSON  physicalCardShipmentAddressJSON `json:"-"`
 }
@@ -234,6 +236,7 @@ type PhysicalCardShipmentAddress struct {
 // [PhysicalCardShipmentAddress]
 type physicalCardShipmentAddressJSON struct {
 	City        apijson.Field
+	Country     apijson.Field
 	Line1       apijson.Field
 	Line2       apijson.Field
 	Line3       apijson.Field
@@ -259,11 +262,12 @@ const (
 	PhysicalCardShipmentMethodUsps                   PhysicalCardShipmentMethod = "usps"
 	PhysicalCardShipmentMethodFedexPriorityOvernight PhysicalCardShipmentMethod = "fedex_priority_overnight"
 	PhysicalCardShipmentMethodFedex2Day              PhysicalCardShipmentMethod = "fedex_2_day"
+	PhysicalCardShipmentMethodDhlWorldwideExpress    PhysicalCardShipmentMethod = "dhl_worldwide_express"
 )
 
 func (r PhysicalCardShipmentMethod) IsKnown() bool {
 	switch r {
-	case PhysicalCardShipmentMethodUsps, PhysicalCardShipmentMethodFedexPriorityOvernight, PhysicalCardShipmentMethodFedex2Day:
+	case PhysicalCardShipmentMethodUsps, PhysicalCardShipmentMethodFedexPriorityOvernight, PhysicalCardShipmentMethodFedex2Day, PhysicalCardShipmentMethodDhlWorldwideExpress:
 		return true
 	}
 	return false
@@ -494,8 +498,13 @@ type PhysicalCardNewParamsShipmentAddress struct {
 	Name param.Field[string] `json:"name,required"`
 	// The postal code of the shipping address.
 	PostalCode param.Field[string] `json:"postal_code,required"`
-	// The US state of the shipping address.
+	// The state of the shipping address.
 	State param.Field[string] `json:"state,required"`
+	// The two-character ISO 3166-1 code of the country where the card should be
+	// shipped (e.g., `US`). Please reach out to
+	// [support@increase.com](mailto:support@increase.com) to ship cards
+	// internationally.
+	Country param.Field[string] `json:"country"`
 	// The second line of the shipping address.
 	Line2 param.Field[string] `json:"line2"`
 	// The third line of the shipping address.
@@ -515,11 +524,12 @@ const (
 	PhysicalCardNewParamsShipmentMethodUsps                   PhysicalCardNewParamsShipmentMethod = "usps"
 	PhysicalCardNewParamsShipmentMethodFedexPriorityOvernight PhysicalCardNewParamsShipmentMethod = "fedex_priority_overnight"
 	PhysicalCardNewParamsShipmentMethodFedex2Day              PhysicalCardNewParamsShipmentMethod = "fedex_2_day"
+	PhysicalCardNewParamsShipmentMethodDhlWorldwideExpress    PhysicalCardNewParamsShipmentMethod = "dhl_worldwide_express"
 )
 
 func (r PhysicalCardNewParamsShipmentMethod) IsKnown() bool {
 	switch r {
-	case PhysicalCardNewParamsShipmentMethodUsps, PhysicalCardNewParamsShipmentMethodFedexPriorityOvernight, PhysicalCardNewParamsShipmentMethodFedex2Day:
+	case PhysicalCardNewParamsShipmentMethodUsps, PhysicalCardNewParamsShipmentMethodFedexPriorityOvernight, PhysicalCardNewParamsShipmentMethodFedex2Day, PhysicalCardNewParamsShipmentMethodDhlWorldwideExpress:
 		return true
 	}
 	return false
