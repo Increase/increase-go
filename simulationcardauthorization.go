@@ -108,9 +108,6 @@ type SimulationCardAuthorizationNewParams struct {
 	DeclineReason param.Field[SimulationCardAuthorizationNewParamsDeclineReason] `json:"decline_reason"`
 	// The identifier of the Digital Wallet Token to be authorized.
 	DigitalWalletTokenID param.Field[string] `json:"digital_wallet_token_id"`
-	// The direction describes the direction the funds will move, either from the
-	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction param.Field[SimulationCardAuthorizationNewParamsDirection] `json:"direction"`
 	// The identifier of the Event Subscription to use. If provided, will override the
 	// default real time event subscription. Because you can only create one real time
 	// decision event subscription, you can use this field to route events to any
@@ -137,6 +134,9 @@ type SimulationCardAuthorizationNewParams struct {
 	NetworkRiskScore param.Field[int64] `json:"network_risk_score"`
 	// The identifier of the Physical Card to be authorized.
 	PhysicalCardID param.Field[string] `json:"physical_card_id"`
+	// Fields specific to a specific type of authorization, such as Automatic Fuel
+	// Dispensers, Refund Authorizations, or Cash Disbursements.
+	ProcessingCategory param.Field[SimulationCardAuthorizationNewParamsProcessingCategory] `json:"processing_category"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
 	TerminalID param.Field[string] `json:"terminal_id"`
@@ -181,23 +181,6 @@ func (r SimulationCardAuthorizationNewParamsDeclineReason) IsKnown() bool {
 	return false
 }
 
-// The direction describes the direction the funds will move, either from the
-// cardholder to the merchant or from the merchant to the cardholder.
-type SimulationCardAuthorizationNewParamsDirection string
-
-const (
-	SimulationCardAuthorizationNewParamsDirectionSettlement SimulationCardAuthorizationNewParamsDirection = "settlement"
-	SimulationCardAuthorizationNewParamsDirectionRefund     SimulationCardAuthorizationNewParamsDirection = "refund"
-)
-
-func (r SimulationCardAuthorizationNewParamsDirection) IsKnown() bool {
-	switch r {
-	case SimulationCardAuthorizationNewParamsDirectionSettlement, SimulationCardAuthorizationNewParamsDirectionRefund:
-		return true
-	}
-	return false
-}
-
 // Fields specific to a given card network.
 type SimulationCardAuthorizationNewParamsNetworkDetails struct {
 	// Fields specific to the Visa network.
@@ -234,6 +217,41 @@ const (
 func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
 	switch r {
 	case SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInternalVisaError, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonOther:
+		return true
+	}
+	return false
+}
+
+// Fields specific to a specific type of authorization, such as Automatic Fuel
+// Dispensers, Refund Authorizations, or Cash Disbursements.
+type SimulationCardAuthorizationNewParamsProcessingCategory struct {
+	// The processing category describes the intent behind the authorization, such as
+	// whether it was used for bill payments or an automatic fuel dispenser.
+	Category param.Field[SimulationCardAuthorizationNewParamsProcessingCategoryCategory] `json:"category,required"`
+}
+
+func (r SimulationCardAuthorizationNewParamsProcessingCategory) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The processing category describes the intent behind the authorization, such as
+// whether it was used for bill payments or an automatic fuel dispenser.
+type SimulationCardAuthorizationNewParamsProcessingCategoryCategory string
+
+const (
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryAccountFunding         SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "account_funding"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryAutomaticFuelDispenser SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "automatic_fuel_dispenser"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryBillPayment            SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "bill_payment"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryOriginalCredit         SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "original_credit"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryPurchase               SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "purchase"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryQuasiCash              SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "quasi_cash"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryRefund                 SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "refund"
+	SimulationCardAuthorizationNewParamsProcessingCategoryCategoryCashDisbursement       SimulationCardAuthorizationNewParamsProcessingCategoryCategory = "cash_disbursement"
+)
+
+func (r SimulationCardAuthorizationNewParamsProcessingCategoryCategory) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsProcessingCategoryCategoryAccountFunding, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryAutomaticFuelDispenser, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryBillPayment, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryOriginalCredit, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryPurchase, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryQuasiCash, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryRefund, SimulationCardAuthorizationNewParamsProcessingCategoryCategoryCashDisbursement:
 		return true
 	}
 	return false

@@ -31,7 +31,6 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		CardID:                     increase.F("card_oubs0hwk5rn6knuecxg2"),
 		DeclineReason:              increase.F(increase.SimulationCardAuthorizationNewParamsDeclineReasonAccountClosed),
 		DigitalWalletTokenID:       increase.F("digital_wallet_token_id"),
-		Direction:                  increase.F(increase.SimulationCardAuthorizationNewParamsDirectionSettlement),
 		EventSubscriptionID:        increase.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
 		MerchantAcceptorID:         increase.F("5665270011000168"),
 		MerchantCategoryCode:       increase.F("5734"),
@@ -46,7 +45,10 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		}),
 		NetworkRiskScore: increase.F(int64(0)),
 		PhysicalCardID:   increase.F("physical_card_id"),
-		TerminalID:       increase.F("x"),
+		ProcessingCategory: increase.F(increase.SimulationCardAuthorizationNewParamsProcessingCategory{
+			Category: increase.F(increase.SimulationCardAuthorizationNewParamsProcessingCategoryCategoryAccountFunding),
+		}),
+		TerminalID: increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error
