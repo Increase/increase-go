@@ -39,6 +39,7 @@ func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 				Name:        increase.F("Ian Crease"),
 				PostalCode:  increase.F("10045"),
 				State:       increase.F("NY"),
+				Country:     increase.F("x"),
 				Line2:       increase.F("Unit 2"),
 				Line3:       increase.F("x"),
 				PhoneNumber: increase.F("x"),
