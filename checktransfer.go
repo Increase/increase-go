@@ -104,7 +104,7 @@ func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID strin
 	return
 }
 
-// Request a stop payment on a Check Transfer
+// Stop payment on a Check Transfer
 func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID string, body CheckTransferStopPaymentParams, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	if checkTransferID == "" {
