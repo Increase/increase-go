@@ -1815,6 +1815,12 @@ type CardPaymentElementsCardIncrement struct {
 	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
 	// The identifier of the Pending Transaction associated with this Card Increment.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// The amount of this increment in the minor unit of the transaction's presentment
+	// currency.
+	PresentmentAmount int64 `json:"presentment_amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// incremental authorization.
 	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
@@ -1839,6 +1845,8 @@ type cardPaymentElementsCardIncrementJSON struct {
 	NetworkIdentifiers         apijson.Field
 	NetworkRiskScore           apijson.Field
 	PendingTransactionID       apijson.Field
+	PresentmentAmount          apijson.Field
+	PresentmentCurrency        apijson.Field
 	RealTimeDecisionID         apijson.Field
 	Type                       apijson.Field
 	UpdatedAuthorizationAmount apijson.Field
