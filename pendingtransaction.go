@@ -405,6 +405,10 @@ type PendingTransactionSourceCardAuthorization struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner PendingTransactionSourceCardAuthorizationActioner `json:"actioner,required"`
+	// Additional amounts associated with the card authorization, such as ATM
+	// surcharges fees. These are usually a subset of the `amount` field and are used
+	// to provide more detailed information about the transaction.
+	AdditionalAmounts PendingTransactionSourceCardAuthorizationAdditionalAmounts `json:"additional_amounts,required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -478,6 +482,7 @@ type PendingTransactionSourceCardAuthorization struct {
 type pendingTransactionSourceCardAuthorizationJSON struct {
 	ID                   apijson.Field
 	Actioner             apijson.Field
+	AdditionalAmounts    apijson.Field
 	Amount               apijson.Field
 	CardPaymentID        apijson.Field
 	Currency             apijson.Field
@@ -531,6 +536,308 @@ func (r PendingTransactionSourceCardAuthorizationActioner) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Additional amounts associated with the card authorization, such as ATM
+// surcharges fees. These are usually a subset of the `amount` field and are used
+// to provide more detailed information about the transaction.
+type PendingTransactionSourceCardAuthorizationAdditionalAmounts struct {
+	// The part of this transaction amount that was for clinic-related services.
+	Clinic PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	// The part of this transaction amount that was for dental-related services.
+	Dental PendingTransactionSourceCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The part of this transaction amount that was for healthcare prescriptions.
+	Prescription PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	// The surcharge amount charged for this transaction by the merchant.
+	Surcharge PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	// The total amount of a series of incremental authorizations, optionally provided.
+	TotalCumulative PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	// The total amount of healthcare-related additional amounts.
+	TotalHealthcare PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	// The part of this transaction amount that was for transit-related services.
+	Transit PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit `json:"transit,required,nullable"`
+	// An unknown additional amount.
+	Unknown PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	// The part of this transaction amount that was for vision-related services.
+	Vision PendingTransactionSourceCardAuthorizationAdditionalAmountsVision `json:"vision,required,nullable"`
+	JSON   pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON   `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON contains the JSON
+// metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmounts]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON struct {
+	Clinic          apijson.Field
+	Dental          apijson.Field
+	Prescription    apijson.Field
+	Surcharge       apijson.Field
+	TotalCumulative apijson.Field
+	TotalHealthcare apijson.Field
+	Transit         apijson.Field
+	Unknown         apijson.Field
+	Vision          apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmounts) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for clinic-related services.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                               `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsClinicJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsClinicJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsClinicJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsClinicJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for dental-related services.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsDental struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                               `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsDental]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsDental) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for healthcare prescriptions.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                     `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsPrescriptionJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsPrescriptionJSON
+// contains the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsPrescriptionJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsPrescriptionJSON) RawJSON() string {
+	return r.raw
+}
+
+// The surcharge amount charged for this transaction by the merchant.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                  `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsSurchargeJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsSurchargeJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsSurchargeJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsSurchargeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The total amount of a series of incremental authorizations, optionally provided.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                        `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulativeJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulativeJSON
+// contains the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulativeJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulativeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The total amount of healthcare-related additional amounts.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                        `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcareJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcareJSON
+// contains the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcareJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcareJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for transit-related services.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsTransitJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsTransitJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsTransitJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsTransitJSON) RawJSON() string {
+	return r.raw
+}
+
+// An unknown additional amount.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsUnknownJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsUnknownJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsUnknownJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsUnknownJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for vision-related services.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsVision struct {
+	// The amount in minor units of the `currency` field.
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                               `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsVisionJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsVisionJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsVision]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsVisionJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsVision) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsVisionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
