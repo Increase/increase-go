@@ -2832,9 +2832,15 @@ type CardPaymentElementsCardReversal struct {
 	NetworkIdentifiers CardPaymentElementsCardReversalNetworkIdentifiers `json:"network_identifiers,required"`
 	// The identifier of the Pending Transaction associated with this Card Reversal.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
+	// presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
 	// The amount of this reversal in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	ReversalAmount int64 `json:"reversal_amount,required"`
+	// The amount of this reversal in the minor unit of the transaction's presentment
+	// currency. For dollars, for example, this is cents.
+	ReversalPresentmentAmount int64 `json:"reversal_presentment_amount,required"`
 	// Why this reversal was initiated.
 	ReversalReason CardPaymentElementsCardReversalReversalReason `json:"reversal_reason,required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
@@ -2845,33 +2851,39 @@ type CardPaymentElementsCardReversal struct {
 	Type CardPaymentElementsCardReversalType `json:"type,required"`
 	// The amount left pending on the Card Authorization in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64                               `json:"updated_authorization_amount,required"`
-	JSON                       cardPaymentElementsCardReversalJSON `json:"-"`
+	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount,required"`
+	// The amount left pending on the Card Authorization in the minor unit of the
+	// transaction's presentment currency. For dollars, for example, this is cents.
+	UpdatedAuthorizationPresentmentAmount int64                               `json:"updated_authorization_presentment_amount,required"`
+	JSON                                  cardPaymentElementsCardReversalJSON `json:"-"`
 }
 
 // cardPaymentElementsCardReversalJSON contains the JSON metadata for the struct
 // [CardPaymentElementsCardReversal]
 type cardPaymentElementsCardReversalJSON struct {
-	ID                         apijson.Field
-	CardAuthorizationID        apijson.Field
-	Currency                   apijson.Field
-	MerchantAcceptorID         apijson.Field
-	MerchantCategoryCode       apijson.Field
-	MerchantCity               apijson.Field
-	MerchantCountry            apijson.Field
-	MerchantDescriptor         apijson.Field
-	MerchantPostalCode         apijson.Field
-	MerchantState              apijson.Field
-	Network                    apijson.Field
-	NetworkIdentifiers         apijson.Field
-	PendingTransactionID       apijson.Field
-	ReversalAmount             apijson.Field
-	ReversalReason             apijson.Field
-	TerminalID                 apijson.Field
-	Type                       apijson.Field
-	UpdatedAuthorizationAmount apijson.Field
-	raw                        string
-	ExtraFields                map[string]apijson.Field
+	ID                                    apijson.Field
+	CardAuthorizationID                   apijson.Field
+	Currency                              apijson.Field
+	MerchantAcceptorID                    apijson.Field
+	MerchantCategoryCode                  apijson.Field
+	MerchantCity                          apijson.Field
+	MerchantCountry                       apijson.Field
+	MerchantDescriptor                    apijson.Field
+	MerchantPostalCode                    apijson.Field
+	MerchantState                         apijson.Field
+	Network                               apijson.Field
+	NetworkIdentifiers                    apijson.Field
+	PendingTransactionID                  apijson.Field
+	PresentmentCurrency                   apijson.Field
+	ReversalAmount                        apijson.Field
+	ReversalPresentmentAmount             apijson.Field
+	ReversalReason                        apijson.Field
+	TerminalID                            apijson.Field
+	Type                                  apijson.Field
+	UpdatedAuthorizationAmount            apijson.Field
+	UpdatedAuthorizationPresentmentAmount apijson.Field
+	raw                                   string
+	ExtraFields                           map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardReversal) UnmarshalJSON(data []byte) (err error) {
