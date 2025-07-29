@@ -1428,6 +1428,9 @@ type CardPaymentElementsCardDecline struct {
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
 	Direction CardPaymentElementsCardDeclineDirection `json:"direction,required"`
+	// The identifier of the card authorization this request attempted to incrementally
+	// authorize.
+	IncrementedCardAuthorizationID string `json:"incremented_card_authorization_id,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
@@ -1482,36 +1485,37 @@ type CardPaymentElementsCardDecline struct {
 // cardPaymentElementsCardDeclineJSON contains the JSON metadata for the struct
 // [CardPaymentElementsCardDecline]
 type cardPaymentElementsCardDeclineJSON struct {
-	ID                     apijson.Field
-	Actioner               apijson.Field
-	AdditionalAmounts      apijson.Field
-	Amount                 apijson.Field
-	CardPaymentID          apijson.Field
-	Currency               apijson.Field
-	DeclinedTransactionID  apijson.Field
-	DigitalWalletTokenID   apijson.Field
-	Direction              apijson.Field
-	MerchantAcceptorID     apijson.Field
-	MerchantCategoryCode   apijson.Field
-	MerchantCity           apijson.Field
-	MerchantCountry        apijson.Field
-	MerchantDescriptor     apijson.Field
-	MerchantPostalCode     apijson.Field
-	MerchantState          apijson.Field
-	NetworkDetails         apijson.Field
-	NetworkIdentifiers     apijson.Field
-	NetworkRiskScore       apijson.Field
-	PhysicalCardID         apijson.Field
-	PresentmentAmount      apijson.Field
-	PresentmentCurrency    apijson.Field
-	ProcessingCategory     apijson.Field
-	RealTimeDecisionID     apijson.Field
-	RealTimeDecisionReason apijson.Field
-	Reason                 apijson.Field
-	TerminalID             apijson.Field
-	Verification           apijson.Field
-	raw                    string
-	ExtraFields            map[string]apijson.Field
+	ID                             apijson.Field
+	Actioner                       apijson.Field
+	AdditionalAmounts              apijson.Field
+	Amount                         apijson.Field
+	CardPaymentID                  apijson.Field
+	Currency                       apijson.Field
+	DeclinedTransactionID          apijson.Field
+	DigitalWalletTokenID           apijson.Field
+	Direction                      apijson.Field
+	IncrementedCardAuthorizationID apijson.Field
+	MerchantAcceptorID             apijson.Field
+	MerchantCategoryCode           apijson.Field
+	MerchantCity                   apijson.Field
+	MerchantCountry                apijson.Field
+	MerchantDescriptor             apijson.Field
+	MerchantPostalCode             apijson.Field
+	MerchantState                  apijson.Field
+	NetworkDetails                 apijson.Field
+	NetworkIdentifiers             apijson.Field
+	NetworkRiskScore               apijson.Field
+	PhysicalCardID                 apijson.Field
+	PresentmentAmount              apijson.Field
+	PresentmentCurrency            apijson.Field
+	ProcessingCategory             apijson.Field
+	RealTimeDecisionID             apijson.Field
+	RealTimeDecisionReason         apijson.Field
+	Reason                         apijson.Field
+	TerminalID                     apijson.Field
+	Verification                   apijson.Field
+	raw                            string
+	ExtraFields                    map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardDecline) UnmarshalJSON(data []byte) (err error) {
