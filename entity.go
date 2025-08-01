@@ -592,12 +592,15 @@ func (r entityGovernmentAuthorityAuthorizedPersonJSON) RawJSON() string {
 type EntityGovernmentAuthorityCategory string
 
 const (
-	EntityGovernmentAuthorityCategoryMunicipality EntityGovernmentAuthorityCategory = "municipality"
+	EntityGovernmentAuthorityCategoryMunicipality    EntityGovernmentAuthorityCategory = "municipality"
+	EntityGovernmentAuthorityCategoryStateAgency     EntityGovernmentAuthorityCategory = "state_agency"
+	EntityGovernmentAuthorityCategoryStateGovernment EntityGovernmentAuthorityCategory = "state_government"
+	EntityGovernmentAuthorityCategoryFederalAgency   EntityGovernmentAuthorityCategory = "federal_agency"
 )
 
 func (r EntityGovernmentAuthorityCategory) IsKnown() bool {
 	switch r {
-	case EntityGovernmentAuthorityCategoryMunicipality:
+	case EntityGovernmentAuthorityCategoryMunicipality, EntityGovernmentAuthorityCategoryStateAgency, EntityGovernmentAuthorityCategoryStateGovernment, EntityGovernmentAuthorityCategoryFederalAgency:
 		return true
 	}
 	return false
@@ -1668,12 +1671,15 @@ func (r EntityNewParamsGovernmentAuthorityAuthorizedPerson) MarshalJSON() (data 
 type EntityNewParamsGovernmentAuthorityCategory string
 
 const (
-	EntityNewParamsGovernmentAuthorityCategoryMunicipality EntityNewParamsGovernmentAuthorityCategory = "municipality"
+	EntityNewParamsGovernmentAuthorityCategoryMunicipality    EntityNewParamsGovernmentAuthorityCategory = "municipality"
+	EntityNewParamsGovernmentAuthorityCategoryStateAgency     EntityNewParamsGovernmentAuthorityCategory = "state_agency"
+	EntityNewParamsGovernmentAuthorityCategoryStateGovernment EntityNewParamsGovernmentAuthorityCategory = "state_government"
+	EntityNewParamsGovernmentAuthorityCategoryFederalAgency   EntityNewParamsGovernmentAuthorityCategory = "federal_agency"
 )
 
 func (r EntityNewParamsGovernmentAuthorityCategory) IsKnown() bool {
 	switch r {
-	case EntityNewParamsGovernmentAuthorityCategoryMunicipality:
+	case EntityNewParamsGovernmentAuthorityCategoryMunicipality, EntityNewParamsGovernmentAuthorityCategoryStateAgency, EntityNewParamsGovernmentAuthorityCategoryStateGovernment, EntityNewParamsGovernmentAuthorityCategoryFederalAgency:
 		return true
 	}
 	return false
