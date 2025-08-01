@@ -327,6 +327,8 @@ type PhysicalCardProfileCloneParams struct {
 	// Text printed on the front of the card. Reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
 	FrontText param.Field[PhysicalCardProfileCloneParamsFrontText] `json:"front_text"`
+	// The identifier of the Program to use for the cloned Physical Card Profile.
+	ProgramID param.Field[string] `json:"program_id"`
 }
 
 func (r PhysicalCardProfileCloneParams) MarshalJSON() (data []byte, err error) {
