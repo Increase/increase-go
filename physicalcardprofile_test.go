@@ -142,6 +142,7 @@ func TestPhysicalCardProfileCloneWithOptionalParams(t *testing.T) {
 				Line1: increase.F("x"),
 				Line2: increase.F("x"),
 			}),
+			ProgramID: increase.F("program_id"),
 		},
 	)
 	if err != nil {
