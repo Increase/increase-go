@@ -204,6 +204,10 @@ type TransactionSource struct {
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	// Contains the details of a successful Card Dispute.
 	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,required,nullable"`
+	// A Card Dispute Financial object. This field will be present in the JSON response
+	// if and only if `category` is equal to `card_dispute_financial`. Financial event
+	// related to a Card Dispute.
+	CardDisputeFinancial TransactionSourceCardDisputeFinancial `json:"card_dispute_financial,required,nullable"`
 	// A Card Dispute Loss object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_dispute_loss`. Contains the details of
 	// a lost Card Dispute.
@@ -349,6 +353,7 @@ type transactionSourceJSON struct {
 	ACHTransferRejection                        apijson.Field
 	ACHTransferReturn                           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
+	CardDisputeFinancial                        apijson.Field
 	CardDisputeLoss                             apijson.Field
 	CardPushTransferAcceptance                  apijson.Field
 	CardRefund                                  apijson.Field
@@ -682,6 +687,106 @@ func (r *TransactionSourceCardDisputeAcceptance) UnmarshalJSON(data []byte) (err
 
 func (r transactionSourceCardDisputeAcceptanceJSON) RawJSON() string {
 	return r.raw
+}
+
+// A Card Dispute Financial object. This field will be present in the JSON response
+// if and only if `category` is equal to `card_dispute_financial`. Financial event
+// related to a Card Dispute.
+type TransactionSourceCardDisputeFinancial struct {
+	// The amount of the financial event.
+	Amount int64 `json:"amount,required"`
+	// The identifier of the Card Dispute the financial event is associated with.
+	CardDisputeID string `json:"card_dispute_id,required"`
+	// The network that the Card Dispute is associated with.
+	Network TransactionSourceCardDisputeFinancialNetwork `json:"network,required"`
+	// The identifier of the Transaction that was created to credit or debit the
+	// disputed funds to or from your account.
+	TransactionID string `json:"transaction_id,required"`
+	// Information for events related to card dispute for card payments processed over
+	// Visa's network. This field will be present in the JSON response if and only if
+	// `network` is equal to `visa`.
+	Visa TransactionSourceCardDisputeFinancialVisa `json:"visa,required,nullable"`
+	JSON transactionSourceCardDisputeFinancialJSON `json:"-"`
+}
+
+// transactionSourceCardDisputeFinancialJSON contains the JSON metadata for the
+// struct [TransactionSourceCardDisputeFinancial]
+type transactionSourceCardDisputeFinancialJSON struct {
+	Amount        apijson.Field
+	CardDisputeID apijson.Field
+	Network       apijson.Field
+	TransactionID apijson.Field
+	Visa          apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardDisputeFinancial) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardDisputeFinancialJSON) RawJSON() string {
+	return r.raw
+}
+
+// The network that the Card Dispute is associated with.
+type TransactionSourceCardDisputeFinancialNetwork string
+
+const (
+	TransactionSourceCardDisputeFinancialNetworkVisa TransactionSourceCardDisputeFinancialNetwork = "visa"
+)
+
+func (r TransactionSourceCardDisputeFinancialNetwork) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardDisputeFinancialNetworkVisa:
+		return true
+	}
+	return false
+}
+
+// Information for events related to card dispute for card payments processed over
+// Visa's network. This field will be present in the JSON response if and only if
+// `network` is equal to `visa`.
+type TransactionSourceCardDisputeFinancialVisa struct {
+	// The type of card dispute financial event.
+	EventType TransactionSourceCardDisputeFinancialVisaEventType `json:"event_type,required"`
+	JSON      transactionSourceCardDisputeFinancialVisaJSON      `json:"-"`
+}
+
+// transactionSourceCardDisputeFinancialVisaJSON contains the JSON metadata for the
+// struct [TransactionSourceCardDisputeFinancialVisa]
+type transactionSourceCardDisputeFinancialVisaJSON struct {
+	EventType   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardDisputeFinancialVisa) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardDisputeFinancialVisaJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of card dispute financial event.
+type TransactionSourceCardDisputeFinancialVisaEventType string
+
+const (
+	TransactionSourceCardDisputeFinancialVisaEventTypeChargebackSubmitted            TransactionSourceCardDisputeFinancialVisaEventType = "chargeback_submitted"
+	TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationDeclined TransactionSourceCardDisputeFinancialVisaEventType = "merchant_prearbitration_declined"
+	TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationReceived TransactionSourceCardDisputeFinancialVisaEventType = "merchant_prearbitration_received"
+	TransactionSourceCardDisputeFinancialVisaEventTypeRepresented                    TransactionSourceCardDisputeFinancialVisaEventType = "represented"
+	TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationDeclined     TransactionSourceCardDisputeFinancialVisaEventType = "user_prearbitration_declined"
+	TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationSubmitted    TransactionSourceCardDisputeFinancialVisaEventType = "user_prearbitration_submitted"
+)
+
+func (r TransactionSourceCardDisputeFinancialVisaEventType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardDisputeFinancialVisaEventTypeChargebackSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationDeclined, TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationReceived, TransactionSourceCardDisputeFinancialVisaEventTypeRepresented, TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationDeclined, TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationSubmitted:
+		return true
+	}
+	return false
 }
 
 // A Card Dispute Loss object. This field will be present in the JSON response if
@@ -2571,6 +2676,7 @@ const (
 	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
 	TransactionSourceCategoryCashbackPayment                             TransactionSourceCategory = "cashback_payment"
 	TransactionSourceCategoryCardDisputeAcceptance                       TransactionSourceCategory = "card_dispute_acceptance"
+	TransactionSourceCategoryCardDisputeFinancial                        TransactionSourceCategory = "card_dispute_financial"
 	TransactionSourceCategoryCardDisputeLoss                             TransactionSourceCategory = "card_dispute_loss"
 	TransactionSourceCategoryCardRefund                                  TransactionSourceCategory = "card_refund"
 	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
@@ -2600,7 +2706,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferDecline, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3866,6 +3972,7 @@ const (
 	TransactionListParamsCategoryInACHTransferReturn                           TransactionListParamsCategoryIn = "ach_transfer_return"
 	TransactionListParamsCategoryInCashbackPayment                             TransactionListParamsCategoryIn = "cashback_payment"
 	TransactionListParamsCategoryInCardDisputeAcceptance                       TransactionListParamsCategoryIn = "card_dispute_acceptance"
+	TransactionListParamsCategoryInCardDisputeFinancial                        TransactionListParamsCategoryIn = "card_dispute_financial"
 	TransactionListParamsCategoryInCardDisputeLoss                             TransactionListParamsCategoryIn = "card_dispute_loss"
 	TransactionListParamsCategoryInCardRefund                                  TransactionListParamsCategoryIn = "card_refund"
 	TransactionListParamsCategoryInCardSettlement                              TransactionListParamsCategoryIn = "card_settlement"
@@ -3895,7 +4002,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
