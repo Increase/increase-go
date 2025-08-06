@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.274.0 (2025-08-06)
+
+Full Changelog: [v0.273.0...v0.274.0](https://github.com/Increase/increase-go/compare/v0.273.0...v0.274.0)
+
+### Features
+
+* **api:** api update ([ab81bcd](https://github.com/Increase/increase-go/commit/ab81bcd70dada0ea5c21295c42b75b2cd162ceab))
+* **client:** support optional json html escaping ([3314519](https://github.com/Increase/increase-go/commit/33145197f3899db6cfe79469e58af1cc474c4773))
+
 ## 0.273.0 (2025-08-06)
 
 Full Changelog: [v0.272.0...v0.273.0](https://github.com/Increase/increase-go/compare/v0.272.0...v0.273.0)
