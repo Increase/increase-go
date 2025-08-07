@@ -162,6 +162,7 @@ func (r FileDirection) IsKnown() bool {
 type FilePurpose string
 
 const (
+	FilePurposeCardDisputeAttachment                 FilePurpose = "card_dispute_attachment"
 	FilePurposeCheckImageFront                       FilePurpose = "check_image_front"
 	FilePurposeCheckImageBack                        FilePurpose = "check_image_back"
 	FilePurposeProcessedCheckImageFront              FilePurpose = "processed_check_image_front"
@@ -194,7 +195,7 @@ const (
 
 func (r FilePurpose) IsKnown() bool {
 	switch r {
-	case FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeProcessedCheckImageFront, FilePurposeProcessedCheckImageBack, FilePurposeMailedCheckImage, FilePurposeCheckAttachment, FilePurposeInboundMailItem, FilePurposeForm1099Int, FilePurposeForm1099Misc, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment, FilePurposeDepositAccountControlAgreement, FilePurposeProofOfAuthorizationRequestSubmission, FilePurposeAccountVerificationLetter, FilePurposeFundingInstructions, FilePurposeHoldHarmlessLetter:
+	case FilePurposeCardDisputeAttachment, FilePurposeCheckImageFront, FilePurposeCheckImageBack, FilePurposeProcessedCheckImageFront, FilePurposeProcessedCheckImageBack, FilePurposeMailedCheckImage, FilePurposeCheckAttachment, FilePurposeInboundMailItem, FilePurposeForm1099Int, FilePurposeForm1099Misc, FilePurposeFormSS4, FilePurposeIdentityDocument, FilePurposeIncreaseStatement, FilePurposeOther, FilePurposeTrustFormationDocument, FilePurposeDigitalWalletArtwork, FilePurposeDigitalWalletAppIcon, FilePurposePhysicalCardFront, FilePurposePhysicalCardBack, FilePurposePhysicalCardCarrier, FilePurposeDocumentRequest, FilePurposeEntitySupplementalDocument, FilePurposeExport, FilePurposeUnusualActivityReportAttachment, FilePurposeDepositAccountControlAgreement, FilePurposeProofOfAuthorizationRequestSubmission, FilePurposeAccountVerificationLetter, FilePurposeFundingInstructions, FilePurposeHoldHarmlessLetter:
 		return true
 	}
 	return false
@@ -246,6 +247,7 @@ func (r FileNewParams) MarshalMultipart() (data []byte, contentType string, err 
 type FileNewParamsPurpose string
 
 const (
+	FileNewParamsPurposeCardDisputeAttachment                 FileNewParamsPurpose = "card_dispute_attachment"
 	FileNewParamsPurposeCheckImageFront                       FileNewParamsPurpose = "check_image_front"
 	FileNewParamsPurposeCheckImageBack                        FileNewParamsPurpose = "check_image_back"
 	FileNewParamsPurposeMailedCheckImage                      FileNewParamsPurpose = "mailed_check_image"
@@ -266,7 +268,7 @@ const (
 
 func (r FileNewParamsPurpose) IsKnown() bool {
 	switch r {
-	case FileNewParamsPurposeCheckImageFront, FileNewParamsPurposeCheckImageBack, FileNewParamsPurposeMailedCheckImage, FileNewParamsPurposeCheckAttachment, FileNewParamsPurposeFormSS4, FileNewParamsPurposeIdentityDocument, FileNewParamsPurposeOther, FileNewParamsPurposeTrustFormationDocument, FileNewParamsPurposeDigitalWalletArtwork, FileNewParamsPurposeDigitalWalletAppIcon, FileNewParamsPurposePhysicalCardFront, FileNewParamsPurposePhysicalCardCarrier, FileNewParamsPurposeDocumentRequest, FileNewParamsPurposeEntitySupplementalDocument, FileNewParamsPurposeUnusualActivityReportAttachment, FileNewParamsPurposeProofOfAuthorizationRequestSubmission:
+	case FileNewParamsPurposeCardDisputeAttachment, FileNewParamsPurposeCheckImageFront, FileNewParamsPurposeCheckImageBack, FileNewParamsPurposeMailedCheckImage, FileNewParamsPurposeCheckAttachment, FileNewParamsPurposeFormSS4, FileNewParamsPurposeIdentityDocument, FileNewParamsPurposeOther, FileNewParamsPurposeTrustFormationDocument, FileNewParamsPurposeDigitalWalletArtwork, FileNewParamsPurposeDigitalWalletAppIcon, FileNewParamsPurposePhysicalCardFront, FileNewParamsPurposePhysicalCardCarrier, FileNewParamsPurposeDocumentRequest, FileNewParamsPurposeEntitySupplementalDocument, FileNewParamsPurposeUnusualActivityReportAttachment, FileNewParamsPurposeProofOfAuthorizationRequestSubmission:
 		return true
 	}
 	return false
@@ -336,6 +338,7 @@ func (r FileListParamsPurpose) URLQuery() (v url.Values) {
 type FileListParamsPurposeIn string
 
 const (
+	FileListParamsPurposeInCardDisputeAttachment                 FileListParamsPurposeIn = "card_dispute_attachment"
 	FileListParamsPurposeInCheckImageFront                       FileListParamsPurposeIn = "check_image_front"
 	FileListParamsPurposeInCheckImageBack                        FileListParamsPurposeIn = "check_image_back"
 	FileListParamsPurposeInProcessedCheckImageFront              FileListParamsPurposeIn = "processed_check_image_front"
@@ -368,7 +371,7 @@ const (
 
 func (r FileListParamsPurposeIn) IsKnown() bool {
 	switch r {
-	case FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInProcessedCheckImageFront, FileListParamsPurposeInProcessedCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInCheckAttachment, FileListParamsPurposeInInboundMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInForm1099Misc, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment, FileListParamsPurposeInDepositAccountControlAgreement, FileListParamsPurposeInProofOfAuthorizationRequestSubmission, FileListParamsPurposeInAccountVerificationLetter, FileListParamsPurposeInFundingInstructions, FileListParamsPurposeInHoldHarmlessLetter:
+	case FileListParamsPurposeInCardDisputeAttachment, FileListParamsPurposeInCheckImageFront, FileListParamsPurposeInCheckImageBack, FileListParamsPurposeInProcessedCheckImageFront, FileListParamsPurposeInProcessedCheckImageBack, FileListParamsPurposeInMailedCheckImage, FileListParamsPurposeInCheckAttachment, FileListParamsPurposeInInboundMailItem, FileListParamsPurposeInForm1099Int, FileListParamsPurposeInForm1099Misc, FileListParamsPurposeInFormSS4, FileListParamsPurposeInIdentityDocument, FileListParamsPurposeInIncreaseStatement, FileListParamsPurposeInOther, FileListParamsPurposeInTrustFormationDocument, FileListParamsPurposeInDigitalWalletArtwork, FileListParamsPurposeInDigitalWalletAppIcon, FileListParamsPurposeInPhysicalCardFront, FileListParamsPurposeInPhysicalCardBack, FileListParamsPurposeInPhysicalCardCarrier, FileListParamsPurposeInDocumentRequest, FileListParamsPurposeInEntitySupplementalDocument, FileListParamsPurposeInExport, FileListParamsPurposeInUnusualActivityReportAttachment, FileListParamsPurposeInDepositAccountControlAgreement, FileListParamsPurposeInProofOfAuthorizationRequestSubmission, FileListParamsPurposeInAccountVerificationLetter, FileListParamsPurposeInFundingInstructions, FileListParamsPurposeInHoldHarmlessLetter:
 		return true
 	}
 	return false
