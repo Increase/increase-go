@@ -773,18 +773,18 @@ func (r transactionSourceCardDisputeFinancialVisaJSON) RawJSON() string {
 type TransactionSourceCardDisputeFinancialVisaEventType string
 
 const (
-	TransactionSourceCardDisputeFinancialVisaEventTypeChargebackSubmitted                           TransactionSourceCardDisputeFinancialVisaEventType = "chargeback_submitted"
-	TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationRequestDeclineSubmitted TransactionSourceCardDisputeFinancialVisaEventType = "merchant_prearbitration_request_decline_submitted"
-	TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationRequestReceived         TransactionSourceCardDisputeFinancialVisaEventType = "merchant_prearbitration_request_received"
-	TransactionSourceCardDisputeFinancialVisaEventTypeRepresented                                   TransactionSourceCardDisputeFinancialVisaEventType = "represented"
-	TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationRequestDeclineReceived      TransactionSourceCardDisputeFinancialVisaEventType = "user_prearbitration_request_decline_received"
-	TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationRequestSubmitted            TransactionSourceCardDisputeFinancialVisaEventType = "user_prearbitration_request_submitted"
-	TransactionSourceCardDisputeFinancialVisaEventTypeUserWithdrawalSubmitted                       TransactionSourceCardDisputeFinancialVisaEventType = "user_withdrawal_submitted"
+	TransactionSourceCardDisputeFinancialVisaEventTypeChargebackSubmitted                    TransactionSourceCardDisputeFinancialVisaEventType = "chargeback_submitted"
+	TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationDeclineSubmitted TransactionSourceCardDisputeFinancialVisaEventType = "merchant_prearbitration_decline_submitted"
+	TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationReceived         TransactionSourceCardDisputeFinancialVisaEventType = "merchant_prearbitration_received"
+	TransactionSourceCardDisputeFinancialVisaEventTypeRepresented                            TransactionSourceCardDisputeFinancialVisaEventType = "represented"
+	TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationDeclineReceived      TransactionSourceCardDisputeFinancialVisaEventType = "user_prearbitration_decline_received"
+	TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationSubmitted            TransactionSourceCardDisputeFinancialVisaEventType = "user_prearbitration_submitted"
+	TransactionSourceCardDisputeFinancialVisaEventTypeUserWithdrawalSubmitted                TransactionSourceCardDisputeFinancialVisaEventType = "user_withdrawal_submitted"
 )
 
 func (r TransactionSourceCardDisputeFinancialVisaEventType) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardDisputeFinancialVisaEventTypeChargebackSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationRequestDeclineSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationRequestReceived, TransactionSourceCardDisputeFinancialVisaEventTypeRepresented, TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationRequestDeclineReceived, TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationRequestSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeUserWithdrawalSubmitted:
+	case TransactionSourceCardDisputeFinancialVisaEventTypeChargebackSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationDeclineSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeMerchantPrearbitrationReceived, TransactionSourceCardDisputeFinancialVisaEventTypeRepresented, TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationDeclineReceived, TransactionSourceCardDisputeFinancialVisaEventTypeUserPrearbitrationSubmitted, TransactionSourceCardDisputeFinancialVisaEventTypeUserWithdrawalSubmitted:
 		return true
 	}
 	return false
