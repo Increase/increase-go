@@ -145,7 +145,9 @@ type InboundWireTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer`.
 	Type InboundWireTransferType `json:"type,required"`
-	JSON inboundWireTransferJSON `json:"-"`
+	// The wire drawdown request the inbound wire transfer is fulfilling.
+	WireDrawdownRequestID string                  `json:"wire_drawdown_request_id,required,nullable"`
+	JSON                  inboundWireTransferJSON `json:"-"`
 }
 
 // inboundWireTransferJSON contains the JSON metadata for the struct
@@ -177,6 +179,7 @@ type inboundWireTransferJSON struct {
 	SenderReference                         apijson.Field
 	Status                                  apijson.Field
 	Type                                    apijson.Field
+	WireDrawdownRequestID                   apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
