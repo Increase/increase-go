@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.277.0 (2025-08-11)
+
+Full Changelog: [v0.276.0...v0.277.0](https://github.com/Increase/increase-go/compare/v0.276.0...v0.277.0)
+
+### Features
+
+* **api:** api update ([1c80d90](https://github.com/Increase/increase-go/commit/1c80d9078e016f2078d8505088cac2965004eae7))
+
+
+### Chores
+
+* **internal:** update comment in script ([e66f5bf](https://github.com/Increase/increase-go/commit/e66f5bfa96b19a8b639c68d60b38586c8b46d19e))
+* update @stainless-api/prism-cli to v5.15.0 ([6f8ab31](https://github.com/Increase/increase-go/commit/6f8ab319b33441a39f2bf67b91ee33bd8b73b8a8))
+
 ## 0.276.0 (2025-08-07)
 
 Full Changelog: [v0.275.0...v0.276.0](https://github.com/Increase/increase-go/compare/v0.275.0...v0.276.0)
