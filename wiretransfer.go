@@ -461,6 +461,8 @@ type WireTransferReversal struct {
 	// The American Banking Association (ABA) routing number of the bank originating
 	// the transfer.
 	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
+	// Additional information included in the wire reversal by the reversal originator.
+	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
 	// The Fedwire cycle date for the wire transfer that is being reversed by this
 	// message.
 	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
@@ -494,6 +496,7 @@ type wireTransferReversalJSON struct {
 	InputSequenceNumber                                   apijson.Field
 	InputSource                                           apijson.Field
 	OriginatorRoutingNumber                               apijson.Field
+	OriginatorToBeneficiaryInformation                    apijson.Field
 	PreviousMessageInputCycleDate                         apijson.Field
 	PreviousMessageInputMessageAccountabilityData         apijson.Field
 	PreviousMessageInputSequenceNumber                    apijson.Field
