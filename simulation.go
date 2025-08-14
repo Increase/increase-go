@@ -42,6 +42,7 @@ type SimulationService struct {
 	Programs                         *SimulationProgramService
 	AccountStatements                *SimulationAccountStatementService
 	Documents                        *SimulationDocumentService
+	CardTokens                       *SimulationCardTokenService
 }
 
 // NewSimulationService generates a new service that applies the given options to
@@ -78,5 +79,6 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.Programs = NewSimulationProgramService(opts...)
 	r.AccountStatements = NewSimulationAccountStatementService(opts...)
 	r.Documents = NewSimulationDocumentService(opts...)
+	r.CardTokens = NewSimulationCardTokenService(opts...)
 	return
 }
