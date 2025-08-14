@@ -1467,13 +1467,12 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividual) MarshalJSON() (dat
 // The individual's physical address. Mail receiving locations like PO Boxes and
 // PMB's are disallowed.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city,required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
 	Country param.Field[string] `json:"country,required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1,required"`
-	// The city, district, town, or village of the address. Required in certain
-	// countries.
-	City param.Field[string] `json:"city"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2531,13 +2530,12 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual) MarshalJSON() (
 // The individual's physical address. Mail receiving locations like PO Boxes and
 // PMB's are disallowed.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city,required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
 	Country param.Field[string] `json:"country,required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1,required"`
-	// The city, district, town, or village of the address. Required in certain
-	// countries.
-	City param.Field[string] `json:"city"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2707,13 +2705,12 @@ func (r EntityUpdateBeneficialOwnerAddressParams) MarshalJSON() (data []byte, er
 // The individual's physical address. Mail receiving locations like PO Boxes and
 // PMB's are disallowed.
 type EntityUpdateBeneficialOwnerAddressParamsAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city,required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
 	Country param.Field[string] `json:"country,required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1,required"`
-	// The city, district, town, or village of the address. Required in certain
-	// countries.
-	City param.Field[string] `json:"city"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
