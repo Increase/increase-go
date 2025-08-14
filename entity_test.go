@@ -39,9 +39,9 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			BeneficialOwners: increase.F([]increase.EntityNewParamsCorporationBeneficialOwner{{
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Address: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualAddress{
+						City:    increase.F("New York"),
 						Country: increase.F("x"),
 						Line1:   increase.F("33 Liberty Street"),
-						City:    increase.F("New York"),
 						Line2:   increase.F("x"),
 						State:   increase.F("NY"),
 						Zip:     increase.F("10045"),
@@ -425,9 +425,9 @@ func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
 			BeneficialOwner: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwner{
 				Individual: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual{
 					Address: increase.F(increase.EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress{
+						City:    increase.F("New York"),
 						Country: increase.F("US"),
 						Line1:   increase.F("33 Liberty Street"),
-						City:    increase.F("New York"),
 						Line2:   increase.F("x"),
 						State:   increase.F("NY"),
 						Zip:     increase.F("10045"),
@@ -523,9 +523,9 @@ func TestEntityUpdateBeneficialOwnerAddressWithOptionalParams(t *testing.T) {
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntityUpdateBeneficialOwnerAddressParams{
 			Address: increase.F(increase.EntityUpdateBeneficialOwnerAddressParamsAddress{
+				City:    increase.F("New York"),
 				Country: increase.F("US"),
 				Line1:   increase.F("33 Liberty Street"),
-				City:    increase.F("New York"),
 				Line2:   increase.F("Unit 2"),
 				State:   increase.F("NY"),
 				Zip:     increase.F("10045"),
