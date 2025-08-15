@@ -167,14 +167,15 @@ func (r ExternalAccountAccountHolder) IsKnown() bool {
 type ExternalAccountFunding string
 
 const (
-	ExternalAccountFundingChecking ExternalAccountFunding = "checking"
-	ExternalAccountFundingSavings  ExternalAccountFunding = "savings"
-	ExternalAccountFundingOther    ExternalAccountFunding = "other"
+	ExternalAccountFundingChecking      ExternalAccountFunding = "checking"
+	ExternalAccountFundingSavings       ExternalAccountFunding = "savings"
+	ExternalAccountFundingGeneralLedger ExternalAccountFunding = "general_ledger"
+	ExternalAccountFundingOther         ExternalAccountFunding = "other"
 )
 
 func (r ExternalAccountFunding) IsKnown() bool {
 	switch r {
-	case ExternalAccountFundingChecking, ExternalAccountFundingSavings, ExternalAccountFundingOther:
+	case ExternalAccountFundingChecking, ExternalAccountFundingSavings, ExternalAccountFundingGeneralLedger, ExternalAccountFundingOther:
 		return true
 	}
 	return false
@@ -251,14 +252,15 @@ func (r ExternalAccountNewParamsAccountHolder) IsKnown() bool {
 type ExternalAccountNewParamsFunding string
 
 const (
-	ExternalAccountNewParamsFundingChecking ExternalAccountNewParamsFunding = "checking"
-	ExternalAccountNewParamsFundingSavings  ExternalAccountNewParamsFunding = "savings"
-	ExternalAccountNewParamsFundingOther    ExternalAccountNewParamsFunding = "other"
+	ExternalAccountNewParamsFundingChecking      ExternalAccountNewParamsFunding = "checking"
+	ExternalAccountNewParamsFundingSavings       ExternalAccountNewParamsFunding = "savings"
+	ExternalAccountNewParamsFundingGeneralLedger ExternalAccountNewParamsFunding = "general_ledger"
+	ExternalAccountNewParamsFundingOther         ExternalAccountNewParamsFunding = "other"
 )
 
 func (r ExternalAccountNewParamsFunding) IsKnown() bool {
 	switch r {
-	case ExternalAccountNewParamsFundingChecking, ExternalAccountNewParamsFundingSavings, ExternalAccountNewParamsFundingOther:
+	case ExternalAccountNewParamsFundingChecking, ExternalAccountNewParamsFundingSavings, ExternalAccountNewParamsFundingGeneralLedger, ExternalAccountNewParamsFundingOther:
 		return true
 	}
 	return false
@@ -299,14 +301,15 @@ func (r ExternalAccountUpdateParamsAccountHolder) IsKnown() bool {
 type ExternalAccountUpdateParamsFunding string
 
 const (
-	ExternalAccountUpdateParamsFundingChecking ExternalAccountUpdateParamsFunding = "checking"
-	ExternalAccountUpdateParamsFundingSavings  ExternalAccountUpdateParamsFunding = "savings"
-	ExternalAccountUpdateParamsFundingOther    ExternalAccountUpdateParamsFunding = "other"
+	ExternalAccountUpdateParamsFundingChecking      ExternalAccountUpdateParamsFunding = "checking"
+	ExternalAccountUpdateParamsFundingSavings       ExternalAccountUpdateParamsFunding = "savings"
+	ExternalAccountUpdateParamsFundingGeneralLedger ExternalAccountUpdateParamsFunding = "general_ledger"
+	ExternalAccountUpdateParamsFundingOther         ExternalAccountUpdateParamsFunding = "other"
 )
 
 func (r ExternalAccountUpdateParamsFunding) IsKnown() bool {
 	switch r {
-	case ExternalAccountUpdateParamsFundingChecking, ExternalAccountUpdateParamsFundingSavings, ExternalAccountUpdateParamsFundingOther:
+	case ExternalAccountUpdateParamsFundingChecking, ExternalAccountUpdateParamsFundingSavings, ExternalAccountUpdateParamsFundingGeneralLedger, ExternalAccountUpdateParamsFundingOther:
 		return true
 	}
 	return false
