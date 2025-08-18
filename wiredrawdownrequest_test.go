@@ -36,8 +36,7 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 			PostalCode: increase.F("10045"),
 			State:      increase.F("NY"),
 		}),
-		CreditorName:        increase.F("National Phonograph Company"),
-		DebtorAccountNumber: increase.F("987654321"),
+		CreditorName: increase.F("National Phonograph Company"),
 		DebtorAddress: increase.F(increase.WireDrawdownRequestNewParamsDebtorAddress{
 			City:       increase.F("New York"),
 			Country:    increase.F("US"),
@@ -47,8 +46,10 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 			State:      increase.F("NY"),
 		}),
 		DebtorName:                        increase.F("Ian Crease"),
-		DebtorRoutingNumber:               increase.F("101050001"),
 		UnstructuredRemittanceInformation: increase.F("Invoice 29582"),
+		DebtorAccountNumber:               increase.F("987654321"),
+		DebtorExternalAccountID:           increase.F("debtor_external_account_id"),
+		DebtorRoutingNumber:               increase.F("101050001"),
 	})
 	if err != nil {
 		var apierr *increase.Error
