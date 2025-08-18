@@ -312,16 +312,19 @@ type WireDrawdownRequestNewParams struct {
 	CreditorAddress param.Field[WireDrawdownRequestNewParamsCreditorAddress] `json:"creditor_address,required"`
 	// The creditor's name.
 	CreditorName param.Field[string] `json:"creditor_name,required"`
-	// The debtor's account number.
-	DebtorAccountNumber param.Field[string] `json:"debtor_account_number,required"`
 	// The debtor's address.
 	DebtorAddress param.Field[WireDrawdownRequestNewParamsDebtorAddress] `json:"debtor_address,required"`
 	// The debtor's name.
 	DebtorName param.Field[string] `json:"debtor_name,required"`
-	// The debtor's routing number.
-	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number,required"`
 	// Remittance information the debtor will see as part of the request.
 	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information,required"`
+	// The debtor's account number.
+	DebtorAccountNumber param.Field[string] `json:"debtor_account_number"`
+	// The ID of an External Account to initiate a transfer to. If this parameter is
+	// provided, `debtor_account_number` and `debtor_routing_number` must be absent.
+	DebtorExternalAccountID param.Field[string] `json:"debtor_external_account_id"`
+	// The debtor's routing number.
+	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number"`
 }
 
 func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
