@@ -108,6 +108,8 @@ type WireDrawdownRequest struct {
 	DebtorAccountNumber string `json:"debtor_account_number,required"`
 	// The debtor's address.
 	DebtorAddress WireDrawdownRequestDebtorAddress `json:"debtor_address,required"`
+	// The debtor's external account identifier.
+	DebtorExternalAccountID string `json:"debtor_external_account_id,required,nullable"`
 	// The debtor's name.
 	DebtorName string `json:"debtor_name,required"`
 	// The debtor's routing number.
@@ -144,6 +146,7 @@ type wireDrawdownRequestJSON struct {
 	Currency                          apijson.Field
 	DebtorAccountNumber               apijson.Field
 	DebtorAddress                     apijson.Field
+	DebtorExternalAccountID           apijson.Field
 	DebtorName                        apijson.Field
 	DebtorRoutingNumber               apijson.Field
 	FulfillmentInboundWireTransferID  apijson.Field
