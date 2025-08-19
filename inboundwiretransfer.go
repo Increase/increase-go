@@ -108,12 +108,35 @@ type InboundWireTransfer struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the inbound wire transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// A free-form address field set by the sender.
+	CreditorAddressLine1 string `json:"creditor_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	CreditorAddressLine2 string `json:"creditor_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	CreditorAddressLine3 string `json:"creditor_address_line3,required,nullable"`
+	// A name set by the sender.
+	CreditorName string `json:"creditor_name,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine1 string `json:"debtor_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine2 string `json:"debtor_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine3 string `json:"debtor_address_line3,required,nullable"`
+	// A name set by the sender.
+	DebtorName string `json:"debtor_name,required,nullable"`
 	// An Increase-constructed description of the transfer.
 	Description string `json:"description,required"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	EndToEndIdentification string `json:"end_to_end_identification,required,nullable"`
 	// A unique identifier available to the originating and receiving banks, commonly
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank that sent the
+	// wire.
+	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number,required,nullable"`
+	// The sending bank's identifier for the wire transfer.
+	InstructionIdentification string `json:"instruction_identification,required,nullable"`
 	// The address of the wire originator, set by the sending bank.
 	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
 	// The address of the wire originator, set by the sending bank.
@@ -145,6 +168,12 @@ type InboundWireTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer`.
 	Type InboundWireTransferType `json:"type,required"`
+	// The Unique End-to-end Transaction Reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the transfer.
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
+	// A free-form message set by the sender.
+	UnstructuredRemittanceInformation string `json:"unstructured_remittance_information,required,nullable"`
 	// The wire drawdown request the inbound wire transfer is fulfilling.
 	WireDrawdownRequestID string                  `json:"wire_drawdown_request_id,required,nullable"`
 	JSON                  inboundWireTransferJSON `json:"-"`
@@ -163,8 +192,19 @@ type inboundWireTransferJSON struct {
 	BeneficiaryName                         apijson.Field
 	BeneficiaryReference                    apijson.Field
 	CreatedAt                               apijson.Field
+	CreditorAddressLine1                    apijson.Field
+	CreditorAddressLine2                    apijson.Field
+	CreditorAddressLine3                    apijson.Field
+	CreditorName                            apijson.Field
+	DebtorAddressLine1                      apijson.Field
+	DebtorAddressLine2                      apijson.Field
+	DebtorAddressLine3                      apijson.Field
+	DebtorName                              apijson.Field
 	Description                             apijson.Field
+	EndToEndIdentification                  apijson.Field
 	InputMessageAccountabilityData          apijson.Field
+	InstructingAgentRoutingNumber           apijson.Field
+	InstructionIdentification               apijson.Field
 	OriginatorAddressLine1                  apijson.Field
 	OriginatorAddressLine2                  apijson.Field
 	OriginatorAddressLine3                  apijson.Field
@@ -179,6 +219,8 @@ type inboundWireTransferJSON struct {
 	SenderReference                         apijson.Field
 	Status                                  apijson.Field
 	Type                                    apijson.Field
+	UniqueEndToEndTransactionReference      apijson.Field
+	UnstructuredRemittanceInformation       apijson.Field
 	WireDrawdownRequestID                   apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
