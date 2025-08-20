@@ -139,6 +139,7 @@ type ExportCategory string
 
 const (
 	ExportCategoryAccountStatementOfx          ExportCategory = "account_statement_ofx"
+	ExportCategoryAccountStatementBai2         ExportCategory = "account_statement_bai2"
 	ExportCategoryTransactionCsv               ExportCategory = "transaction_csv"
 	ExportCategoryBalanceCsv                   ExportCategory = "balance_csv"
 	ExportCategoryBookkeepingAccountBalanceCsv ExportCategory = "bookkeeping_account_balance_csv"
@@ -149,7 +150,7 @@ const (
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv:
+	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv:
 		return true
 	}
 	return false
@@ -192,6 +193,9 @@ type ExportNewParams struct {
 	// The type of Export to create.
 	Category param.Field[ExportNewParamsCategory] `json:"category,required"`
 	// Options for the created export. Required if `category` is equal to
+	// `account_statement_bai2`.
+	AccountStatementBai2 param.Field[ExportNewParamsAccountStatementBai2] `json:"account_statement_bai2"`
+	// Options for the created export. Required if `category` is equal to
 	// `account_statement_ofx`.
 	AccountStatementOfx param.Field[ExportNewParamsAccountStatementOfx] `json:"account_statement_ofx"`
 	// Options for the created export. Required if `category` is equal to
@@ -218,6 +222,7 @@ type ExportNewParamsCategory string
 
 const (
 	ExportNewParamsCategoryAccountStatementOfx          ExportNewParamsCategory = "account_statement_ofx"
+	ExportNewParamsCategoryAccountStatementBai2         ExportNewParamsCategory = "account_statement_bai2"
 	ExportNewParamsCategoryTransactionCsv               ExportNewParamsCategory = "transaction_csv"
 	ExportNewParamsCategoryBalanceCsv                   ExportNewParamsCategory = "balance_csv"
 	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
@@ -227,10 +232,27 @@ const (
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv:
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv:
 		return true
 	}
 	return false
+}
+
+// Options for the created export. Required if `category` is equal to
+// `account_statement_bai2`.
+type ExportNewParamsAccountStatementBai2 struct {
+	// The Account to create a BAI2 report for. If not provided, all open accounts will
+	// be included.
+	AccountID param.Field[string] `json:"account_id"`
+	// The date to create a BAI2 report for. If not provided, the current date will be
+	// used. The timezone is UTC. If the current date is used, the report will include
+	// intraday balances, otherwise it will include end-of-day balances for the
+	// provided date.
+	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
+}
+
+func (r ExportNewParamsAccountStatementBai2) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Options for the created export. Required if `category` is equal to
@@ -450,6 +472,7 @@ type ExportListParamsCategoryIn string
 
 const (
 	ExportListParamsCategoryInAccountStatementOfx          ExportListParamsCategoryIn = "account_statement_ofx"
+	ExportListParamsCategoryInAccountStatementBai2         ExportListParamsCategoryIn = "account_statement_bai2"
 	ExportListParamsCategoryInTransactionCsv               ExportListParamsCategoryIn = "transaction_csv"
 	ExportListParamsCategoryInBalanceCsv                   ExportListParamsCategoryIn = "balance_csv"
 	ExportListParamsCategoryInBookkeepingAccountBalanceCsv ExportListParamsCategoryIn = "bookkeeping_account_balance_csv"
@@ -460,7 +483,7 @@ const (
 
 func (r ExportListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv, ExportListParamsCategoryInDashboardTableCsv:
+	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInAccountStatementBai2, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv, ExportListParamsCategoryInDashboardTableCsv:
 		return true
 	}
 	return false
