@@ -152,6 +152,34 @@ func TestCardListWithOptionalParams(t *testing.T) {
 	}
 }
 
+func TestCardNewDetailsIframeWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Cards.NewDetailsIframe(
+		context.TODO(),
+		"card_oubs0hwk5rn6knuecxg2",
+		increase.CardNewDetailsIframeParams{
+			PhysicalCardID: increase.F("physical_card_id"),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestCardDetails(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
