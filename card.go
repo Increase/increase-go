@@ -92,7 +92,22 @@ func (r *CardService) ListAutoPaging(ctx context.Context, query CardListParams, 
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Retrieve sensitive details for a Card
+// Create an iframe URL for a Card to display the card details. More details about
+// styling and usage can be found in the
+// [documentation](/documentation/embedded-card-component).
+func (r *CardService) NewDetailsIframe(ctx context.Context, cardID string, body CardNewDetailsIframeParams, opts ...option.RequestOption) (res *CardIframeURL, err error) {
+	opts = append(r.Options[:], opts...)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return
+	}
+	path := fmt.Sprintf("cards/%s/create_details_iframe", cardID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
+// Sensitive details for a Card include the primary account number, expiry, card
+// verification code, and PIN.
 func (r *CardService) Details(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = append(r.Options[:], opts...)
 	if cardID == "" {
@@ -332,6 +347,51 @@ func (r CardDetailsType) IsKnown() bool {
 	return false
 }
 
+// An object containing the iframe URL for a Card.
+type CardIframeURL struct {
+	// The time the iframe URL will expire.
+	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	// The iframe URL for the Card. Treat this as an opaque URL.
+	IframeURL string `json:"iframe_url,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `card_iframe_url`.
+	Type CardIframeURLType `json:"type,required"`
+	JSON cardIframeURLJSON `json:"-"`
+}
+
+// cardIframeURLJSON contains the JSON metadata for the struct [CardIframeURL]
+type cardIframeURLJSON struct {
+	ExpiresAt   apijson.Field
+	IframeURL   apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardIframeURL) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardIframeURLJSON) RawJSON() string {
+	return r.raw
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `card_iframe_url`.
+type CardIframeURLType string
+
+const (
+	CardIframeURLTypeCardIframeURL CardIframeURLType = "card_iframe_url"
+)
+
+func (r CardIframeURLType) IsKnown() bool {
+	switch r {
+	case CardIframeURLTypeCardIframeURL:
+		return true
+	}
+	return false
+}
+
 type CardNewParams struct {
 	// The Account the card should belong to.
 	AccountID param.Field[string] `json:"account_id,required"`
@@ -542,4 +602,13 @@ func (r CardListParamsStatusIn) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type CardNewDetailsIframeParams struct {
+	// The identifier of the Physical Card to retrieve details for.
+	PhysicalCardID param.Field[string] `json:"physical_card_id"`
+}
+
+func (r CardNewDetailsIframeParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
