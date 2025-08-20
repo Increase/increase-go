@@ -85,6 +85,8 @@ func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query AC
 type ACHPrenotification struct {
 	// The ACH Prenotification's identifier.
 	ID string `json:"id,required"`
+	// The account that sent the ACH Prenotification.
+	AccountID string `json:"account_id,required,nullable"`
 	// The destination account number.
 	AccountNumber string `json:"account_number,required"`
 	// Additional information for the recipient.
@@ -108,6 +110,11 @@ type ACHPrenotification struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// Your identifier for the recipient.
+	IndividualID string `json:"individual_id,required,nullable"`
+	// The name of the recipient. This value is informational and not verified by the
+	// recipient's bank.
+	IndividualName string `json:"individual_name,required,nullable"`
 	// If the receiving bank notifies that future transfers should use different
 	// details, this will contain those details.
 	NotificationsOfChange []ACHPrenotificationNotificationsOfChange `json:"notifications_of_change,required"`
@@ -115,6 +122,8 @@ type ACHPrenotification struct {
 	PrenotificationReturn ACHPrenotificationPrenotificationReturn `json:"prenotification_return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
+	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+	StandardEntryClassCode ACHPrenotificationStandardEntryClassCode `json:"standard_entry_class_code,required,nullable"`
 	// The lifecycle status of the ACH Prenotification.
 	Status ACHPrenotificationStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -127,6 +136,7 @@ type ACHPrenotification struct {
 // [ACHPrenotification]
 type achPrenotificationJSON struct {
 	ID                       apijson.Field
+	AccountID                apijson.Field
 	AccountNumber            apijson.Field
 	Addendum                 apijson.Field
 	CompanyDescriptiveDate   apijson.Field
@@ -137,9 +147,12 @@ type achPrenotificationJSON struct {
 	CreditDebitIndicator     apijson.Field
 	EffectiveDate            apijson.Field
 	IdempotencyKey           apijson.Field
+	IndividualID             apijson.Field
+	IndividualName           apijson.Field
 	NotificationsOfChange    apijson.Field
 	PrenotificationReturn    apijson.Field
 	RoutingNumber            apijson.Field
+	StandardEntryClassCode   apijson.Field
 	Status                   apijson.Field
 	Type                     apijson.Field
 	raw                      string
@@ -349,6 +362,24 @@ func (r ACHPrenotificationPrenotificationReturnReturnReasonCode) IsKnown() bool 
 	return false
 }
 
+// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+type ACHPrenotificationStandardEntryClassCode string
+
+const (
+	ACHPrenotificationStandardEntryClassCodeCorporateCreditOrDebit        ACHPrenotificationStandardEntryClassCode = "corporate_credit_or_debit"
+	ACHPrenotificationStandardEntryClassCodeCorporateTradeExchange        ACHPrenotificationStandardEntryClassCode = "corporate_trade_exchange"
+	ACHPrenotificationStandardEntryClassCodePrearrangedPaymentsAndDeposit ACHPrenotificationStandardEntryClassCode = "prearranged_payments_and_deposit"
+	ACHPrenotificationStandardEntryClassCodeInternetInitiated             ACHPrenotificationStandardEntryClassCode = "internet_initiated"
+)
+
+func (r ACHPrenotificationStandardEntryClassCode) IsKnown() bool {
+	switch r {
+	case ACHPrenotificationStandardEntryClassCodeCorporateCreditOrDebit, ACHPrenotificationStandardEntryClassCodeCorporateTradeExchange, ACHPrenotificationStandardEntryClassCodePrearrangedPaymentsAndDeposit, ACHPrenotificationStandardEntryClassCodeInternetInitiated:
+		return true
+	}
+	return false
+}
+
 // The lifecycle status of the ACH Prenotification.
 type ACHPrenotificationStatus string
 
@@ -384,7 +415,7 @@ func (r ACHPrenotificationType) IsKnown() bool {
 }
 
 type ACHPrenotificationNewParams struct {
-	// The Increase identifier for the account that will send the transfer.
+	// The Increase identifier for the account that will send the ACH Prenotification.
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number,required"`
@@ -393,23 +424,23 @@ type ACHPrenotificationNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number,required"`
 	// Additional information that will be sent to the recipient.
 	Addendum param.Field[string] `json:"addendum"`
-	// The description of the date of the transfer.
+	// The description of the date of the ACH Prenotification.
 	CompanyDescriptiveDate param.Field[string] `json:"company_descriptive_date"`
-	// The data you choose to associate with the transfer.
+	// The data you choose to associate with the ACH Prenotification.
 	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
-	// The description of the transfer you wish to be shown to the recipient.
+	// The description you wish to be shown to the recipient.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
 	// The name by which the recipient knows you.
 	CompanyName param.Field[string] `json:"company_name"`
 	// Whether the Prenotification is for a future debit or credit.
 	CreditDebitIndicator param.Field[ACHPrenotificationNewParamsCreditDebitIndicator] `json:"credit_debit_indicator"`
-	// The transfer effective date in
+	// The ACH Prenotification effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
-	// Your identifier for the transfer recipient.
+	// Your identifier for the recipient.
 	IndividualID param.Field[string] `json:"individual_id"`
-	// The name of the transfer recipient. This value is information and not verified
-	// by the recipient's bank.
+	// The name of therecipient. This value is informational and not verified by the
+	// recipient's bank.
 	IndividualName param.Field[string] `json:"individual_name"`
 	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
 	StandardEntryClassCode param.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`

@@ -107,6 +107,8 @@ type IntrafiAccountEnrollment struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the enrollment was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The contact email for the account owner, to be shared with IntraFi.
+	EmailAddress string `json:"email_address,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -129,6 +131,7 @@ type intrafiAccountEnrollmentJSON struct {
 	ID             apijson.Field
 	AccountID      apijson.Field
 	CreatedAt      apijson.Field
+	EmailAddress   apijson.Field
 	IdempotencyKey apijson.Field
 	IntrafiID      apijson.Field
 	Status         apijson.Field
