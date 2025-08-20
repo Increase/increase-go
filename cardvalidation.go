@@ -90,6 +90,8 @@ type CardValidation struct {
 	Acceptance CardValidationAcceptance `json:"acceptance,required,nullable"`
 	// The identifier of the Account from which to send the validation.
 	AccountID string `json:"account_id,required"`
+	// The ID of the Card Token that was used to validate the card.
+	CardTokenID string `json:"card_token_id,required"`
 	// The cardholder's first name.
 	CardholderFirstName string `json:"cardholder_first_name,required,nullable"`
 	// The cardholder's last name.
@@ -140,6 +142,7 @@ type cardValidationJSON struct {
 	ID                      apijson.Field
 	Acceptance              apijson.Field
 	AccountID               apijson.Field
+	CardTokenID             apijson.Field
 	CardholderFirstName     apijson.Field
 	CardholderLastName      apijson.Field
 	CardholderMiddleName    apijson.Field
