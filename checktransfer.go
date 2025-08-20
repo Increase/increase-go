@@ -133,6 +133,8 @@ type CheckTransfer struct {
 	// If the Check Transfer was successfully deposited, this will contain the
 	// identifier of the Inbound Check Deposit object with details of the deposit.
 	ApprovedInboundCheckDepositID string `json:"approved_inbound_check_deposit_id,required,nullable"`
+	// How the account's available balance should be checked.
+	BalanceCheck CheckTransferBalanceCheck `json:"balance_check,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation CheckTransferCancellation `json:"cancellation,required,nullable"`
@@ -192,6 +194,7 @@ type checkTransferJSON struct {
 	Amount                        apijson.Field
 	Approval                      apijson.Field
 	ApprovedInboundCheckDepositID apijson.Field
+	BalanceCheck                  apijson.Field
 	Cancellation                  apijson.Field
 	CheckNumber                   apijson.Field
 	CreatedAt                     apijson.Field
@@ -248,6 +251,22 @@ func (r *CheckTransferApproval) UnmarshalJSON(data []byte) (err error) {
 
 func (r checkTransferApprovalJSON) RawJSON() string {
 	return r.raw
+}
+
+// How the account's available balance should be checked.
+type CheckTransferBalanceCheck string
+
+const (
+	CheckTransferBalanceCheckFull CheckTransferBalanceCheck = "full"
+	CheckTransferBalanceCheckNone CheckTransferBalanceCheck = "none"
+)
+
+func (r CheckTransferBalanceCheck) IsKnown() bool {
+	switch r {
+	case CheckTransferBalanceCheckFull, CheckTransferBalanceCheckNone:
+		return true
+	}
+	return false
 }
 
 // If your account requires approvals for transfers and the transfer was not
