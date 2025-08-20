@@ -80,7 +80,7 @@ func (r *RealTimePaymentsTransferService) ListAutoPaging(ctx context.Context, qu
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Approves an Real-Time Payments Transfer in a pending_approval state.
+// Approves a Real-Time Payments Transfer in a pending_approval state.
 func (r *RealTimePaymentsTransferService) Approve(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	if realTimePaymentsTransferID == "" {
@@ -92,7 +92,7 @@ func (r *RealTimePaymentsTransferService) Approve(ctx context.Context, realTimeP
 	return
 }
 
-// Cancels an Real-Time Payments Transfer in a pending_approval state.
+// Cancels a Real-Time Payments Transfer in a pending_approval state.
 func (r *RealTimePaymentsTransferService) Cancel(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	if realTimePaymentsTransferID == "" {
