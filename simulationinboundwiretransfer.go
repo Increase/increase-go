@@ -44,51 +44,45 @@ type SimulationInboundWireTransferNewParams struct {
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`
 	// The transfer amount in cents. Must be positive.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The sending bank will set beneficiary_address_line1 in production. You can
-	// simulate any value here.
-	BeneficiaryAddressLine1 param.Field[string] `json:"beneficiary_address_line1"`
-	// The sending bank will set beneficiary_address_line2 in production. You can
-	// simulate any value here.
-	BeneficiaryAddressLine2 param.Field[string] `json:"beneficiary_address_line2"`
-	// The sending bank will set beneficiary_address_line3 in production. You can
-	// simulate any value here.
-	BeneficiaryAddressLine3 param.Field[string] `json:"beneficiary_address_line3"`
-	// The sending bank will set beneficiary_name in production. You can simulate any
-	// value here.
-	BeneficiaryName param.Field[string] `json:"beneficiary_name"`
-	// The sending bank will set beneficiary_reference in production. You can simulate
+	// The sending bank will set creditor_address_line1 in production. You can simulate
 	// any value here.
-	BeneficiaryReference param.Field[string] `json:"beneficiary_reference"`
-	// The sending bank will set originator_address_line1 in production. You can
-	// simulate any value here.
-	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
-	// The sending bank will set originator_address_line2 in production. You can
-	// simulate any value here.
-	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
-	// The sending bank will set originator_address_line3 in production. You can
-	// simulate any value here.
-	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
-	// The sending bank will set originator_name in production. You can simulate any
+	CreditorAddressLine1 param.Field[string] `json:"creditor_address_line1"`
+	// The sending bank will set creditor_address_line2 in production. You can simulate
+	// any value here.
+	CreditorAddressLine2 param.Field[string] `json:"creditor_address_line2"`
+	// The sending bank will set creditor_address_line3 in production. You can simulate
+	// any value here.
+	CreditorAddressLine3 param.Field[string] `json:"creditor_address_line3"`
+	// The sending bank will set creditor_name in production. You can simulate any
 	// value here.
-	OriginatorName param.Field[string] `json:"originator_name"`
-	// The sending bank will set originator_routing_number in production. You can
+	CreditorName param.Field[string] `json:"creditor_name"`
+	// The sending bank will set debtor_address_line1 in production. You can simulate
+	// any value here.
+	DebtorAddressLine1 param.Field[string] `json:"debtor_address_line1"`
+	// The sending bank will set debtor_address_line2 in production. You can simulate
+	// any value here.
+	DebtorAddressLine2 param.Field[string] `json:"debtor_address_line2"`
+	// The sending bank will set debtor_address_line3 in production. You can simulate
+	// any value here.
+	DebtorAddressLine3 param.Field[string] `json:"debtor_address_line3"`
+	// The sending bank will set debtor_name in production. You can simulate any value
+	// here.
+	DebtorName param.Field[string] `json:"debtor_name"`
+	// The sending bank will set end_to_end_identification in production. You can
 	// simulate any value here.
-	OriginatorRoutingNumber param.Field[string] `json:"originator_routing_number"`
-	// The sending bank will set originator_to_beneficiary_information_line1 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine1 param.Field[string] `json:"originator_to_beneficiary_information_line1"`
-	// The sending bank will set originator_to_beneficiary_information_line2 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine2 param.Field[string] `json:"originator_to_beneficiary_information_line2"`
-	// The sending bank will set originator_to_beneficiary_information_line3 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine3 param.Field[string] `json:"originator_to_beneficiary_information_line3"`
-	// The sending bank will set originator_to_beneficiary_information_line4 in
-	// production. You can simulate any value here.
-	OriginatorToBeneficiaryInformationLine4 param.Field[string] `json:"originator_to_beneficiary_information_line4"`
-	// The sending bank will set sender_reference in production. You can simulate any
-	// value here.
-	SenderReference param.Field[string] `json:"sender_reference"`
+	EndToEndIdentification param.Field[string] `json:"end_to_end_identification"`
+	// The sending bank will set instructing_agent_routing_number in production. You
+	// can simulate any value here.
+	InstructingAgentRoutingNumber param.Field[string] `json:"instructing_agent_routing_number"`
+	// The sending bank will set instruction_identification in production. You can
+	// simulate any value here.
+	InstructionIdentification param.Field[string] `json:"instruction_identification"`
+	// The sending bank will set unique_end_to_end_transaction_reference in production.
+	// You can simulate any value here.
+	UniqueEndToEndTransactionReference param.Field[string] `json:"unique_end_to_end_transaction_reference"`
+	// The sending bank will set unstructured_remittance_information in production. You
+	// can simulate any value here.
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information"`
 	// The identifier of a Wire Drawdown Request the inbound Wire Transfer is
 	// fulfilling.
 	WireDrawdownRequestID param.Field[string] `json:"wire_drawdown_request_id"`
