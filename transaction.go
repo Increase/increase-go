@@ -3544,71 +3544,67 @@ type TransactionSourceInboundWireTransfer struct {
 	// The amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// A free-form address field set by the sender.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
+	CreditorAddressLine1 string `json:"creditor_address_line1,required,nullable"`
 	// A free-form address field set by the sender.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
+	CreditorAddressLine2 string `json:"creditor_address_line2,required,nullable"`
 	// A free-form address field set by the sender.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
+	CreditorAddressLine3 string `json:"creditor_address_line3,required,nullable"`
 	// A name set by the sender.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
-	// A free-form reference string set by the sender, to help identify the transfer.
-	BeneficiaryReference string `json:"beneficiary_reference,required,nullable"`
+	CreditorName string `json:"creditor_name,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine1 string `json:"debtor_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine2 string `json:"debtor_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine3 string `json:"debtor_address_line3,required,nullable"`
+	// A name set by the sender.
+	DebtorName string `json:"debtor_name,required,nullable"`
 	// An Increase-constructed description of the transfer.
 	Description string `json:"description,required"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	EndToEndIdentification string `json:"end_to_end_identification,required,nullable"`
 	// A unique identifier available to the originating and receiving banks, commonly
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// The address of the wire originator, set by the sending bank.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The originator of the wire, set by the sending bank.
-	OriginatorName string `json:"originator_name,required,nullable"`
-	// The American Banking Association (ABA) routing number of the bank originating
-	// the transfer.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
-	// An Increase-created concatenation of the Originator-to-Beneficiary lines.
-	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	// A free-form message set by the wire originator.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// The American Banking Association (ABA) routing number of the bank that sent the
+	// wire.
+	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number,required,nullable"`
+	// The sending bank's identifier for the wire transfer.
+	InstructionIdentification string `json:"instruction_identification,required,nullable"`
 	// The ID of the Inbound Wire Transfer object that resulted in this Transaction.
-	TransferID string                                   `json:"transfer_id,required"`
-	JSON       transactionSourceInboundWireTransferJSON `json:"-"`
+	TransferID string `json:"transfer_id,required"`
+	// The Unique End-to-end Transaction Reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the transfer.
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
+	// A free-form message set by the sender.
+	UnstructuredRemittanceInformation string                                   `json:"unstructured_remittance_information,required,nullable"`
+	JSON                              transactionSourceInboundWireTransferJSON `json:"-"`
 }
 
 // transactionSourceInboundWireTransferJSON contains the JSON metadata for the
 // struct [TransactionSourceInboundWireTransfer]
 type transactionSourceInboundWireTransferJSON struct {
-	Amount                                  apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryReference                    apijson.Field
-	Description                             apijson.Field
-	InputMessageAccountabilityData          apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorRoutingNumber                 apijson.Field
-	OriginatorToBeneficiaryInformation      apijson.Field
-	OriginatorToBeneficiaryInformationLine1 apijson.Field
-	OriginatorToBeneficiaryInformationLine2 apijson.Field
-	OriginatorToBeneficiaryInformationLine3 apijson.Field
-	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	TransferID                              apijson.Field
-	raw                                     string
-	ExtraFields                             map[string]apijson.Field
+	Amount                             apijson.Field
+	CreditorAddressLine1               apijson.Field
+	CreditorAddressLine2               apijson.Field
+	CreditorAddressLine3               apijson.Field
+	CreditorName                       apijson.Field
+	DebtorAddressLine1                 apijson.Field
+	DebtorAddressLine2                 apijson.Field
+	DebtorAddressLine3                 apijson.Field
+	DebtorName                         apijson.Field
+	Description                        apijson.Field
+	EndToEndIdentification             apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	InstructingAgentRoutingNumber      apijson.Field
+	InstructionIdentification          apijson.Field
+	TransferID                         apijson.Field
+	UniqueEndToEndTransactionReference apijson.Field
+	UnstructuredRemittanceInformation  apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundWireTransfer) UnmarshalJSON(data []byte) (err error) {
