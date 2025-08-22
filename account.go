@@ -122,6 +122,10 @@ func (r *AccountService) Close(ctx context.Context, accountID string, opts ...op
 type Account struct {
 	// The Account identifier.
 	ID string `json:"id,required"`
+	// The account revenue rate currently being earned on the account, as a string
+	// containing a decimal number. For example, a 1% account revenue rate would be
+	// represented as "0.01".
+	AccountRevenueRate string `json:"account_revenue_rate,required,nullable"`
 	// The bank the Account is with.
 	Bank AccountBank `json:"bank,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
@@ -148,7 +152,7 @@ type Account struct {
 	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 	// interest was accrued.
 	InterestAccruedAt time.Time `json:"interest_accrued_at,required,nullable" format:"date"`
-	// The Interest Rate currently being earned on the account, as a string containing
+	// The interest rate currently being earned on the account, as a string containing
 	// a decimal number. For example, a 1% interest rate would be represented as
 	// "0.01".
 	InterestRate string `json:"interest_rate,required"`
@@ -168,6 +172,7 @@ type Account struct {
 // accountJSON contains the JSON metadata for the struct [Account]
 type accountJSON struct {
 	ID                    apijson.Field
+	AccountRevenueRate    apijson.Field
 	Bank                  apijson.Field
 	ClosedAt              apijson.Field
 	CreatedAt             apijson.Field
