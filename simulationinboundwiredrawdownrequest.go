@@ -44,50 +44,51 @@ func (r *SimulationInboundWireDrawdownRequestService) New(ctx context.Context, b
 type SimulationInboundWireDrawdownRequestNewParams struct {
 	// The amount being requested in cents.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The drawdown request's beneficiary's account number.
-	BeneficiaryAccountNumber param.Field[string] `json:"beneficiary_account_number,required"`
-	// The drawdown request's beneficiary's routing number.
-	BeneficiaryRoutingNumber param.Field[string] `json:"beneficiary_routing_number,required"`
+	// The creditor's account number.
+	CreditorAccountNumber param.Field[string] `json:"creditor_account_number,required"`
+	// The creditor's routing number.
+	CreditorRoutingNumber param.Field[string] `json:"creditor_routing_number,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
 	Currency param.Field[string] `json:"currency,required"`
-	// A message from the drawdown request's originator.
-	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
-	// The drawdown request's originator's account number.
-	OriginatorAccountNumber param.Field[string] `json:"originator_account_number,required"`
-	// The drawdown request's originator's routing number.
-	OriginatorRoutingNumber param.Field[string] `json:"originator_routing_number,required"`
 	// The Account Number to which the recipient of this request is being requested to
 	// send funds from.
 	RecipientAccountNumberID param.Field[string] `json:"recipient_account_number_id,required"`
-	// Line 1 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine1 param.Field[string] `json:"beneficiary_address_line1"`
-	// Line 2 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine2 param.Field[string] `json:"beneficiary_address_line2"`
-	// Line 3 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine3 param.Field[string] `json:"beneficiary_address_line3"`
-	// The drawdown request's beneficiary's name.
-	BeneficiaryName param.Field[string] `json:"beneficiary_name"`
-	// Line 1 of the drawdown request's originator's address.
-	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
-	// Line 2 of the drawdown request's originator's address.
-	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
-	// Line 3 of the drawdown request's originator's address.
-	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
-	// The drawdown request's originator's name.
-	OriginatorName param.Field[string] `json:"originator_name"`
-	// Line 1 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine1 param.Field[string] `json:"originator_to_beneficiary_information_line1"`
-	// Line 2 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine2 param.Field[string] `json:"originator_to_beneficiary_information_line2"`
-	// Line 3 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine3 param.Field[string] `json:"originator_to_beneficiary_information_line3"`
-	// Line 4 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine4 param.Field[string] `json:"originator_to_beneficiary_information_line4"`
+	// A free-form address field set by the sender representing the first line of the
+	// creditor's address.
+	CreditorAddressLine1 param.Field[string] `json:"creditor_address_line1"`
+	// A free-form address field set by the sender representing the second line of the
+	// creditor's address.
+	CreditorAddressLine2 param.Field[string] `json:"creditor_address_line2"`
+	// A free-form address field set by the sender representing the third line of the
+	// creditor's address.
+	CreditorAddressLine3 param.Field[string] `json:"creditor_address_line3"`
+	// A free-form name field set by the sender representing the creditor's name.
+	CreditorName param.Field[string] `json:"creditor_name"`
+	// The debtor's account number.
+	DebtorAccountNumber param.Field[string] `json:"debtor_account_number"`
+	// A free-form address field set by the sender representing the first line of the
+	// debtor's address.
+	DebtorAddressLine1 param.Field[string] `json:"debtor_address_line1"`
+	// A free-form address field set by the sender representing the second line of the
+	// debtor's address.
+	DebtorAddressLine2 param.Field[string] `json:"debtor_address_line2"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine3 param.Field[string] `json:"debtor_address_line3"`
+	// A free-form name field set by the sender representing the debtor's name.
+	DebtorName param.Field[string] `json:"debtor_name"`
+	// The debtor's routing number.
+	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	EndToEndIdentification param.Field[string] `json:"end_to_end_identification"`
+	// The sending bank's identifier for the wire transfer.
+	InstructionIdentification param.Field[string] `json:"instruction_identification"`
+	// The Unique End-to-end Transaction Reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the transfer.
+	UniqueEndToEndTransactionReference param.Field[string] `json:"unique_end_to_end_transaction_reference"`
+	// A free-form message set by the sender.
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information"`
 }
 
 func (r SimulationInboundWireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
