@@ -42,3 +42,15 @@ func (r *SimulationWireDrawdownRequestService) Refuse(ctx context.Context, wireD
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
 }
+
+// Simulates a Wire Drawdown Request being submitted to Fedwire.
+func (r *SimulationWireDrawdownRequestService) Submit(ctx context.Context, wireDrawdownRequestID string, opts ...option.RequestOption) (res *WireDrawdownRequest, err error) {
+	opts = append(r.Options[:], opts...)
+	if wireDrawdownRequestID == "" {
+		err = errors.New("missing required wire_drawdown_request_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/wire_drawdown_requests/%s/submit", wireDrawdownRequestID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return
+}

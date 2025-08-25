@@ -80,87 +80,82 @@ type InboundWireDrawdownRequest struct {
 	ID string `json:"id,required"`
 	// The amount being requested in cents.
 	Amount int64 `json:"amount,required"`
-	// The drawdown request's beneficiary's account number.
-	BeneficiaryAccountNumber string `json:"beneficiary_account_number,required"`
-	// Line 1 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
-	// Line 2 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
-	// Line 3 of the drawdown request's beneficiary's address.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	// The drawdown request's beneficiary's name.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
-	// The drawdown request's beneficiary's routing number.
-	BeneficiaryRoutingNumber string `json:"beneficiary_routing_number,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the inbound wire drawdown requested was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The creditor's account number.
+	CreditorAccountNumber string `json:"creditor_account_number,required"`
+	// A free-form address field set by the sender.
+	CreditorAddressLine1 string `json:"creditor_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	CreditorAddressLine2 string `json:"creditor_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	CreditorAddressLine3 string `json:"creditor_address_line3,required,nullable"`
+	// A name set by the sender.
+	CreditorName string `json:"creditor_name,required,nullable"`
+	// The creditor's routing number.
+	CreditorRoutingNumber string `json:"creditor_routing_number,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
 	Currency string `json:"currency,required"`
-	// A message from the drawdown request's originator.
-	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
-	// The drawdown request's originator's account number.
-	OriginatorAccountNumber string `json:"originator_account_number,required,nullable"`
-	// Line 1 of the drawdown request's originator's address.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// Line 2 of the drawdown request's originator's address.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// Line 3 of the drawdown request's originator's address.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The drawdown request's originator's name.
-	OriginatorName string `json:"originator_name,required,nullable"`
-	// The drawdown request's originator's routing number.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required"`
-	// Line 1 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine1 string `json:"originator_to_beneficiary_information_line1,required,nullable"`
-	// Line 2 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine2 string `json:"originator_to_beneficiary_information_line2,required,nullable"`
-	// Line 3 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine3 string `json:"originator_to_beneficiary_information_line3,required,nullable"`
-	// Line 4 of the information conveyed from the originator of the message to the
-	// beneficiary.
-	OriginatorToBeneficiaryInformationLine4 string `json:"originator_to_beneficiary_information_line4,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine1 string `json:"debtor_address_line1,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine2 string `json:"debtor_address_line2,required,nullable"`
+	// A free-form address field set by the sender.
+	DebtorAddressLine3 string `json:"debtor_address_line3,required,nullable"`
+	// A name set by the sender.
+	DebtorName string `json:"debtor_name,required,nullable"`
+	// A free-form reference string set by the sender, to help identify the drawdown
+	// request.
+	EndToEndIdentification string `json:"end_to_end_identification,required,nullable"`
+	// A unique identifier available to the originating and receiving banks, commonly
+	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
+	// service and is helpful when debugging wires with the originating bank.
+	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	// The sending bank's identifier for the drawdown request.
+	InstructionIdentification string `json:"instruction_identification,required,nullable"`
 	// The Account Number from which the recipient of this request is being requested
 	// to send funds.
 	RecipientAccountNumberID string `json:"recipient_account_number_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_drawdown_request`.
 	Type InboundWireDrawdownRequestType `json:"type,required"`
-	JSON inboundWireDrawdownRequestJSON `json:"-"`
+	// The Unique End-to-end Transaction Reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the drawdown request.
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
+	// A free-form message set by the sender.
+	UnstructuredRemittanceInformation string                         `json:"unstructured_remittance_information,required,nullable"`
+	JSON                              inboundWireDrawdownRequestJSON `json:"-"`
 }
 
 // inboundWireDrawdownRequestJSON contains the JSON metadata for the struct
 // [InboundWireDrawdownRequest]
 type inboundWireDrawdownRequestJSON struct {
-	ID                                      apijson.Field
-	Amount                                  apijson.Field
-	BeneficiaryAccountNumber                apijson.Field
-	BeneficiaryAddressLine1                 apijson.Field
-	BeneficiaryAddressLine2                 apijson.Field
-	BeneficiaryAddressLine3                 apijson.Field
-	BeneficiaryName                         apijson.Field
-	BeneficiaryRoutingNumber                apijson.Field
-	CreatedAt                               apijson.Field
-	Currency                                apijson.Field
-	MessageToRecipient                      apijson.Field
-	OriginatorAccountNumber                 apijson.Field
-	OriginatorAddressLine1                  apijson.Field
-	OriginatorAddressLine2                  apijson.Field
-	OriginatorAddressLine3                  apijson.Field
-	OriginatorName                          apijson.Field
-	OriginatorRoutingNumber                 apijson.Field
-	OriginatorToBeneficiaryInformationLine1 apijson.Field
-	OriginatorToBeneficiaryInformationLine2 apijson.Field
-	OriginatorToBeneficiaryInformationLine3 apijson.Field
-	OriginatorToBeneficiaryInformationLine4 apijson.Field
-	RecipientAccountNumberID                apijson.Field
-	Type                                    apijson.Field
-	raw                                     string
-	ExtraFields                             map[string]apijson.Field
+	ID                                 apijson.Field
+	Amount                             apijson.Field
+	CreatedAt                          apijson.Field
+	CreditorAccountNumber              apijson.Field
+	CreditorAddressLine1               apijson.Field
+	CreditorAddressLine2               apijson.Field
+	CreditorAddressLine3               apijson.Field
+	CreditorName                       apijson.Field
+	CreditorRoutingNumber              apijson.Field
+	Currency                           apijson.Field
+	DebtorAddressLine1                 apijson.Field
+	DebtorAddressLine2                 apijson.Field
+	DebtorAddressLine3                 apijson.Field
+	DebtorName                         apijson.Field
+	EndToEndIdentification             apijson.Field
+	InputMessageAccountabilityData     apijson.Field
+	InstructionIdentification          apijson.Field
+	RecipientAccountNumberID           apijson.Field
+	Type                               apijson.Field
+	UniqueEndToEndTransactionReference apijson.Field
+	UnstructuredRemittanceInformation  apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *InboundWireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {
