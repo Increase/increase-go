@@ -796,6 +796,7 @@ Methods:
 Methods:
 
 - <code title="post /simulations/wire_drawdown_requests/{wire_drawdown_request_id}/refuse">client.Simulations.WireDrawdownRequests.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationWireDrawdownRequestService.Refuse">Refuse</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, wireDrawdownRequestID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#WireDrawdownRequest">WireDrawdownRequest</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /simulations/wire_drawdown_requests/{wire_drawdown_request_id}/submit">client.Simulations.WireDrawdownRequests.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationWireDrawdownRequestService.Submit">Submit</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, wireDrawdownRequestID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#WireDrawdownRequest">WireDrawdownRequest</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## InboundWireDrawdownRequests
 
