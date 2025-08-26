@@ -1795,6 +1795,8 @@ type TransactionSourceCardSettlement struct {
 	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state,required,nullable"`
+	// The card network on which this transaction was processed.
+	Network TransactionSourceCardSettlementNetwork `json:"network,required"`
 	// Network-specific identifiers for this refund.
 	NetworkIdentifiers TransactionSourceCardSettlementNetworkIdentifiers `json:"network_identifiers,required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
@@ -1832,6 +1834,7 @@ type transactionSourceCardSettlementJSON struct {
 	MerchantName         apijson.Field
 	MerchantPostalCode   apijson.Field
 	MerchantState        apijson.Field
+	Network              apijson.Field
 	NetworkIdentifiers   apijson.Field
 	PendingTransactionID apijson.Field
 	PresentmentAmount    apijson.Field
@@ -1970,6 +1973,21 @@ const (
 func (r TransactionSourceCardSettlementInterchangeCurrency) IsKnown() bool {
 	switch r {
 	case TransactionSourceCardSettlementInterchangeCurrencyCad, TransactionSourceCardSettlementInterchangeCurrencyChf, TransactionSourceCardSettlementInterchangeCurrencyEur, TransactionSourceCardSettlementInterchangeCurrencyGbp, TransactionSourceCardSettlementInterchangeCurrencyJpy, TransactionSourceCardSettlementInterchangeCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The card network on which this transaction was processed.
+type TransactionSourceCardSettlementNetwork string
+
+const (
+	TransactionSourceCardSettlementNetworkVisa TransactionSourceCardSettlementNetwork = "visa"
+)
+
+func (r TransactionSourceCardSettlementNetwork) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementNetworkVisa:
 		return true
 	}
 	return false
