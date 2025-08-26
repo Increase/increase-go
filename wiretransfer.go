@@ -465,13 +465,13 @@ type WireTransferReversal struct {
 	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
 	// The Fedwire cycle date for the wire transfer that is being reversed by this
 	// message.
-	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required" format:"date"`
+	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required,nullable" format:"date"`
 	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required"`
+	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required,nullable"`
 	// The Fedwire sequence number for the wire transfer that was reversed.
 	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
 	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource string `json:"previous_message_input_source,required"`
+	PreviousMessageInputSource string `json:"previous_message_input_source,required,nullable"`
 	// Information included in the wire reversal for the receiving financial
 	// institution.
 	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
