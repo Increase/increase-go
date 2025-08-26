@@ -461,8 +461,6 @@ func (r checkDepositDepositSubmissionJSON) RawJSON() string {
 // Increase will sometimes hold the funds for Check Deposits. If funds are held,
 // this sub-object will contain details of the hold.
 type CheckDepositInboundFundsHold struct {
-	// The Inbound Funds Hold identifier.
-	ID string `json:"id,required"`
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -492,7 +490,6 @@ type CheckDepositInboundFundsHold struct {
 // checkDepositInboundFundsHoldJSON contains the JSON metadata for the struct
 // [CheckDepositInboundFundsHold]
 type checkDepositInboundFundsHoldJSON struct {
-	ID                      apijson.Field
 	Amount                  apijson.Field
 	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field
