@@ -1399,8 +1399,6 @@ func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool
 // certain transaction types to account for return windows where funds might still
 // be clawed back by the sending institution.
 type PendingTransactionSourceInboundFundsHold struct {
-	// The Inbound Funds Hold identifier.
-	ID string `json:"id,required"`
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -1430,7 +1428,6 @@ type PendingTransactionSourceInboundFundsHold struct {
 // pendingTransactionSourceInboundFundsHoldJSON contains the JSON metadata for the
 // struct [PendingTransactionSourceInboundFundsHold]
 type pendingTransactionSourceInboundFundsHoldJSON struct {
-	ID                      apijson.Field
 	Amount                  apijson.Field
 	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field

@@ -663,8 +663,6 @@ func (r ACHTransferFunding) IsKnown() bool {
 // Increase will sometimes hold the funds for ACH debit transfers. If funds are
 // held, this sub-object will contain details of the hold.
 type ACHTransferInboundFundsHold struct {
-	// The Inbound Funds Hold identifier.
-	ID string `json:"id,required"`
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount,required"`
@@ -694,7 +692,6 @@ type ACHTransferInboundFundsHold struct {
 // achTransferInboundFundsHoldJSON contains the JSON metadata for the struct
 // [ACHTransferInboundFundsHold]
 type achTransferInboundFundsHoldJSON struct {
-	ID                      apijson.Field
 	Amount                  apijson.Field
 	AutomaticallyReleasesAt apijson.Field
 	CreatedAt               apijson.Field
