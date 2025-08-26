@@ -746,15 +746,11 @@ Methods:
 
 - <code title="post /simulations/digital_wallet_token_requests">client.Simulations.DigitalWalletTokenRequests.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDigitalWalletTokenRequestService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDigitalWalletTokenRequestNewParams">SimulationDigitalWalletTokenRequestNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDigitalWalletTokenRequestNewResponse">SimulationDigitalWalletTokenRequestNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-## InboundFundsHolds
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInboundFundsHoldReleaseResponse">SimulationInboundFundsHoldReleaseResponse</a>
+## PendingTransactions
 
 Methods:
 
-- <code title="post /simulations/inbound_funds_holds/{inbound_funds_hold_id}/release">client.Simulations.InboundFundsHolds.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInboundFundsHoldService.Release">Release</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, inboundFundsHoldID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInboundFundsHoldReleaseResponse">SimulationInboundFundsHoldReleaseResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /simulations/pending_transactions/{pending_transaction_id}/release_inbound_funds_hold">client.Simulations.PendingTransactions.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationPendingTransactionService.ReleaseInboundFundsHold">ReleaseInboundFundsHold</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, pendingTransactionID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#PendingTransaction">PendingTransaction</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## AccountTransfers
 
