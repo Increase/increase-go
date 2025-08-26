@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationInboundFundsHoldRelease(t *testing.T) {
+func TestSimulationPendingTransactionReleaseInboundFundsHold(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,7 @@ func TestSimulationInboundFundsHoldRelease(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.InboundFundsHolds.Release(context.TODO(), "inbound_funds_hold_9vuasmywdo7xb3zt4071")
+	_, err := client.Simulations.PendingTransactions.ReleaseInboundFundsHold(context.TODO(), "pending_transaction_k1sfetcau2qbvjbzgju4")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
