@@ -445,10 +445,10 @@ type WireTransferReversal struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the reversal was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The debtor's routing number.
+	DebtorRoutingNumber string `json:"debtor_routing_number,required,nullable"`
 	// The description on the reversal message from Fedwire, set by the reversing bank.
 	Description string `json:"description,required"`
-	// Additional financial institution information included in the wire reversal.
-	FinancialInstitutionToFinancialInstitutionInformation string `json:"financial_institution_to_financial_institution_information,required,nullable"`
 	// The Fedwire cycle date for the wire reversal. The "Fedwire day" begins at 9:00
 	// PM Eastern Time on the evening before the `cycle date`.
 	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
@@ -458,25 +458,10 @@ type WireTransferReversal struct {
 	InputSequenceNumber string `json:"input_sequence_number,required"`
 	// The Fedwire input source identifier.
 	InputSource string `json:"input_source,required"`
-	// The American Banking Association (ABA) routing number of the bank originating
-	// the transfer.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required,nullable"`
-	// Additional information included in the wire reversal by the reversal originator.
-	OriginatorToBeneficiaryInformation string `json:"originator_to_beneficiary_information,required,nullable"`
-	// The Fedwire cycle date for the wire transfer that is being reversed by this
-	// message.
-	PreviousMessageInputCycleDate time.Time `json:"previous_message_input_cycle_date,required,nullable" format:"date"`
-	// The Fedwire transaction identifier for the wire transfer that was reversed.
-	PreviousMessageInputMessageAccountabilityData string `json:"previous_message_input_message_accountability_data,required,nullable"`
-	// The Fedwire sequence number for the wire transfer that was reversed.
-	PreviousMessageInputSequenceNumber string `json:"previous_message_input_sequence_number,required"`
-	// The Fedwire input source identifier for the wire transfer that was reversed.
-	PreviousMessageInputSource string `json:"previous_message_input_source,required,nullable"`
-	// Information included in the wire reversal for the receiving financial
-	// institution.
-	ReceiverFinancialInstitutionInformation string `json:"receiver_financial_institution_information,required,nullable"`
-	// The sending bank's reference number for the wire reversal.
-	SenderReference string `json:"sender_reference,required,nullable"`
+	// The sending bank's identifier for the reversal.
+	InstructionIdentification string `json:"instruction_identification,required,nullable"`
+	// Additional information about the reason for the reversal.
+	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
@@ -487,26 +472,20 @@ type WireTransferReversal struct {
 // wireTransferReversalJSON contains the JSON metadata for the struct
 // [WireTransferReversal]
 type wireTransferReversalJSON struct {
-	Amount                                                apijson.Field
-	CreatedAt                                             apijson.Field
-	Description                                           apijson.Field
-	FinancialInstitutionToFinancialInstitutionInformation apijson.Field
-	InputCycleDate                                        apijson.Field
-	InputMessageAccountabilityData                        apijson.Field
-	InputSequenceNumber                                   apijson.Field
-	InputSource                                           apijson.Field
-	OriginatorRoutingNumber                               apijson.Field
-	OriginatorToBeneficiaryInformation                    apijson.Field
-	PreviousMessageInputCycleDate                         apijson.Field
-	PreviousMessageInputMessageAccountabilityData         apijson.Field
-	PreviousMessageInputSequenceNumber                    apijson.Field
-	PreviousMessageInputSource                            apijson.Field
-	ReceiverFinancialInstitutionInformation               apijson.Field
-	SenderReference                                       apijson.Field
-	TransactionID                                         apijson.Field
-	WireTransferID                                        apijson.Field
-	raw                                                   string
-	ExtraFields                                           map[string]apijson.Field
+	Amount                            apijson.Field
+	CreatedAt                         apijson.Field
+	DebtorRoutingNumber               apijson.Field
+	Description                       apijson.Field
+	InputCycleDate                    apijson.Field
+	InputMessageAccountabilityData    apijson.Field
+	InputSequenceNumber               apijson.Field
+	InputSource                       apijson.Field
+	InstructionIdentification         apijson.Field
+	ReturnReasonAdditionalInformation apijson.Field
+	TransactionID                     apijson.Field
+	WireTransferID                    apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *WireTransferReversal) UnmarshalJSON(data []byte) (err error) {
