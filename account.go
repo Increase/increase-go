@@ -124,7 +124,8 @@ type Account struct {
 	ID string `json:"id,required"`
 	// The account revenue rate currently being earned on the account, as a string
 	// containing a decimal number. For example, a 1% account revenue rate would be
-	// represented as "0.01".
+	// represented as "0.01". Account revenue is a type of non-interest income accrued
+	// on the account.
 	AccountRevenueRate string `json:"account_revenue_rate,required,nullable"`
 	// The bank the Account is with.
 	Bank AccountBank `json:"bank,required"`
