@@ -82,15 +82,18 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID
 // `submitted`. For convenience, if the transfer is in `status`:
 // `pending_submission`, the simulation will also submit the transfer. Without this
 // simulation the transfer will eventually settle on its own following the same
-// Federal Reserve timeline as in production.
-func (r *SimulationACHTransferService) Settle(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
+// Federal Reserve timeline as in production. Additionally, you can specify the
+// behavior of the inbound funds hold that is created when the ACH Transfer is
+// settled. If no behavior is specified, the inbound funds hold will be released
+// immediately in order for the funds to be available for use.
+func (r *SimulationACHTransferService) Settle(ctx context.Context, achTransferID string, body SimulationACHTransferSettleParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
 	opts = append(r.Options[:], opts...)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
 	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/settle", achTransferID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -245,6 +248,35 @@ const (
 func (r SimulationACHTransferReturnParamsReason) IsKnown() bool {
 	switch r {
 	case SimulationACHTransferReturnParamsReasonInsufficientFund, SimulationACHTransferReturnParamsReasonNoAccount, SimulationACHTransferReturnParamsReasonAccountClosed, SimulationACHTransferReturnParamsReasonInvalidAccountNumberStructure, SimulationACHTransferReturnParamsReasonAccountFrozenEntryReturnedPerOfacInstruction, SimulationACHTransferReturnParamsReasonCreditEntryRefusedByReceiver, SimulationACHTransferReturnParamsReasonUnauthorizedDebitToConsumerAccountUsingCorporateSecCode, SimulationACHTransferReturnParamsReasonCorporateCustomerAdvisedNotAuthorized, SimulationACHTransferReturnParamsReasonPaymentStopped, SimulationACHTransferReturnParamsReasonNonTransactionAccount, SimulationACHTransferReturnParamsReasonUncollectedFunds, SimulationACHTransferReturnParamsReasonRoutingNumberCheckDigitError, SimulationACHTransferReturnParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, SimulationACHTransferReturnParamsReasonAmountFieldError, SimulationACHTransferReturnParamsReasonAuthorizationRevokedByCustomer, SimulationACHTransferReturnParamsReasonInvalidACHRoutingNumber, SimulationACHTransferReturnParamsReasonFileRecordEditCriteria, SimulationACHTransferReturnParamsReasonEnrInvalidIndividualName, SimulationACHTransferReturnParamsReasonReturnedPerOdfiRequest, SimulationACHTransferReturnParamsReasonLimitedParticipationDfi, SimulationACHTransferReturnParamsReasonIncorrectlyCodedOutboundInternationalPayment, SimulationACHTransferReturnParamsReasonAccountSoldToAnotherDfi, SimulationACHTransferReturnParamsReasonAddendaError, SimulationACHTransferReturnParamsReasonBeneficiaryOrAccountHolderDeceased, SimulationACHTransferReturnParamsReasonCustomerAdvisedNotWithinAuthorizationTerms, SimulationACHTransferReturnParamsReasonCorrectedReturn, SimulationACHTransferReturnParamsReasonDuplicateEntry, SimulationACHTransferReturnParamsReasonDuplicateReturn, SimulationACHTransferReturnParamsReasonEnrDuplicateEnrollment, SimulationACHTransferReturnParamsReasonEnrInvalidDfiAccountNumber, SimulationACHTransferReturnParamsReasonEnrInvalidIndividualIDNumber, SimulationACHTransferReturnParamsReasonEnrInvalidRepresentativePayeeIndicator, SimulationACHTransferReturnParamsReasonEnrInvalidTransactionCode, SimulationACHTransferReturnParamsReasonEnrReturnOfEnrEntry, SimulationACHTransferReturnParamsReasonEnrRoutingNumberCheckDigitError, SimulationACHTransferReturnParamsReasonEntryNotProcessedByGateway, SimulationACHTransferReturnParamsReasonFieldError, SimulationACHTransferReturnParamsReasonForeignReceivingDfiUnableToSettle, SimulationACHTransferReturnParamsReasonIatEntryCodingError, SimulationACHTransferReturnParamsReasonImproperEffectiveEntryDate, SimulationACHTransferReturnParamsReasonImproperSourceDocumentSourceDocumentPresented, SimulationACHTransferReturnParamsReasonInvalidCompanyID, SimulationACHTransferReturnParamsReasonInvalidForeignReceivingDfiIdentification, SimulationACHTransferReturnParamsReasonInvalidIndividualIDNumber, SimulationACHTransferReturnParamsReasonItemAndRckEntryPresentedForPayment, SimulationACHTransferReturnParamsReasonItemRelatedToRckEntryIsIneligible, SimulationACHTransferReturnParamsReasonMandatoryFieldError, SimulationACHTransferReturnParamsReasonMisroutedDishonoredReturn, SimulationACHTransferReturnParamsReasonMisroutedReturn, SimulationACHTransferReturnParamsReasonNoErrorsFound, SimulationACHTransferReturnParamsReasonNonAcceptanceOfR62DishonoredReturn, SimulationACHTransferReturnParamsReasonNonParticipantInIatProgram, SimulationACHTransferReturnParamsReasonPermissibleReturnEntry, SimulationACHTransferReturnParamsReasonPermissibleReturnEntryNotAccepted, SimulationACHTransferReturnParamsReasonRdfiNonSettlement, SimulationACHTransferReturnParamsReasonRdfiParticipantInCheckTruncationProgram, SimulationACHTransferReturnParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, SimulationACHTransferReturnParamsReasonReturnNotADuplicate, SimulationACHTransferReturnParamsReasonReturnOfErroneousOrReversingDebit, SimulationACHTransferReturnParamsReasonReturnOfImproperCreditEntry, SimulationACHTransferReturnParamsReasonReturnOfImproperDebitEntry, SimulationACHTransferReturnParamsReasonReturnOfXckEntry, SimulationACHTransferReturnParamsReasonSourceDocumentPresentedForPayment, SimulationACHTransferReturnParamsReasonStateLawAffectingRckAcceptance, SimulationACHTransferReturnParamsReasonStopPaymentOnItemRelatedToRckEntry, SimulationACHTransferReturnParamsReasonStopPaymentOnSourceDocument, SimulationACHTransferReturnParamsReasonTimelyOriginalReturn, SimulationACHTransferReturnParamsReasonTraceNumberError, SimulationACHTransferReturnParamsReasonUntimelyDishonoredReturn, SimulationACHTransferReturnParamsReasonUntimelyReturn:
+		return true
+	}
+	return false
+}
+
+type SimulationACHTransferSettleParams struct {
+	// The behavior of the inbound funds hold that is created when the ACH Transfer is
+	// settled. If no behavior is specified, the inbound funds hold will be released
+	// immediately in order for the funds to be available for use.
+	InboundFundsHoldBehavior param.Field[SimulationACHTransferSettleParamsInboundFundsHoldBehavior] `json:"inbound_funds_hold_behavior"`
+}
+
+func (r SimulationACHTransferSettleParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The behavior of the inbound funds hold that is created when the ACH Transfer is
+// settled. If no behavior is specified, the inbound funds hold will be released
+// immediately in order for the funds to be available for use.
+type SimulationACHTransferSettleParamsInboundFundsHoldBehavior string
+
+const (
+	SimulationACHTransferSettleParamsInboundFundsHoldBehaviorReleaseImmediately       SimulationACHTransferSettleParamsInboundFundsHoldBehavior = "release_immediately"
+	SimulationACHTransferSettleParamsInboundFundsHoldBehaviorReleaseOnDefaultSchedule SimulationACHTransferSettleParamsInboundFundsHoldBehavior = "release_on_default_schedule"
+)
+
+func (r SimulationACHTransferSettleParamsInboundFundsHoldBehavior) IsKnown() bool {
+	switch r {
+	case SimulationACHTransferSettleParamsInboundFundsHoldBehaviorReleaseImmediately, SimulationACHTransferSettleParamsInboundFundsHoldBehaviorReleaseOnDefaultSchedule:
 		return true
 	}
 	return false
