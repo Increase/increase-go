@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.305.1 (2025-08-28)
+
+Full Changelog: [v0.305.0...v0.305.1](https://github.com/Increase/increase-go/compare/v0.305.0...v0.305.1)
+
+### Bug Fixes
+
+* close body before retrying ([1d2d91b](https://github.com/Increase/increase-go/commit/1d2d91b5867f4ae9fede1fde02b89de4aba5d4e6))
+
 ## 0.305.0 (2025-08-28)
 
 Full Changelog: [v0.304.0...v0.305.0](https://github.com/Increase/increase-go/compare/v0.304.0...v0.305.0)
