@@ -3695,26 +3695,27 @@ func (r TransactionSourceInternalSourceCurrency) IsKnown() bool {
 type TransactionSourceInternalSourceReason string
 
 const (
-	TransactionSourceInternalSourceReasonAccountClosure             TransactionSourceInternalSourceReason = "account_closure"
-	TransactionSourceInternalSourceReasonBankDrawnCheck             TransactionSourceInternalSourceReason = "bank_drawn_check"
-	TransactionSourceInternalSourceReasonBankDrawnCheckCredit       TransactionSourceInternalSourceReason = "bank_drawn_check_credit"
-	TransactionSourceInternalSourceReasonBankMigration              TransactionSourceInternalSourceReason = "bank_migration"
-	TransactionSourceInternalSourceReasonCheckAdjustment            TransactionSourceInternalSourceReason = "check_adjustment"
-	TransactionSourceInternalSourceReasonCollectionPayment          TransactionSourceInternalSourceReason = "collection_payment"
-	TransactionSourceInternalSourceReasonCollectionReceivable       TransactionSourceInternalSourceReason = "collection_receivable"
-	TransactionSourceInternalSourceReasonEmpyrealAdjustment         TransactionSourceInternalSourceReason = "empyreal_adjustment"
-	TransactionSourceInternalSourceReasonError                      TransactionSourceInternalSourceReason = "error"
-	TransactionSourceInternalSourceReasonErrorCorrection            TransactionSourceInternalSourceReason = "error_correction"
-	TransactionSourceInternalSourceReasonFees                       TransactionSourceInternalSourceReason = "fees"
-	TransactionSourceInternalSourceReasonInterest                   TransactionSourceInternalSourceReason = "interest"
-	TransactionSourceInternalSourceReasonNegativeBalanceForgiveness TransactionSourceInternalSourceReason = "negative_balance_forgiveness"
-	TransactionSourceInternalSourceReasonSampleFunds                TransactionSourceInternalSourceReason = "sample_funds"
-	TransactionSourceInternalSourceReasonSampleFundsReturn          TransactionSourceInternalSourceReason = "sample_funds_return"
+	TransactionSourceInternalSourceReasonAccountClosure                    TransactionSourceInternalSourceReason = "account_closure"
+	TransactionSourceInternalSourceReasonBankDrawnCheck                    TransactionSourceInternalSourceReason = "bank_drawn_check"
+	TransactionSourceInternalSourceReasonBankDrawnCheckCredit              TransactionSourceInternalSourceReason = "bank_drawn_check_credit"
+	TransactionSourceInternalSourceReasonBankMigration                     TransactionSourceInternalSourceReason = "bank_migration"
+	TransactionSourceInternalSourceReasonCheckAdjustment                   TransactionSourceInternalSourceReason = "check_adjustment"
+	TransactionSourceInternalSourceReasonCollectionPayment                 TransactionSourceInternalSourceReason = "collection_payment"
+	TransactionSourceInternalSourceReasonCollectionReceivable              TransactionSourceInternalSourceReason = "collection_receivable"
+	TransactionSourceInternalSourceReasonEmpyrealAdjustment                TransactionSourceInternalSourceReason = "empyreal_adjustment"
+	TransactionSourceInternalSourceReasonError                             TransactionSourceInternalSourceReason = "error"
+	TransactionSourceInternalSourceReasonErrorCorrection                   TransactionSourceInternalSourceReason = "error_correction"
+	TransactionSourceInternalSourceReasonFees                              TransactionSourceInternalSourceReason = "fees"
+	TransactionSourceInternalSourceReasonInterest                          TransactionSourceInternalSourceReason = "interest"
+	TransactionSourceInternalSourceReasonNegativeBalanceForgiveness        TransactionSourceInternalSourceReason = "negative_balance_forgiveness"
+	TransactionSourceInternalSourceReasonSampleFunds                       TransactionSourceInternalSourceReason = "sample_funds"
+	TransactionSourceInternalSourceReasonSampleFundsReturn                 TransactionSourceInternalSourceReason = "sample_funds_return"
+	TransactionSourceInternalSourceReasonAccountRevenuePaymentDistribution TransactionSourceInternalSourceReason = "account_revenue_payment_distribution"
 )
 
 func (r TransactionSourceInternalSourceReason) IsKnown() bool {
 	switch r {
-	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonBankDrawnCheck, TransactionSourceInternalSourceReasonBankDrawnCheckCredit, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn:
+	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonBankDrawnCheck, TransactionSourceInternalSourceReasonBankDrawnCheckCredit, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn, TransactionSourceInternalSourceReasonAccountRevenuePaymentDistribution:
 		return true
 	}
 	return false
