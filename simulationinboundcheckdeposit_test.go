@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationInboundCheckDepositNew(t *testing.T) {
+func TestSimulationInboundCheckDepositNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,9 +26,10 @@ func TestSimulationInboundCheckDepositNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.InboundCheckDeposits.New(context.TODO(), increase.SimulationInboundCheckDepositNewParams{
-		AccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		Amount:          increase.F(int64(1000)),
-		CheckNumber:     increase.F("1234567890"),
+		AccountNumberID:   increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		Amount:            increase.F(int64(1000)),
+		CheckNumber:       increase.F("1234567890"),
+		PayeeNameAnalysis: increase.F(increase.SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNameMatches),
 	})
 	if err != nil {
 		var apierr *increase.Error
