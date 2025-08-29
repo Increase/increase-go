@@ -216,9 +216,11 @@ func (r DocumentType) IsKnown() bool {
 type DocumentNewParams struct {
 	// The type of document to create.
 	Category param.Field[DocumentNewParamsCategory] `json:"category,required"`
-	// An account verification letter.
+	// An account verification letter. Required if and only if `category` is
+	// `account_verification_letter`.
 	AccountVerificationLetter param.Field[DocumentNewParamsAccountVerificationLetter] `json:"account_verification_letter"`
-	// Funding instructions.
+	// Funding instructions. Required if and only if `category` is
+	// `funding_instructions`.
 	FundingInstructions param.Field[DocumentNewParamsFundingInstructions] `json:"funding_instructions"`
 }
 
@@ -242,7 +244,8 @@ func (r DocumentNewParamsCategory) IsKnown() bool {
 	return false
 }
 
-// An account verification letter.
+// An account verification letter. Required if and only if `category` is
+// `account_verification_letter`.
 type DocumentNewParamsAccountVerificationLetter struct {
 	// The Account Number the bank letter should be generated for.
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`
@@ -254,7 +257,8 @@ func (r DocumentNewParamsAccountVerificationLetter) MarshalJSON() (data []byte, 
 	return apijson.MarshalRoot(r)
 }
 
-// Funding instructions.
+// Funding instructions. Required if and only if `category` is
+// `funding_instructions`.
 type DocumentNewParamsFundingInstructions struct {
 	// The Account Number the funding instructions should be generated for.
 	AccountNumberID param.Field[string] `json:"account_number_id,required"`

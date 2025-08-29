@@ -1244,9 +1244,11 @@ type ACHTransferNewParamsAddenda struct {
 	// The type of addenda to pass with the transfer.
 	Category param.Field[ACHTransferNewParamsAddendaCategory] `json:"category,required"`
 	// Unstructured `payment_related_information` passed through with the transfer.
+	// Required if and only if `category` is `freeform`.
 	Freeform param.Field[ACHTransferNewParamsAddendaFreeform] `json:"freeform"`
 	// Structured ASC X12 820 remittance advice records. Please reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
+	// Required if and only if `category` is `payment_order_remittance_advice`.
 	PaymentOrderRemittanceAdvice param.Field[ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice] `json:"payment_order_remittance_advice"`
 }
 
@@ -1271,6 +1273,7 @@ func (r ACHTransferNewParamsAddendaCategory) IsKnown() bool {
 }
 
 // Unstructured `payment_related_information` passed through with the transfer.
+// Required if and only if `category` is `freeform`.
 type ACHTransferNewParamsAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer. In general, you should
 	// send at most one addendum–most ACH recipients cannot access beyond the first 80
@@ -1295,6 +1298,7 @@ func (r ACHTransferNewParamsAddendaFreeformEntry) MarshalJSON() (data []byte, er
 
 // Structured ASC X12 820 remittance advice records. Please reach out to
 // [support@increase.com](mailto:support@increase.com) for more information.
+// Required if and only if `category` is `payment_order_remittance_advice`.
 type ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice struct {
 	// ASC X12 RMR records for this specific transfer.
 	Invoices param.Field[[]ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice] `json:"invoices,required"`
