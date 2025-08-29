@@ -3434,6 +3434,12 @@ type TransactionSourceInboundWireReversal struct {
 	InstructionIdentification string `json:"instruction_identification,required,nullable"`
 	// Additional information about the reason for the reversal.
 	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information,required,nullable"`
+	// A code provided by the sending bank giving a reason for the reversal. It will
+	// generally be one of the codes defined in the ISO20022
+	// `ExternalReturnReason1Code` code set, but this is not enforced by the network.
+	ReturnReasonCode string `json:"return_reason_code,required,nullable"`
+	// An Increase-generated description of the `return_reason_code`.
+	ReturnReasonCodeDescription string `json:"return_reason_code_description,required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
@@ -3454,6 +3460,8 @@ type transactionSourceInboundWireReversalJSON struct {
 	InputSource                       apijson.Field
 	InstructionIdentification         apijson.Field
 	ReturnReasonAdditionalInformation apijson.Field
+	ReturnReasonCode                  apijson.Field
+	ReturnReasonCodeDescription       apijson.Field
 	TransactionID                     apijson.Field
 	WireTransferID                    apijson.Field
 	raw                               string
