@@ -51,8 +51,31 @@ type SimulationInboundCheckDepositNewParams struct {
 	Amount param.Field[int64] `json:"amount,required"`
 	// The check number on the check to be deposited.
 	CheckNumber param.Field[string] `json:"check_number,required"`
+	// Simulate the outcome of
+	// [payee name checking](https://increase.com/documentation/positive-pay#payee-name-mismatches).
+	// Defaults to `not_evaluated`.
+	PayeeNameAnalysis param.Field[SimulationInboundCheckDepositNewParamsPayeeNameAnalysis] `json:"payee_name_analysis"`
 }
 
 func (r SimulationInboundCheckDepositNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Simulate the outcome of
+// [payee name checking](https://increase.com/documentation/positive-pay#payee-name-mismatches).
+// Defaults to `not_evaluated`.
+type SimulationInboundCheckDepositNewParamsPayeeNameAnalysis string
+
+const (
+	SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNameMatches  SimulationInboundCheckDepositNewParamsPayeeNameAnalysis = "name_matches"
+	SimulationInboundCheckDepositNewParamsPayeeNameAnalysisDoesNotMatch SimulationInboundCheckDepositNewParamsPayeeNameAnalysis = "does_not_match"
+	SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNotEvaluated SimulationInboundCheckDepositNewParamsPayeeNameAnalysis = "not_evaluated"
+)
+
+func (r SimulationInboundCheckDepositNewParamsPayeeNameAnalysis) IsKnown() bool {
+	switch r {
+	case SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNameMatches, SimulationInboundCheckDepositNewParamsPayeeNameAnalysisDoesNotMatch, SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNotEvaluated:
+		return true
+	}
+	return false
 }
