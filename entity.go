@@ -1330,7 +1330,7 @@ type EntityNewParams struct {
 	// The description you choose to give the entity.
 	Description param.Field[string] `json:"description"`
 	// Details of the Government Authority entity to create. Required if `structure` is
-	// equal to `Government Authority`.
+	// equal to `government_authority`.
 	GovernmentAuthority param.Field[EntityNewParamsGovernmentAuthority] `json:"government_authority"`
 	// Details of the joint entity to create. Required if `structure` is equal to
 	// `joint`.
@@ -1616,7 +1616,7 @@ func (r EntityNewParamsCorporationBeneficialOwnershipExemptionReason) IsKnown() 
 }
 
 // Details of the Government Authority entity to create. Required if `structure` is
-// equal to `Government Authority`.
+// equal to `government_authority`.
 type EntityNewParamsGovernmentAuthority struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
@@ -2081,8 +2081,8 @@ func (r EntityNewParamsTrustCategory) IsKnown() bool {
 type EntityNewParamsTrustTrustee struct {
 	// The structure of the trustee.
 	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
-	// Details of the individual trustee. Required when the trustee `structure` is
-	// equal to `individual`.
+	// Details of the individual trustee. Within the trustee object, this is required
+	// if `structure` is equal to `individual`.
 	Individual param.Field[EntityNewParamsTrustTrusteesIndividual] `json:"individual"`
 }
 
@@ -2105,8 +2105,8 @@ func (r EntityNewParamsTrustTrusteesStructure) IsKnown() bool {
 	return false
 }
 
-// Details of the individual trustee. Required when the trustee `structure` is
-// equal to `individual`.
+// Details of the individual trustee. Within the trustee object, this is required
+// if `structure` is equal to `individual`.
 type EntityNewParamsTrustTrusteesIndividual struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
