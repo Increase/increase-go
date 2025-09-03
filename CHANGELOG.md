@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.309.1 (2025-09-03)
+
+Full Changelog: [v0.309.0...v0.309.1](https://github.com/Increase/increase-go/compare/v0.309.0...v0.309.1)
+
+### Bug Fixes
+
+* remove null from release please manifest ([d415b64](https://github.com/Increase/increase-go/commit/d415b64f04cb0d1a9554043a790654ad3e4fdbd3))
+* use release please annotations on more places ([6fc127a](https://github.com/Increase/increase-go/commit/6fc127ac6f0f5d35d5783d91f4b86e453c0f74d8))
+
 ## 0.309.0 (2025-08-29)
 
 Full Changelog: [v0.308.0...v0.309.0](https://github.com/Increase/increase-go/compare/v0.308.0...v0.309.0)
