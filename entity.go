@@ -57,6 +57,18 @@ func (r *EntityService) Get(ctx context.Context, entityID string, opts ...option
 	return
 }
 
+// Update an Entity
+func (r *EntityService) Update(ctx context.Context, entityID string, body EntityUpdateParams, opts ...option.RequestOption) (res *Entity, err error) {
+	opts = append(r.Options[:], opts...)
+	if entityID == "" {
+		err = errors.New("missing required entity_id parameter")
+		return
+	}
+	path := fmt.Sprintf("entities/%s", entityID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
+	return
+}
+
 // List Entities
 func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *pagination.Page[Entity], err error) {
 	var raw *http.Response
@@ -194,6 +206,9 @@ type Entity struct {
 	// Details of the natural person entity. Will be present if `structure` is equal to
 	// `natural_person`.
 	NaturalPerson EntityNaturalPerson `json:"natural_person,required,nullable"`
+	// An assessment of the entity’s potential risk of involvement in financial crimes,
+	// such as money laundering.
+	RiskRating EntityRiskRating `json:"risk_rating,required,nullable"`
 	// The status of the entity.
 	Status EntityStatus `json:"status,required"`
 	// The entity's legal structure.
@@ -224,6 +239,7 @@ type entityJSON struct {
 	IdempotencyKey         apijson.Field
 	Joint                  apijson.Field
 	NaturalPerson          apijson.Field
+	RiskRating             apijson.Field
 	Status                 apijson.Field
 	Structure              apijson.Field
 	SupplementalDocuments  apijson.Field
@@ -859,6 +875,51 @@ func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
 	return false
 }
 
+// An assessment of the entity’s potential risk of involvement in financial crimes,
+// such as money laundering.
+type EntityRiskRating struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
+	// rating was performed.
+	RatedAt time.Time `json:"rated_at,required" format:"date-time"`
+	// The rating given to this entity.
+	Rating EntityRiskRatingRating `json:"rating,required"`
+	JSON   entityRiskRatingJSON   `json:"-"`
+}
+
+// entityRiskRatingJSON contains the JSON metadata for the struct
+// [EntityRiskRating]
+type entityRiskRatingJSON struct {
+	RatedAt     apijson.Field
+	Rating      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityRiskRating) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityRiskRatingJSON) RawJSON() string {
+	return r.raw
+}
+
+// The rating given to this entity.
+type EntityRiskRatingRating string
+
+const (
+	EntityRiskRatingRatingLow    EntityRiskRatingRating = "low"
+	EntityRiskRatingRatingMedium EntityRiskRatingRating = "medium"
+	EntityRiskRatingRatingHigh   EntityRiskRatingRating = "high"
+)
+
+func (r EntityRiskRatingRating) IsKnown() bool {
+	switch r {
+	case EntityRiskRatingRatingLow, EntityRiskRatingRatingMedium, EntityRiskRatingRatingHigh:
+		return true
+	}
+	return false
+}
+
 // The status of the entity.
 type EntityStatus string
 
@@ -1340,6 +1401,9 @@ type EntityNewParams struct {
 	// `social_security_number` or `individual_taxpayer_identification_number`
 	// identification methods.
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
+	// An assessment of the entity’s potential risk of involvement in financial crimes,
+	// such as money laundering.
+	RiskRating param.Field[EntityNewParamsRiskRating] `json:"risk_rating"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
 	// A reference to data stored in a third-party verification service. Your
@@ -1971,6 +2035,37 @@ func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data 
 	return apijson.MarshalRoot(r)
 }
 
+// An assessment of the entity’s potential risk of involvement in financial crimes,
+// such as money laundering.
+type EntityNewParamsRiskRating struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
+	// rating was performed.
+	RatedAt param.Field[time.Time] `json:"rated_at,required" format:"date-time"`
+	// The rating given to this entity.
+	Rating param.Field[EntityNewParamsRiskRatingRating] `json:"rating,required"`
+}
+
+func (r EntityNewParamsRiskRating) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The rating given to this entity.
+type EntityNewParamsRiskRatingRating string
+
+const (
+	EntityNewParamsRiskRatingRatingLow    EntityNewParamsRiskRatingRating = "low"
+	EntityNewParamsRiskRatingRatingMedium EntityNewParamsRiskRatingRating = "medium"
+	EntityNewParamsRiskRatingRatingHigh   EntityNewParamsRiskRatingRating = "high"
+)
+
+func (r EntityNewParamsRiskRatingRating) IsKnown() bool {
+	switch r {
+	case EntityNewParamsRiskRatingRatingLow, EntityNewParamsRiskRatingRatingMedium, EntityNewParamsRiskRatingRatingHigh:
+		return true
+	}
+	return false
+}
+
 type EntityNewParamsSupplementalDocument struct {
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id,required"`
@@ -2378,6 +2473,47 @@ type EntityNewParamsTrustGrantorIdentificationPassport struct {
 
 func (r EntityNewParamsTrustGrantorIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+type EntityUpdateParams struct {
+	// An assessment of the entity’s potential risk of involvement in financial crimes,
+	// such as money laundering.
+	RiskRating param.Field[EntityUpdateParamsRiskRating] `json:"risk_rating"`
+}
+
+func (r EntityUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// An assessment of the entity’s potential risk of involvement in financial crimes,
+// such as money laundering.
+type EntityUpdateParamsRiskRating struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
+	// rating was performed.
+	RatedAt param.Field[time.Time] `json:"rated_at,required" format:"date-time"`
+	// The rating given to this entity.
+	Rating param.Field[EntityUpdateParamsRiskRatingRating] `json:"rating,required"`
+}
+
+func (r EntityUpdateParamsRiskRating) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The rating given to this entity.
+type EntityUpdateParamsRiskRatingRating string
+
+const (
+	EntityUpdateParamsRiskRatingRatingLow    EntityUpdateParamsRiskRatingRating = "low"
+	EntityUpdateParamsRiskRatingRatingMedium EntityUpdateParamsRiskRatingRating = "medium"
+	EntityUpdateParamsRiskRatingRatingHigh   EntityUpdateParamsRiskRatingRating = "high"
+)
+
+func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
+	switch r {
+	case EntityUpdateParamsRiskRatingRatingLow, EntityUpdateParamsRiskRatingRatingMedium, EntityUpdateParamsRiskRatingRatingHigh:
+		return true
+	}
+	return false
 }
 
 type EntityListParams struct {
