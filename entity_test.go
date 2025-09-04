@@ -317,6 +317,10 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				RatedAt: increase.F(time.Now()),
 				Rating:  increase.F(increase.EntityUpdateParamsRiskRatingRatingLow),
 			}),
+			ThirdPartyVerification: increase.F(increase.EntityUpdateParamsThirdPartyVerification{
+				Reference: increase.F("x"),
+				Vendor:    increase.F(increase.EntityUpdateParamsThirdPartyVerificationVendorAlloy),
+			}),
 		},
 	)
 	if err != nil {
