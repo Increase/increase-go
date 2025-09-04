@@ -2479,6 +2479,9 @@ type EntityUpdateParams struct {
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating param.Field[EntityUpdateParamsRiskRating] `json:"risk_rating"`
+	// A reference to data stored in a third-party verification service. Your
+	// integration may or may not use this field.
+	ThirdPartyVerification param.Field[EntityUpdateParamsThirdPartyVerification] `json:"third_party_verification"`
 }
 
 func (r EntityUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -2511,6 +2514,36 @@ const (
 func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
 	switch r {
 	case EntityUpdateParamsRiskRatingRatingLow, EntityUpdateParamsRiskRatingRatingMedium, EntityUpdateParamsRiskRatingRatingHigh:
+		return true
+	}
+	return false
+}
+
+// A reference to data stored in a third-party verification service. Your
+// integration may or may not use this field.
+type EntityUpdateParamsThirdPartyVerification struct {
+	// The reference identifier for the third party verification.
+	Reference param.Field[string] `json:"reference,required"`
+	// The vendor that was used to perform the verification.
+	Vendor param.Field[EntityUpdateParamsThirdPartyVerificationVendor] `json:"vendor,required"`
+}
+
+func (r EntityUpdateParamsThirdPartyVerification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The vendor that was used to perform the verification.
+type EntityUpdateParamsThirdPartyVerificationVendor string
+
+const (
+	EntityUpdateParamsThirdPartyVerificationVendorAlloy   EntityUpdateParamsThirdPartyVerificationVendor = "alloy"
+	EntityUpdateParamsThirdPartyVerificationVendorMiddesk EntityUpdateParamsThirdPartyVerificationVendor = "middesk"
+	EntityUpdateParamsThirdPartyVerificationVendorOscilar EntityUpdateParamsThirdPartyVerificationVendor = "oscilar"
+)
+
+func (r EntityUpdateParamsThirdPartyVerificationVendor) IsKnown() bool {
+	switch r {
+	case EntityUpdateParamsThirdPartyVerificationVendorAlloy, EntityUpdateParamsThirdPartyVerificationVendorMiddesk, EntityUpdateParamsThirdPartyVerificationVendorOscilar:
 		return true
 	}
 	return false
