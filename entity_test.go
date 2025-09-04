@@ -169,6 +169,10 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Name:               increase.F("x"),
 			ConfirmedNoUsTaxID: increase.F(true),
 		}),
+		RiskRating: increase.F(increase.EntityNewParamsRiskRating{
+			RatedAt: increase.F(time.Now()),
+			Rating:  increase.F(increase.EntityNewParamsRiskRatingRatingLow),
+		}),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
 		}}),
@@ -284,6 +288,37 @@ func TestEntityGet(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Entities.Get(context.TODO(), "entity_n8y8tnk2p9339ti393yi")
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestEntityUpdateWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Entities.Update(
+		context.TODO(),
+		"entity_n8y8tnk2p9339ti393yi",
+		increase.EntityUpdateParams{
+			RiskRating: increase.F(increase.EntityUpdateParamsRiskRating{
+				RatedAt: increase.F(time.Now()),
+				Rating:  increase.F(increase.EntityUpdateParamsRiskRatingRatingLow),
+			}),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
