@@ -233,6 +233,12 @@ type PhysicalCardProfileNewParams struct {
 	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
 	// The identifier for the Program that this Physical Card Profile falls under.
 	ProgramID param.Field[string] `json:"program_id,required"`
+	// A reference ID provided by the fulfillment provider for the card stock used.
+	// Only used if you've ordered card stock separately.
+	CardStockReference param.Field[string] `json:"card_stock_reference"`
+	// A reference ID provided by the fulfillment provider for the carrier stock used.
+	// Only used if you've ordered carrier stock separately.
+	CarrierStockReference param.Field[string] `json:"carrier_stock_reference"`
 	// Text printed on the front of the card. Reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
 	FrontText param.Field[PhysicalCardProfileNewParamsFrontText] `json:"front_text"`
