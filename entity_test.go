@@ -313,6 +313,15 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntityUpdateParams{
+			Corporation: increase.F(increase.EntityUpdateParamsCorporation{
+				Name: increase.F("x"),
+			}),
+			GovernmentAuthority: increase.F(increase.EntityUpdateParamsGovernmentAuthority{
+				Name: increase.F("x"),
+			}),
+			NaturalPerson: increase.F(increase.EntityUpdateParamsNaturalPerson{
+				Name: increase.F("x"),
+			}),
 			RiskRating: increase.F(increase.EntityUpdateParamsRiskRating{
 				RatedAt: increase.F(time.Now()),
 				Rating:  increase.F(increase.EntityUpdateParamsRiskRatingRatingLow),
@@ -320,6 +329,9 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 			ThirdPartyVerification: increase.F(increase.EntityUpdateParamsThirdPartyVerification{
 				Reference: increase.F("x"),
 				Vendor:    increase.F(increase.EntityUpdateParamsThirdPartyVerificationVendorAlloy),
+			}),
+			Trust: increase.F(increase.EntityUpdateParamsTrust{
+				Name: increase.F("x"),
 			}),
 		},
 	)
