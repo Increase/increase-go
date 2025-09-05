@@ -2476,11 +2476,14 @@ func (r EntityNewParamsTrustGrantorIdentificationPassport) MarshalJSON() (data [
 }
 
 type EntityUpdateParams struct {
-	// Details of the corporation entity to update.
+	// Details of the corporation entity to update. If you specify this parameter and
+	// the entity is not a corporation, the request will fail.
 	Corporation param.Field[EntityUpdateParamsCorporation] `json:"corporation"`
-	// Details of the government authority entity to update.
+	// Details of the government authority entity to update. If you specify this
+	// parameter and the entity is not a government authority, the request will fail.
 	GovernmentAuthority param.Field[EntityUpdateParamsGovernmentAuthority] `json:"government_authority"`
-	// Details of the natural person entity to update.
+	// Details of the natural person entity to update. If you specify this parameter
+	// and the entity is not a natural person, the request will fail.
 	NaturalPerson param.Field[EntityUpdateParamsNaturalPerson] `json:"natural_person"`
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
@@ -2488,7 +2491,8 @@ type EntityUpdateParams struct {
 	// A reference to data stored in a third-party verification service. Your
 	// integration may or may not use this field.
 	ThirdPartyVerification param.Field[EntityUpdateParamsThirdPartyVerification] `json:"third_party_verification"`
-	// Details of the trust entity to update.
+	// Details of the trust entity to update. If you specify this parameter and the
+	// entity is not a trust, the request will fail.
 	Trust param.Field[EntityUpdateParamsTrust] `json:"trust"`
 }
 
@@ -2496,7 +2500,8 @@ func (r EntityUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Details of the corporation entity to update.
+// Details of the corporation entity to update. If you specify this parameter and
+// the entity is not a corporation, the request will fail.
 type EntityUpdateParamsCorporation struct {
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name"`
@@ -2506,7 +2511,8 @@ func (r EntityUpdateParamsCorporation) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Details of the government authority entity to update.
+// Details of the government authority entity to update. If you specify this
+// parameter and the entity is not a government authority, the request will fail.
 type EntityUpdateParamsGovernmentAuthority struct {
 	// The legal name of the government authority.
 	Name param.Field[string] `json:"name"`
@@ -2516,7 +2522,8 @@ func (r EntityUpdateParamsGovernmentAuthority) MarshalJSON() (data []byte, err e
 	return apijson.MarshalRoot(r)
 }
 
-// Details of the natural person entity to update.
+// Details of the natural person entity to update. If you specify this parameter
+// and the entity is not a natural person, the request will fail.
 type EntityUpdateParamsNaturalPerson struct {
 	// The legal name of the natural person.
 	Name param.Field[string] `json:"name"`
@@ -2587,7 +2594,8 @@ func (r EntityUpdateParamsThirdPartyVerificationVendor) IsKnown() bool {
 	return false
 }
 
-// Details of the trust entity to update.
+// Details of the trust entity to update. If you specify this parameter and the
+// entity is not a trust, the request will fail.
 type EntityUpdateParamsTrust struct {
 	// The legal name of the trust.
 	Name param.Field[string] `json:"name"`
