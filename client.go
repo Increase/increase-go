@@ -18,6 +18,7 @@ type Client struct {
 	Options                          []option.RequestOption
 	Accounts                         *AccountService
 	AccountNumbers                   *AccountNumberService
+	AccountTransfers                 *AccountTransferService
 	Cards                            *CardService
 	CardPayments                     *CardPaymentService
 	CardPurchaseSupplements          *CardPurchaseSupplementService
@@ -29,7 +30,6 @@ type Client struct {
 	Transactions                     *TransactionService
 	PendingTransactions              *PendingTransactionService
 	DeclinedTransactions             *DeclinedTransactionService
-	AccountTransfers                 *AccountTransferService
 	ACHTransfers                     *ACHTransferService
 	ACHPrenotifications              *ACHPrenotificationService
 	InboundACHTransfers              *InboundACHTransferService
@@ -101,6 +101,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r.Accounts = NewAccountService(opts...)
 	r.AccountNumbers = NewAccountNumberService(opts...)
+	r.AccountTransfers = NewAccountTransferService(opts...)
 	r.Cards = NewCardService(opts...)
 	r.CardPayments = NewCardPaymentService(opts...)
 	r.CardPurchaseSupplements = NewCardPurchaseSupplementService(opts...)
@@ -112,7 +113,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Transactions = NewTransactionService(opts...)
 	r.PendingTransactions = NewPendingTransactionService(opts...)
 	r.DeclinedTransactions = NewDeclinedTransactionService(opts...)
-	r.AccountTransfers = NewAccountTransferService(opts...)
 	r.ACHTransfers = NewACHTransferService(opts...)
 	r.ACHPrenotifications = NewACHPrenotificationService(opts...)
 	r.InboundACHTransfers = NewInboundACHTransferService(opts...)
