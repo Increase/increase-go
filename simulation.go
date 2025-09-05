@@ -15,6 +15,7 @@ import (
 type SimulationService struct {
 	Options                          []option.RequestOption
 	InterestPayments                 *SimulationInterestPaymentService
+	AccountTransfers                 *SimulationAccountTransferService
 	CardAuthorizations               *SimulationCardAuthorizationService
 	CardAuthorizationExpirations     *SimulationCardAuthorizationExpirationService
 	CardSettlements                  *SimulationCardSettlementService
@@ -26,7 +27,6 @@ type SimulationService struct {
 	PhysicalCards                    *SimulationPhysicalCardService
 	DigitalWalletTokenRequests       *SimulationDigitalWalletTokenRequestService
 	PendingTransactions              *SimulationPendingTransactionService
-	AccountTransfers                 *SimulationAccountTransferService
 	ACHTransfers                     *SimulationACHTransferService
 	InboundACHTransfers              *SimulationInboundACHTransferService
 	WireTransfers                    *SimulationWireTransferService
@@ -52,6 +52,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r = &SimulationService{}
 	r.Options = opts
 	r.InterestPayments = NewSimulationInterestPaymentService(opts...)
+	r.AccountTransfers = NewSimulationAccountTransferService(opts...)
 	r.CardAuthorizations = NewSimulationCardAuthorizationService(opts...)
 	r.CardAuthorizationExpirations = NewSimulationCardAuthorizationExpirationService(opts...)
 	r.CardSettlements = NewSimulationCardSettlementService(opts...)
@@ -63,7 +64,6 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.PhysicalCards = NewSimulationPhysicalCardService(opts...)
 	r.DigitalWalletTokenRequests = NewSimulationDigitalWalletTokenRequestService(opts...)
 	r.PendingTransactions = NewSimulationPendingTransactionService(opts...)
-	r.AccountTransfers = NewSimulationAccountTransferService(opts...)
 	r.ACHTransfers = NewSimulationACHTransferService(opts...)
 	r.InboundACHTransfers = NewSimulationInboundACHTransferService(opts...)
 	r.WireTransfers = NewSimulationWireTransferService(opts...)
