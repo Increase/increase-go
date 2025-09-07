@@ -31,8 +31,10 @@ func TestPhysicalCardProfileNewWithOptionalParams(t *testing.T) {
 		Description:           increase.F("My Card Profile"),
 		FrontImageFileID:      increase.F("file_o6aex13wm1jcc36sgcj1"),
 		ProgramID:             increase.F("program_i2v2os4mwza1oetokh9i"),
+		BackColor:             increase.F(increase.PhysicalCardProfileNewParamsBackColorBlack),
 		CardStockReference:    increase.F("x"),
 		CarrierStockReference: increase.F("x"),
+		FrontColor:            increase.F(increase.PhysicalCardProfileNewParamsFrontColorBlack),
 		FrontText: increase.F(increase.PhysicalCardProfileNewParamsFrontText{
 			Line1: increase.F("x"),
 			Line2: increase.F("x"),
