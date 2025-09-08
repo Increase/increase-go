@@ -2506,6 +2506,11 @@ type EntityUpdateParamsCorporation struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
 	Address param.Field[EntityUpdateParamsCorporationAddress] `json:"address"`
+	// The North American Industry Classification System (NAICS) code for the
+	// corporation's primary line of business. This is a number, like `5132` for
+	// `Software Publishers`. A full list of classification codes is available
+	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
+	IndustryCode param.Field[string] `json:"industry_code"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name"`
 }
