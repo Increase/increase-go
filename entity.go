@@ -2483,6 +2483,10 @@ type EntityUpdateParams struct {
 	// Details of the corporation entity to update. If you specify this parameter and
 	// the entity is not a corporation, the request will fail.
 	Corporation param.Field[EntityUpdateParamsCorporation] `json:"corporation"`
+	// When your user last confirmed the Entity's details. Depending on your program,
+	// you may be required to affirmatively confirm details with your users on an
+	// annual basis.
+	DetailsConfirmedAt param.Field[time.Time] `json:"details_confirmed_at" format:"date-time"`
 	// Details of the government authority entity to update. If you specify this
 	// parameter and the entity is not a government authority, the request will fail.
 	GovernmentAuthority param.Field[EntityUpdateParamsGovernmentAuthority] `json:"government_authority"`
