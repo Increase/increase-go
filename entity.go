@@ -2503,6 +2503,9 @@ func (r EntityUpdateParams) MarshalJSON() (data []byte, err error) {
 // Details of the corporation entity to update. If you specify this parameter and
 // the entity is not a corporation, the request will fail.
 type EntityUpdateParamsCorporation struct {
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
+	Address param.Field[EntityUpdateParamsCorporationAddress] `json:"address"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name"`
 }
@@ -2511,9 +2514,32 @@ func (r EntityUpdateParamsCorporation) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
+type EntityUpdateParamsCorporationAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityUpdateParamsCorporationAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Details of the government authority entity to update. If you specify this
 // parameter and the entity is not a government authority, the request will fail.
 type EntityUpdateParamsGovernmentAuthority struct {
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
+	Address param.Field[EntityUpdateParamsGovernmentAuthorityAddress] `json:"address"`
 	// The legal name of the government authority.
 	Name param.Field[string] `json:"name"`
 }
@@ -2522,14 +2548,57 @@ func (r EntityUpdateParamsGovernmentAuthority) MarshalJSON() (data []byte, err e
 	return apijson.MarshalRoot(r)
 }
 
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
+type EntityUpdateParamsGovernmentAuthorityAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityUpdateParamsGovernmentAuthorityAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Details of the natural person entity to update. If you specify this parameter
 // and the entity is not a natural person, the request will fail.
 type EntityUpdateParamsNaturalPerson struct {
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
+	Address param.Field[EntityUpdateParamsNaturalPersonAddress] `json:"address"`
 	// The legal name of the natural person.
 	Name param.Field[string] `json:"name"`
 }
 
 func (r EntityUpdateParamsNaturalPerson) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
+type EntityUpdateParamsNaturalPersonAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityUpdateParamsNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -2597,11 +2666,34 @@ func (r EntityUpdateParamsThirdPartyVerificationVendor) IsKnown() bool {
 // Details of the trust entity to update. If you specify this parameter and the
 // entity is not a trust, the request will fail.
 type EntityUpdateParamsTrust struct {
+	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
+	Address param.Field[EntityUpdateParamsTrustAddress] `json:"address"`
 	// The legal name of the trust.
 	Name param.Field[string] `json:"name"`
 }
 
 func (r EntityUpdateParamsTrust) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
+type EntityUpdateParamsTrustAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city,required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state,required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip,required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityUpdateParamsTrustAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
