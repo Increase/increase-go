@@ -217,8 +217,9 @@ type Entity struct {
 	// first 10 documents for an entity. If an entity has more than 10 documents, use
 	// the GET /entity_supplemental_documents list endpoint to retrieve them.
 	SupplementalDocuments []EntitySupplementalDocument `json:"supplemental_documents,required"`
-	// A reference to data stored in a third-party verification service. Your
-	// integration may or may not use this field.
+	// If you are using a third-party service for identity verification, you can use
+	// this field to associate this Entity with the identifier that represents them in
+	// that service.
 	ThirdPartyVerification EntityThirdPartyVerification `json:"third_party_verification,required,nullable"`
 	// Details of the trust entity. Will be present if `structure` is equal to `trust`.
 	Trust EntityTrust `json:"trust,required,nullable"`
@@ -956,8 +957,9 @@ func (r EntityStructure) IsKnown() bool {
 	return false
 }
 
-// A reference to data stored in a third-party verification service. Your
-// integration may or may not use this field.
+// If you are using a third-party service for identity verification, you can use
+// this field to associate this Entity with the identifier that represents them in
+// that service.
 type EntityThirdPartyVerification struct {
 	// The reference identifier for the third party verification.
 	Reference string `json:"reference,required"`
@@ -1406,8 +1408,9 @@ type EntityNewParams struct {
 	RiskRating param.Field[EntityNewParamsRiskRating] `json:"risk_rating"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
-	// A reference to data stored in a third-party verification service. Your
-	// integration may or may not use this field.
+	// If you are using a third-party service for identity verification, you can use
+	// this field to associate this Entity with the identifier that represents them in
+	// that service.
 	ThirdPartyVerification param.Field[EntityNewParamsThirdPartyVerification] `json:"third_party_verification"`
 	// Details of the trust entity to create. Required if `structure` is equal to
 	// `trust`.
@@ -2075,8 +2078,9 @@ func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err err
 	return apijson.MarshalRoot(r)
 }
 
-// A reference to data stored in a third-party verification service. Your
-// integration may or may not use this field.
+// If you are using a third-party service for identity verification, you can use
+// this field to associate this Entity with the identifier that represents them in
+// that service.
 type EntityNewParamsThirdPartyVerification struct {
 	// The reference identifier for the third party verification.
 	Reference param.Field[string] `json:"reference,required"`
@@ -2488,8 +2492,9 @@ type EntityUpdateParams struct {
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating param.Field[EntityUpdateParamsRiskRating] `json:"risk_rating"`
-	// A reference to data stored in a third-party verification service. Your
-	// integration may or may not use this field.
+	// If you are using a third-party service for identity verification, you can use
+	// this field to associate this Entity with the identifier that represents them in
+	// that service.
 	ThirdPartyVerification param.Field[EntityUpdateParamsThirdPartyVerification] `json:"third_party_verification"`
 	// Details of the trust entity to update. If you specify this parameter and the
 	// entity is not a trust, the request will fail.
@@ -2638,8 +2643,9 @@ func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
 	return false
 }
 
-// A reference to data stored in a third-party verification service. Your
-// integration may or may not use this field.
+// If you are using a third-party service for identity verification, you can use
+// this field to associate this Entity with the identifier that represents them in
+// that service.
 type EntityUpdateParamsThirdPartyVerification struct {
 	// The reference identifier for the third party verification.
 	Reference param.Field[string] `json:"reference,required"`
