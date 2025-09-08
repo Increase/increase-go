@@ -314,12 +314,33 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 		"entity_n8y8tnk2p9339ti393yi",
 		increase.EntityUpdateParams{
 			Corporation: increase.F(increase.EntityUpdateParamsCorporation{
+				Address: increase.F(increase.EntityUpdateParamsCorporationAddress{
+					City:  increase.F("New York"),
+					Line1: increase.F("33 Liberty Street"),
+					State: increase.F("NY"),
+					Zip:   increase.F("10045"),
+					Line2: increase.F("Unit 2"),
+				}),
 				Name: increase.F("x"),
 			}),
 			GovernmentAuthority: increase.F(increase.EntityUpdateParamsGovernmentAuthority{
+				Address: increase.F(increase.EntityUpdateParamsGovernmentAuthorityAddress{
+					City:  increase.F("x"),
+					Line1: increase.F("x"),
+					State: increase.F("x"),
+					Zip:   increase.F("x"),
+					Line2: increase.F("x"),
+				}),
 				Name: increase.F("x"),
 			}),
 			NaturalPerson: increase.F(increase.EntityUpdateParamsNaturalPerson{
+				Address: increase.F(increase.EntityUpdateParamsNaturalPersonAddress{
+					City:  increase.F("x"),
+					Line1: increase.F("x"),
+					State: increase.F("x"),
+					Zip:   increase.F("x"),
+					Line2: increase.F("x"),
+				}),
 				Name: increase.F("x"),
 			}),
 			RiskRating: increase.F(increase.EntityUpdateParamsRiskRating{
@@ -331,6 +352,13 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				Vendor:    increase.F(increase.EntityUpdateParamsThirdPartyVerificationVendorAlloy),
 			}),
 			Trust: increase.F(increase.EntityUpdateParamsTrust{
+				Address: increase.F(increase.EntityUpdateParamsTrustAddress{
+					City:  increase.F("x"),
+					Line1: increase.F("x"),
+					State: increase.F("x"),
+					Zip:   increase.F("x"),
+					Line2: increase.F("x"),
+				}),
 				Name: increase.F("x"),
 			}),
 		},
