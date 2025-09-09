@@ -231,6 +231,9 @@ type RealTimeDecisionCardAuthorization struct {
 	CardID string `json:"card_id,required"`
 	// Whether or not the authorization was approved.
 	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision,required,nullable"`
+	// Present if and only if `decision` is `decline`. Contains information related to
+	// the reason the authorization was declined.
+	Decline RealTimeDecisionCardAuthorizationDecline `json:"decline,required,nullable"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
 	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
@@ -300,6 +303,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	AdditionalAmounts     apijson.Field
 	CardID                apijson.Field
 	Decision              apijson.Field
+	Decline               apijson.Field
 	DigitalWalletTokenID  apijson.Field
 	Direction             apijson.Field
 	MerchantAcceptorID    apijson.Field
@@ -649,6 +653,30 @@ func (r RealTimeDecisionCardAuthorizationDecision) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Present if and only if `decision` is `decline`. Contains information related to
+// the reason the authorization was declined.
+type RealTimeDecisionCardAuthorizationDecline struct {
+	// The reason the authorization was declined.
+	Reason string                                       `json:"reason,required"`
+	JSON   realTimeDecisionCardAuthorizationDeclineJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationDeclineJSON contains the JSON metadata for the
+// struct [RealTimeDecisionCardAuthorizationDecline]
+type realTimeDecisionCardAuthorizationDeclineJSON struct {
+	Reason      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationDeclineJSON) RawJSON() string {
+	return r.raw
 }
 
 // The direction describes the direction the funds will move, either from the
@@ -1058,16 +1086,16 @@ type RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult string
 
 const (
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked                       RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "not_checked"
-	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_no_match"
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_no_match_address_match"
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch                            RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "match"
 	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch                          RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "no_match"
+	RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
 )
 
 func (r RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch:
+	case RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNotChecked, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultNoMatch, RealTimeDecisionCardAuthorizationVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked:
 		return true
 	}
 	return false
@@ -1397,8 +1425,18 @@ func (r RealTimeDecisionActionParamsCardAuthenticationChallengeResult) IsKnown()
 type RealTimeDecisionActionParamsCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
 	Decision param.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
+	// If your application approves the authorization, this contains metadata about
+	// your decision to approve. Your response here is advisory to the acquiring bank.
+	// The bank may choose to reverse the authorization if you approve the transaction
+	// but indicate the address does not match.
+	Approval param.Field[RealTimeDecisionActionParamsCardAuthorizationApproval] `json:"approval"`
+	// If your application declines the authorization, this contains details about the
+	// decline.
+	Decline param.Field[RealTimeDecisionActionParamsCardAuthorizationDecline] `json:"decline"`
 	// The reason the card authorization was declined. This translates to a specific
-	// decline code that is sent to the card network.
+	// decline code that is sent to the card network. This field is deprecated, please
+	// transition to using the `decline` object as this field will be removed in a
+	// future release.
 	DeclineReason param.Field[RealTimeDecisionActionParamsCardAuthorizationDeclineReason] `json:"decline_reason"`
 }
 
@@ -1420,6 +1458,95 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDecision) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// If your application approves the authorization, this contains metadata about
+// your decision to approve. Your response here is advisory to the acquiring bank.
+// The bank may choose to reverse the authorization if you approve the transaction
+// but indicate the address does not match.
+type RealTimeDecisionActionParamsCardAuthorizationApproval struct {
+	// Your decisions on whether or not each provided address component is a match.
+	// Your response here is evaluated against the customer's provided `postal_code`
+	// and `line1`, and an appropriate network response is generated. For example, if
+	// you would like to approve all transactions for a given card, you can submit
+	// `match` for both `postal_code` and `line1` and Increase will generate an
+	// approval with an Address Verification System (AVS) code that will match all of
+	// the available address information, or will report that no check was performed if
+	// no address information is available. If you do not provide a response, the
+	// address verification result will be calculated by Increase using the available
+	// address information available on the card. If none is available, Increase will
+	// report that no check was performed.
+	CardholderAddressVerificationResult param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResult] `json:"cardholder_address_verification_result"`
+}
+
+func (r RealTimeDecisionActionParamsCardAuthorizationApproval) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Your decisions on whether or not each provided address component is a match.
+// Your response here is evaluated against the customer's provided `postal_code`
+// and `line1`, and an appropriate network response is generated. For example, if
+// you would like to approve all transactions for a given card, you can submit
+// `match` for both `postal_code` and `line1` and Increase will generate an
+// approval with an Address Verification System (AVS) code that will match all of
+// the available address information, or will report that no check was performed if
+// no address information is available. If you do not provide a response, the
+// address verification result will be calculated by Increase using the available
+// address information available on the card. If none is available, Increase will
+// report that no check was performed.
+type RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResult struct {
+	// Your decision on the address line of the provided address.
+	Line1 param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1] `json:"line1,required"`
+	// Your decision on the postal code of the provided address.
+	PostalCode param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode] `json:"postal_code,required"`
+}
+
+func (r RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResult) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Your decision on the address line of the provided address.
+type RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1 string
+
+const (
+	RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1Match   RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1 = "match"
+	RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1NoMatch RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1 = "no_match"
+)
+
+func (r RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1Match, RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1NoMatch:
+		return true
+	}
+	return false
+}
+
+// Your decision on the postal code of the provided address.
+type RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode string
+
+const (
+	RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCodeMatch   RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode = "match"
+	RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCodeNoMatch RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode = "no_match"
+)
+
+func (r RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCodeMatch, RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCodeNoMatch:
+		return true
+	}
+	return false
+}
+
+// If your application declines the authorization, this contains details about the
+// decline.
+type RealTimeDecisionActionParamsCardAuthorizationDecline struct {
+	// The reason the card authorization was declined. This translates to a specific
+	// decline code that is sent to the card network.
+	Reason param.Field[RealTimeDecisionActionParamsCardAuthorizationDeclineReason] `json:"reason,required"`
+}
+
+func (r RealTimeDecisionActionParamsCardAuthorizationDecline) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // The reason the card authorization was declined. This translates to a specific
@@ -1447,7 +1574,9 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDeclineReason) IsKnown() bo
 // this object contains your response to the authentication.
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
-	Result  param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult]  `json:"result,required"`
+	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+	// If your application was able to deliver the one-time passcode, this contains
+	// metadata about the delivery. Exactly one of `phone` or `email` must be provided.
 	Success param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess] `json:"success"`
 }
 
@@ -1471,6 +1600,8 @@ func (r RealTimeDecisionActionParamsDigitalWalletAuthenticationResult) IsKnown()
 	return false
 }
 
+// If your application was able to deliver the one-time passcode, this contains
+// metadata about the delivery. Exactly one of `phone` or `email` must be provided.
 type RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess struct {
 	// The email address that was used to verify the cardholder via one-time passcode.
 	Email param.Field[string] `json:"email"`
