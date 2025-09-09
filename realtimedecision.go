@@ -1433,11 +1433,6 @@ type RealTimeDecisionActionParamsCardAuthorization struct {
 	// If your application declines the authorization, this contains details about the
 	// decline.
 	Decline param.Field[RealTimeDecisionActionParamsCardAuthorizationDecline] `json:"decline"`
-	// The reason the card authorization was declined. This translates to a specific
-	// decline code that is sent to the card network. This field is deprecated, please
-	// transition to using the `decline` object as this field will be removed in a
-	// future release.
-	DeclineReason param.Field[RealTimeDecisionActionParamsCardAuthorizationDeclineReason] `json:"decline_reason"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byte, err error) {
