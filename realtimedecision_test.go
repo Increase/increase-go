@@ -68,7 +68,6 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 				Decline: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDecline{
 					Reason: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds),
 				}),
-				DeclineReason: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds),
 			}),
 			DigitalWalletAuthentication: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthentication{
 				Result: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess),
