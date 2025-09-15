@@ -257,8 +257,8 @@ type PendingTransactionSource struct {
 	// response if and only if `category` is equal to `check_transfer_instruction`.
 	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,required,nullable"`
 	// A FedNow Transfer Instruction object. This field will be present in the JSON
-	// response if and only if `category` is equal to `fed_now_transfer_instruction`.
-	FedNowTransferInstruction PendingTransactionSourceFedNowTransferInstruction `json:"fed_now_transfer_instruction,required,nullable"`
+	// response if and only if `category` is equal to `fednow_transfer_instruction`.
+	FednowTransferInstruction PendingTransactionSourceFednowTransferInstruction `json:"fednow_transfer_instruction,required,nullable"`
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`. We hold funds for
 	// certain transaction types to account for return windows where funds might still
@@ -299,7 +299,7 @@ type pendingTransactionSourceJSON struct {
 	Category                            apijson.Field
 	CheckDepositInstruction             apijson.Field
 	CheckTransferInstruction            apijson.Field
-	FedNowTransferInstruction           apijson.Field
+	FednowTransferInstruction           apijson.Field
 	InboundFundsHold                    apijson.Field
 	InboundWireTransferReversal         apijson.Field
 	Other                               apijson.Field
@@ -1268,7 +1268,7 @@ const (
 	PendingTransactionSourceCategoryCardAuthorization                   PendingTransactionSourceCategory = "card_authorization"
 	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
 	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
-	PendingTransactionSourceCategoryFedNowTransferInstruction           PendingTransactionSourceCategory = "fed_now_transfer_instruction"
+	PendingTransactionSourceCategoryFednowTransferInstruction           PendingTransactionSourceCategory = "fednow_transfer_instruction"
 	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
 	PendingTransactionSourceCategoryUserInitiatedHold                   PendingTransactionSourceCategory = "user_initiated_hold"
 	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
@@ -1281,7 +1281,7 @@ const (
 
 func (r PendingTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryFedNowTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryOther:
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryFednowTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1400,26 +1400,26 @@ func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool
 }
 
 // A FedNow Transfer Instruction object. This field will be present in the JSON
-// response if and only if `category` is equal to `fed_now_transfer_instruction`.
-type PendingTransactionSourceFedNowTransferInstruction struct {
+// response if and only if `category` is equal to `fednow_transfer_instruction`.
+type PendingTransactionSourceFednowTransferInstruction struct {
 	// The identifier of the FedNow Transfer that led to this Pending Transaction.
 	TransferID string                                                `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceFedNowTransferInstructionJSON `json:"-"`
+	JSON       pendingTransactionSourceFednowTransferInstructionJSON `json:"-"`
 }
 
-// pendingTransactionSourceFedNowTransferInstructionJSON contains the JSON metadata
-// for the struct [PendingTransactionSourceFedNowTransferInstruction]
-type pendingTransactionSourceFedNowTransferInstructionJSON struct {
+// pendingTransactionSourceFednowTransferInstructionJSON contains the JSON metadata
+// for the struct [PendingTransactionSourceFednowTransferInstruction]
+type pendingTransactionSourceFednowTransferInstructionJSON struct {
 	TransferID  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *PendingTransactionSourceFedNowTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+func (r *PendingTransactionSourceFednowTransferInstruction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r pendingTransactionSourceFedNowTransferInstructionJSON) RawJSON() string {
+func (r pendingTransactionSourceFednowTransferInstructionJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1743,7 +1743,7 @@ const (
 	PendingTransactionListParamsCategoryInCardAuthorization                   PendingTransactionListParamsCategoryIn = "card_authorization"
 	PendingTransactionListParamsCategoryInCheckDepositInstruction             PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
 	PendingTransactionListParamsCategoryInCheckTransferInstruction            PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
-	PendingTransactionListParamsCategoryInFedNowTransferInstruction           PendingTransactionListParamsCategoryIn = "fed_now_transfer_instruction"
+	PendingTransactionListParamsCategoryInFednowTransferInstruction           PendingTransactionListParamsCategoryIn = "fednow_transfer_instruction"
 	PendingTransactionListParamsCategoryInInboundFundsHold                    PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
 	PendingTransactionListParamsCategoryInUserInitiatedHold                   PendingTransactionListParamsCategoryIn = "user_initiated_hold"
 	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
@@ -1756,7 +1756,7 @@ const (
 
 func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInFedNowTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInUserInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInCardPushTransferInstruction, PendingTransactionListParamsCategoryInOther:
+	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInFednowTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInUserInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInCardPushTransferInstruction, PendingTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
