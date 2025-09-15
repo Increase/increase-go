@@ -266,9 +266,9 @@ type TransactionSource struct {
 	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
 	// A FedNow Transfer Acknowledgement object. This field will be present in the JSON
 	// response if and only if `category` is equal to
-	// `fed_now_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
+	// `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
 	// when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
-	FedNowTransferAcknowledgement TransactionSourceFedNowTransferAcknowledgement `json:"fed_now_transfer_acknowledgement,required,nullable"`
+	FednowTransferAcknowledgement TransactionSourceFednowTransferAcknowledgement `json:"fednow_transfer_acknowledgement,required,nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
 	// made to Increase.
@@ -375,7 +375,7 @@ type transactionSourceJSON struct {
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
-	FedNowTransferAcknowledgement               apijson.Field
+	FednowTransferAcknowledgement               apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundACHTransferReturnIntention           apijson.Field
@@ -2746,7 +2746,7 @@ const (
 	TransactionSourceCategoryCardRevenuePayment                          TransactionSourceCategory = "card_revenue_payment"
 	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
 	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
-	TransactionSourceCategoryFedNowTransferAcknowledgement               TransactionSourceCategory = "fed_now_transfer_acknowledgement"
+	TransactionSourceCategoryFednowTransferAcknowledgement               TransactionSourceCategory = "fednow_transfer_acknowledgement"
 	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
 	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
 	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
@@ -2771,7 +2771,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFedNowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -3027,27 +3027,27 @@ func (r TransactionSourceCheckTransferDepositType) IsKnown() bool {
 
 // A FedNow Transfer Acknowledgement object. This field will be present in the JSON
 // response if and only if `category` is equal to
-// `fed_now_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
+// `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
 // when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
-type TransactionSourceFedNowTransferAcknowledgement struct {
+type TransactionSourceFednowTransferAcknowledgement struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
 	TransferID string                                             `json:"transfer_id,required"`
-	JSON       transactionSourceFedNowTransferAcknowledgementJSON `json:"-"`
+	JSON       transactionSourceFednowTransferAcknowledgementJSON `json:"-"`
 }
 
-// transactionSourceFedNowTransferAcknowledgementJSON contains the JSON metadata
-// for the struct [TransactionSourceFedNowTransferAcknowledgement]
-type transactionSourceFedNowTransferAcknowledgementJSON struct {
+// transactionSourceFednowTransferAcknowledgementJSON contains the JSON metadata
+// for the struct [TransactionSourceFednowTransferAcknowledgement]
+type transactionSourceFednowTransferAcknowledgementJSON struct {
 	TransferID  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *TransactionSourceFedNowTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
+func (r *TransactionSourceFednowTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r transactionSourceFedNowTransferAcknowledgementJSON) RawJSON() string {
+func (r transactionSourceFednowTransferAcknowledgementJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -3984,7 +3984,7 @@ const (
 	TransactionListParamsCategoryInCardRevenuePayment                          TransactionListParamsCategoryIn = "card_revenue_payment"
 	TransactionListParamsCategoryInCheckDepositAcceptance                      TransactionListParamsCategoryIn = "check_deposit_acceptance"
 	TransactionListParamsCategoryInCheckDepositReturn                          TransactionListParamsCategoryIn = "check_deposit_return"
-	TransactionListParamsCategoryInFedNowTransferAcknowledgement               TransactionListParamsCategoryIn = "fed_now_transfer_acknowledgement"
+	TransactionListParamsCategoryInFednowTransferAcknowledgement               TransactionListParamsCategoryIn = "fednow_transfer_acknowledgement"
 	TransactionListParamsCategoryInCheckTransferDeposit                        TransactionListParamsCategoryIn = "check_transfer_deposit"
 	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
 	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
@@ -4009,7 +4009,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInFedNowTransferAcknowledgement, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInSwiftTransferReturn, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInAccountRevenuePayment, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInFednowTransferAcknowledgement, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInSwiftTransferReturn, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInAccountRevenuePayment, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
