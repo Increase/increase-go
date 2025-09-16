@@ -147,7 +147,7 @@ type WireTransfer struct {
 	// was sent.
 	InboundWireDrawdownRequestID string `json:"inbound_wire_drawdown_request_id,required,nullable"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient string `json:"message_to_recipient,required,nullable"`
+	MessageToRecipient string `json:"message_to_recipient,required"`
 	// The transfer's network.
 	Network WireTransferNetwork `json:"network,required"`
 	// The originator's address line 1.
@@ -163,6 +163,8 @@ type WireTransfer struct {
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	// Remittance information sent with the wire transfer.
+	Remittance WireTransferRemittance `json:"remittance,required,nullable"`
 	// If your transfer is reversed, this will contain details of the reversal.
 	Reversal WireTransferReversal `json:"reversal,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -207,6 +209,7 @@ type wireTransferJSON struct {
 	OriginatorAddressLine3       apijson.Field
 	OriginatorName               apijson.Field
 	PendingTransactionID         apijson.Field
+	Remittance                   apijson.Field
 	Reversal                     apijson.Field
 	RoutingNumber                apijson.Field
 	SourceAccountNumberID        apijson.Field
@@ -438,6 +441,109 @@ func (r WireTransferNetwork) IsKnown() bool {
 	return false
 }
 
+// Remittance information sent with the wire transfer.
+type WireTransferRemittance struct {
+	// The type of remittance information being passed.
+	Category WireTransferRemittanceCategory `json:"category,required"`
+	// Internal Revenue Service (IRS) tax repayment information. Required if `category`
+	// is equal to `tax`.
+	Tax WireTransferRemittanceTax `json:"tax,required,nullable"`
+	// Unstructured remittance information. Required if `category` is equal to
+	// `unstructured`.
+	Unstructured WireTransferRemittanceUnstructured `json:"unstructured,required,nullable"`
+	JSON         wireTransferRemittanceJSON         `json:"-"`
+}
+
+// wireTransferRemittanceJSON contains the JSON metadata for the struct
+// [WireTransferRemittance]
+type wireTransferRemittanceJSON struct {
+	Category     apijson.Field
+	Tax          apijson.Field
+	Unstructured apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
+}
+
+func (r *WireTransferRemittance) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferRemittanceJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of remittance information being passed.
+type WireTransferRemittanceCategory string
+
+const (
+	WireTransferRemittanceCategoryUnstructured WireTransferRemittanceCategory = "unstructured"
+	WireTransferRemittanceCategoryTax          WireTransferRemittanceCategory = "tax"
+)
+
+func (r WireTransferRemittanceCategory) IsKnown() bool {
+	switch r {
+	case WireTransferRemittanceCategoryUnstructured, WireTransferRemittanceCategoryTax:
+		return true
+	}
+	return false
+}
+
+// Internal Revenue Service (IRS) tax repayment information. Required if `category`
+// is equal to `tax`.
+type WireTransferRemittanceTax struct {
+	// The month and year the tax payment is for, in YYYY-MM-DD format. The day is
+	// ignored.
+	Date time.Time `json:"date,required" format:"date"`
+	// The 9-digit Tax Identification Number (TIN) or Employer Identification Number
+	// (EIN).
+	IdentificationNumber string `json:"identification_number,required"`
+	// The 5-character tax type code.
+	TypeCode string                        `json:"type_code,required"`
+	JSON     wireTransferRemittanceTaxJSON `json:"-"`
+}
+
+// wireTransferRemittanceTaxJSON contains the JSON metadata for the struct
+// [WireTransferRemittanceTax]
+type wireTransferRemittanceTaxJSON struct {
+	Date                 apijson.Field
+	IdentificationNumber apijson.Field
+	TypeCode             apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *WireTransferRemittanceTax) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferRemittanceTaxJSON) RawJSON() string {
+	return r.raw
+}
+
+// Unstructured remittance information. Required if `category` is equal to
+// `unstructured`.
+type WireTransferRemittanceUnstructured struct {
+	// The message to the beneficiary.
+	Message string                                 `json:"message,required"`
+	JSON    wireTransferRemittanceUnstructuredJSON `json:"-"`
+}
+
+// wireTransferRemittanceUnstructuredJSON contains the JSON metadata for the struct
+// [WireTransferRemittanceUnstructured]
+type wireTransferRemittanceUnstructuredJSON struct {
+	Message     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferRemittanceUnstructured) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferRemittanceUnstructuredJSON) RawJSON() string {
+	return r.raw
+}
+
 // If your transfer is reversed, this will contain details of the reversal.
 type WireTransferReversal struct {
 	// The amount that was reversed in USD cents.
@@ -577,8 +683,6 @@ type WireTransferNewParams struct {
 	Amount param.Field[int64] `json:"amount,required"`
 	// The beneficiary's name.
 	BeneficiaryName param.Field[string] `json:"beneficiary_name,required"`
-	// The message that will show on the recipient's bank statement.
-	MessageToRecipient param.Field[string] `json:"message_to_recipient,required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number"`
 	// The beneficiary's address line 1.
@@ -605,6 +709,8 @@ type WireTransferNewParams struct {
 	// The originator's name. This is only necessary if you're transferring from a
 	// commingled account. Otherwise, we'll use the associated entity's details.
 	OriginatorName param.Field[string] `json:"originator_name"`
+	// Additional remittance information related to the wire transfer.
+	Remittance param.Field[WireTransferNewParamsRemittance] `json:"remittance"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
@@ -615,6 +721,66 @@ type WireTransferNewParams struct {
 }
 
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Additional remittance information related to the wire transfer.
+type WireTransferNewParamsRemittance struct {
+	// The type of remittance information being passed.
+	Category param.Field[WireTransferNewParamsRemittanceCategory] `json:"category,required"`
+	// Internal Revenue Service (IRS) tax repayment information. Required if `category`
+	// is equal to `tax`.
+	Tax param.Field[WireTransferNewParamsRemittanceTax] `json:"tax"`
+	// Unstructured remittance information. Required if `category` is equal to
+	// `unstructured`.
+	Unstructured param.Field[WireTransferNewParamsRemittanceUnstructured] `json:"unstructured"`
+}
+
+func (r WireTransferNewParamsRemittance) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of remittance information being passed.
+type WireTransferNewParamsRemittanceCategory string
+
+const (
+	WireTransferNewParamsRemittanceCategoryUnstructured WireTransferNewParamsRemittanceCategory = "unstructured"
+	WireTransferNewParamsRemittanceCategoryTax          WireTransferNewParamsRemittanceCategory = "tax"
+)
+
+func (r WireTransferNewParamsRemittanceCategory) IsKnown() bool {
+	switch r {
+	case WireTransferNewParamsRemittanceCategoryUnstructured, WireTransferNewParamsRemittanceCategoryTax:
+		return true
+	}
+	return false
+}
+
+// Internal Revenue Service (IRS) tax repayment information. Required if `category`
+// is equal to `tax`.
+type WireTransferNewParamsRemittanceTax struct {
+	// The month and year the tax payment is for, in YYYY-MM-DD format. The day is
+	// ignored.
+	Date param.Field[time.Time] `json:"date,required" format:"date"`
+	// The 9-digit Tax Identification Number (TIN) or Employer Identification Number
+	// (EIN).
+	IdentificationNumber param.Field[string] `json:"identification_number,required"`
+	// The 5-character tax type code.
+	TypeCode param.Field[string] `json:"type_code,required"`
+}
+
+func (r WireTransferNewParamsRemittanceTax) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Unstructured remittance information. Required if `category` is equal to
+// `unstructured`.
+type WireTransferNewParamsRemittanceUnstructured struct {
+	// The message to the beneficiary.
+	Message param.Field[string] `json:"message,required"`
+}
+
+func (r WireTransferNewParamsRemittanceUnstructured) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
