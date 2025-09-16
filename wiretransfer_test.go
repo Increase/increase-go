@@ -30,7 +30,6 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		AccountID:                    increase.F("account_in71c4amph0vgo2qllky"),
 		Amount:                       increase.F(int64(100)),
 		BeneficiaryName:              increase.F("Ian Crease"),
-		MessageToRecipient:           increase.F("New account transfer"),
 		AccountNumber:                increase.F("987654321"),
 		BeneficiaryAddressLine1:      increase.F("33 Liberty Street"),
 		BeneficiaryAddressLine2:      increase.F("New York"),
@@ -41,9 +40,20 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		OriginatorAddressLine2:       increase.F("x"),
 		OriginatorAddressLine3:       increase.F("x"),
 		OriginatorName:               increase.F("x"),
-		RequireApproval:              increase.F(true),
-		RoutingNumber:                increase.F("101050001"),
-		SourceAccountNumberID:        increase.F("source_account_number_id"),
+		Remittance: increase.F(increase.WireTransferNewParamsRemittance{
+			Category: increase.F(increase.WireTransferNewParamsRemittanceCategoryUnstructured),
+			Tax: increase.F(increase.WireTransferNewParamsRemittanceTax{
+				Date:                 increase.F(time.Now()),
+				IdentificationNumber: increase.F("xxxxxxxxx"),
+				TypeCode:             increase.F("xxxxx"),
+			}),
+			Unstructured: increase.F(increase.WireTransferNewParamsRemittanceUnstructured{
+				Message: increase.F("New account transfer"),
+			}),
+		}),
+		RequireApproval:       increase.F(true),
+		RoutingNumber:         increase.F("101050001"),
+		SourceAccountNumberID: increase.F("source_account_number_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
