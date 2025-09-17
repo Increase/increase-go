@@ -194,6 +194,10 @@ type DeclinedTransactionSource struct {
 	// A Check Deposit Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_rejection`.
 	CheckDepositRejection DeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection,required,nullable"`
+	// An Inbound FedNow Transfer Decline object. This field will be present in the
+	// JSON response if and only if `category` is equal to
+	// `inbound_fednow_transfer_decline`.
+	InboundFednowTransferDecline DeclinedTransactionSourceInboundFednowTransferDecline `json:"inbound_fednow_transfer_decline,required,nullable"`
 	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
@@ -215,6 +219,7 @@ type declinedTransactionSourceJSON struct {
 	Category                               apijson.Field
 	CheckDecline                           apijson.Field
 	CheckDepositRejection                  apijson.Field
+	InboundFednowTransferDecline           apijson.Field
 	InboundRealTimePaymentsTransferDecline apijson.Field
 	Other                                  apijson.Field
 	WireDecline                            apijson.Field
@@ -1212,6 +1217,7 @@ const (
 	DeclinedTransactionSourceCategoryCardDecline                            DeclinedTransactionSourceCategory = "card_decline"
 	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
 	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
+	DeclinedTransactionSourceCategoryInboundFednowTransferDecline           DeclinedTransactionSourceCategory = "inbound_fednow_transfer_decline"
 	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
 	DeclinedTransactionSourceCategoryCheckDepositRejection                  DeclinedTransactionSourceCategory = "check_deposit_rejection"
 	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
@@ -1219,7 +1225,7 @@ const (
 
 func (r DeclinedTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryCheckDepositRejection, DeclinedTransactionSourceCategoryOther:
+	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryInboundFednowTransferDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryCheckDepositRejection, DeclinedTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1386,6 +1392,54 @@ const (
 func (r DeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 	switch r {
 	case DeclinedTransactionSourceCheckDepositRejectionReasonIncompleteImage, DeclinedTransactionSourceCheckDepositRejectionReasonDuplicate, DeclinedTransactionSourceCheckDepositRejectionReasonPoorImageQuality, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectAmount, DeclinedTransactionSourceCheckDepositRejectionReasonIncorrectRecipient, DeclinedTransactionSourceCheckDepositRejectionReasonNotEligibleForMobileDeposit, DeclinedTransactionSourceCheckDepositRejectionReasonMissingRequiredDataElements, DeclinedTransactionSourceCheckDepositRejectionReasonSuspectedFraud, DeclinedTransactionSourceCheckDepositRejectionReasonDepositWindowExpired, DeclinedTransactionSourceCheckDepositRejectionReasonRequestedByUser, DeclinedTransactionSourceCheckDepositRejectionReasonUnknown:
+		return true
+	}
+	return false
+}
+
+// An Inbound FedNow Transfer Decline object. This field will be present in the
+// JSON response if and only if `category` is equal to
+// `inbound_fednow_transfer_decline`.
+type DeclinedTransactionSourceInboundFednowTransferDecline struct {
+	// Why the transfer was declined.
+	Reason DeclinedTransactionSourceInboundFednowTransferDeclineReason `json:"reason,required"`
+	// The identifier of the FedNow Transfer that led to this declined transaction.
+	TransferID string                                                    `json:"transfer_id,required"`
+	JSON       declinedTransactionSourceInboundFednowTransferDeclineJSON `json:"-"`
+}
+
+// declinedTransactionSourceInboundFednowTransferDeclineJSON contains the JSON
+// metadata for the struct [DeclinedTransactionSourceInboundFednowTransferDecline]
+type declinedTransactionSourceInboundFednowTransferDeclineJSON struct {
+	Reason      apijson.Field
+	TransferID  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceInboundFednowTransferDecline) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceInboundFednowTransferDeclineJSON) RawJSON() string {
+	return r.raw
+}
+
+// Why the transfer was declined.
+type DeclinedTransactionSourceInboundFednowTransferDeclineReason string
+
+const (
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberCanceled DeclinedTransactionSourceInboundFednowTransferDeclineReason = "account_number_canceled"
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberDisabled DeclinedTransactionSourceInboundFednowTransferDeclineReason = "account_number_disabled"
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountRestricted     DeclinedTransactionSourceInboundFednowTransferDeclineReason = "account_restricted"
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonGroupLocked           DeclinedTransactionSourceInboundFednowTransferDeclineReason = "group_locked"
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonEntityNotActive       DeclinedTransactionSourceInboundFednowTransferDeclineReason = "entity_not_active"
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonFednowNotEnabled      DeclinedTransactionSourceInboundFednowTransferDeclineReason = "fednow_not_enabled"
+)
+
+func (r DeclinedTransactionSourceInboundFednowTransferDeclineReason) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberCanceled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberDisabled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountRestricted, DeclinedTransactionSourceInboundFednowTransferDeclineReasonGroupLocked, DeclinedTransactionSourceInboundFednowTransferDeclineReasonEntityNotActive, DeclinedTransactionSourceInboundFednowTransferDeclineReasonFednowNotEnabled:
 		return true
 	}
 	return false
@@ -1597,6 +1651,7 @@ const (
 	DeclinedTransactionListParamsCategoryInCardDecline                            DeclinedTransactionListParamsCategoryIn = "card_decline"
 	DeclinedTransactionListParamsCategoryInCheckDecline                           DeclinedTransactionListParamsCategoryIn = "check_decline"
 	DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline DeclinedTransactionListParamsCategoryIn = "inbound_real_time_payments_transfer_decline"
+	DeclinedTransactionListParamsCategoryInInboundFednowTransferDecline           DeclinedTransactionListParamsCategoryIn = "inbound_fednow_transfer_decline"
 	DeclinedTransactionListParamsCategoryInWireDecline                            DeclinedTransactionListParamsCategoryIn = "wire_decline"
 	DeclinedTransactionListParamsCategoryInCheckDepositRejection                  DeclinedTransactionListParamsCategoryIn = "check_deposit_rejection"
 	DeclinedTransactionListParamsCategoryInOther                                  DeclinedTransactionListParamsCategoryIn = "other"
@@ -1604,7 +1659,7 @@ const (
 
 func (r DeclinedTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionListParamsCategoryInACHDecline, DeclinedTransactionListParamsCategoryInCardDecline, DeclinedTransactionListParamsCategoryInCheckDecline, DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, DeclinedTransactionListParamsCategoryInWireDecline, DeclinedTransactionListParamsCategoryInCheckDepositRejection, DeclinedTransactionListParamsCategoryInOther:
+	case DeclinedTransactionListParamsCategoryInACHDecline, DeclinedTransactionListParamsCategoryInCardDecline, DeclinedTransactionListParamsCategoryInCheckDecline, DeclinedTransactionListParamsCategoryInInboundRealTimePaymentsTransferDecline, DeclinedTransactionListParamsCategoryInInboundFednowTransferDecline, DeclinedTransactionListParamsCategoryInWireDecline, DeclinedTransactionListParamsCategoryInCheckDepositRejection, DeclinedTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
