@@ -714,8 +714,6 @@ type TransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
 	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
-	// The identifier of the Card Dispute that was accepted.
-	CardDisputeID string `json:"card_dispute_id,required"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
 	TransactionID string                                     `json:"transaction_id,required"`
@@ -726,7 +724,6 @@ type TransactionSourceCardDisputeAcceptance struct {
 // struct [TransactionSourceCardDisputeAcceptance]
 type transactionSourceCardDisputeAcceptanceJSON struct {
 	AcceptedAt    apijson.Field
-	CardDisputeID apijson.Field
 	TransactionID apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -746,8 +743,6 @@ func (r transactionSourceCardDisputeAcceptanceJSON) RawJSON() string {
 type TransactionSourceCardDisputeFinancial struct {
 	// The amount of the financial event.
 	Amount int64 `json:"amount,required"`
-	// The identifier of the Card Dispute the financial event is associated with.
-	CardDisputeID string `json:"card_dispute_id,required"`
 	// The network that the Card Dispute is associated with.
 	Network TransactionSourceCardDisputeFinancialNetwork `json:"network,required"`
 	// The identifier of the Transaction that was created to credit or debit the
@@ -764,7 +759,6 @@ type TransactionSourceCardDisputeFinancial struct {
 // struct [TransactionSourceCardDisputeFinancial]
 type transactionSourceCardDisputeFinancialJSON struct {
 	Amount        apijson.Field
-	CardDisputeID apijson.Field
 	Network       apijson.Field
 	TransactionID apijson.Field
 	Visa          apijson.Field
@@ -845,8 +839,6 @@ func (r TransactionSourceCardDisputeFinancialVisaEventType) IsKnown() bool {
 // and only if `category` is equal to `card_dispute_loss`. Contains the details of
 // a lost Card Dispute.
 type TransactionSourceCardDisputeLoss struct {
-	// The identifier of the Card Dispute that was lost.
-	CardDisputeID string `json:"card_dispute_id,required"`
 	// Why the Card Dispute was lost.
 	Explanation string `json:"explanation,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -861,7 +853,6 @@ type TransactionSourceCardDisputeLoss struct {
 // transactionSourceCardDisputeLossJSON contains the JSON metadata for the struct
 // [TransactionSourceCardDisputeLoss]
 type transactionSourceCardDisputeLossJSON struct {
-	CardDisputeID apijson.Field
 	Explanation   apijson.Field
 	LostAt        apijson.Field
 	TransactionID apijson.Field
