@@ -67,6 +67,8 @@ func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query Routing
 type RoutingNumberListResponse struct {
 	// This routing number's support for ACH Transfers.
 	ACHTransfers RoutingNumberListResponseACHTransfers `json:"ach_transfers,required"`
+	// This routing number's support for FedNow Transfers.
+	FednowTransfers RoutingNumberListResponseFednowTransfers `json:"fednow_transfers,required"`
 	// The name of the financial institution belonging to a routing number.
 	Name string `json:"name,required"`
 	// This routing number's support for Real-Time Payments Transfers.
@@ -85,6 +87,7 @@ type RoutingNumberListResponse struct {
 // [RoutingNumberListResponse]
 type routingNumberListResponseJSON struct {
 	ACHTransfers              apijson.Field
+	FednowTransfers           apijson.Field
 	Name                      apijson.Field
 	RealTimePaymentsTransfers apijson.Field
 	RoutingNumber             apijson.Field
@@ -113,6 +116,22 @@ const (
 func (r RoutingNumberListResponseACHTransfers) IsKnown() bool {
 	switch r {
 	case RoutingNumberListResponseACHTransfersSupported, RoutingNumberListResponseACHTransfersNotSupported:
+		return true
+	}
+	return false
+}
+
+// This routing number's support for FedNow Transfers.
+type RoutingNumberListResponseFednowTransfers string
+
+const (
+	RoutingNumberListResponseFednowTransfersSupported    RoutingNumberListResponseFednowTransfers = "supported"
+	RoutingNumberListResponseFednowTransfersNotSupported RoutingNumberListResponseFednowTransfers = "not_supported"
+)
+
+func (r RoutingNumberListResponseFednowTransfers) IsKnown() bool {
+	switch r {
+	case RoutingNumberListResponseFednowTransfersSupported, RoutingNumberListResponseFednowTransfersNotSupported:
 		return true
 	}
 	return false
