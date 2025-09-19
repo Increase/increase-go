@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -35,7 +36,7 @@ func NewSimulationDigitalWalletTokenRequestService(opts ...option.RequestOption)
 // Simulates a user attempting add a [Card](#cards) to a digital wallet such as
 // Apple Pay.
 func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, body SimulationDigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *SimulationDigitalWalletTokenRequestNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/digital_wallet_token_requests"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

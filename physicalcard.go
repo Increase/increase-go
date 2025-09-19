@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewPhysicalCardService(opts ...option.RequestOption) (r *PhysicalCardServic
 
 // Create a Physical Card
 func (r *PhysicalCardService) New(ctx context.Context, body PhysicalCardNewParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "physical_cards"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *PhysicalCardService) New(ctx context.Context, body PhysicalCardNewParam
 
 // Retrieve a Physical Card
 func (r *PhysicalCardService) Get(ctx context.Context, physicalCardID string, opts ...option.RequestOption) (res *PhysicalCard, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
 		return
@@ -59,7 +60,7 @@ func (r *PhysicalCardService) Get(ctx context.Context, physicalCardID string, op
 
 // Update a Physical Card
 func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string, body PhysicalCardUpdateParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
 		return
@@ -72,7 +73,7 @@ func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string,
 // List Physical Cards
 func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) (res *pagination.Page[PhysicalCard], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "physical_cards"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

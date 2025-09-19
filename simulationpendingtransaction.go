@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
@@ -34,7 +35,7 @@ func NewSimulationPendingTransactionService(opts ...option.RequestOption) (r *Si
 // This endpoint simulates immediately releasing an Inbound Funds Hold, which might
 // be created as a result of, for example, an ACH debit.
 func (r *SimulationPendingTransactionService) ReleaseInboundFundsHold(ctx context.Context, pendingTransactionID string, opts ...option.RequestOption) (res *PendingTransaction, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if pendingTransactionID == "" {
 		err = errors.New("missing required pending_transaction_id parameter")
 		return

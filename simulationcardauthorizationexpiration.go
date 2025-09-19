@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -34,7 +35,7 @@ func NewSimulationCardAuthorizationExpirationService(opts ...option.RequestOptio
 
 // Simulates expiring a Card Authorization immediately.
 func (r *SimulationCardAuthorizationExpirationService) New(ctx context.Context, body SimulationCardAuthorizationExpirationNewParams, opts ...option.RequestOption) (res *CardPayment, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_authorization_expirations"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

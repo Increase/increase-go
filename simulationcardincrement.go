@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -34,7 +35,7 @@ func NewSimulationCardIncrementService(opts ...option.RequestOption) (r *Simulat
 // Simulates the increment of an authorization by a card acquirer. An authorization
 // can be incremented multiple times.
 func (r *SimulationCardIncrementService) New(ctx context.Context, body SimulationCardIncrementNewParams, opts ...option.RequestOption) (res *CardPayment, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_increments"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

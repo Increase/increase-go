@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -34,7 +35,7 @@ func NewSimulationCardTokenService(opts ...option.RequestOption) (r *SimulationC
 
 // Simulates tokenizing a card in the sandbox environment.
 func (r *SimulationCardTokenService) New(ctx context.Context, body SimulationCardTokenNewParams, opts ...option.RequestOption) (res *CardToken, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_tokens"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

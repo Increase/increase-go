@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -36,7 +37,7 @@ func NewSimulationInboundRealTimePaymentsTransferService(opts ...option.RequestO
 // [Inbound Real-Time Payments Transfer](#inbound-real-time-payments-transfers) to
 // your account. Real-Time Payments are a beta feature.
 func (r *SimulationInboundRealTimePaymentsTransferService) New(ctx context.Context, body SimulationInboundRealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *InboundRealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_real_time_payments_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

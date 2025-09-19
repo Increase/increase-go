@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewPhysicalCardProfileService(opts ...option.RequestOption) (r *PhysicalCar
 
 // Create a Physical Card Profile
 func (r *PhysicalCardProfileService) New(ctx context.Context, body PhysicalCardProfileNewParams, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "physical_card_profiles"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *PhysicalCardProfileService) New(ctx context.Context, body PhysicalCardP
 
 // Retrieve a Card Profile
 func (r *PhysicalCardProfileService) Get(ctx context.Context, physicalCardProfileID string, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
 		err = errors.New("missing required physical_card_profile_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *PhysicalCardProfileService) Get(ctx context.Context, physicalCardProfil
 // List Physical Card Profiles
 func (r *PhysicalCardProfileService) List(ctx context.Context, query PhysicalCardProfileListParams, opts ...option.RequestOption) (res *pagination.Page[PhysicalCardProfile], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "physical_card_profiles"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *PhysicalCardProfileService) ListAutoPaging(ctx context.Context, query P
 
 // Archive a Physical Card Profile
 func (r *PhysicalCardProfileService) Archive(ctx context.Context, physicalCardProfileID string, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
 		err = errors.New("missing required physical_card_profile_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *PhysicalCardProfileService) Archive(ctx context.Context, physicalCardPr
 
 // Clone a Physical Card Profile
 func (r *PhysicalCardProfileService) Clone(ctx context.Context, physicalCardProfileID string, body PhysicalCardProfileCloneParams, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
 		err = errors.New("missing required physical_card_profile_id parameter")
 		return

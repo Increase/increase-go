@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
@@ -36,7 +37,7 @@ func NewSimulationCheckTransferService(opts ...option.RequestOption) (r *Simulat
 // This transfer must first have a `status` of `pending_approval` or
 // `pending_submission`.
 func (r *SimulationCheckTransferService) Mail(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
 		return

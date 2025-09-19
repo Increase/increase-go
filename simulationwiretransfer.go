@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
@@ -36,7 +37,7 @@ func NewSimulationWireTransferService(opts ...option.RequestOption) (r *Simulati
 // [Transaction](#transaction) to account for the returned funds. This Wire
 // Transfer must first have a `status` of `complete`.
 func (r *SimulationWireTransferService) Reverse(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
 		return
@@ -50,7 +51,7 @@ func (r *SimulationWireTransferService) Reverse(ctx context.Context, wireTransfe
 // Reserve. This transfer must first have a `status` of `pending_approval` or
 // `pending_creating`.
 func (r *SimulationWireTransferService) Submit(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
 		return

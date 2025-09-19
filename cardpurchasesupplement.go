@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewCardPurchaseSupplementService(opts ...option.RequestOption) (r *CardPurc
 
 // Retrieve a Card Purchase Supplement
 func (r *CardPurchaseSupplementService) Get(ctx context.Context, cardPurchaseSupplementID string, opts ...option.RequestOption) (res *CardPurchaseSupplement, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardPurchaseSupplementID == "" {
 		err = errors.New("missing required card_purchase_supplement_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *CardPurchaseSupplementService) Get(ctx context.Context, cardPurchaseSup
 // List Card Purchase Supplements
 func (r *CardPurchaseSupplementService) List(ctx context.Context, query CardPurchaseSupplementListParams, opts ...option.RequestOption) (res *pagination.Page[CardPurchaseSupplement], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_purchase_supplements"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

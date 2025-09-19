@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewCardTokenService(opts ...option.RequestOption) (r *CardTokenService) {
 
 // Retrieve a Card Token
 func (r *CardTokenService) Get(ctx context.Context, cardTokenID string, opts ...option.RequestOption) (res *CardToken, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardTokenID == "" {
 		err = errors.New("missing required card_token_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *CardTokenService) Get(ctx context.Context, cardTokenID string, opts ...
 // List Card Tokens
 func (r *CardTokenService) List(ctx context.Context, query CardTokenListParams, opts ...option.RequestOption) (res *pagination.Page[CardToken], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_tokens"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -76,7 +77,7 @@ func (r *CardTokenService) ListAutoPaging(ctx context.Context, query CardTokenLi
 // specific operations, such as Card Push Transfers. The capabilities can change
 // over time based on the issuing bank's configuration of the card range.
 func (r *CardTokenService) Capabilities(ctx context.Context, cardTokenID string, opts ...option.RequestOption) (res *CardTokenCapabilities, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardTokenID == "" {
 		err = errors.New("missing required card_token_id parameter")
 		return

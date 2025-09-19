@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -34,7 +35,7 @@ func NewSimulationInboundMailItemService(opts ...option.RequestOption) (r *Simul
 // Simulates an inbound mail item to your account, as if someone had mailed a
 // physical check to one of your account's Lockboxes.
 func (r *SimulationInboundMailItemService) New(ctx context.Context, body SimulationInboundMailItemNewParams, opts ...option.RequestOption) (res *InboundMailItem, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_mail_items"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

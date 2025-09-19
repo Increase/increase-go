@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewInboundMailItemService(opts ...option.RequestOption) (r *InboundMailItem
 
 // Retrieve an Inbound Mail Item
 func (r *InboundMailItemService) Get(ctx context.Context, inboundMailItemID string, opts ...option.RequestOption) (res *InboundMailItem, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundMailItemID == "" {
 		err = errors.New("missing required inbound_mail_item_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *InboundMailItemService) Get(ctx context.Context, inboundMailItemID stri
 // List Inbound Mail Items
 func (r *InboundMailItemService) List(ctx context.Context, query InboundMailItemListParams, opts ...option.RequestOption) (res *pagination.Page[InboundMailItem], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_mail_items"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

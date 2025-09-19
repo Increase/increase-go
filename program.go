@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewProgramService(opts ...option.RequestOption) (r *ProgramService) {
 
 // Retrieve a Program
 func (r *ProgramService) Get(ctx context.Context, programID string, opts ...option.RequestOption) (res *Program, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if programID == "" {
 		err = errors.New("missing required program_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *ProgramService) Get(ctx context.Context, programID string, opts ...opti
 // List Programs
 func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) (res *pagination.Page[Program], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "programs"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -34,7 +35,7 @@ func NewSimulationCardRefundService(opts ...option.RequestOption) (r *Simulation
 // Simulates refunding a card transaction. The full value of the original sandbox
 // transaction is refunded.
 func (r *SimulationCardRefundService) New(ctx context.Context, body SimulationCardRefundNewParams, opts ...option.RequestOption) (res *Transaction, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_refunds"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

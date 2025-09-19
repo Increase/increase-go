@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -38,7 +39,7 @@ func NewSimulationInboundCheckDepositService(opts ...option.RequestOption) (r *S
 // Transaction as a result. You can inspect the resulting Inbound Check Deposit
 // object to see the result.
 func (r *SimulationInboundCheckDepositService) New(ctx context.Context, body SimulationInboundCheckDepositNewParams, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_check_deposits"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

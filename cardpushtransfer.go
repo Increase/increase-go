@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewCardPushTransferService(opts ...option.RequestOption) (r *CardPushTransf
 
 // Create a Card Push Transfer
 func (r *CardPushTransferService) New(ctx context.Context, body CardPushTransferNewParams, opts ...option.RequestOption) (res *CardPushTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "card_push_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *CardPushTransferService) New(ctx context.Context, body CardPushTransfer
 
 // Retrieve a Card Push Transfer
 func (r *CardPushTransferService) Get(ctx context.Context, cardPushTransferID string, opts ...option.RequestOption) (res *CardPushTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardPushTransferID == "" {
 		err = errors.New("missing required card_push_transfer_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *CardPushTransferService) Get(ctx context.Context, cardPushTransferID st
 // List Card Push Transfers
 func (r *CardPushTransferService) List(ctx context.Context, query CardPushTransferListParams, opts ...option.RequestOption) (res *pagination.Page[CardPushTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_push_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *CardPushTransferService) ListAutoPaging(ctx context.Context, query Card
 
 // Approves a Card Push Transfer in a pending_approval state.
 func (r *CardPushTransferService) Approve(ctx context.Context, cardPushTransferID string, opts ...option.RequestOption) (res *CardPushTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardPushTransferID == "" {
 		err = errors.New("missing required card_push_transfer_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *CardPushTransferService) Approve(ctx context.Context, cardPushTransferI
 
 // Cancels a Card Push Transfer in a pending_approval state.
 func (r *CardPushTransferService) Cancel(ctx context.Context, cardPushTransferID string, opts ...option.RequestOption) (res *CardPushTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardPushTransferID == "" {
 		err = errors.New("missing required card_push_transfer_id parameter")
 		return

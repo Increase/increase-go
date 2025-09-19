@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -40,7 +41,7 @@ func NewSimulationACHTransferService(opts ...option.RequestOption) (r *Simulatio
 // Reserve, this endpoint allows you to skip that delay and add the acknowledgment
 // subresource to the ACH Transfer.
 func (r *SimulationACHTransferService) Acknowledge(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
@@ -53,7 +54,7 @@ func (r *SimulationACHTransferService) Acknowledge(ctx context.Context, achTrans
 // Simulates receiving a Notification of Change for an
 // [ACH Transfer](#ach-transfers).
 func (r *SimulationACHTransferService) NewNotificationOfChange(ctx context.Context, achTransferID string, body SimulationACHTransferNewNotificationOfChangeParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
@@ -67,7 +68,7 @@ func (r *SimulationACHTransferService) NewNotificationOfChange(ctx context.Conte
 // due to an error condition. This will also create a Transaction to account for
 // the returned funds. This transfer must first have a `status` of `submitted`.
 func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID string, body SimulationACHTransferReturnParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
@@ -87,7 +88,7 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID
 // settled. If no behavior is specified, the inbound funds hold will be released
 // immediately in order for the funds to be available for use.
 func (r *SimulationACHTransferService) Settle(ctx context.Context, achTransferID string, body SimulationACHTransferSettleParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
@@ -104,7 +105,7 @@ func (r *SimulationACHTransferService) Settle(ctx context.Context, achTransferID
 // not submitted to the Federal Reserve, this endpoint allows you to skip that
 // delay and transition the ACH Transfer to a status of `submitted`.
 func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return

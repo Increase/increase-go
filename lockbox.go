@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewLockboxService(opts ...option.RequestOption) (r *LockboxService) {
 
 // Create a Lockbox
 func (r *LockboxService) New(ctx context.Context, body LockboxNewParams, opts ...option.RequestOption) (res *Lockbox, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "lockboxes"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *LockboxService) New(ctx context.Context, body LockboxNewParams, opts ..
 
 // Retrieve a Lockbox
 func (r *LockboxService) Get(ctx context.Context, lockboxID string, opts ...option.RequestOption) (res *Lockbox, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if lockboxID == "" {
 		err = errors.New("missing required lockbox_id parameter")
 		return
@@ -59,7 +60,7 @@ func (r *LockboxService) Get(ctx context.Context, lockboxID string, opts ...opti
 
 // Update a Lockbox
 func (r *LockboxService) Update(ctx context.Context, lockboxID string, body LockboxUpdateParams, opts ...option.RequestOption) (res *Lockbox, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if lockboxID == "" {
 		err = errors.New("missing required lockbox_id parameter")
 		return
@@ -72,7 +73,7 @@ func (r *LockboxService) Update(ctx context.Context, lockboxID string, body Lock
 // List Lockboxes
 func (r *LockboxService) List(ctx context.Context, query LockboxListParams, opts ...option.RequestOption) (res *pagination.Page[Lockbox], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "lockboxes"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

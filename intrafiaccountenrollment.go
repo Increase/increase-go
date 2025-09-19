@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewIntrafiAccountEnrollmentService(opts ...option.RequestOption) (r *Intraf
 
 // Enroll an account in the IntraFi deposit sweep network
 func (r *IntrafiAccountEnrollmentService) New(ctx context.Context, body IntrafiAccountEnrollmentNewParams, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "intrafi_account_enrollments"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *IntrafiAccountEnrollmentService) New(ctx context.Context, body IntrafiA
 
 // Get an IntraFi Account Enrollment
 func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccountEnrollmentID string, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if intrafiAccountEnrollmentID == "" {
 		err = errors.New("missing required intrafi_account_enrollment_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccoun
 // List IntraFi Account Enrollments
 func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiAccountEnrollment], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "intrafi_account_enrollments"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *IntrafiAccountEnrollmentService) ListAutoPaging(ctx context.Context, qu
 
 // Unenroll an account from IntraFi
 func (r *IntrafiAccountEnrollmentService) Unenroll(ctx context.Context, intrafiAccountEnrollmentID string, opts ...option.RequestOption) (res *IntrafiAccountEnrollment, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if intrafiAccountEnrollmentID == "" {
 		err = errors.New("missing required intrafi_account_enrollment_id parameter")
 		return

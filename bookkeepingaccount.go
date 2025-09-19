@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewBookkeepingAccountService(opts ...option.RequestOption) (r *BookkeepingA
 
 // Create a Bookkeeping Account
 func (r *BookkeepingAccountService) New(ctx context.Context, body BookkeepingAccountNewParams, opts ...option.RequestOption) (res *BookkeepingAccount, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "bookkeeping_accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *BookkeepingAccountService) New(ctx context.Context, body BookkeepingAcc
 
 // Update a Bookkeeping Account
 func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccountID string, body BookkeepingAccountUpdateParams, opts ...option.RequestOption) (res *BookkeepingAccount, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if bookkeepingAccountID == "" {
 		err = errors.New("missing required bookkeeping_account_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccou
 // List Bookkeeping Accounts
 func (r *BookkeepingAccountService) List(ctx context.Context, query BookkeepingAccountListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingAccount], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_accounts"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *BookkeepingAccountService) ListAutoPaging(ctx context.Context, query Bo
 
 // Retrieve a Bookkeeping Account Balance
 func (r *BookkeepingAccountService) Balance(ctx context.Context, bookkeepingAccountID string, query BookkeepingAccountBalanceParams, opts ...option.RequestOption) (res *BookkeepingBalanceLookup, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if bookkeepingAccountID == "" {
 		err = errors.New("missing required bookkeeping_account_id parameter")
 		return

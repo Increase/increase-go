@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -39,7 +40,7 @@ func NewSimulationRealTimePaymentsTransferService(opts ...option.RequestOption) 
 // response from the destination financial institution. This transfer must first
 // have a `status` of `pending_submission`.
 func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context, realTimePaymentsTransferID string, body SimulationRealTimePaymentsTransferCompleteParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
 		return
