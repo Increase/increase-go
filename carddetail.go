@@ -35,7 +35,7 @@ func NewCardDetailService(opts ...option.RequestOption) (r *CardDetailService) {
 	return
 }
 
-// Update a Card's Details
+// Update a Card's PIN
 func (r *CardDetailService) Update(ctx context.Context, cardID string, body CardDetailUpdateParams, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
@@ -74,7 +74,11 @@ func (r *CardDetailService) Details(ctx context.Context, cardID string, opts ...
 	return
 }
 
-// An object containing the sensitive details (card number, CVC, etc) for a Card.
+// An object containing the sensitive details (card number, CVC, PIN, etc) for a
+// Card. These details are not included in the Card object. If you'd prefer to
+// never access these details directly, you can use the
+// [embedded iframe](/documentation/embedded-card-component) to display the
+// information to your users.
 type CardDetails struct {
 	// The identifier for the Card for which sensitive details have been returned.
 	CardID string `json:"card_id,required"`
