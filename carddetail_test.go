@@ -7,14 +7,13 @@ import (
 	"errors"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/Increase/increase-go"
 	"github.com/Increase/increase-go/internal/testutil"
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationPhysicalCardNewWithOptionalParams(t *testing.T) {
+func TestCardDetailUpdate(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,15 +25,11 @@ func TestSimulationPhysicalCardNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.PhysicalCards.New(
+	_, err := client.CardDetails.Update(
 		context.TODO(),
-		"physical_card_ode8duyq5v2ynhjoharl",
-		increase.SimulationPhysicalCardNewParams{
-			Category:                   increase.F(increase.SimulationPhysicalCardNewParamsCategoryDelivered),
-			CarrierEstimatedDeliveryAt: increase.F(time.Now()),
-			City:                       increase.F("New York"),
-			PostalCode:                 increase.F("10045"),
-			State:                      increase.F("NY"),
+		"card_oubs0hwk5rn6knuecxg2",
+		increase.CardDetailUpdateParams{
+			Pin: increase.F("1234"),
 		},
 	)
 	if err != nil {
@@ -46,7 +41,7 @@ func TestSimulationPhysicalCardNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestSimulationPhysicalCardAdvanceShipment(t *testing.T) {
+func TestCardDetailNewDetailsIframeWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -58,13 +53,35 @@ func TestSimulationPhysicalCardAdvanceShipment(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.PhysicalCards.AdvanceShipment(
+	_, err := client.CardDetails.NewDetailsIframe(
 		context.TODO(),
-		"physical_card_ode8duyq5v2ynhjoharl",
-		increase.SimulationPhysicalCardAdvanceShipmentParams{
-			ShipmentStatus: increase.F(increase.SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped),
+		"card_oubs0hwk5rn6knuecxg2",
+		increase.CardDetailNewDetailsIframeParams{
+			PhysicalCardID: increase.F("physical_card_id"),
 		},
 	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestCardDetailDetails(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.CardDetails.Details(context.TODO(), "card_oubs0hwk5rn6knuecxg2")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

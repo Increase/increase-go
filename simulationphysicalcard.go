@@ -35,6 +35,19 @@ func NewSimulationPhysicalCardService(opts ...option.RequestOption) (r *Simulati
 	return
 }
 
+// This endpoint allows you to simulate receiving a tracking update for a Physical
+// Card, to simulate the progress of a shipment.
+func (r *SimulationPhysicalCardService) New(ctx context.Context, physicalCardID string, body SimulationPhysicalCardNewParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if physicalCardID == "" {
+		err = errors.New("missing required physical_card_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/physical_cards/%s/tracking_updates", physicalCardID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // This endpoint allows you to simulate advancing the shipment status of a Physical
 // Card, to simulate e.g., that a physical card was attempted shipped but then
 // failed delivery.
@@ -49,17 +62,40 @@ func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, phy
 	return
 }
 
-// This endpoint allows you to simulate receiving a tracking update for a Physical
-// Card, to simulate the progress of a shipment.
-func (r *SimulationPhysicalCardService) TrackingUpdates(ctx context.Context, physicalCardID string, body SimulationPhysicalCardTrackingUpdatesParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
-	opts = slices.Concat(r.Options, opts)
-	if physicalCardID == "" {
-		err = errors.New("missing required physical_card_id parameter")
-		return
+type SimulationPhysicalCardNewParams struct {
+	// The type of tracking event.
+	Category param.Field[SimulationPhysicalCardNewParamsCategory] `json:"category,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
+	// carrier expects the card to be delivered.
+	CarrierEstimatedDeliveryAt param.Field[time.Time] `json:"carrier_estimated_delivery_at" format:"date-time"`
+	// The city where the event took place.
+	City param.Field[string] `json:"city"`
+	// The postal code where the event took place.
+	PostalCode param.Field[string] `json:"postal_code"`
+	// The state where the event took place.
+	State param.Field[string] `json:"state"`
+}
+
+func (r SimulationPhysicalCardNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of tracking event.
+type SimulationPhysicalCardNewParamsCategory string
+
+const (
+	SimulationPhysicalCardNewParamsCategoryInTransit            SimulationPhysicalCardNewParamsCategory = "in_transit"
+	SimulationPhysicalCardNewParamsCategoryProcessedForDelivery SimulationPhysicalCardNewParamsCategory = "processed_for_delivery"
+	SimulationPhysicalCardNewParamsCategoryDelivered            SimulationPhysicalCardNewParamsCategory = "delivered"
+	SimulationPhysicalCardNewParamsCategoryReturnedToSender     SimulationPhysicalCardNewParamsCategory = "returned_to_sender"
+)
+
+func (r SimulationPhysicalCardNewParamsCategory) IsKnown() bool {
+	switch r {
+	case SimulationPhysicalCardNewParamsCategoryInTransit, SimulationPhysicalCardNewParamsCategoryProcessedForDelivery, SimulationPhysicalCardNewParamsCategoryDelivered, SimulationPhysicalCardNewParamsCategoryReturnedToSender:
+		return true
 	}
-	path := fmt.Sprintf("simulations/physical_cards/%s/tracking_updates", physicalCardID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return false
 }
 
 type SimulationPhysicalCardAdvanceShipmentParams struct {
@@ -88,42 +124,6 @@ const (
 func (r SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus) IsKnown() bool {
 	switch r {
 	case SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusPending, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusCanceled, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusSubmitted, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusAcknowledged, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusRejected, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusShipped, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusReturned, SimulationPhysicalCardAdvanceShipmentParamsShipmentStatusRequiresAttention:
-		return true
-	}
-	return false
-}
-
-type SimulationPhysicalCardTrackingUpdatesParams struct {
-	// The type of tracking event.
-	Category param.Field[SimulationPhysicalCardTrackingUpdatesParamsCategory] `json:"category,required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
-	// carrier expects the card to be delivered.
-	CarrierEstimatedDeliveryAt param.Field[time.Time] `json:"carrier_estimated_delivery_at" format:"date-time"`
-	// The city where the event took place.
-	City param.Field[string] `json:"city"`
-	// The postal code where the event took place.
-	PostalCode param.Field[string] `json:"postal_code"`
-	// The state where the event took place.
-	State param.Field[string] `json:"state"`
-}
-
-func (r SimulationPhysicalCardTrackingUpdatesParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The type of tracking event.
-type SimulationPhysicalCardTrackingUpdatesParamsCategory string
-
-const (
-	SimulationPhysicalCardTrackingUpdatesParamsCategoryInTransit            SimulationPhysicalCardTrackingUpdatesParamsCategory = "in_transit"
-	SimulationPhysicalCardTrackingUpdatesParamsCategoryProcessedForDelivery SimulationPhysicalCardTrackingUpdatesParamsCategory = "processed_for_delivery"
-	SimulationPhysicalCardTrackingUpdatesParamsCategoryDelivered            SimulationPhysicalCardTrackingUpdatesParamsCategory = "delivered"
-	SimulationPhysicalCardTrackingUpdatesParamsCategoryReturnedToSender     SimulationPhysicalCardTrackingUpdatesParamsCategory = "returned_to_sender"
-)
-
-func (r SimulationPhysicalCardTrackingUpdatesParamsCategory) IsKnown() bool {
-	switch r {
-	case SimulationPhysicalCardTrackingUpdatesParamsCategoryInTransit, SimulationPhysicalCardTrackingUpdatesParamsCategoryProcessedForDelivery, SimulationPhysicalCardTrackingUpdatesParamsCategoryDelivered, SimulationPhysicalCardTrackingUpdatesParamsCategoryReturnedToSender:
 		return true
 	}
 	return false
