@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewDigitalWalletTokenService(opts ...option.RequestOption) (r *DigitalWalle
 
 // Retrieve a Digital Wallet Token
 func (r *DigitalWalletTokenService) Get(ctx context.Context, digitalWalletTokenID string, opts ...option.RequestOption) (res *DigitalWalletToken, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if digitalWalletTokenID == "" {
 		err = errors.New("missing required digital_wallet_token_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *DigitalWalletTokenService) Get(ctx context.Context, digitalWalletTokenI
 // List Digital Wallet Tokens
 func (r *DigitalWalletTokenService) List(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalWalletToken], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "digital_wallet_tokens"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

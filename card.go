@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewCardService(opts ...option.RequestOption) (r *CardService) {
 
 // Create a Card
 func (r *CardService) New(ctx context.Context, body CardNewParams, opts ...option.RequestOption) (res *Card, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "cards"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *CardService) New(ctx context.Context, body CardNewParams, opts ...optio
 
 // Retrieve a Card
 func (r *CardService) Get(ctx context.Context, cardID string, opts ...option.RequestOption) (res *Card, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
 		return
@@ -59,7 +60,7 @@ func (r *CardService) Get(ctx context.Context, cardID string, opts ...option.Req
 
 // Update a Card
 func (r *CardService) Update(ctx context.Context, cardID string, body CardUpdateParams, opts ...option.RequestOption) (res *Card, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
 		return
@@ -72,7 +73,7 @@ func (r *CardService) Update(ctx context.Context, cardID string, body CardUpdate
 // List Cards
 func (r *CardService) List(ctx context.Context, query CardListParams, opts ...option.RequestOption) (res *pagination.Page[Card], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "cards"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -96,7 +97,7 @@ func (r *CardService) ListAutoPaging(ctx context.Context, query CardListParams, 
 // styling and usage can be found in the
 // [documentation](/documentation/embedded-card-component).
 func (r *CardService) NewDetailsIframe(ctx context.Context, cardID string, body CardNewDetailsIframeParams, opts ...option.RequestOption) (res *CardIframeURL, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
 		return
@@ -109,7 +110,7 @@ func (r *CardService) NewDetailsIframe(ctx context.Context, cardID string, body 
 // Sensitive details for a Card include the primary account number, expiry, card
 // verification code, and PIN.
 func (r *CardService) Details(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
 		return

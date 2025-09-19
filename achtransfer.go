@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewACHTransferService(opts ...option.RequestOption) (r *ACHTransferService)
 
 // Create an ACH Transfer
 func (r *ACHTransferService) New(ctx context.Context, body ACHTransferNewParams, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "ach_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *ACHTransferService) New(ctx context.Context, body ACHTransferNewParams,
 
 // Retrieve an ACH Transfer
 func (r *ACHTransferService) Get(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *ACHTransferService) Get(ctx context.Context, achTransferID string, opts
 // List ACH Transfers
 func (r *ACHTransferService) List(ctx context.Context, query ACHTransferListParams, opts ...option.RequestOption) (res *pagination.Page[ACHTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "ach_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *ACHTransferService) ListAutoPaging(ctx context.Context, query ACHTransf
 
 // Approves an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Approve(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *ACHTransferService) Approve(ctx context.Context, achTransferID string, 
 
 // Cancels an ACH Transfer in a pending_approval state.
 func (r *ACHTransferService) Cancel(ctx context.Context, achTransferID string, opts ...option.RequestOption) (res *ACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
 		return

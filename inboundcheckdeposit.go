@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewInboundCheckDepositService(opts ...option.RequestOption) (r *InboundChec
 
 // Retrieve an Inbound Check Deposit
 func (r *InboundCheckDepositService) Get(ctx context.Context, inboundCheckDepositID string, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *InboundCheckDepositService) Get(ctx context.Context, inboundCheckDeposi
 // List Inbound Check Deposits
 func (r *InboundCheckDepositService) List(ctx context.Context, query InboundCheckDepositListParams, opts ...option.RequestOption) (res *pagination.Page[InboundCheckDeposit], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_check_deposits"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -74,7 +75,7 @@ func (r *InboundCheckDepositService) ListAutoPaging(ctx context.Context, query I
 
 // Decline an Inbound Check Deposit
 func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDepositID string, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
 		return
@@ -86,7 +87,7 @@ func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDe
 
 // Return an Inbound Check Deposit
 func (r *InboundCheckDepositService) Return(ctx context.Context, inboundCheckDepositID string, body InboundCheckDepositReturnParams, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
 		return

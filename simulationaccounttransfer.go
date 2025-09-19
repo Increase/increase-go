@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
@@ -36,7 +37,7 @@ func NewSimulationAccountTransferService(opts ...option.RequestOption) (r *Simul
 // You can also approve sandbox Account Transfers in the dashboard. This transfer
 // must first have a `status` of `pending_approval`.
 func (r *SimulationAccountTransferService) Complete(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
 		return

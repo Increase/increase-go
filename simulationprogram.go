@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -36,7 +37,7 @@ func NewSimulationProgramService(opts ...option.RequestOption) (r *SimulationPro
 // operates more than one program, `program_id` is a required field when creating
 // accounts.
 func (r *SimulationProgramService) New(ctx context.Context, body SimulationProgramNewParams, opts ...option.RequestOption) (res *Program, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/programs"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

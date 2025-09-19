@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
@@ -33,7 +34,7 @@ func NewSimulationWireDrawdownRequestService(opts ...option.RequestOption) (r *S
 
 // Simulates a Wire Drawdown Request being refused by the debtor.
 func (r *SimulationWireDrawdownRequestService) Refuse(ctx context.Context, wireDrawdownRequestID string, opts ...option.RequestOption) (res *WireDrawdownRequest, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireDrawdownRequestID == "" {
 		err = errors.New("missing required wire_drawdown_request_id parameter")
 		return
@@ -45,7 +46,7 @@ func (r *SimulationWireDrawdownRequestService) Refuse(ctx context.Context, wireD
 
 // Simulates a Wire Drawdown Request being submitted to Fedwire.
 func (r *SimulationWireDrawdownRequestService) Submit(ctx context.Context, wireDrawdownRequestID string, opts ...option.RequestOption) (res *WireDrawdownRequest, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireDrawdownRequestID == "" {
 		err = errors.New("missing required wire_drawdown_request_id parameter")
 		return

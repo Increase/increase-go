@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -34,7 +35,7 @@ func NewSimulationAccountStatementService(opts ...option.RequestOption) (r *Simu
 // Simulates an [Account Statement](#account-statements) being created for an
 // account. In production, Account Statements are generated once per month.
 func (r *SimulationAccountStatementService) New(ctx context.Context, body SimulationAccountStatementNewParams, opts ...option.RequestOption) (res *AccountStatement, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/account_statements"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

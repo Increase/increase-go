@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -33,7 +34,7 @@ func NewSimulationInboundWireTransferService(opts ...option.RequestOption) (r *S
 
 // Simulates an [Inbound Wire Transfer](#inbound-wire-transfers) to your account.
 func (r *SimulationInboundWireTransferService) New(ctx context.Context, body SimulationInboundWireTransferNewParams, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_wire_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

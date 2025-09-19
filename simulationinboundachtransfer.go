@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -43,7 +44,7 @@ func NewSimulationInboundACHTransferService(opts ...option.RequestOption) (r *Si
 // [Declined Transaction](#declined-transactions) depending on whether or not the
 // transfer is allowed.
 func (r *SimulationInboundACHTransferService) New(ctx context.Context, body SimulationInboundACHTransferNewParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_ach_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

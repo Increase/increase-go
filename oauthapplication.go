@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewOAuthApplicationService(opts ...option.RequestOption) (r *OAuthApplicati
 
 // Retrieve an OAuth Application
 func (r *OAuthApplicationService) Get(ctx context.Context, oauthApplicationID string, opts ...option.RequestOption) (res *OAuthApplication, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if oauthApplicationID == "" {
 		err = errors.New("missing required oauth_application_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *OAuthApplicationService) Get(ctx context.Context, oauthApplicationID st
 // List OAuth Applications
 func (r *OAuthApplicationService) List(ctx context.Context, query OAuthApplicationListParams, opts ...option.RequestOption) (res *pagination.Page[OAuthApplication], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "oauth_applications"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

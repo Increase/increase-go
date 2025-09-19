@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewInboundACHTransferService(opts ...option.RequestOption) (r *InboundACHTr
 
 // Retrieve an Inbound ACH Transfer
 func (r *InboundACHTransferService) Get(ctx context.Context, inboundACHTransferID string, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *InboundACHTransferService) Get(ctx context.Context, inboundACHTransferI
 // List Inbound ACH Transfers
 func (r *InboundACHTransferService) List(ctx context.Context, query InboundACHTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundACHTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_ach_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -74,7 +75,7 @@ func (r *InboundACHTransferService) ListAutoPaging(ctx context.Context, query In
 
 // Create a notification of change for an Inbound ACH Transfer
 func (r *InboundACHTransferService) NewNotificationOfChange(ctx context.Context, inboundACHTransferID string, body InboundACHTransferNewNotificationOfChangeParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
 		return
@@ -86,7 +87,7 @@ func (r *InboundACHTransferService) NewNotificationOfChange(ctx context.Context,
 
 // Decline an Inbound ACH Transfer
 func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTransferID string, body InboundACHTransferDeclineParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
 		return
@@ -98,7 +99,7 @@ func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTrans
 
 // Return an Inbound ACH Transfer
 func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundACHTransferID string, body InboundACHTransferTransferReturnParams, opts ...option.RequestOption) (res *InboundACHTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
 		return

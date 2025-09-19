@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewRealTimePaymentsTransferService(opts ...option.RequestOption) (r *RealTi
 
 // Create a Real-Time Payments Transfer
 func (r *RealTimePaymentsTransferService) New(ctx context.Context, body RealTimePaymentsTransferNewParams, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "real_time_payments_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *RealTimePaymentsTransferService) New(ctx context.Context, body RealTime
 
 // Retrieve a Real-Time Payments Transfer
 func (r *RealTimePaymentsTransferService) Get(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *RealTimePaymentsTransferService) Get(ctx context.Context, realTimePayme
 // List Real-Time Payments Transfers
 func (r *RealTimePaymentsTransferService) List(ctx context.Context, query RealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *pagination.Page[RealTimePaymentsTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "real_time_payments_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *RealTimePaymentsTransferService) ListAutoPaging(ctx context.Context, qu
 
 // Approves a Real-Time Payments Transfer in a pending_approval state.
 func (r *RealTimePaymentsTransferService) Approve(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *RealTimePaymentsTransferService) Approve(ctx context.Context, realTimeP
 
 // Cancels a Real-Time Payments Transfer in a pending_approval state.
 func (r *RealTimePaymentsTransferService) Cancel(ctx context.Context, realTimePaymentsTransferID string, opts ...option.RequestOption) (res *RealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
 		return

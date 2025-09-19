@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -34,7 +35,7 @@ func NewFileLinkService(opts ...option.RequestOption) (r *FileLinkService) {
 
 // Create a File Link
 func (r *FileLinkService) New(ctx context.Context, body FileLinkNewParams, opts ...option.RequestOption) (res *FileLink, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "file_links"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

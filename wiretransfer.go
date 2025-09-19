@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewWireTransferService(opts ...option.RequestOption) (r *WireTransferServic
 
 // Create a Wire Transfer
 func (r *WireTransferService) New(ctx context.Context, body WireTransferNewParams, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "wire_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *WireTransferService) New(ctx context.Context, body WireTransferNewParam
 
 // Retrieve a Wire Transfer
 func (r *WireTransferService) Get(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *WireTransferService) Get(ctx context.Context, wireTransferID string, op
 // List Wire Transfers
 func (r *WireTransferService) List(ctx context.Context, query WireTransferListParams, opts ...option.RequestOption) (res *pagination.Page[WireTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "wire_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *WireTransferService) ListAutoPaging(ctx context.Context, query WireTran
 
 // Approve a Wire Transfer
 func (r *WireTransferService) Approve(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *WireTransferService) Approve(ctx context.Context, wireTransferID string
 
 // Cancel a pending Wire Transfer
 func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string, opts ...option.RequestOption) (res *WireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
 		return

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewBookkeepingEntrySetService(opts ...option.RequestOption) (r *Bookkeeping
 
 // Create a Bookkeeping Entry Set
 func (r *BookkeepingEntrySetService) New(ctx context.Context, body BookkeepingEntrySetNewParams, opts ...option.RequestOption) (res *BookkeepingEntrySet, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "bookkeeping_entry_sets"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *BookkeepingEntrySetService) New(ctx context.Context, body BookkeepingEn
 
 // Retrieve a Bookkeeping Entry Set
 func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySetID string, opts ...option.RequestOption) (res *BookkeepingEntrySet, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if bookkeepingEntrySetID == "" {
 		err = errors.New("missing required bookkeeping_entry_set_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySe
 // List Bookkeeping Entry Sets
 func (r *BookkeepingEntrySetService) List(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingEntrySet], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_entry_sets"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

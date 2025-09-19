@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewInboundRealTimePaymentsTransferService(opts ...option.RequestOption) (r 
 
 // Retrieve an Inbound Real-Time Payments Transfer
 func (r *InboundRealTimePaymentsTransferService) Get(ctx context.Context, inboundRealTimePaymentsTransferID string, opts ...option.RequestOption) (res *InboundRealTimePaymentsTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundRealTimePaymentsTransferID == "" {
 		err = errors.New("missing required inbound_real_time_payments_transfer_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *InboundRealTimePaymentsTransferService) Get(ctx context.Context, inboun
 // List Inbound Real-Time Payments Transfers
 func (r *InboundRealTimePaymentsTransferService) List(ctx context.Context, query InboundRealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundRealTimePaymentsTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_real_time_payments_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

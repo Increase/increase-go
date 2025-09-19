@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewDigitalCardProfileService(opts ...option.RequestOption) (r *DigitalCardP
 
 // Create a Digital Card Profile
 func (r *DigitalCardProfileService) New(ctx context.Context, body DigitalCardProfileNewParams, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "digital_card_profiles"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *DigitalCardProfileService) New(ctx context.Context, body DigitalCardPro
 
 // Retrieve a Digital Card Profile
 func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileID string, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {
 		err = errors.New("missing required digital_card_profile_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileI
 // List Card Profiles
 func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalCardProfile], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "digital_card_profiles"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *DigitalCardProfileService) ListAutoPaging(ctx context.Context, query Di
 
 // Archive a Digital Card Profile
 func (r *DigitalCardProfileService) Archive(ctx context.Context, digitalCardProfileID string, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {
 		err = errors.New("missing required digital_card_profile_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *DigitalCardProfileService) Archive(ctx context.Context, digitalCardProf
 
 // Clones a Digital Card Profile
 func (r *DigitalCardProfileService) Clone(ctx context.Context, digitalCardProfileID string, body DigitalCardProfileCloneParams, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {
 		err = errors.New("missing required digital_card_profile_id parameter")
 		return

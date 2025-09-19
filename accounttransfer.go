@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewAccountTransferService(opts ...option.RequestOption) (r *AccountTransfer
 
 // Create an Account Transfer
 func (r *AccountTransferService) New(ctx context.Context, body AccountTransferNewParams, opts ...option.RequestOption) (res *AccountTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "account_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *AccountTransferService) New(ctx context.Context, body AccountTransferNe
 
 // Retrieve an Account Transfer
 func (r *AccountTransferService) Get(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *AccountTransferService) Get(ctx context.Context, accountTransferID stri
 // List Account Transfers
 func (r *AccountTransferService) List(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) (res *pagination.Page[AccountTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query Accou
 
 // Approve an Account Transfer
 func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID 
 
 // Cancel an Account Transfer
 func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
 		return

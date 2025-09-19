@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewCardValidationService(opts ...option.RequestOption) (r *CardValidationSe
 
 // Create a Card Validation
 func (r *CardValidationService) New(ctx context.Context, body CardValidationNewParams, opts ...option.RequestOption) (res *CardValidation, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "card_validations"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *CardValidationService) New(ctx context.Context, body CardValidationNewP
 
 // Retrieve a Card Validation
 func (r *CardValidationService) Get(ctx context.Context, cardValidationID string, opts ...option.RequestOption) (res *CardValidation, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if cardValidationID == "" {
 		err = errors.New("missing required card_validation_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *CardValidationService) Get(ctx context.Context, cardValidationID string
 // List Card Validations
 func (r *CardValidationService) List(ctx context.Context, query CardValidationListParams, opts ...option.RequestOption) (res *pagination.Page[CardValidation], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_validations"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

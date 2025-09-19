@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -36,7 +37,7 @@ func NewRealTimeDecisionService(opts ...option.RequestOption) (r *RealTimeDecisi
 
 // Retrieve a Real-Time Decision
 func (r *RealTimeDecisionService) Get(ctx context.Context, realTimeDecisionID string, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if realTimeDecisionID == "" {
 		err = errors.New("missing required real_time_decision_id parameter")
 		return
@@ -48,7 +49,7 @@ func (r *RealTimeDecisionService) Get(ctx context.Context, realTimeDecisionID st
 
 // Action a Real-Time Decision
 func (r *RealTimeDecisionService) Action(ctx context.Context, realTimeDecisionID string, body RealTimeDecisionActionParams, opts ...option.RequestOption) (res *RealTimeDecision, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if realTimeDecisionID == "" {
 		err = errors.New("missing required real_time_decision_id parameter")
 		return

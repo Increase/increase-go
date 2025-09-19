@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewInboundWireTransferService(opts ...option.RequestOption) (r *InboundWire
 
 // Retrieve an Inbound Wire Transfer
 func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransferID string, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundWireTransferID == "" {
 		err = errors.New("missing required inbound_wire_transfer_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransfe
 // List Inbound Wire Transfers
 func (r *InboundWireTransferService) List(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundWireTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_wire_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -74,7 +75,7 @@ func (r *InboundWireTransferService) ListAutoPaging(ctx context.Context, query I
 
 // Reverse an Inbound Wire Transfer
 func (r *InboundWireTransferService) Reverse(ctx context.Context, inboundWireTransferID string, body InboundWireTransferReverseParams, opts ...option.RequestOption) (res *InboundWireTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if inboundWireTransferID == "" {
 		err = errors.New("missing required inbound_wire_transfer_id parameter")
 		return

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewEntityService(opts ...option.RequestOption) (r *EntityService) {
 
 // Create an Entity
 func (r *EntityService) New(ctx context.Context, body EntityNewParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "entities"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *EntityService) New(ctx context.Context, body EntityNewParams, opts ...o
 
 // Retrieve an Entity
 func (r *EntityService) Get(ctx context.Context, entityID string, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -59,7 +60,7 @@ func (r *EntityService) Get(ctx context.Context, entityID string, opts ...option
 
 // Update an Entity
 func (r *EntityService) Update(ctx context.Context, entityID string, body EntityUpdateParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -72,7 +73,7 @@ func (r *EntityService) Update(ctx context.Context, entityID string, body Entity
 // List Entities
 func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *pagination.Page[Entity], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "entities"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -94,7 +95,7 @@ func (r *EntityService) ListAutoPaging(ctx context.Context, query EntityListPara
 
 // Archive an Entity
 func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -106,7 +107,7 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 
 // Archive a beneficial owner for a corporate Entity
 func (r *EntityService) ArchiveBeneficialOwner(ctx context.Context, entityID string, body EntityArchiveBeneficialOwnerParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -120,7 +121,7 @@ func (r *EntityService) ArchiveBeneficialOwner(ctx context.Context, entityID str
 // on a recurring basis. After making any required updates, call this endpoint to
 // record that your user confirmed their details.
 func (r *EntityService) Confirm(ctx context.Context, entityID string, body EntityConfirmParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -132,7 +133,7 @@ func (r *EntityService) Confirm(ctx context.Context, entityID string, body Entit
 
 // Create a beneficial owner for a corporate Entity
 func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string, body EntityNewBeneficialOwnerParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -144,7 +145,7 @@ func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string,
 
 // Update a Natural Person or Corporation's address
 func (r *EntityService) UpdateAddress(ctx context.Context, entityID string, body EntityUpdateAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -156,7 +157,7 @@ func (r *EntityService) UpdateAddress(ctx context.Context, entityID string, body
 
 // Update the address for a beneficial owner belonging to a corporate Entity
 func (r *EntityService) UpdateBeneficialOwnerAddress(ctx context.Context, entityID string, body EntityUpdateBeneficialOwnerAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return
@@ -168,7 +169,7 @@ func (r *EntityService) UpdateBeneficialOwnerAddress(ctx context.Context, entity
 
 // Update the industry code for a corporate Entity
 func (r *EntityService) UpdateIndustryCode(ctx context.Context, entityID string, body EntityUpdateIndustryCodeParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return

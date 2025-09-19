@@ -6,6 +6,7 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -37,7 +38,7 @@ func NewSupplementalDocumentService(opts ...option.RequestOption) (r *Supplement
 
 // Create a supplemental document for an Entity
 func (r *SupplementalDocumentService) New(ctx context.Context, body SupplementalDocumentNewParams, opts ...option.RequestOption) (res *EntitySupplementalDocument, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "entity_supplemental_documents"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -46,7 +47,7 @@ func (r *SupplementalDocumentService) New(ctx context.Context, body Supplemental
 // List Entity Supplemental Document Submissions
 func (r *SupplementalDocumentService) List(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[EntitySupplementalDocument], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "entity_supplemental_documents"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -33,7 +34,7 @@ func NewSimulationDocumentService(opts ...option.RequestOption) (r *SimulationDo
 
 // Simulates an tax document being created for an account.
 func (r *SimulationDocumentService) New(ctx context.Context, body SimulationDocumentNewParams, opts ...option.RequestOption) (res *Document, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/documents"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewACHPrenotificationService(opts ...option.RequestOption) (r *ACHPrenotifi
 
 // Create an ACH Prenotification
 func (r *ACHPrenotificationService) New(ctx context.Context, body ACHPrenotificationNewParams, opts ...option.RequestOption) (res *ACHPrenotification, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "ach_prenotifications"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *ACHPrenotificationService) New(ctx context.Context, body ACHPrenotifica
 
 // Retrieve an ACH Prenotification
 func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationID string, opts ...option.RequestOption) (res *ACHPrenotification, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if achPrenotificationID == "" {
 		err = errors.New("missing required ach_prenotification_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationI
 // List ACH Prenotifications
 func (r *ACHPrenotificationService) List(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) (res *pagination.Page[ACHPrenotification], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "ach_prenotifications"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

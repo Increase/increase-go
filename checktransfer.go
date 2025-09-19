@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewCheckTransferService(opts ...option.RequestOption) (r *CheckTransferServ
 
 // Create a Check Transfer
 func (r *CheckTransferService) New(ctx context.Context, body CheckTransferNewParams, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "check_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *CheckTransferService) New(ctx context.Context, body CheckTransferNewPar
 
 // Retrieve a Check Transfer
 func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, 
 // List Check Transfers
 func (r *CheckTransferService) List(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) (res *pagination.Page[CheckTransfer], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_transfers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query CheckTr
 
 // Approve a Check Transfer
 func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
 		return
@@ -94,7 +95,7 @@ func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID stri
 
 // Cancel a pending Check Transfer
 func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
 		return
@@ -106,7 +107,7 @@ func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID strin
 
 // Stop payment on a Check Transfer
 func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID string, body CheckTransferStopPaymentParams, opts ...option.RequestOption) (res *CheckTransfer, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
 		return
