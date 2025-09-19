@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.330.1 (2025-09-19)
+
+Full Changelog: [v0.330.0...v0.330.1](https://github.com/Increase/increase-go/compare/v0.330.0...v0.330.1)
+
+### Bug Fixes
+
+* use slices.Concat instead of sometimes modifying r.Options ([b30e0db](https://github.com/Increase/increase-go/commit/b30e0dbccfebdb4727423e6b7d982c0fcc9ddcfb))
+
+
+### Chores
+
+* bump minimum go version to 1.22 ([64cf34b](https://github.com/Increase/increase-go/commit/64cf34ba653f8b81855879c2a189736896ca43f4))
+* update more docs for 1.22 ([6c516fd](https://github.com/Increase/increase-go/commit/6c516fdb3777d89b3c702f49447d68e3586f0c79))
+
 ## 0.330.0 (2025-09-19)
 
 Full Changelog: [v0.329.0...v0.330.0](https://github.com/Increase/increase-go/compare/v0.329.0...v0.330.0)
