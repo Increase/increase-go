@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.331.0 (2025-09-19)
+
+Full Changelog: [v0.330.1...v0.331.0](https://github.com/Increase/increase-go/compare/v0.330.1...v0.331.0)
+
+### Features
+
+* **api:** api update ([0fca8d2](https://github.com/Increase/increase-go/commit/0fca8d2ed1867924275bd664511529ebe764df1d))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([4c99dba](https://github.com/Increase/increase-go/commit/4c99dba03373011d24a86013c353a6f9ce49fecb))
+
 ## 0.330.1 (2025-09-19)
 
 Full Changelog: [v0.330.0...v0.330.1](https://github.com/Increase/increase-go/compare/v0.330.0...v0.330.1)
