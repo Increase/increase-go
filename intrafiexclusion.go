@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewIntrafiExclusionService(opts ...option.RequestOption) (r *IntrafiExclusi
 
 // Create an IntraFi Exclusion
 func (r *IntrafiExclusionService) New(ctx context.Context, body IntrafiExclusionNewParams, opts ...option.RequestOption) (res *IntrafiExclusion, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "intrafi_exclusions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *IntrafiExclusionService) New(ctx context.Context, body IntrafiExclusion
 
 // Get an IntraFi Exclusion
 func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID string, opts ...option.RequestOption) (res *IntrafiExclusion, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if intrafiExclusionID == "" {
 		err = errors.New("missing required intrafi_exclusion_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID st
 // List IntraFi Exclusions
 func (r *IntrafiExclusionService) List(ctx context.Context, query IntrafiExclusionListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiExclusion], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "intrafi_exclusions"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -82,7 +83,7 @@ func (r *IntrafiExclusionService) ListAutoPaging(ctx context.Context, query Intr
 
 // Archive an IntraFi Exclusion
 func (r *IntrafiExclusionService) Archive(ctx context.Context, intrafiExclusionID string, opts ...option.RequestOption) (res *IntrafiExclusion, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if intrafiExclusionID == "" {
 		err = errors.New("missing required intrafi_exclusion_id parameter")
 		return

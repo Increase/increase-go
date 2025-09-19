@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -38,7 +39,7 @@ func NewSimulationPhysicalCardService(opts ...option.RequestOption) (r *Simulati
 // Card, to simulate e.g., that a physical card was attempted shipped but then
 // failed delivery.
 func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, physicalCardID string, body SimulationPhysicalCardAdvanceShipmentParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
 		return
@@ -51,7 +52,7 @@ func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, phy
 // This endpoint allows you to simulate receiving a tracking update for a Physical
 // Card, to simulate the progress of a shipment.
 func (r *SimulationPhysicalCardService) TrackingUpdates(ctx context.Context, physicalCardID string, body SimulationPhysicalCardTrackingUpdatesParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
 		return

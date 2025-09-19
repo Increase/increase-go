@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -42,7 +43,7 @@ func NewPendingTransactionService(opts ...option.RequestOption) (r *PendingTrans
 // resulting Pending Transaction will have a `category` of `user_initiated_hold`
 // and can be released via the API to unlock the held funds.
 func (r *PendingTransactionService) New(ctx context.Context, body PendingTransactionNewParams, opts ...option.RequestOption) (res *PendingTransaction, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "pending_transactions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -50,7 +51,7 @@ func (r *PendingTransactionService) New(ctx context.Context, body PendingTransac
 
 // Retrieve a Pending Transaction
 func (r *PendingTransactionService) Get(ctx context.Context, pendingTransactionID string, opts ...option.RequestOption) (res *PendingTransaction, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if pendingTransactionID == "" {
 		err = errors.New("missing required pending_transaction_id parameter")
 		return
@@ -63,7 +64,7 @@ func (r *PendingTransactionService) Get(ctx context.Context, pendingTransactionI
 // List Pending Transactions
 func (r *PendingTransactionService) List(ctx context.Context, query PendingTransactionListParams, opts ...option.RequestOption) (res *pagination.Page[PendingTransaction], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "pending_transactions"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -88,7 +89,7 @@ func (r *PendingTransactionService) ListAutoPaging(ctx context.Context, query Pe
 // `pending`. This will unlock the held funds and mark the Pending Transaction as
 // complete.
 func (r *PendingTransactionService) Release(ctx context.Context, pendingTransactionID string, opts ...option.RequestOption) (res *PendingTransaction, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if pendingTransactionID == "" {
 		err = errors.New("missing required pending_transaction_id parameter")
 		return

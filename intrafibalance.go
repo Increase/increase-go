@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -37,7 +38,7 @@ func NewIntrafiBalanceService(opts ...option.RequestOption) (r *IntrafiBalanceSe
 // multiple banks. This endpoint will include both the total balance and the amount
 // swept to each institution.
 func (r *IntrafiBalanceService) IntrafiBalance(ctx context.Context, accountID string, opts ...option.RequestOption) (res *IntrafiBalance, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if accountID == "" {
 		err = errors.New("missing required account_id parameter")
 		return

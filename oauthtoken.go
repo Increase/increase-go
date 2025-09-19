@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -33,7 +34,7 @@ func NewOAuthTokenService(opts ...option.RequestOption) (r *OAuthTokenService) {
 
 // Create an OAuth Token
 func (r *OAuthTokenService) New(ctx context.Context, body OAuthTokenNewParams, opts ...option.RequestOption) (res *OAuthToken, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "oauth/tokens"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

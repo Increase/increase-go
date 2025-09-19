@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -36,7 +37,7 @@ func NewSimulationCardReversalService(opts ...option.RequestOption) (r *Simulati
 // Marks the pending transaction as complete if the authorization is fully
 // reversed.
 func (r *SimulationCardReversalService) New(ctx context.Context, body SimulationCardReversalNewParams, opts ...option.RequestOption) (res *CardPayment, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_reversals"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

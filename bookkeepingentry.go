@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Increase/increase-go/internal/apijson"
@@ -39,7 +40,7 @@ func NewBookkeepingEntryService(opts ...option.RequestOption) (r *BookkeepingEnt
 
 // Retrieve a Bookkeeping Entry
 func (r *BookkeepingEntryService) Get(ctx context.Context, bookkeepingEntryID string, opts ...option.RequestOption) (res *BookkeepingEntry, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if bookkeepingEntryID == "" {
 		err = errors.New("missing required bookkeeping_entry_id parameter")
 		return
@@ -52,7 +53,7 @@ func (r *BookkeepingEntryService) Get(ctx context.Context, bookkeepingEntryID st
 // List Bookkeeping Entries
 func (r *BookkeepingEntryService) List(ctx context.Context, query BookkeepingEntryListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingEntry], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_entries"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

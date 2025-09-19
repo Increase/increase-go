@@ -5,6 +5,7 @@ package increase
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/apijson"
 	"github.com/Increase/increase-go/internal/param"
@@ -35,7 +36,7 @@ func NewSimulationInboundWireDrawdownRequestService(opts ...option.RequestOption
 // Simulates receiving an
 // [Inbound Wire Drawdown Request](#inbound-wire-drawdown-requests).
 func (r *SimulationInboundWireDrawdownRequestService) New(ctx context.Context, body SimulationInboundWireDrawdownRequestNewParams, opts ...option.RequestOption) (res *InboundWireDrawdownRequest, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_wire_drawdown_requests"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

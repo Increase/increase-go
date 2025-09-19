@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
@@ -35,7 +36,7 @@ func NewSimulationCheckDepositService(opts ...option.RequestOption) (r *Simulati
 // factors like poor image quality. This Check Deposit must first have a `status`
 // of `pending`.
 func (r *SimulationCheckDepositService) Reject(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
 		return
@@ -48,7 +49,7 @@ func (r *SimulationCheckDepositService) Reject(ctx context.Context, checkDeposit
 // Simulates the return of a [Check Deposit](#check-deposits). This Check Deposit
 // must first have a `status` of `submitted`.
 func (r *SimulationCheckDepositService) Return(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
 		return
@@ -61,7 +62,7 @@ func (r *SimulationCheckDepositService) Return(ctx context.Context, checkDeposit
 // Simulates the submission of a [Check Deposit](#check-deposits) to the Federal
 // Reserve. This Check Deposit must first have a `status` of `pending`.
 func (r *SimulationCheckDepositService) Submit(ctx context.Context, checkDepositID string, opts ...option.RequestOption) (res *CheckDeposit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
 		return
