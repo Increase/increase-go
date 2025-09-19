@@ -29,7 +29,7 @@ go get -u 'github.com/Increase/increase-go@v0.330.0'
 
 ## Requirements
 
-This library requires Go 1.18+.
+This library requires Go 1.22+.
 
 ## Usage
 
