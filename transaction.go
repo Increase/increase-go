@@ -1852,6 +1852,10 @@ type TransactionSourceCardSettlement struct {
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails TransactionSourceCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
+	// Surcharge amount details, if applicable. The amounts positive if the surcharge
+	// is added to to the overall transaction amount (surcharge), and negative if the
+	// surcharge is deducted from the overall transaction amount (discount).
+	Surcharge TransactionSourceCardSettlementSurcharge `json:"surcharge,required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -1883,6 +1887,7 @@ type transactionSourceCardSettlementJSON struct {
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
 	PurchaseDetails      apijson.Field
+	Surcharge            apijson.Field
 	TransactionID        apijson.Field
 	Type                 apijson.Field
 	raw                  string
@@ -2648,6 +2653,35 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode
 		return true
 	}
 	return false
+}
+
+// Surcharge amount details, if applicable. The amounts positive if the surcharge
+// is added to to the overall transaction amount (surcharge), and negative if the
+// surcharge is deducted from the overall transaction amount (discount).
+type TransactionSourceCardSettlementSurcharge struct {
+	// The surcharge amount in the minor unit of the transaction's settlement currency.
+	Amount int64 `json:"amount,required"`
+	// The surcharge amount in the minor unit of the transaction's presentment
+	// currency.
+	PresentmentAmount int64                                        `json:"presentment_amount,required"`
+	JSON              transactionSourceCardSettlementSurchargeJSON `json:"-"`
+}
+
+// transactionSourceCardSettlementSurchargeJSON contains the JSON metadata for the
+// struct [TransactionSourceCardSettlementSurcharge]
+type transactionSourceCardSettlementSurchargeJSON struct {
+	Amount            apijson.Field
+	PresentmentAmount apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardSettlementSurcharge) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardSettlementSurchargeJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
