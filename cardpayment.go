@@ -671,7 +671,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsJSON) RawJSON() str
 
 // The part of this transaction amount that was for clinic-related services.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsClinic struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -699,7 +701,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsClinicJSON) RawJSON
 
 // The part of this transaction amount that was for dental-related services.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsDental struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -727,7 +731,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsDentalJSON) RawJSON
 
 // The part of this transaction amount that was for healthcare prescriptions.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsPrescription struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -755,7 +761,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsPrescriptionJSON) R
 
 // The surcharge amount charged for this transaction by the merchant.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsSurcharge struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -783,7 +791,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsSurchargeJSON) RawJ
 
 // The total amount of a series of incremental authorizations, optionally provided.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsTotalCumulative struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -811,7 +821,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsTotalCumulativeJSON
 
 // The total amount of healthcare-related additional amounts.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsTotalHealthcare struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -839,7 +851,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsTotalHealthcareJSON
 
 // The part of this transaction amount that was for transit-related services.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsTransit struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -867,7 +881,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsTransitJSON) RawJSO
 
 // An unknown additional amount.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsUnknown struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -895,7 +911,9 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsUnknownJSON) RawJSO
 
 // The part of this transaction amount that was for vision-related services.
 type CardPaymentElementsCardAuthorizationAdditionalAmountsVision struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1596,7 +1614,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsJSON) RawJSON() string {
 
 // The part of this transaction amount that was for clinic-related services.
 type CardPaymentElementsCardDeclineAdditionalAmountsClinic struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1623,7 +1643,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsClinicJSON) RawJSON() str
 
 // The part of this transaction amount that was for dental-related services.
 type CardPaymentElementsCardDeclineAdditionalAmountsDental struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1650,7 +1672,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsDentalJSON) RawJSON() str
 
 // The part of this transaction amount that was for healthcare prescriptions.
 type CardPaymentElementsCardDeclineAdditionalAmountsPrescription struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1678,7 +1702,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsPrescriptionJSON) RawJSON
 
 // The surcharge amount charged for this transaction by the merchant.
 type CardPaymentElementsCardDeclineAdditionalAmountsSurcharge struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1706,7 +1732,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsSurchargeJSON) RawJSON() 
 
 // The total amount of a series of incremental authorizations, optionally provided.
 type CardPaymentElementsCardDeclineAdditionalAmountsTotalCumulative struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1734,7 +1762,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsTotalCumulativeJSON) RawJ
 
 // The total amount of healthcare-related additional amounts.
 type CardPaymentElementsCardDeclineAdditionalAmountsTotalHealthcare struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1762,7 +1792,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsTotalHealthcareJSON) RawJ
 
 // The part of this transaction amount that was for transit-related services.
 type CardPaymentElementsCardDeclineAdditionalAmountsTransit struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1789,7 +1821,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsTransitJSON) RawJSON() st
 
 // An unknown additional amount.
 type CardPaymentElementsCardDeclineAdditionalAmountsUnknown struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -1816,7 +1850,9 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsUnknownJSON) RawJSON() st
 
 // The part of this transaction amount that was for vision-related services.
 type CardPaymentElementsCardDeclineAdditionalAmountsVision struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2548,7 +2584,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsJSON) RawJSON() string 
 
 // The part of this transaction amount that was for clinic-related services.
 type CardPaymentElementsCardIncrementAdditionalAmountsClinic struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2576,7 +2614,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsClinicJSON) RawJSON() s
 
 // The part of this transaction amount that was for dental-related services.
 type CardPaymentElementsCardIncrementAdditionalAmountsDental struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2604,7 +2644,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsDentalJSON) RawJSON() s
 
 // The part of this transaction amount that was for healthcare prescriptions.
 type CardPaymentElementsCardIncrementAdditionalAmountsPrescription struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2632,7 +2674,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsPrescriptionJSON) RawJS
 
 // The surcharge amount charged for this transaction by the merchant.
 type CardPaymentElementsCardIncrementAdditionalAmountsSurcharge struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2660,7 +2704,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsSurchargeJSON) RawJSON(
 
 // The total amount of a series of incremental authorizations, optionally provided.
 type CardPaymentElementsCardIncrementAdditionalAmountsTotalCumulative struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2688,7 +2734,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsTotalCumulativeJSON) Ra
 
 // The total amount of healthcare-related additional amounts.
 type CardPaymentElementsCardIncrementAdditionalAmountsTotalHealthcare struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2716,7 +2764,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsTotalHealthcareJSON) Ra
 
 // The part of this transaction amount that was for transit-related services.
 type CardPaymentElementsCardIncrementAdditionalAmountsTransit struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2744,7 +2794,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsTransitJSON) RawJSON() 
 
 // An unknown additional amount.
 type CardPaymentElementsCardIncrementAdditionalAmountsUnknown struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -2772,7 +2824,9 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsUnknownJSON) RawJSON() 
 
 // The part of this transaction amount that was for vision-related services.
 type CardPaymentElementsCardIncrementAdditionalAmountsVision struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -4993,7 +5047,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsJSON) RawJSON() string
 
 // The part of this transaction amount that was for clinic-related services.
 type CardPaymentElementsCardValidationAdditionalAmountsClinic struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5021,7 +5077,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsClinicJSON) RawJSON() 
 
 // The part of this transaction amount that was for dental-related services.
 type CardPaymentElementsCardValidationAdditionalAmountsDental struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5049,7 +5107,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsDentalJSON) RawJSON() 
 
 // The part of this transaction amount that was for healthcare prescriptions.
 type CardPaymentElementsCardValidationAdditionalAmountsPrescription struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5077,7 +5137,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsPrescriptionJSON) RawJ
 
 // The surcharge amount charged for this transaction by the merchant.
 type CardPaymentElementsCardValidationAdditionalAmountsSurcharge struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5105,7 +5167,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsSurchargeJSON) RawJSON
 
 // The total amount of a series of incremental authorizations, optionally provided.
 type CardPaymentElementsCardValidationAdditionalAmountsTotalCumulative struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5133,7 +5197,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsTotalCumulativeJSON) R
 
 // The total amount of healthcare-related additional amounts.
 type CardPaymentElementsCardValidationAdditionalAmountsTotalHealthcare struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5161,7 +5227,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsTotalHealthcareJSON) R
 
 // The part of this transaction amount that was for transit-related services.
 type CardPaymentElementsCardValidationAdditionalAmountsTransit struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5189,7 +5257,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsTransitJSON) RawJSON()
 
 // An unknown additional amount.
 type CardPaymentElementsCardValidationAdditionalAmountsUnknown struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -5217,7 +5287,9 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsUnknownJSON) RawJSON()
 
 // The part of this transaction amount that was for vision-related services.
 type CardPaymentElementsCardValidationAdditionalAmountsVision struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
