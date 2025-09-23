@@ -595,7 +595,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON) RawJSON(
 
 // The part of this transaction amount that was for clinic-related services.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -623,7 +625,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsClinicJSON) Ra
 
 // The part of this transaction amount that was for dental-related services.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsDental struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -651,7 +655,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON) Ra
 
 // The part of this transaction amount that was for healthcare prescriptions.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -679,7 +685,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsPrescriptionJS
 
 // The surcharge amount charged for this transaction by the merchant.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -707,7 +715,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsSurchargeJSON)
 
 // The total amount of a series of incremental authorizations, optionally provided.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -735,7 +745,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulativ
 
 // The total amount of healthcare-related additional amounts.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -763,7 +775,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcar
 
 // The part of this transaction amount that was for transit-related services.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -791,7 +805,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsTransitJSON) R
 
 // An unknown additional amount.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -819,7 +835,9 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsUnknownJSON) R
 
 // The part of this transaction amount that was for vision-related services.
 type PendingTransactionSourceCardAuthorizationAdditionalAmountsVision struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
