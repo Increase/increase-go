@@ -1852,7 +1852,7 @@ type TransactionSourceCardSettlement struct {
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
 	PurchaseDetails TransactionSourceCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
-	// Surcharge amount details, if applicable. The amounts positive if the surcharge
+	// Surcharge amount details, if applicable. The amount is positive if the surcharge
 	// is added to to the overall transaction amount (surcharge), and negative if the
 	// surcharge is deducted from the overall transaction amount (discount).
 	Surcharge TransactionSourceCardSettlementSurcharge `json:"surcharge,required,nullable"`
@@ -2655,7 +2655,7 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode
 	return false
 }
 
-// Surcharge amount details, if applicable. The amounts positive if the surcharge
+// Surcharge amount details, if applicable. The amount is positive if the surcharge
 // is added to to the overall transaction amount (surcharge), and negative if the
 // surcharge is deducted from the overall transaction amount (discount).
 type TransactionSourceCardSettlementSurcharge struct {
