@@ -390,7 +390,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsJSON) RawJSON() string
 
 // The part of this transaction amount that was for clinic-related services.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsClinic struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -418,7 +420,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsClinicJSON) RawJSON() 
 
 // The part of this transaction amount that was for dental-related services.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsDental struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -446,7 +450,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsDentalJSON) RawJSON() 
 
 // The part of this transaction amount that was for healthcare prescriptions.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsPrescription struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -474,7 +480,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsPrescriptionJSON) RawJ
 
 // The surcharge amount charged for this transaction by the merchant.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsSurcharge struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -502,7 +510,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsSurchargeJSON) RawJSON
 
 // The total amount of a series of incremental authorizations, optionally provided.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsTotalCumulative struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -530,7 +540,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsTotalCumulativeJSON) R
 
 // The total amount of healthcare-related additional amounts.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsTotalHealthcare struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -558,7 +570,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsTotalHealthcareJSON) R
 
 // The part of this transaction amount that was for transit-related services.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsTransit struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -586,7 +600,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsTransitJSON) RawJSON()
 
 // An unknown additional amount.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsUnknown struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
@@ -614,7 +630,9 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsUnknownJSON) RawJSON()
 
 // The part of this transaction amount that was for vision-related services.
 type RealTimeDecisionCardAuthorizationAdditionalAmountsVision struct {
-	// The amount in minor units of the `currency` field.
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
 	Amount int64 `json:"amount,required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
