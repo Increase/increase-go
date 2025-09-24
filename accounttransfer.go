@@ -81,7 +81,7 @@ func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query Accou
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Approve an Account Transfer
+// Approves an Account Transfer in status `pending_approval`.
 func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
@@ -93,7 +93,7 @@ func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID 
 	return
 }
 
-// Cancel an Account Transfer
+// Cancels an Account Transfer in status `pending_approval`.
 func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID string, opts ...option.RequestOption) (res *AccountTransfer, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
@@ -105,14 +105,19 @@ func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID s
 	return
 }
 
-// Account transfers move funds between your own accounts at Increase.
+// Account transfers move funds between your own accounts at Increase (accounting
+// systems often refer to these as Book Transfers). Account Transfers are free and
+// synchronous. Upon creation they create two Transactions, one negative on the
+// originating account and one positive on the destination account (unless the
+// transfer requires approval, in which case the Transactions will be created when
+// the transfer is approved).
 type AccountTransfer struct {
-	// The account transfer's identifier.
+	// The Account Transfer's identifier.
 	ID string `json:"id,required"`
-	// The Account to which the transfer belongs.
+	// The Account from which the transfer originated.
 	AccountID string `json:"account_id,required"`
-	// The transfer amount in the minor unit of the destination account currency. For
-	// dollars, for example, this is cents.
+	// The transfer amount in cents. This will always be positive and indicates the
+	// amount of money leaving the originating account.
 	Amount int64 `json:"amount,required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
@@ -125,21 +130,21 @@ type AccountTransfer struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
 	CreatedBy AccountTransferCreatedBy `json:"created_by,required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-	// account currency.
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+	// currency.
 	Currency AccountTransferCurrency `json:"currency,required"`
-	// The description that will show on the transactions.
+	// An internal-facing description for the transfer for display in the API and
+	// dashboard. This will also show in the description of the created Transactions.
 	Description string `json:"description,required"`
-	// The destination account's identifier.
+	// The destination Account's identifier.
 	DestinationAccountID string `json:"destination_account_id,required"`
-	// The ID for the transaction receiving the transfer.
+	// The identifier of the Transaction on the destination Account representing the
+	// received funds.
 	DestinationTransactionID string `json:"destination_transaction_id,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
-	// The transfer's network.
-	Network AccountTransferNetwork `json:"network,required"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
@@ -147,7 +152,8 @@ type AccountTransfer struct {
 	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
 	// The lifecycle status of the transfer.
 	Status AccountTransferStatus `json:"status,required"`
-	// The ID for the transaction funding the transfer.
+	// The identifier of the Transaction on the originating account representing the
+	// transferred funds.
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
@@ -169,7 +175,6 @@ type accountTransferJSON struct {
 	DestinationAccountID     apijson.Field
 	DestinationTransactionID apijson.Field
 	IdempotencyKey           apijson.Field
-	Network                  apijson.Field
 	PendingTransactionID     apijson.Field
 	Status                   apijson.Field
 	TransactionID            apijson.Field
@@ -362,8 +367,8 @@ func (r accountTransferCreatedByUserJSON) RawJSON() string {
 	return r.raw
 }
 
-// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
-// account currency.
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
+// currency.
 type AccountTransferCurrency string
 
 const (
@@ -378,21 +383,6 @@ const (
 func (r AccountTransferCurrency) IsKnown() bool {
 	switch r {
 	case AccountTransferCurrencyCad, AccountTransferCurrencyChf, AccountTransferCurrencyEur, AccountTransferCurrencyGbp, AccountTransferCurrencyJpy, AccountTransferCurrencyUsd:
-		return true
-	}
-	return false
-}
-
-// The transfer's network.
-type AccountTransferNetwork string
-
-const (
-	AccountTransferNetworkAccount AccountTransferNetwork = "account"
-)
-
-func (r AccountTransferNetwork) IsKnown() bool {
-	switch r {
-	case AccountTransferNetworkAccount:
 		return true
 	}
 	return false
@@ -432,16 +422,19 @@ func (r AccountTransferType) IsKnown() bool {
 }
 
 type AccountTransferNewParams struct {
-	// The identifier for the account that will send the transfer.
+	// The identifier for the originating Account that will send the transfer.
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The transfer amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The description you choose to give the transfer.
+	// An internal-facing description for the transfer for display in the API and
+	// dashboard. This will also show in the description of the created Transactions.
 	Description param.Field[string] `json:"description,required"`
-	// The identifier for the account that will receive the transfer.
+	// The identifier for the destination Account that will receive the transfer.
 	DestinationAccountID param.Field[string] `json:"destination_account_id,required"`
-	// Whether the transfer requires explicit approval via the dashboard or API.
+	// Whether the transfer should require explicit approval via the dashboard or API.
+	// For more information, see
+	// [Transfer Approvals](/documentation/transfer-approvals).
 	RequireApproval param.Field[bool] `json:"require_approval"`
 }
 
