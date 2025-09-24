@@ -21,7 +21,6 @@ type Client struct {
 	AccountNumbers                   *AccountNumberService
 	AccountTransfers                 *AccountTransferService
 	Cards                            *CardService
-	CardDetails                      *CardDetailService
 	CardPayments                     *CardPaymentService
 	CardPurchaseSupplements          *CardPurchaseSupplementService
 	PhysicalCards                    *PhysicalCardService
@@ -104,7 +103,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.AccountNumbers = NewAccountNumberService(opts...)
 	r.AccountTransfers = NewAccountTransferService(opts...)
 	r.Cards = NewCardService(opts...)
-	r.CardDetails = NewCardDetailService(opts...)
 	r.CardPayments = NewCardPaymentService(opts...)
 	r.CardPurchaseSupplements = NewCardPurchaseSupplementService(opts...)
 	r.PhysicalCards = NewPhysicalCardService(opts...)
