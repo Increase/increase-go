@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.336.0 (2025-09-24)
+
+Full Changelog: [v0.335.0...v0.336.0](https://github.com/Increase/increase-go/compare/v0.335.0...v0.336.0)
+
+### Features
+
+* **api:** api update ([e39b82d](https://github.com/Increase/increase-go/commit/e39b82def3650dee150b31aa40946ad7f3eb478b))
+
 ## 0.335.0 (2025-09-23)
 
 Full Changelog: [v0.334.0...v0.335.0](https://github.com/Increase/increase-go/compare/v0.334.0...v0.335.0)
