@@ -30,6 +30,7 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 		OAuthConnectionID:     increase.F("x"),
 		SelectedEventCategory: increase.F(increase.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated),
 		SharedSecret:          increase.F("x"),
+		Status:                increase.F(increase.EventSubscriptionNewParamsStatusActive),
 	})
 	if err != nil {
 		var apierr *increase.Error
