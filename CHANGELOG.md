@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.338.1 (2025-09-25)
+
+Full Changelog: [v0.338.0...v0.338.1](https://github.com/Increase/increase-go/compare/v0.338.0...v0.338.1)
+
+### Bug Fixes
+
+* bugfix for setting JSON keys with special characters ([482b969](https://github.com/Increase/increase-go/commit/482b96940e3239200fd32ec5b92a681993c4cdd2))
+
 ## 0.338.0 (2025-09-24)
 
 Full Changelog: [v0.337.0...v0.338.0](https://github.com/Increase/increase-go/compare/v0.337.0...v0.338.0)
