@@ -318,8 +318,8 @@ func (r PhysicalCardShipmentStatus) IsKnown() bool {
 
 // Tracking details for the shipment.
 type PhysicalCardShipmentTracking struct {
-	// The tracking number.
-	Number string `json:"number,required"`
+	// The tracking number. Not available for USPS shipments.
+	Number string `json:"number,required,nullable"`
 	// For returned shipments, the tracking number of the return shipment.
 	ReturnNumber string `json:"return_number,required,nullable"`
 	// For returned shipments, this describes why the package was returned.
