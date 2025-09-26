@@ -234,16 +234,6 @@ type PhysicalCardProfileNewParams struct {
 	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
 	// The identifier for the Program that this Physical Card Profile falls under.
 	ProgramID param.Field[string] `json:"program_id,required"`
-	// The color of the text on the back of the card. Defaults to "black".
-	BackColor param.Field[PhysicalCardProfileNewParamsBackColor] `json:"back_color"`
-	// A reference ID provided by the fulfillment provider for the card stock used.
-	// Only used if you've ordered card stock separately.
-	CardStockReference param.Field[string] `json:"card_stock_reference"`
-	// A reference ID provided by the fulfillment provider for the carrier stock used.
-	// Only used if you've ordered carrier stock separately.
-	CarrierStockReference param.Field[string] `json:"carrier_stock_reference"`
-	// The color of the design on the front of the card. Defaults to "black".
-	FrontColor param.Field[PhysicalCardProfileNewParamsFrontColor] `json:"front_color"`
 	// Text printed on the front of the card. Reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
 	FrontText param.Field[PhysicalCardProfileNewParamsFrontText] `json:"front_text"`
@@ -251,38 +241,6 @@ type PhysicalCardProfileNewParams struct {
 
 func (r PhysicalCardProfileNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-// The color of the text on the back of the card. Defaults to "black".
-type PhysicalCardProfileNewParamsBackColor string
-
-const (
-	PhysicalCardProfileNewParamsBackColorBlack PhysicalCardProfileNewParamsBackColor = "black"
-	PhysicalCardProfileNewParamsBackColorWhite PhysicalCardProfileNewParamsBackColor = "white"
-)
-
-func (r PhysicalCardProfileNewParamsBackColor) IsKnown() bool {
-	switch r {
-	case PhysicalCardProfileNewParamsBackColorBlack, PhysicalCardProfileNewParamsBackColorWhite:
-		return true
-	}
-	return false
-}
-
-// The color of the design on the front of the card. Defaults to "black".
-type PhysicalCardProfileNewParamsFrontColor string
-
-const (
-	PhysicalCardProfileNewParamsFrontColorBlack PhysicalCardProfileNewParamsFrontColor = "black"
-	PhysicalCardProfileNewParamsFrontColorWhite PhysicalCardProfileNewParamsFrontColor = "white"
-)
-
-func (r PhysicalCardProfileNewParamsFrontColor) IsKnown() bool {
-	switch r {
-	case PhysicalCardProfileNewParamsFrontColorBlack, PhysicalCardProfileNewParamsFrontColorWhite:
-		return true
-	}
-	return false
 }
 
 // Text printed on the front of the card. Reach out to
