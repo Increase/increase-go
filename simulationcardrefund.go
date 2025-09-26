@@ -42,9 +42,13 @@ func (r *SimulationCardRefundService) New(ctx context.Context, body SimulationCa
 }
 
 type SimulationCardRefundNewParams struct {
+	// The identifier of the Pending Transaction for the refund authorization. If this
+	// is provided, `transaction` must not be provided as a refund with a refund
+	// authorized can not be linked to a regular transaction.
+	PendingTransactionID param.Field[string] `json:"pending_transaction_id"`
 	// The identifier for the Transaction to refund. The Transaction's source must have
 	// a category of card_settlement.
-	TransactionID param.Field[string] `json:"transaction_id,required"`
+	TransactionID param.Field[string] `json:"transaction_id"`
 }
 
 func (r SimulationCardRefundNewParams) MarshalJSON() (data []byte, err error) {
