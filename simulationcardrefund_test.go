@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationCardRefundNew(t *testing.T) {
+func TestSimulationCardRefundNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,7 +26,8 @@ func TestSimulationCardRefundNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CardRefunds.New(context.TODO(), increase.SimulationCardRefundNewParams{
-		TransactionID: increase.F("transaction_uyrp7fld2ium70oa7oi"),
+		PendingTransactionID: increase.F("pending_transaction_id"),
+		TransactionID:        increase.F("transaction_uyrp7fld2ium70oa7oi"),
 	})
 	if err != nil {
 		var apierr *increase.Error
