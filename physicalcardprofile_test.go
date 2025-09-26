@@ -26,15 +26,11 @@ func TestPhysicalCardProfileNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCardProfiles.New(context.TODO(), increase.PhysicalCardProfileNewParams{
-		CarrierImageFileID:    increase.F("file_h6v7mtipe119os47ehlu"),
-		ContactPhone:          increase.F("+16505046304"),
-		Description:           increase.F("My Card Profile"),
-		FrontImageFileID:      increase.F("file_o6aex13wm1jcc36sgcj1"),
-		ProgramID:             increase.F("program_i2v2os4mwza1oetokh9i"),
-		BackColor:             increase.F(increase.PhysicalCardProfileNewParamsBackColorBlack),
-		CardStockReference:    increase.F("x"),
-		CarrierStockReference: increase.F("x"),
-		FrontColor:            increase.F(increase.PhysicalCardProfileNewParamsFrontColorBlack),
+		CarrierImageFileID: increase.F("file_h6v7mtipe119os47ehlu"),
+		ContactPhone:       increase.F("+16505046304"),
+		Description:        increase.F("My Card Profile"),
+		FrontImageFileID:   increase.F("file_o6aex13wm1jcc36sgcj1"),
+		ProgramID:          increase.F("program_i2v2os4mwza1oetokh9i"),
 		FrontText: increase.F(increase.PhysicalCardProfileNewParamsFrontText{
 			Line1: increase.F("x"),
 			Line2: increase.F("x"),
