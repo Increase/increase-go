@@ -109,7 +109,7 @@ type OAuthTokenNewParams struct {
 	GrantType param.Field[OAuthTokenNewParamsGrantType] `json:"grant_type,required"`
 	// The public identifier for your application.
 	ClientID param.Field[string] `json:"client_id"`
-	// The secret that confirms you own the application. This is redundent given that
+	// The secret that confirms you own the application. This is redundant given that
 	// the request is made with your API key but it's a required component of OAuth
 	// 2.0.
 	ClientSecret param.Field[string] `json:"client_secret"`
