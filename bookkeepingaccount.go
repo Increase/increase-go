@@ -222,7 +222,7 @@ func (r BookkeepingBalanceLookupType) IsKnown() bool {
 type BookkeepingAccountNewParams struct {
 	// The name you choose for the account.
 	Name param.Field[string] `json:"name,required"`
-	// The entity, if `compliance_category` is `commingled_cash`.
+	// The account, if `compliance_category` is `commingled_cash`.
 	AccountID param.Field[string] `json:"account_id"`
 	// The account compliance category.
 	ComplianceCategory param.Field[BookkeepingAccountNewParamsComplianceCategory] `json:"compliance_category"`
