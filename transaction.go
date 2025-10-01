@@ -206,7 +206,7 @@ type TransactionSource struct {
 	// the first two business days after the transfer is initiated, but can occur much
 	// later.
 	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return,required,nullable"`
-	// A Card Dispute Acceptance object. This field will be present in the JSON
+	// A Legacy Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	// Contains the details of a successful Card Dispute.
 	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,required,nullable"`
@@ -214,9 +214,9 @@ type TransactionSource struct {
 	// if and only if `category` is equal to `card_dispute_financial`. Financial event
 	// related to a Card Dispute.
 	CardDisputeFinancial TransactionSourceCardDisputeFinancial `json:"card_dispute_financial,required,nullable"`
-	// A Card Dispute Loss object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_dispute_loss`. Contains the details of
-	// a lost Card Dispute.
+	// A Legacy Card Dispute Loss object. This field will be present in the JSON
+	// response if and only if `category` is equal to `card_dispute_loss`. Contains the
+	// details of a lost Card Dispute.
 	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss,required,nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_financial`. Card Financials are temporary
@@ -713,7 +713,7 @@ func (r TransactionSourceACHTransferReturnReturnReasonCode) IsKnown() bool {
 	return false
 }
 
-// A Card Dispute Acceptance object. This field will be present in the JSON
+// A Legacy Card Dispute Acceptance object. This field will be present in the JSON
 // response if and only if `category` is equal to `card_dispute_acceptance`.
 // Contains the details of a successful Card Dispute.
 type TransactionSourceCardDisputeAcceptance struct {
@@ -841,9 +841,9 @@ func (r TransactionSourceCardDisputeFinancialVisaEventType) IsKnown() bool {
 	return false
 }
 
-// A Card Dispute Loss object. This field will be present in the JSON response if
-// and only if `category` is equal to `card_dispute_loss`. Contains the details of
-// a lost Card Dispute.
+// A Legacy Card Dispute Loss object. This field will be present in the JSON
+// response if and only if `category` is equal to `card_dispute_loss`. Contains the
+// details of a lost Card Dispute.
 type TransactionSourceCardDisputeLoss struct {
 	// Why the Card Dispute was lost.
 	Explanation string `json:"explanation,required"`
