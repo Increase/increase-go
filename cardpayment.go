@@ -5695,11 +5695,14 @@ type CardPaymentState struct {
 	// The total incrementally updated authorized amount in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
 	IncrementedAmount int64 `json:"incremented_amount,required"`
+	// The total refunded amount in the minor unit of the transaction's currency. For
+	// dollars, for example, this is cents.
+	RefundedAmount int64 `json:"refunded_amount,required"`
 	// The total reversed amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	ReversedAmount int64 `json:"reversed_amount,required"`
-	// The total settled or refunded amount in the minor unit of the transaction's
-	// currency. For dollars, for example, this is cents.
+	// The total settled amount in the minor unit of the transaction's currency. For
+	// dollars, for example, this is cents.
 	SettledAmount int64                `json:"settled_amount,required"`
 	JSON          cardPaymentStateJSON `json:"-"`
 }
@@ -5710,6 +5713,7 @@ type cardPaymentStateJSON struct {
 	AuthorizedAmount    apijson.Field
 	FuelConfirmedAmount apijson.Field
 	IncrementedAmount   apijson.Field
+	RefundedAmount      apijson.Field
 	ReversedAmount      apijson.Field
 	SettledAmount       apijson.Field
 	raw                 string
