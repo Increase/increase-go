@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.347.1 (2025-10-06)
+
+Full Changelog: [v0.347.0...v0.347.1](https://github.com/Increase/increase-go/compare/v0.347.0...v0.347.1)
+
+### Bug Fixes
+
+* **client:** handle some Dispute objects as empty rather than unknown ([8783ab1](https://github.com/Increase/increase-go/commit/8783ab1633717d5e2c91dd80228eb66f955a212a))
+
 ## 0.347.0 (2025-10-03)
 
 Full Changelog: [v0.346.0...v0.347.0](https://github.com/Increase/increase-go/compare/v0.346.0...v0.347.0)
