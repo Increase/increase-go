@@ -94,7 +94,7 @@ type CheckDeposit struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// If your deposit is successfully parsed and accepted by Increase, this will
+	// Once your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
 	DepositAcceptance CheckDepositDepositAcceptance `json:"deposit_acceptance,required,nullable"`
 	// If your deposit is rejected by Increase, this will contain details as to why it
@@ -165,10 +165,11 @@ func (r checkDepositJSON) RawJSON() string {
 	return r.raw
 }
 
-// If your deposit is successfully parsed and accepted by Increase, this will
+// Once your deposit is successfully parsed and accepted by Increase, this will
 // contain details of the parsed check.
 type CheckDepositDepositAcceptance struct {
-	// The account number printed on the check.
+	// The account number printed on the check. This is an account at the bank that
+	// issued the check.
 	AccountNumber string `json:"account_number,required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -181,7 +182,8 @@ type CheckDepositDepositAcceptance struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency CheckDepositDepositAcceptanceCurrency `json:"currency,required"`
-	// The routing number printed on the check.
+	// The routing number printed on the check. This is a routing number for the bank
+	// that issued the check.
 	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
