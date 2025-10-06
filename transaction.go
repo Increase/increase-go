@@ -3659,7 +3659,8 @@ func (r TransactionSourceCategory) IsKnown() bool {
 // details confirmed. Check Deposits may be returned by the receiving bank, which
 // will appear as a Check Deposit Return.
 type TransactionSourceCheckDepositAcceptance struct {
-	// The account number printed on the check.
+	// The account number printed on the check. This is an account at the bank that
+	// issued the check.
 	AccountNumber string `json:"account_number,required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
@@ -3672,7 +3673,8 @@ type TransactionSourceCheckDepositAcceptance struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
 	Currency TransactionSourceCheckDepositAcceptanceCurrency `json:"currency,required"`
-	// The routing number printed on the check.
+	// The routing number printed on the check. This is a routing number for the bank
+	// that issued the check.
 	RoutingNumber string `json:"routing_number,required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
