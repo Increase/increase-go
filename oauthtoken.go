@@ -47,6 +47,8 @@ type OAuthToken struct {
 	// You may use this token in place of an API key to make OAuth requests on a user's
 	// behalf.
 	AccessToken string `json:"access_token,required"`
+	// The Group's identifier. A Group is the top-level organization in Increase.
+	GroupID string `json:"group_id,required"`
 	// The type of OAuth token.
 	TokenType OAuthTokenTokenType `json:"token_type,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -58,6 +60,7 @@ type OAuthToken struct {
 // oauthTokenJSON contains the JSON metadata for the struct [OAuthToken]
 type oauthTokenJSON struct {
 	AccessToken apijson.Field
+	GroupID     apijson.Field
 	TokenType   apijson.Field
 	Type        apijson.Field
 	raw         string
