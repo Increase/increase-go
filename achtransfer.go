@@ -1096,6 +1096,13 @@ func (r ACHTransferStatus) IsKnown() bool {
 // weekdays according to their
 // [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 type ACHTransferSubmission struct {
+	// The timestamp by which any administrative returns are expected to be received
+	// by. This follows the NACHA guidelines for return windows, which are: "In
+	// general, return entries must be received by the RDFI’s ACH Operator by its
+	// deposit deadline for the return entry to be made available to the ODFI no later
+	// than the opening of business on the second banking day following the Settlement
+	// Date of the original entry.".
+	AdministrativeReturnsExpectedBy time.Time `json:"administrative_returns_expected_by,required,nullable" format:"date-time"`
 	// The ACH transfer's effective date as sent to the Federal Reserve. If a specific
 	// date was configured using `preferred_effective_date`, this will match that
 	// value. Otherwise, it will be the date selected (following the specified
@@ -1124,13 +1131,14 @@ type ACHTransferSubmission struct {
 // achTransferSubmissionJSON contains the JSON metadata for the struct
 // [ACHTransferSubmission]
 type achTransferSubmissionJSON struct {
-	EffectiveDate              apijson.Field
-	ExpectedFundsSettlementAt  apijson.Field
-	ExpectedSettlementSchedule apijson.Field
-	SubmittedAt                apijson.Field
-	TraceNumber                apijson.Field
-	raw                        string
-	ExtraFields                map[string]apijson.Field
+	AdministrativeReturnsExpectedBy apijson.Field
+	EffectiveDate                   apijson.Field
+	ExpectedFundsSettlementAt       apijson.Field
+	ExpectedSettlementSchedule      apijson.Field
+	SubmittedAt                     apijson.Field
+	TraceNumber                     apijson.Field
+	raw                             string
+	ExtraFields                     map[string]apijson.Field
 }
 
 func (r *ACHTransferSubmission) UnmarshalJSON(data []byte) (err error) {
