@@ -1102,7 +1102,7 @@ type ACHTransferSubmission struct {
 	// deposit deadline for the return entry to be made available to the ODFI no later
 	// than the opening of business on the second banking day following the Settlement
 	// Date of the original entry.".
-	AdministrativeReturnsExpectedBy time.Time `json:"administrative_returns_expected_by,required,nullable" format:"date-time"`
+	AdministrativeReturnsExpectedBy time.Time `json:"administrative_returns_expected_by,required" format:"date-time"`
 	// The ACH transfer's effective date as sent to the Federal Reserve. If a specific
 	// date was configured using `preferred_effective_date`, this will match that
 	// value. Otherwise, it will be the date selected (following the specified
