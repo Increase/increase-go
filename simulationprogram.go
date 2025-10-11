@@ -65,11 +65,12 @@ const (
 	SimulationProgramNewParamsBankFirstInternetBank     SimulationProgramNewParamsBank = "first_internet_bank"
 	SimulationProgramNewParamsBankGlobalInnovationsBank SimulationProgramNewParamsBank = "global_innovations_bank"
 	SimulationProgramNewParamsBankGrasshopperBank       SimulationProgramNewParamsBank = "grasshopper_bank"
+	SimulationProgramNewParamsBankTwinCityBank          SimulationProgramNewParamsBank = "twin_city_bank"
 )
 
 func (r SimulationProgramNewParamsBank) IsKnown() bool {
 	switch r {
-	case SimulationProgramNewParamsBankBlueRidgeBank, SimulationProgramNewParamsBankCoreBank, SimulationProgramNewParamsBankFirstInternetBank, SimulationProgramNewParamsBankGlobalInnovationsBank, SimulationProgramNewParamsBankGrasshopperBank:
+	case SimulationProgramNewParamsBankBlueRidgeBank, SimulationProgramNewParamsBankCoreBank, SimulationProgramNewParamsBankFirstInternetBank, SimulationProgramNewParamsBankGlobalInnovationsBank, SimulationProgramNewParamsBankGrasshopperBank, SimulationProgramNewParamsBankTwinCityBank:
 		return true
 	}
 	return false
