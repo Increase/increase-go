@@ -784,12 +784,13 @@ func (r transactionSourceCardDisputeFinancialJSON) RawJSON() string {
 type TransactionSourceCardDisputeFinancialNetwork string
 
 const (
-	TransactionSourceCardDisputeFinancialNetworkVisa TransactionSourceCardDisputeFinancialNetwork = "visa"
+	TransactionSourceCardDisputeFinancialNetworkVisa  TransactionSourceCardDisputeFinancialNetwork = "visa"
+	TransactionSourceCardDisputeFinancialNetworkPulse TransactionSourceCardDisputeFinancialNetwork = "pulse"
 )
 
 func (r TransactionSourceCardDisputeFinancialNetwork) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardDisputeFinancialNetworkVisa:
+	case TransactionSourceCardDisputeFinancialNetworkVisa, TransactionSourceCardDisputeFinancialNetworkPulse:
 		return true
 	}
 	return false
@@ -1368,6 +1369,8 @@ func (r TransactionSourceCardFinancialDirection) IsKnown() bool {
 type TransactionSourceCardFinancialNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category TransactionSourceCardFinancialNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa TransactionSourceCardFinancialNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON transactionSourceCardFinancialNetworkDetailsJSON `json:"-"`
@@ -1377,6 +1380,7 @@ type TransactionSourceCardFinancialNetworkDetails struct {
 // the struct [TransactionSourceCardFinancialNetworkDetails]
 type transactionSourceCardFinancialNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -1394,12 +1398,13 @@ func (r transactionSourceCardFinancialNetworkDetailsJSON) RawJSON() string {
 type TransactionSourceCardFinancialNetworkDetailsCategory string
 
 const (
-	TransactionSourceCardFinancialNetworkDetailsCategoryVisa TransactionSourceCardFinancialNetworkDetailsCategory = "visa"
+	TransactionSourceCardFinancialNetworkDetailsCategoryVisa  TransactionSourceCardFinancialNetworkDetailsCategory = "visa"
+	TransactionSourceCardFinancialNetworkDetailsCategoryPulse TransactionSourceCardFinancialNetworkDetailsCategory = "pulse"
 )
 
 func (r TransactionSourceCardFinancialNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardFinancialNetworkDetailsCategoryVisa:
+	case TransactionSourceCardFinancialNetworkDetailsCategoryVisa, TransactionSourceCardFinancialNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false
@@ -2871,12 +2876,13 @@ func (r TransactionSourceCardSettlementInterchangeCurrency) IsKnown() bool {
 type TransactionSourceCardSettlementNetwork string
 
 const (
-	TransactionSourceCardSettlementNetworkVisa TransactionSourceCardSettlementNetwork = "visa"
+	TransactionSourceCardSettlementNetworkVisa  TransactionSourceCardSettlementNetwork = "visa"
+	TransactionSourceCardSettlementNetworkPulse TransactionSourceCardSettlementNetwork = "pulse"
 )
 
 func (r TransactionSourceCardSettlementNetwork) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardSettlementNetworkVisa:
+	case TransactionSourceCardSettlementNetworkVisa, TransactionSourceCardSettlementNetworkPulse:
 		return true
 	}
 	return false

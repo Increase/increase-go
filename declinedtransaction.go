@@ -846,6 +846,8 @@ func (r DeclinedTransactionSourceCardDeclineDirection) IsKnown() bool {
 type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category DeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
@@ -855,6 +857,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 // metadata for the struct [DeclinedTransactionSourceCardDeclineNetworkDetails]
 type declinedTransactionSourceCardDeclineNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -872,12 +875,13 @@ func (r declinedTransactionSourceCardDeclineNetworkDetailsJSON) RawJSON() string
 type DeclinedTransactionSourceCardDeclineNetworkDetailsCategory string
 
 const (
-	DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa DeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa  DeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "visa"
+	DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryPulse DeclinedTransactionSourceCardDeclineNetworkDetailsCategory = "pulse"
 )
 
 func (r DeclinedTransactionSourceCardDeclineNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa:
+	case DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryVisa, DeclinedTransactionSourceCardDeclineNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false
