@@ -222,12 +222,13 @@ func (r CardDisputeLossReason) IsKnown() bool {
 type CardDisputeNetwork string
 
 const (
-	CardDisputeNetworkVisa CardDisputeNetwork = "visa"
+	CardDisputeNetworkVisa  CardDisputeNetwork = "visa"
+	CardDisputeNetworkPulse CardDisputeNetwork = "pulse"
 )
 
 func (r CardDisputeNetwork) IsKnown() bool {
 	switch r {
-	case CardDisputeNetworkVisa:
+	case CardDisputeNetworkVisa, CardDisputeNetworkPulse:
 		return true
 	}
 	return false

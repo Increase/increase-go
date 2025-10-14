@@ -719,6 +719,8 @@ func (r RealTimeDecisionCardAuthorizationDirection) IsKnown() bool {
 type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON `json:"-"`
@@ -728,6 +730,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 // for the struct [RealTimeDecisionCardAuthorizationNetworkDetails]
 type realTimeDecisionCardAuthorizationNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -745,12 +748,13 @@ func (r realTimeDecisionCardAuthorizationNetworkDetailsJSON) RawJSON() string {
 type RealTimeDecisionCardAuthorizationNetworkDetailsCategory string
 
 const (
-	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "visa"
+	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa  RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "visa"
+	RealTimeDecisionCardAuthorizationNetworkDetailsCategoryPulse RealTimeDecisionCardAuthorizationNetworkDetailsCategory = "pulse"
 )
 
 func (r RealTimeDecisionCardAuthorizationNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa:
+	case RealTimeDecisionCardAuthorizationNetworkDetailsCategoryVisa, RealTimeDecisionCardAuthorizationNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false
