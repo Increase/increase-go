@@ -981,6 +981,8 @@ func (r CardPaymentElementsCardAuthorizationDirection) IsKnown() bool {
 type CardPaymentElementsCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardAuthorizationNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardAuthorizationNetworkDetailsJSON `json:"-"`
@@ -990,6 +992,7 @@ type CardPaymentElementsCardAuthorizationNetworkDetails struct {
 // metadata for the struct [CardPaymentElementsCardAuthorizationNetworkDetails]
 type cardPaymentElementsCardAuthorizationNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -1007,12 +1010,13 @@ func (r cardPaymentElementsCardAuthorizationNetworkDetailsJSON) RawJSON() string
 type CardPaymentElementsCardAuthorizationNetworkDetailsCategory string
 
 const (
-	CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa CardPaymentElementsCardAuthorizationNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa  CardPaymentElementsCardAuthorizationNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardAuthorizationNetworkDetailsCategoryPulse CardPaymentElementsCardAuthorizationNetworkDetailsCategory = "pulse"
 )
 
 func (r CardPaymentElementsCardAuthorizationNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa:
+	case CardPaymentElementsCardAuthorizationNetworkDetailsCategoryVisa, CardPaymentElementsCardAuthorizationNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false
@@ -1392,12 +1396,13 @@ func (r CardPaymentElementsCardAuthorizationExpirationCurrency) IsKnown() bool {
 type CardPaymentElementsCardAuthorizationExpirationNetwork string
 
 const (
-	CardPaymentElementsCardAuthorizationExpirationNetworkVisa CardPaymentElementsCardAuthorizationExpirationNetwork = "visa"
+	CardPaymentElementsCardAuthorizationExpirationNetworkVisa  CardPaymentElementsCardAuthorizationExpirationNetwork = "visa"
+	CardPaymentElementsCardAuthorizationExpirationNetworkPulse CardPaymentElementsCardAuthorizationExpirationNetwork = "pulse"
 )
 
 func (r CardPaymentElementsCardAuthorizationExpirationNetwork) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthorizationExpirationNetworkVisa:
+	case CardPaymentElementsCardAuthorizationExpirationNetworkVisa, CardPaymentElementsCardAuthorizationExpirationNetworkPulse:
 		return true
 	}
 	return false
@@ -1919,6 +1924,8 @@ func (r CardPaymentElementsCardDeclineDirection) IsKnown() bool {
 type CardPaymentElementsCardDeclineNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardDeclineNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardDeclineNetworkDetailsJSON `json:"-"`
@@ -1928,6 +1935,7 @@ type CardPaymentElementsCardDeclineNetworkDetails struct {
 // the struct [CardPaymentElementsCardDeclineNetworkDetails]
 type cardPaymentElementsCardDeclineNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -1945,12 +1953,13 @@ func (r cardPaymentElementsCardDeclineNetworkDetailsJSON) RawJSON() string {
 type CardPaymentElementsCardDeclineNetworkDetailsCategory string
 
 const (
-	CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa CardPaymentElementsCardDeclineNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa  CardPaymentElementsCardDeclineNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardDeclineNetworkDetailsCategoryPulse CardPaymentElementsCardDeclineNetworkDetailsCategory = "pulse"
 )
 
 func (r CardPaymentElementsCardDeclineNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa:
+	case CardPaymentElementsCardDeclineNetworkDetailsCategoryVisa, CardPaymentElementsCardDeclineNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false
@@ -2376,12 +2385,13 @@ func (r CardPaymentElementsCardFuelConfirmationCurrency) IsKnown() bool {
 type CardPaymentElementsCardFuelConfirmationNetwork string
 
 const (
-	CardPaymentElementsCardFuelConfirmationNetworkVisa CardPaymentElementsCardFuelConfirmationNetwork = "visa"
+	CardPaymentElementsCardFuelConfirmationNetworkVisa  CardPaymentElementsCardFuelConfirmationNetwork = "visa"
+	CardPaymentElementsCardFuelConfirmationNetworkPulse CardPaymentElementsCardFuelConfirmationNetwork = "pulse"
 )
 
 func (r CardPaymentElementsCardFuelConfirmationNetwork) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardFuelConfirmationNetworkVisa:
+	case CardPaymentElementsCardFuelConfirmationNetworkVisa, CardPaymentElementsCardFuelConfirmationNetworkPulse:
 		return true
 	}
 	return false
@@ -2877,12 +2887,13 @@ func (r CardPaymentElementsCardIncrementCurrency) IsKnown() bool {
 type CardPaymentElementsCardIncrementNetwork string
 
 const (
-	CardPaymentElementsCardIncrementNetworkVisa CardPaymentElementsCardIncrementNetwork = "visa"
+	CardPaymentElementsCardIncrementNetworkVisa  CardPaymentElementsCardIncrementNetwork = "visa"
+	CardPaymentElementsCardIncrementNetworkPulse CardPaymentElementsCardIncrementNetwork = "pulse"
 )
 
 func (r CardPaymentElementsCardIncrementNetwork) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardIncrementNetworkVisa:
+	case CardPaymentElementsCardIncrementNetworkVisa, CardPaymentElementsCardIncrementNetworkPulse:
 		return true
 	}
 	return false
@@ -3899,12 +3910,13 @@ func (r CardPaymentElementsCardReversalCurrency) IsKnown() bool {
 type CardPaymentElementsCardReversalNetwork string
 
 const (
-	CardPaymentElementsCardReversalNetworkVisa CardPaymentElementsCardReversalNetwork = "visa"
+	CardPaymentElementsCardReversalNetworkVisa  CardPaymentElementsCardReversalNetwork = "visa"
+	CardPaymentElementsCardReversalNetworkPulse CardPaymentElementsCardReversalNetwork = "pulse"
 )
 
 func (r CardPaymentElementsCardReversalNetwork) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardReversalNetworkVisa:
+	case CardPaymentElementsCardReversalNetworkVisa, CardPaymentElementsCardReversalNetworkPulse:
 		return true
 	}
 	return false
@@ -4208,12 +4220,13 @@ func (r CardPaymentElementsCardSettlementInterchangeCurrency) IsKnown() bool {
 type CardPaymentElementsCardSettlementNetwork string
 
 const (
-	CardPaymentElementsCardSettlementNetworkVisa CardPaymentElementsCardSettlementNetwork = "visa"
+	CardPaymentElementsCardSettlementNetworkVisa  CardPaymentElementsCardSettlementNetwork = "visa"
+	CardPaymentElementsCardSettlementNetworkPulse CardPaymentElementsCardSettlementNetwork = "pulse"
 )
 
 func (r CardPaymentElementsCardSettlementNetwork) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardSettlementNetworkVisa:
+	case CardPaymentElementsCardSettlementNetworkVisa, CardPaymentElementsCardSettlementNetworkPulse:
 		return true
 	}
 	return false
@@ -5340,6 +5353,8 @@ func (r CardPaymentElementsCardValidationCurrency) IsKnown() bool {
 type CardPaymentElementsCardValidationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardValidationNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardValidationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardValidationNetworkDetailsJSON `json:"-"`
@@ -5349,6 +5364,7 @@ type CardPaymentElementsCardValidationNetworkDetails struct {
 // for the struct [CardPaymentElementsCardValidationNetworkDetails]
 type cardPaymentElementsCardValidationNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -5366,12 +5382,13 @@ func (r cardPaymentElementsCardValidationNetworkDetailsJSON) RawJSON() string {
 type CardPaymentElementsCardValidationNetworkDetailsCategory string
 
 const (
-	CardPaymentElementsCardValidationNetworkDetailsCategoryVisa CardPaymentElementsCardValidationNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardValidationNetworkDetailsCategoryVisa  CardPaymentElementsCardValidationNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardValidationNetworkDetailsCategoryPulse CardPaymentElementsCardValidationNetworkDetailsCategory = "pulse"
 )
 
 func (r CardPaymentElementsCardValidationNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardValidationNetworkDetailsCategoryVisa:
+	case CardPaymentElementsCardValidationNetworkDetailsCategoryVisa, CardPaymentElementsCardValidationNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false

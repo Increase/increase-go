@@ -905,6 +905,8 @@ func (r PendingTransactionSourceCardAuthorizationDirection) IsKnown() bool {
 type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category PendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON pendingTransactionSourceCardAuthorizationNetworkDetailsJSON `json:"-"`
@@ -915,6 +917,7 @@ type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 // [PendingTransactionSourceCardAuthorizationNetworkDetails]
 type pendingTransactionSourceCardAuthorizationNetworkDetailsJSON struct {
 	Category    apijson.Field
+	Pulse       apijson.Field
 	Visa        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -932,12 +935,13 @@ func (r pendingTransactionSourceCardAuthorizationNetworkDetailsJSON) RawJSON() s
 type PendingTransactionSourceCardAuthorizationNetworkDetailsCategory string
 
 const (
-	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "visa"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa  PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "visa"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryPulse PendingTransactionSourceCardAuthorizationNetworkDetailsCategory = "pulse"
 )
 
 func (r PendingTransactionSourceCardAuthorizationNetworkDetailsCategory) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa:
+	case PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryVisa, PendingTransactionSourceCardAuthorizationNetworkDetailsCategoryPulse:
 		return true
 	}
 	return false
