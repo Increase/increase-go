@@ -1054,6 +1054,9 @@ func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProces
 
 // Network-specific identifiers for a specific request or transaction.
 type PendingTransactionSourceCardAuthorizationNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -1071,11 +1074,12 @@ type PendingTransactionSourceCardAuthorizationNetworkIdentifiers struct {
 // JSON metadata for the struct
 // [PendingTransactionSourceCardAuthorizationNetworkIdentifiers]
 type pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {

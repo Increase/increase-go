@@ -1128,6 +1128,9 @@ func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingR
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardAuthorizationNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -1144,11 +1147,12 @@ type CardPaymentElementsCardAuthorizationNetworkIdentifiers struct {
 // cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON contains the JSON
 // metadata for the struct [CardPaymentElementsCardAuthorizationNetworkIdentifiers]
 type cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -2071,6 +2075,9 @@ func (r CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason)
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardDeclineNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -2087,11 +2094,12 @@ type CardPaymentElementsCardDeclineNetworkIdentifiers struct {
 // cardPaymentElementsCardDeclineNetworkIdentifiersJSON contains the JSON metadata
 // for the struct [CardPaymentElementsCardDeclineNetworkIdentifiers]
 type cardPaymentElementsCardDeclineNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardDeclineNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -2399,6 +2407,9 @@ func (r CardPaymentElementsCardFuelConfirmationNetwork) IsKnown() bool {
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardFuelConfirmationNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -2416,11 +2427,12 @@ type CardPaymentElementsCardFuelConfirmationNetworkIdentifiers struct {
 // metadata for the struct
 // [CardPaymentElementsCardFuelConfirmationNetworkIdentifiers]
 type cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardFuelConfirmationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -2901,6 +2913,9 @@ func (r CardPaymentElementsCardIncrementNetwork) IsKnown() bool {
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardIncrementNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -2917,11 +2932,12 @@ type CardPaymentElementsCardIncrementNetworkIdentifiers struct {
 // cardPaymentElementsCardIncrementNetworkIdentifiersJSON contains the JSON
 // metadata for the struct [CardPaymentElementsCardIncrementNetworkIdentifiers]
 type cardPaymentElementsCardIncrementNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardIncrementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -3167,6 +3183,9 @@ type CardPaymentElementsCardRefundNetworkIdentifiers struct {
 	AcquirerBusinessID string `json:"acquirer_business_id,required"`
 	// A globally unique identifier for this settlement.
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
 	TransactionID string                                              `json:"transaction_id,required,nullable"`
@@ -3176,11 +3195,12 @@ type CardPaymentElementsCardRefundNetworkIdentifiers struct {
 // cardPaymentElementsCardRefundNetworkIdentifiersJSON contains the JSON metadata
 // for the struct [CardPaymentElementsCardRefundNetworkIdentifiers]
 type cardPaymentElementsCardRefundNetworkIdentifiersJSON struct {
-	AcquirerBusinessID      apijson.Field
-	AcquirerReferenceNumber apijson.Field
-	TransactionID           apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
+	AcquirerBusinessID                  apijson.Field
+	AcquirerReferenceNumber             apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardRefundNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -3924,6 +3944,9 @@ func (r CardPaymentElementsCardReversalNetwork) IsKnown() bool {
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardReversalNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -3940,11 +3963,12 @@ type CardPaymentElementsCardReversalNetworkIdentifiers struct {
 // cardPaymentElementsCardReversalNetworkIdentifiersJSON contains the JSON metadata
 // for the struct [CardPaymentElementsCardReversalNetworkIdentifiers]
 type cardPaymentElementsCardReversalNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardReversalNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -4239,6 +4263,9 @@ type CardPaymentElementsCardSettlementNetworkIdentifiers struct {
 	AcquirerBusinessID string `json:"acquirer_business_id,required"`
 	// A globally unique identifier for this settlement.
 	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
 	TransactionID string                                                  `json:"transaction_id,required,nullable"`
@@ -4248,11 +4275,12 @@ type CardPaymentElementsCardSettlementNetworkIdentifiers struct {
 // cardPaymentElementsCardSettlementNetworkIdentifiersJSON contains the JSON
 // metadata for the struct [CardPaymentElementsCardSettlementNetworkIdentifiers]
 type cardPaymentElementsCardSettlementNetworkIdentifiersJSON struct {
-	AcquirerBusinessID      apijson.Field
-	AcquirerReferenceNumber apijson.Field
-	TransactionID           apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
+	AcquirerBusinessID                  apijson.Field
+	AcquirerReferenceNumber             apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardSettlementNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
@@ -5500,6 +5528,9 @@ func (r CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReas
 
 // Network-specific identifiers for a specific request or transaction.
 type CardPaymentElementsCardValidationNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
@@ -5516,11 +5547,12 @@ type CardPaymentElementsCardValidationNetworkIdentifiers struct {
 // cardPaymentElementsCardValidationNetworkIdentifiersJSON contains the JSON
 // metadata for the struct [CardPaymentElementsCardValidationNetworkIdentifiers]
 type cardPaymentElementsCardValidationNetworkIdentifiersJSON struct {
-	RetrievalReferenceNumber apijson.Field
-	TraceNumber              apijson.Field
-	TransactionID            apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardValidationNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
