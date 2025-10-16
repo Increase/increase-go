@@ -1243,10 +1243,6 @@ func (r RealTimeDecisionDigitalWalletAuthenticationResult) IsKnown() bool {
 type RealTimeDecisionDigitalWalletToken struct {
 	// The identifier of the Card that is being tokenized.
 	CardID string `json:"card_id,required"`
-	// The identifier of the Card Profile that was set via the real time decision. This
-	// will be null until the real time decision is responded to or if the real time
-	// decision did not set a card profile.
-	CardProfileID string `json:"card_profile_id,required,nullable"`
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
 	Decision RealTimeDecisionDigitalWalletTokenDecision `json:"decision,required,nullable"`
@@ -1261,7 +1257,6 @@ type RealTimeDecisionDigitalWalletToken struct {
 // [RealTimeDecisionDigitalWalletToken]
 type realTimeDecisionDigitalWalletTokenJSON struct {
 	CardID        apijson.Field
-	CardProfileID apijson.Field
 	Decision      apijson.Field
 	Device        apijson.Field
 	DigitalWallet apijson.Field
