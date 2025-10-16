@@ -141,7 +141,7 @@ func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
 			AppIconFileID:         increase.F("app_icon_file_id"),
 			BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
 			CardDescription:       increase.F("x"),
-			ContactEmail:          increase.F("x"),
+			ContactEmail:          increase.F("dev@stainless.com"),
 			ContactPhone:          increase.F("x"),
 			ContactWebsite:        increase.F("contact_website"),
 			Description:           increase.F("x"),
