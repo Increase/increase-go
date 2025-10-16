@@ -189,7 +189,7 @@ type IntrafiAccountEnrollmentNewParams struct {
 	// The identifier for the account to be added to IntraFi.
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The contact email for the account owner, to be shared with IntraFi.
-	EmailAddress param.Field[string] `json:"email_address,required"`
+	EmailAddress param.Field[string] `json:"email_address,required" format:"email"`
 }
 
 func (r IntrafiAccountEnrollmentNewParams) MarshalJSON() (data []byte, err error) {

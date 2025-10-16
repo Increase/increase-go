@@ -1616,7 +1616,7 @@ func (r RealTimeDecisionActionParamsDigitalWalletAuthenticationResult) IsKnown()
 // metadata about the delivery. Exactly one of `phone` or `email` must be provided.
 type RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess struct {
 	// The email address that was used to verify the cardholder via one-time passcode.
-	Email param.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email" format:"email"`
 	// The phone number that was used to verify the cardholder via one-time passcode
 	// over SMS.
 	Phone param.Field[string] `json:"phone"`
@@ -1646,7 +1646,7 @@ func (r RealTimeDecisionActionParamsDigitalWalletToken) MarshalJSON() (data []by
 type RealTimeDecisionActionParamsDigitalWalletTokenApproval struct {
 	// An email address that can be used to verify the cardholder via one-time
 	// passcode.
-	Email param.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email" format:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
 	Phone param.Field[string] `json:"phone"`

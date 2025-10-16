@@ -248,7 +248,7 @@ type DigitalCardProfileNewParams struct {
 	// A user-facing description for whoever is issuing the card.
 	IssuerName param.Field[string] `json:"issuer_name,required"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail param.Field[string] `json:"contact_email"`
+	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone"`
 	// A website the user can visit to view and receive support for their card.
@@ -339,7 +339,7 @@ type DigitalCardProfileCloneParams struct {
 	// A user-facing description for the card itself.
 	CardDescription param.Field[string] `json:"card_description"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail param.Field[string] `json:"contact_email"`
+	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone"`
 	// A website the user can visit to view and receive support for their card.

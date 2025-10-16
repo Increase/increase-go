@@ -459,7 +459,7 @@ type CardNewParamsDigitalWallet struct {
 	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to contact and verify the cardholder via
 	// one-time passcode over email.
-	Email param.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email" format:"email"`
 	// A phone number that can be used to contact and verify the cardholder via
 	// one-time passcode over SMS.
 	Phone param.Field[string] `json:"phone"`
@@ -515,7 +515,7 @@ type CardUpdateParamsDigitalWallet struct {
 	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email param.Field[string] `json:"email"`
+	Email param.Field[string] `json:"email" format:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
 	Phone param.Field[string] `json:"phone"`
