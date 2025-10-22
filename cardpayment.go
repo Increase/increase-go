@@ -5744,6 +5744,9 @@ type CardPaymentState struct {
 	// The total incrementally updated authorized amount in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
 	IncrementedAmount int64 `json:"incremented_amount,required"`
+	// The total refund authorized amount in the minor unit of the transaction's
+	// currency. For dollars, for example, this is cents.
+	RefundAuthorizedAmount int64 `json:"refund_authorized_amount,required"`
 	// The total refunded amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
 	RefundedAmount int64 `json:"refunded_amount,required"`
@@ -5759,14 +5762,15 @@ type CardPaymentState struct {
 // cardPaymentStateJSON contains the JSON metadata for the struct
 // [CardPaymentState]
 type cardPaymentStateJSON struct {
-	AuthorizedAmount    apijson.Field
-	FuelConfirmedAmount apijson.Field
-	IncrementedAmount   apijson.Field
-	RefundedAmount      apijson.Field
-	ReversedAmount      apijson.Field
-	SettledAmount       apijson.Field
-	raw                 string
-	ExtraFields         map[string]apijson.Field
+	AuthorizedAmount       apijson.Field
+	FuelConfirmedAmount    apijson.Field
+	IncrementedAmount      apijson.Field
+	RefundAuthorizedAmount apijson.Field
+	RefundedAmount         apijson.Field
+	ReversedAmount         apijson.Field
+	SettledAmount          apijson.Field
+	raw                    string
+	ExtraFields            map[string]apijson.Field
 }
 
 func (r *CardPaymentState) UnmarshalJSON(data []byte) (err error) {
