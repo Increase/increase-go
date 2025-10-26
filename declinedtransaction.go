@@ -494,6 +494,8 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmounts struct {
 	Clinic DeclinedTransactionSourceCardDeclineAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental DeclinedTransactionSourceCardDeclineAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription DeclinedTransactionSourceCardDeclineAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -516,6 +518,7 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmounts struct {
 type declinedTransactionSourceCardDeclineAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -592,6 +595,36 @@ func (r *DeclinedTransactionSourceCardDeclineAdditionalAmountsDental) UnmarshalJ
 }
 
 func (r declinedTransactionSourceCardDeclineAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                            `json:"currency,required"`
+	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// declinedTransactionSourceCardDeclineAdditionalAmountsOriginalJSON contains the
+// JSON metadata for the struct
+// [DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal]
+type declinedTransactionSourceCardDeclineAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 

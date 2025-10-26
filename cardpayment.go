@@ -629,6 +629,8 @@ type CardPaymentElementsCardAuthorizationAdditionalAmounts struct {
 	Clinic CardPaymentElementsCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental CardPaymentElementsCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription CardPaymentElementsCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -651,6 +653,7 @@ type CardPaymentElementsCardAuthorizationAdditionalAmounts struct {
 type cardPaymentElementsCardAuthorizationAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -727,6 +730,36 @@ func (r *CardPaymentElementsCardAuthorizationAdditionalAmountsDental) UnmarshalJ
 }
 
 func (r cardPaymentElementsCardAuthorizationAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                            `json:"currency,required"`
+	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthorizationAdditionalAmountsOriginalJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal]
+type cardPaymentElementsCardAuthorizationAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1582,6 +1615,8 @@ type CardPaymentElementsCardDeclineAdditionalAmounts struct {
 	Clinic CardPaymentElementsCardDeclineAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental CardPaymentElementsCardDeclineAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original CardPaymentElementsCardDeclineAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription CardPaymentElementsCardDeclineAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -1604,6 +1639,7 @@ type CardPaymentElementsCardDeclineAdditionalAmounts struct {
 type cardPaymentElementsCardDeclineAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -1678,6 +1714,36 @@ func (r *CardPaymentElementsCardDeclineAdditionalAmountsDental) UnmarshalJSON(da
 }
 
 func (r cardPaymentElementsCardDeclineAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type CardPaymentElementsCardDeclineAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                      `json:"currency,required"`
+	JSON     cardPaymentElementsCardDeclineAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// cardPaymentElementsCardDeclineAdditionalAmountsOriginalJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardDeclineAdditionalAmountsOriginal]
+type cardPaymentElementsCardDeclineAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardDeclineAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardDeclineAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -2565,6 +2631,8 @@ type CardPaymentElementsCardIncrementAdditionalAmounts struct {
 	Clinic CardPaymentElementsCardIncrementAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental CardPaymentElementsCardIncrementAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original CardPaymentElementsCardIncrementAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription CardPaymentElementsCardIncrementAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -2587,6 +2655,7 @@ type CardPaymentElementsCardIncrementAdditionalAmounts struct {
 type cardPaymentElementsCardIncrementAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -2663,6 +2732,36 @@ func (r *CardPaymentElementsCardIncrementAdditionalAmountsDental) UnmarshalJSON(
 }
 
 func (r cardPaymentElementsCardIncrementAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type CardPaymentElementsCardIncrementAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                        `json:"currency,required"`
+	JSON     cardPaymentElementsCardIncrementAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// cardPaymentElementsCardIncrementAdditionalAmountsOriginalJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardIncrementAdditionalAmountsOriginal]
+type cardPaymentElementsCardIncrementAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardIncrementAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardIncrementAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -5048,6 +5147,8 @@ type CardPaymentElementsCardValidationAdditionalAmounts struct {
 	Clinic CardPaymentElementsCardValidationAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental CardPaymentElementsCardValidationAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original CardPaymentElementsCardValidationAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription CardPaymentElementsCardValidationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -5070,6 +5171,7 @@ type CardPaymentElementsCardValidationAdditionalAmounts struct {
 type cardPaymentElementsCardValidationAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -5146,6 +5248,36 @@ func (r *CardPaymentElementsCardValidationAdditionalAmountsDental) UnmarshalJSON
 }
 
 func (r cardPaymentElementsCardValidationAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type CardPaymentElementsCardValidationAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                         `json:"currency,required"`
+	JSON     cardPaymentElementsCardValidationAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// cardPaymentElementsCardValidationAdditionalAmountsOriginalJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardValidationAdditionalAmountsOriginal]
+type cardPaymentElementsCardValidationAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardValidationAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardValidationAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 

@@ -552,6 +552,8 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmounts struct {
 	Clinic PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental PendingTransactionSourceCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -575,6 +577,7 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmounts struct {
 type pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -651,6 +654,36 @@ func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsDental) Unmar
 }
 
 func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                                 `json:"currency,required"`
+	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationAdditionalAmountsOriginalJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal]
+type pendingTransactionSourceCardAuthorizationAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 

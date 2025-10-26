@@ -1022,6 +1022,8 @@ type TransactionSourceCardFinancialAdditionalAmounts struct {
 	Clinic TransactionSourceCardFinancialAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental TransactionSourceCardFinancialAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original TransactionSourceCardFinancialAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription TransactionSourceCardFinancialAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -1044,6 +1046,7 @@ type TransactionSourceCardFinancialAdditionalAmounts struct {
 type transactionSourceCardFinancialAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -1118,6 +1121,36 @@ func (r *TransactionSourceCardFinancialAdditionalAmountsDental) UnmarshalJSON(da
 }
 
 func (r transactionSourceCardFinancialAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type TransactionSourceCardFinancialAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                      `json:"currency,required"`
+	JSON     transactionSourceCardFinancialAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// transactionSourceCardFinancialAdditionalAmountsOriginalJSON contains the JSON
+// metadata for the struct
+// [TransactionSourceCardFinancialAdditionalAmountsOriginal]
+type transactionSourceCardFinancialAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardFinancialAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardFinancialAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 
