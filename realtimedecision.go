@@ -348,6 +348,8 @@ type RealTimeDecisionCardAuthorizationAdditionalAmounts struct {
 	Clinic RealTimeDecisionCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
 	Dental RealTimeDecisionCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal `json:"original,required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
 	Prescription RealTimeDecisionCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
@@ -370,6 +372,7 @@ type RealTimeDecisionCardAuthorizationAdditionalAmounts struct {
 type realTimeDecisionCardAuthorizationAdditionalAmountsJSON struct {
 	Clinic          apijson.Field
 	Dental          apijson.Field
+	Original        apijson.Field
 	Prescription    apijson.Field
 	Surcharge       apijson.Field
 	TotalCumulative apijson.Field
@@ -446,6 +449,36 @@ func (r *RealTimeDecisionCardAuthorizationAdditionalAmountsDental) UnmarshalJSON
 }
 
 func (r realTimeDecisionCardAuthorizationAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                         `json:"currency,required"`
+	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationAdditionalAmountsOriginalJSON contains the JSON
+// metadata for the struct
+// [RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal]
+type realTimeDecisionCardAuthorizationAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationAdditionalAmountsOriginalJSON) RawJSON() string {
 	return r.raw
 }
 
