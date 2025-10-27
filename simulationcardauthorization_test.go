@@ -47,6 +47,9 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		PhysicalCardID:   increase.F("physical_card_id"),
 		ProcessingCategory: increase.F(increase.SimulationCardAuthorizationNewParamsProcessingCategory{
 			Category: increase.F(increase.SimulationCardAuthorizationNewParamsProcessingCategoryCategoryAccountFunding),
+			Refund: increase.F(increase.SimulationCardAuthorizationNewParamsProcessingCategoryRefund{
+				OriginalCardPaymentID: increase.F("original_card_payment_id"),
+			}),
 		}),
 		TerminalID: increase.F("x"),
 	})
