@@ -26,6 +26,7 @@ func TestSimulationCardRefundNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.CardRefunds.New(context.TODO(), increase.SimulationCardRefundNewParams{
+		Amount:               increase.F(int64(1)),
 		PendingTransactionID: increase.F("pending_transaction_id"),
 		TransactionID:        increase.F("transaction_uyrp7fld2ium70oa7oi"),
 	})
