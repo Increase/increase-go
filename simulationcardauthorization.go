@@ -229,6 +229,8 @@ type SimulationCardAuthorizationNewParamsProcessingCategory struct {
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
 	Category param.Field[SimulationCardAuthorizationNewParamsProcessingCategoryCategory] `json:"category,required"`
+	// Details related to refund authorizations.
+	Refund param.Field[SimulationCardAuthorizationNewParamsProcessingCategoryRefund] `json:"refund"`
 }
 
 func (r SimulationCardAuthorizationNewParamsProcessingCategory) MarshalJSON() (data []byte, err error) {
@@ -256,4 +258,14 @@ func (r SimulationCardAuthorizationNewParamsProcessingCategoryCategory) IsKnown(
 		return true
 	}
 	return false
+}
+
+// Details related to refund authorizations.
+type SimulationCardAuthorizationNewParamsProcessingCategoryRefund struct {
+	// The card payment to link this refund to.
+	OriginalCardPaymentID param.Field[string] `json:"original_card_payment_id"`
+}
+
+func (r SimulationCardAuthorizationNewParamsProcessingCategoryRefund) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
