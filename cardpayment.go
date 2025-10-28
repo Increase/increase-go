@@ -140,6 +140,10 @@ type CardPaymentElement struct {
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
 	CardDecline CardPaymentElementsCardDecline `json:"card_decline,required,nullable"`
+	// A Card Financial object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_financial`. Card Financials are temporary
+	// holds placed on a customers funds with the intent to later clear a transaction.
+	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial,required,nullable"`
 	// A Card Fuel Confirmation object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
 	// Confirmations update the amount of a Card Authorization after a fuel pump
@@ -189,6 +193,7 @@ type cardPaymentElementJSON struct {
 	CardAuthorization           apijson.Field
 	CardAuthorizationExpiration apijson.Field
 	CardDecline                 apijson.Field
+	CardFinancial               apijson.Field
 	CardFuelConfirmation        apijson.Field
 	CardIncrement               apijson.Field
 	CardRefund                  apijson.Field
@@ -2380,6 +2385,889 @@ const (
 func (r CardPaymentElementsCardDeclineVerificationCardholderAddressResult) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardDeclineVerificationCardholderAddressResultNotChecked, CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultNoMatch, CardPaymentElementsCardDeclineVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked:
+		return true
+	}
+	return false
+}
+
+// A Card Financial object. This field will be present in the JSON response if and
+// only if `category` is equal to `card_financial`. Card Financials are temporary
+// holds placed on a customers funds with the intent to later clear a transaction.
+type CardPaymentElementsCardFinancial struct {
+	// The Card Financial identifier.
+	ID string `json:"id,required"`
+	// Whether this financial was approved by Increase, the card network through
+	// stand-in processing, or the user through a real-time decision.
+	Actioner CardPaymentElementsCardFinancialActioner `json:"actioner,required"`
+	// Additional amounts associated with the card authorization, such as ATM
+	// surcharges fees. These are usually a subset of the `amount` field and are used
+	// to provide more detailed information about the transaction.
+	AdditionalAmounts CardPaymentElementsCardFinancialAdditionalAmounts `json:"additional_amounts,required"`
+	// The pending amount in the minor unit of the transaction's currency. For dollars,
+	// for example, this is cents.
+	Amount int64 `json:"amount,required"`
+	// The ID of the Card Payment this transaction belongs to.
+	CardPaymentID string `json:"card_payment_id,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's currency.
+	Currency CardPaymentElementsCardFinancialCurrency `json:"currency,required"`
+	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+	// purchase), the identifier of the token that was used.
+	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	// The direction describes the direction the funds will move, either from the
+	// cardholder to the merchant or from the merchant to the cardholder.
+	Direction CardPaymentElementsCardFinancialDirection `json:"direction,required"`
+	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
+	// is transacting with.
+	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+	// card is transacting with.
+	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	// The city the merchant resides in.
+	MerchantCity string `json:"merchant_city,required,nullable"`
+	// The country the merchant resides in.
+	MerchantCountry string `json:"merchant_country,required"`
+	// The merchant descriptor of the merchant the card is transacting with.
+	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+	// ZIP code, where the first 5 and last 4 are separated by a dash.
+	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	// The state the merchant resides in.
+	MerchantState string `json:"merchant_state,required,nullable"`
+	// Fields specific to the `network`.
+	NetworkDetails CardPaymentElementsCardFinancialNetworkDetails `json:"network_details,required"`
+	// Network-specific identifiers for a specific request or transaction.
+	NetworkIdentifiers CardPaymentElementsCardFinancialNetworkIdentifiers `json:"network_identifiers,required"`
+	// The risk score generated by the card network. For Visa this is the Visa Advanced
+	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
+	// score is from 0 to 999, where 999 is the riskiest.
+	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	// If the authorization was made in-person with a physical card, the Physical Card
+	// that was used.
+	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	// The pending amount in the minor unit of the transaction's presentment currency.
+	PresentmentAmount int64 `json:"presentment_amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// transaction's presentment currency.
+	PresentmentCurrency string `json:"presentment_currency,required"`
+	// The processing category describes the intent behind the financial, such as
+	// whether it was used for bill payments or an automatic fuel dispenser.
+	ProcessingCategory CardPaymentElementsCardFinancialProcessingCategory `json:"processing_category,required"`
+	// The identifier of the Real-Time Decision sent to approve or decline this
+	// transaction.
+	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
+	// is transacting with.
+	TerminalID string `json:"terminal_id,required,nullable"`
+	// The identifier of the Transaction associated with this Transaction.
+	TransactionID string `json:"transaction_id,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `card_financial`.
+	Type CardPaymentElementsCardFinancialType `json:"type,required"`
+	// Fields related to verification of cardholder-provided values.
+	Verification CardPaymentElementsCardFinancialVerification `json:"verification,required"`
+	JSON         cardPaymentElementsCardFinancialJSON         `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialJSON contains the JSON metadata for the struct
+// [CardPaymentElementsCardFinancial]
+type cardPaymentElementsCardFinancialJSON struct {
+	ID                   apijson.Field
+	Actioner             apijson.Field
+	AdditionalAmounts    apijson.Field
+	Amount               apijson.Field
+	CardPaymentID        apijson.Field
+	Currency             apijson.Field
+	DigitalWalletTokenID apijson.Field
+	Direction            apijson.Field
+	MerchantAcceptorID   apijson.Field
+	MerchantCategoryCode apijson.Field
+	MerchantCity         apijson.Field
+	MerchantCountry      apijson.Field
+	MerchantDescriptor   apijson.Field
+	MerchantPostalCode   apijson.Field
+	MerchantState        apijson.Field
+	NetworkDetails       apijson.Field
+	NetworkIdentifiers   apijson.Field
+	NetworkRiskScore     apijson.Field
+	PhysicalCardID       apijson.Field
+	PresentmentAmount    apijson.Field
+	PresentmentCurrency  apijson.Field
+	ProcessingCategory   apijson.Field
+	RealTimeDecisionID   apijson.Field
+	TerminalID           apijson.Field
+	TransactionID        apijson.Field
+	Type                 apijson.Field
+	Verification         apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancial) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialJSON) RawJSON() string {
+	return r.raw
+}
+
+// Whether this financial was approved by Increase, the card network through
+// stand-in processing, or the user through a real-time decision.
+type CardPaymentElementsCardFinancialActioner string
+
+const (
+	CardPaymentElementsCardFinancialActionerUser     CardPaymentElementsCardFinancialActioner = "user"
+	CardPaymentElementsCardFinancialActionerIncrease CardPaymentElementsCardFinancialActioner = "increase"
+	CardPaymentElementsCardFinancialActionerNetwork  CardPaymentElementsCardFinancialActioner = "network"
+)
+
+func (r CardPaymentElementsCardFinancialActioner) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialActionerUser, CardPaymentElementsCardFinancialActionerIncrease, CardPaymentElementsCardFinancialActionerNetwork:
+		return true
+	}
+	return false
+}
+
+// Additional amounts associated with the card authorization, such as ATM
+// surcharges fees. These are usually a subset of the `amount` field and are used
+// to provide more detailed information about the transaction.
+type CardPaymentElementsCardFinancialAdditionalAmounts struct {
+	// The part of this transaction amount that was for clinic-related services.
+	Clinic CardPaymentElementsCardFinancialAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	// The part of this transaction amount that was for dental-related services.
+	Dental CardPaymentElementsCardFinancialAdditionalAmountsDental `json:"dental,required,nullable"`
+	// The original pre-authorized amount.
+	Original CardPaymentElementsCardFinancialAdditionalAmountsOriginal `json:"original,required,nullable"`
+	// The part of this transaction amount that was for healthcare prescriptions.
+	Prescription CardPaymentElementsCardFinancialAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	// The surcharge amount charged for this transaction by the merchant.
+	Surcharge CardPaymentElementsCardFinancialAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	// The total amount of a series of incremental authorizations, optionally provided.
+	TotalCumulative CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	// The total amount of healthcare-related additional amounts.
+	TotalHealthcare CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	// The part of this transaction amount that was for transit-related services.
+	Transit CardPaymentElementsCardFinancialAdditionalAmountsTransit `json:"transit,required,nullable"`
+	// An unknown additional amount.
+	Unknown CardPaymentElementsCardFinancialAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	// The part of this transaction amount that was for vision-related services.
+	Vision CardPaymentElementsCardFinancialAdditionalAmountsVision `json:"vision,required,nullable"`
+	JSON   cardPaymentElementsCardFinancialAdditionalAmountsJSON   `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardFinancialAdditionalAmounts]
+type cardPaymentElementsCardFinancialAdditionalAmountsJSON struct {
+	Clinic          apijson.Field
+	Dental          apijson.Field
+	Original        apijson.Field
+	Prescription    apijson.Field
+	Surcharge       apijson.Field
+	TotalCumulative apijson.Field
+	TotalHealthcare apijson.Field
+	Transit         apijson.Field
+	Unknown         apijson.Field
+	Vision          apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmounts) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for clinic-related services.
+type CardPaymentElementsCardFinancialAdditionalAmountsClinic struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                      `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsClinicJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsClinicJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsClinic]
+type cardPaymentElementsCardFinancialAdditionalAmountsClinicJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsClinic) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsClinicJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for dental-related services.
+type CardPaymentElementsCardFinancialAdditionalAmountsDental struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                      `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsDentalJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsDentalJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsDental]
+type cardPaymentElementsCardFinancialAdditionalAmountsDentalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsDental) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsDentalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The original pre-authorized amount.
+type CardPaymentElementsCardFinancialAdditionalAmountsOriginal struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                        `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsOriginalJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsOriginalJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsOriginal]
+type cardPaymentElementsCardFinancialAdditionalAmountsOriginalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsOriginal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsOriginalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for healthcare prescriptions.
+type CardPaymentElementsCardFinancialAdditionalAmountsPrescription struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                            `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsPrescriptionJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsPrescriptionJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsPrescription]
+type cardPaymentElementsCardFinancialAdditionalAmountsPrescriptionJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsPrescription) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsPrescriptionJSON) RawJSON() string {
+	return r.raw
+}
+
+// The surcharge amount charged for this transaction by the merchant.
+type CardPaymentElementsCardFinancialAdditionalAmountsSurcharge struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                         `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsSurchargeJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsSurchargeJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsSurcharge]
+type cardPaymentElementsCardFinancialAdditionalAmountsSurchargeJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsSurcharge) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsSurchargeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The total amount of a series of incremental authorizations, optionally provided.
+type CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                               `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsTotalCumulativeJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsTotalCumulativeJSON contains
+// the JSON metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative]
+type cardPaymentElementsCardFinancialAdditionalAmountsTotalCumulativeJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsTotalCumulativeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The total amount of healthcare-related additional amounts.
+type CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                               `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcareJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcareJSON contains
+// the JSON metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare]
+type cardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcareJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcareJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for transit-related services.
+type CardPaymentElementsCardFinancialAdditionalAmountsTransit struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                       `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsTransitJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsTransitJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsTransit]
+type cardPaymentElementsCardFinancialAdditionalAmountsTransitJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsTransit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsTransitJSON) RawJSON() string {
+	return r.raw
+}
+
+// An unknown additional amount.
+type CardPaymentElementsCardFinancialAdditionalAmountsUnknown struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                       `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsUnknownJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsUnknownJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsUnknown]
+type cardPaymentElementsCardFinancialAdditionalAmountsUnknownJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsUnknown) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsUnknownJSON) RawJSON() string {
+	return r.raw
+}
+
+// The part of this transaction amount that was for vision-related services.
+type CardPaymentElementsCardFinancialAdditionalAmountsVision struct {
+	// The amount in minor units of the `currency` field. The amount is positive if it
+	// is added to the amount (such as an ATM surcharge fee) and negative if it is
+	// subtracted from the amount (such as a discount).
+	Amount int64 `json:"amount,required"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+	// amount's currency.
+	Currency string                                                      `json:"currency,required"`
+	JSON     cardPaymentElementsCardFinancialAdditionalAmountsVisionJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialAdditionalAmountsVisionJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialAdditionalAmountsVision]
+type cardPaymentElementsCardFinancialAdditionalAmountsVisionJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialAdditionalAmountsVision) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialAdditionalAmountsVisionJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+// transaction's currency.
+type CardPaymentElementsCardFinancialCurrency string
+
+const (
+	CardPaymentElementsCardFinancialCurrencyCad CardPaymentElementsCardFinancialCurrency = "CAD"
+	CardPaymentElementsCardFinancialCurrencyChf CardPaymentElementsCardFinancialCurrency = "CHF"
+	CardPaymentElementsCardFinancialCurrencyEur CardPaymentElementsCardFinancialCurrency = "EUR"
+	CardPaymentElementsCardFinancialCurrencyGbp CardPaymentElementsCardFinancialCurrency = "GBP"
+	CardPaymentElementsCardFinancialCurrencyJpy CardPaymentElementsCardFinancialCurrency = "JPY"
+	CardPaymentElementsCardFinancialCurrencyUsd CardPaymentElementsCardFinancialCurrency = "USD"
+)
+
+func (r CardPaymentElementsCardFinancialCurrency) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialCurrencyCad, CardPaymentElementsCardFinancialCurrencyChf, CardPaymentElementsCardFinancialCurrencyEur, CardPaymentElementsCardFinancialCurrencyGbp, CardPaymentElementsCardFinancialCurrencyJpy, CardPaymentElementsCardFinancialCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The direction describes the direction the funds will move, either from the
+// cardholder to the merchant or from the merchant to the cardholder.
+type CardPaymentElementsCardFinancialDirection string
+
+const (
+	CardPaymentElementsCardFinancialDirectionSettlement CardPaymentElementsCardFinancialDirection = "settlement"
+	CardPaymentElementsCardFinancialDirectionRefund     CardPaymentElementsCardFinancialDirection = "refund"
+)
+
+func (r CardPaymentElementsCardFinancialDirection) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialDirectionSettlement, CardPaymentElementsCardFinancialDirectionRefund:
+		return true
+	}
+	return false
+}
+
+// Fields specific to the `network`.
+type CardPaymentElementsCardFinancialNetworkDetails struct {
+	// The payment network used to process this card authorization.
+	Category CardPaymentElementsCardFinancialNetworkDetailsCategory `json:"category,required"`
+	// Fields specific to the `pulse` network.
+	Pulse interface{} `json:"pulse,required,nullable"`
+	// Fields specific to the `visa` network.
+	Visa CardPaymentElementsCardFinancialNetworkDetailsVisa `json:"visa,required,nullable"`
+	JSON cardPaymentElementsCardFinancialNetworkDetailsJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialNetworkDetailsJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardFinancialNetworkDetails]
+type cardPaymentElementsCardFinancialNetworkDetailsJSON struct {
+	Category    apijson.Field
+	Pulse       apijson.Field
+	Visa        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialNetworkDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialNetworkDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
+// The payment network used to process this card authorization.
+type CardPaymentElementsCardFinancialNetworkDetailsCategory string
+
+const (
+	CardPaymentElementsCardFinancialNetworkDetailsCategoryVisa  CardPaymentElementsCardFinancialNetworkDetailsCategory = "visa"
+	CardPaymentElementsCardFinancialNetworkDetailsCategoryPulse CardPaymentElementsCardFinancialNetworkDetailsCategory = "pulse"
+)
+
+func (r CardPaymentElementsCardFinancialNetworkDetailsCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialNetworkDetailsCategoryVisa, CardPaymentElementsCardFinancialNetworkDetailsCategoryPulse:
+		return true
+	}
+	return false
+}
+
+// Fields specific to the `visa` network.
+type CardPaymentElementsCardFinancialNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date.
+	PointOfServiceEntryMode CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	// Only present when `actioner: network`. Describes why a card authorization was
+	// approved or declined by Visa through stand-in processing.
+	StandInProcessingReason CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	JSON                    cardPaymentElementsCardFinancialNetworkDetailsVisaJSON                    `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialNetworkDetailsVisaJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardFinancialNetworkDetailsVisa]
+type cardPaymentElementsCardFinancialNetworkDetailsVisaJSON struct {
+	ElectronicCommerceIndicator apijson.Field
+	PointOfServiceEntryMode     apijson.Field
+	StandInProcessingReason     apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialNetworkDetailsVisa) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialNetworkDetailsVisaJSON) RawJSON() string {
+	return r.raw
+}
+
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+type CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
+
+func (r CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorRecurring, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorInstallment, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date.
+type CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeUnknown                    CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeManual                     CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeContactless                CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
+func (r CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeUnknown, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeManual, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeContactless, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
+}
+
+// Only present when `actioner: network`. Describes why a card authorization was
+// approved or declined by Visa through stand-in processing.
+type CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason string
+
+const (
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonIssuerError                                              CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "issuer_error"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock                      CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "payment_fraud_disruption_acquirer_block"
+	CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonOther                                                    CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason = "other"
+)
+
+func (r CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonIssuerError, CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonInternalVisaError, CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReasonOther:
+		return true
+	}
+	return false
+}
+
+// Network-specific identifiers for a specific request or transaction.
+type CardPaymentElementsCardFinancialNetworkIdentifiers struct {
+	// The randomly generated 6-character Authorization Identification Response code
+	// sent back to the acquirer in an approved response.
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	// A life-cycle identifier used across e.g., an authorization and a reversal.
+	// Expected to be unique per acquirer within a window of time. For some card
+	// networks the retrieval reference number includes the trace counter.
+	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	// A counter used to verify an individual authorization. Expected to be unique per
+	// acquirer within a window of time.
+	TraceNumber string `json:"trace_number,required,nullable"`
+	// A globally unique transaction identifier provided by the card network, used
+	// across multiple life-cycle requests.
+	TransactionID string                                                 `json:"transaction_id,required,nullable"`
+	JSON          cardPaymentElementsCardFinancialNetworkIdentifiersJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialNetworkIdentifiersJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardFinancialNetworkIdentifiers]
+type cardPaymentElementsCardFinancialNetworkIdentifiersJSON struct {
+	AuthorizationIdentificationResponse apijson.Field
+	RetrievalReferenceNumber            apijson.Field
+	TraceNumber                         apijson.Field
+	TransactionID                       apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialNetworkIdentifiers) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialNetworkIdentifiersJSON) RawJSON() string {
+	return r.raw
+}
+
+// The processing category describes the intent behind the financial, such as
+// whether it was used for bill payments or an automatic fuel dispenser.
+type CardPaymentElementsCardFinancialProcessingCategory string
+
+const (
+	CardPaymentElementsCardFinancialProcessingCategoryAccountFunding         CardPaymentElementsCardFinancialProcessingCategory = "account_funding"
+	CardPaymentElementsCardFinancialProcessingCategoryAutomaticFuelDispenser CardPaymentElementsCardFinancialProcessingCategory = "automatic_fuel_dispenser"
+	CardPaymentElementsCardFinancialProcessingCategoryBillPayment            CardPaymentElementsCardFinancialProcessingCategory = "bill_payment"
+	CardPaymentElementsCardFinancialProcessingCategoryOriginalCredit         CardPaymentElementsCardFinancialProcessingCategory = "original_credit"
+	CardPaymentElementsCardFinancialProcessingCategoryPurchase               CardPaymentElementsCardFinancialProcessingCategory = "purchase"
+	CardPaymentElementsCardFinancialProcessingCategoryQuasiCash              CardPaymentElementsCardFinancialProcessingCategory = "quasi_cash"
+	CardPaymentElementsCardFinancialProcessingCategoryRefund                 CardPaymentElementsCardFinancialProcessingCategory = "refund"
+	CardPaymentElementsCardFinancialProcessingCategoryCashDisbursement       CardPaymentElementsCardFinancialProcessingCategory = "cash_disbursement"
+	CardPaymentElementsCardFinancialProcessingCategoryUnknown                CardPaymentElementsCardFinancialProcessingCategory = "unknown"
+)
+
+func (r CardPaymentElementsCardFinancialProcessingCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialProcessingCategoryAccountFunding, CardPaymentElementsCardFinancialProcessingCategoryAutomaticFuelDispenser, CardPaymentElementsCardFinancialProcessingCategoryBillPayment, CardPaymentElementsCardFinancialProcessingCategoryOriginalCredit, CardPaymentElementsCardFinancialProcessingCategoryPurchase, CardPaymentElementsCardFinancialProcessingCategoryQuasiCash, CardPaymentElementsCardFinancialProcessingCategoryRefund, CardPaymentElementsCardFinancialProcessingCategoryCashDisbursement, CardPaymentElementsCardFinancialProcessingCategoryUnknown:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `card_financial`.
+type CardPaymentElementsCardFinancialType string
+
+const (
+	CardPaymentElementsCardFinancialTypeCardFinancial CardPaymentElementsCardFinancialType = "card_financial"
+)
+
+func (r CardPaymentElementsCardFinancialType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialTypeCardFinancial:
+		return true
+	}
+	return false
+}
+
+// Fields related to verification of cardholder-provided values.
+type CardPaymentElementsCardFinancialVerification struct {
+	// Fields related to verification of the Card Verification Code, a 3-digit code on
+	// the back of the card.
+	CardVerificationCode CardPaymentElementsCardFinancialVerificationCardVerificationCode `json:"card_verification_code,required"`
+	// Cardholder address provided in the authorization request and the address on file
+	// we verified it against.
+	CardholderAddress CardPaymentElementsCardFinancialVerificationCardholderAddress `json:"cardholder_address,required"`
+	JSON              cardPaymentElementsCardFinancialVerificationJSON              `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialVerificationJSON contains the JSON metadata for
+// the struct [CardPaymentElementsCardFinancialVerification]
+type cardPaymentElementsCardFinancialVerificationJSON struct {
+	CardVerificationCode apijson.Field
+	CardholderAddress    apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
+// Fields related to verification of the Card Verification Code, a 3-digit code on
+// the back of the card.
+type CardPaymentElementsCardFinancialVerificationCardVerificationCode struct {
+	// The result of verifying the Card Verification Code.
+	Result CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult `json:"result,required"`
+	JSON   cardPaymentElementsCardFinancialVerificationCardVerificationCodeJSON   `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialVerificationCardVerificationCodeJSON contains
+// the JSON metadata for the struct
+// [CardPaymentElementsCardFinancialVerificationCardVerificationCode]
+type cardPaymentElementsCardFinancialVerificationCardVerificationCodeJSON struct {
+	Result      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialVerificationCardVerificationCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialVerificationCardVerificationCodeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The result of verifying the Card Verification Code.
+type CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult string
+
+const (
+	CardPaymentElementsCardFinancialVerificationCardVerificationCodeResultNotChecked CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult = "not_checked"
+	CardPaymentElementsCardFinancialVerificationCardVerificationCodeResultMatch      CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult = "match"
+	CardPaymentElementsCardFinancialVerificationCardVerificationCodeResultNoMatch    CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult = "no_match"
+)
+
+func (r CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialVerificationCardVerificationCodeResultNotChecked, CardPaymentElementsCardFinancialVerificationCardVerificationCodeResultMatch, CardPaymentElementsCardFinancialVerificationCardVerificationCodeResultNoMatch:
+		return true
+	}
+	return false
+}
+
+// Cardholder address provided in the authorization request and the address on file
+// we verified it against.
+type CardPaymentElementsCardFinancialVerificationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1,required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	// The cardholder address line 1 provided for verification in the authorization
+	// request.
+	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	// The postal code provided for verification in the authorization request.
+	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	// The address verification result returned to the card network.
+	Result CardPaymentElementsCardFinancialVerificationCardholderAddressResult `json:"result,required"`
+	JSON   cardPaymentElementsCardFinancialVerificationCardholderAddressJSON   `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialVerificationCardholderAddressJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardFinancialVerificationCardholderAddress]
+type cardPaymentElementsCardFinancialVerificationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	Result             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// The address verification result returned to the card network.
+type CardPaymentElementsCardFinancialVerificationCardholderAddressResult string
+
+const (
+	CardPaymentElementsCardFinancialVerificationCardholderAddressResultNotChecked                       CardPaymentElementsCardFinancialVerificationCardholderAddressResult = "not_checked"
+	CardPaymentElementsCardFinancialVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    CardPaymentElementsCardFinancialVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	CardPaymentElementsCardFinancialVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    CardPaymentElementsCardFinancialVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	CardPaymentElementsCardFinancialVerificationCardholderAddressResultMatch                            CardPaymentElementsCardFinancialVerificationCardholderAddressResult = "match"
+	CardPaymentElementsCardFinancialVerificationCardholderAddressResultNoMatch                          CardPaymentElementsCardFinancialVerificationCardholderAddressResult = "no_match"
+	CardPaymentElementsCardFinancialVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked CardPaymentElementsCardFinancialVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
+)
+
+func (r CardPaymentElementsCardFinancialVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardFinancialVerificationCardholderAddressResultNotChecked, CardPaymentElementsCardFinancialVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, CardPaymentElementsCardFinancialVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, CardPaymentElementsCardFinancialVerificationCardholderAddressResultMatch, CardPaymentElementsCardFinancialVerificationCardholderAddressResultNoMatch, CardPaymentElementsCardFinancialVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked:
 		return true
 	}
 	return false
@@ -5857,12 +6745,13 @@ const (
 	CardPaymentElementsCategoryCardSettlement              CardPaymentElementsCategory = "card_settlement"
 	CardPaymentElementsCategoryCardRefund                  CardPaymentElementsCategory = "card_refund"
 	CardPaymentElementsCategoryCardFuelConfirmation        CardPaymentElementsCategory = "card_fuel_confirmation"
+	CardPaymentElementsCategoryCardFinancial               CardPaymentElementsCategory = "card_financial"
 	CardPaymentElementsCategoryOther                       CardPaymentElementsCategory = "other"
 )
 
 func (r CardPaymentElementsCategory) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardAuthentication, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryOther:
+	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardAuthentication, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryCardFinancial, CardPaymentElementsCategoryOther:
 		return true
 	}
 	return false
