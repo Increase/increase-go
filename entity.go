@@ -1673,11 +1673,12 @@ const (
 	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "regulated_financial_institution"
 	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany         EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "publicly_traded_company"
 	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPublicEntity                  EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "public_entity"
+	EntityNewParamsCorporationBeneficialOwnershipExemptionReasonOther                         EntityNewParamsCorporationBeneficialOwnershipExemptionReason = "other"
 )
 
 func (r EntityNewParamsCorporationBeneficialOwnershipExemptionReason) IsKnown() bool {
 	switch r {
-	case EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPublicEntity:
+	case EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonPublicEntity, EntityNewParamsCorporationBeneficialOwnershipExemptionReasonOther:
 		return true
 	}
 	return false
