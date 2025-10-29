@@ -847,7 +847,7 @@ type CardDisputeVisaNetworkEventsRepresented struct {
 	InvalidDispute CardDisputeVisaNetworkEventsRepresentedInvalidDispute `json:"invalid_dispute,required,nullable"`
 	// Non-fiat currency or non-fungible token as described details. Present if and
 	// only if `reason` is `non_fiat_currency_or_non_fungible_token_as_described`.
-	NonFiatCurrencyOrNonFungibleTokenAsDescribed interface{} `json:"non_fiat_currency_or_non_fungible_token_as_described,required,nullable"`
+	NonFiatCurrencyOrNonFungibleTokenAsDescribed CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed `json:"non_fiat_currency_or_non_fungible_token_as_described,required,nullable"`
 	// Non-fiat currency or non-fungible token received details. Present if and only if
 	// `reason` is `non_fiat_currency_or_non_fungible_token_received`.
 	NonFiatCurrencyOrNonFungibleTokenReceived CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceived `json:"non_fiat_currency_or_non_fungible_token_received,required,nullable"`
@@ -1019,6 +1019,28 @@ func (r CardDisputeVisaNetworkEventsRepresentedInvalidDisputeReason) IsKnown() b
 		return true
 	}
 	return false
+}
+
+// Non-fiat currency or non-fungible token as described details. Present if and
+// only if `reason` is `non_fiat_currency_or_non_fungible_token_as_described`.
+type CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed struct {
+	JSON cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed]
+type cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON) RawJSON() string {
+	return r.raw
 }
 
 // Non-fiat currency or non-fungible token received details. Present if and only if
@@ -1293,7 +1315,7 @@ type CardDisputeVisaUserSubmissionsChargeback struct {
 	ConsumerMerchandiseNotReceived CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceived `json:"consumer_merchandise_not_received,required,nullable"`
 	// Non-receipt of cash. Present if and only if `category` is
 	// `consumer_non_receipt_of_cash`.
-	ConsumerNonReceiptOfCash interface{} `json:"consumer_non_receipt_of_cash,required,nullable"`
+	ConsumerNonReceiptOfCash CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash `json:"consumer_non_receipt_of_cash,required,nullable"`
 	// Original Credit Transaction (OCT) not accepted. Present if and only if
 	// `category` is `consumer_original_credit_transaction_not_accepted`.
 	ConsumerOriginalCreditTransactionNotAccepted CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAccepted `json:"consumer_original_credit_transaction_not_accepted,required,nullable"`
@@ -2832,6 +2854,28 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMe
 		return true
 	}
 	return false
+}
+
+// Non-receipt of cash. Present if and only if `category` is
+// `consumer_non_receipt_of_cash`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON contains
+// the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash]
+type cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON) RawJSON() string {
+	return r.raw
 }
 
 // Original Credit Transaction (OCT) not accepted. Present if and only if
