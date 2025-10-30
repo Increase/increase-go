@@ -205,8 +205,9 @@ type ACHTransfer struct {
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
-	Type ACHTransferType `json:"type,required"`
-	JSON achTransferJSON `json:"-"`
+	Type        ACHTransferType        `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        achTransferJSON        `json:"-"`
 }
 
 // achTransferJSON contains the JSON metadata for the struct [ACHTransfer]
@@ -686,8 +687,9 @@ type ACHTransferInboundFundsHold struct {
 	Status ACHTransferInboundFundsHoldStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
-	Type ACHTransferInboundFundsHoldType `json:"type,required"`
-	JSON achTransferInboundFundsHoldJSON `json:"-"`
+	Type        ACHTransferInboundFundsHoldType `json:"type,required"`
+	ExtraFields map[string]interface{}          `json:"-,extras"`
+	JSON        achTransferInboundFundsHoldJSON `json:"-"`
 }
 
 // achTransferInboundFundsHoldJSON contains the JSON metadata for the struct
@@ -914,8 +916,9 @@ type ACHTransferReturn struct {
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID string                `json:"transfer_id,required"`
-	JSON       achTransferReturnJSON `json:"-"`
+	TransferID  string                 `json:"transfer_id,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        achTransferReturnJSON  `json:"-"`
 }
 
 // achTransferReturnJSON contains the JSON metadata for the struct

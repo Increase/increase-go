@@ -167,8 +167,9 @@ type Account struct {
 	Status AccountStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account`.
-	Type AccountType `json:"type,required"`
-	JSON accountJSON `json:"-"`
+	Type        AccountType            `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        accountJSON            `json:"-"`
 }
 
 // accountJSON contains the JSON metadata for the struct [Account]

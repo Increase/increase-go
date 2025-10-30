@@ -134,8 +134,9 @@ type CardValidation struct {
 	Submission CardValidationSubmission `json:"submission,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_validation`.
-	Type CardValidationType `json:"type,required"`
-	JSON cardValidationJSON `json:"-"`
+	Type        CardValidationType     `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        cardValidationJSON     `json:"-"`
 }
 
 // cardValidationJSON contains the JSON metadata for the struct [CardValidation]

@@ -450,6 +450,7 @@ type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string                                                        `json:"number_last4,required"`
+	ExtraFields map[string]interface{}                                        `json:"-,extras"`
 	JSON        entityCorporationBeneficialOwnersIndividualIdentificationJSON `json:"-"`
 }
 
@@ -723,6 +724,7 @@ type EntityJointIndividualsIdentification struct {
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string                                   `json:"number_last4,required"`
+	ExtraFields map[string]interface{}                   `json:"-,extras"`
 	JSON        entityJointIndividualsIdentificationJSON `json:"-"`
 }
 
@@ -838,6 +840,7 @@ type EntityNaturalPersonIdentification struct {
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string                                `json:"number_last4,required"`
+	ExtraFields map[string]interface{}                `json:"-,extras"`
 	JSON        entityNaturalPersonIdentificationJSON `json:"-"`
 }
 
@@ -1174,6 +1177,7 @@ type EntityTrustGrantorIdentification struct {
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string                               `json:"number_last4,required"`
+	ExtraFields map[string]interface{}               `json:"-,extras"`
 	JSON        entityTrustGrantorIdentificationJSON `json:"-"`
 }
 
@@ -1315,6 +1319,7 @@ type EntityTrustTrusteesIndividualIdentification struct {
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
 	NumberLast4 string                                          `json:"number_last4,required"`
+	ExtraFields map[string]interface{}                          `json:"-,extras"`
 	JSON        entityTrustTrusteesIndividualIdentificationJSON `json:"-"`
 }
 

@@ -144,6 +144,7 @@ type InboundWireTransfer struct {
 	UnstructuredRemittanceInformation string `json:"unstructured_remittance_information,required,nullable"`
 	// The wire drawdown request the inbound wire transfer is fulfilling.
 	WireDrawdownRequestID string                  `json:"wire_drawdown_request_id,required,nullable"`
+	ExtraFields           map[string]interface{}  `json:"-,extras"`
 	JSON                  inboundWireTransferJSON `json:"-"`
 }
 

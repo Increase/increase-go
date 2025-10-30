@@ -119,8 +119,9 @@ type ExternalAccount struct {
 	Status ExternalAccountStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
-	Type ExternalAccountType `json:"type,required"`
-	JSON externalAccountJSON `json:"-"`
+	Type        ExternalAccountType    `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        externalAccountJSON    `json:"-"`
 }
 
 // externalAccountJSON contains the JSON metadata for the struct [ExternalAccount]

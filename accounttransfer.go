@@ -157,8 +157,9 @@ type AccountTransfer struct {
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
-	Type AccountTransferType `json:"type,required"`
-	JSON accountTransferJSON `json:"-"`
+	Type        AccountTransferType    `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        accountTransferJSON    `json:"-"`
 }
 
 // accountTransferJSON contains the JSON metadata for the struct [AccountTransfer]
