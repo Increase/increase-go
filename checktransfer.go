@@ -940,6 +940,9 @@ type CheckTransferNewParams struct {
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	// How the account's available balance should be checked. Please contact
+	// [support@increase.com](mailto:support@increase.com) to enable this parameter.
+	BalanceCheck param.Field[CheckTransferNewParamsBalanceCheck] `json:"balance_check"`
 	// The check number Increase should use for the check. This should not contain
 	// leading zeroes and must be unique across the `source_account_number`. If this is
 	// omitted, Increase will generate a check number for you.
@@ -971,6 +974,23 @@ const (
 func (r CheckTransferNewParamsFulfillmentMethod) IsKnown() bool {
 	switch r {
 	case CheckTransferNewParamsFulfillmentMethodPhysicalCheck, CheckTransferNewParamsFulfillmentMethodThirdParty:
+		return true
+	}
+	return false
+}
+
+// How the account's available balance should be checked. Please contact
+// [support@increase.com](mailto:support@increase.com) to enable this parameter.
+type CheckTransferNewParamsBalanceCheck string
+
+const (
+	CheckTransferNewParamsBalanceCheckFull CheckTransferNewParamsBalanceCheck = "full"
+	CheckTransferNewParamsBalanceCheckNone CheckTransferNewParamsBalanceCheck = "none"
+)
+
+func (r CheckTransferNewParamsBalanceCheck) IsKnown() bool {
+	switch r {
+	case CheckTransferNewParamsBalanceCheckFull, CheckTransferNewParamsBalanceCheckNone:
 		return true
 	}
 	return false
