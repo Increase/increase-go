@@ -27,19 +27,18 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.New(context.TODO(), increase.WireTransferNewParams{
-		AccountID:                    increase.F("account_in71c4amph0vgo2qllky"),
-		Amount:                       increase.F(int64(100)),
-		BeneficiaryName:              increase.F("Ian Crease"),
-		AccountNumber:                increase.F("987654321"),
-		BeneficiaryAddressLine1:      increase.F("33 Liberty Street"),
-		BeneficiaryAddressLine2:      increase.F("New York"),
-		BeneficiaryAddressLine3:      increase.F("NY 10045"),
-		ExternalAccountID:            increase.F("external_account_id"),
-		InboundWireDrawdownRequestID: increase.F("inbound_wire_drawdown_request_id"),
-		OriginatorAddressLine1:       increase.F("x"),
-		OriginatorAddressLine2:       increase.F("x"),
-		OriginatorAddressLine3:       increase.F("x"),
-		OriginatorName:               increase.F("x"),
+		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:    increase.F(int64(100)),
+		Creditor: increase.F(increase.WireTransferNewParamsCreditor{
+			Name: increase.F("Ian Crease"),
+			Address: increase.F(increase.WireTransferNewParamsCreditorAddress{
+				Unstructured: increase.F(increase.WireTransferNewParamsCreditorAddressUnstructured{
+					Line1: increase.F("33 Liberty Street"),
+					Line2: increase.F("New York"),
+					Line3: increase.F("NY 10045"),
+				}),
+			}),
+		}),
 		Remittance: increase.F(increase.WireTransferNewParamsRemittance{
 			Category: increase.F(increase.WireTransferNewParamsRemittanceCategoryUnstructured),
 			Tax: increase.F(increase.WireTransferNewParamsRemittanceTax{
@@ -51,9 +50,22 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 				Message: increase.F("New account transfer"),
 			}),
 		}),
-		RequireApproval:       increase.F(true),
-		RoutingNumber:         increase.F("101050001"),
-		SourceAccountNumberID: increase.F("source_account_number_id"),
+		AccountNumber: increase.F("987654321"),
+		Debtor: increase.F(increase.WireTransferNewParamsDebtor{
+			Name: increase.F("x"),
+			Address: increase.F(increase.WireTransferNewParamsDebtorAddress{
+				Unstructured: increase.F(increase.WireTransferNewParamsDebtorAddressUnstructured{
+					Line1: increase.F("x"),
+					Line2: increase.F("x"),
+					Line3: increase.F("x"),
+				}),
+			}),
+		}),
+		ExternalAccountID:            increase.F("external_account_id"),
+		InboundWireDrawdownRequestID: increase.F("inbound_wire_drawdown_request_id"),
+		RequireApproval:              increase.F(true),
+		RoutingNumber:                increase.F("101050001"),
+		SourceAccountNumberID:        increase.F("source_account_number_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error

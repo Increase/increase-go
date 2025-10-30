@@ -119,14 +119,6 @@ type WireTransfer struct {
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
 	Approval WireTransferApproval `json:"approval,required,nullable"`
-	// The beneficiary's address line 1.
-	BeneficiaryAddressLine1 string `json:"beneficiary_address_line1,required,nullable"`
-	// The beneficiary's address line 2.
-	BeneficiaryAddressLine2 string `json:"beneficiary_address_line2,required,nullable"`
-	// The beneficiary's address line 3.
-	BeneficiaryAddressLine3 string `json:"beneficiary_address_line3,required,nullable"`
-	// The beneficiary's name.
-	BeneficiaryName string `json:"beneficiary_name,required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation WireTransferCancellation `json:"cancellation,required,nullable"`
@@ -135,9 +127,13 @@ type WireTransfer struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
 	CreatedBy WireTransferCreatedBy `json:"created_by,required,nullable"`
+	// The person or business that is receiving the funds from the transfer.
+	Creditor WireTransferCreditor `json:"creditor,required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For wire transfers this is always equal to `usd`.
 	Currency WireTransferCurrency `json:"currency,required"`
+	// The person or business whose funds are being transferred.
+	Debtor WireTransferDebtor `json:"debtor,required,nullable"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
@@ -147,18 +143,8 @@ type WireTransfer struct {
 	// The ID of an Inbound Wire Drawdown Request in response to which this transfer
 	// was sent.
 	InboundWireDrawdownRequestID string `json:"inbound_wire_drawdown_request_id,required,nullable"`
-	// The message that will show on the recipient's bank statement.
-	MessageToRecipient string `json:"message_to_recipient,required"`
 	// The transfer's network.
 	Network WireTransferNetwork `json:"network,required"`
-	// The originator's address line 1.
-	OriginatorAddressLine1 string `json:"originator_address_line1,required,nullable"`
-	// The originator's address line 2.
-	OriginatorAddressLine2 string `json:"originator_address_line2,required,nullable"`
-	// The originator's address line 3.
-	OriginatorAddressLine3 string `json:"originator_address_line3,required,nullable"`
-	// The originator's name.
-	OriginatorName string `json:"originator_name,required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
@@ -192,23 +178,16 @@ type wireTransferJSON struct {
 	AccountNumber                apijson.Field
 	Amount                       apijson.Field
 	Approval                     apijson.Field
-	BeneficiaryAddressLine1      apijson.Field
-	BeneficiaryAddressLine2      apijson.Field
-	BeneficiaryAddressLine3      apijson.Field
-	BeneficiaryName              apijson.Field
 	Cancellation                 apijson.Field
 	CreatedAt                    apijson.Field
 	CreatedBy                    apijson.Field
+	Creditor                     apijson.Field
 	Currency                     apijson.Field
+	Debtor                       apijson.Field
 	ExternalAccountID            apijson.Field
 	IdempotencyKey               apijson.Field
 	InboundWireDrawdownRequestID apijson.Field
-	MessageToRecipient           apijson.Field
 	Network                      apijson.Field
-	OriginatorAddressLine1       apijson.Field
-	OriginatorAddressLine2       apijson.Field
-	OriginatorAddressLine3       apijson.Field
-	OriginatorName               apijson.Field
 	PendingTransactionID         apijson.Field
 	Remittance                   apijson.Field
 	Reversal                     apijson.Field
@@ -406,6 +385,84 @@ func (r wireTransferCreatedByUserJSON) RawJSON() string {
 	return r.raw
 }
 
+// The person or business that is receiving the funds from the transfer.
+type WireTransferCreditor struct {
+	// The person or business's address.
+	Address WireTransferCreditorAddress `json:"address,required,nullable"`
+	// The person or business's name.
+	Name string                   `json:"name,required,nullable"`
+	JSON wireTransferCreditorJSON `json:"-"`
+}
+
+// wireTransferCreditorJSON contains the JSON metadata for the struct
+// [WireTransferCreditor]
+type wireTransferCreditorJSON struct {
+	Address     apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferCreditor) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreditorJSON) RawJSON() string {
+	return r.raw
+}
+
+// The person or business's address.
+type WireTransferCreditorAddress struct {
+	// Unstructured address lines.
+	Unstructured WireTransferCreditorAddressUnstructured `json:"unstructured,required,nullable"`
+	JSON         wireTransferCreditorAddressJSON         `json:"-"`
+}
+
+// wireTransferCreditorAddressJSON contains the JSON metadata for the struct
+// [WireTransferCreditorAddress]
+type wireTransferCreditorAddressJSON struct {
+	Unstructured apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
+}
+
+func (r *WireTransferCreditorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreditorAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// Unstructured address lines.
+type WireTransferCreditorAddressUnstructured struct {
+	// The first line.
+	Line1 string `json:"line1,required,nullable"`
+	// The second line.
+	Line2 string `json:"line2,required,nullable"`
+	// The third line.
+	Line3 string                                      `json:"line3,required,nullable"`
+	JSON  wireTransferCreditorAddressUnstructuredJSON `json:"-"`
+}
+
+// wireTransferCreditorAddressUnstructuredJSON contains the JSON metadata for the
+// struct [WireTransferCreditorAddressUnstructured]
+type wireTransferCreditorAddressUnstructuredJSON struct {
+	Line1       apijson.Field
+	Line2       apijson.Field
+	Line3       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferCreditorAddressUnstructured) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferCreditorAddressUnstructuredJSON) RawJSON() string {
+	return r.raw
+}
+
 // The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 // currency. For wire transfers this is always equal to `usd`.
 type WireTransferCurrency string
@@ -425,6 +482,84 @@ func (r WireTransferCurrency) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The person or business whose funds are being transferred.
+type WireTransferDebtor struct {
+	// The person or business's address.
+	Address WireTransferDebtorAddress `json:"address,required,nullable"`
+	// The person or business's name.
+	Name string                 `json:"name,required,nullable"`
+	JSON wireTransferDebtorJSON `json:"-"`
+}
+
+// wireTransferDebtorJSON contains the JSON metadata for the struct
+// [WireTransferDebtor]
+type wireTransferDebtorJSON struct {
+	Address     apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferDebtor) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferDebtorJSON) RawJSON() string {
+	return r.raw
+}
+
+// The person or business's address.
+type WireTransferDebtorAddress struct {
+	// Unstructured address lines.
+	Unstructured WireTransferDebtorAddressUnstructured `json:"unstructured,required,nullable"`
+	JSON         wireTransferDebtorAddressJSON         `json:"-"`
+}
+
+// wireTransferDebtorAddressJSON contains the JSON metadata for the struct
+// [WireTransferDebtorAddress]
+type wireTransferDebtorAddressJSON struct {
+	Unstructured apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
+}
+
+func (r *WireTransferDebtorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferDebtorAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// Unstructured address lines.
+type WireTransferDebtorAddressUnstructured struct {
+	// The first line.
+	Line1 string `json:"line1,required,nullable"`
+	// The second line.
+	Line2 string `json:"line2,required,nullable"`
+	// The third line.
+	Line3 string                                    `json:"line3,required,nullable"`
+	JSON  wireTransferDebtorAddressUnstructuredJSON `json:"-"`
+}
+
+// wireTransferDebtorAddressUnstructuredJSON contains the JSON metadata for the
+// struct [WireTransferDebtorAddressUnstructured]
+type wireTransferDebtorAddressUnstructuredJSON struct {
+	Line1       apijson.Field
+	Line2       apijson.Field
+	Line3       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireTransferDebtorAddressUnstructured) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireTransferDebtorAddressUnstructuredJSON) RawJSON() string {
+	return r.raw
 }
 
 // The transfer's network.
@@ -682,36 +817,22 @@ type WireTransferNewParams struct {
 	AccountID param.Field[string] `json:"account_id,required"`
 	// The transfer amount in USD cents.
 	Amount param.Field[int64] `json:"amount,required"`
-	// The beneficiary's name.
-	BeneficiaryName param.Field[string] `json:"beneficiary_name,required"`
+	// The person or business that is receiving the funds from the transfer.
+	Creditor param.Field[WireTransferNewParamsCreditor] `json:"creditor,required"`
+	// Additional remittance information related to the wire transfer.
+	Remittance param.Field[WireTransferNewParamsRemittance] `json:"remittance,required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number"`
-	// The beneficiary's address line 1.
-	BeneficiaryAddressLine1 param.Field[string] `json:"beneficiary_address_line1"`
-	// The beneficiary's address line 2.
-	BeneficiaryAddressLine2 param.Field[string] `json:"beneficiary_address_line2"`
-	// The beneficiary's address line 3.
-	BeneficiaryAddressLine3 param.Field[string] `json:"beneficiary_address_line3"`
+	// The person or business whose funds are being transferred. This is only necessary
+	// if you're transferring from a commingled account. Otherwise, we'll use the
+	// associated entity's details.
+	Debtor param.Field[WireTransferNewParamsDebtor] `json:"debtor"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// The ID of an Inbound Wire Drawdown Request in response to which this transfer is
 	// being sent.
 	InboundWireDrawdownRequestID param.Field[string] `json:"inbound_wire_drawdown_request_id"`
-	// The originator's address line 1. This is only necessary if you're transferring
-	// from a commingled account. Otherwise, we'll use the associated entity's details.
-	OriginatorAddressLine1 param.Field[string] `json:"originator_address_line1"`
-	// The originator's address line 2. This is only necessary if you're transferring
-	// from a commingled account. Otherwise, we'll use the associated entity's details.
-	OriginatorAddressLine2 param.Field[string] `json:"originator_address_line2"`
-	// The originator's address line 3. This is only necessary if you're transferring
-	// from a commingled account. Otherwise, we'll use the associated entity's details.
-	OriginatorAddressLine3 param.Field[string] `json:"originator_address_line3"`
-	// The originator's name. This is only necessary if you're transferring from a
-	// commingled account. Otherwise, we'll use the associated entity's details.
-	OriginatorName param.Field[string] `json:"originator_name"`
-	// Additional remittance information related to the wire transfer.
-	Remittance param.Field[WireTransferNewParamsRemittance] `json:"remittance"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
@@ -722,6 +843,42 @@ type WireTransferNewParams struct {
 }
 
 func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The person or business that is receiving the funds from the transfer.
+type WireTransferNewParamsCreditor struct {
+	// The person or business's name.
+	Name param.Field[string] `json:"name,required"`
+	// The person or business's address.
+	Address param.Field[WireTransferNewParamsCreditorAddress] `json:"address"`
+}
+
+func (r WireTransferNewParamsCreditor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The person or business's address.
+type WireTransferNewParamsCreditorAddress struct {
+	// Unstructured address lines.
+	Unstructured param.Field[WireTransferNewParamsCreditorAddressUnstructured] `json:"unstructured,required"`
+}
+
+func (r WireTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Unstructured address lines.
+type WireTransferNewParamsCreditorAddressUnstructured struct {
+	// The address line 1.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The address line 2.
+	Line2 param.Field[string] `json:"line2"`
+	// The address line 3.
+	Line3 param.Field[string] `json:"line3"`
+}
+
+func (r WireTransferNewParamsCreditorAddressUnstructured) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -777,11 +934,49 @@ func (r WireTransferNewParamsRemittanceTax) MarshalJSON() (data []byte, err erro
 // Unstructured remittance information. Required if `category` is equal to
 // `unstructured`.
 type WireTransferNewParamsRemittanceUnstructured struct {
-	// The message to the beneficiary.
+	// The information.
 	Message param.Field[string] `json:"message,required"`
 }
 
 func (r WireTransferNewParamsRemittanceUnstructured) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The person or business whose funds are being transferred. This is only necessary
+// if you're transferring from a commingled account. Otherwise, we'll use the
+// associated entity's details.
+type WireTransferNewParamsDebtor struct {
+	// The person or business's name.
+	Name param.Field[string] `json:"name,required"`
+	// The person or business's address.
+	Address param.Field[WireTransferNewParamsDebtorAddress] `json:"address"`
+}
+
+func (r WireTransferNewParamsDebtor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The person or business's address.
+type WireTransferNewParamsDebtorAddress struct {
+	// Unstructured address lines.
+	Unstructured param.Field[WireTransferNewParamsDebtorAddressUnstructured] `json:"unstructured,required"`
+}
+
+func (r WireTransferNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Unstructured address lines.
+type WireTransferNewParamsDebtorAddressUnstructured struct {
+	// The address line 1.
+	Line1 param.Field[string] `json:"line1,required"`
+	// The address line 2.
+	Line2 param.Field[string] `json:"line2"`
+	// The address line 3.
+	Line3 param.Field[string] `json:"line3"`
+}
+
+func (r WireTransferNewParamsDebtorAddressUnstructured) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
