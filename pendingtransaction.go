@@ -142,8 +142,9 @@ type PendingTransaction struct {
 	Status PendingTransactionStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `pending_transaction`.
-	Type PendingTransactionType `json:"type,required"`
-	JSON pendingTransactionJSON `json:"-"`
+	Type        PendingTransactionType `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        pendingTransactionJSON `json:"-"`
 }
 
 // pendingTransactionJSON contains the JSON metadata for the struct
@@ -283,10 +284,11 @@ type PendingTransactionSource struct {
 	// An User Initiated Hold object. This field will be present in the JSON response
 	// if and only if `category` is equal to `user_initiated_hold`. Created when a user
 	// initiates a hold on funds in their account.
-	UserInitiatedHold interface{} `json:"user_initiated_hold,required,nullable"`
+	UserInitiatedHold map[string]interface{} `json:"user_initiated_hold,required,nullable"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
 	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,required,nullable"`
+	ExtraFields             map[string]interface{}                          `json:"-,extras"`
 	JSON                    pendingTransactionSourceJSON                    `json:"-"`
 }
 
@@ -330,8 +332,9 @@ type PendingTransactionSourceAccountTransferInstruction struct {
 	// account currency.
 	Currency PendingTransactionSourceAccountTransferInstructionCurrency `json:"currency,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string                                                 `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceAccountTransferInstructionJSON `json:"-"`
+	TransferID  string                                                 `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                 `json:"-,extras"`
+	JSON        pendingTransactionSourceAccountTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceAccountTransferInstructionJSON contains the JSON
@@ -379,8 +382,9 @@ type PendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferID string                                             `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceACHTransferInstructionJSON `json:"-"`
+	TransferID  string                                             `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	JSON        pendingTransactionSourceACHTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceACHTransferInstructionJSON contains the JSON metadata
@@ -480,6 +484,7 @@ type PendingTransactionSourceCardAuthorization struct {
 	Type PendingTransactionSourceCardAuthorizationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification PendingTransactionSourceCardAuthorizationVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                                `json:"-,extras"`
 	JSON         pendingTransactionSourceCardAuthorizationJSON         `json:"-"`
 }
 
@@ -1364,6 +1369,7 @@ type PendingTransactionSourceCheckDepositInstruction struct {
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
 	FrontImageFileID string                                              `json:"front_image_file_id,required"`
+	ExtraFields      map[string]interface{}                              `json:"-,extras"`
 	JSON             pendingTransactionSourceCheckDepositInstructionJSON `json:"-"`
 }
 
@@ -1417,8 +1423,9 @@ type PendingTransactionSourceCheckTransferInstruction struct {
 	// currency.
 	Currency PendingTransactionSourceCheckTransferInstructionCurrency `json:"currency,required"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferID string                                               `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceCheckTransferInstructionJSON `json:"-"`
+	TransferID  string                                               `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                               `json:"-,extras"`
+	JSON        pendingTransactionSourceCheckTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceCheckTransferInstructionJSON contains the JSON metadata
@@ -1464,8 +1471,9 @@ func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool
 // response if and only if `category` is equal to `fednow_transfer_instruction`.
 type PendingTransactionSourceFednowTransferInstruction struct {
 	// The identifier of the FedNow Transfer that led to this Pending Transaction.
-	TransferID string                                                `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceFednowTransferInstructionJSON `json:"-"`
+	TransferID  string                                                `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                `json:"-,extras"`
+	JSON        pendingTransactionSourceFednowTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceFednowTransferInstructionJSON contains the JSON metadata
@@ -1511,8 +1519,9 @@ type PendingTransactionSourceInboundFundsHold struct {
 	Status PendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
-	Type PendingTransactionSourceInboundFundsHoldType `json:"type,required"`
-	JSON pendingTransactionSourceInboundFundsHoldJSON `json:"-"`
+	Type        PendingTransactionSourceInboundFundsHoldType `json:"type,required"`
+	ExtraFields map[string]interface{}                       `json:"-,extras"`
+	JSON        pendingTransactionSourceInboundFundsHoldJSON `json:"-"`
 }
 
 // pendingTransactionSourceInboundFundsHoldJSON contains the JSON metadata for the
@@ -1599,6 +1608,7 @@ func (r PendingTransactionSourceInboundFundsHoldType) IsKnown() bool {
 type PendingTransactionSourceInboundWireTransferReversal struct {
 	// The ID of the Inbound Wire Transfer that is being reversed.
 	InboundWireTransferID string                                                  `json:"inbound_wire_transfer_id,required"`
+	ExtraFields           map[string]interface{}                                  `json:"-,extras"`
 	JSON                  pendingTransactionSourceInboundWireTransferReversalJSON `json:"-"`
 }
 
@@ -1652,8 +1662,9 @@ func (r pendingTransactionSourceRealTimePaymentsTransferInstructionJSON) RawJSON
 // response if and only if `category` is equal to `swift_transfer_instruction`.
 type PendingTransactionSourceSwiftTransferInstruction struct {
 	// The identifier of the Swift Transfer that led to this Pending Transaction.
-	TransferID string                                               `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceSwiftTransferInstructionJSON `json:"-"`
+	TransferID  string                                               `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                               `json:"-,extras"`
+	JSON        pendingTransactionSourceSwiftTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceSwiftTransferInstructionJSON contains the JSON metadata
@@ -1685,8 +1696,9 @@ type PendingTransactionSourceWireTransferInstruction struct {
 	// destination account.
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Pending Transaction.
-	TransferID string                                              `json:"transfer_id,required"`
-	JSON       pendingTransactionSourceWireTransferInstructionJSON `json:"-"`
+	TransferID  string                                              `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                              `json:"-,extras"`
+	JSON        pendingTransactionSourceWireTransferInstructionJSON `json:"-"`
 }
 
 // pendingTransactionSourceWireTransferInstructionJSON contains the JSON metadata

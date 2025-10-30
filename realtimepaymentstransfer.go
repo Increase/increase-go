@@ -176,6 +176,7 @@ type RealTimePaymentsTransfer struct {
 	// The name of the ultimate sender of the transfer. Set this if the funds are being
 	// sent on behalf of someone who is not the account holder at Increase.
 	UltimateDebtorName string                       `json:"ultimate_debtor_name,required,nullable"`
+	ExtraFields        map[string]interface{}       `json:"-,extras"`
 	JSON               realTimePaymentsTransferJSON `json:"-"`
 }
 

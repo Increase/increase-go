@@ -106,8 +106,9 @@ type DeclinedTransaction struct {
 	Source DeclinedTransactionSource `json:"source,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
-	Type DeclinedTransactionType `json:"type,required"`
-	JSON declinedTransactionJSON `json:"-"`
+	Type        DeclinedTransactionType `json:"type,required"`
+	ExtraFields map[string]interface{}  `json:"-,extras"`
+	JSON        declinedTransactionJSON `json:"-"`
 }
 
 // declinedTransactionJSON contains the JSON metadata for the struct
@@ -209,6 +210,7 @@ type DeclinedTransactionSource struct {
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
+	ExtraFields map[string]interface{}               `json:"-,extras"`
 	JSON        declinedTransactionSourceJSON        `json:"-"`
 }
 
@@ -263,8 +265,9 @@ type DeclinedTransactionSourceACHDecline struct {
 	TraceNumber string `json:"trace_number,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_decline`.
-	Type DeclinedTransactionSourceACHDeclineType `json:"type,required"`
-	JSON declinedTransactionSourceACHDeclineJSON `json:"-"`
+	Type        DeclinedTransactionSourceACHDeclineType `json:"type,required"`
+	ExtraFields map[string]interface{}                  `json:"-,extras"`
+	JSON        declinedTransactionSourceACHDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceACHDeclineJSON contains the JSON metadata for the
@@ -421,6 +424,7 @@ type DeclinedTransactionSourceCardDecline struct {
 	TerminalID string `json:"terminal_id,required,nullable"`
 	// Fields related to verification of cardholder-provided values.
 	Verification DeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                           `json:"-,extras"`
 	JSON         declinedTransactionSourceCardDeclineJSON         `json:"-"`
 }
 
@@ -1312,8 +1316,9 @@ type DeclinedTransactionSourceCheckDecline struct {
 	// The identifier of the Inbound Check Deposit object associated with this decline.
 	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
 	// Why the check was declined.
-	Reason DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	JSON   declinedTransactionSourceCheckDeclineJSON   `json:"-"`
+	Reason      DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
+	ExtraFields map[string]interface{}                      `json:"-,extras"`
+	JSON        declinedTransactionSourceCheckDeclineJSON   `json:"-"`
 }
 
 // declinedTransactionSourceCheckDeclineJSON contains the JSON metadata for the
@@ -1387,8 +1392,9 @@ type DeclinedTransactionSourceCheckDepositRejection struct {
 	Reason DeclinedTransactionSourceCheckDepositRejectionReason `json:"reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt time.Time                                          `json:"rejected_at,required" format:"date-time"`
-	JSON       declinedTransactionSourceCheckDepositRejectionJSON `json:"-"`
+	RejectedAt  time.Time                                          `json:"rejected_at,required" format:"date-time"`
+	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	JSON        declinedTransactionSourceCheckDepositRejectionJSON `json:"-"`
 }
 
 // declinedTransactionSourceCheckDepositRejectionJSON contains the JSON metadata
@@ -1465,8 +1471,9 @@ type DeclinedTransactionSourceInboundFednowTransferDecline struct {
 	// Why the transfer was declined.
 	Reason DeclinedTransactionSourceInboundFednowTransferDeclineReason `json:"reason,required"`
 	// The identifier of the FedNow Transfer that led to this declined transaction.
-	TransferID string                                                    `json:"transfer_id,required"`
-	JSON       declinedTransactionSourceInboundFednowTransferDeclineJSON `json:"-"`
+	TransferID  string                                                    `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                    `json:"-,extras"`
+	JSON        declinedTransactionSourceInboundFednowTransferDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceInboundFednowTransferDeclineJSON contains the JSON
@@ -1610,8 +1617,9 @@ type DeclinedTransactionSourceWireDecline struct {
 	// The identifier of the Inbound Wire Transfer that was declined.
 	InboundWireTransferID string `json:"inbound_wire_transfer_id,required"`
 	// Why the wire transfer was declined.
-	Reason DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	JSON   declinedTransactionSourceWireDeclineJSON   `json:"-"`
+	Reason      DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
+	ExtraFields map[string]interface{}                     `json:"-,extras"`
+	JSON        declinedTransactionSourceWireDeclineJSON   `json:"-"`
 }
 
 // declinedTransactionSourceWireDeclineJSON contains the JSON metadata for the

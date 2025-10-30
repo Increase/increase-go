@@ -167,8 +167,9 @@ type WireTransfer struct {
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
-	Type WireTransferType `json:"type,required"`
-	JSON wireTransferJSON `json:"-"`
+	Type        WireTransferType       `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        wireTransferJSON       `json:"-"`
 }
 
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
@@ -714,6 +715,7 @@ type WireTransferReversal struct {
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string                   `json:"wire_transfer_id,required"`
+	ExtraFields    map[string]interface{}   `json:"-,extras"`
 	JSON           wireTransferReversalJSON `json:"-"`
 }
 

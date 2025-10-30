@@ -128,6 +128,7 @@ type InboundWireDrawdownRequest struct {
 	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
 	// A free-form message set by the sender.
 	UnstructuredRemittanceInformation string                         `json:"unstructured_remittance_information,required,nullable"`
+	ExtraFields                       map[string]interface{}         `json:"-,extras"`
 	JSON                              inboundWireDrawdownRequestJSON `json:"-"`
 }
 

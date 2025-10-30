@@ -95,8 +95,9 @@ type InboundMailItem struct {
 	Status InboundMailItemStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_mail_item`.
-	Type InboundMailItemType `json:"type,required"`
-	JSON inboundMailItemJSON `json:"-"`
+	Type        InboundMailItemType    `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        inboundMailItemJSON    `json:"-"`
 }
 
 // inboundMailItemJSON contains the JSON metadata for the struct [InboundMailItem]
