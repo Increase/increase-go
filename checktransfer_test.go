@@ -31,6 +31,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 		Amount:                increase.F(int64(1000)),
 		FulfillmentMethod:     increase.F(increase.CheckTransferNewParamsFulfillmentMethodPhysicalCheck),
 		SourceAccountNumberID: increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		BalanceCheck:          increase.F(increase.CheckTransferNewParamsBalanceCheckFull),
 		CheckNumber:           increase.F("x"),
 		PhysicalCheck: increase.F(increase.CheckTransferNewParamsPhysicalCheck{
 			MailingAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckMailingAddress{
