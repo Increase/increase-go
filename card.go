@@ -168,8 +168,9 @@ type Card struct {
 	Status CardStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card`.
-	Type CardType `json:"type,required"`
-	JSON cardJSON `json:"-"`
+	Type        CardType               `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        cardJSON               `json:"-"`
 }
 
 // cardJSON contains the JSON metadata for the struct [Card]

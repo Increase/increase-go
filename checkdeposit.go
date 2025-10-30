@@ -129,8 +129,9 @@ type CheckDeposit struct {
 	TransactionID string `json:"transaction_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_deposit`.
-	Type CheckDepositType `json:"type,required"`
-	JSON checkDepositJSON `json:"-"`
+	Type        CheckDepositType       `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        checkDepositJSON       `json:"-"`
 }
 
 // checkDepositJSON contains the JSON metadata for the struct [CheckDeposit]
@@ -188,6 +189,7 @@ type CheckDepositDepositAcceptance struct {
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
 	SerialNumber string                            `json:"serial_number,required,nullable"`
+	ExtraFields  map[string]interface{}            `json:"-,extras"`
 	JSON         checkDepositDepositAcceptanceJSON `json:"-"`
 }
 
@@ -251,8 +253,9 @@ type CheckDepositDepositRejection struct {
 	Reason CheckDepositDepositRejectionReason `json:"reason,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt time.Time                        `json:"rejected_at,required" format:"date-time"`
-	JSON       checkDepositDepositRejectionJSON `json:"-"`
+	RejectedAt  time.Time                        `json:"rejected_at,required" format:"date-time"`
+	ExtraFields map[string]interface{}           `json:"-,extras"`
+	JSON        checkDepositDepositRejectionJSON `json:"-"`
 }
 
 // checkDepositDepositRejectionJSON contains the JSON metadata for the struct
@@ -341,6 +344,7 @@ type CheckDepositDepositReturn struct {
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
 	TransactionID string                        `json:"transaction_id,required"`
+	ExtraFields   map[string]interface{}        `json:"-,extras"`
 	JSON          checkDepositDepositReturnJSON `json:"-"`
 }
 
@@ -486,8 +490,9 @@ type CheckDepositInboundFundsHold struct {
 	Status CheckDepositInboundFundsHoldStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
-	Type CheckDepositInboundFundsHoldType `json:"type,required"`
-	JSON checkDepositInboundFundsHoldJSON `json:"-"`
+	Type        CheckDepositInboundFundsHoldType `json:"type,required"`
+	ExtraFields map[string]interface{}           `json:"-,extras"`
+	JSON        checkDepositInboundFundsHoldJSON `json:"-"`
 }
 
 // checkDepositInboundFundsHoldJSON contains the JSON metadata for the struct

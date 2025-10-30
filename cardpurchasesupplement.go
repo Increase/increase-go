@@ -88,8 +88,9 @@ type CardPurchaseSupplement struct {
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_purchase_supplement`.
-	Type CardPurchaseSupplementType `json:"type,required"`
-	JSON cardPurchaseSupplementJSON `json:"-"`
+	Type        CardPurchaseSupplementType `json:"type,required"`
+	ExtraFields map[string]interface{}     `json:"-,extras"`
+	JSON        cardPurchaseSupplementJSON `json:"-"`
 }
 
 // cardPurchaseSupplementJSON contains the JSON metadata for the struct

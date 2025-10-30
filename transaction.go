@@ -107,8 +107,9 @@ type Transaction struct {
 	Source TransactionSource `json:"source,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
-	Type TransactionType `json:"type,required"`
-	JSON transactionJSON `json:"-"`
+	Type        TransactionType        `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        transactionJSON        `json:"-"`
 }
 
 // transactionJSON contains the JSON metadata for the struct [Transaction]
@@ -363,6 +364,7 @@ type TransactionSource struct {
 	// response if and only if `category` is equal to `wire_transfer_intention`. A Wire
 	// Transfer initiated via Increase and sent to a different bank.
 	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,required,nullable"`
+	ExtraFields           map[string]interface{}                 `json:"-,extras"`
 	JSON                  transactionSourceJSON                  `json:"-"`
 }
 
@@ -429,6 +431,7 @@ type TransactionSourceAccountRevenuePayment struct {
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The start of the period for which this transaction paid account revenue.
 	PeriodStart time.Time                                  `json:"period_start,required" format:"date-time"`
+	ExtraFields map[string]interface{}                     `json:"-,extras"`
 	JSON        transactionSourceAccountRevenuePaymentJSON `json:"-"`
 }
 
@@ -468,8 +471,9 @@ type TransactionSourceAccountTransferIntention struct {
 	// The identifier of the Account from where the Account Transfer was sent.
 	SourceAccountID string `json:"source_account_id,required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID string                                        `json:"transfer_id,required"`
-	JSON       transactionSourceAccountTransferIntentionJSON `json:"-"`
+	TransferID  string                                        `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                        `json:"-,extras"`
+	JSON        transactionSourceAccountTransferIntentionJSON `json:"-"`
 }
 
 // transactionSourceAccountTransferIntentionJSON contains the JSON metadata for the
@@ -530,8 +534,9 @@ type TransactionSourceACHTransferIntention struct {
 	// A description set when the ACH Transfer was created.
 	StatementDescriptor string `json:"statement_descriptor,required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string                                    `json:"transfer_id,required"`
-	JSON       transactionSourceACHTransferIntentionJSON `json:"-"`
+	TransferID  string                                    `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	JSON        transactionSourceACHTransferIntentionJSON `json:"-"`
 }
 
 // transactionSourceACHTransferIntentionJSON contains the JSON metadata for the
@@ -560,8 +565,9 @@ func (r transactionSourceACHTransferIntentionJSON) RawJSON() string {
 // offsets the ACH Transfer Intention. These rejections are rare.
 type TransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID string                                    `json:"transfer_id,required"`
-	JSON       transactionSourceACHTransferRejectionJSON `json:"-"`
+	TransferID  string                                    `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	JSON        transactionSourceACHTransferRejectionJSON `json:"-"`
 }
 
 // transactionSourceACHTransferRejectionJSON contains the JSON metadata for the
@@ -603,8 +609,9 @@ type TransactionSourceACHTransferReturn struct {
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id,required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID string                                 `json:"transfer_id,required"`
-	JSON       transactionSourceACHTransferReturnJSON `json:"-"`
+	TransferID  string                                 `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                 `json:"-,extras"`
+	JSON        transactionSourceACHTransferReturnJSON `json:"-"`
 }
 
 // transactionSourceACHTransferReturnJSON contains the JSON metadata for the struct
@@ -723,6 +730,7 @@ type TransactionSourceCardDisputeAcceptance struct {
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
 	TransactionID string                                     `json:"transaction_id,required"`
+	ExtraFields   map[string]interface{}                     `json:"-,extras"`
 	JSON          transactionSourceCardDisputeAcceptanceJSON `json:"-"`
 }
 
@@ -757,8 +765,9 @@ type TransactionSourceCardDisputeFinancial struct {
 	// Information for events related to card dispute for card payments processed over
 	// Visa's network. This field will be present in the JSON response if and only if
 	// `network` is equal to `visa`.
-	Visa TransactionSourceCardDisputeFinancialVisa `json:"visa,required,nullable"`
-	JSON transactionSourceCardDisputeFinancialJSON `json:"-"`
+	Visa        TransactionSourceCardDisputeFinancialVisa `json:"visa,required,nullable"`
+	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	JSON        transactionSourceCardDisputeFinancialJSON `json:"-"`
 }
 
 // transactionSourceCardDisputeFinancialJSON contains the JSON metadata for the
@@ -854,6 +863,7 @@ type TransactionSourceCardDisputeLoss struct {
 	// The identifier of the Transaction that was created to debit the disputed funds
 	// from your account.
 	TransactionID string                               `json:"transaction_id,required"`
+	ExtraFields   map[string]interface{}               `json:"-,extras"`
 	JSON          transactionSourceCardDisputeLossJSON `json:"-"`
 }
 
@@ -951,6 +961,7 @@ type TransactionSourceCardFinancial struct {
 	Type TransactionSourceCardFinancialType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification TransactionSourceCardFinancialVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                     `json:"-,extras"`
 	JSON         transactionSourceCardFinancialJSON         `json:"-"`
 }
 
@@ -1761,8 +1772,9 @@ type TransactionSourceCardPushTransferAcceptance struct {
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount,required"`
 	// The identifier of the Card Push Transfer that led to this Transaction.
-	TransferID string                                          `json:"transfer_id,required"`
-	JSON       transactionSourceCardPushTransferAcceptanceJSON `json:"-"`
+	TransferID  string                                          `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                          `json:"-,extras"`
+	JSON        transactionSourceCardPushTransferAcceptanceJSON `json:"-"`
 }
 
 // transactionSourceCardPushTransferAcceptanceJSON contains the JSON metadata for
@@ -1832,8 +1844,9 @@ type TransactionSourceCardRefund struct {
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type TransactionSourceCardRefundType `json:"type,required"`
-	JSON transactionSourceCardRefundJSON `json:"-"`
+	Type        TransactionSourceCardRefundType `json:"type,required"`
+	ExtraFields map[string]interface{}          `json:"-,extras"`
+	JSON        transactionSourceCardRefundJSON `json:"-"`
 }
 
 // transactionSourceCardRefundJSON contains the JSON metadata for the struct
@@ -2643,6 +2656,7 @@ type TransactionSourceCardRevenuePayment struct {
 	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
 	// The account the card belonged to.
 	TransactedOnAccountID string                                  `json:"transacted_on_account_id,required,nullable"`
+	ExtraFields           map[string]interface{}                  `json:"-,extras"`
 	JSON                  transactionSourceCardRevenuePaymentJSON `json:"-"`
 }
 
@@ -2748,8 +2762,9 @@ type TransactionSourceCardSettlement struct {
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type TransactionSourceCardSettlementType `json:"type,required"`
-	JSON transactionSourceCardSettlementJSON `json:"-"`
+	Type        TransactionSourceCardSettlementType `json:"type,required"`
+	ExtraFields map[string]interface{}              `json:"-,extras"`
+	JSON        transactionSourceCardSettlementJSON `json:"-"`
 }
 
 // transactionSourceCardSettlementJSON contains the JSON metadata for the struct
@@ -3610,6 +3625,7 @@ type TransactionSourceCashbackPayment struct {
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The start of the period for which this transaction paid cashback.
 	PeriodStart time.Time                            `json:"period_start,required" format:"date-time"`
+	ExtraFields map[string]interface{}               `json:"-,extras"`
 	JSON        transactionSourceCashbackPaymentJSON `json:"-"`
 }
 
@@ -3731,6 +3747,7 @@ type TransactionSourceCheckDepositAcceptance struct {
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
 	SerialNumber string                                      `json:"serial_number,required,nullable"`
+	ExtraFields  map[string]interface{}                      `json:"-,extras"`
 	JSON         transactionSourceCheckDepositAcceptanceJSON `json:"-"`
 }
 
@@ -3800,6 +3817,7 @@ type TransactionSourceCheckDepositReturn struct {
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
 	TransactionID string                                  `json:"transaction_id,required"`
+	ExtraFields   map[string]interface{}                  `json:"-,extras"`
 	JSON          transactionSourceCheckDepositReturnJSON `json:"-"`
 }
 
@@ -3912,8 +3930,9 @@ type TransactionSourceCheckTransferDeposit struct {
 	TransferID string `json:"transfer_id,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
-	Type TransactionSourceCheckTransferDepositType `json:"type,required"`
-	JSON transactionSourceCheckTransferDepositJSON `json:"-"`
+	Type        TransactionSourceCheckTransferDepositType `json:"type,required"`
+	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	JSON        transactionSourceCheckTransferDepositJSON `json:"-"`
 }
 
 // transactionSourceCheckTransferDepositJSON contains the JSON metadata for the
@@ -3961,8 +3980,9 @@ func (r TransactionSourceCheckTransferDepositType) IsKnown() bool {
 // when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
 type TransactionSourceFednowTransferAcknowledgement struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
-	TransferID string                                             `json:"transfer_id,required"`
-	JSON       transactionSourceFednowTransferAcknowledgementJSON `json:"-"`
+	TransferID  string                                             `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	JSON        transactionSourceFednowTransferAcknowledgementJSON `json:"-"`
 }
 
 // transactionSourceFednowTransferAcknowledgementJSON contains the JSON metadata
@@ -3994,8 +4014,9 @@ type TransactionSourceFeePayment struct {
 	// The start of this payment's fee period, usually the first day of a month.
 	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
 	// The Program for which this fee was incurred.
-	ProgramID string                          `json:"program_id,required,nullable"`
-	JSON      transactionSourceFeePaymentJSON `json:"-"`
+	ProgramID   string                          `json:"program_id,required,nullable"`
+	ExtraFields map[string]interface{}          `json:"-,extras"`
+	JSON        transactionSourceFeePaymentJSON `json:"-"`
 }
 
 // transactionSourceFeePaymentJSON contains the JSON metadata for the struct
@@ -4070,8 +4091,9 @@ type TransactionSourceInboundACHTransfer struct {
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
 	TraceNumber string `json:"trace_number,required"`
 	// The Inbound ACH Transfer's identifier.
-	TransferID string                                  `json:"transfer_id,required"`
-	JSON       transactionSourceInboundACHTransferJSON `json:"-"`
+	TransferID  string                                  `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                  `json:"-,extras"`
+	JSON        transactionSourceInboundACHTransferJSON `json:"-"`
 }
 
 // transactionSourceInboundACHTransferJSON contains the JSON metadata for the
@@ -4195,6 +4217,7 @@ func (r transactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() s
 type TransactionSourceInboundACHTransferReturnIntention struct {
 	// The ID of the Inbound ACH Transfer that is being returned.
 	InboundACHTransferID string                                                 `json:"inbound_ach_transfer_id,required"`
+	ExtraFields          map[string]interface{}                                 `json:"-,extras"`
 	JSON                 transactionSourceInboundACHTransferReturnIntentionJSON `json:"-"`
 }
 
@@ -4224,8 +4247,9 @@ type TransactionSourceInboundCheckAdjustment struct {
 	// The amount of the check adjustment.
 	Amount int64 `json:"amount,required"`
 	// The reason for the adjustment.
-	Reason TransactionSourceInboundCheckAdjustmentReason `json:"reason,required"`
-	JSON   transactionSourceInboundCheckAdjustmentJSON   `json:"-"`
+	Reason      TransactionSourceInboundCheckAdjustmentReason `json:"reason,required"`
+	ExtraFields map[string]interface{}                        `json:"-,extras"`
+	JSON        transactionSourceInboundCheckAdjustmentJSON   `json:"-"`
 }
 
 // transactionSourceInboundCheckAdjustmentJSON contains the JSON metadata for the
@@ -4273,8 +4297,9 @@ type TransactionSourceInboundCheckDepositReturnIntention struct {
 	// The ID of the Inbound Check Deposit that is being returned.
 	InboundCheckDepositID string `json:"inbound_check_deposit_id,required"`
 	// The identifier of the Check Transfer object that was deposited.
-	TransferID string                                                  `json:"transfer_id,required,nullable"`
-	JSON       transactionSourceInboundCheckDepositReturnIntentionJSON `json:"-"`
+	TransferID  string                                                  `json:"transfer_id,required,nullable"`
+	ExtraFields map[string]interface{}                                  `json:"-,extras"`
+	JSON        transactionSourceInboundCheckDepositReturnIntentionJSON `json:"-"`
 }
 
 // transactionSourceInboundCheckDepositReturnIntentionJSON contains the JSON
@@ -4301,8 +4326,9 @@ func (r transactionSourceInboundCheckDepositReturnIntentionJSON) RawJSON() strin
 // Increase.
 type TransactionSourceInboundFednowTransferConfirmation struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
-	TransferID string                                                 `json:"transfer_id,required"`
-	JSON       transactionSourceInboundFednowTransferConfirmationJSON `json:"-"`
+	TransferID  string                                                 `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                 `json:"-,extras"`
+	JSON        transactionSourceInboundFednowTransferConfirmationJSON `json:"-"`
 }
 
 // transactionSourceInboundFednowTransferConfirmationJSON contains the JSON
@@ -4346,8 +4372,9 @@ type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The Real-Time Payments network identification of the transfer.
 	TransactionIdentification string `json:"transaction_identification,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string                                                           `json:"transfer_id,required"`
-	JSON       transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
+	TransferID  string                                                           `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                           `json:"-,extras"`
+	JSON        transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
 // transactionSourceInboundRealTimePaymentsTransferConfirmationJSON contains the
@@ -4434,6 +4461,7 @@ type TransactionSourceInboundWireReversal struct {
 	TransactionID string `json:"transaction_id,required"`
 	// The ID for the Wire Transfer that is being reversed.
 	WireTransferID string                                   `json:"wire_transfer_id,required"`
+	ExtraFields    map[string]interface{}                   `json:"-,extras"`
 	JSON           transactionSourceInboundWireReversalJSON `json:"-"`
 }
 
@@ -4510,6 +4538,7 @@ type TransactionSourceInboundWireTransfer struct {
 	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
 	// A free-form message set by the sender.
 	UnstructuredRemittanceInformation string                                   `json:"unstructured_remittance_information,required,nullable"`
+	ExtraFields                       map[string]interface{}                   `json:"-,extras"`
 	JSON                              transactionSourceInboundWireTransferJSON `json:"-"`
 }
 
@@ -4553,6 +4582,7 @@ func (r transactionSourceInboundWireTransferJSON) RawJSON() string {
 type TransactionSourceInboundWireTransferReversal struct {
 	// The ID of the Inbound Wire Transfer that is being reversed.
 	InboundWireTransferID string                                           `json:"inbound_wire_transfer_id,required"`
+	ExtraFields           map[string]interface{}                           `json:"-,extras"`
 	JSON                  transactionSourceInboundWireTransferReversalJSON `json:"-"`
 }
 
@@ -4589,6 +4619,7 @@ type TransactionSourceInterestPayment struct {
 	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
 	// The start of the period for which this transaction paid interest.
 	PeriodStart time.Time                            `json:"period_start,required" format:"date-time"`
+	ExtraFields map[string]interface{}               `json:"-,extras"`
 	JSON        transactionSourceInterestPaymentJSON `json:"-"`
 }
 
@@ -4645,8 +4676,9 @@ type TransactionSourceInternalSource struct {
 	Currency TransactionSourceInternalSourceCurrency `json:"currency,required"`
 	// An Internal Source is a transaction between you and Increase. This describes the
 	// reason for the transaction.
-	Reason TransactionSourceInternalSourceReason `json:"reason,required"`
-	JSON   transactionSourceInternalSourceJSON   `json:"-"`
+	Reason      TransactionSourceInternalSourceReason `json:"reason,required"`
+	ExtraFields map[string]interface{}                `json:"-,extras"`
+	JSON        transactionSourceInternalSourceJSON   `json:"-"`
 }
 
 // transactionSourceInternalSourceJSON contains the JSON metadata for the struct
@@ -4735,8 +4767,9 @@ type TransactionSourceRealTimePaymentsTransferAcknowledgement struct {
 	// Unstructured information that will show on the recipient's bank statement.
 	RemittanceInformation string `json:"remittance_information,required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string                                                       `json:"transfer_id,required"`
-	JSON       transactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
+	TransferID  string                                                       `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                       `json:"-,extras"`
+	JSON        transactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
 // transactionSourceRealTimePaymentsTransferAcknowledgementJSON contains the JSON
@@ -4765,8 +4798,9 @@ func (r transactionSourceRealTimePaymentsTransferAcknowledgementJSON) RawJSON() 
 // purposes.
 type TransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator string                           `json:"originator,required"`
-	JSON       transactionSourceSampleFundsJSON `json:"-"`
+	Originator  string                           `json:"originator,required"`
+	ExtraFields map[string]interface{}           `json:"-,extras"`
+	JSON        transactionSourceSampleFundsJSON `json:"-"`
 }
 
 // transactionSourceSampleFundsJSON contains the JSON metadata for the struct
@@ -4790,8 +4824,9 @@ func (r transactionSourceSampleFundsJSON) RawJSON() string {
 // Swift Transfer initiated via Increase.
 type TransactionSourceSwiftTransferIntention struct {
 	// The identifier of the Swift Transfer that led to this Transaction.
-	TransferID string                                      `json:"transfer_id,required"`
-	JSON       transactionSourceSwiftTransferIntentionJSON `json:"-"`
+	TransferID  string                                      `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                      `json:"-,extras"`
+	JSON        transactionSourceSwiftTransferIntentionJSON `json:"-"`
 }
 
 // transactionSourceSwiftTransferIntentionJSON contains the JSON metadata for the
@@ -4815,8 +4850,9 @@ func (r transactionSourceSwiftTransferIntentionJSON) RawJSON() string {
 // Return is created when a Swift Transfer is returned by the receiving bank.
 type TransactionSourceSwiftTransferReturn struct {
 	// The identifier of the Swift Transfer that led to this Transaction.
-	TransferID string                                   `json:"transfer_id,required"`
-	JSON       transactionSourceSwiftTransferReturnJSON `json:"-"`
+	TransferID  string                                   `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                   `json:"-,extras"`
+	JSON        transactionSourceSwiftTransferReturnJSON `json:"-"`
 }
 
 // transactionSourceSwiftTransferReturnJSON contains the JSON metadata for the
@@ -4848,8 +4884,9 @@ type TransactionSourceWireTransferIntention struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID string                                     `json:"transfer_id,required"`
-	JSON       transactionSourceWireTransferIntentionJSON `json:"-"`
+	TransferID  string                                     `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                     `json:"-,extras"`
+	JSON        transactionSourceWireTransferIntentionJSON `json:"-"`
 }
 
 // transactionSourceWireTransferIntentionJSON contains the JSON metadata for the

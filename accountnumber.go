@@ -125,8 +125,9 @@ type AccountNumber struct {
 	Status AccountNumberStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
-	Type AccountNumberType `json:"type,required"`
-	JSON accountNumberJSON `json:"-"`
+	Type        AccountNumberType      `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        accountNumberJSON      `json:"-"`
 }
 
 // accountNumberJSON contains the JSON metadata for the struct [AccountNumber]

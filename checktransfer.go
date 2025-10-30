@@ -183,8 +183,9 @@ type CheckTransfer struct {
 	ThirdParty CheckTransferThirdParty `json:"third_party,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
-	Type CheckTransferType `json:"type,required"`
-	JSON checkTransferJSON `json:"-"`
+	Type        CheckTransferType      `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        checkTransferJSON      `json:"-"`
 }
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
@@ -511,6 +512,7 @@ type CheckTransferPhysicalCheck struct {
 	SignatureText string `json:"signature_text,required,nullable"`
 	// Tracking updates relating to the physical check's delivery.
 	TrackingUpdates []CheckTransferPhysicalCheckTrackingUpdate `json:"tracking_updates,required"`
+	ExtraFields     map[string]interface{}                     `json:"-,extras"`
 	JSON            checkTransferPhysicalCheckJSON             `json:"-"`
 }
 
@@ -735,8 +737,9 @@ type CheckTransferStopPaymentRequest struct {
 	TransferID string `json:"transfer_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type CheckTransferStopPaymentRequestType `json:"type,required"`
-	JSON checkTransferStopPaymentRequestJSON `json:"-"`
+	Type        CheckTransferStopPaymentRequestType `json:"type,required"`
+	ExtraFields map[string]interface{}              `json:"-,extras"`
+	JSON        checkTransferStopPaymentRequestJSON `json:"-"`
 }
 
 // checkTransferStopPaymentRequestJSON contains the JSON metadata for the struct
@@ -804,6 +807,7 @@ type CheckTransferSubmission struct {
 	SubmittedAddress CheckTransferSubmissionSubmittedAddress `json:"submitted_address,required"`
 	// When this check transfer was submitted to our check printer.
 	SubmittedAt time.Time                   `json:"submitted_at,required" format:"date-time"`
+	ExtraFields map[string]interface{}      `json:"-,extras"`
 	JSON        checkTransferSubmissionJSON `json:"-"`
 }
 
@@ -890,6 +894,7 @@ func (r checkTransferSubmissionSubmittedAddressJSON) RawJSON() string {
 type CheckTransferThirdParty struct {
 	// The name that you will print on the check.
 	RecipientName string                      `json:"recipient_name,required,nullable"`
+	ExtraFields   map[string]interface{}      `json:"-,extras"`
 	JSON          checkTransferThirdPartyJSON `json:"-"`
 }
 

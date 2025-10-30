@@ -16,14 +16,14 @@ import (
 type Error struct {
 	Detail string `json:"detail,required,nullable"`
 	// All errors related to parsing the request parameters.
-	Errors     []interface{} `json:"errors,required"`
-	Reason     ErrorReason   `json:"reason,required"`
-	ResourceID string        `json:"resource_id,required"`
-	Status     ErrorStatus   `json:"status,required"`
-	Title      string        `json:"title,required"`
-	Type       ErrorType     `json:"type,required"`
-	RetryAfter int64         `json:"retry_after,nullable"`
-	JSON       errorJSON     `json:"-"`
+	Errors     []map[string]interface{} `json:"errors,required"`
+	Reason     ErrorReason              `json:"reason,required"`
+	ResourceID string                   `json:"resource_id,required"`
+	Status     ErrorStatus              `json:"status,required"`
+	Title      string                   `json:"title,required"`
+	Type       ErrorType                `json:"type,required"`
+	RetryAfter int64                    `json:"retry_after,nullable"`
+	JSON       errorJSON                `json:"-"`
 	StatusCode int
 	Request    *http.Request
 	Response   *http.Response

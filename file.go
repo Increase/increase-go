@@ -114,8 +114,9 @@ type File struct {
 	Purpose FilePurpose `json:"purpose,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `file`.
-	Type FileType `json:"type,required"`
-	JSON fileJSON `json:"-"`
+	Type        FileType               `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        fileJSON               `json:"-"`
 }
 
 // fileJSON contains the JSON metadata for the struct [File]

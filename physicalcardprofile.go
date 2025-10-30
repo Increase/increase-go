@@ -139,8 +139,9 @@ type PhysicalCardProfile struct {
 	Status PhysicalCardProfileStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card_profile`.
-	Type PhysicalCardProfileType `json:"type,required"`
-	JSON physicalCardProfileJSON `json:"-"`
+	Type        PhysicalCardProfileType `json:"type,required"`
+	ExtraFields map[string]interface{}  `json:"-,extras"`
+	JSON        physicalCardProfileJSON `json:"-"`
 }
 
 // physicalCardProfileJSON contains the JSON metadata for the struct

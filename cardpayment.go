@@ -258,8 +258,9 @@ type CardPaymentElementsCardAuthentication struct {
 	Status CardPaymentElementsCardAuthenticationStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authentication`.
-	Type CardPaymentElementsCardAuthenticationType `json:"type,required"`
-	JSON cardPaymentElementsCardAuthenticationJSON `json:"-"`
+	Type        CardPaymentElementsCardAuthenticationType `json:"type,required"`
+	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	JSON        cardPaymentElementsCardAuthenticationJSON `json:"-"`
 }
 
 // cardPaymentElementsCardAuthenticationJSON contains the JSON metadata for the
@@ -562,6 +563,7 @@ type CardPaymentElementsCardAuthorization struct {
 	Type CardPaymentElementsCardAuthorizationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardAuthorizationVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                           `json:"-,extras"`
 	JSON         cardPaymentElementsCardAuthorizationJSON         `json:"-"`
 }
 
@@ -1389,8 +1391,9 @@ type CardPaymentElementsCardAuthorizationExpiration struct {
 	Network CardPaymentElementsCardAuthorizationExpirationNetwork `json:"network,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization_expiration`.
-	Type CardPaymentElementsCardAuthorizationExpirationType `json:"type,required"`
-	JSON cardPaymentElementsCardAuthorizationExpirationJSON `json:"-"`
+	Type        CardPaymentElementsCardAuthorizationExpirationType `json:"type,required"`
+	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	JSON        cardPaymentElementsCardAuthorizationExpirationJSON `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationExpirationJSON contains the JSON metadata
@@ -1547,6 +1550,7 @@ type CardPaymentElementsCardDecline struct {
 	TerminalID string `json:"terminal_id,required,nullable"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardDeclineVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                     `json:"-,extras"`
 	JSON         cardPaymentElementsCardDeclineJSON         `json:"-"`
 }
 
@@ -2466,6 +2470,7 @@ type CardPaymentElementsCardFinancial struct {
 	Type CardPaymentElementsCardFinancialType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardFinancialVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                       `json:"-,extras"`
 	JSON         cardPaymentElementsCardFinancialJSON         `json:"-"`
 }
 
@@ -3298,6 +3303,7 @@ type CardPaymentElementsCardFuelConfirmation struct {
 	// The updated authorization amount after this fuel confirmation, in the minor unit
 	// of the transaction's currency. For dollars, for example, this is cents.
 	UpdatedAuthorizationAmount int64                                       `json:"updated_authorization_amount,required"`
+	ExtraFields                map[string]interface{}                      `json:"-,extras"`
 	JSON                       cardPaymentElementsCardFuelConfirmationJSON `json:"-"`
 }
 
@@ -3460,6 +3466,7 @@ type CardPaymentElementsCardIncrement struct {
 	// The updated authorization amount after this increment, in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
 	UpdatedAuthorizationAmount int64                                `json:"updated_authorization_amount,required"`
+	ExtraFields                map[string]interface{}               `json:"-,extras"`
 	JSON                       cardPaymentElementsCardIncrementJSON `json:"-"`
 }
 
@@ -4003,8 +4010,9 @@ type CardPaymentElementsCardRefund struct {
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type CardPaymentElementsCardRefundType `json:"type,required"`
-	JSON cardPaymentElementsCardRefundJSON `json:"-"`
+	Type        CardPaymentElementsCardRefundType `json:"type,required"`
+	ExtraFields map[string]interface{}            `json:"-,extras"`
+	JSON        cardPaymentElementsCardRefundJSON `json:"-"`
 }
 
 // cardPaymentElementsCardRefundJSON contains the JSON metadata for the struct
@@ -4855,6 +4863,7 @@ type CardPaymentElementsCardReversal struct {
 	// The amount left pending on the Card Authorization in the minor unit of the
 	// transaction's presentment currency. For dollars, for example, this is cents.
 	UpdatedAuthorizationPresentmentAmount int64                               `json:"updated_authorization_presentment_amount,required"`
+	ExtraFields                           map[string]interface{}              `json:"-,extras"`
 	JSON                                  cardPaymentElementsCardReversalJSON `json:"-"`
 }
 
@@ -5063,8 +5072,9 @@ type CardPaymentElementsCardSettlement struct {
 	TransactionID string `json:"transaction_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type CardPaymentElementsCardSettlementType `json:"type,required"`
-	JSON cardPaymentElementsCardSettlementJSON `json:"-"`
+	Type        CardPaymentElementsCardSettlementType `json:"type,required"`
+	ExtraFields map[string]interface{}                `json:"-,extras"`
+	JSON        cardPaymentElementsCardSettlementJSON `json:"-"`
 }
 
 // cardPaymentElementsCardSettlementJSON contains the JSON metadata for the struct
@@ -5970,6 +5980,7 @@ type CardPaymentElementsCardValidation struct {
 	Type CardPaymentElementsCardValidationType `json:"type,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification CardPaymentElementsCardValidationVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                        `json:"-,extras"`
 	JSON         cardPaymentElementsCardValidationJSON         `json:"-"`
 }
 

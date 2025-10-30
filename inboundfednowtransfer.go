@@ -149,8 +149,9 @@ func (r inboundFednowTransferJSON) RawJSON() string {
 // If your transfer is confirmed, this will contain details of the confirmation.
 type InboundFednowTransferConfirmation struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
-	TransferID string                                `json:"transfer_id,required"`
-	JSON       inboundFednowTransferConfirmationJSON `json:"-"`
+	TransferID  string                                `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                `json:"-,extras"`
+	JSON        inboundFednowTransferConfirmationJSON `json:"-"`
 }
 
 // inboundFednowTransferConfirmationJSON contains the JSON metadata for the struct
@@ -195,8 +196,9 @@ type InboundFednowTransferDecline struct {
 	// Why the transfer was declined.
 	Reason InboundFednowTransferDeclineReason `json:"reason,required"`
 	// The identifier of the FedNow Transfer that led to this declined transaction.
-	TransferID string                           `json:"transfer_id,required"`
-	JSON       inboundFednowTransferDeclineJSON `json:"-"`
+	TransferID  string                           `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}           `json:"-,extras"`
+	JSON        inboundFednowTransferDeclineJSON `json:"-"`
 }
 
 // inboundFednowTransferDeclineJSON contains the JSON metadata for the struct

@@ -180,8 +180,9 @@ type CardPushTransfer struct {
 	Submission CardPushTransferSubmission `json:"submission,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_push_transfer`.
-	Type CardPushTransferType `json:"type,required"`
-	JSON cardPushTransferJSON `json:"-"`
+	Type        CardPushTransferType   `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        cardPushTransferJSON   `json:"-"`
 }
 
 // cardPushTransferJSON contains the JSON metadata for the struct

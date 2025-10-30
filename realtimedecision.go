@@ -295,6 +295,7 @@ type RealTimeDecisionCardAuthorization struct {
 	UpcomingCardPaymentID string `json:"upcoming_card_payment_id,required"`
 	// Fields related to verification of cardholder-provided values.
 	Verification RealTimeDecisionCardAuthorizationVerification `json:"verification,required"`
+	ExtraFields  map[string]interface{}                        `json:"-,extras"`
 	JSON         realTimeDecisionCardAuthorizationJSON         `json:"-"`
 }
 
