@@ -182,8 +182,8 @@ type CardPaymentElement struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other interface{}            `json:"other,required,nullable"`
-	JSON  cardPaymentElementJSON `json:"-"`
+	Other CardPaymentElementsOther `json:"other,required,nullable"`
+	JSON  cardPaymentElementJSON   `json:"-"`
 }
 
 // cardPaymentElementJSON contains the JSON metadata for the struct
@@ -1023,7 +1023,7 @@ type CardPaymentElementsCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardAuthorizationNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardAuthorizationNetworkDetailsJSON `json:"-"`
@@ -1061,6 +1061,27 @@ func (r CardPaymentElementsCardAuthorizationNetworkDetailsCategory) IsKnown() bo
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type CardPaymentElementsCardAuthorizationNetworkDetailsPulse struct {
+	JSON cardPaymentElementsCardAuthorizationNetworkDetailsPulseJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthorizationNetworkDetailsPulseJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardAuthorizationNetworkDetailsPulse]
+type cardPaymentElementsCardAuthorizationNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthorizationNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -2006,7 +2027,7 @@ type CardPaymentElementsCardDeclineNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardDeclineNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardDeclineNetworkDetailsJSON `json:"-"`
@@ -2044,6 +2065,26 @@ func (r CardPaymentElementsCardDeclineNetworkDetailsCategory) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type CardPaymentElementsCardDeclineNetworkDetailsPulse struct {
+	JSON cardPaymentElementsCardDeclineNetworkDetailsPulseJSON `json:"-"`
+}
+
+// cardPaymentElementsCardDeclineNetworkDetailsPulseJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardDeclineNetworkDetailsPulse]
+type cardPaymentElementsCardDeclineNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardDeclineNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardDeclineNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -2929,7 +2970,7 @@ type CardPaymentElementsCardFinancialNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardFinancialNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardFinancialNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardFinancialNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardFinancialNetworkDetailsJSON `json:"-"`
@@ -2967,6 +3008,26 @@ func (r CardPaymentElementsCardFinancialNetworkDetailsCategory) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type CardPaymentElementsCardFinancialNetworkDetailsPulse struct {
+	JSON cardPaymentElementsCardFinancialNetworkDetailsPulseJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialNetworkDetailsPulseJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardFinancialNetworkDetailsPulse]
+type cardPaymentElementsCardFinancialNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -6416,7 +6477,7 @@ type CardPaymentElementsCardValidationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category CardPaymentElementsCardValidationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardValidationNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa CardPaymentElementsCardValidationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON cardPaymentElementsCardValidationNetworkDetailsJSON `json:"-"`
@@ -6454,6 +6515,26 @@ func (r CardPaymentElementsCardValidationNetworkDetailsCategory) IsKnown() bool 
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type CardPaymentElementsCardValidationNetworkDetailsPulse struct {
+	JSON cardPaymentElementsCardValidationNetworkDetailsPulseJSON `json:"-"`
+}
+
+// cardPaymentElementsCardValidationNetworkDetailsPulseJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardValidationNetworkDetailsPulse]
+type cardPaymentElementsCardValidationNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardValidationNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardValidationNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -6766,6 +6847,27 @@ func (r CardPaymentElementsCategory) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// If the category of this Transaction source is equal to `other`, this field will
+// contain an empty object, otherwise it will contain null.
+type CardPaymentElementsOther struct {
+	JSON cardPaymentElementsOtherJSON `json:"-"`
+}
+
+// cardPaymentElementsOtherJSON contains the JSON metadata for the struct
+// [CardPaymentElementsOther]
+type cardPaymentElementsOtherJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsOther) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsOtherJSON) RawJSON() string {
+	return r.raw
 }
 
 // The summarized state of this card payment.

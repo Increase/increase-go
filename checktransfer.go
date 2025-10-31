@@ -1025,7 +1025,8 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	ShippingMethod param.Field[CheckTransferNewParamsPhysicalCheckShippingMethod] `json:"shipping_method"`
 	// The text that will appear as the signature on the check in cursive font. If not
 	// provided, the check will be printed with 'No signature required'.
-	SignatureText param.Field[string] `json:"signature_text"`
+	SignatureText param.Field[string]    `json:"signature_text"`
+	ExtraFields   map[string]interface{} `json:"-,extras"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheck) MarshalJSON() (data []byte, err error) {
@@ -1105,7 +1106,8 @@ type CheckTransferNewParamsThirdParty struct {
 	// The pay-to name you will print on the check. If provided, this is used for
 	// [Positive Pay](/documentation/positive-pay). If this is omitted, Increase will
 	// be unable to validate the payer name when the check is deposited.
-	RecipientName param.Field[string] `json:"recipient_name"`
+	RecipientName param.Field[string]    `json:"recipient_name"`
+	ExtraFields   map[string]interface{} `json:"-,extras"`
 }
 
 func (r CheckTransferNewParamsThirdParty) MarshalJSON() (data []byte, err error) {

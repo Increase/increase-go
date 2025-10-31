@@ -755,7 +755,7 @@ type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse RealTimeDecisionCardAuthorizationNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON `json:"-"`
@@ -793,6 +793,26 @@ func (r RealTimeDecisionCardAuthorizationNetworkDetailsCategory) IsKnown() bool 
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type RealTimeDecisionCardAuthorizationNetworkDetailsPulse struct {
+	JSON realTimeDecisionCardAuthorizationNetworkDetailsPulseJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationNetworkDetailsPulseJSON contains the JSON
+// metadata for the struct [RealTimeDecisionCardAuthorizationNetworkDetailsPulse]
+type realTimeDecisionCardAuthorizationNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -968,8 +988,8 @@ type RealTimeDecisionCardAuthorizationRequestDetails struct {
 	// Fields specific to the category `incremental_authorization`.
 	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization,required,nullable"`
 	// Fields specific to the category `initial_authorization`.
-	InitialAuthorization interface{}                                         `json:"initial_authorization,required,nullable"`
-	JSON                 realTimeDecisionCardAuthorizationRequestDetailsJSON `json:"-"`
+	InitialAuthorization RealTimeDecisionCardAuthorizationRequestDetailsInitialAuthorization `json:"initial_authorization,required,nullable"`
+	JSON                 realTimeDecisionCardAuthorizationRequestDetailsJSON                 `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationRequestDetailsJSON contains the JSON metadata
@@ -1032,6 +1052,27 @@ func (r *RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization
 }
 
 func (r realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON) RawJSON() string {
+	return r.raw
+}
+
+// Fields specific to the category `initial_authorization`.
+type RealTimeDecisionCardAuthorizationRequestDetailsInitialAuthorization struct {
+	JSON realTimeDecisionCardAuthorizationRequestDetailsInitialAuthorizationJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationRequestDetailsInitialAuthorizationJSON contains
+// the JSON metadata for the struct
+// [RealTimeDecisionCardAuthorizationRequestDetailsInitialAuthorization]
+type realTimeDecisionCardAuthorizationRequestDetailsInitialAuthorizationJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationRequestDetailsInitialAuthorization) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationRequestDetailsInitialAuthorizationJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1489,7 +1530,8 @@ type RealTimeDecisionActionParamsCardAuthorization struct {
 	Approval param.Field[RealTimeDecisionActionParamsCardAuthorizationApproval] `json:"approval"`
 	// If your application declines the authorization, this contains details about the
 	// decline.
-	Decline param.Field[RealTimeDecisionActionParamsCardAuthorizationDecline] `json:"decline"`
+	Decline     param.Field[RealTimeDecisionActionParamsCardAuthorizationDecline] `json:"decline"`
+	ExtraFields map[string]interface{}                                            `json:"-,extras"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthorization) MarshalJSON() (data []byte, err error) {

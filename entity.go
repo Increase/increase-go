@@ -1508,7 +1508,8 @@ type EntityNewParamsCorporationBeneficialOwner struct {
 	// array containing both.
 	Prongs param.Field[[]EntityNewParamsCorporationBeneficialOwnersProng] `json:"prongs,required"`
 	// This person's role or title within the entity.
-	CompanyTitle param.Field[string] `json:"company_title"`
+	CompanyTitle param.Field[string]    `json:"company_title"`
+	ExtraFields  map[string]interface{} `json:"-,extras"`
 }
 
 func (r EntityNewParamsCorporationBeneficialOwner) MarshalJSON() (data []byte, err error) {
@@ -1574,7 +1575,8 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	Other param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther] `json:"other"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport] `json:"passport"`
+	Passport    param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                                                  `json:"-,extras"`
 }
 
 func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentification) MarshalJSON() (data []byte, err error) {
@@ -1825,7 +1827,8 @@ type EntityNewParamsJointIndividualsIdentification struct {
 	Other param.Field[EntityNewParamsJointIndividualsIdentificationOther] `json:"other"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport param.Field[EntityNewParamsJointIndividualsIdentificationPassport] `json:"passport"`
+	Passport    param.Field[EntityNewParamsJointIndividualsIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                             `json:"-,extras"`
 }
 
 func (r EntityNewParamsJointIndividualsIdentification) MarshalJSON() (data []byte, err error) {
@@ -1965,7 +1968,8 @@ type EntityNewParamsNaturalPersonIdentification struct {
 	Other param.Field[EntityNewParamsNaturalPersonIdentificationOther] `json:"other"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport param.Field[EntityNewParamsNaturalPersonIdentificationPassport] `json:"passport"`
+	Passport    param.Field[EntityNewParamsNaturalPersonIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                          `json:"-,extras"`
 }
 
 func (r EntityNewParamsNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
@@ -2269,7 +2273,8 @@ type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	Other param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationOther] `json:"other"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationPassport] `json:"passport"`
+	Passport    param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                                    `json:"-,extras"`
 }
 
 func (r EntityNewParamsTrustTrusteesIndividualIdentification) MarshalJSON() (data []byte, err error) {
@@ -2406,7 +2411,8 @@ type EntityNewParamsTrustGrantorIdentification struct {
 	Other param.Field[EntityNewParamsTrustGrantorIdentificationOther] `json:"other"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport param.Field[EntityNewParamsTrustGrantorIdentificationPassport] `json:"passport"`
+	Passport    param.Field[EntityNewParamsTrustGrantorIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                         `json:"-,extras"`
 }
 
 func (r EntityNewParamsTrustGrantorIdentification) MarshalJSON() (data []byte, err error) {
@@ -2837,7 +2843,8 @@ type EntityNewBeneficialOwnerParamsBeneficialOwner struct {
 	// array containing both.
 	Prongs param.Field[[]EntityNewBeneficialOwnerParamsBeneficialOwnerProng] `json:"prongs,required"`
 	// This person's role or title within the entity.
-	CompanyTitle param.Field[string] `json:"company_title"`
+	CompanyTitle param.Field[string]    `json:"company_title"`
+	ExtraFields  map[string]interface{} `json:"-,extras"`
 }
 
 func (r EntityNewBeneficialOwnerParamsBeneficialOwner) MarshalJSON() (data []byte, err error) {
@@ -2903,7 +2910,8 @@ type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification struc
 	Other param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationOther] `json:"other"`
 	// Information about the passport used for identification. Required if `method` is
 	// equal to `passport`.
-	Passport param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPassport] `json:"passport"`
+	Passport    param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                                                     `json:"-,extras"`
 }
 
 func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification) MarshalJSON() (data []byte, err error) {

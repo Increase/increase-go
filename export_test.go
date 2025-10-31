@@ -76,7 +76,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 			ProgramID: increase.F("program_id"),
 		}),
-		VendorCsv: increase.F[any](map[string]interface{}{}),
+		VendorCsv: increase.F(increase.ExportNewParamsVendorCsv{}),
 	})
 	if err != nil {
 		var apierr *increase.Error

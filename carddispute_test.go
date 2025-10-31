@@ -49,7 +49,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 					CancellationPolicyProvided: increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvidedNotProvided),
 					Reason:                     increase.F("x"),
 				}),
-				NotReturned: increase.F[any](map[string]interface{}{}),
+				NotReturned: increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledMerchandiseNotReturned{}),
 				ReturnAttempted: increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttempted{
 					AttemptExplanation:     increase.F("x"),
 					AttemptReason:          increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttemptedAttemptReasonMerchantNotResponding),
@@ -90,8 +90,8 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				GuaranteedReservation: increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservation{
 					Explanation: increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservationExplanationCardholderCanceledPriorToService),
 				}),
-				Other:     increase.F[any](map[string]interface{}{}),
-				Timeshare: increase.F[any](map[string]interface{}{}),
+				Other:     increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledServicesOther{}),
+				Timeshare: increase.F(increase.CardDisputeNewParamsVisaConsumerCanceledServicesTimeshare{}),
 			}),
 			ConsumerCounterfeitMerchandise: increase.F(increase.CardDisputeNewParamsVisaConsumerCounterfeitMerchandise{
 				CounterfeitExplanation: increase.F("x"),
@@ -108,7 +108,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				OrderAndIssueExplanation:    increase.F("x"),
 				ReceivedAt:                  increase.F(time.Now()),
 				ReturnOutcome:               increase.F(increase.CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnOutcomeNotReturned),
-				NotReturned:                 increase.F[any](map[string]interface{}{}),
+				NotReturned:                 increase.F(increase.CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseNotReturned{}),
 				ReturnAttempted: increase.F(increase.CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttempted{
 					AttemptExplanation:     increase.F("x"),
 					AttemptReason:          increase.F(increase.CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReasonMerchantNotResponding),
@@ -129,7 +129,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				PurchaseExplanation:          increase.F("x"),
 				ReceivedAt:                   increase.F(time.Now()),
 				ReturnOutcome:                increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnOutcomeNotReturned),
-				NotReturned:                  increase.F[any](map[string]interface{}{}),
+				NotReturned:                  increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationNotReturned{}),
 				ReturnAttempted: increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttempted{
 					AttemptExplanation:     increase.F("x"),
 					AttemptReason:          increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReasonMerchantNotResponding),
@@ -175,7 +175,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				Delayed: increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayed{
 					Explanation:   increase.F("x"),
 					ReturnOutcome: increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnOutcomeNotReturned),
-					NotReturned:   increase.F[any](map[string]interface{}{}),
+					NotReturned:   increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedNotReturned{}),
 					ReturnAttempted: increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnAttempted{
 						AttemptedAt: increase.F(time.Now()),
 					}),
@@ -190,9 +190,9 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				MerchantCancellation: increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantCancellation{
 					CanceledAt: increase.F(time.Now()),
 				}),
-				NoCancellation: increase.F[any](map[string]interface{}{}),
+				NoCancellation: increase.F(increase.CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedNoCancellation{}),
 			}),
-			ConsumerNonReceiptOfCash: increase.F[any](map[string]interface{}{}),
+			ConsumerNonReceiptOfCash: increase.F(increase.CardDisputeNewParamsVisaConsumerNonReceiptOfCash{}),
 			ConsumerOriginalCreditTransactionNotAccepted: increase.F(increase.CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAccepted{
 				Explanation: increase.F("x"),
 				Reason:      increase.F(increase.CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAcceptedReasonProhibitedByLocalLawsOrRegulation),
@@ -203,7 +203,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				PurchaseInfoAndQualityIssue: increase.F("x"),
 				ReceivedAt:                  increase.F(time.Now()),
 				ReturnOutcome:               increase.F(increase.CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnOutcomeNotReturned),
-				NotReturned:                 increase.F[any](map[string]interface{}{}),
+				NotReturned:                 increase.F(increase.CardDisputeNewParamsVisaConsumerQualityMerchandiseNotReturned{}),
 				OngoingNegotiations: increase.F(increase.CardDisputeNewParamsVisaConsumerQualityMerchandiseOngoingNegotiations{
 					Explanation:           increase.F("x"),
 					IssuerFirstNotifiedAt: increase.F(time.Now()),
@@ -272,7 +272,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 				MerchantCancellation: increase.F(increase.CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantCancellation{
 					CanceledAt: increase.F(time.Now()),
 				}),
-				NoCancellation: increase.F[any](map[string]interface{}{}),
+				NoCancellation: increase.F(increase.CardDisputeNewParamsVisaConsumerServicesNotReceivedNoCancellation{}),
 			}),
 			Fraud: increase.F(increase.CardDisputeNewParamsVisaFraud{
 				FraudType: increase.F(increase.CardDisputeNewParamsVisaFraudFraudTypeAccountOrCredentialsTakeover),
@@ -398,7 +398,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 							CancellationPolicyProvided: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvidedNotProvided),
 							Reason:                     increase.F("x"),
 						}),
-						NotReturned: increase.F[any](map[string]interface{}{}),
+						NotReturned: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseNotReturned{}),
 						ReturnAttempted: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttempted{
 							AttemptExplanation:     increase.F("x"),
 							AttemptReason:          increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttemptedAttemptReasonMerchantNotResponding),
@@ -439,8 +439,8 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						GuaranteedReservation: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservation{
 							Explanation: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservationExplanationCardholderCanceledPriorToService),
 						}),
-						Other:     increase.F[any](map[string]interface{}{}),
-						Timeshare: increase.F[any](map[string]interface{}{}),
+						Other:     increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesOther{}),
+						Timeshare: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesTimeshare{}),
 					}),
 					ConsumerCounterfeitMerchandise: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCounterfeitMerchandise{
 						CounterfeitExplanation: increase.F("x"),
@@ -457,7 +457,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						OrderAndIssueExplanation:    increase.F("x"),
 						ReceivedAt:                  increase.F(time.Now()),
 						ReturnOutcome:               increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnOutcomeNotReturned),
-						NotReturned:                 increase.F[any](map[string]interface{}{}),
+						NotReturned:                 increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned{}),
 						ReturnAttempted: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted{
 							AttemptExplanation:     increase.F("x"),
 							AttemptReason:          increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReasonMerchantNotResponding),
@@ -478,7 +478,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						PurchaseExplanation:          increase.F("x"),
 						ReceivedAt:                   increase.F(time.Now()),
 						ReturnOutcome:                increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnOutcomeNotReturned),
-						NotReturned:                  increase.F[any](map[string]interface{}{}),
+						NotReturned:                  increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationNotReturned{}),
 						ReturnAttempted: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttempted{
 							AttemptExplanation:     increase.F("x"),
 							AttemptReason:          increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReasonMerchantNotResponding),
@@ -524,7 +524,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						Delayed: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayed{
 							Explanation:   increase.F("x"),
 							ReturnOutcome: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnOutcomeNotReturned),
-							NotReturned:   increase.F[any](map[string]interface{}{}),
+							NotReturned:   increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedNotReturned{}),
 							ReturnAttempted: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted{
 								AttemptedAt: increase.F(time.Now()),
 							}),
@@ -539,9 +539,9 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						MerchantCancellation: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedMerchantCancellation{
 							CanceledAt: increase.F(time.Now()),
 						}),
-						NoCancellation: increase.F[any](map[string]interface{}{}),
+						NoCancellation: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedNoCancellation{}),
 					}),
-					ConsumerNonReceiptOfCash: increase.F[any](map[string]interface{}{}),
+					ConsumerNonReceiptOfCash: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerNonReceiptOfCash{}),
 					ConsumerOriginalCreditTransactionNotAccepted: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAccepted{
 						Explanation: increase.F("x"),
 						Reason:      increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAcceptedReasonProhibitedByLocalLawsOrRegulation),
@@ -552,7 +552,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						PurchaseInfoAndQualityIssue: increase.F("x"),
 						ReceivedAt:                  increase.F(time.Now()),
 						ReturnOutcome:               increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnOutcomeNotReturned),
-						NotReturned:                 increase.F[any](map[string]interface{}{}),
+						NotReturned:                 increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseNotReturned{}),
 						OngoingNegotiations: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseOngoingNegotiations{
 							Explanation:           increase.F("x"),
 							IssuerFirstNotifiedAt: increase.F(time.Now()),
@@ -621,7 +621,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 						MerchantCancellation: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantCancellation{
 							CanceledAt: increase.F(time.Now()),
 						}),
-						NoCancellation: increase.F[any](map[string]interface{}{}),
+						NoCancellation: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedNoCancellation{}),
 					}),
 					Fraud: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackFraud{
 						FraudType: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargebackFraudFraudTypeAccountOrCredentialsTakeover),
