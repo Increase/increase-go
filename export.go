@@ -250,6 +250,9 @@ type ExportNewParamsAccountStatementBai2 struct {
 	// intraday balances, otherwise it will include end-of-day balances for the
 	// provided date.
 	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
+	// The Program to create a BAI2 report for. If not provided, all open accounts will
+	// be included.
+	ProgramID param.Field[string] `json:"program_id"`
 }
 
 func (r ExportNewParamsAccountStatementBai2) MarshalJSON() (data []byte, err error) {
