@@ -31,6 +31,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 		AccountStatementBai2: increase.F(increase.ExportNewParamsAccountStatementBai2{
 			AccountID:     increase.F("account_id"),
 			EffectiveDate: increase.F(time.Now()),
+			ProgramID:     increase.F("program_id"),
 		}),
 		AccountStatementOfx: increase.F(increase.ExportNewParamsAccountStatementOfx{
 			AccountID: increase.F("account_id"),
