@@ -315,19 +315,19 @@ type CardDisputeVisaNetworkEvent struct {
 	// `chargeback_accepted`. Contains the details specific to a chargeback accepted
 	// Visa Card Dispute Network Event, which represents that a chargeback has been
 	// accepted by the merchant.
-	ChargebackAccepted interface{} `json:"chargeback_accepted,required,nullable"`
+	ChargebackAccepted CardDisputeVisaNetworkEventsChargebackAccepted `json:"chargeback_accepted,required,nullable"`
 	// A Card Dispute Chargeback Submitted Visa Network Event object. This field will
 	// be present in the JSON response if and only if `category` is equal to
 	// `chargeback_submitted`. Contains the details specific to a chargeback submitted
 	// Visa Card Dispute Network Event, which represents that a chargeback has been
 	// submitted to the network.
-	ChargebackSubmitted interface{} `json:"chargeback_submitted,required,nullable"`
+	ChargebackSubmitted CardDisputeVisaNetworkEventsChargebackSubmitted `json:"chargeback_submitted,required,nullable"`
 	// A Card Dispute Chargeback Timed Out Visa Network Event object. This field will
 	// be present in the JSON response if and only if `category` is equal to
 	// `chargeback_timed_out`. Contains the details specific to a chargeback timed out
 	// Visa Card Dispute Network Event, which represents that the chargeback has timed
 	// out in the user's favor.
-	ChargebackTimedOut interface{} `json:"chargeback_timed_out,required,nullable"`
+	ChargebackTimedOut CardDisputeVisaNetworkEventsChargebackTimedOut `json:"chargeback_timed_out,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute Network Event was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -339,7 +339,7 @@ type CardDisputeVisaNetworkEvent struct {
 	// details specific to a merchant prearbitration decline submitted Visa Card
 	// Dispute Network Event, which represents that the user has declined the
 	// merchant's request for a prearbitration request decision in their favor.
-	MerchantPrearbitrationDeclineSubmitted interface{} `json:"merchant_prearbitration_decline_submitted,required,nullable"`
+	MerchantPrearbitrationDeclineSubmitted CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted `json:"merchant_prearbitration_decline_submitted,required,nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Received Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `merchant_prearbitration_received`. Contains the details specific to a merchant
@@ -352,7 +352,7 @@ type CardDisputeVisaNetworkEvent struct {
 	// merchant prearbitration timed out Visa Card Dispute Network Event, which
 	// represents that the user has timed out responding to the merchant's
 	// prearbitration request.
-	MerchantPrearbitrationTimedOut interface{} `json:"merchant_prearbitration_timed_out,required,nullable"`
+	MerchantPrearbitrationTimedOut CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut `json:"merchant_prearbitration_timed_out,required,nullable"`
 	// A Card Dispute Re-presented Visa Network Event object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `represented`. Contains the details specific to a re-presented Visa Card Dispute
@@ -364,38 +364,38 @@ type CardDisputeVisaNetworkEvent struct {
 	// `representment_timed_out`. Contains the details specific to a re-presentment
 	// time-out Visa Card Dispute Network Event, which represents that the user did not
 	// respond to the re-presentment by the merchant within the time limit.
-	RepresentmentTimedOut interface{} `json:"representment_timed_out,required,nullable"`
+	RepresentmentTimedOut CardDisputeVisaNetworkEventsRepresentmentTimedOut `json:"representment_timed_out,required,nullable"`
 	// A Card Dispute User Pre-Arbitration Accepted Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_accepted`. Contains the details specific to a user
 	// prearbitration accepted Visa Card Dispute Network Event, which represents that
 	// the merchant has accepted the user's prearbitration request in the user's favor.
-	UserPrearbitrationAccepted interface{} `json:"user_prearbitration_accepted,required,nullable"`
+	UserPrearbitrationAccepted CardDisputeVisaNetworkEventsUserPrearbitrationAccepted `json:"user_prearbitration_accepted,required,nullable"`
 	// A Card Dispute User Pre-Arbitration Declined Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_declined`. Contains the details specific to a user
 	// prearbitration declined Visa Card Dispute Network Event, which represents that
 	// the merchant has declined the user's prearbitration request.
-	UserPrearbitrationDeclined interface{} `json:"user_prearbitration_declined,required,nullable"`
+	UserPrearbitrationDeclined CardDisputeVisaNetworkEventsUserPrearbitrationDeclined `json:"user_prearbitration_declined,required,nullable"`
 	// A Card Dispute User Pre-Arbitration Submitted Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_submitted`. Contains the details specific to a user
 	// prearbitration submitted Visa Card Dispute Network Event, which represents that
 	// the user's request for prearbitration has been submitted to the network.
-	UserPrearbitrationSubmitted interface{} `json:"user_prearbitration_submitted,required,nullable"`
+	UserPrearbitrationSubmitted CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted `json:"user_prearbitration_submitted,required,nullable"`
 	// A Card Dispute User Pre-Arbitration Timed Out Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_timed_out`. Contains the details specific to a user
 	// prearbitration timed out Visa Card Dispute Network Event, which represents that
 	// the merchant has timed out responding to the user's prearbitration request.
-	UserPrearbitrationTimedOut interface{} `json:"user_prearbitration_timed_out,required,nullable"`
+	UserPrearbitrationTimedOut CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut `json:"user_prearbitration_timed_out,required,nullable"`
 	// A Card Dispute User Withdrawal Submitted Visa Network Event object. This field
 	// will be present in the JSON response if and only if `category` is equal to
 	// `user_withdrawal_submitted`. Contains the details specific to a user withdrawal
 	// submitted Visa Card Dispute Network Event, which represents that the user's
 	// request to withdraw the dispute has been submitted to the network.
-	UserWithdrawalSubmitted interface{}                     `json:"user_withdrawal_submitted,required,nullable"`
-	JSON                    cardDisputeVisaNetworkEventJSON `json:"-"`
+	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted,required,nullable"`
+	JSON                    cardDisputeVisaNetworkEventJSON                     `json:"-"`
 }
 
 // cardDisputeVisaNetworkEventJSON contains the JSON metadata for the struct
@@ -479,6 +479,104 @@ func (r CardDisputeVisaNetworkEventsCategory) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A Card Dispute Chargeback Accepted Visa Network Event object. This field will be
+// present in the JSON response if and only if `category` is equal to
+// `chargeback_accepted`. Contains the details specific to a chargeback accepted
+// Visa Card Dispute Network Event, which represents that a chargeback has been
+// accepted by the merchant.
+type CardDisputeVisaNetworkEventsChargebackAccepted struct {
+	JSON cardDisputeVisaNetworkEventsChargebackAcceptedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsChargebackAcceptedJSON contains the JSON metadata
+// for the struct [CardDisputeVisaNetworkEventsChargebackAccepted]
+type cardDisputeVisaNetworkEventsChargebackAcceptedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsChargebackAccepted) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsChargebackAcceptedJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute Chargeback Submitted Visa Network Event object. This field will
+// be present in the JSON response if and only if `category` is equal to
+// `chargeback_submitted`. Contains the details specific to a chargeback submitted
+// Visa Card Dispute Network Event, which represents that a chargeback has been
+// submitted to the network.
+type CardDisputeVisaNetworkEventsChargebackSubmitted struct {
+	JSON cardDisputeVisaNetworkEventsChargebackSubmittedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsChargebackSubmittedJSON contains the JSON metadata
+// for the struct [CardDisputeVisaNetworkEventsChargebackSubmitted]
+type cardDisputeVisaNetworkEventsChargebackSubmittedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsChargebackSubmitted) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsChargebackSubmittedJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute Chargeback Timed Out Visa Network Event object. This field will
+// be present in the JSON response if and only if `category` is equal to
+// `chargeback_timed_out`. Contains the details specific to a chargeback timed out
+// Visa Card Dispute Network Event, which represents that the chargeback has timed
+// out in the user's favor.
+type CardDisputeVisaNetworkEventsChargebackTimedOut struct {
+	JSON cardDisputeVisaNetworkEventsChargebackTimedOutJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsChargebackTimedOutJSON contains the JSON metadata
+// for the struct [CardDisputeVisaNetworkEventsChargebackTimedOut]
+type cardDisputeVisaNetworkEventsChargebackTimedOutJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsChargebackTimedOut) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsChargebackTimedOutJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute Merchant Pre-Arbitration Decline Submitted Visa Network Event
+// object. This field will be present in the JSON response if and only if
+// `category` is equal to `merchant_prearbitration_decline_submitted`. Contains the
+// details specific to a merchant prearbitration decline submitted Visa Card
+// Dispute Network Event, which represents that the user has declined the
+// merchant's request for a prearbitration request decision in their favor.
+type CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted struct {
+	JSON cardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmittedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmittedJSON contains
+// the JSON metadata for the struct
+// [CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted]
+type cardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmittedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmittedJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Dispute Merchant Pre-Arbitration Received Visa Network Event object. This
@@ -831,6 +929,32 @@ func (r CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedReason) IsKnow
 	return false
 }
 
+// A Card Dispute Merchant Pre-Arbitration Timed Out Visa Network Event object.
+// This field will be present in the JSON response if and only if `category` is
+// equal to `merchant_prearbitration_timed_out`. Contains the details specific to a
+// merchant prearbitration timed out Visa Card Dispute Network Event, which
+// represents that the user has timed out responding to the merchant's
+// prearbitration request.
+type CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut struct {
+	JSON cardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOutJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOutJSON contains the JSON
+// metadata for the struct
+// [CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut]
+type cardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOutJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOutJSON) RawJSON() string {
+	return r.raw
+}
+
 // A Card Dispute Re-presented Visa Network Event object. This field will be
 // present in the JSON response if and only if `category` is equal to
 // `represented`. Contains the details specific to a re-presented Visa Card Dispute
@@ -847,7 +971,7 @@ type CardDisputeVisaNetworkEventsRepresented struct {
 	InvalidDispute CardDisputeVisaNetworkEventsRepresentedInvalidDispute `json:"invalid_dispute,required,nullable"`
 	// Non-fiat currency or non-fungible token as described details. Present if and
 	// only if `reason` is `non_fiat_currency_or_non_fungible_token_as_described`.
-	NonFiatCurrencyOrNonFungibleTokenAsDescribed interface{} `json:"non_fiat_currency_or_non_fungible_token_as_described,required,nullable"`
+	NonFiatCurrencyOrNonFungibleTokenAsDescribed CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed `json:"non_fiat_currency_or_non_fungible_token_as_described,required,nullable"`
 	// Non-fiat currency or non-fungible token received details. Present if and only if
 	// `reason` is `non_fiat_currency_or_non_fungible_token_received`.
 	NonFiatCurrencyOrNonFungibleTokenReceived CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceived `json:"non_fiat_currency_or_non_fungible_token_received,required,nullable"`
@@ -1021,6 +1145,28 @@ func (r CardDisputeVisaNetworkEventsRepresentedInvalidDisputeReason) IsKnown() b
 	return false
 }
 
+// Non-fiat currency or non-fungible token as described details. Present if and
+// only if `reason` is `non_fiat_currency_or_non_fungible_token_as_described`.
+type CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed struct {
+	JSON cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed]
+type cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribedJSON) RawJSON() string {
+	return r.raw
+}
+
 // Non-fiat currency or non-fungible token received details. Present if and only if
 // `reason` is `non_fiat_currency_or_non_fungible_token_received`.
 type CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceived struct {
@@ -1120,6 +1266,151 @@ func (r *CardDisputeVisaNetworkEventsRepresentedReversalIssued) UnmarshalJSON(da
 }
 
 func (r cardDisputeVisaNetworkEventsRepresentedReversalIssuedJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute Re-presentment Timed Out Visa Network Event object. This field
+// will be present in the JSON response if and only if `category` is equal to
+// `representment_timed_out`. Contains the details specific to a re-presentment
+// time-out Visa Card Dispute Network Event, which represents that the user did not
+// respond to the re-presentment by the merchant within the time limit.
+type CardDisputeVisaNetworkEventsRepresentmentTimedOut struct {
+	JSON cardDisputeVisaNetworkEventsRepresentmentTimedOutJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsRepresentmentTimedOutJSON contains the JSON metadata
+// for the struct [CardDisputeVisaNetworkEventsRepresentmentTimedOut]
+type cardDisputeVisaNetworkEventsRepresentmentTimedOutJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsRepresentmentTimedOut) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsRepresentmentTimedOutJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute User Pre-Arbitration Accepted Visa Network Event object. This
+// field will be present in the JSON response if and only if `category` is equal to
+// `user_prearbitration_accepted`. Contains the details specific to a user
+// prearbitration accepted Visa Card Dispute Network Event, which represents that
+// the merchant has accepted the user's prearbitration request in the user's favor.
+type CardDisputeVisaNetworkEventsUserPrearbitrationAccepted struct {
+	JSON cardDisputeVisaNetworkEventsUserPrearbitrationAcceptedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsUserPrearbitrationAcceptedJSON contains the JSON
+// metadata for the struct [CardDisputeVisaNetworkEventsUserPrearbitrationAccepted]
+type cardDisputeVisaNetworkEventsUserPrearbitrationAcceptedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsUserPrearbitrationAccepted) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsUserPrearbitrationAcceptedJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute User Pre-Arbitration Declined Visa Network Event object. This
+// field will be present in the JSON response if and only if `category` is equal to
+// `user_prearbitration_declined`. Contains the details specific to a user
+// prearbitration declined Visa Card Dispute Network Event, which represents that
+// the merchant has declined the user's prearbitration request.
+type CardDisputeVisaNetworkEventsUserPrearbitrationDeclined struct {
+	JSON cardDisputeVisaNetworkEventsUserPrearbitrationDeclinedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsUserPrearbitrationDeclinedJSON contains the JSON
+// metadata for the struct [CardDisputeVisaNetworkEventsUserPrearbitrationDeclined]
+type cardDisputeVisaNetworkEventsUserPrearbitrationDeclinedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsUserPrearbitrationDeclined) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsUserPrearbitrationDeclinedJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute User Pre-Arbitration Submitted Visa Network Event object. This
+// field will be present in the JSON response if and only if `category` is equal to
+// `user_prearbitration_submitted`. Contains the details specific to a user
+// prearbitration submitted Visa Card Dispute Network Event, which represents that
+// the user's request for prearbitration has been submitted to the network.
+type CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted struct {
+	JSON cardDisputeVisaNetworkEventsUserPrearbitrationSubmittedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsUserPrearbitrationSubmittedJSON contains the JSON
+// metadata for the struct
+// [CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted]
+type cardDisputeVisaNetworkEventsUserPrearbitrationSubmittedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsUserPrearbitrationSubmittedJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute User Pre-Arbitration Timed Out Visa Network Event object. This
+// field will be present in the JSON response if and only if `category` is equal to
+// `user_prearbitration_timed_out`. Contains the details specific to a user
+// prearbitration timed out Visa Card Dispute Network Event, which represents that
+// the merchant has timed out responding to the user's prearbitration request.
+type CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut struct {
+	JSON cardDisputeVisaNetworkEventsUserPrearbitrationTimedOutJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsUserPrearbitrationTimedOutJSON contains the JSON
+// metadata for the struct [CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut]
+type cardDisputeVisaNetworkEventsUserPrearbitrationTimedOutJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsUserPrearbitrationTimedOutJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Card Dispute User Withdrawal Submitted Visa Network Event object. This field
+// will be present in the JSON response if and only if `category` is equal to
+// `user_withdrawal_submitted`. Contains the details specific to a user withdrawal
+// submitted Visa Card Dispute Network Event, which represents that the user's
+// request to withdraw the dispute has been submitted to the network.
+type CardDisputeVisaNetworkEventsUserWithdrawalSubmitted struct {
+	JSON cardDisputeVisaNetworkEventsUserWithdrawalSubmittedJSON `json:"-"`
+}
+
+// cardDisputeVisaNetworkEventsUserWithdrawalSubmittedJSON contains the JSON
+// metadata for the struct [CardDisputeVisaNetworkEventsUserWithdrawalSubmitted]
+type cardDisputeVisaNetworkEventsUserWithdrawalSubmittedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaNetworkEventsUserWithdrawalSubmitted) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaNetworkEventsUserWithdrawalSubmittedJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1293,7 +1584,7 @@ type CardDisputeVisaUserSubmissionsChargeback struct {
 	ConsumerMerchandiseNotReceived CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceived `json:"consumer_merchandise_not_received,required,nullable"`
 	// Non-receipt of cash. Present if and only if `category` is
 	// `consumer_non_receipt_of_cash`.
-	ConsumerNonReceiptOfCash interface{} `json:"consumer_non_receipt_of_cash,required,nullable"`
+	ConsumerNonReceiptOfCash CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash `json:"consumer_non_receipt_of_cash,required,nullable"`
 	// Original Credit Transaction (OCT) not accepted. Present if and only if
 	// `category` is `consumer_original_credit_transaction_not_accepted`.
 	ConsumerOriginalCreditTransactionNotAccepted CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAccepted `json:"consumer_original_credit_transaction_not_accepted,required,nullable"`
@@ -1435,7 +1726,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandise struct 
 	// Merchant resolution attempted.
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned interface{} `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturned `json:"not_returned,required,nullable"`
 	// Purchase explanation.
 	PurchaseExplanation string `json:"purchase_explanation,required"`
 	// Received or expected at.
@@ -1552,6 +1843,27 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseMerch
 		return true
 	}
 	return false
+}
+
+// Not returned. Present if and only if `return_outcome` is `not_returned`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturned struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturnedJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturnedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturned]
+type cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturnedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturned) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturnedJSON) RawJSON() string {
+	return r.raw
 }
 
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
@@ -1782,14 +2094,14 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServices struct {
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// Other service type explanation. Present if and only if `service_type` is
 	// `other`.
-	Other interface{} `json:"other,required,nullable"`
+	Other CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOther `json:"other,required,nullable"`
 	// Purchase explanation.
 	PurchaseExplanation string `json:"purchase_explanation,required"`
 	// Service type.
 	ServiceType CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesServiceType `json:"service_type,required"`
 	// Timeshare explanation. Present if and only if `service_type` is `timeshare`.
-	Timeshare interface{}                                                          `json:"timeshare,required,nullable"`
-	JSON      cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesJSON `json:"-"`
+	Timeshare CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshare `json:"timeshare,required,nullable"`
+	JSON      cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesJSON      `json:"-"`
 }
 
 // cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesJSON contains
@@ -1920,6 +2232,28 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesMerchant
 	return false
 }
 
+// Other service type explanation. Present if and only if `service_type` is
+// `other`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOther struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOtherJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOtherJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOther]
+type cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOtherJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOther) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOtherJSON) RawJSON() string {
+	return r.raw
+}
+
 // Service type.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesServiceType string
 
@@ -1935,6 +2269,27 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesServiceT
 		return true
 	}
 	return false
+}
+
+// Timeshare explanation. Present if and only if `service_type` is `timeshare`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshare struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshareJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshareJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshare]
+type cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshareJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshare) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshareJSON) RawJSON() string {
+	return r.raw
 }
 
 // Counterfeit merchandise. Present if and only if `category` is
@@ -2005,7 +2360,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandi
 	// Merchant resolution attempted.
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned interface{} `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned `json:"not_returned,required,nullable"`
 	// Order and issue explanation.
 	OrderAndIssueExplanation string `json:"order_and_issue_explanation,required"`
 	// Received at.
@@ -2056,6 +2411,27 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMercha
 		return true
 	}
 	return false
+}
+
+// Not returned. Present if and only if `return_outcome` is `not_returned`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturnedJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturnedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned]
+type cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturnedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturnedJSON) RawJSON() string {
+	return r.raw
 }
 
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
@@ -2191,7 +2567,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentatio
 	// Misrepresentation explanation.
 	MisrepresentationExplanation string `json:"misrepresentation_explanation,required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned interface{} `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturned `json:"not_returned,required,nullable"`
 	// Purchase explanation.
 	PurchaseExplanation string `json:"purchase_explanation,required"`
 	// Received at.
@@ -2243,6 +2619,27 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresenta
 		return true
 	}
 	return false
+}
+
+// Not returned. Present if and only if `return_outcome` is `not_returned`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturned struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturnedJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturnedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturned]
+type cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturnedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturned) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturnedJSON) RawJSON() string {
+	return r.raw
 }
 
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
@@ -2571,7 +2968,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceived stru
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// No cancellation. Present if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation interface{} `json:"no_cancellation,required,nullable"`
+	NoCancellation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellation `json:"no_cancellation,required,nullable"`
 	// Purchase information and explanation.
 	PurchaseInfoAndExplanation string                                                                     `json:"purchase_info_and_explanation,required"`
 	JSON                       cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedJSON `json:"-"`
@@ -2653,7 +3050,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelay
 	// Explanation.
 	Explanation string `json:"explanation,required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned interface{} `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturned `json:"not_returned,required,nullable"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted `json:"return_attempted,required,nullable"`
 	// Return outcome.
@@ -2681,6 +3078,27 @@ func (r *CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedD
 }
 
 func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedJSON) RawJSON() string {
+	return r.raw
+}
+
+// Not returned. Present if and only if `return_outcome` is `not_returned`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturned struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturnedJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturnedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturned]
+type cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturnedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturned) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturnedJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -2834,6 +3252,50 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMe
 	return false
 }
 
+// No cancellation. Present if and only if `cancellation_outcome` is
+// `no_cancellation`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellation struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellationJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellationJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellation]
+type cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellationJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellation) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellationJSON) RawJSON() string {
+	return r.raw
+}
+
+// Non-receipt of cash. Present if and only if `category` is
+// `consumer_non_receipt_of_cash`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON contains
+// the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash]
+type cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON) RawJSON() string {
+	return r.raw
+}
+
 // Original Credit Transaction (OCT) not accepted. Present if and only if
 // `category` is `consumer_original_credit_transaction_not_accepted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAccepted struct {
@@ -2886,7 +3348,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandise struct {
 	// Merchant resolution attempted.
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned interface{} `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturned `json:"not_returned,required,nullable"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
 	OngoingNegotiations CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseOngoingNegotiations `json:"ongoing_negotiations,required,nullable"`
 	// Purchase information and quality issue.
@@ -2941,6 +3403,27 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseMercha
 		return true
 	}
 	return false
+}
+
+// Not returned. Present if and only if `return_outcome` is `not_returned`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturned struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturnedJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturnedJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturned]
+type cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturnedJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturned) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturnedJSON) RawJSON() string {
+	return r.raw
 }
 
 // Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -3480,7 +3963,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceived struct 
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// No cancellation. Present if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation interface{} `json:"no_cancellation,required,nullable"`
+	NoCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellation `json:"no_cancellation,required,nullable"`
 	// Purchase information and explanation.
 	PurchaseInfoAndExplanation string                                                                  `json:"purchase_info_and_explanation,required"`
 	JSON                       cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedJSON `json:"-"`
@@ -3593,6 +4076,28 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerch
 		return true
 	}
 	return false
+}
+
+// No cancellation. Present if and only if `cancellation_outcome` is
+// `no_cancellation`.
+type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellation struct {
+	JSON cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellationJSON `json:"-"`
+}
+
+// cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellationJSON
+// contains the JSON metadata for the struct
+// [CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellation]
+type cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellationJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellation) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellationJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fraud. Present if and only if `category` is `fraud`.
@@ -4055,7 +4560,7 @@ type CardDisputeNewParamsVisa struct {
 	ConsumerMerchandiseNotReceived param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceived] `json:"consumer_merchandise_not_received"`
 	// Non-receipt of cash. Required if and only if `category` is
 	// `consumer_non_receipt_of_cash`.
-	ConsumerNonReceiptOfCash param.Field[interface{}] `json:"consumer_non_receipt_of_cash"`
+	ConsumerNonReceiptOfCash param.Field[CardDisputeNewParamsVisaConsumerNonReceiptOfCash] `json:"consumer_non_receipt_of_cash"`
 	// Original Credit Transaction (OCT) not accepted. Required if and only if
 	// `category` is `consumer_original_credit_transaction_not_accepted`.
 	ConsumerOriginalCreditTransactionNotAccepted param.Field[CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAccepted] `json:"consumer_original_credit_transaction_not_accepted"`
@@ -4158,7 +4663,7 @@ type CardDisputeNewParamsVisaConsumerCanceledMerchandise struct {
 	// Cardholder cancellation.
 	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellation] `json:"cardholder_cancellation"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttempted] `json:"return_attempted"`
@@ -4249,6 +4754,14 @@ func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellatio
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeNewParamsVisaConsumerCanceledMerchandiseNotReturned struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -4396,9 +4909,9 @@ type CardDisputeNewParamsVisaConsumerCanceledServices struct {
 	GuaranteedReservation param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservation] `json:"guaranteed_reservation"`
 	// Other service type explanation. Required if and only if `service_type` is
 	// `other`.
-	Other param.Field[interface{}] `json:"other"`
+	Other param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesOther] `json:"other"`
 	// Timeshare explanation. Required if and only if `service_type` is `timeshare`.
-	Timeshare param.Field[interface{}] `json:"timeshare"`
+	Timeshare param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesTimeshare] `json:"timeshare"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerCanceledServices) MarshalJSON() (data []byte, err error) {
@@ -4496,6 +5009,23 @@ func (r CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservationExp
 	return false
 }
 
+// Other service type explanation. Required if and only if `service_type` is
+// `other`.
+type CardDisputeNewParamsVisaConsumerCanceledServicesOther struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerCanceledServicesOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Timeshare explanation. Required if and only if `service_type` is `timeshare`.
+type CardDisputeNewParamsVisaConsumerCanceledServicesTimeshare struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerCanceledServicesTimeshare) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Counterfeit merchandise. Required if and only if `category` is
 // `consumer_counterfeit_merchandise`.
 type CardDisputeNewParamsVisaConsumerCounterfeitMerchandise struct {
@@ -4538,7 +5068,7 @@ type CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandise struct {
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttempted] `json:"return_attempted"`
@@ -4581,6 +5111,14 @@ func (r CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnOutco
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseNotReturned struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -4671,7 +5209,7 @@ type CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentation struct {
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttempted] `json:"return_attempted"`
@@ -4714,6 +5252,14 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnOutcom
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationNotReturned struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -4942,7 +5488,7 @@ type CardDisputeNewParamsVisaConsumerMerchandiseNotReceived struct {
 	MerchantCancellation param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantCancellation] `json:"merchant_cancellation"`
 	// No cancellation. Required if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation param.Field[interface{}] `json:"no_cancellation"`
+	NoCancellation param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedNoCancellation] `json:"no_cancellation"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceived) MarshalJSON() (data []byte, err error) {
@@ -5018,7 +5564,7 @@ type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayed struct {
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnAttempted] `json:"return_attempted"`
@@ -5045,6 +5591,14 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnOutco
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedNotReturned struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -5092,6 +5646,24 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantCancellati
 	return apijson.MarshalRoot(r)
 }
 
+// No cancellation. Required if and only if `cancellation_outcome` is
+// `no_cancellation`.
+type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedNoCancellation struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedNoCancellation) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Non-receipt of cash. Required if and only if `category` is
+// `consumer_non_receipt_of_cash`.
+type CardDisputeNewParamsVisaConsumerNonReceiptOfCash struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerNonReceiptOfCash) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Original Credit Transaction (OCT) not accepted. Required if and only if
 // `category` is `consumer_original_credit_transaction_not_accepted`.
 type CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAccepted struct {
@@ -5135,7 +5707,7 @@ type CardDisputeNewParamsVisaConsumerQualityMerchandise struct {
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseNotReturned] `json:"not_returned"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
 	OngoingNegotiations param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseOngoingNegotiations] `json:"ongoing_negotiations"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -5180,6 +5752,14 @@ func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnOutcome) IsKnown
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeNewParamsVisaConsumerQualityMerchandiseNotReturned struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -5536,7 +6116,7 @@ type CardDisputeNewParamsVisaConsumerServicesNotReceived struct {
 	MerchantCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantCancellation] `json:"merchant_cancellation"`
 	// No cancellation. Required if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation param.Field[interface{}] `json:"no_cancellation"`
+	NoCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedNoCancellation] `json:"no_cancellation"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesNotReceived) MarshalJSON() (data []byte, err error) {
@@ -5597,6 +6177,15 @@ type CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantCancellation str
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantCancellation) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// No cancellation. Required if and only if `cancellation_outcome` is
+// `no_cancellation`.
+type CardDisputeNewParamsVisaConsumerServicesNotReceivedNoCancellation struct {
+}
+
+func (r CardDisputeNewParamsVisaConsumerServicesNotReceivedNoCancellation) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -5946,7 +6535,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargeback struct {
 	ConsumerMerchandiseNotReceived param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceived] `json:"consumer_merchandise_not_received"`
 	// Non-receipt of cash. Required if and only if `category` is
 	// `consumer_non_receipt_of_cash`.
-	ConsumerNonReceiptOfCash param.Field[interface{}] `json:"consumer_non_receipt_of_cash"`
+	ConsumerNonReceiptOfCash param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerNonReceiptOfCash] `json:"consumer_non_receipt_of_cash"`
 	// Original Credit Transaction (OCT) not accepted. Required if and only if
 	// `category` is `consumer_original_credit_transaction_not_accepted`.
 	ConsumerOriginalCreditTransactionNotAccepted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAccepted] `json:"consumer_original_credit_transaction_not_accepted"`
@@ -6049,7 +6638,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchand
 	// Cardholder cancellation.
 	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellation] `json:"cardholder_cancellation"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttempted] `json:"return_attempted"`
@@ -6140,6 +6729,14 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerch
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseNotReturned struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -6287,9 +6884,9 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServices
 	GuaranteedReservation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservation] `json:"guaranteed_reservation"`
 	// Other service type explanation. Required if and only if `service_type` is
 	// `other`.
-	Other param.Field[interface{}] `json:"other"`
+	Other param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesOther] `json:"other"`
 	// Timeshare explanation. Required if and only if `service_type` is `timeshare`.
-	Timeshare param.Field[interface{}] `json:"timeshare"`
+	Timeshare param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesTimeshare] `json:"timeshare"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServices) MarshalJSON() (data []byte, err error) {
@@ -6387,6 +6984,23 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServi
 	return false
 }
 
+// Other service type explanation. Required if and only if `service_type` is
+// `other`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesOther struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Timeshare explanation. Required if and only if `service_type` is `timeshare`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesTimeshare struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesTimeshare) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Counterfeit merchandise. Required if and only if `category` is
 // `consumer_counterfeit_merchandise`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCounterfeitMerchandise struct {
@@ -6429,7 +7043,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefecti
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted] `json:"return_attempted"`
@@ -6472,6 +7086,14 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefe
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -6562,7 +7184,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisre
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttempted] `json:"return_attempted"`
@@ -6605,6 +7227,14 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMi
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationNotReturned struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -6833,7 +7463,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotRe
 	MerchantCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedMerchantCancellation] `json:"merchant_cancellation"`
 	// No cancellation. Required if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation param.Field[interface{}] `json:"no_cancellation"`
+	NoCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedNoCancellation] `json:"no_cancellation"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceived) MarshalJSON() (data []byte, err error) {
@@ -6909,7 +7539,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotRe
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted] `json:"return_attempted"`
@@ -6936,6 +7566,14 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedNotReturned struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Return attempted. Required if and only if `return_outcome` is
@@ -6983,6 +7621,24 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 	return apijson.MarshalRoot(r)
 }
 
+// No cancellation. Required if and only if `cancellation_outcome` is
+// `no_cancellation`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedNoCancellation struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedNoCancellation) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Non-receipt of cash. Required if and only if `category` is
+// `consumer_non_receipt_of_cash`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerNonReceiptOfCash struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerNonReceiptOfCash) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Original Credit Transaction (OCT) not accepted. Required if and only if
 // `category` is `consumer_original_credit_transaction_not_accepted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAccepted struct {
@@ -7026,7 +7682,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandi
 	// Return outcome.
 	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnOutcome] `json:"return_outcome,required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
-	NotReturned param.Field[interface{}] `json:"not_returned"`
+	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseNotReturned] `json:"not_returned"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
 	OngoingNegotiations param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseOngoingNegotiations] `json:"ongoing_negotiations"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -7071,6 +7727,14 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMercha
 		return true
 	}
 	return false
+}
+
+// Not returned. Required if and only if `return_outcome` is `not_returned`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseNotReturned struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseNotReturned) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -7427,7 +8091,7 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotRecei
 	MerchantCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantCancellation] `json:"merchant_cancellation"`
 	// No cancellation. Required if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation param.Field[interface{}] `json:"no_cancellation"`
+	NoCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedNoCancellation] `json:"no_cancellation"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceived) MarshalJSON() (data []byte, err error) {
@@ -7488,6 +8152,15 @@ type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotRecei
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantCancellation) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// No cancellation. Required if and only if `cancellation_outcome` is
+// `no_cancellation`.
+type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedNoCancellation struct {
+}
+
+func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedNoCancellation) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

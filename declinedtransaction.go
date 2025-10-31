@@ -206,7 +206,7 @@ type DeclinedTransactionSource struct {
 	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other interface{} `json:"other,required,nullable"`
+	Other DeclinedTransactionSourceOther `json:"other,required,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
 	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
@@ -885,7 +885,7 @@ type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category DeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse DeclinedTransactionSourceCardDeclineNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
@@ -923,6 +923,27 @@ func (r DeclinedTransactionSourceCardDeclineNetworkDetailsCategory) IsKnown() bo
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type DeclinedTransactionSourceCardDeclineNetworkDetailsPulse struct {
+	JSON declinedTransactionSourceCardDeclineNetworkDetailsPulseJSON `json:"-"`
+}
+
+// declinedTransactionSourceCardDeclineNetworkDetailsPulseJSON contains the JSON
+// metadata for the struct
+// [DeclinedTransactionSourceCardDeclineNetworkDetailsPulse]
+type declinedTransactionSourceCardDeclineNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -1609,6 +1630,27 @@ func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason) I
 		return true
 	}
 	return false
+}
+
+// If the category of this Transaction source is equal to `other`, this field will
+// contain an empty object, otherwise it will contain null.
+type DeclinedTransactionSourceOther struct {
+	JSON declinedTransactionSourceOtherJSON `json:"-"`
+}
+
+// declinedTransactionSourceOtherJSON contains the JSON metadata for the struct
+// [DeclinedTransactionSourceOther]
+type declinedTransactionSourceOtherJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceOther) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceOtherJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Wire Decline object. This field will be present in the JSON response if and

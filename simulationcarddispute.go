@@ -86,34 +86,34 @@ type SimulationCardDisputeActionParamsVisa struct {
 	Action param.Field[SimulationCardDisputeActionParamsVisaAction] `json:"action,required"`
 	// The parameters for accepting the chargeback. Required if and only if `action` is
 	// `accept_chargeback`.
-	AcceptChargeback param.Field[interface{}] `json:"accept_chargeback"`
+	AcceptChargeback param.Field[SimulationCardDisputeActionParamsVisaAcceptChargeback] `json:"accept_chargeback"`
 	// The parameters for accepting the user submission. Required if and only if
 	// `action` is `accept_user_submission`.
-	AcceptUserSubmission param.Field[interface{}] `json:"accept_user_submission"`
+	AcceptUserSubmission param.Field[SimulationCardDisputeActionParamsVisaAcceptUserSubmission] `json:"accept_user_submission"`
 	// The parameters for declining the prearbitration. Required if and only if
 	// `action` is `decline_user_prearbitration`.
-	DeclineUserPrearbitration param.Field[interface{}] `json:"decline_user_prearbitration"`
+	DeclineUserPrearbitration param.Field[SimulationCardDisputeActionParamsVisaDeclineUserPrearbitration] `json:"decline_user_prearbitration"`
 	// The parameters for receiving the prearbitration. Required if and only if
 	// `action` is `receive_merchant_prearbitration`.
-	ReceiveMerchantPrearbitration param.Field[interface{}] `json:"receive_merchant_prearbitration"`
+	ReceiveMerchantPrearbitration param.Field[SimulationCardDisputeActionParamsVisaReceiveMerchantPrearbitration] `json:"receive_merchant_prearbitration"`
 	// The parameters for re-presenting the dispute. Required if and only if `action`
 	// is `represent`.
-	Represent param.Field[interface{}] `json:"represent"`
+	Represent param.Field[SimulationCardDisputeActionParamsVisaRepresent] `json:"represent"`
 	// The parameters for requesting further information from the user. Required if and
 	// only if `action` is `request_further_information`.
 	RequestFurtherInformation param.Field[SimulationCardDisputeActionParamsVisaRequestFurtherInformation] `json:"request_further_information"`
 	// The parameters for timing out the chargeback. Required if and only if `action`
 	// is `time_out_chargeback`.
-	TimeOutChargeback param.Field[interface{}] `json:"time_out_chargeback"`
+	TimeOutChargeback param.Field[SimulationCardDisputeActionParamsVisaTimeOutChargeback] `json:"time_out_chargeback"`
 	// The parameters for timing out the merchant prearbitration. Required if and only
 	// if `action` is `time_out_merchant_prearbitration`.
-	TimeOutMerchantPrearbitration param.Field[interface{}] `json:"time_out_merchant_prearbitration"`
+	TimeOutMerchantPrearbitration param.Field[SimulationCardDisputeActionParamsVisaTimeOutMerchantPrearbitration] `json:"time_out_merchant_prearbitration"`
 	// The parameters for timing out the re-presentment. Required if and only if
 	// `action` is `time_out_representment`.
-	TimeOutRepresentment param.Field[interface{}] `json:"time_out_representment"`
+	TimeOutRepresentment param.Field[SimulationCardDisputeActionParamsVisaTimeOutRepresentment] `json:"time_out_representment"`
 	// The parameters for timing out the user prearbitration. Required if and only if
 	// `action` is `time_out_user_prearbitration`.
-	TimeOutUserPrearbitration param.Field[interface{}] `json:"time_out_user_prearbitration"`
+	TimeOutUserPrearbitration param.Field[SimulationCardDisputeActionParamsVisaTimeOutUserPrearbitration] `json:"time_out_user_prearbitration"`
 }
 
 func (r SimulationCardDisputeActionParamsVisa) MarshalJSON() (data []byte, err error) {
@@ -145,6 +145,51 @@ func (r SimulationCardDisputeActionParamsVisaAction) IsKnown() bool {
 	return false
 }
 
+// The parameters for accepting the chargeback. Required if and only if `action` is
+// `accept_chargeback`.
+type SimulationCardDisputeActionParamsVisaAcceptChargeback struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaAcceptChargeback) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for accepting the user submission. Required if and only if
+// `action` is `accept_user_submission`.
+type SimulationCardDisputeActionParamsVisaAcceptUserSubmission struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaAcceptUserSubmission) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for declining the prearbitration. Required if and only if
+// `action` is `decline_user_prearbitration`.
+type SimulationCardDisputeActionParamsVisaDeclineUserPrearbitration struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaDeclineUserPrearbitration) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for receiving the prearbitration. Required if and only if
+// `action` is `receive_merchant_prearbitration`.
+type SimulationCardDisputeActionParamsVisaReceiveMerchantPrearbitration struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaReceiveMerchantPrearbitration) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for re-presenting the dispute. Required if and only if `action`
+// is `represent`.
+type SimulationCardDisputeActionParamsVisaRepresent struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaRepresent) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // The parameters for requesting further information from the user. Required if and
 // only if `action` is `request_further_information`.
 type SimulationCardDisputeActionParamsVisaRequestFurtherInformation struct {
@@ -153,5 +198,41 @@ type SimulationCardDisputeActionParamsVisaRequestFurtherInformation struct {
 }
 
 func (r SimulationCardDisputeActionParamsVisaRequestFurtherInformation) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for timing out the chargeback. Required if and only if `action`
+// is `time_out_chargeback`.
+type SimulationCardDisputeActionParamsVisaTimeOutChargeback struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaTimeOutChargeback) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for timing out the merchant prearbitration. Required if and only
+// if `action` is `time_out_merchant_prearbitration`.
+type SimulationCardDisputeActionParamsVisaTimeOutMerchantPrearbitration struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaTimeOutMerchantPrearbitration) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for timing out the re-presentment. Required if and only if
+// `action` is `time_out_representment`.
+type SimulationCardDisputeActionParamsVisaTimeOutRepresentment struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaTimeOutRepresentment) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for timing out the user prearbitration. Required if and only if
+// `action` is `time_out_user_prearbitration`.
+type SimulationCardDisputeActionParamsVisaTimeOutUserPrearbitration struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaTimeOutUserPrearbitration) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

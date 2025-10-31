@@ -211,7 +211,7 @@ type ExportNewParams struct {
 	// `transaction_csv`.
 	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
 	// Options for the created export. Required if `category` is equal to `vendor_csv`.
-	VendorCsv param.Field[interface{}] `json:"vendor_csv"`
+	VendorCsv param.Field[ExportNewParamsVendorCsv] `json:"vendor_csv"`
 }
 
 func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
@@ -429,6 +429,14 @@ type ExportNewParamsTransactionCsvCreatedAt struct {
 }
 
 func (r ExportNewParamsTransactionCsvCreatedAt) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Options for the created export. Required if `category` is equal to `vendor_csv`.
+type ExportNewParamsVendorCsv struct {
+}
+
+func (r ExportNewParamsVendorCsv) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

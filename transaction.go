@@ -341,7 +341,7 @@ type TransactionSource struct {
 	InternalSource TransactionSourceInternalSource `json:"internal_source,required,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other interface{} `json:"other,required,nullable"`
+	Other TransactionSourceOther `json:"other,required,nullable"`
 	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
@@ -1415,7 +1415,7 @@ type TransactionSourceCardFinancialNetworkDetails struct {
 	// The payment network used to process this card authorization.
 	Category TransactionSourceCardFinancialNetworkDetailsCategory `json:"category,required"`
 	// Fields specific to the `pulse` network.
-	Pulse interface{} `json:"pulse,required,nullable"`
+	Pulse TransactionSourceCardFinancialNetworkDetailsPulse `json:"pulse,required,nullable"`
 	// Fields specific to the `visa` network.
 	Visa TransactionSourceCardFinancialNetworkDetailsVisa `json:"visa,required,nullable"`
 	JSON transactionSourceCardFinancialNetworkDetailsJSON `json:"-"`
@@ -1453,6 +1453,26 @@ func (r TransactionSourceCardFinancialNetworkDetailsCategory) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Fields specific to the `pulse` network.
+type TransactionSourceCardFinancialNetworkDetailsPulse struct {
+	JSON transactionSourceCardFinancialNetworkDetailsPulseJSON `json:"-"`
+}
+
+// transactionSourceCardFinancialNetworkDetailsPulseJSON contains the JSON metadata
+// for the struct [TransactionSourceCardFinancialNetworkDetailsPulse]
+type transactionSourceCardFinancialNetworkDetailsPulseJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardFinancialNetworkDetailsPulse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardFinancialNetworkDetailsPulseJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields specific to the `visa` network.
@@ -4750,6 +4770,27 @@ func (r TransactionSourceInternalSourceReason) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// If the category of this Transaction source is equal to `other`, this field will
+// contain an empty object, otherwise it will contain null.
+type TransactionSourceOther struct {
+	JSON transactionSourceOtherJSON `json:"-"`
+}
+
+// transactionSourceOtherJSON contains the JSON metadata for the struct
+// [TransactionSourceOther]
+type transactionSourceOtherJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceOther) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceOtherJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Real-Time Payments Transfer Acknowledgement object. This field will be present
