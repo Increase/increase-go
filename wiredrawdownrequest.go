@@ -253,14 +253,14 @@ type WireDrawdownRequestStatus string
 
 const (
 	WireDrawdownRequestStatusPendingSubmission WireDrawdownRequestStatus = "pending_submission"
-	WireDrawdownRequestStatusPendingResponse   WireDrawdownRequestStatus = "pending_response"
 	WireDrawdownRequestStatusFulfilled         WireDrawdownRequestStatus = "fulfilled"
+	WireDrawdownRequestStatusPendingResponse   WireDrawdownRequestStatus = "pending_response"
 	WireDrawdownRequestStatusRefused           WireDrawdownRequestStatus = "refused"
 )
 
 func (r WireDrawdownRequestStatus) IsKnown() bool {
 	switch r {
-	case WireDrawdownRequestStatusPendingSubmission, WireDrawdownRequestStatusPendingResponse, WireDrawdownRequestStatusFulfilled, WireDrawdownRequestStatusRefused:
+	case WireDrawdownRequestStatusPendingSubmission, WireDrawdownRequestStatusFulfilled, WireDrawdownRequestStatusPendingResponse, WireDrawdownRequestStatusRefused:
 		return true
 	}
 	return false
@@ -422,14 +422,14 @@ type WireDrawdownRequestListParamsStatusIn string
 
 const (
 	WireDrawdownRequestListParamsStatusInPendingSubmission WireDrawdownRequestListParamsStatusIn = "pending_submission"
-	WireDrawdownRequestListParamsStatusInPendingResponse   WireDrawdownRequestListParamsStatusIn = "pending_response"
 	WireDrawdownRequestListParamsStatusInFulfilled         WireDrawdownRequestListParamsStatusIn = "fulfilled"
+	WireDrawdownRequestListParamsStatusInPendingResponse   WireDrawdownRequestListParamsStatusIn = "pending_response"
 	WireDrawdownRequestListParamsStatusInRefused           WireDrawdownRequestListParamsStatusIn = "refused"
 )
 
 func (r WireDrawdownRequestListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case WireDrawdownRequestListParamsStatusInPendingSubmission, WireDrawdownRequestListParamsStatusInPendingResponse, WireDrawdownRequestListParamsStatusInFulfilled, WireDrawdownRequestListParamsStatusInRefused:
+	case WireDrawdownRequestListParamsStatusInPendingSubmission, WireDrawdownRequestListParamsStatusInFulfilled, WireDrawdownRequestListParamsStatusInPendingResponse, WireDrawdownRequestListParamsStatusInRefused:
 		return true
 	}
 	return false
