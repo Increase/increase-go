@@ -78,9 +78,9 @@ func TestLockboxUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"lockbox_3xt21ok13q19advds4t5",
 		increase.LockboxUpdateParams{
-			Description:   increase.F("x"),
-			RecipientName: increase.F("x"),
-			Status:        increase.F(increase.LockboxUpdateParamsStatusInactive),
+			CheckDepositBehavior: increase.F(increase.LockboxUpdateParamsCheckDepositBehaviorDisabled),
+			Description:          increase.F("x"),
+			RecipientName:        increase.F("x"),
 		},
 	)
 	if err != nil {
