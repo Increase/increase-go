@@ -220,17 +220,12 @@ func (r checkDepositDepositAcceptanceJSON) RawJSON() string {
 type CheckDepositDepositAcceptanceCurrency string
 
 const (
-	CheckDepositDepositAcceptanceCurrencyCad CheckDepositDepositAcceptanceCurrency = "CAD"
-	CheckDepositDepositAcceptanceCurrencyChf CheckDepositDepositAcceptanceCurrency = "CHF"
-	CheckDepositDepositAcceptanceCurrencyEur CheckDepositDepositAcceptanceCurrency = "EUR"
-	CheckDepositDepositAcceptanceCurrencyGbp CheckDepositDepositAcceptanceCurrency = "GBP"
-	CheckDepositDepositAcceptanceCurrencyJpy CheckDepositDepositAcceptanceCurrency = "JPY"
 	CheckDepositDepositAcceptanceCurrencyUsd CheckDepositDepositAcceptanceCurrency = "USD"
 )
 
 func (r CheckDepositDepositAcceptanceCurrency) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositAcceptanceCurrencyCad, CheckDepositDepositAcceptanceCurrencyChf, CheckDepositDepositAcceptanceCurrencyEur, CheckDepositDepositAcceptanceCurrencyGbp, CheckDepositDepositAcceptanceCurrencyJpy, CheckDepositDepositAcceptanceCurrencyUsd:
+	case CheckDepositDepositAcceptanceCurrencyUsd:
 		return true
 	}
 	return false
@@ -284,17 +279,12 @@ func (r checkDepositDepositRejectionJSON) RawJSON() string {
 type CheckDepositDepositRejectionCurrency string
 
 const (
-	CheckDepositDepositRejectionCurrencyCad CheckDepositDepositRejectionCurrency = "CAD"
-	CheckDepositDepositRejectionCurrencyChf CheckDepositDepositRejectionCurrency = "CHF"
-	CheckDepositDepositRejectionCurrencyEur CheckDepositDepositRejectionCurrency = "EUR"
-	CheckDepositDepositRejectionCurrencyGbp CheckDepositDepositRejectionCurrency = "GBP"
-	CheckDepositDepositRejectionCurrencyJpy CheckDepositDepositRejectionCurrency = "JPY"
 	CheckDepositDepositRejectionCurrencyUsd CheckDepositDepositRejectionCurrency = "USD"
 )
 
 func (r CheckDepositDepositRejectionCurrency) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositRejectionCurrencyCad, CheckDepositDepositRejectionCurrencyChf, CheckDepositDepositRejectionCurrencyEur, CheckDepositDepositRejectionCurrencyGbp, CheckDepositDepositRejectionCurrencyJpy, CheckDepositDepositRejectionCurrencyUsd:
+	case CheckDepositDepositRejectionCurrencyUsd:
 		return true
 	}
 	return false
@@ -374,17 +364,12 @@ func (r checkDepositDepositReturnJSON) RawJSON() string {
 type CheckDepositDepositReturnCurrency string
 
 const (
-	CheckDepositDepositReturnCurrencyCad CheckDepositDepositReturnCurrency = "CAD"
-	CheckDepositDepositReturnCurrencyChf CheckDepositDepositReturnCurrency = "CHF"
-	CheckDepositDepositReturnCurrencyEur CheckDepositDepositReturnCurrency = "EUR"
-	CheckDepositDepositReturnCurrencyGbp CheckDepositDepositReturnCurrency = "GBP"
-	CheckDepositDepositReturnCurrencyJpy CheckDepositDepositReturnCurrency = "JPY"
 	CheckDepositDepositReturnCurrencyUsd CheckDepositDepositReturnCurrency = "USD"
 )
 
 func (r CheckDepositDepositReturnCurrency) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositReturnCurrencyCad, CheckDepositDepositReturnCurrencyChf, CheckDepositDepositReturnCurrencyEur, CheckDepositDepositReturnCurrencyGbp, CheckDepositDepositReturnCurrencyJpy, CheckDepositDepositReturnCurrencyUsd:
+	case CheckDepositDepositReturnCurrencyUsd:
 		return true
 	}
 	return false
@@ -524,17 +509,12 @@ func (r checkDepositInboundFundsHoldJSON) RawJSON() string {
 type CheckDepositInboundFundsHoldCurrency string
 
 const (
-	CheckDepositInboundFundsHoldCurrencyCad CheckDepositInboundFundsHoldCurrency = "CAD"
-	CheckDepositInboundFundsHoldCurrencyChf CheckDepositInboundFundsHoldCurrency = "CHF"
-	CheckDepositInboundFundsHoldCurrencyEur CheckDepositInboundFundsHoldCurrency = "EUR"
-	CheckDepositInboundFundsHoldCurrencyGbp CheckDepositInboundFundsHoldCurrency = "GBP"
-	CheckDepositInboundFundsHoldCurrencyJpy CheckDepositInboundFundsHoldCurrency = "JPY"
 	CheckDepositInboundFundsHoldCurrencyUsd CheckDepositInboundFundsHoldCurrency = "USD"
 )
 
 func (r CheckDepositInboundFundsHoldCurrency) IsKnown() bool {
 	switch r {
-	case CheckDepositInboundFundsHoldCurrencyCad, CheckDepositInboundFundsHoldCurrencyChf, CheckDepositInboundFundsHoldCurrencyEur, CheckDepositInboundFundsHoldCurrencyGbp, CheckDepositInboundFundsHoldCurrencyJpy, CheckDepositInboundFundsHoldCurrencyUsd:
+	case CheckDepositInboundFundsHoldCurrencyUsd:
 		return true
 	}
 	return false

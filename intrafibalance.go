@@ -158,17 +158,12 @@ func (r intrafiBalanceBalancesBankLocationJSON) RawJSON() string {
 type IntrafiBalanceCurrency string
 
 const (
-	IntrafiBalanceCurrencyCad IntrafiBalanceCurrency = "CAD"
-	IntrafiBalanceCurrencyChf IntrafiBalanceCurrency = "CHF"
-	IntrafiBalanceCurrencyEur IntrafiBalanceCurrency = "EUR"
-	IntrafiBalanceCurrencyGbp IntrafiBalanceCurrency = "GBP"
-	IntrafiBalanceCurrencyJpy IntrafiBalanceCurrency = "JPY"
 	IntrafiBalanceCurrencyUsd IntrafiBalanceCurrency = "USD"
 )
 
 func (r IntrafiBalanceCurrency) IsKnown() bool {
 	switch r {
-	case IntrafiBalanceCurrencyCad, IntrafiBalanceCurrencyChf, IntrafiBalanceCurrencyEur, IntrafiBalanceCurrencyGbp, IntrafiBalanceCurrencyJpy, IntrafiBalanceCurrencyUsd:
+	case IntrafiBalanceCurrencyUsd:
 		return true
 	}
 	return false

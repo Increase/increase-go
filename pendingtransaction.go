@@ -182,17 +182,12 @@ func (r pendingTransactionJSON) RawJSON() string {
 type PendingTransactionCurrency string
 
 const (
-	PendingTransactionCurrencyCad PendingTransactionCurrency = "CAD"
-	PendingTransactionCurrencyChf PendingTransactionCurrency = "CHF"
-	PendingTransactionCurrencyEur PendingTransactionCurrency = "EUR"
-	PendingTransactionCurrencyGbp PendingTransactionCurrency = "GBP"
-	PendingTransactionCurrencyJpy PendingTransactionCurrency = "JPY"
 	PendingTransactionCurrencyUsd PendingTransactionCurrency = "USD"
 )
 
 func (r PendingTransactionCurrency) IsKnown() bool {
 	switch r {
-	case PendingTransactionCurrencyCad, PendingTransactionCurrencyChf, PendingTransactionCurrencyEur, PendingTransactionCurrencyGbp, PendingTransactionCurrencyJpy, PendingTransactionCurrencyUsd:
+	case PendingTransactionCurrencyUsd:
 		return true
 	}
 	return false
@@ -344,17 +339,12 @@ func (r pendingTransactionSourceAccountTransferInstructionJSON) RawJSON() string
 type PendingTransactionSourceAccountTransferInstructionCurrency string
 
 const (
-	PendingTransactionSourceAccountTransferInstructionCurrencyCad PendingTransactionSourceAccountTransferInstructionCurrency = "CAD"
-	PendingTransactionSourceAccountTransferInstructionCurrencyChf PendingTransactionSourceAccountTransferInstructionCurrency = "CHF"
-	PendingTransactionSourceAccountTransferInstructionCurrencyEur PendingTransactionSourceAccountTransferInstructionCurrency = "EUR"
-	PendingTransactionSourceAccountTransferInstructionCurrencyGbp PendingTransactionSourceAccountTransferInstructionCurrency = "GBP"
-	PendingTransactionSourceAccountTransferInstructionCurrencyJpy PendingTransactionSourceAccountTransferInstructionCurrency = "JPY"
 	PendingTransactionSourceAccountTransferInstructionCurrencyUsd PendingTransactionSourceAccountTransferInstructionCurrency = "USD"
 )
 
 func (r PendingTransactionSourceAccountTransferInstructionCurrency) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceAccountTransferInstructionCurrencyCad, PendingTransactionSourceAccountTransferInstructionCurrencyChf, PendingTransactionSourceAccountTransferInstructionCurrencyEur, PendingTransactionSourceAccountTransferInstructionCurrencyGbp, PendingTransactionSourceAccountTransferInstructionCurrencyJpy, PendingTransactionSourceAccountTransferInstructionCurrencyUsd:
+	case PendingTransactionSourceAccountTransferInstructionCurrencyUsd:
 		return true
 	}
 	return false
@@ -891,17 +881,12 @@ func (r pendingTransactionSourceCardAuthorizationAdditionalAmountsVisionJSON) Ra
 type PendingTransactionSourceCardAuthorizationCurrency string
 
 const (
-	PendingTransactionSourceCardAuthorizationCurrencyCad PendingTransactionSourceCardAuthorizationCurrency = "CAD"
-	PendingTransactionSourceCardAuthorizationCurrencyChf PendingTransactionSourceCardAuthorizationCurrency = "CHF"
-	PendingTransactionSourceCardAuthorizationCurrencyEur PendingTransactionSourceCardAuthorizationCurrency = "EUR"
-	PendingTransactionSourceCardAuthorizationCurrencyGbp PendingTransactionSourceCardAuthorizationCurrency = "GBP"
-	PendingTransactionSourceCardAuthorizationCurrencyJpy PendingTransactionSourceCardAuthorizationCurrency = "JPY"
 	PendingTransactionSourceCardAuthorizationCurrencyUsd PendingTransactionSourceCardAuthorizationCurrency = "USD"
 )
 
 func (r PendingTransactionSourceCardAuthorizationCurrency) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCardAuthorizationCurrencyCad, PendingTransactionSourceCardAuthorizationCurrencyChf, PendingTransactionSourceCardAuthorizationCurrencyEur, PendingTransactionSourceCardAuthorizationCurrencyGbp, PendingTransactionSourceCardAuthorizationCurrencyJpy, PendingTransactionSourceCardAuthorizationCurrencyUsd:
+	case PendingTransactionSourceCardAuthorizationCurrencyUsd:
 		return true
 	}
 	return false
@@ -1403,17 +1388,12 @@ func (r pendingTransactionSourceCheckDepositInstructionJSON) RawJSON() string {
 type PendingTransactionSourceCheckDepositInstructionCurrency string
 
 const (
-	PendingTransactionSourceCheckDepositInstructionCurrencyCad PendingTransactionSourceCheckDepositInstructionCurrency = "CAD"
-	PendingTransactionSourceCheckDepositInstructionCurrencyChf PendingTransactionSourceCheckDepositInstructionCurrency = "CHF"
-	PendingTransactionSourceCheckDepositInstructionCurrencyEur PendingTransactionSourceCheckDepositInstructionCurrency = "EUR"
-	PendingTransactionSourceCheckDepositInstructionCurrencyGbp PendingTransactionSourceCheckDepositInstructionCurrency = "GBP"
-	PendingTransactionSourceCheckDepositInstructionCurrencyJpy PendingTransactionSourceCheckDepositInstructionCurrency = "JPY"
 	PendingTransactionSourceCheckDepositInstructionCurrencyUsd PendingTransactionSourceCheckDepositInstructionCurrency = "USD"
 )
 
 func (r PendingTransactionSourceCheckDepositInstructionCurrency) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCheckDepositInstructionCurrencyCad, PendingTransactionSourceCheckDepositInstructionCurrencyChf, PendingTransactionSourceCheckDepositInstructionCurrencyEur, PendingTransactionSourceCheckDepositInstructionCurrencyGbp, PendingTransactionSourceCheckDepositInstructionCurrencyJpy, PendingTransactionSourceCheckDepositInstructionCurrencyUsd:
+	case PendingTransactionSourceCheckDepositInstructionCurrencyUsd:
 		return true
 	}
 	return false
@@ -1456,17 +1436,12 @@ func (r pendingTransactionSourceCheckTransferInstructionJSON) RawJSON() string {
 type PendingTransactionSourceCheckTransferInstructionCurrency string
 
 const (
-	PendingTransactionSourceCheckTransferInstructionCurrencyCad PendingTransactionSourceCheckTransferInstructionCurrency = "CAD"
-	PendingTransactionSourceCheckTransferInstructionCurrencyChf PendingTransactionSourceCheckTransferInstructionCurrency = "CHF"
-	PendingTransactionSourceCheckTransferInstructionCurrencyEur PendingTransactionSourceCheckTransferInstructionCurrency = "EUR"
-	PendingTransactionSourceCheckTransferInstructionCurrencyGbp PendingTransactionSourceCheckTransferInstructionCurrency = "GBP"
-	PendingTransactionSourceCheckTransferInstructionCurrencyJpy PendingTransactionSourceCheckTransferInstructionCurrency = "JPY"
 	PendingTransactionSourceCheckTransferInstructionCurrencyUsd PendingTransactionSourceCheckTransferInstructionCurrency = "USD"
 )
 
 func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCheckTransferInstructionCurrencyCad, PendingTransactionSourceCheckTransferInstructionCurrencyChf, PendingTransactionSourceCheckTransferInstructionCurrencyEur, PendingTransactionSourceCheckTransferInstructionCurrencyGbp, PendingTransactionSourceCheckTransferInstructionCurrencyJpy, PendingTransactionSourceCheckTransferInstructionCurrencyUsd:
+	case PendingTransactionSourceCheckTransferInstructionCurrencyUsd:
 		return true
 	}
 	return false
@@ -1558,17 +1533,12 @@ func (r pendingTransactionSourceInboundFundsHoldJSON) RawJSON() string {
 type PendingTransactionSourceInboundFundsHoldCurrency string
 
 const (
-	PendingTransactionSourceInboundFundsHoldCurrencyCad PendingTransactionSourceInboundFundsHoldCurrency = "CAD"
-	PendingTransactionSourceInboundFundsHoldCurrencyChf PendingTransactionSourceInboundFundsHoldCurrency = "CHF"
-	PendingTransactionSourceInboundFundsHoldCurrencyEur PendingTransactionSourceInboundFundsHoldCurrency = "EUR"
-	PendingTransactionSourceInboundFundsHoldCurrencyGbp PendingTransactionSourceInboundFundsHoldCurrency = "GBP"
-	PendingTransactionSourceInboundFundsHoldCurrencyJpy PendingTransactionSourceInboundFundsHoldCurrency = "JPY"
 	PendingTransactionSourceInboundFundsHoldCurrencyUsd PendingTransactionSourceInboundFundsHoldCurrency = "USD"
 )
 
 func (r PendingTransactionSourceInboundFundsHoldCurrency) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceInboundFundsHoldCurrencyCad, PendingTransactionSourceInboundFundsHoldCurrencyChf, PendingTransactionSourceInboundFundsHoldCurrencyEur, PendingTransactionSourceInboundFundsHoldCurrencyGbp, PendingTransactionSourceInboundFundsHoldCurrencyJpy, PendingTransactionSourceInboundFundsHoldCurrencyUsd:
+	case PendingTransactionSourceInboundFundsHoldCurrencyUsd:
 		return true
 	}
 	return false

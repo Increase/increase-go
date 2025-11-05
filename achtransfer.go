@@ -611,17 +611,12 @@ func (r achTransferCreatedByUserJSON) RawJSON() string {
 type ACHTransferCurrency string
 
 const (
-	ACHTransferCurrencyCad ACHTransferCurrency = "CAD"
-	ACHTransferCurrencyChf ACHTransferCurrency = "CHF"
-	ACHTransferCurrencyEur ACHTransferCurrency = "EUR"
-	ACHTransferCurrencyGbp ACHTransferCurrency = "GBP"
-	ACHTransferCurrencyJpy ACHTransferCurrency = "JPY"
 	ACHTransferCurrencyUsd ACHTransferCurrency = "USD"
 )
 
 func (r ACHTransferCurrency) IsKnown() bool {
 	switch r {
-	case ACHTransferCurrencyCad, ACHTransferCurrencyChf, ACHTransferCurrencyEur, ACHTransferCurrencyGbp, ACHTransferCurrencyJpy, ACHTransferCurrencyUsd:
+	case ACHTransferCurrencyUsd:
 		return true
 	}
 	return false
@@ -721,17 +716,12 @@ func (r achTransferInboundFundsHoldJSON) RawJSON() string {
 type ACHTransferInboundFundsHoldCurrency string
 
 const (
-	ACHTransferInboundFundsHoldCurrencyCad ACHTransferInboundFundsHoldCurrency = "CAD"
-	ACHTransferInboundFundsHoldCurrencyChf ACHTransferInboundFundsHoldCurrency = "CHF"
-	ACHTransferInboundFundsHoldCurrencyEur ACHTransferInboundFundsHoldCurrency = "EUR"
-	ACHTransferInboundFundsHoldCurrencyGbp ACHTransferInboundFundsHoldCurrency = "GBP"
-	ACHTransferInboundFundsHoldCurrencyJpy ACHTransferInboundFundsHoldCurrency = "JPY"
 	ACHTransferInboundFundsHoldCurrencyUsd ACHTransferInboundFundsHoldCurrency = "USD"
 )
 
 func (r ACHTransferInboundFundsHoldCurrency) IsKnown() bool {
 	switch r {
-	case ACHTransferInboundFundsHoldCurrencyCad, ACHTransferInboundFundsHoldCurrencyChf, ACHTransferInboundFundsHoldCurrencyEur, ACHTransferInboundFundsHoldCurrencyGbp, ACHTransferInboundFundsHoldCurrencyJpy, ACHTransferInboundFundsHoldCurrencyUsd:
+	case ACHTransferInboundFundsHoldCurrencyUsd:
 		return true
 	}
 	return false

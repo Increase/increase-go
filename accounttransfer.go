@@ -373,17 +373,12 @@ func (r accountTransferCreatedByUserJSON) RawJSON() string {
 type AccountTransferCurrency string
 
 const (
-	AccountTransferCurrencyCad AccountTransferCurrency = "CAD"
-	AccountTransferCurrencyChf AccountTransferCurrency = "CHF"
-	AccountTransferCurrencyEur AccountTransferCurrency = "EUR"
-	AccountTransferCurrencyGbp AccountTransferCurrency = "GBP"
-	AccountTransferCurrencyJpy AccountTransferCurrency = "JPY"
 	AccountTransferCurrencyUsd AccountTransferCurrency = "USD"
 )
 
 func (r AccountTransferCurrency) IsKnown() bool {
 	switch r {
-	case AccountTransferCurrencyCad, AccountTransferCurrencyChf, AccountTransferCurrencyEur, AccountTransferCurrencyGbp, AccountTransferCurrencyJpy, AccountTransferCurrencyUsd:
+	case AccountTransferCurrencyUsd:
 		return true
 	}
 	return false

@@ -985,17 +985,12 @@ func (r cardPaymentElementsCardAuthorizationAdditionalAmountsVisionJSON) RawJSON
 type CardPaymentElementsCardAuthorizationCurrency string
 
 const (
-	CardPaymentElementsCardAuthorizationCurrencyCad CardPaymentElementsCardAuthorizationCurrency = "CAD"
-	CardPaymentElementsCardAuthorizationCurrencyChf CardPaymentElementsCardAuthorizationCurrency = "CHF"
-	CardPaymentElementsCardAuthorizationCurrencyEur CardPaymentElementsCardAuthorizationCurrency = "EUR"
-	CardPaymentElementsCardAuthorizationCurrencyGbp CardPaymentElementsCardAuthorizationCurrency = "GBP"
-	CardPaymentElementsCardAuthorizationCurrencyJpy CardPaymentElementsCardAuthorizationCurrency = "JPY"
 	CardPaymentElementsCardAuthorizationCurrencyUsd CardPaymentElementsCardAuthorizationCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardAuthorizationCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthorizationCurrencyCad, CardPaymentElementsCardAuthorizationCurrencyChf, CardPaymentElementsCardAuthorizationCurrencyEur, CardPaymentElementsCardAuthorizationCurrencyGbp, CardPaymentElementsCardAuthorizationCurrencyJpy, CardPaymentElementsCardAuthorizationCurrencyUsd:
+	case CardPaymentElementsCardAuthorizationCurrencyUsd:
 		return true
 	}
 	return false
@@ -1443,17 +1438,12 @@ func (r cardPaymentElementsCardAuthorizationExpirationJSON) RawJSON() string {
 type CardPaymentElementsCardAuthorizationExpirationCurrency string
 
 const (
-	CardPaymentElementsCardAuthorizationExpirationCurrencyCad CardPaymentElementsCardAuthorizationExpirationCurrency = "CAD"
-	CardPaymentElementsCardAuthorizationExpirationCurrencyChf CardPaymentElementsCardAuthorizationExpirationCurrency = "CHF"
-	CardPaymentElementsCardAuthorizationExpirationCurrencyEur CardPaymentElementsCardAuthorizationExpirationCurrency = "EUR"
-	CardPaymentElementsCardAuthorizationExpirationCurrencyGbp CardPaymentElementsCardAuthorizationExpirationCurrency = "GBP"
-	CardPaymentElementsCardAuthorizationExpirationCurrencyJpy CardPaymentElementsCardAuthorizationExpirationCurrency = "JPY"
 	CardPaymentElementsCardAuthorizationExpirationCurrencyUsd CardPaymentElementsCardAuthorizationExpirationCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardAuthorizationExpirationCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthorizationExpirationCurrencyCad, CardPaymentElementsCardAuthorizationExpirationCurrencyChf, CardPaymentElementsCardAuthorizationExpirationCurrencyEur, CardPaymentElementsCardAuthorizationExpirationCurrencyGbp, CardPaymentElementsCardAuthorizationExpirationCurrencyJpy, CardPaymentElementsCardAuthorizationExpirationCurrencyUsd:
+	case CardPaymentElementsCardAuthorizationExpirationCurrencyUsd:
 		return true
 	}
 	return false
@@ -1989,17 +1979,12 @@ func (r cardPaymentElementsCardDeclineAdditionalAmountsVisionJSON) RawJSON() str
 type CardPaymentElementsCardDeclineCurrency string
 
 const (
-	CardPaymentElementsCardDeclineCurrencyCad CardPaymentElementsCardDeclineCurrency = "CAD"
-	CardPaymentElementsCardDeclineCurrencyChf CardPaymentElementsCardDeclineCurrency = "CHF"
-	CardPaymentElementsCardDeclineCurrencyEur CardPaymentElementsCardDeclineCurrency = "EUR"
-	CardPaymentElementsCardDeclineCurrencyGbp CardPaymentElementsCardDeclineCurrency = "GBP"
-	CardPaymentElementsCardDeclineCurrencyJpy CardPaymentElementsCardDeclineCurrency = "JPY"
 	CardPaymentElementsCardDeclineCurrencyUsd CardPaymentElementsCardDeclineCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardDeclineCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardDeclineCurrencyCad, CardPaymentElementsCardDeclineCurrencyChf, CardPaymentElementsCardDeclineCurrencyEur, CardPaymentElementsCardDeclineCurrencyGbp, CardPaymentElementsCardDeclineCurrencyJpy, CardPaymentElementsCardDeclineCurrencyUsd:
+	case CardPaymentElementsCardDeclineCurrencyUsd:
 		return true
 	}
 	return false
@@ -2932,17 +2917,12 @@ func (r cardPaymentElementsCardFinancialAdditionalAmountsVisionJSON) RawJSON() s
 type CardPaymentElementsCardFinancialCurrency string
 
 const (
-	CardPaymentElementsCardFinancialCurrencyCad CardPaymentElementsCardFinancialCurrency = "CAD"
-	CardPaymentElementsCardFinancialCurrencyChf CardPaymentElementsCardFinancialCurrency = "CHF"
-	CardPaymentElementsCardFinancialCurrencyEur CardPaymentElementsCardFinancialCurrency = "EUR"
-	CardPaymentElementsCardFinancialCurrencyGbp CardPaymentElementsCardFinancialCurrency = "GBP"
-	CardPaymentElementsCardFinancialCurrencyJpy CardPaymentElementsCardFinancialCurrency = "JPY"
 	CardPaymentElementsCardFinancialCurrencyUsd CardPaymentElementsCardFinancialCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardFinancialCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardFinancialCurrencyCad, CardPaymentElementsCardFinancialCurrencyChf, CardPaymentElementsCardFinancialCurrencyEur, CardPaymentElementsCardFinancialCurrencyGbp, CardPaymentElementsCardFinancialCurrencyJpy, CardPaymentElementsCardFinancialCurrencyUsd:
+	case CardPaymentElementsCardFinancialCurrencyUsd:
 		return true
 	}
 	return false
@@ -3396,17 +3376,12 @@ func (r cardPaymentElementsCardFuelConfirmationJSON) RawJSON() string {
 type CardPaymentElementsCardFuelConfirmationCurrency string
 
 const (
-	CardPaymentElementsCardFuelConfirmationCurrencyCad CardPaymentElementsCardFuelConfirmationCurrency = "CAD"
-	CardPaymentElementsCardFuelConfirmationCurrencyChf CardPaymentElementsCardFuelConfirmationCurrency = "CHF"
-	CardPaymentElementsCardFuelConfirmationCurrencyEur CardPaymentElementsCardFuelConfirmationCurrency = "EUR"
-	CardPaymentElementsCardFuelConfirmationCurrencyGbp CardPaymentElementsCardFuelConfirmationCurrency = "GBP"
-	CardPaymentElementsCardFuelConfirmationCurrencyJpy CardPaymentElementsCardFuelConfirmationCurrency = "JPY"
 	CardPaymentElementsCardFuelConfirmationCurrencyUsd CardPaymentElementsCardFuelConfirmationCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardFuelConfirmationCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardFuelConfirmationCurrencyCad, CardPaymentElementsCardFuelConfirmationCurrencyChf, CardPaymentElementsCardFuelConfirmationCurrencyEur, CardPaymentElementsCardFuelConfirmationCurrencyGbp, CardPaymentElementsCardFuelConfirmationCurrencyJpy, CardPaymentElementsCardFuelConfirmationCurrencyUsd:
+	case CardPaymentElementsCardFuelConfirmationCurrencyUsd:
 		return true
 	}
 	return false
@@ -3936,17 +3911,12 @@ func (r cardPaymentElementsCardIncrementAdditionalAmountsVisionJSON) RawJSON() s
 type CardPaymentElementsCardIncrementCurrency string
 
 const (
-	CardPaymentElementsCardIncrementCurrencyCad CardPaymentElementsCardIncrementCurrency = "CAD"
-	CardPaymentElementsCardIncrementCurrencyChf CardPaymentElementsCardIncrementCurrency = "CHF"
-	CardPaymentElementsCardIncrementCurrencyEur CardPaymentElementsCardIncrementCurrency = "EUR"
-	CardPaymentElementsCardIncrementCurrencyGbp CardPaymentElementsCardIncrementCurrency = "GBP"
-	CardPaymentElementsCardIncrementCurrencyJpy CardPaymentElementsCardIncrementCurrency = "JPY"
 	CardPaymentElementsCardIncrementCurrencyUsd CardPaymentElementsCardIncrementCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardIncrementCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardIncrementCurrencyCad, CardPaymentElementsCardIncrementCurrencyChf, CardPaymentElementsCardIncrementCurrencyEur, CardPaymentElementsCardIncrementCurrencyGbp, CardPaymentElementsCardIncrementCurrencyJpy, CardPaymentElementsCardIncrementCurrencyUsd:
+	case CardPaymentElementsCardIncrementCurrencyUsd:
 		return true
 	}
 	return false
@@ -4143,17 +4113,12 @@ func (r cardPaymentElementsCardRefundCashbackJSON) RawJSON() string {
 type CardPaymentElementsCardRefundCashbackCurrency string
 
 const (
-	CardPaymentElementsCardRefundCashbackCurrencyCad CardPaymentElementsCardRefundCashbackCurrency = "CAD"
-	CardPaymentElementsCardRefundCashbackCurrencyChf CardPaymentElementsCardRefundCashbackCurrency = "CHF"
-	CardPaymentElementsCardRefundCashbackCurrencyEur CardPaymentElementsCardRefundCashbackCurrency = "EUR"
-	CardPaymentElementsCardRefundCashbackCurrencyGbp CardPaymentElementsCardRefundCashbackCurrency = "GBP"
-	CardPaymentElementsCardRefundCashbackCurrencyJpy CardPaymentElementsCardRefundCashbackCurrency = "JPY"
 	CardPaymentElementsCardRefundCashbackCurrencyUsd CardPaymentElementsCardRefundCashbackCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardRefundCashbackCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardRefundCashbackCurrencyCad, CardPaymentElementsCardRefundCashbackCurrencyChf, CardPaymentElementsCardRefundCashbackCurrencyEur, CardPaymentElementsCardRefundCashbackCurrencyGbp, CardPaymentElementsCardRefundCashbackCurrencyJpy, CardPaymentElementsCardRefundCashbackCurrencyUsd:
+	case CardPaymentElementsCardRefundCashbackCurrencyUsd:
 		return true
 	}
 	return false
@@ -4164,17 +4129,12 @@ func (r CardPaymentElementsCardRefundCashbackCurrency) IsKnown() bool {
 type CardPaymentElementsCardRefundCurrency string
 
 const (
-	CardPaymentElementsCardRefundCurrencyCad CardPaymentElementsCardRefundCurrency = "CAD"
-	CardPaymentElementsCardRefundCurrencyChf CardPaymentElementsCardRefundCurrency = "CHF"
-	CardPaymentElementsCardRefundCurrencyEur CardPaymentElementsCardRefundCurrency = "EUR"
-	CardPaymentElementsCardRefundCurrencyGbp CardPaymentElementsCardRefundCurrency = "GBP"
-	CardPaymentElementsCardRefundCurrencyJpy CardPaymentElementsCardRefundCurrency = "JPY"
 	CardPaymentElementsCardRefundCurrencyUsd CardPaymentElementsCardRefundCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardRefundCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardRefundCurrencyCad, CardPaymentElementsCardRefundCurrencyChf, CardPaymentElementsCardRefundCurrencyEur, CardPaymentElementsCardRefundCurrencyGbp, CardPaymentElementsCardRefundCurrencyJpy, CardPaymentElementsCardRefundCurrencyUsd:
+	case CardPaymentElementsCardRefundCurrencyUsd:
 		return true
 	}
 	return false
@@ -4218,17 +4178,12 @@ func (r cardPaymentElementsCardRefundInterchangeJSON) RawJSON() string {
 type CardPaymentElementsCardRefundInterchangeCurrency string
 
 const (
-	CardPaymentElementsCardRefundInterchangeCurrencyCad CardPaymentElementsCardRefundInterchangeCurrency = "CAD"
-	CardPaymentElementsCardRefundInterchangeCurrencyChf CardPaymentElementsCardRefundInterchangeCurrency = "CHF"
-	CardPaymentElementsCardRefundInterchangeCurrencyEur CardPaymentElementsCardRefundInterchangeCurrency = "EUR"
-	CardPaymentElementsCardRefundInterchangeCurrencyGbp CardPaymentElementsCardRefundInterchangeCurrency = "GBP"
-	CardPaymentElementsCardRefundInterchangeCurrencyJpy CardPaymentElementsCardRefundInterchangeCurrency = "JPY"
 	CardPaymentElementsCardRefundInterchangeCurrencyUsd CardPaymentElementsCardRefundInterchangeCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardRefundInterchangeCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardRefundInterchangeCurrencyCad, CardPaymentElementsCardRefundInterchangeCurrencyChf, CardPaymentElementsCardRefundInterchangeCurrencyEur, CardPaymentElementsCardRefundInterchangeCurrencyGbp, CardPaymentElementsCardRefundInterchangeCurrencyJpy, CardPaymentElementsCardRefundInterchangeCurrencyUsd:
+	case CardPaymentElementsCardRefundInterchangeCurrencyUsd:
 		return true
 	}
 	return false
@@ -4969,17 +4924,12 @@ func (r cardPaymentElementsCardReversalJSON) RawJSON() string {
 type CardPaymentElementsCardReversalCurrency string
 
 const (
-	CardPaymentElementsCardReversalCurrencyCad CardPaymentElementsCardReversalCurrency = "CAD"
-	CardPaymentElementsCardReversalCurrencyChf CardPaymentElementsCardReversalCurrency = "CHF"
-	CardPaymentElementsCardReversalCurrencyEur CardPaymentElementsCardReversalCurrency = "EUR"
-	CardPaymentElementsCardReversalCurrencyGbp CardPaymentElementsCardReversalCurrency = "GBP"
-	CardPaymentElementsCardReversalCurrencyJpy CardPaymentElementsCardReversalCurrency = "JPY"
 	CardPaymentElementsCardReversalCurrencyUsd CardPaymentElementsCardReversalCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardReversalCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardReversalCurrencyCad, CardPaymentElementsCardReversalCurrencyChf, CardPaymentElementsCardReversalCurrencyEur, CardPaymentElementsCardReversalCurrencyGbp, CardPaymentElementsCardReversalCurrencyJpy, CardPaymentElementsCardReversalCurrencyUsd:
+	case CardPaymentElementsCardReversalCurrencyUsd:
 		return true
 	}
 	return false
@@ -5209,17 +5159,12 @@ func (r cardPaymentElementsCardSettlementCashbackJSON) RawJSON() string {
 type CardPaymentElementsCardSettlementCashbackCurrency string
 
 const (
-	CardPaymentElementsCardSettlementCashbackCurrencyCad CardPaymentElementsCardSettlementCashbackCurrency = "CAD"
-	CardPaymentElementsCardSettlementCashbackCurrencyChf CardPaymentElementsCardSettlementCashbackCurrency = "CHF"
-	CardPaymentElementsCardSettlementCashbackCurrencyEur CardPaymentElementsCardSettlementCashbackCurrency = "EUR"
-	CardPaymentElementsCardSettlementCashbackCurrencyGbp CardPaymentElementsCardSettlementCashbackCurrency = "GBP"
-	CardPaymentElementsCardSettlementCashbackCurrencyJpy CardPaymentElementsCardSettlementCashbackCurrency = "JPY"
 	CardPaymentElementsCardSettlementCashbackCurrencyUsd CardPaymentElementsCardSettlementCashbackCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardSettlementCashbackCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardSettlementCashbackCurrencyCad, CardPaymentElementsCardSettlementCashbackCurrencyChf, CardPaymentElementsCardSettlementCashbackCurrencyEur, CardPaymentElementsCardSettlementCashbackCurrencyGbp, CardPaymentElementsCardSettlementCashbackCurrencyJpy, CardPaymentElementsCardSettlementCashbackCurrencyUsd:
+	case CardPaymentElementsCardSettlementCashbackCurrencyUsd:
 		return true
 	}
 	return false
@@ -5230,17 +5175,12 @@ func (r CardPaymentElementsCardSettlementCashbackCurrency) IsKnown() bool {
 type CardPaymentElementsCardSettlementCurrency string
 
 const (
-	CardPaymentElementsCardSettlementCurrencyCad CardPaymentElementsCardSettlementCurrency = "CAD"
-	CardPaymentElementsCardSettlementCurrencyChf CardPaymentElementsCardSettlementCurrency = "CHF"
-	CardPaymentElementsCardSettlementCurrencyEur CardPaymentElementsCardSettlementCurrency = "EUR"
-	CardPaymentElementsCardSettlementCurrencyGbp CardPaymentElementsCardSettlementCurrency = "GBP"
-	CardPaymentElementsCardSettlementCurrencyJpy CardPaymentElementsCardSettlementCurrency = "JPY"
 	CardPaymentElementsCardSettlementCurrencyUsd CardPaymentElementsCardSettlementCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardSettlementCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardSettlementCurrencyCad, CardPaymentElementsCardSettlementCurrencyChf, CardPaymentElementsCardSettlementCurrencyEur, CardPaymentElementsCardSettlementCurrencyGbp, CardPaymentElementsCardSettlementCurrencyJpy, CardPaymentElementsCardSettlementCurrencyUsd:
+	case CardPaymentElementsCardSettlementCurrencyUsd:
 		return true
 	}
 	return false
@@ -5284,17 +5224,12 @@ func (r cardPaymentElementsCardSettlementInterchangeJSON) RawJSON() string {
 type CardPaymentElementsCardSettlementInterchangeCurrency string
 
 const (
-	CardPaymentElementsCardSettlementInterchangeCurrencyCad CardPaymentElementsCardSettlementInterchangeCurrency = "CAD"
-	CardPaymentElementsCardSettlementInterchangeCurrencyChf CardPaymentElementsCardSettlementInterchangeCurrency = "CHF"
-	CardPaymentElementsCardSettlementInterchangeCurrencyEur CardPaymentElementsCardSettlementInterchangeCurrency = "EUR"
-	CardPaymentElementsCardSettlementInterchangeCurrencyGbp CardPaymentElementsCardSettlementInterchangeCurrency = "GBP"
-	CardPaymentElementsCardSettlementInterchangeCurrencyJpy CardPaymentElementsCardSettlementInterchangeCurrency = "JPY"
 	CardPaymentElementsCardSettlementInterchangeCurrencyUsd CardPaymentElementsCardSettlementInterchangeCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardSettlementInterchangeCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardSettlementInterchangeCurrencyCad, CardPaymentElementsCardSettlementInterchangeCurrencyChf, CardPaymentElementsCardSettlementInterchangeCurrencyEur, CardPaymentElementsCardSettlementInterchangeCurrencyGbp, CardPaymentElementsCardSettlementInterchangeCurrencyJpy, CardPaymentElementsCardSettlementInterchangeCurrencyUsd:
+	case CardPaymentElementsCardSettlementInterchangeCurrencyUsd:
 		return true
 	}
 	return false
@@ -6456,17 +6391,12 @@ func (r cardPaymentElementsCardValidationAdditionalAmountsVisionJSON) RawJSON() 
 type CardPaymentElementsCardValidationCurrency string
 
 const (
-	CardPaymentElementsCardValidationCurrencyCad CardPaymentElementsCardValidationCurrency = "CAD"
-	CardPaymentElementsCardValidationCurrencyChf CardPaymentElementsCardValidationCurrency = "CHF"
-	CardPaymentElementsCardValidationCurrencyEur CardPaymentElementsCardValidationCurrency = "EUR"
-	CardPaymentElementsCardValidationCurrencyGbp CardPaymentElementsCardValidationCurrency = "GBP"
-	CardPaymentElementsCardValidationCurrencyJpy CardPaymentElementsCardValidationCurrency = "JPY"
 	CardPaymentElementsCardValidationCurrencyUsd CardPaymentElementsCardValidationCurrency = "USD"
 )
 
 func (r CardPaymentElementsCardValidationCurrency) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardValidationCurrencyCad, CardPaymentElementsCardValidationCurrencyChf, CardPaymentElementsCardValidationCurrencyEur, CardPaymentElementsCardValidationCurrencyGbp, CardPaymentElementsCardValidationCurrencyJpy, CardPaymentElementsCardValidationCurrencyUsd:
+	case CardPaymentElementsCardValidationCurrencyUsd:
 		return true
 	}
 	return false
