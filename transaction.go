@@ -142,17 +142,12 @@ func (r transactionJSON) RawJSON() string {
 type TransactionCurrency string
 
 const (
-	TransactionCurrencyCad TransactionCurrency = "CAD"
-	TransactionCurrencyChf TransactionCurrency = "CHF"
-	TransactionCurrencyEur TransactionCurrency = "EUR"
-	TransactionCurrencyGbp TransactionCurrency = "GBP"
-	TransactionCurrencyJpy TransactionCurrency = "JPY"
 	TransactionCurrencyUsd TransactionCurrency = "USD"
 )
 
 func (r TransactionCurrency) IsKnown() bool {
 	switch r {
-	case TransactionCurrencyCad, TransactionCurrencyChf, TransactionCurrencyEur, TransactionCurrencyGbp, TransactionCurrencyJpy, TransactionCurrencyUsd:
+	case TransactionCurrencyUsd:
 		return true
 	}
 	return false
@@ -502,17 +497,12 @@ func (r transactionSourceAccountTransferIntentionJSON) RawJSON() string {
 type TransactionSourceAccountTransferIntentionCurrency string
 
 const (
-	TransactionSourceAccountTransferIntentionCurrencyCad TransactionSourceAccountTransferIntentionCurrency = "CAD"
-	TransactionSourceAccountTransferIntentionCurrencyChf TransactionSourceAccountTransferIntentionCurrency = "CHF"
-	TransactionSourceAccountTransferIntentionCurrencyEur TransactionSourceAccountTransferIntentionCurrency = "EUR"
-	TransactionSourceAccountTransferIntentionCurrencyGbp TransactionSourceAccountTransferIntentionCurrency = "GBP"
-	TransactionSourceAccountTransferIntentionCurrencyJpy TransactionSourceAccountTransferIntentionCurrency = "JPY"
 	TransactionSourceAccountTransferIntentionCurrencyUsd TransactionSourceAccountTransferIntentionCurrency = "USD"
 )
 
 func (r TransactionSourceAccountTransferIntentionCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceAccountTransferIntentionCurrencyCad, TransactionSourceAccountTransferIntentionCurrencyChf, TransactionSourceAccountTransferIntentionCurrencyEur, TransactionSourceAccountTransferIntentionCurrencyGbp, TransactionSourceAccountTransferIntentionCurrencyJpy, TransactionSourceAccountTransferIntentionCurrencyUsd:
+	case TransactionSourceAccountTransferIntentionCurrencyUsd:
 		return true
 	}
 	return false
@@ -1377,17 +1367,12 @@ func (r transactionSourceCardFinancialAdditionalAmountsVisionJSON) RawJSON() str
 type TransactionSourceCardFinancialCurrency string
 
 const (
-	TransactionSourceCardFinancialCurrencyCad TransactionSourceCardFinancialCurrency = "CAD"
-	TransactionSourceCardFinancialCurrencyChf TransactionSourceCardFinancialCurrency = "CHF"
-	TransactionSourceCardFinancialCurrencyEur TransactionSourceCardFinancialCurrency = "EUR"
-	TransactionSourceCardFinancialCurrencyGbp TransactionSourceCardFinancialCurrency = "GBP"
-	TransactionSourceCardFinancialCurrencyJpy TransactionSourceCardFinancialCurrency = "JPY"
 	TransactionSourceCardFinancialCurrencyUsd TransactionSourceCardFinancialCurrency = "USD"
 )
 
 func (r TransactionSourceCardFinancialCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardFinancialCurrencyCad, TransactionSourceCardFinancialCurrencyChf, TransactionSourceCardFinancialCurrencyEur, TransactionSourceCardFinancialCurrencyGbp, TransactionSourceCardFinancialCurrencyJpy, TransactionSourceCardFinancialCurrencyUsd:
+	case TransactionSourceCardFinancialCurrencyUsd:
 		return true
 	}
 	return false
@@ -1936,17 +1921,12 @@ func (r transactionSourceCardRefundCashbackJSON) RawJSON() string {
 type TransactionSourceCardRefundCashbackCurrency string
 
 const (
-	TransactionSourceCardRefundCashbackCurrencyCad TransactionSourceCardRefundCashbackCurrency = "CAD"
-	TransactionSourceCardRefundCashbackCurrencyChf TransactionSourceCardRefundCashbackCurrency = "CHF"
-	TransactionSourceCardRefundCashbackCurrencyEur TransactionSourceCardRefundCashbackCurrency = "EUR"
-	TransactionSourceCardRefundCashbackCurrencyGbp TransactionSourceCardRefundCashbackCurrency = "GBP"
-	TransactionSourceCardRefundCashbackCurrencyJpy TransactionSourceCardRefundCashbackCurrency = "JPY"
 	TransactionSourceCardRefundCashbackCurrencyUsd TransactionSourceCardRefundCashbackCurrency = "USD"
 )
 
 func (r TransactionSourceCardRefundCashbackCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardRefundCashbackCurrencyCad, TransactionSourceCardRefundCashbackCurrencyChf, TransactionSourceCardRefundCashbackCurrencyEur, TransactionSourceCardRefundCashbackCurrencyGbp, TransactionSourceCardRefundCashbackCurrencyJpy, TransactionSourceCardRefundCashbackCurrencyUsd:
+	case TransactionSourceCardRefundCashbackCurrencyUsd:
 		return true
 	}
 	return false
@@ -1957,17 +1937,12 @@ func (r TransactionSourceCardRefundCashbackCurrency) IsKnown() bool {
 type TransactionSourceCardRefundCurrency string
 
 const (
-	TransactionSourceCardRefundCurrencyCad TransactionSourceCardRefundCurrency = "CAD"
-	TransactionSourceCardRefundCurrencyChf TransactionSourceCardRefundCurrency = "CHF"
-	TransactionSourceCardRefundCurrencyEur TransactionSourceCardRefundCurrency = "EUR"
-	TransactionSourceCardRefundCurrencyGbp TransactionSourceCardRefundCurrency = "GBP"
-	TransactionSourceCardRefundCurrencyJpy TransactionSourceCardRefundCurrency = "JPY"
 	TransactionSourceCardRefundCurrencyUsd TransactionSourceCardRefundCurrency = "USD"
 )
 
 func (r TransactionSourceCardRefundCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardRefundCurrencyCad, TransactionSourceCardRefundCurrencyChf, TransactionSourceCardRefundCurrencyEur, TransactionSourceCardRefundCurrencyGbp, TransactionSourceCardRefundCurrencyJpy, TransactionSourceCardRefundCurrencyUsd:
+	case TransactionSourceCardRefundCurrencyUsd:
 		return true
 	}
 	return false
@@ -2011,17 +1986,12 @@ func (r transactionSourceCardRefundInterchangeJSON) RawJSON() string {
 type TransactionSourceCardRefundInterchangeCurrency string
 
 const (
-	TransactionSourceCardRefundInterchangeCurrencyCad TransactionSourceCardRefundInterchangeCurrency = "CAD"
-	TransactionSourceCardRefundInterchangeCurrencyChf TransactionSourceCardRefundInterchangeCurrency = "CHF"
-	TransactionSourceCardRefundInterchangeCurrencyEur TransactionSourceCardRefundInterchangeCurrency = "EUR"
-	TransactionSourceCardRefundInterchangeCurrencyGbp TransactionSourceCardRefundInterchangeCurrency = "GBP"
-	TransactionSourceCardRefundInterchangeCurrencyJpy TransactionSourceCardRefundInterchangeCurrency = "JPY"
 	TransactionSourceCardRefundInterchangeCurrencyUsd TransactionSourceCardRefundInterchangeCurrency = "USD"
 )
 
 func (r TransactionSourceCardRefundInterchangeCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardRefundInterchangeCurrencyCad, TransactionSourceCardRefundInterchangeCurrencyChf, TransactionSourceCardRefundInterchangeCurrencyEur, TransactionSourceCardRefundInterchangeCurrencyGbp, TransactionSourceCardRefundInterchangeCurrencyJpy, TransactionSourceCardRefundInterchangeCurrencyUsd:
+	case TransactionSourceCardRefundInterchangeCurrencyUsd:
 		return true
 	}
 	return false
@@ -2705,17 +2675,12 @@ func (r transactionSourceCardRevenuePaymentJSON) RawJSON() string {
 type TransactionSourceCardRevenuePaymentCurrency string
 
 const (
-	TransactionSourceCardRevenuePaymentCurrencyCad TransactionSourceCardRevenuePaymentCurrency = "CAD"
-	TransactionSourceCardRevenuePaymentCurrencyChf TransactionSourceCardRevenuePaymentCurrency = "CHF"
-	TransactionSourceCardRevenuePaymentCurrencyEur TransactionSourceCardRevenuePaymentCurrency = "EUR"
-	TransactionSourceCardRevenuePaymentCurrencyGbp TransactionSourceCardRevenuePaymentCurrency = "GBP"
-	TransactionSourceCardRevenuePaymentCurrencyJpy TransactionSourceCardRevenuePaymentCurrency = "JPY"
 	TransactionSourceCardRevenuePaymentCurrencyUsd TransactionSourceCardRevenuePaymentCurrency = "USD"
 )
 
 func (r TransactionSourceCardRevenuePaymentCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardRevenuePaymentCurrencyCad, TransactionSourceCardRevenuePaymentCurrencyChf, TransactionSourceCardRevenuePaymentCurrencyEur, TransactionSourceCardRevenuePaymentCurrencyGbp, TransactionSourceCardRevenuePaymentCurrencyJpy, TransactionSourceCardRevenuePaymentCurrencyUsd:
+	case TransactionSourceCardRevenuePaymentCurrencyUsd:
 		return true
 	}
 	return false
@@ -2858,17 +2823,12 @@ func (r transactionSourceCardSettlementCashbackJSON) RawJSON() string {
 type TransactionSourceCardSettlementCashbackCurrency string
 
 const (
-	TransactionSourceCardSettlementCashbackCurrencyCad TransactionSourceCardSettlementCashbackCurrency = "CAD"
-	TransactionSourceCardSettlementCashbackCurrencyChf TransactionSourceCardSettlementCashbackCurrency = "CHF"
-	TransactionSourceCardSettlementCashbackCurrencyEur TransactionSourceCardSettlementCashbackCurrency = "EUR"
-	TransactionSourceCardSettlementCashbackCurrencyGbp TransactionSourceCardSettlementCashbackCurrency = "GBP"
-	TransactionSourceCardSettlementCashbackCurrencyJpy TransactionSourceCardSettlementCashbackCurrency = "JPY"
 	TransactionSourceCardSettlementCashbackCurrencyUsd TransactionSourceCardSettlementCashbackCurrency = "USD"
 )
 
 func (r TransactionSourceCardSettlementCashbackCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardSettlementCashbackCurrencyCad, TransactionSourceCardSettlementCashbackCurrencyChf, TransactionSourceCardSettlementCashbackCurrencyEur, TransactionSourceCardSettlementCashbackCurrencyGbp, TransactionSourceCardSettlementCashbackCurrencyJpy, TransactionSourceCardSettlementCashbackCurrencyUsd:
+	case TransactionSourceCardSettlementCashbackCurrencyUsd:
 		return true
 	}
 	return false
@@ -2879,17 +2839,12 @@ func (r TransactionSourceCardSettlementCashbackCurrency) IsKnown() bool {
 type TransactionSourceCardSettlementCurrency string
 
 const (
-	TransactionSourceCardSettlementCurrencyCad TransactionSourceCardSettlementCurrency = "CAD"
-	TransactionSourceCardSettlementCurrencyChf TransactionSourceCardSettlementCurrency = "CHF"
-	TransactionSourceCardSettlementCurrencyEur TransactionSourceCardSettlementCurrency = "EUR"
-	TransactionSourceCardSettlementCurrencyGbp TransactionSourceCardSettlementCurrency = "GBP"
-	TransactionSourceCardSettlementCurrencyJpy TransactionSourceCardSettlementCurrency = "JPY"
 	TransactionSourceCardSettlementCurrencyUsd TransactionSourceCardSettlementCurrency = "USD"
 )
 
 func (r TransactionSourceCardSettlementCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardSettlementCurrencyCad, TransactionSourceCardSettlementCurrencyChf, TransactionSourceCardSettlementCurrencyEur, TransactionSourceCardSettlementCurrencyGbp, TransactionSourceCardSettlementCurrencyJpy, TransactionSourceCardSettlementCurrencyUsd:
+	case TransactionSourceCardSettlementCurrencyUsd:
 		return true
 	}
 	return false
@@ -2933,17 +2888,12 @@ func (r transactionSourceCardSettlementInterchangeJSON) RawJSON() string {
 type TransactionSourceCardSettlementInterchangeCurrency string
 
 const (
-	TransactionSourceCardSettlementInterchangeCurrencyCad TransactionSourceCardSettlementInterchangeCurrency = "CAD"
-	TransactionSourceCardSettlementInterchangeCurrencyChf TransactionSourceCardSettlementInterchangeCurrency = "CHF"
-	TransactionSourceCardSettlementInterchangeCurrencyEur TransactionSourceCardSettlementInterchangeCurrency = "EUR"
-	TransactionSourceCardSettlementInterchangeCurrencyGbp TransactionSourceCardSettlementInterchangeCurrency = "GBP"
-	TransactionSourceCardSettlementInterchangeCurrencyJpy TransactionSourceCardSettlementInterchangeCurrency = "JPY"
 	TransactionSourceCardSettlementInterchangeCurrencyUsd TransactionSourceCardSettlementInterchangeCurrency = "USD"
 )
 
 func (r TransactionSourceCardSettlementInterchangeCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardSettlementInterchangeCurrencyCad, TransactionSourceCardSettlementInterchangeCurrencyChf, TransactionSourceCardSettlementInterchangeCurrencyEur, TransactionSourceCardSettlementInterchangeCurrencyGbp, TransactionSourceCardSettlementInterchangeCurrencyJpy, TransactionSourceCardSettlementInterchangeCurrencyUsd:
+	case TransactionSourceCardSettlementInterchangeCurrencyUsd:
 		return true
 	}
 	return false
@@ -3674,17 +3624,12 @@ func (r transactionSourceCashbackPaymentJSON) RawJSON() string {
 type TransactionSourceCashbackPaymentCurrency string
 
 const (
-	TransactionSourceCashbackPaymentCurrencyCad TransactionSourceCashbackPaymentCurrency = "CAD"
-	TransactionSourceCashbackPaymentCurrencyChf TransactionSourceCashbackPaymentCurrency = "CHF"
-	TransactionSourceCashbackPaymentCurrencyEur TransactionSourceCashbackPaymentCurrency = "EUR"
-	TransactionSourceCashbackPaymentCurrencyGbp TransactionSourceCashbackPaymentCurrency = "GBP"
-	TransactionSourceCashbackPaymentCurrencyJpy TransactionSourceCashbackPaymentCurrency = "JPY"
 	TransactionSourceCashbackPaymentCurrencyUsd TransactionSourceCashbackPaymentCurrency = "USD"
 )
 
 func (r TransactionSourceCashbackPaymentCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCashbackPaymentCurrencyCad, TransactionSourceCashbackPaymentCurrencyChf, TransactionSourceCashbackPaymentCurrencyEur, TransactionSourceCashbackPaymentCurrencyGbp, TransactionSourceCashbackPaymentCurrencyJpy, TransactionSourceCashbackPaymentCurrencyUsd:
+	case TransactionSourceCashbackPaymentCurrencyUsd:
 		return true
 	}
 	return false
@@ -3798,17 +3743,12 @@ func (r transactionSourceCheckDepositAcceptanceJSON) RawJSON() string {
 type TransactionSourceCheckDepositAcceptanceCurrency string
 
 const (
-	TransactionSourceCheckDepositAcceptanceCurrencyCad TransactionSourceCheckDepositAcceptanceCurrency = "CAD"
-	TransactionSourceCheckDepositAcceptanceCurrencyChf TransactionSourceCheckDepositAcceptanceCurrency = "CHF"
-	TransactionSourceCheckDepositAcceptanceCurrencyEur TransactionSourceCheckDepositAcceptanceCurrency = "EUR"
-	TransactionSourceCheckDepositAcceptanceCurrencyGbp TransactionSourceCheckDepositAcceptanceCurrency = "GBP"
-	TransactionSourceCheckDepositAcceptanceCurrencyJpy TransactionSourceCheckDepositAcceptanceCurrency = "JPY"
 	TransactionSourceCheckDepositAcceptanceCurrencyUsd TransactionSourceCheckDepositAcceptanceCurrency = "USD"
 )
 
 func (r TransactionSourceCheckDepositAcceptanceCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCheckDepositAcceptanceCurrencyCad, TransactionSourceCheckDepositAcceptanceCurrencyChf, TransactionSourceCheckDepositAcceptanceCurrencyEur, TransactionSourceCheckDepositAcceptanceCurrencyGbp, TransactionSourceCheckDepositAcceptanceCurrencyJpy, TransactionSourceCheckDepositAcceptanceCurrencyUsd:
+	case TransactionSourceCheckDepositAcceptanceCurrencyUsd:
 		return true
 	}
 	return false
@@ -3867,17 +3807,12 @@ func (r transactionSourceCheckDepositReturnJSON) RawJSON() string {
 type TransactionSourceCheckDepositReturnCurrency string
 
 const (
-	TransactionSourceCheckDepositReturnCurrencyCad TransactionSourceCheckDepositReturnCurrency = "CAD"
-	TransactionSourceCheckDepositReturnCurrencyChf TransactionSourceCheckDepositReturnCurrency = "CHF"
-	TransactionSourceCheckDepositReturnCurrencyEur TransactionSourceCheckDepositReturnCurrency = "EUR"
-	TransactionSourceCheckDepositReturnCurrencyGbp TransactionSourceCheckDepositReturnCurrency = "GBP"
-	TransactionSourceCheckDepositReturnCurrencyJpy TransactionSourceCheckDepositReturnCurrency = "JPY"
 	TransactionSourceCheckDepositReturnCurrencyUsd TransactionSourceCheckDepositReturnCurrency = "USD"
 )
 
 func (r TransactionSourceCheckDepositReturnCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceCheckDepositReturnCurrencyCad, TransactionSourceCheckDepositReturnCurrencyChf, TransactionSourceCheckDepositReturnCurrencyEur, TransactionSourceCheckDepositReturnCurrencyGbp, TransactionSourceCheckDepositReturnCurrencyJpy, TransactionSourceCheckDepositReturnCurrencyUsd:
+	case TransactionSourceCheckDepositReturnCurrencyUsd:
 		return true
 	}
 	return false
@@ -4063,17 +3998,12 @@ func (r transactionSourceFeePaymentJSON) RawJSON() string {
 type TransactionSourceFeePaymentCurrency string
 
 const (
-	TransactionSourceFeePaymentCurrencyCad TransactionSourceFeePaymentCurrency = "CAD"
-	TransactionSourceFeePaymentCurrencyChf TransactionSourceFeePaymentCurrency = "CHF"
-	TransactionSourceFeePaymentCurrencyEur TransactionSourceFeePaymentCurrency = "EUR"
-	TransactionSourceFeePaymentCurrencyGbp TransactionSourceFeePaymentCurrency = "GBP"
-	TransactionSourceFeePaymentCurrencyJpy TransactionSourceFeePaymentCurrency = "JPY"
 	TransactionSourceFeePaymentCurrencyUsd TransactionSourceFeePaymentCurrency = "USD"
 )
 
 func (r TransactionSourceFeePaymentCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceFeePaymentCurrencyCad, TransactionSourceFeePaymentCurrencyChf, TransactionSourceFeePaymentCurrencyEur, TransactionSourceFeePaymentCurrencyGbp, TransactionSourceFeePaymentCurrencyJpy, TransactionSourceFeePaymentCurrencyUsd:
+	case TransactionSourceFeePaymentCurrencyUsd:
 		return true
 	}
 	return false
@@ -4427,17 +4357,12 @@ func (r transactionSourceInboundRealTimePaymentsTransferConfirmationJSON) RawJSO
 type TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency string
 
 const (
-	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CAD"
-	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "CHF"
-	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "EUR"
-	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "GBP"
-	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "JPY"
 	TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency = "USD"
 )
 
 func (r TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyCad, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyChf, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyEur, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyGbp, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyJpy, TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd:
+	case TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrencyUsd:
 		return true
 	}
 	return false
@@ -4668,17 +4593,12 @@ func (r transactionSourceInterestPaymentJSON) RawJSON() string {
 type TransactionSourceInterestPaymentCurrency string
 
 const (
-	TransactionSourceInterestPaymentCurrencyCad TransactionSourceInterestPaymentCurrency = "CAD"
-	TransactionSourceInterestPaymentCurrencyChf TransactionSourceInterestPaymentCurrency = "CHF"
-	TransactionSourceInterestPaymentCurrencyEur TransactionSourceInterestPaymentCurrency = "EUR"
-	TransactionSourceInterestPaymentCurrencyGbp TransactionSourceInterestPaymentCurrency = "GBP"
-	TransactionSourceInterestPaymentCurrencyJpy TransactionSourceInterestPaymentCurrency = "JPY"
 	TransactionSourceInterestPaymentCurrencyUsd TransactionSourceInterestPaymentCurrency = "USD"
 )
 
 func (r TransactionSourceInterestPaymentCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceInterestPaymentCurrencyCad, TransactionSourceInterestPaymentCurrencyChf, TransactionSourceInterestPaymentCurrencyEur, TransactionSourceInterestPaymentCurrencyGbp, TransactionSourceInterestPaymentCurrencyJpy, TransactionSourceInterestPaymentCurrencyUsd:
+	case TransactionSourceInterestPaymentCurrencyUsd:
 		return true
 	}
 	return false
@@ -4724,17 +4644,12 @@ func (r transactionSourceInternalSourceJSON) RawJSON() string {
 type TransactionSourceInternalSourceCurrency string
 
 const (
-	TransactionSourceInternalSourceCurrencyCad TransactionSourceInternalSourceCurrency = "CAD"
-	TransactionSourceInternalSourceCurrencyChf TransactionSourceInternalSourceCurrency = "CHF"
-	TransactionSourceInternalSourceCurrencyEur TransactionSourceInternalSourceCurrency = "EUR"
-	TransactionSourceInternalSourceCurrencyGbp TransactionSourceInternalSourceCurrency = "GBP"
-	TransactionSourceInternalSourceCurrencyJpy TransactionSourceInternalSourceCurrency = "JPY"
 	TransactionSourceInternalSourceCurrencyUsd TransactionSourceInternalSourceCurrency = "USD"
 )
 
 func (r TransactionSourceInternalSourceCurrency) IsKnown() bool {
 	switch r {
-	case TransactionSourceInternalSourceCurrencyCad, TransactionSourceInternalSourceCurrencyChf, TransactionSourceInternalSourceCurrencyEur, TransactionSourceInternalSourceCurrencyGbp, TransactionSourceInternalSourceCurrencyJpy, TransactionSourceInternalSourceCurrencyUsd:
+	case TransactionSourceInternalSourceCurrencyUsd:
 		return true
 	}
 	return false

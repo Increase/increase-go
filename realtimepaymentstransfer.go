@@ -425,17 +425,12 @@ func (r realTimePaymentsTransferCreatedByUserJSON) RawJSON() string {
 type RealTimePaymentsTransferCurrency string
 
 const (
-	RealTimePaymentsTransferCurrencyCad RealTimePaymentsTransferCurrency = "CAD"
-	RealTimePaymentsTransferCurrencyChf RealTimePaymentsTransferCurrency = "CHF"
-	RealTimePaymentsTransferCurrencyEur RealTimePaymentsTransferCurrency = "EUR"
-	RealTimePaymentsTransferCurrencyGbp RealTimePaymentsTransferCurrency = "GBP"
-	RealTimePaymentsTransferCurrencyJpy RealTimePaymentsTransferCurrency = "JPY"
 	RealTimePaymentsTransferCurrencyUsd RealTimePaymentsTransferCurrency = "USD"
 )
 
 func (r RealTimePaymentsTransferCurrency) IsKnown() bool {
 	switch r {
-	case RealTimePaymentsTransferCurrencyCad, RealTimePaymentsTransferCurrencyChf, RealTimePaymentsTransferCurrencyEur, RealTimePaymentsTransferCurrencyGbp, RealTimePaymentsTransferCurrencyJpy, RealTimePaymentsTransferCurrencyUsd:
+	case RealTimePaymentsTransferCurrencyUsd:
 		return true
 	}
 	return false

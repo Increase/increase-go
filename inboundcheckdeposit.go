@@ -245,17 +245,12 @@ func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 type InboundCheckDepositCurrency string
 
 const (
-	InboundCheckDepositCurrencyCad InboundCheckDepositCurrency = "CAD"
-	InboundCheckDepositCurrencyChf InboundCheckDepositCurrency = "CHF"
-	InboundCheckDepositCurrencyEur InboundCheckDepositCurrency = "EUR"
-	InboundCheckDepositCurrencyGbp InboundCheckDepositCurrency = "GBP"
-	InboundCheckDepositCurrencyJpy InboundCheckDepositCurrency = "JPY"
 	InboundCheckDepositCurrencyUsd InboundCheckDepositCurrency = "USD"
 )
 
 func (r InboundCheckDepositCurrency) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositCurrencyCad, InboundCheckDepositCurrencyChf, InboundCheckDepositCurrencyEur, InboundCheckDepositCurrencyGbp, InboundCheckDepositCurrencyJpy, InboundCheckDepositCurrencyUsd:
+	case InboundCheckDepositCurrencyUsd:
 		return true
 	}
 	return false

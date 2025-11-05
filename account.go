@@ -224,17 +224,12 @@ func (r AccountBank) IsKnown() bool {
 type AccountCurrency string
 
 const (
-	AccountCurrencyCad AccountCurrency = "CAD"
-	AccountCurrencyChf AccountCurrency = "CHF"
-	AccountCurrencyEur AccountCurrency = "EUR"
-	AccountCurrencyGbp AccountCurrency = "GBP"
-	AccountCurrencyJpy AccountCurrency = "JPY"
 	AccountCurrencyUsd AccountCurrency = "USD"
 )
 
 func (r AccountCurrency) IsKnown() bool {
 	switch r {
-	case AccountCurrencyCad, AccountCurrencyChf, AccountCurrencyEur, AccountCurrencyGbp, AccountCurrencyJpy, AccountCurrencyUsd:
+	case AccountCurrencyUsd:
 		return true
 	}
 	return false

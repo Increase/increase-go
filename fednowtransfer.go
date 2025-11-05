@@ -351,17 +351,12 @@ func (r fednowTransferCreatedByUserJSON) RawJSON() string {
 type FednowTransferCurrency string
 
 const (
-	FednowTransferCurrencyCad FednowTransferCurrency = "CAD"
-	FednowTransferCurrencyChf FednowTransferCurrency = "CHF"
-	FednowTransferCurrencyEur FednowTransferCurrency = "EUR"
-	FednowTransferCurrencyGbp FednowTransferCurrency = "GBP"
-	FednowTransferCurrencyJpy FednowTransferCurrency = "JPY"
 	FednowTransferCurrencyUsd FednowTransferCurrency = "USD"
 )
 
 func (r FednowTransferCurrency) IsKnown() bool {
 	switch r {
-	case FednowTransferCurrencyCad, FednowTransferCurrencyChf, FednowTransferCurrencyEur, FednowTransferCurrencyGbp, FednowTransferCurrencyJpy, FednowTransferCurrencyUsd:
+	case FednowTransferCurrencyUsd:
 		return true
 	}
 	return false
