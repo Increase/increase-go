@@ -142,17 +142,12 @@ func (r declinedTransactionJSON) RawJSON() string {
 type DeclinedTransactionCurrency string
 
 const (
-	DeclinedTransactionCurrencyCad DeclinedTransactionCurrency = "CAD"
-	DeclinedTransactionCurrencyChf DeclinedTransactionCurrency = "CHF"
-	DeclinedTransactionCurrencyEur DeclinedTransactionCurrency = "EUR"
-	DeclinedTransactionCurrencyGbp DeclinedTransactionCurrency = "GBP"
-	DeclinedTransactionCurrencyJpy DeclinedTransactionCurrency = "JPY"
 	DeclinedTransactionCurrencyUsd DeclinedTransactionCurrency = "USD"
 )
 
 func (r DeclinedTransactionCurrency) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionCurrencyCad, DeclinedTransactionCurrencyChf, DeclinedTransactionCurrencyEur, DeclinedTransactionCurrencyGbp, DeclinedTransactionCurrencyJpy, DeclinedTransactionCurrencyUsd:
+	case DeclinedTransactionCurrencyUsd:
 		return true
 	}
 	return false
@@ -847,17 +842,12 @@ func (r declinedTransactionSourceCardDeclineAdditionalAmountsVisionJSON) RawJSON
 type DeclinedTransactionSourceCardDeclineCurrency string
 
 const (
-	DeclinedTransactionSourceCardDeclineCurrencyCad DeclinedTransactionSourceCardDeclineCurrency = "CAD"
-	DeclinedTransactionSourceCardDeclineCurrencyChf DeclinedTransactionSourceCardDeclineCurrency = "CHF"
-	DeclinedTransactionSourceCardDeclineCurrencyEur DeclinedTransactionSourceCardDeclineCurrency = "EUR"
-	DeclinedTransactionSourceCardDeclineCurrencyGbp DeclinedTransactionSourceCardDeclineCurrency = "GBP"
-	DeclinedTransactionSourceCardDeclineCurrencyJpy DeclinedTransactionSourceCardDeclineCurrency = "JPY"
 	DeclinedTransactionSourceCardDeclineCurrencyUsd DeclinedTransactionSourceCardDeclineCurrency = "USD"
 )
 
 func (r DeclinedTransactionSourceCardDeclineCurrency) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCardDeclineCurrencyCad, DeclinedTransactionSourceCardDeclineCurrencyChf, DeclinedTransactionSourceCardDeclineCurrencyEur, DeclinedTransactionSourceCardDeclineCurrencyGbp, DeclinedTransactionSourceCardDeclineCurrencyJpy, DeclinedTransactionSourceCardDeclineCurrencyUsd:
+	case DeclinedTransactionSourceCardDeclineCurrencyUsd:
 		return true
 	}
 	return false
@@ -1444,17 +1434,12 @@ func (r declinedTransactionSourceCheckDepositRejectionJSON) RawJSON() string {
 type DeclinedTransactionSourceCheckDepositRejectionCurrency string
 
 const (
-	DeclinedTransactionSourceCheckDepositRejectionCurrencyCad DeclinedTransactionSourceCheckDepositRejectionCurrency = "CAD"
-	DeclinedTransactionSourceCheckDepositRejectionCurrencyChf DeclinedTransactionSourceCheckDepositRejectionCurrency = "CHF"
-	DeclinedTransactionSourceCheckDepositRejectionCurrencyEur DeclinedTransactionSourceCheckDepositRejectionCurrency = "EUR"
-	DeclinedTransactionSourceCheckDepositRejectionCurrencyGbp DeclinedTransactionSourceCheckDepositRejectionCurrency = "GBP"
-	DeclinedTransactionSourceCheckDepositRejectionCurrencyJpy DeclinedTransactionSourceCheckDepositRejectionCurrency = "JPY"
 	DeclinedTransactionSourceCheckDepositRejectionCurrencyUsd DeclinedTransactionSourceCheckDepositRejectionCurrency = "USD"
 )
 
 func (r DeclinedTransactionSourceCheckDepositRejectionCurrency) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCheckDepositRejectionCurrencyCad, DeclinedTransactionSourceCheckDepositRejectionCurrencyChf, DeclinedTransactionSourceCheckDepositRejectionCurrencyEur, DeclinedTransactionSourceCheckDepositRejectionCurrencyGbp, DeclinedTransactionSourceCheckDepositRejectionCurrencyJpy, DeclinedTransactionSourceCheckDepositRejectionCurrencyUsd:
+	case DeclinedTransactionSourceCheckDepositRejectionCurrencyUsd:
 		return true
 	}
 	return false
@@ -1596,17 +1581,12 @@ func (r declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON) Raw
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency string
 
 const (
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CAD"
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "CHF"
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "EUR"
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "GBP"
-	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "JPY"
 	DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency = "USD"
 )
 
 func (r DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyCad, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyChf, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyEur, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyGbp, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyJpy, DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd:
+	case DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrencyUsd:
 		return true
 	}
 	return false

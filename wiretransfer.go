@@ -469,17 +469,12 @@ func (r wireTransferCreditorAddressUnstructuredJSON) RawJSON() string {
 type WireTransferCurrency string
 
 const (
-	WireTransferCurrencyCad WireTransferCurrency = "CAD"
-	WireTransferCurrencyChf WireTransferCurrency = "CHF"
-	WireTransferCurrencyEur WireTransferCurrency = "EUR"
-	WireTransferCurrencyGbp WireTransferCurrency = "GBP"
-	WireTransferCurrencyJpy WireTransferCurrency = "JPY"
 	WireTransferCurrencyUsd WireTransferCurrency = "USD"
 )
 
 func (r WireTransferCurrency) IsKnown() bool {
 	switch r {
-	case WireTransferCurrencyCad, WireTransferCurrencyChf, WireTransferCurrencyEur, WireTransferCurrencyGbp, WireTransferCurrencyJpy, WireTransferCurrencyUsd:
+	case WireTransferCurrencyUsd:
 		return true
 	}
 	return false

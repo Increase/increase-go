@@ -489,17 +489,12 @@ func (r cardPushTransferCreatedByUserJSON) RawJSON() string {
 type CardPushTransferCurrency string
 
 const (
-	CardPushTransferCurrencyCad CardPushTransferCurrency = "CAD"
-	CardPushTransferCurrencyChf CardPushTransferCurrency = "CHF"
-	CardPushTransferCurrencyEur CardPushTransferCurrency = "EUR"
-	CardPushTransferCurrencyGbp CardPushTransferCurrency = "GBP"
-	CardPushTransferCurrencyJpy CardPushTransferCurrency = "JPY"
 	CardPushTransferCurrencyUsd CardPushTransferCurrency = "USD"
 )
 
 func (r CardPushTransferCurrency) IsKnown() bool {
 	switch r {
-	case CardPushTransferCurrencyCad, CardPushTransferCurrencyChf, CardPushTransferCurrencyEur, CardPushTransferCurrencyGbp, CardPushTransferCurrencyJpy, CardPushTransferCurrencyUsd:
+	case CardPushTransferCurrencyUsd:
 		return true
 	}
 	return false

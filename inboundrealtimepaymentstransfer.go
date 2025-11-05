@@ -176,17 +176,12 @@ func (r inboundRealTimePaymentsTransferConfirmationJSON) RawJSON() string {
 type InboundRealTimePaymentsTransferCurrency string
 
 const (
-	InboundRealTimePaymentsTransferCurrencyCad InboundRealTimePaymentsTransferCurrency = "CAD"
-	InboundRealTimePaymentsTransferCurrencyChf InboundRealTimePaymentsTransferCurrency = "CHF"
-	InboundRealTimePaymentsTransferCurrencyEur InboundRealTimePaymentsTransferCurrency = "EUR"
-	InboundRealTimePaymentsTransferCurrencyGbp InboundRealTimePaymentsTransferCurrency = "GBP"
-	InboundRealTimePaymentsTransferCurrencyJpy InboundRealTimePaymentsTransferCurrency = "JPY"
 	InboundRealTimePaymentsTransferCurrencyUsd InboundRealTimePaymentsTransferCurrency = "USD"
 )
 
 func (r InboundRealTimePaymentsTransferCurrency) IsKnown() bool {
 	switch r {
-	case InboundRealTimePaymentsTransferCurrencyCad, InboundRealTimePaymentsTransferCurrencyChf, InboundRealTimePaymentsTransferCurrencyEur, InboundRealTimePaymentsTransferCurrencyGbp, InboundRealTimePaymentsTransferCurrencyJpy, InboundRealTimePaymentsTransferCurrencyUsd:
+	case InboundRealTimePaymentsTransferCurrencyUsd:
 		return true
 	}
 	return false
