@@ -103,6 +103,8 @@ type Lockbox struct {
 	AccountID string `json:"account_id,required"`
 	// The mailing address for the Lockbox.
 	Address LockboxAddress `json:"address,required"`
+	// Indicates if checks mailed to this lockbox will be deposited.
+	CheckDepositBehavior LockboxCheckDepositBehavior `json:"check_deposit_behavior,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Lockbox
 	// was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -114,8 +116,6 @@ type Lockbox struct {
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The recipient name you choose for the Lockbox.
 	RecipientName string `json:"recipient_name,required,nullable"`
-	// This indicates if mail can be sent to this address.
-	Status LockboxStatus `json:"status,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `lockbox`.
 	Type LockboxType `json:"type,required"`
@@ -124,17 +124,17 @@ type Lockbox struct {
 
 // lockboxJSON contains the JSON metadata for the struct [Lockbox]
 type lockboxJSON struct {
-	ID             apijson.Field
-	AccountID      apijson.Field
-	Address        apijson.Field
-	CreatedAt      apijson.Field
-	Description    apijson.Field
-	IdempotencyKey apijson.Field
-	RecipientName  apijson.Field
-	Status         apijson.Field
-	Type           apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	ID                   apijson.Field
+	AccountID            apijson.Field
+	Address              apijson.Field
+	CheckDepositBehavior apijson.Field
+	CreatedAt            apijson.Field
+	Description          apijson.Field
+	IdempotencyKey       apijson.Field
+	RecipientName        apijson.Field
+	Type                 apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
 }
 
 func (r *Lockbox) UnmarshalJSON(data []byte) (err error) {
@@ -186,17 +186,17 @@ func (r lockboxAddressJSON) RawJSON() string {
 	return r.raw
 }
 
-// This indicates if mail can be sent to this address.
-type LockboxStatus string
+// Indicates if checks mailed to this lockbox will be deposited.
+type LockboxCheckDepositBehavior string
 
 const (
-	LockboxStatusActive   LockboxStatus = "active"
-	LockboxStatusInactive LockboxStatus = "inactive"
+	LockboxCheckDepositBehaviorEnabled  LockboxCheckDepositBehavior = "enabled"
+	LockboxCheckDepositBehaviorDisabled LockboxCheckDepositBehavior = "disabled"
 )
 
-func (r LockboxStatus) IsKnown() bool {
+func (r LockboxCheckDepositBehavior) IsKnown() bool {
 	switch r {
-	case LockboxStatusActive, LockboxStatusInactive:
+	case LockboxCheckDepositBehaviorEnabled, LockboxCheckDepositBehaviorDisabled:
 		return true
 	}
 	return false
@@ -232,29 +232,29 @@ func (r LockboxNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type LockboxUpdateParams struct {
+	// This indicates if checks mailed to this lockbox will be deposited.
+	CheckDepositBehavior param.Field[LockboxUpdateParamsCheckDepositBehavior] `json:"check_deposit_behavior"`
 	// The description you choose for the Lockbox.
 	Description param.Field[string] `json:"description"`
 	// The recipient name you choose for the Lockbox.
 	RecipientName param.Field[string] `json:"recipient_name"`
-	// This indicates if checks can be sent to the Lockbox.
-	Status param.Field[LockboxUpdateParamsStatus] `json:"status"`
 }
 
 func (r LockboxUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// This indicates if checks can be sent to the Lockbox.
-type LockboxUpdateParamsStatus string
+// This indicates if checks mailed to this lockbox will be deposited.
+type LockboxUpdateParamsCheckDepositBehavior string
 
 const (
-	LockboxUpdateParamsStatusActive   LockboxUpdateParamsStatus = "active"
-	LockboxUpdateParamsStatusInactive LockboxUpdateParamsStatus = "inactive"
+	LockboxUpdateParamsCheckDepositBehaviorEnabled  LockboxUpdateParamsCheckDepositBehavior = "enabled"
+	LockboxUpdateParamsCheckDepositBehaviorDisabled LockboxUpdateParamsCheckDepositBehavior = "disabled"
 )
 
-func (r LockboxUpdateParamsStatus) IsKnown() bool {
+func (r LockboxUpdateParamsCheckDepositBehavior) IsKnown() bool {
 	switch r {
-	case LockboxUpdateParamsStatusActive, LockboxUpdateParamsStatusInactive:
+	case LockboxUpdateParamsCheckDepositBehaviorEnabled, LockboxUpdateParamsCheckDepositBehaviorDisabled:
 		return true
 	}
 	return false
