@@ -129,6 +129,8 @@ type InboundMailItemCheck struct {
 	Amount int64 `json:"amount,required"`
 	// The identifier for the File containing the back of the check.
 	BackFileID string `json:"back_file_id,required,nullable"`
+	// The identifier of the Check Deposit if this check was deposited.
+	CheckDepositID string `json:"check_deposit_id,required,nullable"`
 	// The identifier for the File containing the front of the check.
 	FrontFileID string                   `json:"front_file_id,required,nullable"`
 	JSON        inboundMailItemCheckJSON `json:"-"`
@@ -137,11 +139,12 @@ type InboundMailItemCheck struct {
 // inboundMailItemCheckJSON contains the JSON metadata for the struct
 // [InboundMailItemCheck]
 type inboundMailItemCheckJSON struct {
-	Amount      apijson.Field
-	BackFileID  apijson.Field
-	FrontFileID apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Amount         apijson.Field
+	BackFileID     apijson.Field
+	CheckDepositID apijson.Field
+	FrontFileID    apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *InboundMailItemCheck) UnmarshalJSON(data []byte) (err error) {
