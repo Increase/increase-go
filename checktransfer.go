@@ -183,9 +183,13 @@ type CheckTransfer struct {
 	ThirdParty CheckTransferThirdParty `json:"third_party,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
-	Type        CheckTransferType      `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
-	JSON        checkTransferJSON      `json:"-"`
+	Type CheckTransferType `json:"type,required"`
+	// If set, the check will be valid on or before this date. After this date, the
+	// check transfer will be stopped and deposits will not be accepted. For checks
+	// printed by Increase, this date is included on the check as its expiry.
+	ValidUntilDate time.Time              `json:"valid_until_date,required,nullable" format:"date"`
+	ExtraFields    map[string]interface{} `json:"-,extras"`
+	JSON           checkTransferJSON      `json:"-"`
 }
 
 // checkTransferJSON contains the JSON metadata for the struct [CheckTransfer]
@@ -214,6 +218,7 @@ type checkTransferJSON struct {
 	Submission                    apijson.Field
 	ThirdParty                    apijson.Field
 	Type                          apijson.Field
+	ValidUntilDate                apijson.Field
 	raw                           string
 	ExtraFields                   map[string]apijson.Field
 }
@@ -952,6 +957,10 @@ type CheckTransferNewParams struct {
 	// `fulfillment_method` is equal to `third_party`. It must not be included if any
 	// other `fulfillment_method` is provided.
 	ThirdParty param.Field[CheckTransferNewParamsThirdParty] `json:"third_party"`
+	// If provided, the check will be valid on or before this date. After this date,
+	// the check transfer will be stopped and deposits will not be accepted. For checks
+	// printed by Increase, this date is included on the check as its expiry.
+	ValidUntilDate param.Field[time.Time] `json:"valid_until_date" format:"date"`
 }
 
 func (r CheckTransferNewParams) MarshalJSON() (data []byte, err error) {

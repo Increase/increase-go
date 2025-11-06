@@ -63,6 +63,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 		ThirdParty: increase.F(increase.CheckTransferNewParamsThirdParty{
 			RecipientName: increase.F("x"),
 		}),
+		ValidUntilDate: increase.F(time.Now()),
 	})
 	if err != nil {
 		var apierr *increase.Error
