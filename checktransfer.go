@@ -186,8 +186,9 @@ type CheckTransfer struct {
 	// `check_transfer`.
 	Type CheckTransferType `json:"type,required"`
 	// If set, the check will be valid on or before this date. After this date, the
-	// check transfer will be stopped and deposits will not be accepted. For checks
-	// printed by Increase, this date is included on the check as its expiry.
+	// check transfer will be automatically stopped and deposits will not be accepted.
+	// For checks printed by Increase, this date is included on the check as its
+	// expiry.
 	ValidUntilDate time.Time              `json:"valid_until_date,required,nullable" format:"date"`
 	ExtraFields    map[string]interface{} `json:"-,extras"`
 	JSON           checkTransferJSON      `json:"-"`
@@ -767,15 +768,16 @@ func (r checkTransferStopPaymentRequestJSON) RawJSON() string {
 type CheckTransferStopPaymentRequestReason string
 
 const (
-	CheckTransferStopPaymentRequestReasonMailDeliveryFailed CheckTransferStopPaymentRequestReason = "mail_delivery_failed"
-	CheckTransferStopPaymentRequestReasonRejectedByIncrease CheckTransferStopPaymentRequestReason = "rejected_by_increase"
-	CheckTransferStopPaymentRequestReasonNotAuthorized      CheckTransferStopPaymentRequestReason = "not_authorized"
-	CheckTransferStopPaymentRequestReasonUnknown            CheckTransferStopPaymentRequestReason = "unknown"
+	CheckTransferStopPaymentRequestReasonMailDeliveryFailed   CheckTransferStopPaymentRequestReason = "mail_delivery_failed"
+	CheckTransferStopPaymentRequestReasonRejectedByIncrease   CheckTransferStopPaymentRequestReason = "rejected_by_increase"
+	CheckTransferStopPaymentRequestReasonNotAuthorized        CheckTransferStopPaymentRequestReason = "not_authorized"
+	CheckTransferStopPaymentRequestReasonValidUntilDatePassed CheckTransferStopPaymentRequestReason = "valid_until_date_passed"
+	CheckTransferStopPaymentRequestReasonUnknown              CheckTransferStopPaymentRequestReason = "unknown"
 )
 
 func (r CheckTransferStopPaymentRequestReason) IsKnown() bool {
 	switch r {
-	case CheckTransferStopPaymentRequestReasonMailDeliveryFailed, CheckTransferStopPaymentRequestReasonRejectedByIncrease, CheckTransferStopPaymentRequestReasonNotAuthorized, CheckTransferStopPaymentRequestReasonUnknown:
+	case CheckTransferStopPaymentRequestReasonMailDeliveryFailed, CheckTransferStopPaymentRequestReasonRejectedByIncrease, CheckTransferStopPaymentRequestReasonNotAuthorized, CheckTransferStopPaymentRequestReasonValidUntilDatePassed, CheckTransferStopPaymentRequestReasonUnknown:
 		return true
 	}
 	return false
@@ -960,8 +962,9 @@ type CheckTransferNewParams struct {
 	// other `fulfillment_method` is provided.
 	ThirdParty param.Field[CheckTransferNewParamsThirdParty] `json:"third_party"`
 	// If provided, the check will be valid on or before this date. After this date,
-	// the check transfer will be stopped and deposits will not be accepted. For checks
-	// printed by Increase, this date is included on the check as its expiry.
+	// the check transfer will be automatically stopped and deposits will not be
+	// accepted. For checks printed by Increase, this date is included on the check as
+	// its expiry.
 	ValidUntilDate param.Field[time.Time] `json:"valid_until_date" format:"date"`
 }
 
@@ -1223,14 +1226,15 @@ func (r CheckTransferStopPaymentParams) MarshalJSON() (data []byte, err error) {
 type CheckTransferStopPaymentParamsReason string
 
 const (
-	CheckTransferStopPaymentParamsReasonMailDeliveryFailed CheckTransferStopPaymentParamsReason = "mail_delivery_failed"
-	CheckTransferStopPaymentParamsReasonNotAuthorized      CheckTransferStopPaymentParamsReason = "not_authorized"
-	CheckTransferStopPaymentParamsReasonUnknown            CheckTransferStopPaymentParamsReason = "unknown"
+	CheckTransferStopPaymentParamsReasonMailDeliveryFailed   CheckTransferStopPaymentParamsReason = "mail_delivery_failed"
+	CheckTransferStopPaymentParamsReasonNotAuthorized        CheckTransferStopPaymentParamsReason = "not_authorized"
+	CheckTransferStopPaymentParamsReasonValidUntilDatePassed CheckTransferStopPaymentParamsReason = "valid_until_date_passed"
+	CheckTransferStopPaymentParamsReasonUnknown              CheckTransferStopPaymentParamsReason = "unknown"
 )
 
 func (r CheckTransferStopPaymentParamsReason) IsKnown() bool {
 	switch r {
-	case CheckTransferStopPaymentParamsReasonMailDeliveryFailed, CheckTransferStopPaymentParamsReasonNotAuthorized, CheckTransferStopPaymentParamsReasonUnknown:
+	case CheckTransferStopPaymentParamsReasonMailDeliveryFailed, CheckTransferStopPaymentParamsReasonNotAuthorized, CheckTransferStopPaymentParamsReasonValidUntilDatePassed, CheckTransferStopPaymentParamsReasonUnknown:
 		return true
 	}
 	return false
