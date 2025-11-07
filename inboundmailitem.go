@@ -132,8 +132,10 @@ type InboundMailItemCheck struct {
 	// The identifier of the Check Deposit if this check was deposited.
 	CheckDepositID string `json:"check_deposit_id,required,nullable"`
 	// The identifier for the File containing the front of the check.
-	FrontFileID string                   `json:"front_file_id,required,nullable"`
-	JSON        inboundMailItemCheckJSON `json:"-"`
+	FrontFileID string `json:"front_file_id,required,nullable"`
+	// The status of the Inbound Mail Item Check.
+	Status InboundMailItemChecksStatus `json:"status,required,nullable"`
+	JSON   inboundMailItemCheckJSON    `json:"-"`
 }
 
 // inboundMailItemCheckJSON contains the JSON metadata for the struct
@@ -143,6 +145,7 @@ type inboundMailItemCheckJSON struct {
 	BackFileID     apijson.Field
 	CheckDepositID apijson.Field
 	FrontFileID    apijson.Field
+	Status         apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -153,6 +156,23 @@ func (r *InboundMailItemCheck) UnmarshalJSON(data []byte) (err error) {
 
 func (r inboundMailItemCheckJSON) RawJSON() string {
 	return r.raw
+}
+
+// The status of the Inbound Mail Item Check.
+type InboundMailItemChecksStatus string
+
+const (
+	InboundMailItemChecksStatusPending   InboundMailItemChecksStatus = "pending"
+	InboundMailItemChecksStatusDeposited InboundMailItemChecksStatus = "deposited"
+	InboundMailItemChecksStatusIgnored   InboundMailItemChecksStatus = "ignored"
+)
+
+func (r InboundMailItemChecksStatus) IsKnown() bool {
+	switch r {
+	case InboundMailItemChecksStatusPending, InboundMailItemChecksStatusDeposited, InboundMailItemChecksStatusIgnored:
+		return true
+	}
+	return false
 }
 
 // If the mail item has been rejected, why it was rejected.
