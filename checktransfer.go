@@ -93,7 +93,8 @@ func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID stri
 	return
 }
 
-// Cancel a pending Check Transfer
+// Cancel a Check Transfer with the `pending_approval` status. See
+// [Transfer Approvals](/documentation/transfer-approvals) for more information.
 func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID string, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
