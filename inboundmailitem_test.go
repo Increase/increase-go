@@ -67,3 +67,37 @@ func TestInboundMailItemListWithOptionalParams(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
+
+func TestInboundMailItemAction(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.InboundMailItems.Action(
+		context.TODO(),
+		"inbound_mail_item_q6rrg7mmqpplx80zceev",
+		increase.InboundMailItemActionParams{
+			Checks: increase.F([]increase.InboundMailItemActionParamsCheck{{
+				Action:  increase.F(increase.InboundMailItemActionParamsChecksActionDeposit),
+				Account: increase.F("account_in71c4amph0vgo2qllky"),
+			}, {
+				Action:  increase.F(increase.InboundMailItemActionParamsChecksActionIgnore),
+				Account: increase.F("account"),
+			}}),
+		},
+	)
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}

@@ -73,6 +73,18 @@ func (r *InboundMailItemService) ListAutoPaging(ctx context.Context, query Inbou
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Action a Inbound Mail Item
+func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID string, body InboundMailItemActionParams, opts ...option.RequestOption) (res *InboundMailItem, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if inboundMailItemID == "" {
+		err = errors.New("missing required inbound_mail_item_id parameter")
+		return
+	}
+	path := fmt.Sprintf("inbound_mail_items/%s/action", inboundMailItemID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Inbound Mail Items represent pieces of physical mail delivered to a Lockbox.
 type InboundMailItem struct {
 	// The Inbound Mail Item identifier.
@@ -267,4 +279,41 @@ func (r InboundMailItemListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type InboundMailItemActionParams struct {
+	// The actions to perform on the Inbound Mail Item.
+	Checks param.Field[[]InboundMailItemActionParamsCheck] `json:"checks,required"`
+}
+
+func (r InboundMailItemActionParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type InboundMailItemActionParamsCheck struct {
+	// The action to perform on the Inbound Mail Item.
+	Action param.Field[InboundMailItemActionParamsChecksAction] `json:"action,required"`
+	// The identifier of the Account to deposit the check into. If not provided, the
+	// check will be deposited into the Account associated with the Lockbox.
+	Account param.Field[string] `json:"account"`
+}
+
+func (r InboundMailItemActionParamsCheck) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The action to perform on the Inbound Mail Item.
+type InboundMailItemActionParamsChecksAction string
+
+const (
+	InboundMailItemActionParamsChecksActionDeposit InboundMailItemActionParamsChecksAction = "deposit"
+	InboundMailItemActionParamsChecksActionIgnore  InboundMailItemActionParamsChecksAction = "ignore"
+)
+
+func (r InboundMailItemActionParamsChecksAction) IsKnown() bool {
+	switch r {
+	case InboundMailItemActionParamsChecksActionDeposit, InboundMailItemActionParamsChecksActionIgnore:
+		return true
+	}
+	return false
 }
