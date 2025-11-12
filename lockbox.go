@@ -190,13 +190,14 @@ func (r lockboxAddressJSON) RawJSON() string {
 type LockboxCheckDepositBehavior string
 
 const (
-	LockboxCheckDepositBehaviorEnabled  LockboxCheckDepositBehavior = "enabled"
-	LockboxCheckDepositBehaviorDisabled LockboxCheckDepositBehavior = "disabled"
+	LockboxCheckDepositBehaviorEnabled           LockboxCheckDepositBehavior = "enabled"
+	LockboxCheckDepositBehaviorDisabled          LockboxCheckDepositBehavior = "disabled"
+	LockboxCheckDepositBehaviorPendForProcessing LockboxCheckDepositBehavior = "pend_for_processing"
 )
 
 func (r LockboxCheckDepositBehavior) IsKnown() bool {
 	switch r {
-	case LockboxCheckDepositBehaviorEnabled, LockboxCheckDepositBehaviorDisabled:
+	case LockboxCheckDepositBehaviorEnabled, LockboxCheckDepositBehaviorDisabled, LockboxCheckDepositBehaviorPendForProcessing:
 		return true
 	}
 	return false
@@ -248,13 +249,14 @@ func (r LockboxUpdateParams) MarshalJSON() (data []byte, err error) {
 type LockboxUpdateParamsCheckDepositBehavior string
 
 const (
-	LockboxUpdateParamsCheckDepositBehaviorEnabled  LockboxUpdateParamsCheckDepositBehavior = "enabled"
-	LockboxUpdateParamsCheckDepositBehaviorDisabled LockboxUpdateParamsCheckDepositBehavior = "disabled"
+	LockboxUpdateParamsCheckDepositBehaviorEnabled           LockboxUpdateParamsCheckDepositBehavior = "enabled"
+	LockboxUpdateParamsCheckDepositBehaviorDisabled          LockboxUpdateParamsCheckDepositBehavior = "disabled"
+	LockboxUpdateParamsCheckDepositBehaviorPendForProcessing LockboxUpdateParamsCheckDepositBehavior = "pend_for_processing"
 )
 
 func (r LockboxUpdateParamsCheckDepositBehavior) IsKnown() bool {
 	switch r {
-	case LockboxUpdateParamsCheckDepositBehaviorEnabled, LockboxUpdateParamsCheckDepositBehaviorDisabled:
+	case LockboxUpdateParamsCheckDepositBehaviorEnabled, LockboxUpdateParamsCheckDepositBehaviorDisabled, LockboxUpdateParamsCheckDepositBehaviorPendForProcessing:
 		return true
 	}
 	return false
