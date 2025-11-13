@@ -231,11 +231,12 @@ const (
 	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit  InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
 	InboundCheckDepositAdjustmentsReasonAdjustedAmount    InboundCheckDepositAdjustmentsReason = "adjusted_amount"
 	InboundCheckDepositAdjustmentsReasonNonConformingItem InboundCheckDepositAdjustmentsReason = "non_conforming_item"
+	InboundCheckDepositAdjustmentsReasonPaid              InboundCheckDepositAdjustmentsReason = "paid"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonAdjustedAmount, InboundCheckDepositAdjustmentsReasonNonConformingItem:
+	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonAdjustedAmount, InboundCheckDepositAdjustmentsReasonNonConformingItem, InboundCheckDepositAdjustmentsReasonPaid:
 		return true
 	}
 	return false
