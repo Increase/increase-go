@@ -4228,11 +4228,12 @@ const (
 	TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit  TransactionSourceInboundCheckAdjustmentReason = "wrong_payee_credit"
 	TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount    TransactionSourceInboundCheckAdjustmentReason = "adjusted_amount"
 	TransactionSourceInboundCheckAdjustmentReasonNonConformingItem TransactionSourceInboundCheckAdjustmentReason = "non_conforming_item"
+	TransactionSourceInboundCheckAdjustmentReasonPaid              TransactionSourceInboundCheckAdjustmentReason = "paid"
 )
 
 func (r TransactionSourceInboundCheckAdjustmentReason) IsKnown() bool {
 	switch r {
-	case TransactionSourceInboundCheckAdjustmentReasonLateReturn, TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit, TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount, TransactionSourceInboundCheckAdjustmentReasonNonConformingItem:
+	case TransactionSourceInboundCheckAdjustmentReasonLateReturn, TransactionSourceInboundCheckAdjustmentReasonWrongPayeeCredit, TransactionSourceInboundCheckAdjustmentReasonAdjustedAmount, TransactionSourceInboundCheckAdjustmentReasonNonConformingItem, TransactionSourceInboundCheckAdjustmentReasonPaid:
 		return true
 	}
 	return false
