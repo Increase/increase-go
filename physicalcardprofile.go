@@ -111,9 +111,11 @@ func (r *PhysicalCardProfileService) Clone(ctx context.Context, physicalCardProf
 type PhysicalCardProfile struct {
 	// The Card Profile identifier.
 	ID string `json:"id,required"`
-	// The identifier of the File containing the physical card's back image.
+	// The identifier of the File containing the physical card's back image. This will
+	// be missing until the image has been post-processed.
 	BackImageFileID string `json:"back_image_file_id,required,nullable"`
-	// The identifier of the File containing the physical card's carrier image.
+	// The identifier of the File containing the physical card's carrier image. This
+	// will be missing until the image has been post-processed.
 	CarrierImageFileID string `json:"carrier_image_file_id,required,nullable"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone string `json:"contact_phone,required,nullable"`
@@ -124,7 +126,8 @@ type PhysicalCardProfile struct {
 	Creator PhysicalCardProfileCreator `json:"creator,required"`
 	// A description you can use to identify the Physical Card Profile.
 	Description string `json:"description,required"`
-	// The identifier of the File containing the physical card's front image.
+	// The identifier of the File containing the physical card's front image. This will
+	// be missing until the image has been post-processed.
 	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
