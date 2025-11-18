@@ -1775,7 +1775,7 @@ func (r TransactionSourceCardFinancialVerificationCardholderAddressResult) IsKno
 // sent from Increase is accepted by the receiving bank.
 type TransactionSourceCardPushTransferAcceptance struct {
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	SettlementAmount int64 `json:"settlement_amount,required"`
 	// The identifier of the Card Push Transfer that led to this Transaction.
 	TransferID  string                                          `json:"transfer_id,required"`
 	ExtraFields map[string]interface{}                          `json:"-,extras"`
@@ -1785,10 +1785,10 @@ type TransactionSourceCardPushTransferAcceptance struct {
 // transactionSourceCardPushTransferAcceptanceJSON contains the JSON metadata for
 // the struct [TransactionSourceCardPushTransferAcceptance]
 type transactionSourceCardPushTransferAcceptanceJSON struct {
-	Amount      apijson.Field
-	TransferID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	SettlementAmount apijson.Field
+	TransferID       apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *TransactionSourceCardPushTransferAcceptance) UnmarshalJSON(data []byte) (err error) {
