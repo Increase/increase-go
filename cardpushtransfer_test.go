@@ -27,7 +27,6 @@ func TestCardPushTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardPushTransfers.New(context.TODO(), increase.CardPushTransferNewParams{
-		Amount:                        increase.F(int64(100)),
 		BusinessApplicationIdentifier: increase.F(increase.CardPushTransferNewParamsBusinessApplicationIdentifierFundsDisbursement),
 		CardTokenID:                   increase.F("outbound_card_token_zlt0ml6youq3q7vcdlg0"),
 		MerchantCategoryCode:          increase.F("1234"),
@@ -36,14 +35,18 @@ func TestCardPushTransferNewWithOptionalParams(t *testing.T) {
 		MerchantNamePrefix:            increase.F("Acme"),
 		MerchantPostalCode:            increase.F("10045"),
 		MerchantState:                 increase.F("NY"),
-		RecipientName:                 increase.F("Ian Crease"),
-		SenderAddressCity:             increase.F("New York"),
-		SenderAddressLine1:            increase.F("33 Liberty Street"),
-		SenderAddressPostalCode:       increase.F("10045"),
-		SenderAddressState:            increase.F("NY"),
-		SenderName:                    increase.F("Ian Crease"),
-		SourceAccountNumberID:         increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		RequireApproval:               increase.F(true),
+		PresentmentAmount: increase.F(increase.CardPushTransferNewParamsPresentmentAmount{
+			Currency: increase.F(increase.CardPushTransferNewParamsPresentmentAmountCurrencyUsd),
+			Value:    increase.F("1234.56"),
+		}),
+		RecipientName:           increase.F("Ian Crease"),
+		SenderAddressCity:       increase.F("New York"),
+		SenderAddressLine1:      increase.F("33 Liberty Street"),
+		SenderAddressPostalCode: increase.F("10045"),
+		SenderAddressState:      increase.F("NY"),
+		SenderName:              increase.F("Ian Crease"),
+		SourceAccountNumberID:   increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		RequireApproval:         increase.F(true),
 	})
 	if err != nil {
 		var apierr *increase.Error
