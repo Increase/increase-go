@@ -40,6 +40,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				PostalCode: increase.F("10045"),
 				State:      increase.F("NY"),
 				Line2:      increase.F("x"),
+				Name:       increase.F("Ian Crease"),
 			}),
 			Memo:             increase.F("Check payment"),
 			RecipientName:    increase.F("Ian Crease"),

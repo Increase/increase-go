@@ -1053,6 +1053,9 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The second line of the address component of the check's destination address.
 	Line2 param.Field[string] `json:"line2"`
+	// The name component of the check's destination address. Defaults to the provided
+	// `recipient_name` parameter if `name` is not provided.
+	Name param.Field[string] `json:"name"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data []byte, err error) {
