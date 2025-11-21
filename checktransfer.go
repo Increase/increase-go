@@ -1060,9 +1060,9 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	// The name component of the check's destination address. Defaults to the provided
 	// `recipient_name` parameter if `name` is not provided.
 	Name param.Field[string] `json:"name"`
-	// The phone number to associate with the check's destination address. Will be
-	// supplied to FedEx as the contact phone number for the recipient to be used in
-	// case of delivery issues.
+	// The phone number to associate with the check's destination address. Only used if
+	// shipping method is `fedex_overnight`. Will be supplied to FedEx as the contact
+	// phone number for the recipient to be used in case of delivery issues.
 	Phone param.Field[string] `json:"phone"`
 }
 
