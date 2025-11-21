@@ -553,6 +553,9 @@ type CheckTransferPhysicalCheckMailingAddress struct {
 	Line2 string `json:"line2,required,nullable"`
 	// The name component of the check's mailing address.
 	Name string `json:"name,required,nullable"`
+	// The phone number to be used in case of delivery issues at the check's mailing
+	// address. Only used for FedEx overnight shipping.
+	Phone string `json:"phone,required,nullable"`
 	// The postal code of the check's destination.
 	PostalCode string `json:"postal_code,required,nullable"`
 	// The state of the check's destination.
@@ -567,6 +570,7 @@ type checkTransferPhysicalCheckMailingAddressJSON struct {
 	Line1       apijson.Field
 	Line2       apijson.Field
 	Name        apijson.Field
+	Phone       apijson.Field
 	PostalCode  apijson.Field
 	State       apijson.Field
 	raw         string
@@ -1056,6 +1060,10 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	// The name component of the check's destination address. Defaults to the provided
 	// `recipient_name` parameter if `name` is not provided.
 	Name param.Field[string] `json:"name"`
+	// The phone number to associate with the check's destination address. Will be
+	// supplied to FedEx as the contact phone number for the recipient to be used in
+	// case of delivery issues.
+	Phone param.Field[string] `json:"phone"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data []byte, err error) {
