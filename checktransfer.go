@@ -494,6 +494,8 @@ func (r checkTransferMailingJSON) RawJSON() string {
 type CheckTransferPhysicalCheck struct {
 	// The ID of the file for the check attachment.
 	AttachmentFileID string `json:"attachment_file_id,required,nullable"`
+	// The ID of the file for the check voucher image.
+	CheckVoucherImageFileID string `json:"check_voucher_image_file_id,required,nullable"`
 	// Details for where Increase will mail the check.
 	MailingAddress CheckTransferPhysicalCheckMailingAddress `json:"mailing_address,required"`
 	// The descriptor that will be printed on the memo field on the check.
@@ -521,18 +523,19 @@ type CheckTransferPhysicalCheck struct {
 // checkTransferPhysicalCheckJSON contains the JSON metadata for the struct
 // [CheckTransferPhysicalCheck]
 type checkTransferPhysicalCheckJSON struct {
-	AttachmentFileID apijson.Field
-	MailingAddress   apijson.Field
-	Memo             apijson.Field
-	Note             apijson.Field
-	Payer            apijson.Field
-	RecipientName    apijson.Field
-	ReturnAddress    apijson.Field
-	ShippingMethod   apijson.Field
-	SignatureText    apijson.Field
-	TrackingUpdates  apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	AttachmentFileID        apijson.Field
+	CheckVoucherImageFileID apijson.Field
+	MailingAddress          apijson.Field
+	Memo                    apijson.Field
+	Note                    apijson.Field
+	Payer                   apijson.Field
+	RecipientName           apijson.Field
+	ReturnAddress           apijson.Field
+	ShippingMethod          apijson.Field
+	SignatureText           apijson.Field
+	TrackingUpdates         apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *CheckTransferPhysicalCheck) UnmarshalJSON(data []byte) (err error) {
@@ -1022,6 +1025,10 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// `purpose: check_attachment`. For details on pricing and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
 	AttachmentFileID param.Field[string] `json:"attachment_file_id"`
+	// The ID of a File to be used as the check voucher image. This must have
+	// `purpose: check_voucher_image`. For details on pricing and restrictions, see
+	// https://increase.com/documentation/originating-checks#printing-checks .
+	CheckVoucherImageFileID param.Field[string] `json:"check_voucher_image_file_id"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
 	// The payer of the check. This will be printed on the top-left portion of the
