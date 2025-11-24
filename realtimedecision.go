@@ -713,8 +713,8 @@ func (r RealTimeDecisionCardAuthorizationDecision) IsKnown() bool {
 // the reason the authorization was declined.
 type RealTimeDecisionCardAuthorizationDecline struct {
 	// The reason the authorization was declined.
-	Reason string                                       `json:"reason,required"`
-	JSON   realTimeDecisionCardAuthorizationDeclineJSON `json:"-"`
+	Reason RealTimeDecisionCardAuthorizationDeclineReason `json:"reason,required"`
+	JSON   realTimeDecisionCardAuthorizationDeclineJSON   `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationDeclineJSON contains the JSON metadata for the
@@ -731,6 +731,26 @@ func (r *RealTimeDecisionCardAuthorizationDecline) UnmarshalJSON(data []byte) (e
 
 func (r realTimeDecisionCardAuthorizationDeclineJSON) RawJSON() string {
 	return r.raw
+}
+
+// The reason the authorization was declined.
+type RealTimeDecisionCardAuthorizationDeclineReason string
+
+const (
+	RealTimeDecisionCardAuthorizationDeclineReasonInsufficientFunds       RealTimeDecisionCardAuthorizationDeclineReason = "insufficient_funds"
+	RealTimeDecisionCardAuthorizationDeclineReasonTransactionNeverAllowed RealTimeDecisionCardAuthorizationDeclineReason = "transaction_never_allowed"
+	RealTimeDecisionCardAuthorizationDeclineReasonExceedsApprovalLimit    RealTimeDecisionCardAuthorizationDeclineReason = "exceeds_approval_limit"
+	RealTimeDecisionCardAuthorizationDeclineReasonCardTemporarilyDisabled RealTimeDecisionCardAuthorizationDeclineReason = "card_temporarily_disabled"
+	RealTimeDecisionCardAuthorizationDeclineReasonSuspectedFraud          RealTimeDecisionCardAuthorizationDeclineReason = "suspected_fraud"
+	RealTimeDecisionCardAuthorizationDeclineReasonOther                   RealTimeDecisionCardAuthorizationDeclineReason = "other"
+)
+
+func (r RealTimeDecisionCardAuthorizationDeclineReason) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationDeclineReasonInsufficientFunds, RealTimeDecisionCardAuthorizationDeclineReasonTransactionNeverAllowed, RealTimeDecisionCardAuthorizationDeclineReasonExceedsApprovalLimit, RealTimeDecisionCardAuthorizationDeclineReasonCardTemporarilyDisabled, RealTimeDecisionCardAuthorizationDeclineReasonSuspectedFraud, RealTimeDecisionCardAuthorizationDeclineReasonOther:
+		return true
+	}
+	return false
 }
 
 // The direction describes the direction the funds will move, either from the
