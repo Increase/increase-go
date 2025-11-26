@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // OAuthApplicationService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *OAuthApplicationService) Get(ctx context.Context, oauthApplicationID st
 }
 
 // List OAuth Applications
-func (r *OAuthApplicationService) List(ctx context.Context, query OAuthApplicationListParams, opts ...option.RequestOption) (res *OAuthApplicationListResponse, err error) {
+func (r *OAuthApplicationService) List(ctx context.Context, query OAuthApplicationListParams, opts ...option.RequestOption) (res *pagination.Page[OAuthApplication], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "oauth_applications"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List OAuth Applications
+func (r *OAuthApplicationService) ListAutoPaging(ctx context.Context, query OAuthApplicationListParams, opts ...option.RequestOption) *pagination.PageAutoPager[OAuthApplication] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // An OAuth Application lets you build an application for others to use with their
@@ -135,33 +151,6 @@ func (r OAuthApplicationType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of OAuth Application objects.
-type OAuthApplicationListResponse struct {
-	// The contents of the list.
-	Data []OAuthApplication `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                           `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}           `json:"-,extras"`
-	JSON        oauthApplicationListResponseJSON `json:"-"`
-}
-
-// oauthApplicationListResponseJSON contains the JSON metadata for the struct
-// [OAuthApplicationListResponse]
-type oauthApplicationListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *OAuthApplicationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r oauthApplicationListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type OAuthApplicationListParams struct {

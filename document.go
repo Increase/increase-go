@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // DocumentService contains methods and other services that help with interacting
@@ -58,11 +59,26 @@ func (r *DocumentService) Get(ctx context.Context, documentID string, opts ...op
 }
 
 // List Documents
-func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *DocumentListResponse, err error) {
+func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *pagination.Page[Document], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "documents"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Documents
+func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Document] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Increase generates certain documents / forms automatically for your application;
@@ -196,33 +212,6 @@ func (r DocumentType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Document objects.
-type DocumentListResponse struct {
-	// The contents of the list.
-	Data []Document `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                   `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}   `json:"-,extras"`
-	JSON        documentListResponseJSON `json:"-"`
-}
-
-// documentListResponseJSON contains the JSON metadata for the struct
-// [DocumentListResponse]
-type documentListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *DocumentListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r documentListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type DocumentNewParams struct {

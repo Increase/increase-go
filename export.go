@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // ExportService contains methods and other services that help with interacting
@@ -58,11 +59,26 @@ func (r *ExportService) Get(ctx context.Context, exportID string, opts ...option
 }
 
 // List Exports
-func (r *ExportService) List(ctx context.Context, query ExportListParams, opts ...option.RequestOption) (res *ExportListResponse, err error) {
+func (r *ExportService) List(ctx context.Context, query ExportListParams, opts ...option.RequestOption) (res *pagination.Page[Export], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "exports"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Exports
+func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Export] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Exports are batch summaries of your Increase data. You can make them from the
@@ -172,33 +188,6 @@ func (r ExportType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Export objects.
-type ExportListResponse struct {
-	// The contents of the list.
-	Data []Export `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                 `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
-	JSON        exportListResponseJSON `json:"-"`
-}
-
-// exportListResponseJSON contains the JSON metadata for the struct
-// [ExportListResponse]
-type exportListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExportListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r exportListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type ExportNewParams struct {

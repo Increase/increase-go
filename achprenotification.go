@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // ACHPrenotificationService contains methods and other services that help with
@@ -58,11 +59,26 @@ func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationI
 }
 
 // List ACH Prenotifications
-func (r *ACHPrenotificationService) List(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) (res *ACHPrenotificationListResponse, err error) {
+func (r *ACHPrenotificationService) List(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) (res *pagination.Page[ACHPrenotification], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "ach_prenotifications"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List ACH Prenotifications
+func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query ACHPrenotificationListParams, opts ...option.RequestOption) *pagination.PageAutoPager[ACHPrenotification] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // ACH Prenotifications are one way you can verify account and routing numbers by
@@ -397,33 +413,6 @@ func (r ACHPrenotificationType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of ACH Prenotification objects.
-type ACHPrenotificationListResponse struct {
-	// The contents of the list.
-	Data []ACHPrenotification `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                             `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}             `json:"-,extras"`
-	JSON        achPrenotificationListResponseJSON `json:"-"`
-}
-
-// achPrenotificationListResponseJSON contains the JSON metadata for the struct
-// [ACHPrenotificationListResponse]
-type achPrenotificationListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ACHPrenotificationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r achPrenotificationListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type ACHPrenotificationNewParams struct {

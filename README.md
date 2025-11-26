@@ -52,7 +52,9 @@ func main() {
 		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
 	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-		Name: increase.F("New Account!"),
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
 		panic(err.Error())
@@ -162,8 +164,33 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Accounts.ListAutoPaging(context.TODO(), increase.AccountListParams{})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	account := iter.Current()
+	fmt.Printf("%+v\n", account)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Accounts.List(context.TODO(), increase.AccountListParams{})
+for page != nil {
+	for _, account := range page.Data {
+		fmt.Printf("%+v\n", account)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
@@ -205,7 +232,9 @@ defer cancel()
 client.Accounts.New(
 	ctx,
 	increase.AccountNewParams{
-		Name: increase.F("New Account!"),
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -264,7 +293,9 @@ client := increase.NewClient(
 client.Accounts.New(
 	context.TODO(),
 	increase.AccountNewParams{
-		Name: increase.F("New Account!"),
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	},
 	option.WithMaxRetries(5),
 )
@@ -281,7 +312,9 @@ var response *http.Response
 account, err := client.Accounts.New(
 	context.TODO(),
 	increase.AccountNewParams{
-		Name: increase.F("New Account!"),
+		Name:      increase.F("New Account!"),
+		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	},
 	option.WithResponseInto(&response),
 )

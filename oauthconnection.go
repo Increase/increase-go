@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // OAuthConnectionService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *OAuthConnectionService) Get(ctx context.Context, oauthConnectionID stri
 }
 
 // List OAuth Connections
-func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) (res *OAuthConnectionListResponse, err error) {
+func (r *OAuthConnectionService) List(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) (res *pagination.Page[OAuthConnection], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "oauth_connections"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List OAuth Connections
+func (r *OAuthConnectionService) ListAutoPaging(ctx context.Context, query OAuthConnectionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[OAuthConnection] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // When a user authorizes your OAuth application, an OAuth Connection object is
@@ -132,33 +148,6 @@ func (r OAuthConnectionType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of OAuth Connection objects.
-type OAuthConnectionListResponse struct {
-	// The contents of the list.
-	Data []OAuthConnection `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                          `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
-	JSON        oauthConnectionListResponseJSON `json:"-"`
-}
-
-// oauthConnectionListResponseJSON contains the JSON metadata for the struct
-// [OAuthConnectionListResponse]
-type oauthConnectionListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *OAuthConnectionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r oauthConnectionListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type OAuthConnectionListParams struct {

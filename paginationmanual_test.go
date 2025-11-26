@@ -12,7 +12,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestManualPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,14 +24,21 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-		Name:      increase.F("New Account!"),
-		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
-		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
-	})
+	page, err := client.Accounts.List(context.TODO(), increase.AccountListParams{})
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", account.ID)
+	for _, account := range page.Data {
+		t.Logf("%+v\n", account.ID)
+	}
+	// Prism mock isn't going to give us real pagination
+	page, err = page.GetNextPage()
+	if err != nil {
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	if page != nil {
+		for _, account := range page.Data {
+			t.Logf("%+v\n", account.ID)
+		}
+	}
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // LockboxService contains methods and other services that help with interacting
@@ -70,11 +71,26 @@ func (r *LockboxService) Update(ctx context.Context, lockboxID string, body Lock
 }
 
 // List Lockboxes
-func (r *LockboxService) List(ctx context.Context, query LockboxListParams, opts ...option.RequestOption) (res *LockboxListResponse, err error) {
+func (r *LockboxService) List(ctx context.Context, query LockboxListParams, opts ...option.RequestOption) (res *pagination.Page[Lockbox], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "lockboxes"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Lockboxes
+func (r *LockboxService) ListAutoPaging(ctx context.Context, query LockboxListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Lockbox] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Lockboxes are physical locations that can receive mail containing paper checks.
@@ -201,33 +217,6 @@ func (r LockboxType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Lockbox objects.
-type LockboxListResponse struct {
-	// The contents of the list.
-	Data []Lockbox `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                  `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}  `json:"-,extras"`
-	JSON        lockboxListResponseJSON `json:"-"`
-}
-
-// lockboxListResponseJSON contains the JSON metadata for the struct
-// [LockboxListResponse]
-type lockboxListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *LockboxListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r lockboxListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type LockboxNewParams struct {

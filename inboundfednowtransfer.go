@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // InboundFednowTransferService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *InboundFednowTransferService) Get(ctx context.Context, inboundFednowTra
 }
 
 // List Inbound FedNow Transfers
-func (r *InboundFednowTransferService) List(ctx context.Context, query InboundFednowTransferListParams, opts ...option.RequestOption) (res *InboundFednowTransferListResponse, err error) {
+func (r *InboundFednowTransferService) List(ctx context.Context, query InboundFednowTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundFednowTransfer], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_fednow_transfers"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Inbound FedNow Transfers
+func (r *InboundFednowTransferService) ListAutoPaging(ctx context.Context, query InboundFednowTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundFednowTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // An Inbound FedNow Transfer is a FedNow transfer initiated outside of Increase to
@@ -250,33 +266,6 @@ func (r InboundFednowTransferType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Inbound FedNow Transfer objects.
-type InboundFednowTransferListResponse struct {
-	// The contents of the list.
-	Data []InboundFednowTransfer `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                                `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}                `json:"-,extras"`
-	JSON        inboundFednowTransferListResponseJSON `json:"-"`
-}
-
-// inboundFednowTransferListResponseJSON contains the JSON metadata for the struct
-// [InboundFednowTransferListResponse]
-type inboundFednowTransferListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundFednowTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundFednowTransferListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type InboundFednowTransferListParams struct {

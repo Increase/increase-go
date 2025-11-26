@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // EventService contains methods and other services that help with interacting with
@@ -50,11 +51,26 @@ func (r *EventService) Get(ctx context.Context, eventID string, opts ...option.R
 }
 
 // List Events
-func (r *EventService) List(ctx context.Context, query EventListParams, opts ...option.RequestOption) (res *EventListResponse, err error) {
+func (r *EventService) List(ctx context.Context, query EventListParams, opts ...option.RequestOption) (res *pagination.Page[Event], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "events"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Events
+func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Event] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Events are records of things that happened to objects at Increase. Events are
@@ -228,33 +244,6 @@ func (r EventType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Event objects.
-type EventListResponse struct {
-	// The contents of the list.
-	Data []Event `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                 `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
-	JSON        eventListResponseJSON  `json:"-"`
-}
-
-// eventListResponseJSON contains the JSON metadata for the struct
-// [EventListResponse]
-type eventListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *EventListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r eventListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type EventListParams struct {

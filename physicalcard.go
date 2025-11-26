@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // PhysicalCardService contains methods and other services that help with
@@ -70,11 +71,26 @@ func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string,
 }
 
 // List Physical Cards
-func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) (res *PhysicalCardListResponse, err error) {
+func (r *PhysicalCardService) List(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) (res *pagination.Page[PhysicalCard], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "physical_cards"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Physical Cards
+func (r *PhysicalCardService) ListAutoPaging(ctx context.Context, query PhysicalCardListParams, opts ...option.RequestOption) *pagination.PageAutoPager[PhysicalCard] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Custom physical Visa cards that are shipped to your customers. The artwork is
@@ -425,33 +441,6 @@ func (r PhysicalCardType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Physical Card objects.
-type PhysicalCardListResponse struct {
-	// The contents of the list.
-	Data []PhysicalCard `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                       `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}       `json:"-,extras"`
-	JSON        physicalCardListResponseJSON `json:"-"`
-}
-
-// physicalCardListResponseJSON contains the JSON metadata for the struct
-// [PhysicalCardListResponse]
-type physicalCardListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PhysicalCardListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r physicalCardListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type PhysicalCardNewParams struct {

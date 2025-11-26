@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // InboundMailItemService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *InboundMailItemService) Get(ctx context.Context, inboundMailItemID stri
 }
 
 // List Inbound Mail Items
-func (r *InboundMailItemService) List(ctx context.Context, query InboundMailItemListParams, opts ...option.RequestOption) (res *InboundMailItemListResponse, err error) {
+func (r *InboundMailItemService) List(ctx context.Context, query InboundMailItemListParams, opts ...option.RequestOption) (res *pagination.Page[InboundMailItem], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_mail_items"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Inbound Mail Items
+func (r *InboundMailItemService) ListAutoPaging(ctx context.Context, query InboundMailItemListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundMailItem] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Action a Inbound Mail Item
@@ -219,33 +235,6 @@ func (r InboundMailItemType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Inbound Mail Item objects.
-type InboundMailItemListResponse struct {
-	// The contents of the list.
-	Data []InboundMailItem `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                          `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
-	JSON        inboundMailItemListResponseJSON `json:"-"`
-}
-
-// inboundMailItemListResponseJSON contains the JSON metadata for the struct
-// [InboundMailItemListResponse]
-type inboundMailItemListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundMailItemListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundMailItemListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type InboundMailItemListParams struct {
