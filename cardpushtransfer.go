@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CardPushTransferService contains methods and other services that help with
@@ -59,26 +58,11 @@ func (r *CardPushTransferService) Get(ctx context.Context, cardPushTransferID st
 }
 
 // List Card Push Transfers
-func (r *CardPushTransferService) List(ctx context.Context, query CardPushTransferListParams, opts ...option.RequestOption) (res *pagination.Page[CardPushTransfer], err error) {
-	var raw *http.Response
+func (r *CardPushTransferService) List(ctx context.Context, query CardPushTransferListParams, opts ...option.RequestOption) (res *CardPushTransferListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_push_transfers"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Card Push Transfers
-func (r *CardPushTransferService) ListAutoPaging(ctx context.Context, query CardPushTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardPushTransfer] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Approves a Card Push Transfer in a pending_approval state.
@@ -847,6 +831,33 @@ func (r CardPushTransferType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Card Push Transfer objects.
+type CardPushTransferListResponse struct {
+	// The contents of the list.
+	Data []CardPushTransfer `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                           `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}           `json:"-,extras"`
+	JSON        cardPushTransferListResponseJSON `json:"-"`
+}
+
+// cardPushTransferListResponseJSON contains the JSON metadata for the struct
+// [CardPushTransferListResponse]
+type cardPushTransferListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPushTransferListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPushTransferListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type CardPushTransferNewParams struct {

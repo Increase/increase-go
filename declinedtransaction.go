@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // DeclinedTransactionService contains methods and other services that help with
@@ -51,26 +50,11 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declinedTransactio
 }
 
 // List Declined Transactions
-func (r *DeclinedTransactionService) List(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) (res *pagination.Page[DeclinedTransaction], err error) {
-	var raw *http.Response
+func (r *DeclinedTransactionService) List(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) (res *DeclinedTransactionListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "declined_transactions"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Declined Transactions
-func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query DeclinedTransactionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[DeclinedTransaction] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Declined Transactions are refused additions and removals of money from your bank
@@ -1695,6 +1679,33 @@ func (r DeclinedTransactionType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Declined Transaction objects.
+type DeclinedTransactionListResponse struct {
+	// The contents of the list.
+	Data []DeclinedTransaction `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                              `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}              `json:"-,extras"`
+	JSON        declinedTransactionListResponseJSON `json:"-"`
+}
+
+// declinedTransactionListResponseJSON contains the JSON metadata for the struct
+// [DeclinedTransactionListResponse]
+type declinedTransactionListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type DeclinedTransactionListParams struct {

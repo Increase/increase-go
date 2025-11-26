@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // AccountService contains methods and other services that help with interacting
@@ -71,26 +70,11 @@ func (r *AccountService) Update(ctx context.Context, accountID string, body Acco
 }
 
 // List Accounts
-func (r *AccountService) List(ctx context.Context, query AccountListParams, opts ...option.RequestOption) (res *pagination.Page[Account], err error) {
-	var raw *http.Response
+func (r *AccountService) List(ctx context.Context, query AccountListParams, opts ...option.RequestOption) (res *AccountListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "accounts"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Accounts
-func (r *AccountService) ListAutoPaging(ctx context.Context, query AccountListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Account] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Retrieve the current and available balances for an account in minor units of the
@@ -316,6 +300,33 @@ func (r BalanceLookupType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Account objects.
+type AccountListResponse struct {
+	// The contents of the list.
+	Data []Account `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                  `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}  `json:"-,extras"`
+	JSON        accountListResponseJSON `json:"-"`
+}
+
+// accountListResponseJSON contains the JSON metadata for the struct
+// [AccountListResponse]
+type accountListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type AccountNewParams struct {

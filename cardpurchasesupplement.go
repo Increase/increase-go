@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CardPurchaseSupplementService contains methods and other services that help with
@@ -51,26 +50,11 @@ func (r *CardPurchaseSupplementService) Get(ctx context.Context, cardPurchaseSup
 }
 
 // List Card Purchase Supplements
-func (r *CardPurchaseSupplementService) List(ctx context.Context, query CardPurchaseSupplementListParams, opts ...option.RequestOption) (res *pagination.Page[CardPurchaseSupplement], err error) {
-	var raw *http.Response
+func (r *CardPurchaseSupplementService) List(ctx context.Context, query CardPurchaseSupplementListParams, opts ...option.RequestOption) (res *CardPurchaseSupplementListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_purchase_supplements"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Card Purchase Supplements
-func (r *CardPurchaseSupplementService) ListAutoPaging(ctx context.Context, query CardPurchaseSupplementListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardPurchaseSupplement] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Additional information about a card purchase (e.g., settlement or refund), such
@@ -340,6 +324,33 @@ func (r CardPurchaseSupplementType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Card Purchase Supplement objects.
+type CardPurchaseSupplementListResponse struct {
+	// The contents of the list.
+	Data []CardPurchaseSupplement `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                                 `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}                 `json:"-,extras"`
+	JSON        cardPurchaseSupplementListResponseJSON `json:"-"`
+}
+
+// cardPurchaseSupplementListResponseJSON contains the JSON metadata for the struct
+// [CardPurchaseSupplementListResponse]
+type cardPurchaseSupplementListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPurchaseSupplementListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPurchaseSupplementListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type CardPurchaseSupplementListParams struct {
