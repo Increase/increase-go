@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // InboundRealTimePaymentsTransferService contains methods and other services that
@@ -51,26 +50,11 @@ func (r *InboundRealTimePaymentsTransferService) Get(ctx context.Context, inboun
 }
 
 // List Inbound Real-Time Payments Transfers
-func (r *InboundRealTimePaymentsTransferService) List(ctx context.Context, query InboundRealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundRealTimePaymentsTransfer], err error) {
-	var raw *http.Response
+func (r *InboundRealTimePaymentsTransferService) List(ctx context.Context, query InboundRealTimePaymentsTransferListParams, opts ...option.RequestOption) (res *InboundRealTimePaymentsTransferListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_real_time_payments_transfers"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Inbound Real-Time Payments Transfers
-func (r *InboundRealTimePaymentsTransferService) ListAutoPaging(ctx context.Context, query InboundRealTimePaymentsTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundRealTimePaymentsTransfer] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // An Inbound Real-Time Payments Transfer is a Real-Time Payments transfer
@@ -268,6 +252,33 @@ func (r InboundRealTimePaymentsTransferType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Inbound Real-Time Payments Transfer objects.
+type InboundRealTimePaymentsTransferListResponse struct {
+	// The contents of the list.
+	Data []InboundRealTimePaymentsTransfer `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                                          `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}                          `json:"-,extras"`
+	JSON        inboundRealTimePaymentsTransferListResponseJSON `json:"-"`
+}
+
+// inboundRealTimePaymentsTransferListResponseJSON contains the JSON metadata for
+// the struct [InboundRealTimePaymentsTransferListResponse]
+type inboundRealTimePaymentsTransferListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InboundRealTimePaymentsTransferListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundRealTimePaymentsTransferListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type InboundRealTimePaymentsTransferListParams struct {

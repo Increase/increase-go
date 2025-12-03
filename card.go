@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CardService contains methods and other services that help with interacting with
@@ -71,26 +70,11 @@ func (r *CardService) Update(ctx context.Context, cardID string, body CardUpdate
 }
 
 // List Cards
-func (r *CardService) List(ctx context.Context, query CardListParams, opts ...option.RequestOption) (res *pagination.Page[Card], err error) {
-	var raw *http.Response
+func (r *CardService) List(ctx context.Context, query CardListParams, opts ...option.RequestOption) (res *CardListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "cards"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Cards
-func (r *CardService) ListAutoPaging(ctx context.Context, query CardListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Card] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Create an iframe URL for a Card to display the card details. More details about
@@ -408,6 +392,33 @@ func (r CardIframeURLType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Card objects.
+type CardListResponse struct {
+	// The contents of the list.
+	Data []Card `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                 `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        cardListResponseJSON   `json:"-"`
+}
+
+// cardListResponseJSON contains the JSON metadata for the struct
+// [CardListResponse]
+type cardListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type CardNewParams struct {

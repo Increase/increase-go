@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // WireDrawdownRequestService contains methods and other services that help with
@@ -59,26 +58,11 @@ func (r *WireDrawdownRequestService) Get(ctx context.Context, wireDrawdownReques
 }
 
 // List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) List(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) (res *pagination.Page[WireDrawdownRequest], err error) {
-	var raw *http.Response
+func (r *WireDrawdownRequestService) List(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) (res *WireDrawdownRequestListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "wire_drawdown_requests"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Wire Drawdown Requests
-func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query WireDrawdownRequestListParams, opts ...option.RequestOption) *pagination.PageAutoPager[WireDrawdownRequest] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Wire drawdown requests enable you to request that someone else send you a wire.
@@ -305,6 +289,33 @@ func (r WireDrawdownRequestType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Wire Drawdown Request objects.
+type WireDrawdownRequestListResponse struct {
+	// The contents of the list.
+	Data []WireDrawdownRequest `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                              `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}              `json:"-,extras"`
+	JSON        wireDrawdownRequestListResponseJSON `json:"-"`
+}
+
+// wireDrawdownRequestListResponseJSON contains the JSON metadata for the struct
+// [WireDrawdownRequestListResponse]
+type wireDrawdownRequestListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *WireDrawdownRequestListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireDrawdownRequestListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type WireDrawdownRequestNewParams struct {

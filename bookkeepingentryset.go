@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // BookkeepingEntrySetService contains methods and other services that help with
@@ -59,26 +58,11 @@ func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySe
 }
 
 // List Bookkeeping Entry Sets
-func (r *BookkeepingEntrySetService) List(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) (res *pagination.Page[BookkeepingEntrySet], err error) {
-	var raw *http.Response
+func (r *BookkeepingEntrySetService) List(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) (res *BookkeepingEntrySetListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "bookkeeping_entry_sets"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Bookkeeping Entry Sets
-func (r *BookkeepingEntrySetService) ListAutoPaging(ctx context.Context, query BookkeepingEntrySetListParams, opts ...option.RequestOption) *pagination.PageAutoPager[BookkeepingEntrySet] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Entry Sets are accounting entries that are transactionally applied. Your
@@ -170,6 +154,33 @@ func (r BookkeepingEntrySetType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Bookkeeping Entry Set objects.
+type BookkeepingEntrySetListResponse struct {
+	// The contents of the list.
+	Data []BookkeepingEntrySet `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                              `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}              `json:"-,extras"`
+	JSON        bookkeepingEntrySetListResponseJSON `json:"-"`
+}
+
+// bookkeepingEntrySetListResponseJSON contains the JSON metadata for the struct
+// [BookkeepingEntrySetListResponse]
+type bookkeepingEntrySetListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *BookkeepingEntrySetListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r bookkeepingEntrySetListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type BookkeepingEntrySetNewParams struct {

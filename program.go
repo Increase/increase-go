@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // ProgramService contains methods and other services that help with interacting
@@ -51,26 +50,11 @@ func (r *ProgramService) Get(ctx context.Context, programID string, opts ...opti
 }
 
 // List Programs
-func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) (res *pagination.Page[Program], err error) {
-	var raw *http.Response
+func (r *ProgramService) List(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) (res *ProgramListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "programs"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Programs
-func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Program] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Programs determine the compliance and commercial terms of Accounts. By default,
@@ -158,6 +142,33 @@ func (r ProgramType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Program objects.
+type ProgramListResponse struct {
+	// The contents of the list.
+	Data []Program `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                  `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}  `json:"-,extras"`
+	JSON        programListResponseJSON `json:"-"`
+}
+
+// programListResponseJSON contains the JSON metadata for the struct
+// [ProgramListResponse]
+type programListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ProgramListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r programListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProgramListParams struct {

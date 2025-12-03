@@ -25,9 +25,7 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
-		Name:      increase.F("New Account!"),
-		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
-		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
+		Name: increase.F("New Account!"),
 	})
 	if err != nil {
 		t.Error(err)
