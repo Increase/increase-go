@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // DigitalWalletTokenService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *DigitalWalletTokenService) Get(ctx context.Context, digitalWalletTokenI
 }
 
 // List Digital Wallet Tokens
-func (r *DigitalWalletTokenService) List(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) (res *DigitalWalletTokenListResponse, err error) {
+func (r *DigitalWalletTokenService) List(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalWalletToken], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "digital_wallet_tokens"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Digital Wallet Tokens
+func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query DigitalWalletTokenListParams, opts ...option.RequestOption) *pagination.PageAutoPager[DigitalWalletToken] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // A Digital Wallet Token is created when a user adds a Card to their Apple Pay or
@@ -280,33 +296,6 @@ func (r DigitalWalletTokenUpdatesStatus) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Digital Wallet Token objects.
-type DigitalWalletTokenListResponse struct {
-	// The contents of the list.
-	Data []DigitalWalletToken `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                             `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}             `json:"-,extras"`
-	JSON        digitalWalletTokenListResponseJSON `json:"-"`
-}
-
-// digitalWalletTokenListResponseJSON contains the JSON metadata for the struct
-// [DigitalWalletTokenListResponse]
-type digitalWalletTokenListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *DigitalWalletTokenListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r digitalWalletTokenListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type DigitalWalletTokenListParams struct {

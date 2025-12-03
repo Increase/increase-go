@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // PendingTransactionService contains methods and other services that help with
@@ -61,11 +62,26 @@ func (r *PendingTransactionService) Get(ctx context.Context, pendingTransactionI
 }
 
 // List Pending Transactions
-func (r *PendingTransactionService) List(ctx context.Context, query PendingTransactionListParams, opts ...option.RequestOption) (res *PendingTransactionListResponse, err error) {
+func (r *PendingTransactionService) List(ctx context.Context, query PendingTransactionListParams, opts ...option.RequestOption) (res *pagination.Page[PendingTransaction], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "pending_transactions"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Pending Transactions
+func (r *PendingTransactionService) ListAutoPaging(ctx context.Context, query PendingTransactionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[PendingTransaction] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Release a Pending Transaction you had previously created. The Pending
@@ -1732,33 +1748,6 @@ func (r PendingTransactionType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Pending Transaction objects.
-type PendingTransactionListResponse struct {
-	// The contents of the list.
-	Data []PendingTransaction `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                             `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}             `json:"-,extras"`
-	JSON        pendingTransactionListResponseJSON `json:"-"`
-}
-
-// pendingTransactionListResponseJSON contains the JSON metadata for the struct
-// [PendingTransactionListResponse]
-type pendingTransactionListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PendingTransactionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r pendingTransactionListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type PendingTransactionNewParams struct {
