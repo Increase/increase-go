@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // TransactionService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *TransactionService) Get(ctx context.Context, transactionID string, opts
 }
 
 // List Transactions
-func (r *TransactionService) List(ctx context.Context, query TransactionListParams, opts ...option.RequestOption) (res *TransactionListResponse, err error) {
+func (r *TransactionService) List(ctx context.Context, query TransactionListParams, opts ...option.RequestOption) (res *pagination.Page[Transaction], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "transactions"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Transactions
+func (r *TransactionService) ListAutoPaging(ctx context.Context, query TransactionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Transaction] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Transactions are the immutable additions and removals of money from your bank
@@ -4864,33 +4880,6 @@ func (r TransactionType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Transaction objects.
-type TransactionListResponse struct {
-	// The contents of the list.
-	Data []Transaction `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                      `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}      `json:"-,extras"`
-	JSON        transactionListResponseJSON `json:"-"`
-}
-
-// transactionListResponseJSON contains the JSON metadata for the struct
-// [TransactionListResponse]
-type transactionListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *TransactionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r transactionListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type TransactionListParams struct {

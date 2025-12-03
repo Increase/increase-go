@@ -11,9 +11,10 @@ import (
 )
 
 type Page[T any] struct {
-	Data       interface{} `json:":data"`
-	NextCursor interface{} `json:":next_cursor"`
-	JSON       pageJSON    `json:"-"`
+	Data []T `json:"data"`
+	// A pointer to a place in the list.
+	NextCursor string   `json:"next_cursor,nullable"`
+	JSON       pageJSON `json:"-"`
 	cfg        *requestconfig.RequestConfig
 	res        *http.Response
 }
@@ -38,7 +39,7 @@ func (r pageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *Page[T]) GetNextPage() (res *Page[T], err error) {
-	if len(r.data) == 0 {
+	if len(r.Data) == 0 {
 		return nil, nil
 	}
 	next := r.NextCursor
@@ -46,7 +47,7 @@ func (r *Page[T]) GetNextPage() (res *Page[T], err error) {
 		return nil, nil
 	}
 	cfg := r.cfg.Clone(r.cfg.Context)
-	err = cfg.Apply(option.WithQuery(":cursor", next))
+	err = cfg.Apply(option.WithQuery("cursor", next))
 	if err != nil {
 		return nil, err
 	}
@@ -85,17 +86,17 @@ func NewPageAutoPager[T any](page *Page[T], err error) *PageAutoPager[T] {
 }
 
 func (r *PageAutoPager[T]) Next() bool {
-	if r.page == nil || len(r.page.data) == 0 {
+	if r.page == nil || len(r.page.Data) == 0 {
 		return false
 	}
-	if r.idx >= len(r.page.data) {
+	if r.idx >= len(r.page.Data) {
 		r.idx = 0
 		r.page, r.err = r.page.GetNextPage()
-		if r.err != nil || r.page == nil || len(r.page.data) == 0 {
+		if r.err != nil || r.page == nil || len(r.page.Data) == 0 {
 			return false
 		}
 	}
-	r.cur = r.page.data[r.idx]
+	r.cur = r.page.Data[r.idx]
 	r.run += 1
 	r.idx += 1
 	return true

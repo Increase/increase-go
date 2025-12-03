@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // InboundCheckDepositService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *InboundCheckDepositService) Get(ctx context.Context, inboundCheckDeposi
 }
 
 // List Inbound Check Deposits
-func (r *InboundCheckDepositService) List(ctx context.Context, query InboundCheckDepositListParams, opts ...option.RequestOption) (res *InboundCheckDepositListResponse, err error) {
+func (r *InboundCheckDepositService) List(ctx context.Context, query InboundCheckDepositListParams, opts ...option.RequestOption) (res *pagination.Page[InboundCheckDeposit], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_check_deposits"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Inbound Check Deposits
+func (r *InboundCheckDepositService) ListAutoPaging(ctx context.Context, query InboundCheckDepositListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundCheckDeposit] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Decline an Inbound Check Deposit
@@ -341,33 +357,6 @@ func (r InboundCheckDepositType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Inbound Check Deposit objects.
-type InboundCheckDepositListResponse struct {
-	// The contents of the list.
-	Data []InboundCheckDeposit `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                              `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}              `json:"-,extras"`
-	JSON        inboundCheckDepositListResponseJSON `json:"-"`
-}
-
-// inboundCheckDepositListResponseJSON contains the JSON metadata for the struct
-// [InboundCheckDepositListResponse]
-type inboundCheckDepositListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *InboundCheckDepositListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r inboundCheckDepositListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type InboundCheckDepositListParams struct {

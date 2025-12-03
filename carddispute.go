@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CardDisputeService contains methods and other services that help with
@@ -58,11 +59,26 @@ func (r *CardDisputeService) Get(ctx context.Context, cardDisputeID string, opts
 }
 
 // List Card Disputes
-func (r *CardDisputeService) List(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) (res *CardDisputeListResponse, err error) {
+func (r *CardDisputeService) List(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) (res *pagination.Page[CardDispute], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_disputes"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Card Disputes
+func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query CardDisputeListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardDispute] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Submit a User Submission for a Card Dispute
@@ -4456,33 +4472,6 @@ func (r *CardDisputeWin) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r cardDisputeWinJSON) RawJSON() string {
-	return r.raw
-}
-
-// A list of Card Dispute objects.
-type CardDisputeListResponse struct {
-	// The contents of the list.
-	Data []CardDispute `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                      `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}      `json:"-,extras"`
-	JSON        cardDisputeListResponseJSON `json:"-"`
-}
-
-// cardDisputeListResponseJSON contains the JSON metadata for the struct
-// [CardDisputeListResponse]
-type cardDisputeListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardDisputeListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r cardDisputeListResponseJSON) RawJSON() string {
 	return r.raw
 }
 

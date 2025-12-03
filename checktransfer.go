@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CheckTransferService contains methods and other services that help with
@@ -58,11 +59,26 @@ func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, 
 }
 
 // List Check Transfers
-func (r *CheckTransferService) List(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) (res *CheckTransferListResponse, err error) {
+func (r *CheckTransferService) List(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) (res *pagination.Page[CheckTransfer], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_transfers"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Check Transfers
+func (r *CheckTransferService) ListAutoPaging(ctx context.Context, query CheckTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CheckTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Approve a Check Transfer
@@ -922,33 +938,6 @@ func (r CheckTransferType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Check Transfer objects.
-type CheckTransferListResponse struct {
-	// The contents of the list.
-	Data []CheckTransfer `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                        `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}        `json:"-,extras"`
-	JSON        checkTransferListResponseJSON `json:"-"`
-}
-
-// checkTransferListResponseJSON contains the JSON metadata for the struct
-// [CheckTransferListResponse]
-type checkTransferListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CheckTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r checkTransferListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type CheckTransferNewParams struct {

@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // ExternalAccountService contains methods and other services that help with
@@ -70,11 +71,26 @@ func (r *ExternalAccountService) Update(ctx context.Context, externalAccountID s
 }
 
 // List External Accounts
-func (r *ExternalAccountService) List(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) (res *ExternalAccountListResponse, err error) {
+func (r *ExternalAccountService) List(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) (res *pagination.Page[ExternalAccount], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "external_accounts"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List External Accounts
+func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query ExternalAccountListParams, opts ...option.RequestOption) *pagination.PageAutoPager[ExternalAccount] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // External Accounts represent accounts at financial institutions other than
@@ -197,33 +213,6 @@ func (r ExternalAccountType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of External Account objects.
-type ExternalAccountListResponse struct {
-	// The contents of the list.
-	Data []ExternalAccount `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                          `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
-	JSON        externalAccountListResponseJSON `json:"-"`
-}
-
-// externalAccountListResponseJSON contains the JSON metadata for the struct
-// [ExternalAccountListResponse]
-type externalAccountListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExternalAccountListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r externalAccountListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type ExternalAccountNewParams struct {

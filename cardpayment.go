@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CardPaymentService contains methods and other services that help with
@@ -50,11 +51,26 @@ func (r *CardPaymentService) Get(ctx context.Context, cardPaymentID string, opts
 }
 
 // List Card Payments
-func (r *CardPaymentService) List(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) (res *CardPaymentListResponse, err error) {
+func (r *CardPaymentService) List(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) (res *pagination.Page[CardPayment], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_payments"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Card Payments
+func (r *CardPaymentService) ListAutoPaging(ctx context.Context, query CardPaymentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardPayment] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Card Payments group together interactions related to a single card payment, such
@@ -6846,33 +6862,6 @@ func (r CardPaymentType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Card Payment objects.
-type CardPaymentListResponse struct {
-	// The contents of the list.
-	Data []CardPayment `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                      `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}      `json:"-,extras"`
-	JSON        cardPaymentListResponseJSON `json:"-"`
-}
-
-// cardPaymentListResponseJSON contains the JSON metadata for the struct
-// [CardPaymentListResponse]
-type cardPaymentListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardPaymentListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r cardPaymentListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type CardPaymentListParams struct {

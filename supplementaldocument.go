@@ -14,6 +14,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // SupplementalDocumentService contains methods and other services that help with
@@ -44,11 +45,26 @@ func (r *SupplementalDocumentService) New(ctx context.Context, body Supplemental
 }
 
 // List Entity Supplemental Document Submissions
-func (r *SupplementalDocumentService) List(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) (res *SupplementalDocumentListResponse, err error) {
+func (r *SupplementalDocumentService) List(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[EntitySupplementalDocument], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "entity_supplemental_documents"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Entity Supplemental Document Submissions
+func (r *SupplementalDocumentService) ListAutoPaging(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[EntitySupplementalDocument] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Supplemental Documents are uploaded files connected to an Entity during
@@ -105,33 +121,6 @@ func (r EntitySupplementalDocumentType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Supplemental Document objects.
-type SupplementalDocumentListResponse struct {
-	// The contents of the list.
-	Data []EntitySupplementalDocument `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                               `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}               `json:"-,extras"`
-	JSON        supplementalDocumentListResponseJSON `json:"-"`
-}
-
-// supplementalDocumentListResponseJSON contains the JSON metadata for the struct
-// [SupplementalDocumentListResponse]
-type supplementalDocumentListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SupplementalDocumentListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r supplementalDocumentListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type SupplementalDocumentNewParams struct {

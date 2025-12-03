@@ -16,6 +16,7 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
+	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // AccountTransferService contains methods and other services that help with
@@ -58,11 +59,26 @@ func (r *AccountTransferService) Get(ctx context.Context, accountTransferID stri
 }
 
 // List Account Transfers
-func (r *AccountTransferService) List(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) (res *AccountTransferListResponse, err error) {
+func (r *AccountTransferService) List(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) (res *pagination.Page[AccountTransfer], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "account_transfers"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Account Transfers
+func (r *AccountTransferService) ListAutoPaging(ctx context.Context, query AccountTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[AccountTransfer] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Approves an Account Transfer in status `pending_approval`.
@@ -399,33 +415,6 @@ func (r AccountTransferType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// A list of Account Transfer objects.
-type AccountTransferListResponse struct {
-	// The contents of the list.
-	Data []AccountTransfer `json:"data,required"`
-	// A pointer to a place in the list.
-	NextCursor  string                          `json:"next_cursor,required,nullable"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
-	JSON        accountTransferListResponseJSON `json:"-"`
-}
-
-// accountTransferListResponseJSON contains the JSON metadata for the struct
-// [AccountTransferListResponse]
-type accountTransferListResponseJSON struct {
-	Data        apijson.Field
-	NextCursor  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AccountTransferListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r accountTransferListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type AccountTransferNewParams struct {
