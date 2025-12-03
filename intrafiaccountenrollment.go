@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // IntrafiAccountEnrollmentService contains methods and other services that help
@@ -59,26 +58,11 @@ func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccoun
 }
 
 // List IntraFi Account Enrollments
-func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) (res *pagination.Page[IntrafiAccountEnrollment], err error) {
-	var raw *http.Response
+func (r *IntrafiAccountEnrollmentService) List(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) (res *IntrafiAccountEnrollmentListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "intrafi_account_enrollments"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List IntraFi Account Enrollments
-func (r *IntrafiAccountEnrollmentService) ListAutoPaging(ctx context.Context, query IntrafiAccountEnrollmentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[IntrafiAccountEnrollment] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Unenroll an account from IntraFi
@@ -183,6 +167,33 @@ func (r IntrafiAccountEnrollmentType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of IntraFi Account Enrollment objects.
+type IntrafiAccountEnrollmentListResponse struct {
+	// The contents of the list.
+	Data []IntrafiAccountEnrollment `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                                   `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}                   `json:"-,extras"`
+	JSON        intrafiAccountEnrollmentListResponseJSON `json:"-"`
+}
+
+// intrafiAccountEnrollmentListResponseJSON contains the JSON metadata for the
+// struct [IntrafiAccountEnrollmentListResponse]
+type intrafiAccountEnrollmentListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IntrafiAccountEnrollmentListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r intrafiAccountEnrollmentListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type IntrafiAccountEnrollmentNewParams struct {

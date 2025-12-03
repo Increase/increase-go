@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CardValidationService contains methods and other services that help with
@@ -59,26 +58,11 @@ func (r *CardValidationService) Get(ctx context.Context, cardValidationID string
 }
 
 // List Card Validations
-func (r *CardValidationService) List(ctx context.Context, query CardValidationListParams, opts ...option.RequestOption) (res *pagination.Page[CardValidation], err error) {
-	var raw *http.Response
+func (r *CardValidationService) List(ctx context.Context, query CardValidationListParams, opts ...option.RequestOption) (res *CardValidationListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "card_validations"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Card Validations
-func (r *CardValidationService) ListAutoPaging(ctx context.Context, query CardValidationListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CardValidation] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Card Validations are used to validate a card and its cardholder before sending
@@ -613,6 +597,33 @@ func (r CardValidationType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Card Validation objects.
+type CardValidationListResponse struct {
+	// The contents of the list.
+	Data []CardValidation `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                         `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}         `json:"-,extras"`
+	JSON        cardValidationListResponseJSON `json:"-"`
+}
+
+// cardValidationListResponseJSON contains the JSON metadata for the struct
+// [CardValidationListResponse]
+type cardValidationListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardValidationListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardValidationListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type CardValidationNewParams struct {

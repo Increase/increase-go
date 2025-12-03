@@ -13,7 +13,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // RoutingNumberService contains methods and other services that help with
@@ -39,54 +38,63 @@ func NewRoutingNumberService(opts ...option.RequestOption) (r *RoutingNumberServ
 // user is providing you with bank account details. Since routing numbers uniquely
 // identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
 // valid routing number for this method is 110000000.
-func (r *RoutingNumberService) List(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) (res *pagination.Page[RoutingNumberListResponse], err error) {
-	var raw *http.Response
+func (r *RoutingNumberService) List(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) (res *RoutingNumberListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "routing_numbers"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
-// You can use this API to confirm if a routing number is valid, such as when a
-// user is providing you with bank account details. Since routing numbers uniquely
-// identify a bank, this will always return 0 or 1 entry. In Sandbox, the only
-// valid routing number for this method is 110000000.
-func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query RoutingNumberListParams, opts ...option.RequestOption) *pagination.PageAutoPager[RoutingNumberListResponse] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
-}
-
-// Routing numbers are used to identify your bank in a financial transaction.
+// A list of Routing Number objects.
 type RoutingNumberListResponse struct {
-	// This routing number's support for ACH Transfers.
-	ACHTransfers RoutingNumberListResponseACHTransfers `json:"ach_transfers,required"`
-	// This routing number's support for FedNow Transfers.
-	FednowTransfers RoutingNumberListResponseFednowTransfers `json:"fednow_transfers,required"`
-	// The name of the financial institution belonging to a routing number.
-	Name string `json:"name,required"`
-	// This routing number's support for Real-Time Payments Transfers.
-	RealTimePaymentsTransfers RoutingNumberListResponseRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
-	// The nine digit routing number identifier.
-	RoutingNumber string `json:"routing_number,required"`
-	// A constant representing the object's type. For this resource it will always be
-	// `routing_number`.
-	Type RoutingNumberListResponseType `json:"type,required"`
-	// This routing number's support for Wire Transfers.
-	WireTransfers RoutingNumberListResponseWireTransfers `json:"wire_transfers,required"`
-	JSON          routingNumberListResponseJSON          `json:"-"`
+	// The contents of the list.
+	Data []RoutingNumberListResponseData `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                        `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}        `json:"-,extras"`
+	JSON        routingNumberListResponseJSON `json:"-"`
 }
 
 // routingNumberListResponseJSON contains the JSON metadata for the struct
 // [RoutingNumberListResponse]
 type routingNumberListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r routingNumberListResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+// Routing numbers are used to identify your bank in a financial transaction.
+type RoutingNumberListResponseData struct {
+	// This routing number's support for ACH Transfers.
+	ACHTransfers RoutingNumberListResponseDataACHTransfers `json:"ach_transfers,required"`
+	// This routing number's support for FedNow Transfers.
+	FednowTransfers RoutingNumberListResponseDataFednowTransfers `json:"fednow_transfers,required"`
+	// The name of the financial institution belonging to a routing number.
+	Name string `json:"name,required"`
+	// This routing number's support for Real-Time Payments Transfers.
+	RealTimePaymentsTransfers RoutingNumberListResponseDataRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
+	// The nine digit routing number identifier.
+	RoutingNumber string `json:"routing_number,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `routing_number`.
+	Type RoutingNumberListResponseDataType `json:"type,required"`
+	// This routing number's support for Wire Transfers.
+	WireTransfers RoutingNumberListResponseDataWireTransfers `json:"wire_transfers,required"`
+	JSON          routingNumberListResponseDataJSON          `json:"-"`
+}
+
+// routingNumberListResponseDataJSON contains the JSON metadata for the struct
+// [RoutingNumberListResponseData]
+type routingNumberListResponseDataJSON struct {
 	ACHTransfers              apijson.Field
 	FednowTransfers           apijson.Field
 	Name                      apijson.Field
@@ -98,57 +106,57 @@ type routingNumberListResponseJSON struct {
 	ExtraFields               map[string]apijson.Field
 }
 
-func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *RoutingNumberListResponseData) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r routingNumberListResponseJSON) RawJSON() string {
+func (r routingNumberListResponseDataJSON) RawJSON() string {
 	return r.raw
 }
 
 // This routing number's support for ACH Transfers.
-type RoutingNumberListResponseACHTransfers string
+type RoutingNumberListResponseDataACHTransfers string
 
 const (
-	RoutingNumberListResponseACHTransfersSupported    RoutingNumberListResponseACHTransfers = "supported"
-	RoutingNumberListResponseACHTransfersNotSupported RoutingNumberListResponseACHTransfers = "not_supported"
+	RoutingNumberListResponseDataACHTransfersSupported    RoutingNumberListResponseDataACHTransfers = "supported"
+	RoutingNumberListResponseDataACHTransfersNotSupported RoutingNumberListResponseDataACHTransfers = "not_supported"
 )
 
-func (r RoutingNumberListResponseACHTransfers) IsKnown() bool {
+func (r RoutingNumberListResponseDataACHTransfers) IsKnown() bool {
 	switch r {
-	case RoutingNumberListResponseACHTransfersSupported, RoutingNumberListResponseACHTransfersNotSupported:
+	case RoutingNumberListResponseDataACHTransfersSupported, RoutingNumberListResponseDataACHTransfersNotSupported:
 		return true
 	}
 	return false
 }
 
 // This routing number's support for FedNow Transfers.
-type RoutingNumberListResponseFednowTransfers string
+type RoutingNumberListResponseDataFednowTransfers string
 
 const (
-	RoutingNumberListResponseFednowTransfersSupported    RoutingNumberListResponseFednowTransfers = "supported"
-	RoutingNumberListResponseFednowTransfersNotSupported RoutingNumberListResponseFednowTransfers = "not_supported"
+	RoutingNumberListResponseDataFednowTransfersSupported    RoutingNumberListResponseDataFednowTransfers = "supported"
+	RoutingNumberListResponseDataFednowTransfersNotSupported RoutingNumberListResponseDataFednowTransfers = "not_supported"
 )
 
-func (r RoutingNumberListResponseFednowTransfers) IsKnown() bool {
+func (r RoutingNumberListResponseDataFednowTransfers) IsKnown() bool {
 	switch r {
-	case RoutingNumberListResponseFednowTransfersSupported, RoutingNumberListResponseFednowTransfersNotSupported:
+	case RoutingNumberListResponseDataFednowTransfersSupported, RoutingNumberListResponseDataFednowTransfersNotSupported:
 		return true
 	}
 	return false
 }
 
 // This routing number's support for Real-Time Payments Transfers.
-type RoutingNumberListResponseRealTimePaymentsTransfers string
+type RoutingNumberListResponseDataRealTimePaymentsTransfers string
 
 const (
-	RoutingNumberListResponseRealTimePaymentsTransfersSupported    RoutingNumberListResponseRealTimePaymentsTransfers = "supported"
-	RoutingNumberListResponseRealTimePaymentsTransfersNotSupported RoutingNumberListResponseRealTimePaymentsTransfers = "not_supported"
+	RoutingNumberListResponseDataRealTimePaymentsTransfersSupported    RoutingNumberListResponseDataRealTimePaymentsTransfers = "supported"
+	RoutingNumberListResponseDataRealTimePaymentsTransfersNotSupported RoutingNumberListResponseDataRealTimePaymentsTransfers = "not_supported"
 )
 
-func (r RoutingNumberListResponseRealTimePaymentsTransfers) IsKnown() bool {
+func (r RoutingNumberListResponseDataRealTimePaymentsTransfers) IsKnown() bool {
 	switch r {
-	case RoutingNumberListResponseRealTimePaymentsTransfersSupported, RoutingNumberListResponseRealTimePaymentsTransfersNotSupported:
+	case RoutingNumberListResponseDataRealTimePaymentsTransfersSupported, RoutingNumberListResponseDataRealTimePaymentsTransfersNotSupported:
 		return true
 	}
 	return false
@@ -156,31 +164,31 @@ func (r RoutingNumberListResponseRealTimePaymentsTransfers) IsKnown() bool {
 
 // A constant representing the object's type. For this resource it will always be
 // `routing_number`.
-type RoutingNumberListResponseType string
+type RoutingNumberListResponseDataType string
 
 const (
-	RoutingNumberListResponseTypeRoutingNumber RoutingNumberListResponseType = "routing_number"
+	RoutingNumberListResponseDataTypeRoutingNumber RoutingNumberListResponseDataType = "routing_number"
 )
 
-func (r RoutingNumberListResponseType) IsKnown() bool {
+func (r RoutingNumberListResponseDataType) IsKnown() bool {
 	switch r {
-	case RoutingNumberListResponseTypeRoutingNumber:
+	case RoutingNumberListResponseDataTypeRoutingNumber:
 		return true
 	}
 	return false
 }
 
 // This routing number's support for Wire Transfers.
-type RoutingNumberListResponseWireTransfers string
+type RoutingNumberListResponseDataWireTransfers string
 
 const (
-	RoutingNumberListResponseWireTransfersSupported    RoutingNumberListResponseWireTransfers = "supported"
-	RoutingNumberListResponseWireTransfersNotSupported RoutingNumberListResponseWireTransfers = "not_supported"
+	RoutingNumberListResponseDataWireTransfersSupported    RoutingNumberListResponseDataWireTransfers = "supported"
+	RoutingNumberListResponseDataWireTransfersNotSupported RoutingNumberListResponseDataWireTransfers = "not_supported"
 )
 
-func (r RoutingNumberListResponseWireTransfers) IsKnown() bool {
+func (r RoutingNumberListResponseDataWireTransfers) IsKnown() bool {
 	switch r {
-	case RoutingNumberListResponseWireTransfersSupported, RoutingNumberListResponseWireTransfersNotSupported:
+	case RoutingNumberListResponseDataWireTransfersSupported, RoutingNumberListResponseDataWireTransfersNotSupported:
 		return true
 	}
 	return false

@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // InboundWireTransferService contains methods and other services that help with
@@ -51,26 +50,11 @@ func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransfe
 }
 
 // List Inbound Wire Transfers
-func (r *InboundWireTransferService) List(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) (res *pagination.Page[InboundWireTransfer], err error) {
-	var raw *http.Response
+func (r *InboundWireTransferService) List(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) (res *InboundWireTransferListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "inbound_wire_transfers"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Inbound Wire Transfers
-func (r *InboundWireTransferService) ListAutoPaging(ctx context.Context, query InboundWireTransferListParams, opts ...option.RequestOption) *pagination.PageAutoPager[InboundWireTransfer] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Reverse an Inbound Wire Transfer
@@ -263,6 +247,33 @@ func (r InboundWireTransferType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Inbound Wire Transfer objects.
+type InboundWireTransferListResponse struct {
+	// The contents of the list.
+	Data []InboundWireTransfer `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                              `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}              `json:"-,extras"`
+	JSON        inboundWireTransferListResponseJSON `json:"-"`
+}
+
+// inboundWireTransferListResponseJSON contains the JSON metadata for the struct
+// [InboundWireTransferListResponse]
+type inboundWireTransferListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *InboundWireTransferListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundWireTransferListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type InboundWireTransferListParams struct {

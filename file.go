@@ -20,7 +20,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // FileService contains methods and other services that help with interacting with
@@ -65,26 +64,11 @@ func (r *FileService) Get(ctx context.Context, fileID string, opts ...option.Req
 }
 
 // List Files
-func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *pagination.Page[File], err error) {
-	var raw *http.Response
+func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *FileListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "files"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Files
-func (r *FileService) ListAutoPaging(ctx context.Context, query FileListParams, opts ...option.RequestOption) *pagination.PageAutoPager[File] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Files are objects that represent a file hosted on Increase's servers. The file
@@ -219,6 +203,33 @@ func (r FileType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of File objects.
+type FileListResponse struct {
+	// The contents of the list.
+	Data []File `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                 `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        fileListResponseJSON   `json:"-"`
+}
+
+// fileListResponseJSON contains the JSON metadata for the struct
+// [FileListResponse]
+type fileListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *FileListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r fileListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type FileNewParams struct {

@@ -16,7 +16,6 @@ import (
 	"github.com/Increase/increase-go/internal/param"
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
-	"github.com/Increase/increase-go/packages/pagination"
 )
 
 // CheckDepositService contains methods and other services that help with
@@ -59,26 +58,11 @@ func (r *CheckDepositService) Get(ctx context.Context, checkDepositID string, op
 }
 
 // List Check Deposits
-func (r *CheckDepositService) List(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) (res *pagination.Page[CheckDeposit], err error) {
-	var raw *http.Response
+func (r *CheckDepositService) List(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) (res *CheckDepositListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "check_deposits"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// List Check Deposits
-func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query CheckDepositListParams, opts ...option.RequestOption) *pagination.PageAutoPager[CheckDeposit] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 // Check Deposits allow you to deposit images of paper checks into your account.
@@ -584,6 +568,33 @@ func (r CheckDepositType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A list of Check Deposit objects.
+type CheckDepositListResponse struct {
+	// The contents of the list.
+	Data []CheckDeposit `json:"data,required"`
+	// A pointer to a place in the list.
+	NextCursor  string                       `json:"next_cursor,required,nullable"`
+	ExtraFields map[string]interface{}       `json:"-,extras"`
+	JSON        checkDepositListResponseJSON `json:"-"`
+}
+
+// checkDepositListResponseJSON contains the JSON metadata for the struct
+// [CheckDepositListResponse]
+type checkDepositListResponseJSON struct {
+	Data        apijson.Field
+	NextCursor  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckDepositListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkDepositListResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type CheckDepositNewParams struct {
