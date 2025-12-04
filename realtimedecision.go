@@ -228,6 +228,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
 	AdditionalAmounts RealTimeDecisionCardAuthorizationAdditionalAmounts `json:"additional_amounts,required"`
+	// Present if and only if `decision` is `approve`. Contains information related to
+	// the approval of the authorization.
+	Approval RealTimeDecisionCardAuthorizationApproval `json:"approval,required,nullable"`
 	// The identifier of the Card that is being authorized.
 	CardID string `json:"card_id,required"`
 	// Whether or not the authorization was approved.
@@ -266,6 +269,8 @@ type RealTimeDecisionCardAuthorization struct {
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
 	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	// Whether or not the authorization supports partial approvals.
+	PartialApprovalCapability RealTimeDecisionCardAuthorizationPartialApprovalCapability `json:"partial_approval_capability,required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
 	PhysicalCardID string `json:"physical_card_id,required,nullable"`
@@ -302,35 +307,37 @@ type RealTimeDecisionCardAuthorization struct {
 // realTimeDecisionCardAuthorizationJSON contains the JSON metadata for the struct
 // [RealTimeDecisionCardAuthorization]
 type realTimeDecisionCardAuthorizationJSON struct {
-	AccountID             apijson.Field
-	AdditionalAmounts     apijson.Field
-	CardID                apijson.Field
-	Decision              apijson.Field
-	Decline               apijson.Field
-	DigitalWalletTokenID  apijson.Field
-	Direction             apijson.Field
-	MerchantAcceptorID    apijson.Field
-	MerchantCategoryCode  apijson.Field
-	MerchantCity          apijson.Field
-	MerchantCountry       apijson.Field
-	MerchantDescriptor    apijson.Field
-	MerchantPostalCode    apijson.Field
-	MerchantState         apijson.Field
-	NetworkDetails        apijson.Field
-	NetworkIdentifiers    apijson.Field
-	NetworkRiskScore      apijson.Field
-	PhysicalCardID        apijson.Field
-	PresentmentAmount     apijson.Field
-	PresentmentCurrency   apijson.Field
-	ProcessingCategory    apijson.Field
-	RequestDetails        apijson.Field
-	SettlementAmount      apijson.Field
-	SettlementCurrency    apijson.Field
-	TerminalID            apijson.Field
-	UpcomingCardPaymentID apijson.Field
-	Verification          apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	AccountID                 apijson.Field
+	AdditionalAmounts         apijson.Field
+	Approval                  apijson.Field
+	CardID                    apijson.Field
+	Decision                  apijson.Field
+	Decline                   apijson.Field
+	DigitalWalletTokenID      apijson.Field
+	Direction                 apijson.Field
+	MerchantAcceptorID        apijson.Field
+	MerchantCategoryCode      apijson.Field
+	MerchantCity              apijson.Field
+	MerchantCountry           apijson.Field
+	MerchantDescriptor        apijson.Field
+	MerchantPostalCode        apijson.Field
+	MerchantState             apijson.Field
+	NetworkDetails            apijson.Field
+	NetworkIdentifiers        apijson.Field
+	NetworkRiskScore          apijson.Field
+	PartialApprovalCapability apijson.Field
+	PhysicalCardID            apijson.Field
+	PresentmentAmount         apijson.Field
+	PresentmentCurrency       apijson.Field
+	ProcessingCategory        apijson.Field
+	RequestDetails            apijson.Field
+	SettlementAmount          apijson.Field
+	SettlementCurrency        apijson.Field
+	TerminalID                apijson.Field
+	UpcomingCardPaymentID     apijson.Field
+	Verification              apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthorization) UnmarshalJSON(data []byte) (err error) {
@@ -693,6 +700,31 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsVisionJSON) RawJSON() 
 	return r.raw
 }
 
+// Present if and only if `decision` is `approve`. Contains information related to
+// the approval of the authorization.
+type RealTimeDecisionCardAuthorizationApproval struct {
+	// If the authorization was partially approved, this field contains the approved
+	// amount in the minor unit of the settlement currency.
+	PartialAmount int64                                         `json:"partial_amount,required,nullable"`
+	JSON          realTimeDecisionCardAuthorizationApprovalJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationApprovalJSON contains the JSON metadata for the
+// struct [RealTimeDecisionCardAuthorizationApproval]
+type realTimeDecisionCardAuthorizationApprovalJSON struct {
+	PartialAmount apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationApproval) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationApprovalJSON) RawJSON() string {
+	return r.raw
+}
+
 // Whether or not the authorization was approved.
 type RealTimeDecisionCardAuthorizationDecision string
 
@@ -974,6 +1006,22 @@ func (r *RealTimeDecisionCardAuthorizationNetworkIdentifiers) UnmarshalJSON(data
 
 func (r realTimeDecisionCardAuthorizationNetworkIdentifiersJSON) RawJSON() string {
 	return r.raw
+}
+
+// Whether or not the authorization supports partial approvals.
+type RealTimeDecisionCardAuthorizationPartialApprovalCapability string
+
+const (
+	RealTimeDecisionCardAuthorizationPartialApprovalCapabilitySupported    RealTimeDecisionCardAuthorizationPartialApprovalCapability = "supported"
+	RealTimeDecisionCardAuthorizationPartialApprovalCapabilityNotSupported RealTimeDecisionCardAuthorizationPartialApprovalCapability = "not_supported"
+)
+
+func (r RealTimeDecisionCardAuthorizationPartialApprovalCapability) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationPartialApprovalCapabilitySupported, RealTimeDecisionCardAuthorizationPartialApprovalCapabilityNotSupported:
+		return true
+	}
+	return false
 }
 
 // The processing category describes the intent behind the authorization, such as
@@ -1586,6 +1634,11 @@ type RealTimeDecisionActionParamsCardAuthorizationApproval struct {
 	// [Address Verification System Codes and Overrides](https://increase.com/documentation/address-verification-system-codes-and-overrides)
 	// guide.
 	CardholderAddressVerificationResult param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResult] `json:"cardholder_address_verification_result"`
+	// If the transaction supports partial approvals
+	// (`partial_approval_capability: supported`) the `partial_amount` can be provided
+	// in the transaction's settlement currency to approve a lower amount than was
+	// requested.
+	PartialAmount param.Field[int64] `json:"partial_amount"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthorizationApproval) MarshalJSON() (data []byte, err error) {

@@ -64,6 +64,7 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 						Line1:      increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1Match),
 						PostalCode: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCodeNoMatch),
 					}),
+					PartialAmount: increase.F(int64(1)),
 				}),
 				Decline: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDecline{
 					Reason: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds),
