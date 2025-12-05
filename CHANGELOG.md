@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.398.2 (2025-12-05)
+
+Full Changelog: [v0.398.1...v0.398.2](https://github.com/Increase/increase-go/compare/v0.398.1...v0.398.2)
+
+### Bug Fixes
+
+* rename param to avoid collision ([6b30589](https://github.com/Increase/increase-go/commit/6b305893ab14e630f8392d0008fb1d42395467ef))
+
 ## 0.398.1 (2025-12-05)
 
 Full Changelog: [v0.398.0...v0.398.1](https://github.com/Increase/increase-go/compare/v0.398.0...v0.398.1)
