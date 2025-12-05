@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.398.1 (2025-12-05)
+
+Full Changelog: [v0.398.0...v0.398.1](https://github.com/Increase/increase-go/compare/v0.398.0...v0.398.1)
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([add6c82](https://github.com/Increase/increase-go/commit/add6c829686fc9d5d666a15c00538cc18415ac63))
+
+
+### Chores
+
+* elide duplicate aliases ([d91b0ce](https://github.com/Increase/increase-go/commit/d91b0ce0bdf0f93445bedd7ff1fbfd5d375a8ffb))
+* **internal:** codegen related update ([2aff2fd](https://github.com/Increase/increase-go/commit/2aff2fdc9b9d2e69cb552d52622e2b0410d7146b))
+
 ## 0.398.0 (2025-12-05)
 
 Full Changelog: [v0.397.0...v0.398.0](https://github.com/Increase/increase-go/compare/v0.397.0...v0.398.0)
