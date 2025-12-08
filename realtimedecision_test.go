@@ -70,6 +70,12 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 					Reason: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds),
 				}),
 			}),
+			CardBalanceInquiry: increase.F(increase.RealTimeDecisionActionParamsCardBalanceInquiry{
+				Decision: increase.F(increase.RealTimeDecisionActionParamsCardBalanceInquiryDecisionApprove),
+				Approval: increase.F(increase.RealTimeDecisionActionParamsCardBalanceInquiryApproval{
+					Balance: increase.F(int64(0)),
+				}),
+			}),
 			DigitalWalletAuthentication: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthentication{
 				Result: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationResultSuccess),
 				Success: increase.F(increase.RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess{
