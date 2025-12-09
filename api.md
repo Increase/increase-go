@@ -721,6 +721,12 @@ Methods:
 
 - <code title="post /simulations/card_authorizations">client.Simulations.CardAuthorizations.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardAuthorizationService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardAuthorizationNewParams">SimulationCardAuthorizationNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardAuthorizationNewResponse">SimulationCardAuthorizationNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## CardBalanceInquiries
+
+Methods:
+
+- <code title="post /simulations/card_balance_inquiries">client.Simulations.CardBalanceInquiries.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardBalanceInquiryService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardBalanceInquiryNewParams">SimulationCardBalanceInquiryNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CardPayment">CardPayment</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## CardAuthorizationExpirations
 
 Methods:
