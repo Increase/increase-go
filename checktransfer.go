@@ -620,6 +620,9 @@ type CheckTransferPhysicalCheckReturnAddress struct {
 	Line2 string `json:"line2,required,nullable"`
 	// The name component of the check's return address.
 	Name string `json:"name,required,nullable"`
+	// The shipper's phone number to be used in case of delivery issues. Only used for
+	// FedEx overnight shipping.
+	Phone string `json:"phone,required,nullable"`
 	// The postal code of the check's destination.
 	PostalCode string `json:"postal_code,required,nullable"`
 	// The state of the check's destination.
@@ -634,6 +637,7 @@ type checkTransferPhysicalCheckReturnAddressJSON struct {
 	Line1       apijson.Field
 	Line2       apijson.Field
 	Name        apijson.Field
+	Phone       apijson.Field
 	PostalCode  apijson.Field
 	State       apijson.Field
 	raw         string
@@ -1067,9 +1071,9 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	// The name component of the check's destination address. Defaults to the provided
 	// `recipient_name` parameter if `name` is not provided.
 	Name param.Field[string] `json:"name"`
-	// The phone number to associate with the check's destination address. The number
-	// is only used when `shipping_method` is `fedex_overnight` and will be supplied to
-	// FedEx to be used in case of delivery issues.
+	// The phone number to associate with the check's destination address. The phone
+	// number is only used when `shipping_method` is `fedex_overnight` and will be
+	// supplied to FedEx to be used in case of delivery issues.
 	Phone param.Field[string] `json:"phone"`
 }
 
@@ -1102,6 +1106,10 @@ type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 	State param.Field[string] `json:"state,required"`
 	// The second line of the return address.
 	Line2 param.Field[string] `json:"line2"`
+	// The phone number to associate with the shipper. The phone number is only used
+	// when `shipping_method` is `fedex_overnight` and will be supplied to FedEx to be
+	// used in case of delivery issues.
+	Phone param.Field[string] `json:"phone"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheckReturnAddress) MarshalJSON() (data []byte, err error) {
