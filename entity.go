@@ -268,6 +268,8 @@ type EntityCorporation struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
 	BeneficialOwners []EntityCorporationBeneficialOwner `json:"beneficial_owners,required"`
+	// An email address for the business.
+	Email string `json:"email,required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
 	IncorporationState string `json:"incorporation_state,required,nullable"`
@@ -288,6 +290,7 @@ type EntityCorporation struct {
 type entityCorporationJSON struct {
 	Address            apijson.Field
 	BeneficialOwners   apijson.Field
+	Email              apijson.Field
 	IncorporationState apijson.Field
 	IndustryCode       apijson.Field
 	Name               apijson.Field
@@ -1465,6 +1468,9 @@ type EntityNewParamsCorporation struct {
 	// provide the justification. If a reason is provided, you do not need to submit a
 	// list of beneficial owners.
 	BeneficialOwnershipExemptionReason param.Field[EntityNewParamsCorporationBeneficialOwnershipExemptionReason] `json:"beneficial_ownership_exemption_reason"`
+	// An email address for the business. Not every program requires an email for
+	// submitted Entities.
+	Email param.Field[string] `json:"email" format:"email"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
 	IncorporationState param.Field[string] `json:"incorporation_state"`
@@ -2530,6 +2536,9 @@ type EntityUpdateParamsCorporation struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
 	Address param.Field[EntityUpdateParamsCorporationAddress] `json:"address"`
+	// An email address for the business. Not every program requires an email for
+	// submitted Entities.
+	Email param.Field[string] `json:"email" format:"email"`
 	// The North American Industry Classification System (NAICS) code for the
 	// corporation's primary line of business. This is a number, like `5132` for
 	// `Software Publishers`. A full list of classification codes is available
