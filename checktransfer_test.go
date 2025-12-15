@@ -58,6 +58,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				PostalCode: increase.F("x"),
 				State:      increase.F("x"),
 				Line2:      increase.F("x"),
+				Phone:      increase.F("x"),
 			}),
 			ShippingMethod: increase.F(increase.CheckTransferNewParamsPhysicalCheckShippingMethodUspsFirstClass),
 			SignatureText:  increase.F("Ian Crease"),
