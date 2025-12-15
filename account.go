@@ -280,8 +280,9 @@ type BalanceLookup struct {
 	CurrentBalance int64 `json:"current_balance,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
-	Type BalanceLookupType `json:"type,required"`
-	JSON balanceLookupJSON `json:"-"`
+	Type        BalanceLookupType      `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        balanceLookupJSON      `json:"-"`
 }
 
 // balanceLookupJSON contains the JSON metadata for the struct [BalanceLookup]
