@@ -87,12 +87,13 @@ const (
 	SimulationPhysicalCardNewParamsCategoryInTransit            SimulationPhysicalCardNewParamsCategory = "in_transit"
 	SimulationPhysicalCardNewParamsCategoryProcessedForDelivery SimulationPhysicalCardNewParamsCategory = "processed_for_delivery"
 	SimulationPhysicalCardNewParamsCategoryDelivered            SimulationPhysicalCardNewParamsCategory = "delivered"
+	SimulationPhysicalCardNewParamsCategoryDeliveryIssue        SimulationPhysicalCardNewParamsCategory = "delivery_issue"
 	SimulationPhysicalCardNewParamsCategoryReturnedToSender     SimulationPhysicalCardNewParamsCategory = "returned_to_sender"
 )
 
 func (r SimulationPhysicalCardNewParamsCategory) IsKnown() bool {
 	switch r {
-	case SimulationPhysicalCardNewParamsCategoryInTransit, SimulationPhysicalCardNewParamsCategoryProcessedForDelivery, SimulationPhysicalCardNewParamsCategoryDelivered, SimulationPhysicalCardNewParamsCategoryReturnedToSender:
+	case SimulationPhysicalCardNewParamsCategoryInTransit, SimulationPhysicalCardNewParamsCategoryProcessedForDelivery, SimulationPhysicalCardNewParamsCategoryDelivered, SimulationPhysicalCardNewParamsCategoryDeliveryIssue, SimulationPhysicalCardNewParamsCategoryReturnedToSender:
 		return true
 	}
 	return false

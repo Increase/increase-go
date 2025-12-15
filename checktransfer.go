@@ -704,12 +704,13 @@ const (
 	CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit            CheckTransferPhysicalCheckTrackingUpdatesCategory = "in_transit"
 	CheckTransferPhysicalCheckTrackingUpdatesCategoryProcessedForDelivery CheckTransferPhysicalCheckTrackingUpdatesCategory = "processed_for_delivery"
 	CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered            CheckTransferPhysicalCheckTrackingUpdatesCategory = "delivered"
+	CheckTransferPhysicalCheckTrackingUpdatesCategoryDeliveryIssue        CheckTransferPhysicalCheckTrackingUpdatesCategory = "delivery_issue"
 	CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender     CheckTransferPhysicalCheckTrackingUpdatesCategory = "returned_to_sender"
 )
 
 func (r CheckTransferPhysicalCheckTrackingUpdatesCategory) IsKnown() bool {
 	switch r {
-	case CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit, CheckTransferPhysicalCheckTrackingUpdatesCategoryProcessedForDelivery, CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered, CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender:
+	case CheckTransferPhysicalCheckTrackingUpdatesCategoryInTransit, CheckTransferPhysicalCheckTrackingUpdatesCategoryProcessedForDelivery, CheckTransferPhysicalCheckTrackingUpdatesCategoryDelivered, CheckTransferPhysicalCheckTrackingUpdatesCategoryDeliveryIssue, CheckTransferPhysicalCheckTrackingUpdatesCategoryReturnedToSender:
 		return true
 	}
 	return false

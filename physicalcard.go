@@ -399,12 +399,13 @@ const (
 	PhysicalCardShipmentTrackingUpdatesCategoryInTransit            PhysicalCardShipmentTrackingUpdatesCategory = "in_transit"
 	PhysicalCardShipmentTrackingUpdatesCategoryProcessedForDelivery PhysicalCardShipmentTrackingUpdatesCategory = "processed_for_delivery"
 	PhysicalCardShipmentTrackingUpdatesCategoryDelivered            PhysicalCardShipmentTrackingUpdatesCategory = "delivered"
+	PhysicalCardShipmentTrackingUpdatesCategoryDeliveryIssue        PhysicalCardShipmentTrackingUpdatesCategory = "delivery_issue"
 	PhysicalCardShipmentTrackingUpdatesCategoryReturnedToSender     PhysicalCardShipmentTrackingUpdatesCategory = "returned_to_sender"
 )
 
 func (r PhysicalCardShipmentTrackingUpdatesCategory) IsKnown() bool {
 	switch r {
-	case PhysicalCardShipmentTrackingUpdatesCategoryInTransit, PhysicalCardShipmentTrackingUpdatesCategoryProcessedForDelivery, PhysicalCardShipmentTrackingUpdatesCategoryDelivered, PhysicalCardShipmentTrackingUpdatesCategoryReturnedToSender:
+	case PhysicalCardShipmentTrackingUpdatesCategoryInTransit, PhysicalCardShipmentTrackingUpdatesCategoryProcessedForDelivery, PhysicalCardShipmentTrackingUpdatesCategoryDelivered, PhysicalCardShipmentTrackingUpdatesCategoryDeliveryIssue, PhysicalCardShipmentTrackingUpdatesCategoryReturnedToSender:
 		return true
 	}
 	return false
