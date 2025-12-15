@@ -98,8 +98,9 @@ type AccountStatement struct {
 	StatementPeriodStart time.Time `json:"statement_period_start,required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
-	Type AccountStatementType `json:"type,required"`
-	JSON accountStatementJSON `json:"-"`
+	Type        AccountStatementType   `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        accountStatementJSON   `json:"-"`
 }
 
 // accountStatementJSON contains the JSON metadata for the struct
