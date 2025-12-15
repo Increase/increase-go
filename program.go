@@ -100,8 +100,9 @@ type Program struct {
 	Type ProgramType `json:"type,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was last updated.
-	UpdatedAt time.Time   `json:"updated_at,required" format:"date-time"`
-	JSON      programJSON `json:"-"`
+	UpdatedAt   time.Time              `json:"updated_at,required" format:"date-time"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        programJSON            `json:"-"`
 }
 
 // programJSON contains the JSON metadata for the struct [Program]
