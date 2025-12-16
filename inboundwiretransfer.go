@@ -219,13 +219,14 @@ func (r inboundWireTransferReversalJSON) RawJSON() string {
 type InboundWireTransferReversalReason string
 
 const (
-	InboundWireTransferReversalReasonDuplicate       InboundWireTransferReversalReason = "duplicate"
-	InboundWireTransferReversalReasonCreditorRequest InboundWireTransferReversalReason = "creditor_request"
+	InboundWireTransferReversalReasonDuplicate            InboundWireTransferReversalReason = "duplicate"
+	InboundWireTransferReversalReasonCreditorRequest      InboundWireTransferReversalReason = "creditor_request"
+	InboundWireTransferReversalReasonTransactionForbidden InboundWireTransferReversalReason = "transaction_forbidden"
 )
 
 func (r InboundWireTransferReversalReason) IsKnown() bool {
 	switch r {
-	case InboundWireTransferReversalReasonDuplicate, InboundWireTransferReversalReasonCreditorRequest:
+	case InboundWireTransferReversalReasonDuplicate, InboundWireTransferReversalReasonCreditorRequest, InboundWireTransferReversalReasonTransactionForbidden:
 		return true
 	}
 	return false
@@ -361,13 +362,14 @@ func (r InboundWireTransferReverseParams) MarshalJSON() (data []byte, err error)
 type InboundWireTransferReverseParamsReason string
 
 const (
-	InboundWireTransferReverseParamsReasonDuplicate       InboundWireTransferReverseParamsReason = "duplicate"
-	InboundWireTransferReverseParamsReasonCreditorRequest InboundWireTransferReverseParamsReason = "creditor_request"
+	InboundWireTransferReverseParamsReasonDuplicate            InboundWireTransferReverseParamsReason = "duplicate"
+	InboundWireTransferReverseParamsReasonCreditorRequest      InboundWireTransferReverseParamsReason = "creditor_request"
+	InboundWireTransferReverseParamsReasonTransactionForbidden InboundWireTransferReverseParamsReason = "transaction_forbidden"
 )
 
 func (r InboundWireTransferReverseParamsReason) IsKnown() bool {
 	switch r {
-	case InboundWireTransferReverseParamsReasonDuplicate, InboundWireTransferReverseParamsReasonCreditorRequest:
+	case InboundWireTransferReverseParamsReasonDuplicate, InboundWireTransferReverseParamsReasonCreditorRequest, InboundWireTransferReverseParamsReasonTransactionForbidden:
 		return true
 	}
 	return false
