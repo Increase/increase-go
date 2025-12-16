@@ -4398,9 +4398,9 @@ type TransactionSourceInboundWireReversal struct {
 	InstructionIdentification string `json:"instruction_identification,required,nullable"`
 	// Additional information about the reason for the reversal.
 	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information,required,nullable"`
-	// A code provided by the sending bank giving a reason for the reversal. It will
-	// generally be one of the codes defined in the ISO20022
-	// `ExternalReturnReason1Code` code set, but this is not enforced by the network.
+	// A code provided by the sending bank giving a reason for the reversal. The common
+	// return reason codes are
+	// [documented here](/documentation/wire-reversals#reversal-reason-codes).
 	ReturnReasonCode string `json:"return_reason_code,required,nullable"`
 	// An Increase-generated description of the `return_reason_code`.
 	ReturnReasonCodeDescription string `json:"return_reason_code_description,required,nullable"`
