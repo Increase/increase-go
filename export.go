@@ -147,11 +147,15 @@ const (
 	ExportCategoryEntityCsv                    ExportCategory = "entity_csv"
 	ExportCategoryVendorCsv                    ExportCategory = "vendor_csv"
 	ExportCategoryDashboardTableCsv            ExportCategory = "dashboard_table_csv"
+	ExportCategoryAccountVerificationLetter    ExportCategory = "account_verification_letter"
+	ExportCategoryFundingInstructions          ExportCategory = "funding_instructions"
+	ExportCategoryForm1099Int                  ExportCategory = "form_1099_int"
+	ExportCategoryForm1099Misc                 ExportCategory = "form_1099_misc"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv:
+	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc:
 		return true
 	}
 	return false
@@ -491,11 +495,15 @@ const (
 	ExportListParamsCategoryInEntityCsv                    ExportListParamsCategoryIn = "entity_csv"
 	ExportListParamsCategoryInVendorCsv                    ExportListParamsCategoryIn = "vendor_csv"
 	ExportListParamsCategoryInDashboardTableCsv            ExportListParamsCategoryIn = "dashboard_table_csv"
+	ExportListParamsCategoryInAccountVerificationLetter    ExportListParamsCategoryIn = "account_verification_letter"
+	ExportListParamsCategoryInFundingInstructions          ExportListParamsCategoryIn = "funding_instructions"
+	ExportListParamsCategoryInForm1099Int                  ExportListParamsCategoryIn = "form_1099_int"
+	ExportListParamsCategoryInForm1099Misc                 ExportListParamsCategoryIn = "form_1099_misc"
 )
 
 func (r ExportListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInAccountStatementBai2, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv, ExportListParamsCategoryInDashboardTableCsv:
+	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInAccountStatementBai2, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv, ExportListParamsCategoryInDashboardTableCsv, ExportListParamsCategoryInAccountVerificationLetter, ExportListParamsCategoryInFundingInstructions, ExportListParamsCategoryInForm1099Int, ExportListParamsCategoryInForm1099Misc:
 		return true
 	}
 	return false
