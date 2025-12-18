@@ -43,7 +43,6 @@ type SimulationService struct {
 	InboundMailItems                 *SimulationInboundMailItemService
 	Programs                         *SimulationProgramService
 	AccountStatements                *SimulationAccountStatementService
-	Documents                        *SimulationDocumentService
 	Exports                          *SimulationExportService
 	CardTokens                       *SimulationCardTokenService
 }
@@ -83,7 +82,6 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.InboundMailItems = NewSimulationInboundMailItemService(opts...)
 	r.Programs = NewSimulationProgramService(opts...)
 	r.AccountStatements = NewSimulationAccountStatementService(opts...)
-	r.Documents = NewSimulationDocumentService(opts...)
 	r.Exports = NewSimulationExportService(opts...)
 	r.CardTokens = NewSimulationCardTokenService(opts...)
 	return
