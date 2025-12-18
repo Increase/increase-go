@@ -81,10 +81,10 @@ func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListPara
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Exports are batch summaries of your Increase data. You can make them from the
-// API or dashboard. Since they can take a while, they are generated
-// asynchronously. We send a webhook when they are ready. For more information,
-// please read our
+// Exports are generated files. Some exports can contain a lot of data, like a CSV
+// of your transactions. Others can be a single document, like a tax form. Since
+// they can take a while, they are generated asynchronously. We send a webhook when
+// they are ready. For more information, please read our
 // [Exports documentation](https://increase.com/documentation/exports).
 type Export struct {
 	// The Export identifier.
@@ -204,6 +204,9 @@ type ExportNewParams struct {
 	// `account_statement_ofx`.
 	AccountStatementOfx param.Field[ExportNewParamsAccountStatementOfx] `json:"account_statement_ofx"`
 	// Options for the created export. Required if `category` is equal to
+	// `account_verification_letter`.
+	AccountVerificationLetter param.Field[ExportNewParamsAccountVerificationLetter] `json:"account_verification_letter"`
+	// Options for the created export. Required if `category` is equal to
 	// `balance_csv`.
 	BalanceCsv param.Field[ExportNewParamsBalanceCsv] `json:"balance_csv"`
 	// Options for the created export. Required if `category` is equal to
@@ -211,6 +214,9 @@ type ExportNewParams struct {
 	BookkeepingAccountBalanceCsv param.Field[ExportNewParamsBookkeepingAccountBalanceCsv] `json:"bookkeeping_account_balance_csv"`
 	// Options for the created export. Required if `category` is equal to `entity_csv`.
 	EntityCsv param.Field[ExportNewParamsEntityCsv] `json:"entity_csv"`
+	// Options for the created export. Required if `category` is equal to
+	// `funding_instructions`.
+	FundingInstructions param.Field[ExportNewParamsFundingInstructions] `json:"funding_instructions"`
 	// Options for the created export. Required if `category` is equal to
 	// `transaction_csv`.
 	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
@@ -233,11 +239,13 @@ const (
 	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
 	ExportNewParamsCategoryEntityCsv                    ExportNewParamsCategory = "entity_csv"
 	ExportNewParamsCategoryVendorCsv                    ExportNewParamsCategory = "vendor_csv"
+	ExportNewParamsCategoryAccountVerificationLetter    ExportNewParamsCategory = "account_verification_letter"
+	ExportNewParamsCategoryFundingInstructions          ExportNewParamsCategory = "funding_instructions"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv:
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions:
 		return true
 	}
 	return false
@@ -293,6 +301,19 @@ type ExportNewParamsAccountStatementOfxCreatedAt struct {
 }
 
 func (r ExportNewParamsAccountStatementOfxCreatedAt) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Options for the created export. Required if `category` is equal to
+// `account_verification_letter`.
+type ExportNewParamsAccountVerificationLetter struct {
+	// The Account Number to create a letter for.
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	// The date of the balance to include in the letter. Defaults to the current date.
+	BalanceDate param.Field[time.Time] `json:"balance_date" format:"date"`
+}
+
+func (r ExportNewParamsAccountVerificationLetter) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -399,6 +420,17 @@ func (r ExportNewParamsEntityCsvStatusIn) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Options for the created export. Required if `category` is equal to
+// `funding_instructions`.
+type ExportNewParamsFundingInstructions struct {
+	// The Account Number to create funding instructions for.
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+}
+
+func (r ExportNewParamsFundingInstructions) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Options for the created export. Required if `category` is equal to
