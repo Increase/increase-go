@@ -898,6 +898,12 @@ Methods:
 
 - <code title="post /simulations/documents">client.Simulations.Documents.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDocumentService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDocumentNewParams">SimulationDocumentNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Document">Document</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## Exports
+
+Methods:
+
+- <code title="post /simulations/exports">client.Simulations.Exports.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationExportService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationExportNewParams">SimulationExportNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Export">Export</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## CardTokens
 
 Methods:
