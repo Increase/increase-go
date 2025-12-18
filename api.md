@@ -484,18 +484,6 @@ Methods:
 
 - <code title="post /file_links">client.FileLinks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLinkNewParams">FileLinkNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#FileLink">FileLink</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-# Documents
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Document">Document</a>
-
-Methods:
-
-- <code title="post /documents">client.Documents.<a href="https://pkg.go.dev/github.com/Increase/increase-go#DocumentService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#DocumentNewParams">DocumentNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Document">Document</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code title="get /documents/{document_id}">client.Documents.<a href="https://pkg.go.dev/github.com/Increase/increase-go#DocumentService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, documentID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Document">Document</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code title="get /documents">client.Documents.<a href="https://pkg.go.dev/github.com/Increase/increase-go#DocumentService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#DocumentListParams">DocumentListParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Document">Document</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
 # Exports
 
 Response Types:
@@ -889,12 +877,6 @@ Methods:
 Methods:
 
 - <code title="post /simulations/account_statements">client.Simulations.AccountStatements.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationAccountStatementService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationAccountStatementNewParams">SimulationAccountStatementNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#AccountStatement">AccountStatement</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
-## Documents
-
-Methods:
-
-- <code title="post /simulations/documents">client.Simulations.Documents.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDocumentService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationDocumentNewParams">SimulationDocumentNewParams</a>) (<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Document">Document</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Exports
 

@@ -55,7 +55,6 @@ type Client struct {
 	AccountStatements                *AccountStatementService
 	Files                            *FileService
 	FileLinks                        *FileLinkService
-	Documents                        *DocumentService
 	Exports                          *ExportService
 	Events                           *EventService
 	EventSubscriptions               *EventSubscriptionService
@@ -140,7 +139,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.AccountStatements = NewAccountStatementService(opts...)
 	r.Files = NewFileService(opts...)
 	r.FileLinks = NewFileLinkService(opts...)
-	r.Documents = NewDocumentService(opts...)
 	r.Exports = NewExportService(opts...)
 	r.Events = NewEventService(opts...)
 	r.EventSubscriptions = NewEventSubscriptionService(opts...)
