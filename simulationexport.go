@@ -32,7 +32,10 @@ func NewSimulationExportService(opts ...option.RequestOption) (r *SimulationExpo
 	return
 }
 
-// Simulates a tax form export being generated.
+// Many exports are created by you via POST /exports or in the Dashboard. Some
+// exports are created automatically by Increase. For example, tax documents are
+// published once a year. In sandbox, you can trigger the arrival of an export that
+// would normally only be created automatically via this simulation.
 func (r *SimulationExportService) New(ctx context.Context, body SimulationExportNewParams, opts ...option.RequestOption) (res *Export, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/exports"
@@ -41,10 +44,39 @@ func (r *SimulationExportService) New(ctx context.Context, body SimulationExport
 }
 
 type SimulationExportNewParams struct {
+	// The type of Export to create.
+	Category param.Field[SimulationExportNewParamsCategory] `json:"category,required"`
+	// Options for the created export. Required if `category` is equal to
+	// `form_1099_int`.
+	Form1099Int param.Field[SimulationExportNewParamsForm1099Int] `json:"form_1099_int"`
+}
+
+func (r SimulationExportNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of Export to create.
+type SimulationExportNewParamsCategory string
+
+const (
+	SimulationExportNewParamsCategoryForm1099Int SimulationExportNewParamsCategory = "form_1099_int"
+)
+
+func (r SimulationExportNewParamsCategory) IsKnown() bool {
+	switch r {
+	case SimulationExportNewParamsCategoryForm1099Int:
+		return true
+	}
+	return false
+}
+
+// Options for the created export. Required if `category` is equal to
+// `form_1099_int`.
+type SimulationExportNewParamsForm1099Int struct {
 	// The identifier of the Account the tax document is for.
 	AccountID param.Field[string] `json:"account_id,required"`
 }
 
-func (r SimulationExportNewParams) MarshalJSON() (data []byte, err error) {
+func (r SimulationExportNewParamsForm1099Int) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
