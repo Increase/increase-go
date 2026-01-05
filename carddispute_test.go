@@ -33,6 +33,7 @@ func TestCardDisputeNewWithOptionalParams(t *testing.T) {
 		AttachmentFiles: increase.F([]increase.CardDisputeNewParamsAttachmentFile{{
 			FileID: increase.F("file_id"),
 		}}),
+		Explanation: increase.F("x"),
 		Visa: increase.F(increase.CardDisputeNewParamsVisa{
 			Category: increase.F(increase.CardDisputeNewParamsVisaCategoryFraud),
 			Authorization: increase.F(increase.CardDisputeNewParamsVisaAuthorization{
@@ -380,6 +381,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 			AttachmentFiles: increase.F([]increase.CardDisputeSubmitUserSubmissionParamsAttachmentFile{{
 				FileID: increase.F("file_id"),
 			}}),
+			Explanation: increase.F("x"),
 			Visa: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisa{
 				Category: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaCategoryMerchantPrearbitrationDecline),
 				Chargeback: increase.F(increase.CardDisputeSubmitUserSubmissionParamsVisaChargeback{
