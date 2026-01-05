@@ -1454,6 +1454,9 @@ type CardDisputeVisaUserSubmission struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute User Submission was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The free-form explanation provided to Increase to provide more context for the
+	// user submission. This field is not sent directly to the card networks.
+	Explanation string `json:"explanation,required,nullable"`
 	// The date and time at which Increase requested further information from the user
 	// for the Visa Card Dispute.
 	FurtherInformationRequestedAt time.Time `json:"further_information_requested_at,required,nullable" format:"date-time"`
@@ -1487,6 +1490,7 @@ type cardDisputeVisaUserSubmissionJSON struct {
 	Category                          apijson.Field
 	Chargeback                        apijson.Field
 	CreatedAt                         apijson.Field
+	Explanation                       apijson.Field
 	FurtherInformationRequestedAt     apijson.Field
 	FurtherInformationRequestedReason apijson.Field
 	MerchantPrearbitrationDecline     apijson.Field
@@ -4489,6 +4493,9 @@ type CardDisputeNewParams struct {
 	Amount param.Field[int64] `json:"amount"`
 	// The files to be attached to the initial dispute submission.
 	AttachmentFiles param.Field[[]CardDisputeNewParamsAttachmentFile] `json:"attachment_files"`
+	// The free-form explanation provided to Increase to provide more context for the
+	// user submission. This field is not sent directly to the card networks.
+	Explanation param.Field[string] `json:"explanation"`
 	// The Visa-specific parameters for the dispute. Required if and only if `network`
 	// is `visa`.
 	Visa param.Field[CardDisputeNewParamsVisa] `json:"visa"`
@@ -6425,6 +6432,9 @@ type CardDisputeSubmitUserSubmissionParams struct {
 	Amount param.Field[int64] `json:"amount"`
 	// The files to be attached to the user submission.
 	AttachmentFiles param.Field[[]CardDisputeSubmitUserSubmissionParamsAttachmentFile] `json:"attachment_files"`
+	// The free-form explanation provided to Increase to provide more context for the
+	// user submission. This field is not sent directly to the card networks.
+	Explanation param.Field[string] `json:"explanation"`
 	// The Visa-specific parameters for the dispute. Required if and only if `network`
 	// is `visa`.
 	Visa param.Field[CardDisputeSubmitUserSubmissionParamsVisa] `json:"visa"`
