@@ -218,6 +218,9 @@ type Entity struct {
 	// first 10 documents for an entity. If an entity has more than 10 documents, use
 	// the GET /entity_supplemental_documents list endpoint to retrieve them.
 	SupplementalDocuments []EntitySupplementalDocument `json:"supplemental_documents,required"`
+	// The terms that the Entity agreed to. Not all programs are required to submit
+	// this data.
+	TermsAgreements []EntityTermsAgreement `json:"terms_agreements,required"`
 	// If you are using a third-party service for identity verification, you can use
 	// this field to associate this Entity with the identifier that represents them in
 	// that service.
@@ -245,6 +248,7 @@ type entityJSON struct {
 	Status                 apijson.Field
 	Structure              apijson.Field
 	SupplementalDocuments  apijson.Field
+	TermsAgreements        apijson.Field
 	ThirdPartyVerification apijson.Field
 	Trust                  apijson.Field
 	Type                   apijson.Field
@@ -964,6 +968,34 @@ func (r EntityStructure) IsKnown() bool {
 	return false
 }
 
+type EntityTermsAgreement struct {
+	// The timestamp of when the Entity agreed to the terms.
+	AgreedAt time.Time `json:"agreed_at,required" format:"date-time"`
+	// The IP address the Entity accessed reviewed the terms from.
+	IPAddress string `json:"ip_address,required"`
+	// The URL of the terms agreement. This link will be provided by your bank partner.
+	TermsURL string                   `json:"terms_url,required"`
+	JSON     entityTermsAgreementJSON `json:"-"`
+}
+
+// entityTermsAgreementJSON contains the JSON metadata for the struct
+// [EntityTermsAgreement]
+type entityTermsAgreementJSON struct {
+	AgreedAt    apijson.Field
+	IPAddress   apijson.Field
+	TermsURL    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityTermsAgreement) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityTermsAgreementJSON) RawJSON() string {
+	return r.raw
+}
+
 // If you are using a third-party service for identity verification, you can use
 // this field to associate this Entity with the identifier that represents them in
 // that service.
@@ -1418,6 +1450,9 @@ type EntityNewParams struct {
 	RiskRating param.Field[EntityNewParamsRiskRating] `json:"risk_rating"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
+	// The terms that the Entity agreed to. Not all programs are required to submit
+	// this data.
+	TermsAgreements param.Field[[]EntityNewParamsTermsAgreement] `json:"terms_agreements"`
 	// If you are using a third-party service for identity verification, you can use
 	// this field to associate this Entity with the identifier that represents them in
 	// that service.
@@ -2093,6 +2128,19 @@ type EntityNewParamsSupplementalDocument struct {
 }
 
 func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type EntityNewParamsTermsAgreement struct {
+	// The timestamp of when the Entity agreed to the terms.
+	AgreedAt param.Field[time.Time] `json:"agreed_at,required" format:"date-time"`
+	// The IP address the Entity accessed reviewed the terms from.
+	IPAddress param.Field[string] `json:"ip_address,required"`
+	// The URL of the terms agreement. This link will be provided by your bank partner.
+	TermsURL param.Field[string] `json:"terms_url,required"`
+}
+
+func (r EntityNewParamsTermsAgreement) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

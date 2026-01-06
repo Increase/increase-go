@@ -177,6 +177,11 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
 		}}),
+		TermsAgreements: increase.F([]increase.EntityNewParamsTermsAgreement{{
+			AgreedAt:  increase.F(time.Now()),
+			IPAddress: increase.F("x"),
+			TermsURL:  increase.F("x"),
+		}}),
 		ThirdPartyVerification: increase.F(increase.EntityNewParamsThirdPartyVerification{
 			Reference: increase.F("x"),
 			Vendor:    increase.F(increase.EntityNewParamsThirdPartyVerificationVendorAlloy),
