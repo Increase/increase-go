@@ -74,6 +74,7 @@ type ErrorReason string
 const (
 	ErrorReasonDeletedCredential ErrorReason = "deleted_credential"
 	ErrorReasonExpiredCredential ErrorReason = "expired_credential"
+	ErrorReasonIPNotAllowed      ErrorReason = "ip_not_allowed"
 	ErrorReasonNoCredential      ErrorReason = "no_credential"
 	ErrorReasonNoHeader          ErrorReason = "no_header"
 	ErrorReasonNoAPIAccess       ErrorReason = "no_api_access"
@@ -82,7 +83,7 @@ const (
 
 func (r ErrorReason) IsKnown() bool {
 	switch r {
-	case ErrorReasonDeletedCredential, ErrorReasonExpiredCredential, ErrorReasonNoCredential, ErrorReasonNoHeader, ErrorReasonNoAPIAccess, ErrorReasonWrongEnvironment:
+	case ErrorReasonDeletedCredential, ErrorReasonExpiredCredential, ErrorReasonIPNotAllowed, ErrorReasonNoCredential, ErrorReasonNoHeader, ErrorReasonNoAPIAccess, ErrorReasonWrongEnvironment:
 		return true
 	}
 	return false
