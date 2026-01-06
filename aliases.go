@@ -11,6 +11,7 @@ type ErrorReason = apierror.ErrorReason
 
 const ErrorReasonDeletedCredential = apierror.ErrorReasonDeletedCredential
 const ErrorReasonExpiredCredential = apierror.ErrorReasonExpiredCredential
+const ErrorReasonIPNotAllowed = apierror.ErrorReasonIPNotAllowed
 const ErrorReasonNoCredential = apierror.ErrorReasonNoCredential
 const ErrorReasonNoHeader = apierror.ErrorReasonNoHeader
 const ErrorReasonNoAPIAccess = apierror.ErrorReasonNoAPIAccess
