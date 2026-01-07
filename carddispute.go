@@ -3862,6 +3862,8 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentatio
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribed struct {
 	// Cardholder cancellation.
 	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellation `json:"cardholder_cancellation,required"`
+	// Explanation of what was ordered and was not as described.
+	Explanation string `json:"explanation,required"`
 	// Merchant resolution attempted.
 	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
 	// Received at.
@@ -3874,6 +3876,7 @@ type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribed stru
 // [CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribed]
 type cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedJSON struct {
 	CardholderCancellation      apijson.Field
+	Explanation                 apijson.Field
 	MerchantResolutionAttempted apijson.Field
 	ReceivedAt                  apijson.Field
 	raw                         string
@@ -6048,6 +6051,8 @@ func (r CardDisputeNewParamsVisaConsumerServicesMisrepresentationMerchantResolut
 type CardDisputeNewParamsVisaConsumerServicesNotAsDescribed struct {
 	// Cardholder cancellation.
 	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellation] `json:"cardholder_cancellation,required"`
+	// Explanation of what was ordered and was not as described.
+	Explanation param.Field[string] `json:"explanation,required"`
 	// Merchant resolution attempted.
 	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
 	// Received at.
@@ -8026,6 +8031,8 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisre
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribed struct {
 	// Cardholder cancellation.
 	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellation] `json:"cardholder_cancellation,required"`
+	// Explanation of what was ordered and was not as described.
+	Explanation param.Field[string] `json:"explanation,required"`
 	// Merchant resolution attempted.
 	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
 	// Received at.
