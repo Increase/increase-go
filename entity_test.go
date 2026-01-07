@@ -327,9 +327,10 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 					Zip:   increase.F("10045"),
 					Line2: increase.F("Unit 2"),
 				}),
-				Email:        increase.F("dev@stainless.com"),
-				IndustryCode: increase.F("x"),
-				Name:         increase.F("x"),
+				Email:              increase.F("dev@stainless.com"),
+				IncorporationState: increase.F("x"),
+				IndustryCode:       increase.F("x"),
+				Name:               increase.F("x"),
 			}),
 			DetailsConfirmedAt: increase.F(time.Now()),
 			GovernmentAuthority: increase.F(increase.EntityUpdateParamsGovernmentAuthority{
