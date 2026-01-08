@@ -44,6 +44,7 @@ type Client struct {
 	InboundRealTimePaymentsTransfers *InboundRealTimePaymentsTransferService
 	FednowTransfers                  *FednowTransferService
 	InboundFednowTransfers           *InboundFednowTransferService
+	SwiftTransfers                   *SwiftTransferService
 	CheckDeposits                    *CheckDepositService
 	Lockboxes                        *LockboxService
 	InboundMailItems                 *InboundMailItemService
@@ -129,6 +130,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.InboundRealTimePaymentsTransfers = NewInboundRealTimePaymentsTransferService(opts...)
 	r.FednowTransfers = NewFednowTransferService(opts...)
 	r.InboundFednowTransfers = NewInboundFednowTransferService(opts...)
+	r.SwiftTransfers = NewSwiftTransferService(opts...)
 	r.CheckDeposits = NewCheckDepositService(opts...)
 	r.Lockboxes = NewLockboxService(opts...)
 	r.InboundMailItems = NewInboundMailItemService(opts...)
