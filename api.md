@@ -515,6 +515,7 @@ Methods:
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Event">Event</a>
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#UnwrapWebhookEvent">UnwrapWebhookEvent</a>
 
 Methods:
 
