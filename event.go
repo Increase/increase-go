@@ -17,6 +17,7 @@ import (
 	"github.com/Increase/increase-go/internal/requestconfig"
 	"github.com/Increase/increase-go/option"
 	"github.com/Increase/increase-go/packages/pagination"
+	standardwebhooks "github.com/standard-webhooks/standard-webhooks/libraries/go"
 )
 
 // EventService contains methods and other services that help with interacting with
@@ -71,6 +72,32 @@ func (r *EventService) List(ctx context.Context, query EventListParams, opts ...
 // List Events
 func (r *EventService) ListAutoPaging(ctx context.Context, query EventListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Event] {
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+}
+
+func (r *EventService) Unwrap(payload []byte, headers http.Header, opts ...option.RequestOption) (*UnwrapWebhookEvent, error) {
+	opts = slices.Concat(r.Options, opts)
+	cfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	key := cfg.WebhookSecret
+	if key == "" {
+		return nil, errors.New("The WebhookSecret option must be set in order to verify webhook headers")
+	}
+	wh, err := standardwebhooks.NewWebhook(key)
+	if err != nil {
+		return nil, err
+	}
+	err = wh.Verify(payload, headers)
+	if err != nil {
+		return nil, err
+	}
+	res := &UnwrapWebhookEvent{}
+	err = res.UnmarshalJSON(payload)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
 }
 
 // Events are records of things that happened to objects at Increase. Events are
@@ -246,6 +273,8 @@ func (r EventType) IsKnown() bool {
 	}
 	return false
 }
+
+type UnwrapWebhookEvent = interface{}
 
 type EventListParams struct {
 	// Filter Events to those belonging to the object with the provided identifier.
