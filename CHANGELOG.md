@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.422.0 (2026-01-22)
+
+Full Changelog: [v0.421.0...v0.422.0](https://github.com/Increase/increase-go/compare/v0.421.0...v0.422.0)
+
+### Features
+
+* **api:** api update ([1f63ec9](https://github.com/Increase/increase-go/commit/1f63ec9ea91997fecdf4b09bb0ab7470cd7026da))
+* **api:** api update ([a8abea5](https://github.com/Increase/increase-go/commit/a8abea53cc23e0defeba1a2e83e0c993216d740a))
+* **api:** api update ([5f735b5](https://github.com/Increase/increase-go/commit/5f735b553a9ff1de2042572fb228c817184bdd14))
+
+
+### Bug Fixes
+
+* **docs:** add missing pointer prefix to api.md return types ([8681e22](https://github.com/Increase/increase-go/commit/8681e225ea8175146ed3356008b43e2ed3008de1))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([c3d97bb](https://github.com/Increase/increase-go/commit/c3d97bb84a4903a3d5346a454922c2de1589314d))
+
 ## 0.421.0 (2026-01-14)
 
 Full Changelog: [v0.420.0...v0.421.0](https://github.com/Increase/increase-go/compare/v0.420.0...v0.421.0)
