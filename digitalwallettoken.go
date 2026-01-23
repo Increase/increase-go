@@ -88,6 +88,8 @@ type DigitalWalletToken struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The device that was used to create the Digital Wallet Token.
 	Device DigitalWalletTokenDevice `json:"device,required"`
+	// The redacted Dynamic Primary Account Number.
+	DynamicPrimaryAccountNumber DigitalWalletTokenDynamicPrimaryAccountNumber `json:"dynamic_primary_account_number,required,nullable"`
 	// This indicates if payments can be made with the Digital Wallet Token.
 	Status DigitalWalletTokenStatus `json:"status,required"`
 	// The digital wallet app being used.
@@ -103,17 +105,18 @@ type DigitalWalletToken struct {
 // digitalWalletTokenJSON contains the JSON metadata for the struct
 // [DigitalWalletToken]
 type digitalWalletTokenJSON struct {
-	ID             apijson.Field
-	CardID         apijson.Field
-	Cardholder     apijson.Field
-	CreatedAt      apijson.Field
-	Device         apijson.Field
-	Status         apijson.Field
-	TokenRequestor apijson.Field
-	Type           apijson.Field
-	Updates        apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	ID                          apijson.Field
+	CardID                      apijson.Field
+	Cardholder                  apijson.Field
+	CreatedAt                   apijson.Field
+	Device                      apijson.Field
+	DynamicPrimaryAccountNumber apijson.Field
+	Status                      apijson.Field
+	TokenRequestor              apijson.Field
+	Type                        apijson.Field
+	Updates                     apijson.Field
+	raw                         string
+	ExtraFields                 map[string]apijson.Field
 }
 
 func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
@@ -200,6 +203,32 @@ func (r DigitalWalletTokenDeviceDeviceType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The redacted Dynamic Primary Account Number.
+type DigitalWalletTokenDynamicPrimaryAccountNumber struct {
+	// The first 6 digits of the token's Dynamic Primary Account Number.
+	First6 string `json:"first6,required"`
+	// The last 4 digits of the token's Dynamic Primary Account Number.
+	Last4 string                                            `json:"last4,required"`
+	JSON  digitalWalletTokenDynamicPrimaryAccountNumberJSON `json:"-"`
+}
+
+// digitalWalletTokenDynamicPrimaryAccountNumberJSON contains the JSON metadata for
+// the struct [DigitalWalletTokenDynamicPrimaryAccountNumber]
+type digitalWalletTokenDynamicPrimaryAccountNumberJSON struct {
+	First6      apijson.Field
+	Last4       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenDynamicPrimaryAccountNumber) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenDynamicPrimaryAccountNumberJSON) RawJSON() string {
+	return r.raw
 }
 
 // This indicates if payments can be made with the Digital Wallet Token.
