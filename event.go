@@ -276,7 +276,182 @@ func (r EventType) IsKnown() bool {
 	return false
 }
 
-type UnwrapWebhookEvent = interface{}
+// Events are records of things that happened to objects at Increase. Events are
+// accessible via the List Events endpoint and can be delivered to your application
+// via webhooks. For more information, see our
+// [webhooks guide](https://increase.com/documentation/webhooks).
+type UnwrapWebhookEvent struct {
+	// The Event identifier.
+	ID string `json:"id,required"`
+	// The identifier of the object that generated this Event.
+	AssociatedObjectID string `json:"associated_object_id,required"`
+	// The type of the object that generated this Event.
+	AssociatedObjectType string `json:"associated_object_type,required"`
+	// The category of the Event. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
+	Category UnwrapWebhookEventCategory `json:"category,required"`
+	// The time the Event was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// A constant representing the object's type. For this resource it will always be
+	// `event`.
+	Type UnwrapWebhookEventType `json:"type,required"`
+	JSON unwrapWebhookEventJSON `json:"-"`
+}
+
+// unwrapWebhookEventJSON contains the JSON metadata for the struct
+// [UnwrapWebhookEvent]
+type unwrapWebhookEventJSON struct {
+	ID                   apijson.Field
+	AssociatedObjectID   apijson.Field
+	AssociatedObjectType apijson.Field
+	Category             apijson.Field
+	CreatedAt            apijson.Field
+	Type                 apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *UnwrapWebhookEvent) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r unwrapWebhookEventJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the Event. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
+type UnwrapWebhookEventCategory string
+
+const (
+	UnwrapWebhookEventCategoryAccountCreated                                       UnwrapWebhookEventCategory = "account.created"
+	UnwrapWebhookEventCategoryAccountUpdated                                       UnwrapWebhookEventCategory = "account.updated"
+	UnwrapWebhookEventCategoryAccountNumberCreated                                 UnwrapWebhookEventCategory = "account_number.created"
+	UnwrapWebhookEventCategoryAccountNumberUpdated                                 UnwrapWebhookEventCategory = "account_number.updated"
+	UnwrapWebhookEventCategoryAccountStatementCreated                              UnwrapWebhookEventCategory = "account_statement.created"
+	UnwrapWebhookEventCategoryAccountTransferCreated                               UnwrapWebhookEventCategory = "account_transfer.created"
+	UnwrapWebhookEventCategoryAccountTransferUpdated                               UnwrapWebhookEventCategory = "account_transfer.updated"
+	UnwrapWebhookEventCategoryACHPrenotificationCreated                            UnwrapWebhookEventCategory = "ach_prenotification.created"
+	UnwrapWebhookEventCategoryACHPrenotificationUpdated                            UnwrapWebhookEventCategory = "ach_prenotification.updated"
+	UnwrapWebhookEventCategoryACHTransferCreated                                   UnwrapWebhookEventCategory = "ach_transfer.created"
+	UnwrapWebhookEventCategoryACHTransferUpdated                                   UnwrapWebhookEventCategory = "ach_transfer.updated"
+	UnwrapWebhookEventCategoryBookkeepingAccountCreated                            UnwrapWebhookEventCategory = "bookkeeping_account.created"
+	UnwrapWebhookEventCategoryBookkeepingAccountUpdated                            UnwrapWebhookEventCategory = "bookkeeping_account.updated"
+	UnwrapWebhookEventCategoryBookkeepingEntrySetUpdated                           UnwrapWebhookEventCategory = "bookkeeping_entry_set.updated"
+	UnwrapWebhookEventCategoryCardCreated                                          UnwrapWebhookEventCategory = "card.created"
+	UnwrapWebhookEventCategoryCardUpdated                                          UnwrapWebhookEventCategory = "card.updated"
+	UnwrapWebhookEventCategoryCardPaymentCreated                                   UnwrapWebhookEventCategory = "card_payment.created"
+	UnwrapWebhookEventCategoryCardPaymentUpdated                                   UnwrapWebhookEventCategory = "card_payment.updated"
+	UnwrapWebhookEventCategoryCardProfileCreated                                   UnwrapWebhookEventCategory = "card_profile.created"
+	UnwrapWebhookEventCategoryCardProfileUpdated                                   UnwrapWebhookEventCategory = "card_profile.updated"
+	UnwrapWebhookEventCategoryCardDisputeCreated                                   UnwrapWebhookEventCategory = "card_dispute.created"
+	UnwrapWebhookEventCategoryCardDisputeUpdated                                   UnwrapWebhookEventCategory = "card_dispute.updated"
+	UnwrapWebhookEventCategoryCheckDepositCreated                                  UnwrapWebhookEventCategory = "check_deposit.created"
+	UnwrapWebhookEventCategoryCheckDepositUpdated                                  UnwrapWebhookEventCategory = "check_deposit.updated"
+	UnwrapWebhookEventCategoryCheckTransferCreated                                 UnwrapWebhookEventCategory = "check_transfer.created"
+	UnwrapWebhookEventCategoryCheckTransferUpdated                                 UnwrapWebhookEventCategory = "check_transfer.updated"
+	UnwrapWebhookEventCategoryDeclinedTransactionCreated                           UnwrapWebhookEventCategory = "declined_transaction.created"
+	UnwrapWebhookEventCategoryDigitalCardProfileCreated                            UnwrapWebhookEventCategory = "digital_card_profile.created"
+	UnwrapWebhookEventCategoryDigitalCardProfileUpdated                            UnwrapWebhookEventCategory = "digital_card_profile.updated"
+	UnwrapWebhookEventCategoryDigitalWalletTokenCreated                            UnwrapWebhookEventCategory = "digital_wallet_token.created"
+	UnwrapWebhookEventCategoryDigitalWalletTokenUpdated                            UnwrapWebhookEventCategory = "digital_wallet_token.updated"
+	UnwrapWebhookEventCategoryDocumentCreated                                      UnwrapWebhookEventCategory = "document.created"
+	UnwrapWebhookEventCategoryEntityCreated                                        UnwrapWebhookEventCategory = "entity.created"
+	UnwrapWebhookEventCategoryEntityUpdated                                        UnwrapWebhookEventCategory = "entity.updated"
+	UnwrapWebhookEventCategoryEventSubscriptionCreated                             UnwrapWebhookEventCategory = "event_subscription.created"
+	UnwrapWebhookEventCategoryEventSubscriptionUpdated                             UnwrapWebhookEventCategory = "event_subscription.updated"
+	UnwrapWebhookEventCategoryExportCreated                                        UnwrapWebhookEventCategory = "export.created"
+	UnwrapWebhookEventCategoryExportUpdated                                        UnwrapWebhookEventCategory = "export.updated"
+	UnwrapWebhookEventCategoryExternalAccountCreated                               UnwrapWebhookEventCategory = "external_account.created"
+	UnwrapWebhookEventCategoryExternalAccountUpdated                               UnwrapWebhookEventCategory = "external_account.updated"
+	UnwrapWebhookEventCategoryFednowTransferCreated                                UnwrapWebhookEventCategory = "fednow_transfer.created"
+	UnwrapWebhookEventCategoryFednowTransferUpdated                                UnwrapWebhookEventCategory = "fednow_transfer.updated"
+	UnwrapWebhookEventCategoryFileCreated                                          UnwrapWebhookEventCategory = "file.created"
+	UnwrapWebhookEventCategoryGroupUpdated                                         UnwrapWebhookEventCategory = "group.updated"
+	UnwrapWebhookEventCategoryGroupHeartbeat                                       UnwrapWebhookEventCategory = "group.heartbeat"
+	UnwrapWebhookEventCategoryInboundACHTransferCreated                            UnwrapWebhookEventCategory = "inbound_ach_transfer.created"
+	UnwrapWebhookEventCategoryInboundACHTransferUpdated                            UnwrapWebhookEventCategory = "inbound_ach_transfer.updated"
+	UnwrapWebhookEventCategoryInboundACHTransferReturnCreated                      UnwrapWebhookEventCategory = "inbound_ach_transfer_return.created"
+	UnwrapWebhookEventCategoryInboundACHTransferReturnUpdated                      UnwrapWebhookEventCategory = "inbound_ach_transfer_return.updated"
+	UnwrapWebhookEventCategoryInboundCheckDepositCreated                           UnwrapWebhookEventCategory = "inbound_check_deposit.created"
+	UnwrapWebhookEventCategoryInboundCheckDepositUpdated                           UnwrapWebhookEventCategory = "inbound_check_deposit.updated"
+	UnwrapWebhookEventCategoryInboundFednowTransferCreated                         UnwrapWebhookEventCategory = "inbound_fednow_transfer.created"
+	UnwrapWebhookEventCategoryInboundFednowTransferUpdated                         UnwrapWebhookEventCategory = "inbound_fednow_transfer.updated"
+	UnwrapWebhookEventCategoryInboundMailItemCreated                               UnwrapWebhookEventCategory = "inbound_mail_item.created"
+	UnwrapWebhookEventCategoryInboundMailItemUpdated                               UnwrapWebhookEventCategory = "inbound_mail_item.updated"
+	UnwrapWebhookEventCategoryInboundRealTimePaymentsTransferCreated               UnwrapWebhookEventCategory = "inbound_real_time_payments_transfer.created"
+	UnwrapWebhookEventCategoryInboundRealTimePaymentsTransferUpdated               UnwrapWebhookEventCategory = "inbound_real_time_payments_transfer.updated"
+	UnwrapWebhookEventCategoryInboundWireDrawdownRequestCreated                    UnwrapWebhookEventCategory = "inbound_wire_drawdown_request.created"
+	UnwrapWebhookEventCategoryInboundWireTransferCreated                           UnwrapWebhookEventCategory = "inbound_wire_transfer.created"
+	UnwrapWebhookEventCategoryInboundWireTransferUpdated                           UnwrapWebhookEventCategory = "inbound_wire_transfer.updated"
+	UnwrapWebhookEventCategoryIntrafiAccountEnrollmentCreated                      UnwrapWebhookEventCategory = "intrafi_account_enrollment.created"
+	UnwrapWebhookEventCategoryIntrafiAccountEnrollmentUpdated                      UnwrapWebhookEventCategory = "intrafi_account_enrollment.updated"
+	UnwrapWebhookEventCategoryIntrafiExclusionCreated                              UnwrapWebhookEventCategory = "intrafi_exclusion.created"
+	UnwrapWebhookEventCategoryIntrafiExclusionUpdated                              UnwrapWebhookEventCategory = "intrafi_exclusion.updated"
+	UnwrapWebhookEventCategoryLegacyCardDisputeCreated                             UnwrapWebhookEventCategory = "legacy_card_dispute.created"
+	UnwrapWebhookEventCategoryLegacyCardDisputeUpdated                             UnwrapWebhookEventCategory = "legacy_card_dispute.updated"
+	UnwrapWebhookEventCategoryLockboxCreated                                       UnwrapWebhookEventCategory = "lockbox.created"
+	UnwrapWebhookEventCategoryLockboxUpdated                                       UnwrapWebhookEventCategory = "lockbox.updated"
+	UnwrapWebhookEventCategoryOAuthConnectionCreated                               UnwrapWebhookEventCategory = "oauth_connection.created"
+	UnwrapWebhookEventCategoryOAuthConnectionDeactivated                           UnwrapWebhookEventCategory = "oauth_connection.deactivated"
+	UnwrapWebhookEventCategoryCardPushTransferCreated                              UnwrapWebhookEventCategory = "card_push_transfer.created"
+	UnwrapWebhookEventCategoryCardPushTransferUpdated                              UnwrapWebhookEventCategory = "card_push_transfer.updated"
+	UnwrapWebhookEventCategoryCardValidationCreated                                UnwrapWebhookEventCategory = "card_validation.created"
+	UnwrapWebhookEventCategoryCardValidationUpdated                                UnwrapWebhookEventCategory = "card_validation.updated"
+	UnwrapWebhookEventCategoryPendingTransactionCreated                            UnwrapWebhookEventCategory = "pending_transaction.created"
+	UnwrapWebhookEventCategoryPendingTransactionUpdated                            UnwrapWebhookEventCategory = "pending_transaction.updated"
+	UnwrapWebhookEventCategoryPhysicalCardCreated                                  UnwrapWebhookEventCategory = "physical_card.created"
+	UnwrapWebhookEventCategoryPhysicalCardUpdated                                  UnwrapWebhookEventCategory = "physical_card.updated"
+	UnwrapWebhookEventCategoryPhysicalCardProfileCreated                           UnwrapWebhookEventCategory = "physical_card_profile.created"
+	UnwrapWebhookEventCategoryPhysicalCardProfileUpdated                           UnwrapWebhookEventCategory = "physical_card_profile.updated"
+	UnwrapWebhookEventCategoryPhysicalCheckCreated                                 UnwrapWebhookEventCategory = "physical_check.created"
+	UnwrapWebhookEventCategoryPhysicalCheckUpdated                                 UnwrapWebhookEventCategory = "physical_check.updated"
+	UnwrapWebhookEventCategoryProgramCreated                                       UnwrapWebhookEventCategory = "program.created"
+	UnwrapWebhookEventCategoryProgramUpdated                                       UnwrapWebhookEventCategory = "program.updated"
+	UnwrapWebhookEventCategoryProofOfAuthorizationRequestCreated                   UnwrapWebhookEventCategory = "proof_of_authorization_request.created"
+	UnwrapWebhookEventCategoryProofOfAuthorizationRequestUpdated                   UnwrapWebhookEventCategory = "proof_of_authorization_request.updated"
+	UnwrapWebhookEventCategoryRealTimeDecisionCardAuthorizationRequested           UnwrapWebhookEventCategory = "real_time_decision.card_authorization_requested"
+	UnwrapWebhookEventCategoryRealTimeDecisionCardBalanceInquiryRequested          UnwrapWebhookEventCategory = "real_time_decision.card_balance_inquiry_requested"
+	UnwrapWebhookEventCategoryRealTimeDecisionDigitalWalletTokenRequested          UnwrapWebhookEventCategory = "real_time_decision.digital_wallet_token_requested"
+	UnwrapWebhookEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested UnwrapWebhookEventCategory = "real_time_decision.digital_wallet_authentication_requested"
+	UnwrapWebhookEventCategoryRealTimeDecisionCardAuthenticationRequested          UnwrapWebhookEventCategory = "real_time_decision.card_authentication_requested"
+	UnwrapWebhookEventCategoryRealTimeDecisionCardAuthenticationChallengeRequested UnwrapWebhookEventCategory = "real_time_decision.card_authentication_challenge_requested"
+	UnwrapWebhookEventCategoryRealTimePaymentsTransferCreated                      UnwrapWebhookEventCategory = "real_time_payments_transfer.created"
+	UnwrapWebhookEventCategoryRealTimePaymentsTransferUpdated                      UnwrapWebhookEventCategory = "real_time_payments_transfer.updated"
+	UnwrapWebhookEventCategoryRealTimePaymentsRequestForPaymentCreated             UnwrapWebhookEventCategory = "real_time_payments_request_for_payment.created"
+	UnwrapWebhookEventCategoryRealTimePaymentsRequestForPaymentUpdated             UnwrapWebhookEventCategory = "real_time_payments_request_for_payment.updated"
+	UnwrapWebhookEventCategorySwiftTransferCreated                                 UnwrapWebhookEventCategory = "swift_transfer.created"
+	UnwrapWebhookEventCategorySwiftTransferUpdated                                 UnwrapWebhookEventCategory = "swift_transfer.updated"
+	UnwrapWebhookEventCategoryTransactionCreated                                   UnwrapWebhookEventCategory = "transaction.created"
+	UnwrapWebhookEventCategoryWireDrawdownRequestCreated                           UnwrapWebhookEventCategory = "wire_drawdown_request.created"
+	UnwrapWebhookEventCategoryWireDrawdownRequestUpdated                           UnwrapWebhookEventCategory = "wire_drawdown_request.updated"
+	UnwrapWebhookEventCategoryWireTransferCreated                                  UnwrapWebhookEventCategory = "wire_transfer.created"
+	UnwrapWebhookEventCategoryWireTransferUpdated                                  UnwrapWebhookEventCategory = "wire_transfer.updated"
+)
+
+func (r UnwrapWebhookEventCategory) IsKnown() bool {
+	switch r {
+	case UnwrapWebhookEventCategoryAccountCreated, UnwrapWebhookEventCategoryAccountUpdated, UnwrapWebhookEventCategoryAccountNumberCreated, UnwrapWebhookEventCategoryAccountNumberUpdated, UnwrapWebhookEventCategoryAccountStatementCreated, UnwrapWebhookEventCategoryAccountTransferCreated, UnwrapWebhookEventCategoryAccountTransferUpdated, UnwrapWebhookEventCategoryACHPrenotificationCreated, UnwrapWebhookEventCategoryACHPrenotificationUpdated, UnwrapWebhookEventCategoryACHTransferCreated, UnwrapWebhookEventCategoryACHTransferUpdated, UnwrapWebhookEventCategoryBookkeepingAccountCreated, UnwrapWebhookEventCategoryBookkeepingAccountUpdated, UnwrapWebhookEventCategoryBookkeepingEntrySetUpdated, UnwrapWebhookEventCategoryCardCreated, UnwrapWebhookEventCategoryCardUpdated, UnwrapWebhookEventCategoryCardPaymentCreated, UnwrapWebhookEventCategoryCardPaymentUpdated, UnwrapWebhookEventCategoryCardProfileCreated, UnwrapWebhookEventCategoryCardProfileUpdated, UnwrapWebhookEventCategoryCardDisputeCreated, UnwrapWebhookEventCategoryCardDisputeUpdated, UnwrapWebhookEventCategoryCheckDepositCreated, UnwrapWebhookEventCategoryCheckDepositUpdated, UnwrapWebhookEventCategoryCheckTransferCreated, UnwrapWebhookEventCategoryCheckTransferUpdated, UnwrapWebhookEventCategoryDeclinedTransactionCreated, UnwrapWebhookEventCategoryDigitalCardProfileCreated, UnwrapWebhookEventCategoryDigitalCardProfileUpdated, UnwrapWebhookEventCategoryDigitalWalletTokenCreated, UnwrapWebhookEventCategoryDigitalWalletTokenUpdated, UnwrapWebhookEventCategoryDocumentCreated, UnwrapWebhookEventCategoryEntityCreated, UnwrapWebhookEventCategoryEntityUpdated, UnwrapWebhookEventCategoryEventSubscriptionCreated, UnwrapWebhookEventCategoryEventSubscriptionUpdated, UnwrapWebhookEventCategoryExportCreated, UnwrapWebhookEventCategoryExportUpdated, UnwrapWebhookEventCategoryExternalAccountCreated, UnwrapWebhookEventCategoryExternalAccountUpdated, UnwrapWebhookEventCategoryFednowTransferCreated, UnwrapWebhookEventCategoryFednowTransferUpdated, UnwrapWebhookEventCategoryFileCreated, UnwrapWebhookEventCategoryGroupUpdated, UnwrapWebhookEventCategoryGroupHeartbeat, UnwrapWebhookEventCategoryInboundACHTransferCreated, UnwrapWebhookEventCategoryInboundACHTransferUpdated, UnwrapWebhookEventCategoryInboundACHTransferReturnCreated, UnwrapWebhookEventCategoryInboundACHTransferReturnUpdated, UnwrapWebhookEventCategoryInboundCheckDepositCreated, UnwrapWebhookEventCategoryInboundCheckDepositUpdated, UnwrapWebhookEventCategoryInboundFednowTransferCreated, UnwrapWebhookEventCategoryInboundFednowTransferUpdated, UnwrapWebhookEventCategoryInboundMailItemCreated, UnwrapWebhookEventCategoryInboundMailItemUpdated, UnwrapWebhookEventCategoryInboundRealTimePaymentsTransferCreated, UnwrapWebhookEventCategoryInboundRealTimePaymentsTransferUpdated, UnwrapWebhookEventCategoryInboundWireDrawdownRequestCreated, UnwrapWebhookEventCategoryInboundWireTransferCreated, UnwrapWebhookEventCategoryInboundWireTransferUpdated, UnwrapWebhookEventCategoryIntrafiAccountEnrollmentCreated, UnwrapWebhookEventCategoryIntrafiAccountEnrollmentUpdated, UnwrapWebhookEventCategoryIntrafiExclusionCreated, UnwrapWebhookEventCategoryIntrafiExclusionUpdated, UnwrapWebhookEventCategoryLegacyCardDisputeCreated, UnwrapWebhookEventCategoryLegacyCardDisputeUpdated, UnwrapWebhookEventCategoryLockboxCreated, UnwrapWebhookEventCategoryLockboxUpdated, UnwrapWebhookEventCategoryOAuthConnectionCreated, UnwrapWebhookEventCategoryOAuthConnectionDeactivated, UnwrapWebhookEventCategoryCardPushTransferCreated, UnwrapWebhookEventCategoryCardPushTransferUpdated, UnwrapWebhookEventCategoryCardValidationCreated, UnwrapWebhookEventCategoryCardValidationUpdated, UnwrapWebhookEventCategoryPendingTransactionCreated, UnwrapWebhookEventCategoryPendingTransactionUpdated, UnwrapWebhookEventCategoryPhysicalCardCreated, UnwrapWebhookEventCategoryPhysicalCardUpdated, UnwrapWebhookEventCategoryPhysicalCardProfileCreated, UnwrapWebhookEventCategoryPhysicalCardProfileUpdated, UnwrapWebhookEventCategoryPhysicalCheckCreated, UnwrapWebhookEventCategoryPhysicalCheckUpdated, UnwrapWebhookEventCategoryProgramCreated, UnwrapWebhookEventCategoryProgramUpdated, UnwrapWebhookEventCategoryProofOfAuthorizationRequestCreated, UnwrapWebhookEventCategoryProofOfAuthorizationRequestUpdated, UnwrapWebhookEventCategoryRealTimeDecisionCardAuthorizationRequested, UnwrapWebhookEventCategoryRealTimeDecisionCardBalanceInquiryRequested, UnwrapWebhookEventCategoryRealTimeDecisionDigitalWalletTokenRequested, UnwrapWebhookEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested, UnwrapWebhookEventCategoryRealTimeDecisionCardAuthenticationRequested, UnwrapWebhookEventCategoryRealTimeDecisionCardAuthenticationChallengeRequested, UnwrapWebhookEventCategoryRealTimePaymentsTransferCreated, UnwrapWebhookEventCategoryRealTimePaymentsTransferUpdated, UnwrapWebhookEventCategoryRealTimePaymentsRequestForPaymentCreated, UnwrapWebhookEventCategoryRealTimePaymentsRequestForPaymentUpdated, UnwrapWebhookEventCategorySwiftTransferCreated, UnwrapWebhookEventCategorySwiftTransferUpdated, UnwrapWebhookEventCategoryTransactionCreated, UnwrapWebhookEventCategoryWireDrawdownRequestCreated, UnwrapWebhookEventCategoryWireDrawdownRequestUpdated, UnwrapWebhookEventCategoryWireTransferCreated, UnwrapWebhookEventCategoryWireTransferUpdated:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `event`.
+type UnwrapWebhookEventType string
+
+const (
+	UnwrapWebhookEventTypeEvent UnwrapWebhookEventType = "event"
+)
+
+func (r UnwrapWebhookEventType) IsKnown() bool {
+	switch r {
+	case UnwrapWebhookEventTypeEvent:
+		return true
+	}
+	return false
+}
 
 type EventListParams struct {
 	// Filter Events to those belonging to the object with the provided identifier.
