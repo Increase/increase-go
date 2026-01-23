@@ -79,7 +79,7 @@ func TestEventUnwrap(t *testing.T) {
 		option.WithWebhookSecret("whsec_c2VjcmV0Cg=="),
 		option.WithAPIKey("My API Key"),
 	)
-	payload := []byte("{}")
+	payload := []byte(`{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}`)
 	wh, err := standardwebhooks.NewWebhook("whsec_c2VjcmV0Cg==")
 	if err != nil {
 		t.Error("Failed to sign test webhook message")
