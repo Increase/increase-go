@@ -460,25 +460,19 @@ func (r CheckTransferFulfillmentMethod) IsKnown() bool {
 // If the check has been mailed by Increase, this will contain details of the
 // shipment.
 type CheckTransferMailing struct {
-	// The ID of the file corresponding to an image of the check that was mailed, if
-	// available.
-	ImageID string `json:"image_id,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
-	MailedAt time.Time `json:"mailed_at,required" format:"date-time"`
-	// The tracking number of the shipment, if available for the shipping method.
-	TrackingNumber string                   `json:"tracking_number,required,nullable"`
-	JSON           checkTransferMailingJSON `json:"-"`
+	MailedAt    time.Time                `json:"mailed_at,required" format:"date-time"`
+	ExtraFields map[string]interface{}   `json:"-,extras"`
+	JSON        checkTransferMailingJSON `json:"-"`
 }
 
 // checkTransferMailingJSON contains the JSON metadata for the struct
 // [CheckTransferMailing]
 type checkTransferMailingJSON struct {
-	ImageID        apijson.Field
-	MailedAt       apijson.Field
-	TrackingNumber apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	MailedAt    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CheckTransferMailing) UnmarshalJSON(data []byte) (err error) {
@@ -812,20 +806,27 @@ func (r CheckTransferStopPaymentRequestType) IsKnown() bool {
 
 // After the transfer is submitted, this will contain supplemental details.
 type CheckTransferSubmission struct {
+	// The ID of the file corresponding to an image of the check that was mailed, if
+	// available.
+	PreviewFileID string `json:"preview_file_id,required,nullable"`
 	// The address we submitted to the printer. This is what is physically printed on
 	// the check.
 	SubmittedAddress CheckTransferSubmissionSubmittedAddress `json:"submitted_address,required"`
 	// When this check was submitted to our check printer.
-	SubmittedAt time.Time                   `json:"submitted_at,required" format:"date-time"`
-	ExtraFields map[string]interface{}      `json:"-,extras"`
-	JSON        checkTransferSubmissionJSON `json:"-"`
+	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	// The tracking number for the check shipment.
+	TrackingNumber string                      `json:"tracking_number,required,nullable"`
+	ExtraFields    map[string]interface{}      `json:"-,extras"`
+	JSON           checkTransferSubmissionJSON `json:"-"`
 }
 
 // checkTransferSubmissionJSON contains the JSON metadata for the struct
 // [CheckTransferSubmission]
 type checkTransferSubmissionJSON struct {
+	PreviewFileID    apijson.Field
 	SubmittedAddress apijson.Field
 	SubmittedAt      apijson.Field
+	TrackingNumber   apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
