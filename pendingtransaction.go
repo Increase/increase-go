@@ -1169,7 +1169,9 @@ type PendingTransactionSourceCardAuthorizationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress PendingTransactionSourceCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              pendingTransactionSourceCardAuthorizationVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName PendingTransactionSourceCardAuthorizationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           pendingTransactionSourceCardAuthorizationVerificationJSON           `json:"-"`
 }
 
 // pendingTransactionSourceCardAuthorizationVerificationJSON contains the JSON
@@ -1177,6 +1179,7 @@ type PendingTransactionSourceCardAuthorizationVerification struct {
 type pendingTransactionSourceCardAuthorizationVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -1287,6 +1290,36 @@ func (r PendingTransactionSourceCardAuthorizationVerificationCardholderAddressRe
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type PendingTransactionSourceCardAuthorizationVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                                  `json:"provided_middle_name,required,nullable"`
+	JSON               pendingTransactionSourceCardAuthorizationVerificationCardholderNameJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationVerificationCardholderNameJSON contains
+// the JSON metadata for the struct
+// [PendingTransactionSourceCardAuthorizationVerificationCardholderName]
+type pendingTransactionSourceCardAuthorizationVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Push Transfer Instruction object. This field will be present in the JSON
