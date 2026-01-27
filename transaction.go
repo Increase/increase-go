@@ -4675,6 +4675,7 @@ const (
 	TransactionSourceInternalSourceReasonError                             TransactionSourceInternalSourceReason = "error"
 	TransactionSourceInternalSourceReasonErrorCorrection                   TransactionSourceInternalSourceReason = "error_correction"
 	TransactionSourceInternalSourceReasonFees                              TransactionSourceInternalSourceReason = "fees"
+	TransactionSourceInternalSourceReasonGeneralLedgerTransfer             TransactionSourceInternalSourceReason = "general_ledger_transfer"
 	TransactionSourceInternalSourceReasonInterest                          TransactionSourceInternalSourceReason = "interest"
 	TransactionSourceInternalSourceReasonNegativeBalanceForgiveness        TransactionSourceInternalSourceReason = "negative_balance_forgiveness"
 	TransactionSourceInternalSourceReasonSampleFunds                       TransactionSourceInternalSourceReason = "sample_funds"
@@ -4683,7 +4684,7 @@ const (
 
 func (r TransactionSourceInternalSourceReason) IsKnown() bool {
 	switch r {
-	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonAccountRevenuePaymentDistribution, TransactionSourceInternalSourceReasonBankDrawnCheck, TransactionSourceInternalSourceReasonBankDrawnCheckCredit, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonDishonoredACHReturn, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn:
+	case TransactionSourceInternalSourceReasonAccountClosure, TransactionSourceInternalSourceReasonAccountRevenuePaymentDistribution, TransactionSourceInternalSourceReasonBankDrawnCheck, TransactionSourceInternalSourceReasonBankDrawnCheckCredit, TransactionSourceInternalSourceReasonBankMigration, TransactionSourceInternalSourceReasonCheckAdjustment, TransactionSourceInternalSourceReasonCollectionPayment, TransactionSourceInternalSourceReasonCollectionReceivable, TransactionSourceInternalSourceReasonDishonoredACHReturn, TransactionSourceInternalSourceReasonEmpyrealAdjustment, TransactionSourceInternalSourceReasonError, TransactionSourceInternalSourceReasonErrorCorrection, TransactionSourceInternalSourceReasonFees, TransactionSourceInternalSourceReasonGeneralLedgerTransfer, TransactionSourceInternalSourceReasonInterest, TransactionSourceInternalSourceReasonNegativeBalanceForgiveness, TransactionSourceInternalSourceReasonSampleFunds, TransactionSourceInternalSourceReasonSampleFundsReturn:
 		return true
 	}
 	return false
