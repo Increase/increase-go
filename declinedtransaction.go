@@ -1165,7 +1165,9 @@ type DeclinedTransactionSourceCardDeclineVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress DeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              declinedTransactionSourceCardDeclineVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName DeclinedTransactionSourceCardDeclineVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           declinedTransactionSourceCardDeclineVerificationJSON           `json:"-"`
 }
 
 // declinedTransactionSourceCardDeclineVerificationJSON contains the JSON metadata
@@ -1173,6 +1175,7 @@ type DeclinedTransactionSourceCardDeclineVerification struct {
 type declinedTransactionSourceCardDeclineVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -1283,6 +1286,36 @@ func (r DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult)
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type DeclinedTransactionSourceCardDeclineVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                             `json:"provided_middle_name,required,nullable"`
+	JSON               declinedTransactionSourceCardDeclineVerificationCardholderNameJSON `json:"-"`
+}
+
+// declinedTransactionSourceCardDeclineVerificationCardholderNameJSON contains the
+// JSON metadata for the struct
+// [DeclinedTransactionSourceCardDeclineVerificationCardholderName]
+type declinedTransactionSourceCardDeclineVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of the resource. We may add additional possible values for this enum

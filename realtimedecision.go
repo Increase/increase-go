@@ -1156,7 +1156,9 @@ type RealTimeDecisionCardAuthorizationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress RealTimeDecisionCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              realTimeDecisionCardAuthorizationVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName RealTimeDecisionCardAuthorizationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           realTimeDecisionCardAuthorizationVerificationJSON           `json:"-"`
 }
 
 // realTimeDecisionCardAuthorizationVerificationJSON contains the JSON metadata for
@@ -1164,6 +1166,7 @@ type RealTimeDecisionCardAuthorizationVerification struct {
 type realTimeDecisionCardAuthorizationVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -1274,6 +1277,36 @@ func (r RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult) Is
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type RealTimeDecisionCardAuthorizationVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                          `json:"provided_middle_name,required,nullable"`
+	JSON               realTimeDecisionCardAuthorizationVerificationCardholderNameJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationVerificationCardholderNameJSON contains the
+// JSON metadata for the struct
+// [RealTimeDecisionCardAuthorizationVerificationCardholderName]
+type realTimeDecisionCardAuthorizationVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // Fields related to a card balance inquiry.
@@ -1976,7 +2009,9 @@ type RealTimeDecisionCardBalanceInquiryVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress RealTimeDecisionCardBalanceInquiryVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              realTimeDecisionCardBalanceInquiryVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName RealTimeDecisionCardBalanceInquiryVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           realTimeDecisionCardBalanceInquiryVerificationJSON           `json:"-"`
 }
 
 // realTimeDecisionCardBalanceInquiryVerificationJSON contains the JSON metadata
@@ -1984,6 +2019,7 @@ type RealTimeDecisionCardBalanceInquiryVerification struct {
 type realTimeDecisionCardBalanceInquiryVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -2094,6 +2130,36 @@ func (r RealTimeDecisionCardBalanceInquiryVerificationCardholderAddressResult) I
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type RealTimeDecisionCardBalanceInquiryVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                           `json:"provided_middle_name,required,nullable"`
+	JSON               realTimeDecisionCardBalanceInquiryVerificationCardholderNameJSON `json:"-"`
+}
+
+// realTimeDecisionCardBalanceInquiryVerificationCardholderNameJSON contains the
+// JSON metadata for the struct
+// [RealTimeDecisionCardBalanceInquiryVerificationCardholderName]
+type realTimeDecisionCardBalanceInquiryVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardBalanceInquiryVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardBalanceInquiryVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // The category of the Real-Time Decision.
