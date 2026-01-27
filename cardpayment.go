@@ -1276,7 +1276,9 @@ type CardPaymentElementsCardAuthorizationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardAuthorizationVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName CardPaymentElementsCardAuthorizationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           cardPaymentElementsCardAuthorizationVerificationJSON           `json:"-"`
 }
 
 // cardPaymentElementsCardAuthorizationVerificationJSON contains the JSON metadata
@@ -1284,6 +1286,7 @@ type CardPaymentElementsCardAuthorizationVerification struct {
 type cardPaymentElementsCardAuthorizationVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -1394,6 +1397,36 @@ func (r CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult)
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type CardPaymentElementsCardAuthorizationVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                             `json:"provided_middle_name,required,nullable"`
+	JSON               cardPaymentElementsCardAuthorizationVerificationCardholderNameJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthorizationVerificationCardholderNameJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardAuthorizationVerificationCardholderName]
+type cardPaymentElementsCardAuthorizationVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthorizationVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Authorization Expiration object. This field will be present in the JSON
@@ -2192,7 +2225,9 @@ type CardPaymentElementsCardBalanceInquiryVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardBalanceInquiryVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardBalanceInquiryVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName CardPaymentElementsCardBalanceInquiryVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           cardPaymentElementsCardBalanceInquiryVerificationJSON           `json:"-"`
 }
 
 // cardPaymentElementsCardBalanceInquiryVerificationJSON contains the JSON metadata
@@ -2200,6 +2235,7 @@ type CardPaymentElementsCardBalanceInquiryVerification struct {
 type cardPaymentElementsCardBalanceInquiryVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -2310,6 +2346,36 @@ func (r CardPaymentElementsCardBalanceInquiryVerificationCardholderAddressResult
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type CardPaymentElementsCardBalanceInquiryVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                              `json:"provided_middle_name,required,nullable"`
+	JSON               cardPaymentElementsCardBalanceInquiryVerificationCardholderNameJSON `json:"-"`
+}
+
+// cardPaymentElementsCardBalanceInquiryVerificationCardholderNameJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardBalanceInquiryVerificationCardholderName]
+type cardPaymentElementsCardBalanceInquiryVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardBalanceInquiryVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardBalanceInquiryVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Decline object. This field will be present in the JSON response if and
@@ -3132,7 +3198,9 @@ type CardPaymentElementsCardDeclineVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardDeclineVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName CardPaymentElementsCardDeclineVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           cardPaymentElementsCardDeclineVerificationJSON           `json:"-"`
 }
 
 // cardPaymentElementsCardDeclineVerificationJSON contains the JSON metadata for
@@ -3140,6 +3208,7 @@ type CardPaymentElementsCardDeclineVerification struct {
 type cardPaymentElementsCardDeclineVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -3250,6 +3319,36 @@ func (r CardPaymentElementsCardDeclineVerificationCardholderAddressResult) IsKno
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type CardPaymentElementsCardDeclineVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                       `json:"provided_middle_name,required,nullable"`
+	JSON               cardPaymentElementsCardDeclineVerificationCardholderNameJSON `json:"-"`
+}
+
+// cardPaymentElementsCardDeclineVerificationCardholderNameJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardDeclineVerificationCardholderName]
+type cardPaymentElementsCardDeclineVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardDeclineVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardDeclineVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Financial object. This field will be present in the JSON response if and
@@ -4032,7 +4131,9 @@ type CardPaymentElementsCardFinancialVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardFinancialVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardFinancialVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName CardPaymentElementsCardFinancialVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           cardPaymentElementsCardFinancialVerificationJSON           `json:"-"`
 }
 
 // cardPaymentElementsCardFinancialVerificationJSON contains the JSON metadata for
@@ -4040,6 +4141,7 @@ type CardPaymentElementsCardFinancialVerification struct {
 type cardPaymentElementsCardFinancialVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -4150,6 +4252,36 @@ func (r CardPaymentElementsCardFinancialVerificationCardholderAddressResult) IsK
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type CardPaymentElementsCardFinancialVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                         `json:"provided_middle_name,required,nullable"`
+	JSON               cardPaymentElementsCardFinancialVerificationCardholderNameJSON `json:"-"`
+}
+
+// cardPaymentElementsCardFinancialVerificationCardholderNameJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardFinancialVerificationCardholderName]
+type cardPaymentElementsCardFinancialVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardFinancialVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardFinancialVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Fuel Confirmation object. This field will be present in the JSON response
@@ -7465,7 +7597,9 @@ type CardPaymentElementsCardValidationVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress CardPaymentElementsCardValidationVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              cardPaymentElementsCardValidationVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName CardPaymentElementsCardValidationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           cardPaymentElementsCardValidationVerificationJSON           `json:"-"`
 }
 
 // cardPaymentElementsCardValidationVerificationJSON contains the JSON metadata for
@@ -7473,6 +7607,7 @@ type CardPaymentElementsCardValidationVerification struct {
 type cardPaymentElementsCardValidationVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -7583,6 +7718,36 @@ func (r CardPaymentElementsCardValidationVerificationCardholderAddressResult) Is
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type CardPaymentElementsCardValidationVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                          `json:"provided_middle_name,required,nullable"`
+	JSON               cardPaymentElementsCardValidationVerificationCardholderNameJSON `json:"-"`
+}
+
+// cardPaymentElementsCardValidationVerificationCardholderNameJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardValidationVerificationCardholderName]
+type cardPaymentElementsCardValidationVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardValidationVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardValidationVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of the resource. We may add additional possible values for this enum

@@ -1650,7 +1650,9 @@ type TransactionSourceCardFinancialVerification struct {
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
 	CardholderAddress TransactionSourceCardFinancialVerificationCardholderAddress `json:"cardholder_address,required"`
-	JSON              transactionSourceCardFinancialVerificationJSON              `json:"-"`
+	// Cardholder name provided in the authorization request.
+	CardholderName TransactionSourceCardFinancialVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	JSON           transactionSourceCardFinancialVerificationJSON           `json:"-"`
 }
 
 // transactionSourceCardFinancialVerificationJSON contains the JSON metadata for
@@ -1658,6 +1660,7 @@ type TransactionSourceCardFinancialVerification struct {
 type transactionSourceCardFinancialVerificationJSON struct {
 	CardVerificationCode apijson.Field
 	CardholderAddress    apijson.Field
+	CardholderName       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -1768,6 +1771,36 @@ func (r TransactionSourceCardFinancialVerificationCardholderAddressResult) IsKno
 		return true
 	}
 	return false
+}
+
+// Cardholder name provided in the authorization request.
+type TransactionSourceCardFinancialVerificationCardholderName struct {
+	// The first name provided for verification in the authorization request.
+	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	// The last name provided for verification in the authorization request.
+	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	// The middle name provided for verification in the authorization request.
+	ProvidedMiddleName string                                                       `json:"provided_middle_name,required,nullable"`
+	JSON               transactionSourceCardFinancialVerificationCardholderNameJSON `json:"-"`
+}
+
+// transactionSourceCardFinancialVerificationCardholderNameJSON contains the JSON
+// metadata for the struct
+// [TransactionSourceCardFinancialVerificationCardholderName]
+type transactionSourceCardFinancialVerificationCardholderNameJSON struct {
+	ProvidedFirstName  apijson.Field
+	ProvidedLastName   apijson.Field
+	ProvidedMiddleName apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardFinancialVerificationCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardFinancialVerificationCardholderNameJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Card Push Transfer Acceptance object. This field will be present in the JSON
