@@ -667,7 +667,7 @@ func TestCardDisputeSubmitUserSubmissionWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestCardDisputeWithdraw(t *testing.T) {
+func TestCardDisputeWithdrawWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -679,7 +679,13 @@ func TestCardDisputeWithdraw(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.CardDisputes.Withdraw(context.TODO(), "card_dispute_h9sc95nbl1cgltpp7men")
+	_, err := client.CardDisputes.Withdraw(
+		context.TODO(),
+		"card_dispute_h9sc95nbl1cgltpp7men",
+		increase.CardDisputeWithdrawParams{
+			Explanation: increase.F("The explanation for withdrawing the Card Dispute."),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
