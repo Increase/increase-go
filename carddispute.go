@@ -94,14 +94,14 @@ func (r *CardDisputeService) SubmitUserSubmission(ctx context.Context, cardDispu
 }
 
 // Withdraw a Card Dispute
-func (r *CardDisputeService) Withdraw(ctx context.Context, cardDisputeID string, opts ...option.RequestOption) (res *CardDispute, err error) {
+func (r *CardDisputeService) Withdraw(ctx context.Context, cardDisputeID string, body CardDisputeWithdrawParams, opts ...option.RequestOption) (res *CardDispute, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if cardDisputeID == "" {
 		err = errors.New("missing required card_dispute_id parameter")
 		return
 	}
 	path := fmt.Sprintf("card_disputes/%s/withdraw", cardDisputeID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -144,8 +144,11 @@ type CardDispute struct {
 	Visa CardDisputeVisa `json:"visa,required,nullable"`
 	// If the Card Dispute's status is `won`, this will contain details of the won
 	// dispute.
-	Win  CardDisputeWin  `json:"win,required,nullable"`
-	JSON cardDisputeJSON `json:"-"`
+	Win CardDisputeWin `json:"win,required,nullable"`
+	// If the Card Dispute has been withdrawn, this will contain details of the
+	// withdrawal.
+	Withdrawal CardDisputeWithdrawal `json:"withdrawal,required,nullable"`
+	JSON       cardDisputeJSON       `json:"-"`
 }
 
 // cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
@@ -163,6 +166,7 @@ type cardDisputeJSON struct {
 	UserSubmissionRequiredBy apijson.Field
 	Visa                     apijson.Field
 	Win                      apijson.Field
+	Withdrawal               apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
 }
@@ -4482,6 +4486,30 @@ func (r cardDisputeWinJSON) RawJSON() string {
 	return r.raw
 }
 
+// If the Card Dispute has been withdrawn, this will contain details of the
+// withdrawal.
+type CardDisputeWithdrawal struct {
+	// The explanation for the withdrawal of the Card Dispute.
+	Explanation string                    `json:"explanation,required,nullable"`
+	JSON        cardDisputeWithdrawalJSON `json:"-"`
+}
+
+// cardDisputeWithdrawalJSON contains the JSON metadata for the struct
+// [CardDisputeWithdrawal]
+type cardDisputeWithdrawalJSON struct {
+	Explanation apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeWithdrawal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeWithdrawalJSON) RawJSON() string {
+	return r.raw
+}
+
 type CardDisputeNewParams struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
@@ -8392,4 +8420,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitrationCategoryChang
 		return true
 	}
 	return false
+}
+
+type CardDisputeWithdrawParams struct {
+	// The explanation for withdrawing the Card Dispute.
+	Explanation param.Field[string] `json:"explanation"`
+}
+
+func (r CardDisputeWithdrawParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
