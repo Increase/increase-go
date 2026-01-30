@@ -93,6 +93,8 @@ type Program struct {
 	// string containing a decimal number. For example, a 1% interest rate would be
 	// represented as "0.01".
 	InterestRate string `json:"interest_rate,required"`
+	// The lending details for the program.
+	Lending ProgramLending `json:"lending,required,nullable"`
 	// The name of the Program.
 	Name string `json:"name,required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -100,9 +102,8 @@ type Program struct {
 	Type ProgramType `json:"type,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was last updated.
-	UpdatedAt   time.Time              `json:"updated_at,required" format:"date-time"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
-	JSON        programJSON            `json:"-"`
+	UpdatedAt time.Time   `json:"updated_at,required" format:"date-time"`
+	JSON      programJSON `json:"-"`
 }
 
 // programJSON contains the JSON metadata for the struct [Program]
@@ -113,6 +114,7 @@ type programJSON struct {
 	CreatedAt                   apijson.Field
 	DefaultDigitalCardProfileID apijson.Field
 	InterestRate                apijson.Field
+	Lending                     apijson.Field
 	Name                        apijson.Field
 	Type                        apijson.Field
 	UpdatedAt                   apijson.Field
@@ -143,6 +145,28 @@ func (r ProgramBank) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The lending details for the program.
+type ProgramLending struct {
+	// The maximum extendable credit of the program.
+	MaximumExtendableCredit int64              `json:"maximum_extendable_credit,required"`
+	JSON                    programLendingJSON `json:"-"`
+}
+
+// programLendingJSON contains the JSON metadata for the struct [ProgramLending]
+type programLendingJSON struct {
+	MaximumExtendableCredit apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *ProgramLending) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r programLendingJSON) RawJSON() string {
+	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be

@@ -141,6 +141,8 @@ type Account struct {
 	Currency AccountCurrency `json:"currency,required"`
 	// The identifier for the Entity the Account belongs to.
 	EntityID string `json:"entity_id,required"`
+	// Whether the Account is funded by a loan or by deposits.
+	Funding AccountFunding `json:"funding,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -158,6 +160,8 @@ type Account struct {
 	// a decimal number. For example, a 1% interest rate would be represented as
 	// "0.01".
 	InterestRate string `json:"interest_rate,required"`
+	// The Account's loan-related information, if the Account is a loan account.
+	Loan AccountLoan `json:"loan,required,nullable"`
 	// The name you choose for the Account.
 	Name string `json:"name,required"`
 	// The identifier of the Program determining the compliance and commercial terms of
@@ -181,11 +185,13 @@ type accountJSON struct {
 	CreatedAt             apijson.Field
 	Currency              apijson.Field
 	EntityID              apijson.Field
+	Funding               apijson.Field
 	IdempotencyKey        apijson.Field
 	InformationalEntityID apijson.Field
 	InterestAccrued       apijson.Field
 	InterestAccruedAt     apijson.Field
 	InterestRate          apijson.Field
+	Loan                  apijson.Field
 	Name                  apijson.Field
 	ProgramID             apijson.Field
 	Status                apijson.Field
@@ -235,6 +241,73 @@ func (r AccountCurrency) IsKnown() bool {
 	return false
 }
 
+// Whether the Account is funded by a loan or by deposits.
+type AccountFunding string
+
+const (
+	AccountFundingLoan     AccountFunding = "loan"
+	AccountFundingDeposits AccountFunding = "deposits"
+)
+
+func (r AccountFunding) IsKnown() bool {
+	switch r {
+	case AccountFundingLoan, AccountFundingDeposits:
+		return true
+	}
+	return false
+}
+
+// The Account's loan-related information, if the Account is a loan account.
+type AccountLoan struct {
+	// The maximum amount of money that can be borrowed on the Account.
+	CreditLimit int64 `json:"credit_limit,required"`
+	// The number of days after the statement date that the Account can be past due
+	// before being considered delinquent.
+	GracePeriodDays int64 `json:"grace_period_days,required"`
+	// The date on which the loan matures.
+	MaturityDate time.Time `json:"maturity_date,required,nullable" format:"date"`
+	// The day of the month on which the loan statement is generated.
+	StatementDayOfMonth int64 `json:"statement_day_of_month,required"`
+	// The type of payment for the loan.
+	StatementPaymentType AccountLoanStatementPaymentType `json:"statement_payment_type,required"`
+	JSON                 accountLoanJSON                 `json:"-"`
+}
+
+// accountLoanJSON contains the JSON metadata for the struct [AccountLoan]
+type accountLoanJSON struct {
+	CreditLimit          apijson.Field
+	GracePeriodDays      apijson.Field
+	MaturityDate         apijson.Field
+	StatementDayOfMonth  apijson.Field
+	StatementPaymentType apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *AccountLoan) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountLoanJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of payment for the loan.
+type AccountLoanStatementPaymentType string
+
+const (
+	AccountLoanStatementPaymentTypeBalance               AccountLoanStatementPaymentType = "balance"
+	AccountLoanStatementPaymentTypeInterestUntilMaturity AccountLoanStatementPaymentType = "interest_until_maturity"
+)
+
+func (r AccountLoanStatementPaymentType) IsKnown() bool {
+	switch r {
+	case AccountLoanStatementPaymentTypeBalance, AccountLoanStatementPaymentTypeInterestUntilMaturity:
+		return true
+	}
+	return false
+}
+
 // The status of the Account.
 type AccountStatus string
 
@@ -278,11 +351,12 @@ type BalanceLookup struct {
 	// The Account's current balance, representing the sum of all posted Transactions
 	// on the Account.
 	CurrentBalance int64 `json:"current_balance,required"`
+	// The loan balances for the Account.
+	Loan BalanceLookupLoan `json:"loan,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
-	Type        BalanceLookupType      `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
-	JSON        balanceLookupJSON      `json:"-"`
+	Type BalanceLookupType `json:"type,required"`
+	JSON balanceLookupJSON `json:"-"`
 }
 
 // balanceLookupJSON contains the JSON metadata for the struct [BalanceLookup]
@@ -290,6 +364,7 @@ type balanceLookupJSON struct {
 	AccountID        apijson.Field
 	AvailableBalance apijson.Field
 	CurrentBalance   apijson.Field
+	Loan             apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -300,6 +375,36 @@ func (r *BalanceLookup) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r balanceLookupJSON) RawJSON() string {
+	return r.raw
+}
+
+// The loan balances for the Account.
+type BalanceLookupLoan struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the loan
+	// payment is due.
+	DueAt time.Time `json:"due_at,required,nullable" format:"date-time"`
+	// The total amount due on the loan.
+	DueBalance int64 `json:"due_balance,required"`
+	// The amount past due on the loan.
+	PastDueBalance int64                 `json:"past_due_balance,required"`
+	JSON           balanceLookupLoanJSON `json:"-"`
+}
+
+// balanceLookupLoanJSON contains the JSON metadata for the struct
+// [BalanceLookupLoan]
+type balanceLookupLoanJSON struct {
+	DueAt          apijson.Field
+	DueBalance     apijson.Field
+	PastDueBalance apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *BalanceLookupLoan) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r balanceLookupLoanJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -324,9 +429,13 @@ type AccountNewParams struct {
 	Name param.Field[string] `json:"name,required"`
 	// The identifier for the Entity that will own the Account.
 	EntityID param.Field[string] `json:"entity_id"`
+	// Whether the Account is funded by a loan or by deposits.
+	Funding param.Field[AccountNewParamsFunding] `json:"funding"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity. This is generally the beneficiary of the funds.
 	InformationalEntityID param.Field[string] `json:"informational_entity_id"`
+	// The loan details for the account.
+	Loan param.Field[AccountNewParamsLoan] `json:"loan"`
 	// The identifier for the Program that this Account falls under. Required if you
 	// operate more than one Program.
 	ProgramID param.Field[string] `json:"program_id"`
@@ -336,12 +445,75 @@ func (r AccountNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Whether the Account is funded by a loan or by deposits.
+type AccountNewParamsFunding string
+
+const (
+	AccountNewParamsFundingLoan     AccountNewParamsFunding = "loan"
+	AccountNewParamsFundingDeposits AccountNewParamsFunding = "deposits"
+)
+
+func (r AccountNewParamsFunding) IsKnown() bool {
+	switch r {
+	case AccountNewParamsFundingLoan, AccountNewParamsFundingDeposits:
+		return true
+	}
+	return false
+}
+
+// The loan details for the account.
+type AccountNewParamsLoan struct {
+	// The maximum amount of money that can be drawn from the Account.
+	CreditLimit param.Field[int64] `json:"credit_limit,required"`
+	// The number of days after the statement date that the Account can be past due
+	// before being considered delinquent.
+	GracePeriodDays param.Field[int64] `json:"grace_period_days,required"`
+	// The day of the month on which the loan statement is generated.
+	StatementDayOfMonth param.Field[int64] `json:"statement_day_of_month,required"`
+	// The type of statement payment for the account.
+	StatementPaymentType param.Field[AccountNewParamsLoanStatementPaymentType] `json:"statement_payment_type,required"`
+	// The date on which the loan matures.
+	MaturityDate param.Field[time.Time] `json:"maturity_date" format:"date"`
+}
+
+func (r AccountNewParamsLoan) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of statement payment for the account.
+type AccountNewParamsLoanStatementPaymentType string
+
+const (
+	AccountNewParamsLoanStatementPaymentTypeBalance               AccountNewParamsLoanStatementPaymentType = "balance"
+	AccountNewParamsLoanStatementPaymentTypeInterestUntilMaturity AccountNewParamsLoanStatementPaymentType = "interest_until_maturity"
+)
+
+func (r AccountNewParamsLoanStatementPaymentType) IsKnown() bool {
+	switch r {
+	case AccountNewParamsLoanStatementPaymentTypeBalance, AccountNewParamsLoanStatementPaymentTypeInterestUntilMaturity:
+		return true
+	}
+	return false
+}
+
 type AccountUpdateParams struct {
+	// The loan details for the account.
+	Loan param.Field[AccountUpdateParamsLoan] `json:"loan"`
 	// The new name of the Account.
 	Name param.Field[string] `json:"name"`
 }
 
 func (r AccountUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The loan details for the account.
+type AccountUpdateParamsLoan struct {
+	// The maximum amount of money that can be drawn from the Account.
+	CreditLimit param.Field[int64] `json:"credit_limit,required"`
+}
+
+func (r AccountUpdateParamsLoan) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
