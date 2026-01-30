@@ -337,9 +337,6 @@ func (r AccountNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type AccountUpdateParams struct {
-	// The new credit limit of the Account, if and only if the Account is a loan
-	// account.
-	CreditLimit param.Field[int64] `json:"credit_limit"`
 	// The new name of the Account.
 	Name param.Field[string] `json:"name"`
 }
