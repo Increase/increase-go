@@ -48,6 +48,8 @@ type SimulationProgramNewParams struct {
 	Name param.Field[string] `json:"name,required"`
 	// The bank for the program's accounts, defaults to First Internet Bank.
 	Bank param.Field[SimulationProgramNewParamsBank] `json:"bank"`
+	// The maximum extendable credit of the program being added.
+	LendingMaximumExtendableCredit param.Field[int64] `json:"lending_maximum_extendable_credit"`
 	// The identifier of the Account the Program should be added to is for.
 	ReserveAccountID param.Field[string] `json:"reserve_account_id"`
 }

@@ -26,9 +26,10 @@ func TestSimulationProgramNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.Programs.New(context.TODO(), increase.SimulationProgramNewParams{
-		Name:             increase.F("For Benefit Of"),
-		Bank:             increase.F(increase.SimulationProgramNewParamsBankBlueRidgeBank),
-		ReserveAccountID: increase.F("reserve_account_id"),
+		Name:                           increase.F("For Benefit Of"),
+		Bank:                           increase.F(increase.SimulationProgramNewParamsBankBlueRidgeBank),
+		LendingMaximumExtendableCredit: increase.F(int64(0)),
+		ReserveAccountID:               increase.F("reserve_account_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
