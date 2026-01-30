@@ -29,8 +29,16 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 	_, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name:                  increase.F("New Account!"),
 		EntityID:              increase.F("entity_n8y8tnk2p9339ti393yi"),
+		Funding:               increase.F(increase.AccountNewParamsFundingLoan),
 		InformationalEntityID: increase.F("informational_entity_id"),
-		ProgramID:             increase.F("program_i2v2os4mwza1oetokh9i"),
+		Loan: increase.F(increase.AccountNewParamsLoan{
+			CreditLimit:          increase.F(int64(0)),
+			GracePeriodDays:      increase.F(int64(0)),
+			StatementDayOfMonth:  increase.F(int64(1)),
+			StatementPaymentType: increase.F(increase.AccountNewParamsLoanStatementPaymentTypeBalance),
+			MaturityDate:         increase.F(time.Now()),
+		}),
+		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -79,6 +87,9 @@ func TestAccountUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"account_in71c4amph0vgo2qllky",
 		increase.AccountUpdateParams{
+			Loan: increase.F(increase.AccountUpdateParamsLoan{
+				CreditLimit: increase.F(int64(0)),
+			}),
 			Name: increase.F("My renamed account"),
 		},
 	)

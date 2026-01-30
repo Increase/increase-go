@@ -88,6 +88,8 @@ type AccountStatement struct {
 	EndingBalance int64 `json:"ending_balance,required"`
 	// The identifier of the File containing a PDF of the statement.
 	FileID string `json:"file_id,required"`
+	// The loan balances.
+	Loan AccountStatementLoan `json:"loan,required,nullable"`
 	// The Account's balance at the start of its statement period.
 	StartingBalance int64 `json:"starting_balance,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
@@ -98,9 +100,8 @@ type AccountStatement struct {
 	StatementPeriodStart time.Time `json:"statement_period_start,required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
-	Type        AccountStatementType   `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
-	JSON        accountStatementJSON   `json:"-"`
+	Type AccountStatementType `json:"type,required"`
+	JSON accountStatementJSON `json:"-"`
 }
 
 // accountStatementJSON contains the JSON metadata for the struct
@@ -111,6 +112,7 @@ type accountStatementJSON struct {
 	CreatedAt            apijson.Field
 	EndingBalance        apijson.Field
 	FileID               apijson.Field
+	Loan                 apijson.Field
 	StartingBalance      apijson.Field
 	StatementPeriodEnd   apijson.Field
 	StatementPeriodStart apijson.Field
@@ -124,6 +126,36 @@ func (r *AccountStatement) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r accountStatementJSON) RawJSON() string {
+	return r.raw
+}
+
+// The loan balances.
+type AccountStatementLoan struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the loan
+	// payment is due.
+	DueAt time.Time `json:"due_at,required,nullable" format:"date-time"`
+	// The total amount due on the loan.
+	DueBalance int64 `json:"due_balance,required"`
+	// The amount past due on the loan.
+	PastDueBalance int64                    `json:"past_due_balance,required"`
+	JSON           accountStatementLoanJSON `json:"-"`
+}
+
+// accountStatementLoanJSON contains the JSON metadata for the struct
+// [AccountStatementLoan]
+type accountStatementLoanJSON struct {
+	DueAt          apijson.Field
+	DueBalance     apijson.Field
+	PastDueBalance apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *AccountStatementLoan) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountStatementLoanJSON) RawJSON() string {
 	return r.raw
 }
 
