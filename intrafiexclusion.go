@@ -155,14 +155,15 @@ func (r intrafiExclusionJSON) RawJSON() string {
 type IntrafiExclusionStatus string
 
 const (
-	IntrafiExclusionStatusPending   IntrafiExclusionStatus = "pending"
-	IntrafiExclusionStatusCompleted IntrafiExclusionStatus = "completed"
-	IntrafiExclusionStatusArchived  IntrafiExclusionStatus = "archived"
+	IntrafiExclusionStatusPending    IntrafiExclusionStatus = "pending"
+	IntrafiExclusionStatusCompleted  IntrafiExclusionStatus = "completed"
+	IntrafiExclusionStatusArchived   IntrafiExclusionStatus = "archived"
+	IntrafiExclusionStatusIneligible IntrafiExclusionStatus = "ineligible"
 )
 
 func (r IntrafiExclusionStatus) IsKnown() bool {
 	switch r {
-	case IntrafiExclusionStatusPending, IntrafiExclusionStatusCompleted, IntrafiExclusionStatusArchived:
+	case IntrafiExclusionStatusPending, IntrafiExclusionStatusCompleted, IntrafiExclusionStatusArchived, IntrafiExclusionStatusIneligible:
 		return true
 	}
 	return false
