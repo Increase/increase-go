@@ -142,7 +142,7 @@ type Account struct {
 	// The identifier for the Entity the Account belongs to.
 	EntityID string `json:"entity_id,required"`
 	// Whether the Account is funded by a loan or by deposits.
-	Funding AccountFunding `json:"funding,required,nullable"`
+	Funding AccountFunding `json:"funding,required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
