@@ -26,8 +26,8 @@ func TestIntrafiExclusionNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.IntrafiExclusions.New(context.TODO(), increase.IntrafiExclusionNewParams{
-		BankName: increase.F("Example Bank"),
-		EntityID: increase.F("entity_n8y8tnk2p9339ti393yi"),
+		EntityID:              increase.F("entity_n8y8tnk2p9339ti393yi"),
+		FdicCertificateNumber: increase.F("314159"),
 	})
 	if err != nil {
 		var apierr *increase.Error
