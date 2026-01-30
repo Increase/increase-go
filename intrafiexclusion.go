@@ -101,7 +101,7 @@ type IntrafiExclusion struct {
 	// The identifier of this exclusion request.
 	ID string `json:"id,required"`
 	// The name of the excluded institution.
-	BankName string `json:"bank_name,required"`
+	BankName string `json:"bank_name,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the exclusion was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -185,10 +185,13 @@ func (r IntrafiExclusionType) IsKnown() bool {
 }
 
 type IntrafiExclusionNewParams struct {
-	// The name of the financial institution to be excluded.
-	BankName param.Field[string] `json:"bank_name,required"`
 	// The identifier of the Entity whose deposits will be excluded.
 	EntityID param.Field[string] `json:"entity_id,required"`
+	// The FDIC certificate number of the financial institution to be excluded. An FDIC
+	// certificate number uniquely identifies a financial institution, and is different
+	// than a routing number. To find one, we recommend searching by Bank Name using
+	// the [FDIC's bankfind tool](https://banks.data.fdic.gov/bankfind-suite/bankfind).
+	FdicCertificateNumber param.Field[string] `json:"fdic_certificate_number,required"`
 }
 
 func (r IntrafiExclusionNewParams) MarshalJSON() (data []byte, err error) {
