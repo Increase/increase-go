@@ -320,11 +320,11 @@ func (r ExportNewParamsAccountVerificationLetter) MarshalJSON() (data []byte, er
 // Options for the created export. Required if `category` is equal to
 // `balance_csv`.
 type ExportNewParamsBalanceCsv struct {
-	// Filter exported Transactions to the specified Account.
+	// Filter exported Balances to the specified Account.
 	AccountID param.Field[string] `json:"account_id"`
 	// Filter results by time range on the `created_at` attribute.
 	CreatedAt param.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
-	// Filter exported Transactions to the specified Program.
+	// Filter exported Balances to the specified Program.
 	ProgramID param.Field[string] `json:"program_id"`
 }
 
@@ -355,7 +355,8 @@ func (r ExportNewParamsBalanceCsvCreatedAt) MarshalJSON() (data []byte, err erro
 // Options for the created export. Required if `category` is equal to
 // `bookkeeping_account_balance_csv`.
 type ExportNewParamsBookkeepingAccountBalanceCsv struct {
-	// Filter exported Transactions to the specified Bookkeeping Account.
+	// Filter exported Bookkeeping Account Balances to the specified Bookkeeping
+	// Account.
 	BookkeepingAccountID param.Field[string] `json:"bookkeeping_account_id"`
 	// Filter results by time range on the `created_at` attribute.
 	CreatedAt param.Field[ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt] `json:"created_at"`
