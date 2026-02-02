@@ -324,8 +324,6 @@ type ExportNewParamsBalanceCsv struct {
 	AccountID param.Field[string] `json:"account_id"`
 	// Filter results by time range on the `created_at` attribute.
 	CreatedAt param.Field[ExportNewParamsBalanceCsvCreatedAt] `json:"created_at"`
-	// Filter exported Balances to the specified Program.
-	ProgramID param.Field[string] `json:"program_id"`
 }
 
 func (r ExportNewParamsBalanceCsv) MarshalJSON() (data []byte, err error) {
