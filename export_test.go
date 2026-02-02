@@ -65,11 +65,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 				OnOrBefore: increase.F(time.Now()),
 			}),
 		}),
-		EntityCsv: increase.F(increase.ExportNewParamsEntityCsv{
-			Status: increase.F(increase.ExportNewParamsEntityCsvStatus{
-				In: increase.F([]increase.ExportNewParamsEntityCsvStatusIn{increase.ExportNewParamsEntityCsvStatusInActive}),
-			}),
-		}),
+		EntityCsv: increase.F(increase.ExportNewParamsEntityCsv{}),
 		FundingInstructions: increase.F(increase.ExportNewParamsFundingInstructions{
 			AccountNumberID: increase.F("account_number_id"),
 		}),
