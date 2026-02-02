@@ -388,39 +388,10 @@ func (r ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt) MarshalJSON() (dat
 
 // Options for the created export. Required if `category` is equal to `entity_csv`.
 type ExportNewParamsEntityCsv struct {
-	// Entity statuses to filter by.
-	Status param.Field[ExportNewParamsEntityCsvStatus] `json:"status"`
 }
 
 func (r ExportNewParamsEntityCsv) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-// Entity statuses to filter by.
-type ExportNewParamsEntityCsvStatus struct {
-	// Entity statuses to filter by. For GET requests, this should be encoded as a
-	// comma-delimited string, such as `?in=one,two,three`.
-	In param.Field[[]ExportNewParamsEntityCsvStatusIn] `json:"in,required"`
-}
-
-func (r ExportNewParamsEntityCsvStatus) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type ExportNewParamsEntityCsvStatusIn string
-
-const (
-	ExportNewParamsEntityCsvStatusInActive   ExportNewParamsEntityCsvStatusIn = "active"
-	ExportNewParamsEntityCsvStatusInArchived ExportNewParamsEntityCsvStatusIn = "archived"
-	ExportNewParamsEntityCsvStatusInDisabled ExportNewParamsEntityCsvStatusIn = "disabled"
-)
-
-func (r ExportNewParamsEntityCsvStatusIn) IsKnown() bool {
-	switch r {
-	case ExportNewParamsEntityCsvStatusInActive, ExportNewParamsEntityCsvStatusInArchived, ExportNewParamsEntityCsvStatusInDisabled:
-		return true
-	}
-	return false
 }
 
 // Options for the created export. Required if `category` is equal to
