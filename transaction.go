@@ -202,6 +202,14 @@ type TransactionSource struct {
 	// the first two business days after the transfer is initiated, but can occur much
 	// later.
 	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return,required,nullable"`
+	// A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
+	// the JSON response if and only if `category` is equal to
+	// `blockchain_offramp_transfer_settlement`.
+	BlockchainOfframpTransferSettlement TransactionSourceBlockchainOfframpTransferSettlement `json:"blockchain_offramp_transfer_settlement,required,nullable"`
+	// A Blockchain On-Ramp Transfer Intention object. This field will be present in
+	// the JSON response if and only if `category` is equal to
+	// `blockchain_onramp_transfer_intention`.
+	BlockchainOnrampTransferIntention TransactionSourceBlockchainOnrampTransferIntention `json:"blockchain_onramp_transfer_intention,required,nullable"`
 	// A Legacy Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	// Contains the details of a successful Card Dispute.
@@ -371,6 +379,8 @@ type transactionSourceJSON struct {
 	ACHTransferIntention                        apijson.Field
 	ACHTransferRejection                        apijson.Field
 	ACHTransferReturn                           apijson.Field
+	BlockchainOfframpTransferSettlement         apijson.Field
+	BlockchainOnrampTransferIntention           apijson.Field
 	CardDisputeAcceptance                       apijson.Field
 	CardDisputeFinancial                        apijson.Field
 	CardDisputeLoss                             apijson.Field
@@ -708,6 +718,64 @@ func (r TransactionSourceACHTransferReturnReturnReasonCode) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `blockchain_offramp_transfer_settlement`.
+type TransactionSourceBlockchainOfframpTransferSettlement struct {
+	// The identifier of the Blockchain Address the funds were received at.
+	SourceBlockchainAddressID string `json:"source_blockchain_address_id,required"`
+	// The identifier of the Blockchain Off-Ramp Transfer that led to this Transaction.
+	TransferID  string                                                   `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                   `json:"-,extras"`
+	JSON        transactionSourceBlockchainOfframpTransferSettlementJSON `json:"-"`
+}
+
+// transactionSourceBlockchainOfframpTransferSettlementJSON contains the JSON
+// metadata for the struct [TransactionSourceBlockchainOfframpTransferSettlement]
+type transactionSourceBlockchainOfframpTransferSettlementJSON struct {
+	SourceBlockchainAddressID apijson.Field
+	TransferID                apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *TransactionSourceBlockchainOfframpTransferSettlement) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceBlockchainOfframpTransferSettlementJSON) RawJSON() string {
+	return r.raw
+}
+
+// A Blockchain On-Ramp Transfer Intention object. This field will be present in
+// the JSON response if and only if `category` is equal to
+// `blockchain_onramp_transfer_intention`.
+type TransactionSourceBlockchainOnrampTransferIntention struct {
+	// The blockchain address the funds were sent to.
+	DestinationBlockchainAddress string `json:"destination_blockchain_address,required"`
+	// The identifier of the Blockchain On-Ramp Transfer that led to this Transaction.
+	TransferID  string                                                 `json:"transfer_id,required"`
+	ExtraFields map[string]interface{}                                 `json:"-,extras"`
+	JSON        transactionSourceBlockchainOnrampTransferIntentionJSON `json:"-"`
+}
+
+// transactionSourceBlockchainOnrampTransferIntentionJSON contains the JSON
+// metadata for the struct [TransactionSourceBlockchainOnrampTransferIntention]
+type transactionSourceBlockchainOnrampTransferIntentionJSON struct {
+	DestinationBlockchainAddress apijson.Field
+	TransferID                   apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
+}
+
+func (r *TransactionSourceBlockchainOnrampTransferIntention) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceBlockchainOnrampTransferIntentionJSON) RawJSON() string {
+	return r.raw
 }
 
 // A Legacy Card Dispute Acceptance object. This field will be present in the JSON
@@ -3709,12 +3777,14 @@ const (
 	TransactionSourceCategorySwiftTransferReturn                         TransactionSourceCategory = "swift_transfer_return"
 	TransactionSourceCategoryCardPushTransferAcceptance                  TransactionSourceCategory = "card_push_transfer_acceptance"
 	TransactionSourceCategoryAccountRevenuePayment                       TransactionSourceCategory = "account_revenue_payment"
+	TransactionSourceCategoryBlockchainOnrampTransferIntention           TransactionSourceCategory = "blockchain_onramp_transfer_intention"
+	TransactionSourceCategoryBlockchainOfframpTransferSettlement         TransactionSourceCategory = "blockchain_offramp_transfer_settlement"
 	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
 )
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardFinancial, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundFednowTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardFinancial, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundFednowTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryBlockchainOnrampTransferIntention, TransactionSourceCategoryBlockchainOfframpTransferSettlement, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -4993,12 +5063,14 @@ const (
 	TransactionListParamsCategoryInSwiftTransferReturn                         TransactionListParamsCategoryIn = "swift_transfer_return"
 	TransactionListParamsCategoryInCardPushTransferAcceptance                  TransactionListParamsCategoryIn = "card_push_transfer_acceptance"
 	TransactionListParamsCategoryInAccountRevenuePayment                       TransactionListParamsCategoryIn = "account_revenue_payment"
+	TransactionListParamsCategoryInBlockchainOnrampTransferIntention           TransactionListParamsCategoryIn = "blockchain_onramp_transfer_intention"
+	TransactionListParamsCategoryInBlockchainOfframpTransferSettlement         TransactionListParamsCategoryIn = "blockchain_offramp_transfer_settlement"
 	TransactionListParamsCategoryInOther                                       TransactionListParamsCategoryIn = "other"
 )
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardFinancial, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInFednowTransferAcknowledgement, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundFednowTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInSwiftTransferReturn, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInAccountRevenuePayment, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardFinancial, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInFednowTransferAcknowledgement, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundFednowTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInSwiftTransferReturn, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInAccountRevenuePayment, TransactionListParamsCategoryInBlockchainOnrampTransferIntention, TransactionListParamsCategoryInBlockchainOfframpTransferSettlement, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
