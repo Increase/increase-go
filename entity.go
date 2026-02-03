@@ -2597,6 +2597,8 @@ type EntityUpdateParamsCorporation struct {
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name"`
+	// The Employer Identification Number (EIN) for the corporation.
+	TaxIdentifier param.Field[string] `json:"tax_identifier"`
 }
 
 func (r EntityUpdateParamsCorporation) MarshalJSON() (data []byte, err error) {
