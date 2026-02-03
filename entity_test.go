@@ -331,6 +331,7 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				IncorporationState: increase.F("x"),
 				IndustryCode:       increase.F("x"),
 				Name:               increase.F("x"),
+				TaxIdentifier:      increase.F("x"),
 			}),
 			DetailsConfirmedAt: increase.F(time.Now()),
 			GovernmentAuthority: increase.F(increase.EntityUpdateParamsGovernmentAuthority{
