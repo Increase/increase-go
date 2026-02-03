@@ -115,12 +115,6 @@ type Export struct {
 	// Details of the entity CSV export. This field will be present when the `category`
 	// is equal to `entity_csv`.
 	EntityCsv ExportEntityCsv `json:"entity_csv,required,nullable"`
-	// A URL at which the Export's file can be downloaded. This will be present when
-	// the Export's status transitions to `complete`.
-	FileDownloadURL string `json:"file_download_url,required,nullable"`
-	// The File containing the contents of the Export. This will be present when the
-	// Export's status transitions to `complete`.
-	FileID string `json:"file_id,required,nullable"`
 	// Details of the Form 1099-INT export. This field will be present when the
 	// `category` is equal to `form_1099_int`.
 	Form1099Int ExportForm1099Int `json:"form_1099_int,required,nullable"`
@@ -134,6 +128,9 @@ type Export struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	// The result of the Export. This will be present when the Export's status
+	// transitions to `complete`.
+	Result ExportResult `json:"result,required,nullable"`
 	// The status of the Export.
 	Status ExportStatus `json:"status,required"`
 	// Details of the transaction CSV export. This field will be present when the
@@ -160,12 +157,11 @@ type exportJSON struct {
 	CreatedAt                    apijson.Field
 	DashboardTableCsv            apijson.Field
 	EntityCsv                    apijson.Field
-	FileDownloadURL              apijson.Field
-	FileID                       apijson.Field
 	Form1099Int                  apijson.Field
 	Form1099Misc                 apijson.Field
 	FundingInstructions          apijson.Field
 	IdempotencyKey               apijson.Field
+	Result                       apijson.Field
 	Status                       apijson.Field
 	TransactionCsv               apijson.Field
 	Type                         apijson.Field
@@ -550,6 +546,29 @@ func (r *ExportFundingInstructions) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r exportFundingInstructionsJSON) RawJSON() string {
+	return r.raw
+}
+
+// The result of the Export. This will be present when the Export's status
+// transitions to `complete`.
+type ExportResult struct {
+	// The File containing the contents of the Export.
+	FileID string           `json:"file_id,required"`
+	JSON   exportResultJSON `json:"-"`
+}
+
+// exportResultJSON contains the JSON metadata for the struct [ExportResult]
+type exportResultJSON struct {
+	FileID      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportResult) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportResultJSON) RawJSON() string {
 	return r.raw
 }
 
