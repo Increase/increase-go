@@ -89,41 +89,89 @@ func (r *ExportService) ListAutoPaging(ctx context.Context, query ExportListPara
 type Export struct {
 	// The Export identifier.
 	ID string `json:"id,required"`
+	// Details of the account statement BAI2 export. This field will be present when
+	// the `category` is equal to `account_statement_bai2`.
+	AccountStatementBai2 ExportAccountStatementBai2 `json:"account_statement_bai2,required,nullable"`
+	// Details of the account statement OFX export. This field will be present when the
+	// `category` is equal to `account_statement_ofx`.
+	AccountStatementOfx ExportAccountStatementOfx `json:"account_statement_ofx,required,nullable"`
+	// Details of the account verification letter export. This field will be present
+	// when the `category` is equal to `account_verification_letter`.
+	AccountVerificationLetter ExportAccountVerificationLetter `json:"account_verification_letter,required,nullable"`
+	// Details of the balance CSV export. This field will be present when the
+	// `category` is equal to `balance_csv`.
+	BalanceCsv ExportBalanceCsv `json:"balance_csv,required,nullable"`
+	// Details of the bookkeeping account balance CSV export. This field will be
+	// present when the `category` is equal to `bookkeeping_account_balance_csv`.
+	BookkeepingAccountBalanceCsv ExportBookkeepingAccountBalanceCsv `json:"bookkeeping_account_balance_csv,required,nullable"`
 	// The category of the Export. We may add additional possible values for this enum
 	// over time; your application should be able to handle that gracefully.
 	Category ExportCategory `json:"category,required"`
 	// The time the Export was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Details of the dashboard table CSV export. This field will be present when the
+	// `category` is equal to `dashboard_table_csv`.
+	DashboardTableCsv ExportDashboardTableCsv `json:"dashboard_table_csv,required,nullable"`
+	// Details of the entity CSV export. This field will be present when the `category`
+	// is equal to `entity_csv`.
+	EntityCsv ExportEntityCsv `json:"entity_csv,required,nullable"`
 	// A URL at which the Export's file can be downloaded. This will be present when
 	// the Export's status transitions to `complete`.
 	FileDownloadURL string `json:"file_download_url,required,nullable"`
 	// The File containing the contents of the Export. This will be present when the
 	// Export's status transitions to `complete`.
 	FileID string `json:"file_id,required,nullable"`
+	// Details of the Form 1099-INT export. This field will be present when the
+	// `category` is equal to `form_1099_int`.
+	Form1099Int ExportForm1099Int `json:"form_1099_int,required,nullable"`
+	// Details of the Form 1099-MISC export. This field will be present when the
+	// `category` is equal to `form_1099_misc`.
+	Form1099Misc ExportForm1099Misc `json:"form_1099_misc,required,nullable"`
+	// Details of the funding instructions export. This field will be present when the
+	// `category` is equal to `funding_instructions`.
+	FundingInstructions ExportFundingInstructions `json:"funding_instructions,required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key,required,nullable"`
 	// The status of the Export.
 	Status ExportStatus `json:"status,required"`
+	// Details of the transaction CSV export. This field will be present when the
+	// `category` is equal to `transaction_csv`.
+	TransactionCsv ExportTransactionCsv `json:"transaction_csv,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `export`.
 	Type ExportType `json:"type,required"`
-	JSON exportJSON `json:"-"`
+	// Details of the vendor CSV export. This field will be present when the `category`
+	// is equal to `vendor_csv`.
+	VendorCsv ExportVendorCsv `json:"vendor_csv,required,nullable"`
+	JSON      exportJSON      `json:"-"`
 }
 
 // exportJSON contains the JSON metadata for the struct [Export]
 type exportJSON struct {
-	ID              apijson.Field
-	Category        apijson.Field
-	CreatedAt       apijson.Field
-	FileDownloadURL apijson.Field
-	FileID          apijson.Field
-	IdempotencyKey  apijson.Field
-	Status          apijson.Field
-	Type            apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+	ID                           apijson.Field
+	AccountStatementBai2         apijson.Field
+	AccountStatementOfx          apijson.Field
+	AccountVerificationLetter    apijson.Field
+	BalanceCsv                   apijson.Field
+	BookkeepingAccountBalanceCsv apijson.Field
+	Category                     apijson.Field
+	CreatedAt                    apijson.Field
+	DashboardTableCsv            apijson.Field
+	EntityCsv                    apijson.Field
+	FileDownloadURL              apijson.Field
+	FileID                       apijson.Field
+	Form1099Int                  apijson.Field
+	Form1099Misc                 apijson.Field
+	FundingInstructions          apijson.Field
+	IdempotencyKey               apijson.Field
+	Status                       apijson.Field
+	TransactionCsv               apijson.Field
+	Type                         apijson.Field
+	VendorCsv                    apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
 }
 
 func (r *Export) UnmarshalJSON(data []byte) (err error) {
@@ -131,6 +179,222 @@ func (r *Export) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r exportJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the account statement BAI2 export. This field will be present when
+// the `category` is equal to `account_statement_bai2`.
+type ExportAccountStatementBai2 struct {
+	// Filter results by Account.
+	AccountID string `json:"account_id,required,nullable"`
+	// The date for which to retrieve the balance.
+	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
+	// Filter results by Program.
+	ProgramID string                         `json:"program_id,required,nullable"`
+	JSON      exportAccountStatementBai2JSON `json:"-"`
+}
+
+// exportAccountStatementBai2JSON contains the JSON metadata for the struct
+// [ExportAccountStatementBai2]
+type exportAccountStatementBai2JSON struct {
+	AccountID     apijson.Field
+	EffectiveDate apijson.Field
+	ProgramID     apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *ExportAccountStatementBai2) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportAccountStatementBai2JSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the account statement OFX export. This field will be present when the
+// `category` is equal to `account_statement_ofx`.
+type ExportAccountStatementOfx struct {
+	// The Account to create a statement for.
+	AccountID string `json:"account_id,required"`
+	// Filter transactions by their created date.
+	CreatedAt ExportAccountStatementOfxCreatedAt `json:"created_at,required,nullable"`
+	JSON      exportAccountStatementOfxJSON      `json:"-"`
+}
+
+// exportAccountStatementOfxJSON contains the JSON metadata for the struct
+// [ExportAccountStatementOfx]
+type exportAccountStatementOfxJSON struct {
+	AccountID   apijson.Field
+	CreatedAt   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportAccountStatementOfx) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportAccountStatementOfxJSON) RawJSON() string {
+	return r.raw
+}
+
+// Filter transactions by their created date.
+type ExportAccountStatementOfxCreatedAt struct {
+	// Filter results to transactions created after this time.
+	After time.Time `json:"after,required,nullable" format:"date-time"`
+	// Filter results to transactions created before this time.
+	Before time.Time                              `json:"before,required,nullable" format:"date-time"`
+	JSON   exportAccountStatementOfxCreatedAtJSON `json:"-"`
+}
+
+// exportAccountStatementOfxCreatedAtJSON contains the JSON metadata for the struct
+// [ExportAccountStatementOfxCreatedAt]
+type exportAccountStatementOfxCreatedAtJSON struct {
+	After       apijson.Field
+	Before      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportAccountStatementOfxCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportAccountStatementOfxCreatedAtJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the account verification letter export. This field will be present
+// when the `category` is equal to `account_verification_letter`.
+type ExportAccountVerificationLetter struct {
+	// The Account Number to create a letter for.
+	AccountNumberID string `json:"account_number_id,required"`
+	// The date of the balance to include in the letter.
+	BalanceDate time.Time                           `json:"balance_date,required,nullable" format:"date"`
+	JSON        exportAccountVerificationLetterJSON `json:"-"`
+}
+
+// exportAccountVerificationLetterJSON contains the JSON metadata for the struct
+// [ExportAccountVerificationLetter]
+type exportAccountVerificationLetterJSON struct {
+	AccountNumberID apijson.Field
+	BalanceDate     apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *ExportAccountVerificationLetter) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportAccountVerificationLetterJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the balance CSV export. This field will be present when the
+// `category` is equal to `balance_csv`.
+type ExportBalanceCsv struct {
+	// Filter results by Account.
+	AccountID string `json:"account_id,required,nullable"`
+	// Filter balances by their created date.
+	CreatedAt ExportBalanceCsvCreatedAt `json:"created_at,required,nullable"`
+	JSON      exportBalanceCsvJSON      `json:"-"`
+}
+
+// exportBalanceCsvJSON contains the JSON metadata for the struct
+// [ExportBalanceCsv]
+type exportBalanceCsvJSON struct {
+	AccountID   apijson.Field
+	CreatedAt   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportBalanceCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportBalanceCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Filter balances by their created date.
+type ExportBalanceCsvCreatedAt struct {
+	// Filter balances created after this time.
+	After time.Time `json:"after,required,nullable" format:"date-time"`
+	// Filter balances created before this time.
+	Before time.Time                     `json:"before,required,nullable" format:"date-time"`
+	JSON   exportBalanceCsvCreatedAtJSON `json:"-"`
+}
+
+// exportBalanceCsvCreatedAtJSON contains the JSON metadata for the struct
+// [ExportBalanceCsvCreatedAt]
+type exportBalanceCsvCreatedAtJSON struct {
+	After       apijson.Field
+	Before      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportBalanceCsvCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportBalanceCsvCreatedAtJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the bookkeeping account balance CSV export. This field will be
+// present when the `category` is equal to `bookkeeping_account_balance_csv`.
+type ExportBookkeepingAccountBalanceCsv struct {
+	// Filter results by Bookkeeping Account.
+	BookkeepingAccountID string `json:"bookkeeping_account_id,required,nullable"`
+	// Filter balances by their created date.
+	CreatedAt ExportBookkeepingAccountBalanceCsvCreatedAt `json:"created_at,required,nullable"`
+	JSON      exportBookkeepingAccountBalanceCsvJSON      `json:"-"`
+}
+
+// exportBookkeepingAccountBalanceCsvJSON contains the JSON metadata for the struct
+// [ExportBookkeepingAccountBalanceCsv]
+type exportBookkeepingAccountBalanceCsvJSON struct {
+	BookkeepingAccountID apijson.Field
+	CreatedAt            apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *ExportBookkeepingAccountBalanceCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportBookkeepingAccountBalanceCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Filter balances by their created date.
+type ExportBookkeepingAccountBalanceCsvCreatedAt struct {
+	// Filter balances created after this time.
+	After time.Time `json:"after,required,nullable" format:"date-time"`
+	// Filter balances created before this time.
+	Before time.Time                                       `json:"before,required,nullable" format:"date-time"`
+	JSON   exportBookkeepingAccountBalanceCsvCreatedAtJSON `json:"-"`
+}
+
+// exportBookkeepingAccountBalanceCsvCreatedAtJSON contains the JSON metadata for
+// the struct [ExportBookkeepingAccountBalanceCsvCreatedAt]
+type exportBookkeepingAccountBalanceCsvCreatedAtJSON struct {
+	After       apijson.Field
+	Before      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportBookkeepingAccountBalanceCsvCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportBookkeepingAccountBalanceCsvCreatedAtJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -161,6 +425,134 @@ func (r ExportCategory) IsKnown() bool {
 	return false
 }
 
+// Details of the dashboard table CSV export. This field will be present when the
+// `category` is equal to `dashboard_table_csv`.
+type ExportDashboardTableCsv struct {
+	JSON exportDashboardTableCsvJSON `json:"-"`
+}
+
+// exportDashboardTableCsvJSON contains the JSON metadata for the struct
+// [ExportDashboardTableCsv]
+type exportDashboardTableCsvJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportDashboardTableCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportDashboardTableCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the entity CSV export. This field will be present when the `category`
+// is equal to `entity_csv`.
+type ExportEntityCsv struct {
+	JSON exportEntityCsvJSON `json:"-"`
+}
+
+// exportEntityCsvJSON contains the JSON metadata for the struct [ExportEntityCsv]
+type exportEntityCsvJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportEntityCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportEntityCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the Form 1099-INT export. This field will be present when the
+// `category` is equal to `form_1099_int`.
+type ExportForm1099Int struct {
+	// The Account the tax form is for.
+	AccountID string `json:"account_id,required"`
+	// Whether the tax form is a corrected form.
+	Corrected bool `json:"corrected,required"`
+	// A description of the tax form.
+	Description string `json:"description,required"`
+	// The tax year for the tax form.
+	Year int64                 `json:"year,required"`
+	JSON exportForm1099IntJSON `json:"-"`
+}
+
+// exportForm1099IntJSON contains the JSON metadata for the struct
+// [ExportForm1099Int]
+type exportForm1099IntJSON struct {
+	AccountID   apijson.Field
+	Corrected   apijson.Field
+	Description apijson.Field
+	Year        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportForm1099Int) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportForm1099IntJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the Form 1099-MISC export. This field will be present when the
+// `category` is equal to `form_1099_misc`.
+type ExportForm1099Misc struct {
+	// The Account the tax form is for.
+	AccountID string `json:"account_id,required"`
+	// Whether the tax form is a corrected form.
+	Corrected bool `json:"corrected,required"`
+	// The tax year for the tax form.
+	Year int64                  `json:"year,required"`
+	JSON exportForm1099MiscJSON `json:"-"`
+}
+
+// exportForm1099MiscJSON contains the JSON metadata for the struct
+// [ExportForm1099Misc]
+type exportForm1099MiscJSON struct {
+	AccountID   apijson.Field
+	Corrected   apijson.Field
+	Year        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportForm1099Misc) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportForm1099MiscJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the funding instructions export. This field will be present when the
+// `category` is equal to `funding_instructions`.
+type ExportFundingInstructions struct {
+	// The Account Number to create funding instructions for.
+	AccountNumberID string                        `json:"account_number_id,required"`
+	JSON            exportFundingInstructionsJSON `json:"-"`
+}
+
+// exportFundingInstructionsJSON contains the JSON metadata for the struct
+// [ExportFundingInstructions]
+type exportFundingInstructionsJSON struct {
+	AccountNumberID apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *ExportFundingInstructions) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportFundingInstructionsJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the Export.
 type ExportStatus string
 
@@ -178,6 +570,59 @@ func (r ExportStatus) IsKnown() bool {
 	return false
 }
 
+// Details of the transaction CSV export. This field will be present when the
+// `category` is equal to `transaction_csv`.
+type ExportTransactionCsv struct {
+	// Filter results by Account.
+	AccountID string `json:"account_id,required,nullable"`
+	// Filter transactions by their created date.
+	CreatedAt ExportTransactionCsvCreatedAt `json:"created_at,required,nullable"`
+	JSON      exportTransactionCsvJSON      `json:"-"`
+}
+
+// exportTransactionCsvJSON contains the JSON metadata for the struct
+// [ExportTransactionCsv]
+type exportTransactionCsvJSON struct {
+	AccountID   apijson.Field
+	CreatedAt   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportTransactionCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportTransactionCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Filter transactions by their created date.
+type ExportTransactionCsvCreatedAt struct {
+	// Filter transactions created after this time.
+	After time.Time `json:"after,required,nullable" format:"date-time"`
+	// Filter transactions created before this time.
+	Before time.Time                         `json:"before,required,nullable" format:"date-time"`
+	JSON   exportTransactionCsvCreatedAtJSON `json:"-"`
+}
+
+// exportTransactionCsvCreatedAtJSON contains the JSON metadata for the struct
+// [ExportTransactionCsvCreatedAt]
+type exportTransactionCsvCreatedAtJSON struct {
+	After       apijson.Field
+	Before      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportTransactionCsvCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportTransactionCsvCreatedAtJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `export`.
 type ExportType string
@@ -192,6 +637,26 @@ func (r ExportType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Details of the vendor CSV export. This field will be present when the `category`
+// is equal to `vendor_csv`.
+type ExportVendorCsv struct {
+	JSON exportVendorCsvJSON `json:"-"`
+}
+
+// exportVendorCsvJSON contains the JSON metadata for the struct [ExportVendorCsv]
+type exportVendorCsvJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportVendorCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportVendorCsvJSON) RawJSON() string {
+	return r.raw
 }
 
 type ExportNewParams struct {
