@@ -123,16 +123,20 @@ func TestExportListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Exports.List(context.TODO(), increase.ExportListParams{
-		Category: increase.F(increase.ExportListParamsCategory{
-			In: increase.F([]increase.ExportListParamsCategoryIn{increase.ExportListParamsCategoryInAccountStatementOfx}),
-		}),
+		Category: increase.F(increase.ExportListParamsCategoryAccountStatementOfx),
 		CreatedAt: increase.F(increase.ExportListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:         increase.F("cursor"),
+		Cursor: increase.F("cursor"),
+		Form1099Int: increase.F(increase.ExportListParamsForm1099Int{
+			AccountID: increase.F("account_id"),
+		}),
+		Form1099Misc: increase.F(increase.ExportListParamsForm1099Misc{
+			AccountID: increase.F("account_id"),
+		}),
 		IdempotencyKey: increase.F("x"),
 		Limit:          increase.F(int64(1)),
 		Status: increase.F(increase.ExportListParamsStatus{
