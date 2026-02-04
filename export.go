@@ -929,10 +929,13 @@ func (r ExportNewParamsVendorCsv) MarshalJSON() (data []byte, err error) {
 }
 
 type ExportListParams struct {
+	// Filter Exports for those with the specified category.
 	Category  param.Field[ExportListParamsCategory]  `query:"category"`
 	CreatedAt param.Field[ExportListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
-	Cursor param.Field[string] `query:"cursor"`
+	Cursor       param.Field[string]                       `query:"cursor"`
+	Form1099Int  param.Field[ExportListParamsForm1099Int]  `query:"form_1099_int"`
+	Form1099Misc param.Field[ExportListParamsForm1099Misc] `query:"form_1099_misc"`
 	// Filter records to the one with the specified `idempotency_key` you chose for
 	// that object. This value is unique across Increase and is used to ensure that a
 	// request is only processed once. Learn more about
@@ -952,42 +955,27 @@ func (r ExportListParams) URLQuery() (v url.Values) {
 	})
 }
 
-type ExportListParamsCategory struct {
-	// Filter Exports for those with the specified category or categories. For GET
-	// requests, this should be encoded as a comma-delimited string, such as
-	// `?in=one,two,three`.
-	In param.Field[[]ExportListParamsCategoryIn] `query:"in"`
-}
-
-// URLQuery serializes [ExportListParamsCategory]'s query parameters as
-// `url.Values`.
-func (r ExportListParamsCategory) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type ExportListParamsCategoryIn string
+// Filter Exports for those with the specified category.
+type ExportListParamsCategory string
 
 const (
-	ExportListParamsCategoryInAccountStatementOfx          ExportListParamsCategoryIn = "account_statement_ofx"
-	ExportListParamsCategoryInAccountStatementBai2         ExportListParamsCategoryIn = "account_statement_bai2"
-	ExportListParamsCategoryInTransactionCsv               ExportListParamsCategoryIn = "transaction_csv"
-	ExportListParamsCategoryInBalanceCsv                   ExportListParamsCategoryIn = "balance_csv"
-	ExportListParamsCategoryInBookkeepingAccountBalanceCsv ExportListParamsCategoryIn = "bookkeeping_account_balance_csv"
-	ExportListParamsCategoryInEntityCsv                    ExportListParamsCategoryIn = "entity_csv"
-	ExportListParamsCategoryInVendorCsv                    ExportListParamsCategoryIn = "vendor_csv"
-	ExportListParamsCategoryInDashboardTableCsv            ExportListParamsCategoryIn = "dashboard_table_csv"
-	ExportListParamsCategoryInAccountVerificationLetter    ExportListParamsCategoryIn = "account_verification_letter"
-	ExportListParamsCategoryInFundingInstructions          ExportListParamsCategoryIn = "funding_instructions"
-	ExportListParamsCategoryInForm1099Int                  ExportListParamsCategoryIn = "form_1099_int"
-	ExportListParamsCategoryInForm1099Misc                 ExportListParamsCategoryIn = "form_1099_misc"
+	ExportListParamsCategoryAccountStatementOfx          ExportListParamsCategory = "account_statement_ofx"
+	ExportListParamsCategoryAccountStatementBai2         ExportListParamsCategory = "account_statement_bai2"
+	ExportListParamsCategoryTransactionCsv               ExportListParamsCategory = "transaction_csv"
+	ExportListParamsCategoryBalanceCsv                   ExportListParamsCategory = "balance_csv"
+	ExportListParamsCategoryBookkeepingAccountBalanceCsv ExportListParamsCategory = "bookkeeping_account_balance_csv"
+	ExportListParamsCategoryEntityCsv                    ExportListParamsCategory = "entity_csv"
+	ExportListParamsCategoryVendorCsv                    ExportListParamsCategory = "vendor_csv"
+	ExportListParamsCategoryDashboardTableCsv            ExportListParamsCategory = "dashboard_table_csv"
+	ExportListParamsCategoryAccountVerificationLetter    ExportListParamsCategory = "account_verification_letter"
+	ExportListParamsCategoryFundingInstructions          ExportListParamsCategory = "funding_instructions"
+	ExportListParamsCategoryForm1099Int                  ExportListParamsCategory = "form_1099_int"
+	ExportListParamsCategoryForm1099Misc                 ExportListParamsCategory = "form_1099_misc"
 )
 
-func (r ExportListParamsCategoryIn) IsKnown() bool {
+func (r ExportListParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryInAccountStatementOfx, ExportListParamsCategoryInAccountStatementBai2, ExportListParamsCategoryInTransactionCsv, ExportListParamsCategoryInBalanceCsv, ExportListParamsCategoryInBookkeepingAccountBalanceCsv, ExportListParamsCategoryInEntityCsv, ExportListParamsCategoryInVendorCsv, ExportListParamsCategoryInDashboardTableCsv, ExportListParamsCategoryInAccountVerificationLetter, ExportListParamsCategoryInFundingInstructions, ExportListParamsCategoryInForm1099Int, ExportListParamsCategoryInForm1099Misc:
+	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc:
 		return true
 	}
 	return false
@@ -1011,6 +999,34 @@ type ExportListParamsCreatedAt struct {
 // URLQuery serializes [ExportListParamsCreatedAt]'s query parameters as
 // `url.Values`.
 func (r ExportListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type ExportListParamsForm1099Int struct {
+	// Filter Form 1099-INT Exports to those for the specified Account.
+	AccountID param.Field[string] `query:"account_id"`
+}
+
+// URLQuery serializes [ExportListParamsForm1099Int]'s query parameters as
+// `url.Values`.
+func (r ExportListParamsForm1099Int) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type ExportListParamsForm1099Misc struct {
+	// Filter Form 1099-MISC Exports to those for the specified Account.
+	AccountID param.Field[string] `query:"account_id"`
+}
+
+// URLQuery serializes [ExportListParamsForm1099Misc]'s query parameters as
+// `url.Values`.
+func (r ExportListParamsForm1099Misc) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
