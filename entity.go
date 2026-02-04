@@ -1445,7 +1445,7 @@ type EntityNewParams struct {
 	// `social_security_number` or `individual_taxpayer_identification_number`
 	// identification methods.
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
-	// An assessment of the entity’s potential risk of involvement in financial crimes,
+	// An assessment of the entity's potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating param.Field[EntityNewParamsRiskRating] `json:"risk_rating"`
 	// Additional documentation associated with the entity.
@@ -2091,7 +2091,7 @@ func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data 
 	return apijson.MarshalRoot(r)
 }
 
-// An assessment of the entity’s potential risk of involvement in financial crimes,
+// An assessment of the entity's potential risk of involvement in financial crimes,
 // such as money laundering.
 type EntityNewParamsRiskRating struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
