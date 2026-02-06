@@ -27,7 +27,7 @@ func TestSimulationProgramNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Simulations.Programs.New(context.TODO(), increase.SimulationProgramNewParams{
 		Name:                           increase.F("For Benefit Of"),
-		Bank:                           increase.F(increase.SimulationProgramNewParamsBankBlueRidgeBank),
+		Bank:                           increase.F(increase.SimulationProgramNewParamsBankCoreBank),
 		LendingMaximumExtendableCredit: increase.F(int64(0)),
 		ReserveAccountID:               increase.F("reserve_account_id"),
 	})
