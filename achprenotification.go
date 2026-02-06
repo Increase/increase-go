@@ -123,7 +123,9 @@ type ACHPrenotification struct {
 	PrenotificationReturn ACHPrenotificationPrenotificationReturn `json:"prenotification_return,required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
 	RoutingNumber string `json:"routing_number,required"`
-	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+	// The
+	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+	// to use for the ACH Prenotification.
 	StandardEntryClassCode ACHPrenotificationStandardEntryClassCode `json:"standard_entry_class_code,required,nullable"`
 	// The lifecycle status of the ACH Prenotification.
 	Status ACHPrenotificationStatus `json:"status,required"`
@@ -363,7 +365,9 @@ func (r ACHPrenotificationPrenotificationReturnReturnReasonCode) IsKnown() bool 
 	return false
 }
 
-// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+// The
+// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+// to use for the ACH Prenotification.
 type ACHPrenotificationStandardEntryClassCode string
 
 const (
@@ -443,7 +447,9 @@ type ACHPrenotificationNewParams struct {
 	// The name of therecipient. This value is informational and not verified by the
 	// recipient's bank.
 	IndividualName param.Field[string] `json:"individual_name"`
-	// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+	// The
+	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+	// to use for the ACH Prenotification.
 	StandardEntryClassCode param.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 }
 
@@ -467,7 +473,9 @@ func (r ACHPrenotificationNewParamsCreditDebitIndicator) IsKnown() bool {
 	return false
 }
 
-// The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+// The
+// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+// to use for the ACH Prenotification.
 type ACHPrenotificationNewParamsStandardEntryClassCode string
 
 const (
