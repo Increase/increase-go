@@ -62,17 +62,15 @@ func (r SimulationProgramNewParams) MarshalJSON() (data []byte, err error) {
 type SimulationProgramNewParamsBank string
 
 const (
-	SimulationProgramNewParamsBankBlueRidgeBank         SimulationProgramNewParamsBank = "blue_ridge_bank"
-	SimulationProgramNewParamsBankCoreBank              SimulationProgramNewParamsBank = "core_bank"
-	SimulationProgramNewParamsBankFirstInternetBank     SimulationProgramNewParamsBank = "first_internet_bank"
-	SimulationProgramNewParamsBankGlobalInnovationsBank SimulationProgramNewParamsBank = "global_innovations_bank"
-	SimulationProgramNewParamsBankGrasshopperBank       SimulationProgramNewParamsBank = "grasshopper_bank"
-	SimulationProgramNewParamsBankTwinCityBank          SimulationProgramNewParamsBank = "twin_city_bank"
+	SimulationProgramNewParamsBankCoreBank          SimulationProgramNewParamsBank = "core_bank"
+	SimulationProgramNewParamsBankFirstInternetBank SimulationProgramNewParamsBank = "first_internet_bank"
+	SimulationProgramNewParamsBankGrasshopperBank   SimulationProgramNewParamsBank = "grasshopper_bank"
+	SimulationProgramNewParamsBankTwinCityBank      SimulationProgramNewParamsBank = "twin_city_bank"
 )
 
 func (r SimulationProgramNewParamsBank) IsKnown() bool {
 	switch r {
-	case SimulationProgramNewParamsBankBlueRidgeBank, SimulationProgramNewParamsBankCoreBank, SimulationProgramNewParamsBankFirstInternetBank, SimulationProgramNewParamsBankGlobalInnovationsBank, SimulationProgramNewParamsBankGrasshopperBank, SimulationProgramNewParamsBankTwinCityBank:
+	case SimulationProgramNewParamsBankCoreBank, SimulationProgramNewParamsBankFirstInternetBank, SimulationProgramNewParamsBankGrasshopperBank, SimulationProgramNewParamsBankTwinCityBank:
 		return true
 	}
 	return false
