@@ -189,7 +189,9 @@ type ACHTransfer struct {
 	// A subhash containing information about when and how the transfer settled at the
 	// Federal Reserve.
 	Settlement ACHTransferSettlement `json:"settlement,required,nullable"`
-	// The Standard Entry Class (SEC) code to use for the transfer.
+	// The
+	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+	// to use for the transfer.
 	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
 	// The descriptor that will show on the recipient's bank statement.
 	StatementDescriptor string `json:"statement_descriptor,required"`
@@ -1042,7 +1044,9 @@ func (r achTransferSettlementJSON) RawJSON() string {
 	return r.raw
 }
 
-// The Standard Entry Class (SEC) code to use for the transfer.
+// The
+// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+// to use for the transfer.
 type ACHTransferStandardEntryClassCode string
 
 const (
@@ -1201,8 +1205,9 @@ type ACHTransferNewParams struct {
 	// The data you choose to associate with the transfer. This is included in the
 	// transfer data sent to the receiving bank.
 	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
-	// A description of the transfer. This is included in the transfer data sent to the
-	// receiving bank.
+	// A description of the transfer, included in the transfer data sent to the
+	// receiving bank. Standardized formatting may be required, for example `PAYROLL`
+	// for payroll-related Prearranged Payments and Deposits (PPD) credit transfers.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
 	// The name by which the recipient knows you. This is included in the transfer data
 	// sent to the receiving bank.
@@ -1230,7 +1235,9 @@ type ACHTransferNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number"`
-	// The Standard Entry Class (SEC) code to use for the transfer.
+	// The
+	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+	// to use for the transfer.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 	// The timing of the transaction.
 	TransactionTiming param.Field[ACHTransferNewParamsTransactionTiming] `json:"transaction_timing"`
@@ -1389,7 +1396,9 @@ func (r ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule) IsKnown() 
 	return false
 }
 
-// The Standard Entry Class (SEC) code to use for the transfer.
+// The
+// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
+// to use for the transfer.
 type ACHTransferNewParamsStandardEntryClassCode string
 
 const (
