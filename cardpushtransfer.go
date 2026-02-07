@@ -369,22 +369,22 @@ func (r cardPushTransferCancellationJSON) RawJSON() string {
 
 // What object created the transfer, either via the API or the dashboard.
 type CardPushTransferCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey CardPushTransferCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category CardPushTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey CardPushTransferCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication CardPushTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication CardPushTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User CardPushTransferCreatedByUser `json:"user,required,nullable"`
+	User CardPushTransferCreatedByUser `json:"user,nullable"`
 	JSON cardPushTransferCreatedByJSON `json:"-"`
 }
 
 // cardPushTransferCreatedByJSON contains the JSON metadata for the struct
 // [CardPushTransferCreatedBy]
 type cardPushTransferCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -397,6 +397,23 @@ func (r *CardPushTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
 
 func (r cardPushTransferCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type CardPushTransferCreatedByCategory string
+
+const (
+	CardPushTransferCreatedByCategoryAPIKey           CardPushTransferCreatedByCategory = "api_key"
+	CardPushTransferCreatedByCategoryOAuthApplication CardPushTransferCreatedByCategory = "oauth_application"
+	CardPushTransferCreatedByCategoryUser             CardPushTransferCreatedByCategory = "user"
+)
+
+func (r CardPushTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case CardPushTransferCreatedByCategoryAPIKey, CardPushTransferCreatedByCategoryOAuthApplication, CardPushTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -420,23 +437,6 @@ func (r *CardPushTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error)
 
 func (r cardPushTransferCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type CardPushTransferCreatedByCategory string
-
-const (
-	CardPushTransferCreatedByCategoryAPIKey           CardPushTransferCreatedByCategory = "api_key"
-	CardPushTransferCreatedByCategoryOAuthApplication CardPushTransferCreatedByCategory = "oauth_application"
-	CardPushTransferCreatedByCategoryUser             CardPushTransferCreatedByCategory = "user"
-)
-
-func (r CardPushTransferCreatedByCategory) IsKnown() bool {
-	switch r {
-	case CardPushTransferCreatedByCategoryAPIKey, CardPushTransferCreatedByCategoryOAuthApplication, CardPushTransferCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.

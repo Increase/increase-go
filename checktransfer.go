@@ -309,22 +309,22 @@ func (r checkTransferCancellationJSON) RawJSON() string {
 
 // What object created the transfer, either via the API or the dashboard.
 type CheckTransferCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey CheckTransferCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category CheckTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey CheckTransferCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication CheckTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication CheckTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User CheckTransferCreatedByUser `json:"user,required,nullable"`
+	User CheckTransferCreatedByUser `json:"user,nullable"`
 	JSON checkTransferCreatedByJSON `json:"-"`
 }
 
 // checkTransferCreatedByJSON contains the JSON metadata for the struct
 // [CheckTransferCreatedBy]
 type checkTransferCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -337,6 +337,23 @@ func (r *CheckTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
 
 func (r checkTransferCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type CheckTransferCreatedByCategory string
+
+const (
+	CheckTransferCreatedByCategoryAPIKey           CheckTransferCreatedByCategory = "api_key"
+	CheckTransferCreatedByCategoryOAuthApplication CheckTransferCreatedByCategory = "oauth_application"
+	CheckTransferCreatedByCategoryUser             CheckTransferCreatedByCategory = "user"
+)
+
+func (r CheckTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case CheckTransferCreatedByCategoryAPIKey, CheckTransferCreatedByCategoryOAuthApplication, CheckTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -360,23 +377,6 @@ func (r *CheckTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
 
 func (r checkTransferCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type CheckTransferCreatedByCategory string
-
-const (
-	CheckTransferCreatedByCategoryAPIKey           CheckTransferCreatedByCategory = "api_key"
-	CheckTransferCreatedByCategoryOAuthApplication CheckTransferCreatedByCategory = "oauth_application"
-	CheckTransferCreatedByCategoryUser             CheckTransferCreatedByCategory = "user"
-)
-
-func (r CheckTransferCreatedByCategory) IsKnown() bool {
-	switch r {
-	case CheckTransferCreatedByCategoryAPIKey, CheckTransferCreatedByCategoryOAuthApplication, CheckTransferCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.

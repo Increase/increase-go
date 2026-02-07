@@ -175,198 +175,198 @@ func (r TransactionRouteType) IsKnown() bool {
 // undocumented keys may appear in this object. These should be treated as
 // deprecated and will be removed in the future.
 type TransactionSource struct {
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
+	Category TransactionSourceCategory `json:"category,required"`
 	// An Account Revenue Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_revenue_payment`. An
 	// Account Revenue Payment represents a payment made to an account from the bank.
 	// Account revenue is a type of non-interest income.
-	AccountRevenuePayment TransactionSourceAccountRevenuePayment `json:"account_revenue_payment,required,nullable"`
+	AccountRevenuePayment TransactionSourceAccountRevenuePayment `json:"account_revenue_payment,nullable"`
 	// An Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`. Two
 	// Account Transfer Intentions are created from each Account Transfer. One
 	// decrements the source account, and the other increments the destination account.
-	AccountTransferIntention TransactionSourceAccountTransferIntention `json:"account_transfer_intention,required,nullable"`
+	AccountTransferIntention TransactionSourceAccountTransferIntention `json:"account_transfer_intention,nullable"`
 	// An ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_intention`. An ACH
 	// Transfer Intention is created from an ACH Transfer. It reflects the intention to
 	// move money into or out of an Increase account via the ACH network.
-	ACHTransferIntention TransactionSourceACHTransferIntention `json:"ach_transfer_intention,required,nullable"`
+	ACHTransferIntention TransactionSourceACHTransferIntention `json:"ach_transfer_intention,nullable"`
 	// An ACH Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_rejection`. An ACH
 	// Transfer Rejection is created when an ACH Transfer is rejected by Increase. It
 	// offsets the ACH Transfer Intention. These rejections are rare.
-	ACHTransferRejection TransactionSourceACHTransferRejection `json:"ach_transfer_rejection,required,nullable"`
+	ACHTransferRejection TransactionSourceACHTransferRejection `json:"ach_transfer_rejection,nullable"`
 	// An ACH Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer
 	// Return is created when an ACH Transfer is returned by the receiving bank. It
 	// offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
 	// the first two business days after the transfer is initiated, but can occur much
 	// later.
-	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return,required,nullable"`
+	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return,nullable"`
 	// A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_offramp_transfer_settlement`.
-	BlockchainOfframpTransferSettlement TransactionSourceBlockchainOfframpTransferSettlement `json:"blockchain_offramp_transfer_settlement,required,nullable"`
+	BlockchainOfframpTransferSettlement TransactionSourceBlockchainOfframpTransferSettlement `json:"blockchain_offramp_transfer_settlement,nullable"`
 	// A Blockchain On-Ramp Transfer Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_onramp_transfer_intention`.
-	BlockchainOnrampTransferIntention TransactionSourceBlockchainOnrampTransferIntention `json:"blockchain_onramp_transfer_intention,required,nullable"`
+	BlockchainOnrampTransferIntention TransactionSourceBlockchainOnrampTransferIntention `json:"blockchain_onramp_transfer_intention,nullable"`
 	// A Legacy Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	// Contains the details of a successful Card Dispute.
-	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,required,nullable"`
+	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,nullable"`
 	// A Card Dispute Financial object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_dispute_financial`. Financial event
 	// related to a Card Dispute.
-	CardDisputeFinancial TransactionSourceCardDisputeFinancial `json:"card_dispute_financial,required,nullable"`
+	CardDisputeFinancial TransactionSourceCardDisputeFinancial `json:"card_dispute_financial,nullable"`
 	// A Legacy Card Dispute Loss object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_loss`. Contains the
 	// details of a lost Card Dispute.
-	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss,required,nullable"`
+	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss,nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_financial`. Card Financials are temporary
 	// holds placed on a customers funds with the intent to later clear a transaction.
-	CardFinancial TransactionSourceCardFinancial `json:"card_financial,required,nullable"`
+	CardFinancial TransactionSourceCardFinancial `json:"card_financial,nullable"`
 	// A Card Push Transfer Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_push_transfer_acceptance`.
 	// A Card Push Transfer Acceptance is created when an Outbound Card Push Transfer
 	// sent from Increase is accepted by the receiving bank.
-	CardPushTransferAcceptance TransactionSourceCardPushTransferAcceptance `json:"card_push_transfer_acceptance,required,nullable"`
+	CardPushTransferAcceptance TransactionSourceCardPushTransferAcceptance `json:"card_push_transfer_acceptance,nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`. Card Refunds move money back to
 	// the cardholder. While they are usually connected to a Card Settlement an
 	// acquirer can also refund money directly to a card without relation to a
 	// transaction.
-	CardRefund TransactionSourceCardRefund `json:"card_refund,required,nullable"`
+	CardRefund TransactionSourceCardRefund `json:"card_refund,nullable"`
 	// A Card Revenue Payment object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_revenue_payment`. Card Revenue
 	// Payments reflect earnings from fees on card transactions.
-	CardRevenuePayment TransactionSourceCardRevenuePayment `json:"card_revenue_payment,required,nullable"`
+	CardRevenuePayment TransactionSourceCardRevenuePayment `json:"card_revenue_payment,nullable"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`. Card Settlements are card
 	// transactions that have cleared and settled. While a settlement is usually
 	// preceded by an authorization, an acquirer can also directly clear a transaction
 	// without first authorizing it.
-	CardSettlement TransactionSourceCardSettlement `json:"card_settlement,required,nullable"`
+	CardSettlement TransactionSourceCardSettlement `json:"card_settlement,nullable"`
 	// A Cashback Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `cashback_payment`. A Cashback Payment
 	// represents the cashback paid to a cardholder for a given period. Cashback is
 	// usually paid monthly for the prior month's transactions.
-	CashbackPayment TransactionSourceCashbackPayment `json:"cashback_payment,required,nullable"`
-	// The type of the resource. We may add additional possible values for this enum
-	// over time; your application should be able to handle such additions gracefully.
-	Category TransactionSourceCategory `json:"category,required"`
+	CashbackPayment TransactionSourceCashbackPayment `json:"cashback_payment,nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`. A
 	// Check Deposit Acceptance is created when a Check Deposit is processed and its
 	// details confirmed. Check Deposits may be returned by the receiving bank, which
 	// will appear as a Check Deposit Return.
-	CheckDepositAcceptance TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,required,nullable"`
+	CheckDepositAcceptance TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,nullable"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`. A Check Deposit
 	// Return is created when a Check Deposit is returned by the bank holding the
 	// account it was drawn against. Check Deposits may be returned for a variety of
 	// reasons, including insufficient funds or a mismatched account number. Usually,
 	// checks are returned within the first 7 days after the deposit is made.
-	CheckDepositReturn TransactionSourceCheckDepositReturn `json:"check_deposit_return,required,nullable"`
+	CheckDepositReturn TransactionSourceCheckDepositReturn `json:"check_deposit_return,nullable"`
 	// A Check Transfer Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_deposit`. An Inbound Check
 	// is a check drawn on an Increase account that has been deposited by an external
 	// bank account. These types of checks are not pre-registered.
-	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,required,nullable"`
+	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,nullable"`
 	// A FedNow Transfer Acknowledgement object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
 	// when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
-	FednowTransferAcknowledgement TransactionSourceFednowTransferAcknowledgement `json:"fednow_transfer_acknowledgement,required,nullable"`
+	FednowTransferAcknowledgement TransactionSourceFednowTransferAcknowledgement `json:"fednow_transfer_acknowledgement,nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
 	// made to Increase.
-	FeePayment TransactionSourceFeePayment `json:"fee_payment,required,nullable"`
+	FeePayment TransactionSourceFeePayment `json:"fee_payment,nullable"`
 	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_ach_transfer`. An
 	// Inbound ACH Transfer Intention is created when an ACH transfer is initiated at
 	// another bank and received by Increase.
-	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,required,nullable"`
+	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,nullable"`
 	// An Inbound ACH Transfer Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_ach_transfer_return_intention`. An Inbound ACH Transfer Return
 	// Intention is created when an ACH transfer is initiated at another bank and
 	// returned by Increase.
-	InboundACHTransferReturnIntention TransactionSourceInboundACHTransferReturnIntention `json:"inbound_ach_transfer_return_intention,required,nullable"`
+	InboundACHTransferReturnIntention TransactionSourceInboundACHTransferReturnIntention `json:"inbound_ach_transfer_return_intention,nullable"`
 	// An Inbound Check Adjustment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_check_adjustment`. An
 	// Inbound Check Adjustment is created when Increase receives an adjustment for a
 	// check or return deposited through Check21.
-	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment,required,nullable"`
+	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment,nullable"`
 	// An Inbound Check Deposit Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return
 	// Intention is created when Increase receives an Inbound Check and the User
 	// requests that it be returned.
-	InboundCheckDepositReturnIntention TransactionSourceInboundCheckDepositReturnIntention `json:"inbound_check_deposit_return_intention,required,nullable"`
+	InboundCheckDepositReturnIntention TransactionSourceInboundCheckDepositReturnIntention `json:"inbound_check_deposit_return_intention,nullable"`
 	// An Inbound FedNow Transfer Confirmation object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_fednow_transfer_confirmation`. An Inbound FedNow Transfer Confirmation
 	// is created when a FedNow transfer is initiated at another bank and received by
 	// Increase.
-	InboundFednowTransferConfirmation TransactionSourceInboundFednowTransferConfirmation `json:"inbound_fednow_transfer_confirmation,required,nullable"`
+	InboundFednowTransferConfirmation TransactionSourceInboundFednowTransferConfirmation `json:"inbound_fednow_transfer_confirmation,nullable"`
 	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time
 	// Payments Transfer Confirmation is created when a Real-Time Payments transfer is
 	// initiated at another bank and received by Increase.
-	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,required,nullable"`
+	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,nullable"`
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`. An Inbound Wire
 	// Reversal represents a reversal of a wire transfer that was initiated via
 	// Increase. The other bank is sending the money back. This most often happens when
 	// the original destination account details were incorrect.
-	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,required,nullable"`
+	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,nullable"`
 	// An Inbound Wire Transfer Intention object. This field will be present in the
 	// JSON response if and only if `category` is equal to `inbound_wire_transfer`. An
 	// Inbound Wire Transfer Intention is created when a wire transfer is initiated at
 	// another bank and received by Increase.
-	InboundWireTransfer TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,required,nullable"`
+	InboundWireTransfer TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,nullable"`
 	// An Inbound Wire Transfer Reversal Intention object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `inbound_wire_transfer_reversal`. An Inbound Wire Transfer Reversal Intention is
 	// created when Increase has received a wire and the User requests that it be
 	// reversed.
-	InboundWireTransferReversal TransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,required,nullable"`
+	InboundWireTransferReversal TransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,nullable"`
 	// An Interest Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `interest_payment`. An Interest Payment
 	// represents a payment of interest on an account. Interest is usually paid
 	// monthly.
-	InterestPayment TransactionSourceInterestPayment `json:"interest_payment,required,nullable"`
+	InterestPayment TransactionSourceInterestPayment `json:"interest_payment,nullable"`
 	// An Internal Source object. This field will be present in the JSON response if
 	// and only if `category` is equal to `internal_source`. A transaction between the
 	// user and Increase. See the `reason` attribute for more information.
-	InternalSource TransactionSourceInternalSource `json:"internal_source,required,nullable"`
+	InternalSource TransactionSourceInternalSource `json:"internal_source,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other TransactionSourceOther `json:"other,required,nullable"`
+	Other TransactionSourceOther `json:"other,nullable"`
 	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
 	// Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
 	// is acknowledged by the receiving bank.
-	RealTimePaymentsTransferAcknowledgement TransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,required,nullable"`
+	RealTimePaymentsTransferAcknowledgement TransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,nullable"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`. Sample funds for testing
 	// purposes.
-	SampleFunds TransactionSourceSampleFunds `json:"sample_funds,required,nullable"`
+	SampleFunds TransactionSourceSampleFunds `json:"sample_funds,nullable"`
 	// A Swift Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `swift_transfer_intention`. A
 	// Swift Transfer initiated via Increase.
-	SwiftTransferIntention TransactionSourceSwiftTransferIntention `json:"swift_transfer_intention,required,nullable"`
+	SwiftTransferIntention TransactionSourceSwiftTransferIntention `json:"swift_transfer_intention,nullable"`
 	// A Swift Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `swift_transfer_return`. A Swift Transfer
 	// Return is created when a Swift Transfer is returned by the receiving bank.
-	SwiftTransferReturn TransactionSourceSwiftTransferReturn `json:"swift_transfer_return,required,nullable"`
+	SwiftTransferReturn TransactionSourceSwiftTransferReturn `json:"swift_transfer_return,nullable"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`. A Wire
 	// Transfer initiated via Increase and sent to a different bank.
-	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,required,nullable"`
+	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,nullable"`
 	ExtraFields           map[string]interface{}                 `json:"-,extras"`
 	JSON                  transactionSourceJSON                  `json:"-"`
 }
@@ -374,6 +374,7 @@ type TransactionSource struct {
 // transactionSourceJSON contains the JSON metadata for the struct
 // [TransactionSource]
 type transactionSourceJSON struct {
+	Category                                    apijson.Field
 	AccountRevenuePayment                       apijson.Field
 	AccountTransferIntention                    apijson.Field
 	ACHTransferIntention                        apijson.Field
@@ -390,7 +391,6 @@ type transactionSourceJSON struct {
 	CardRevenuePayment                          apijson.Field
 	CardSettlement                              apijson.Field
 	CashbackPayment                             apijson.Field
-	Category                                    apijson.Field
 	CheckDepositAcceptance                      apijson.Field
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
@@ -423,6 +423,59 @@ func (r *TransactionSource) UnmarshalJSON(data []byte) (err error) {
 
 func (r transactionSourceJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
+type TransactionSourceCategory string
+
+const (
+	TransactionSourceCategoryAccountTransferIntention                    TransactionSourceCategory = "account_transfer_intention"
+	TransactionSourceCategoryACHTransferIntention                        TransactionSourceCategory = "ach_transfer_intention"
+	TransactionSourceCategoryACHTransferRejection                        TransactionSourceCategory = "ach_transfer_rejection"
+	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
+	TransactionSourceCategoryCashbackPayment                             TransactionSourceCategory = "cashback_payment"
+	TransactionSourceCategoryCardDisputeAcceptance                       TransactionSourceCategory = "card_dispute_acceptance"
+	TransactionSourceCategoryCardDisputeFinancial                        TransactionSourceCategory = "card_dispute_financial"
+	TransactionSourceCategoryCardDisputeLoss                             TransactionSourceCategory = "card_dispute_loss"
+	TransactionSourceCategoryCardRefund                                  TransactionSourceCategory = "card_refund"
+	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
+	TransactionSourceCategoryCardFinancial                               TransactionSourceCategory = "card_financial"
+	TransactionSourceCategoryCardRevenuePayment                          TransactionSourceCategory = "card_revenue_payment"
+	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
+	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
+	TransactionSourceCategoryFednowTransferAcknowledgement               TransactionSourceCategory = "fednow_transfer_acknowledgement"
+	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
+	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
+	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
+	TransactionSourceCategoryInboundACHTransferReturnIntention           TransactionSourceCategory = "inbound_ach_transfer_return_intention"
+	TransactionSourceCategoryInboundCheckDepositReturnIntention          TransactionSourceCategory = "inbound_check_deposit_return_intention"
+	TransactionSourceCategoryInboundCheckAdjustment                      TransactionSourceCategory = "inbound_check_adjustment"
+	TransactionSourceCategoryInboundFednowTransferConfirmation           TransactionSourceCategory = "inbound_fednow_transfer_confirmation"
+	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
+	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
+	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
+	TransactionSourceCategoryInboundWireTransferReversal                 TransactionSourceCategory = "inbound_wire_transfer_reversal"
+	TransactionSourceCategoryInterestPayment                             TransactionSourceCategory = "interest_payment"
+	TransactionSourceCategoryInternalSource                              TransactionSourceCategory = "internal_source"
+	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
+	TransactionSourceCategorySampleFunds                                 TransactionSourceCategory = "sample_funds"
+	TransactionSourceCategoryWireTransferIntention                       TransactionSourceCategory = "wire_transfer_intention"
+	TransactionSourceCategorySwiftTransferIntention                      TransactionSourceCategory = "swift_transfer_intention"
+	TransactionSourceCategorySwiftTransferReturn                         TransactionSourceCategory = "swift_transfer_return"
+	TransactionSourceCategoryCardPushTransferAcceptance                  TransactionSourceCategory = "card_push_transfer_acceptance"
+	TransactionSourceCategoryAccountRevenuePayment                       TransactionSourceCategory = "account_revenue_payment"
+	TransactionSourceCategoryBlockchainOnrampTransferIntention           TransactionSourceCategory = "blockchain_onramp_transfer_intention"
+	TransactionSourceCategoryBlockchainOfframpTransferSettlement         TransactionSourceCategory = "blockchain_offramp_transfer_settlement"
+	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
+)
+
+func (r TransactionSourceCategory) IsKnown() bool {
+	switch r {
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardFinancial, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundFednowTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryBlockchainOnrampTransferIntention, TransactionSourceCategoryBlockchainOfframpTransferSettlement, TransactionSourceCategoryOther:
+		return true
+	}
+	return false
 }
 
 // An Account Revenue Payment object. This field will be present in the JSON
@@ -3732,59 +3785,6 @@ const (
 func (r TransactionSourceCashbackPaymentCurrency) IsKnown() bool {
 	switch r {
 	case TransactionSourceCashbackPaymentCurrencyUsd:
-		return true
-	}
-	return false
-}
-
-// The type of the resource. We may add additional possible values for this enum
-// over time; your application should be able to handle such additions gracefully.
-type TransactionSourceCategory string
-
-const (
-	TransactionSourceCategoryAccountTransferIntention                    TransactionSourceCategory = "account_transfer_intention"
-	TransactionSourceCategoryACHTransferIntention                        TransactionSourceCategory = "ach_transfer_intention"
-	TransactionSourceCategoryACHTransferRejection                        TransactionSourceCategory = "ach_transfer_rejection"
-	TransactionSourceCategoryACHTransferReturn                           TransactionSourceCategory = "ach_transfer_return"
-	TransactionSourceCategoryCashbackPayment                             TransactionSourceCategory = "cashback_payment"
-	TransactionSourceCategoryCardDisputeAcceptance                       TransactionSourceCategory = "card_dispute_acceptance"
-	TransactionSourceCategoryCardDisputeFinancial                        TransactionSourceCategory = "card_dispute_financial"
-	TransactionSourceCategoryCardDisputeLoss                             TransactionSourceCategory = "card_dispute_loss"
-	TransactionSourceCategoryCardRefund                                  TransactionSourceCategory = "card_refund"
-	TransactionSourceCategoryCardSettlement                              TransactionSourceCategory = "card_settlement"
-	TransactionSourceCategoryCardFinancial                               TransactionSourceCategory = "card_financial"
-	TransactionSourceCategoryCardRevenuePayment                          TransactionSourceCategory = "card_revenue_payment"
-	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
-	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
-	TransactionSourceCategoryFednowTransferAcknowledgement               TransactionSourceCategory = "fednow_transfer_acknowledgement"
-	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
-	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
-	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
-	TransactionSourceCategoryInboundACHTransferReturnIntention           TransactionSourceCategory = "inbound_ach_transfer_return_intention"
-	TransactionSourceCategoryInboundCheckDepositReturnIntention          TransactionSourceCategory = "inbound_check_deposit_return_intention"
-	TransactionSourceCategoryInboundCheckAdjustment                      TransactionSourceCategory = "inbound_check_adjustment"
-	TransactionSourceCategoryInboundFednowTransferConfirmation           TransactionSourceCategory = "inbound_fednow_transfer_confirmation"
-	TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation TransactionSourceCategory = "inbound_real_time_payments_transfer_confirmation"
-	TransactionSourceCategoryInboundWireReversal                         TransactionSourceCategory = "inbound_wire_reversal"
-	TransactionSourceCategoryInboundWireTransfer                         TransactionSourceCategory = "inbound_wire_transfer"
-	TransactionSourceCategoryInboundWireTransferReversal                 TransactionSourceCategory = "inbound_wire_transfer_reversal"
-	TransactionSourceCategoryInterestPayment                             TransactionSourceCategory = "interest_payment"
-	TransactionSourceCategoryInternalSource                              TransactionSourceCategory = "internal_source"
-	TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement     TransactionSourceCategory = "real_time_payments_transfer_acknowledgement"
-	TransactionSourceCategorySampleFunds                                 TransactionSourceCategory = "sample_funds"
-	TransactionSourceCategoryWireTransferIntention                       TransactionSourceCategory = "wire_transfer_intention"
-	TransactionSourceCategorySwiftTransferIntention                      TransactionSourceCategory = "swift_transfer_intention"
-	TransactionSourceCategorySwiftTransferReturn                         TransactionSourceCategory = "swift_transfer_return"
-	TransactionSourceCategoryCardPushTransferAcceptance                  TransactionSourceCategory = "card_push_transfer_acceptance"
-	TransactionSourceCategoryAccountRevenuePayment                       TransactionSourceCategory = "account_revenue_payment"
-	TransactionSourceCategoryBlockchainOnrampTransferIntention           TransactionSourceCategory = "blockchain_onramp_transfer_intention"
-	TransactionSourceCategoryBlockchainOfframpTransferSettlement         TransactionSourceCategory = "blockchain_offramp_transfer_settlement"
-	TransactionSourceCategoryOther                                       TransactionSourceCategory = "other"
-)
-
-func (r TransactionSourceCategory) IsKnown() bool {
-	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardFinancial, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundFednowTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryBlockchainOnrampTransferIntention, TransactionSourceCategoryBlockchainOfframpTransferSettlement, TransactionSourceCategoryOther:
 		return true
 	}
 	return false

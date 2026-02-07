@@ -215,67 +215,67 @@ func (r PendingTransactionRouteType) IsKnown() bool {
 // Pending Transaction. For example, for a card transaction this lists the
 // merchant's industry and location.
 type PendingTransactionSource struct {
+	// The type of the resource. We may add additional possible values for this enum
+	// over time; your application should be able to handle such additions gracefully.
+	Category PendingTransactionSourceCategory `json:"category,required"`
 	// An Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
-	AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,required,nullable"`
+	AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,nullable"`
 	// An ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
-	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction,required,nullable"`
+	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction,nullable"`
 	// A Blockchain Off-Ramp Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_offramp_transfer_instruction`.
-	BlockchainOfframpTransferInstruction PendingTransactionSourceBlockchainOfframpTransferInstruction `json:"blockchain_offramp_transfer_instruction,required,nullable"`
+	BlockchainOfframpTransferInstruction PendingTransactionSourceBlockchainOfframpTransferInstruction `json:"blockchain_offramp_transfer_instruction,nullable"`
 	// A Blockchain On-Ramp Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_onramp_transfer_instruction`.
-	BlockchainOnrampTransferInstruction PendingTransactionSourceBlockchainOnrampTransferInstruction `json:"blockchain_onramp_transfer_instruction,required,nullable"`
+	BlockchainOnrampTransferInstruction PendingTransactionSourceBlockchainOnrampTransferInstruction `json:"blockchain_onramp_transfer_instruction,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`. Card Authorizations are
 	// temporary holds placed on a customers funds with the intent to later clear a
 	// transaction.
-	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,required,nullable"`
+	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,nullable"`
 	// A Card Push Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_push_transfer_instruction`.
-	CardPushTransferInstruction PendingTransactionSourceCardPushTransferInstruction `json:"card_push_transfer_instruction,required,nullable"`
-	// The type of the resource. We may add additional possible values for this enum
-	// over time; your application should be able to handle such additions gracefully.
-	Category PendingTransactionSourceCategory `json:"category,required"`
+	CardPushTransferInstruction PendingTransactionSourceCardPushTransferInstruction `json:"card_push_transfer_instruction,nullable"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
-	CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction,required,nullable"`
+	CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction,nullable"`
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
-	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,required,nullable"`
+	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,nullable"`
 	// A FedNow Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `fednow_transfer_instruction`.
-	FednowTransferInstruction PendingTransactionSourceFednowTransferInstruction `json:"fednow_transfer_instruction,required,nullable"`
+	FednowTransferInstruction PendingTransactionSourceFednowTransferInstruction `json:"fednow_transfer_instruction,nullable"`
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`. We hold funds for
 	// certain transaction types to account for return windows where funds might still
 	// be clawed back by the sending institution.
-	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
+	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,nullable"`
 	// An Inbound Wire Transfer Reversal object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_transfer_reversal`.
 	// An Inbound Wire Transfer Reversal is created when Increase has received a wire
 	// and the User requests that it be reversed.
-	InboundWireTransferReversal PendingTransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,required,nullable"`
+	InboundWireTransferReversal PendingTransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other PendingTransactionSourceOther `json:"other,required,nullable"`
+	Other PendingTransactionSourceOther `json:"other,nullable"`
 	// A Real-Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
-	RealTimePaymentsTransferInstruction PendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,required,nullable"`
+	RealTimePaymentsTransferInstruction PendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,nullable"`
 	// A Swift Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `swift_transfer_instruction`.
-	SwiftTransferInstruction PendingTransactionSourceSwiftTransferInstruction `json:"swift_transfer_instruction,required,nullable"`
+	SwiftTransferInstruction PendingTransactionSourceSwiftTransferInstruction `json:"swift_transfer_instruction,nullable"`
 	// An User Initiated Hold object. This field will be present in the JSON response
 	// if and only if `category` is equal to `user_initiated_hold`. Created when a user
 	// initiates a hold on funds in their account.
-	UserInitiatedHold map[string]interface{} `json:"user_initiated_hold,required,nullable"`
+	UserInitiatedHold map[string]interface{} `json:"user_initiated_hold,nullable"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
-	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,required,nullable"`
+	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,nullable"`
 	ExtraFields             map[string]interface{}                          `json:"-,extras"`
 	JSON                    pendingTransactionSourceJSON                    `json:"-"`
 }
@@ -283,13 +283,13 @@ type PendingTransactionSource struct {
 // pendingTransactionSourceJSON contains the JSON metadata for the struct
 // [PendingTransactionSource]
 type pendingTransactionSourceJSON struct {
+	Category                             apijson.Field
 	AccountTransferInstruction           apijson.Field
 	ACHTransferInstruction               apijson.Field
 	BlockchainOfframpTransferInstruction apijson.Field
 	BlockchainOnrampTransferInstruction  apijson.Field
 	CardAuthorization                    apijson.Field
 	CardPushTransferInstruction          apijson.Field
-	Category                             apijson.Field
 	CheckDepositInstruction              apijson.Field
 	CheckTransferInstruction             apijson.Field
 	FednowTransferInstruction            apijson.Field
@@ -310,6 +310,37 @@ func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
 
 func (r pendingTransactionSourceJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
+type PendingTransactionSourceCategory string
+
+const (
+	PendingTransactionSourceCategoryAccountTransferInstruction           PendingTransactionSourceCategory = "account_transfer_instruction"
+	PendingTransactionSourceCategoryACHTransferInstruction               PendingTransactionSourceCategory = "ach_transfer_instruction"
+	PendingTransactionSourceCategoryCardAuthorization                    PendingTransactionSourceCategory = "card_authorization"
+	PendingTransactionSourceCategoryCheckDepositInstruction              PendingTransactionSourceCategory = "check_deposit_instruction"
+	PendingTransactionSourceCategoryCheckTransferInstruction             PendingTransactionSourceCategory = "check_transfer_instruction"
+	PendingTransactionSourceCategoryFednowTransferInstruction            PendingTransactionSourceCategory = "fednow_transfer_instruction"
+	PendingTransactionSourceCategoryInboundFundsHold                     PendingTransactionSourceCategory = "inbound_funds_hold"
+	PendingTransactionSourceCategoryUserInitiatedHold                    PendingTransactionSourceCategory = "user_initiated_hold"
+	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction  PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
+	PendingTransactionSourceCategoryWireTransferInstruction              PendingTransactionSourceCategory = "wire_transfer_instruction"
+	PendingTransactionSourceCategoryInboundWireTransferReversal          PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
+	PendingTransactionSourceCategorySwiftTransferInstruction             PendingTransactionSourceCategory = "swift_transfer_instruction"
+	PendingTransactionSourceCategoryCardPushTransferInstruction          PendingTransactionSourceCategory = "card_push_transfer_instruction"
+	PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction  PendingTransactionSourceCategory = "blockchain_onramp_transfer_instruction"
+	PendingTransactionSourceCategoryBlockchainOfframpTransferInstruction PendingTransactionSourceCategory = "blockchain_offramp_transfer_instruction"
+	PendingTransactionSourceCategoryOther                                PendingTransactionSourceCategory = "other"
+)
+
+func (r PendingTransactionSourceCategory) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryFednowTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction, PendingTransactionSourceCategoryBlockchainOfframpTransferInstruction, PendingTransactionSourceCategoryOther:
+		return true
+	}
+	return false
 }
 
 // An Account Transfer Instruction object. This field will be present in the JSON
@@ -1420,37 +1451,6 @@ func (r *PendingTransactionSourceCardPushTransferInstruction) UnmarshalJSON(data
 
 func (r pendingTransactionSourceCardPushTransferInstructionJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of the resource. We may add additional possible values for this enum
-// over time; your application should be able to handle such additions gracefully.
-type PendingTransactionSourceCategory string
-
-const (
-	PendingTransactionSourceCategoryAccountTransferInstruction           PendingTransactionSourceCategory = "account_transfer_instruction"
-	PendingTransactionSourceCategoryACHTransferInstruction               PendingTransactionSourceCategory = "ach_transfer_instruction"
-	PendingTransactionSourceCategoryCardAuthorization                    PendingTransactionSourceCategory = "card_authorization"
-	PendingTransactionSourceCategoryCheckDepositInstruction              PendingTransactionSourceCategory = "check_deposit_instruction"
-	PendingTransactionSourceCategoryCheckTransferInstruction             PendingTransactionSourceCategory = "check_transfer_instruction"
-	PendingTransactionSourceCategoryFednowTransferInstruction            PendingTransactionSourceCategory = "fednow_transfer_instruction"
-	PendingTransactionSourceCategoryInboundFundsHold                     PendingTransactionSourceCategory = "inbound_funds_hold"
-	PendingTransactionSourceCategoryUserInitiatedHold                    PendingTransactionSourceCategory = "user_initiated_hold"
-	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction  PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	PendingTransactionSourceCategoryWireTransferInstruction              PendingTransactionSourceCategory = "wire_transfer_instruction"
-	PendingTransactionSourceCategoryInboundWireTransferReversal          PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
-	PendingTransactionSourceCategorySwiftTransferInstruction             PendingTransactionSourceCategory = "swift_transfer_instruction"
-	PendingTransactionSourceCategoryCardPushTransferInstruction          PendingTransactionSourceCategory = "card_push_transfer_instruction"
-	PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction  PendingTransactionSourceCategory = "blockchain_onramp_transfer_instruction"
-	PendingTransactionSourceCategoryBlockchainOfframpTransferInstruction PendingTransactionSourceCategory = "blockchain_offramp_transfer_instruction"
-	PendingTransactionSourceCategoryOther                                PendingTransactionSourceCategory = "other"
-)
-
-func (r PendingTransactionSourceCategory) IsKnown() bool {
-	switch r {
-	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryFednowTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction, PendingTransactionSourceCategoryBlockchainOfframpTransferInstruction, PendingTransactionSourceCategoryOther:
-		return true
-	}
-	return false
 }
 
 // A Check Deposit Instruction object. This field will be present in the JSON
