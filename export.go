@@ -141,8 +141,9 @@ type Export struct {
 	Type ExportType `json:"type,required"`
 	// Details of the vendor CSV export. This field will be present when the `category`
 	// is equal to `vendor_csv`.
-	VendorCsv ExportVendorCsv `json:"vendor_csv,required,nullable"`
-	JSON      exportJSON      `json:"-"`
+	VendorCsv   ExportVendorCsv        `json:"vendor_csv,required,nullable"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        exportJSON             `json:"-"`
 }
 
 // exportJSON contains the JSON metadata for the struct [Export]
