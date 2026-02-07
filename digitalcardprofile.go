@@ -140,8 +140,9 @@ type DigitalCardProfile struct {
 	TextColor DigitalCardProfileTextColor `json:"text_color,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_card_profile`.
-	Type DigitalCardProfileType `json:"type,required"`
-	JSON digitalCardProfileJSON `json:"-"`
+	Type        DigitalCardProfileType `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        digitalCardProfileJSON `json:"-"`
 }
 
 // digitalCardProfileJSON contains the JSON metadata for the struct

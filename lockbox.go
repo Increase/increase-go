@@ -118,8 +118,9 @@ type Lockbox struct {
 	RecipientName string `json:"recipient_name,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `lockbox`.
-	Type LockboxType `json:"type,required"`
-	JSON lockboxJSON `json:"-"`
+	Type        LockboxType            `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        lockboxJSON            `json:"-"`
 }
 
 // lockboxJSON contains the JSON metadata for the struct [Lockbox]

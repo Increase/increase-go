@@ -229,8 +229,9 @@ type Entity struct {
 	Trust EntityTrust `json:"trust,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity`.
-	Type EntityType `json:"type,required"`
-	JSON entityJSON `json:"-"`
+	Type        EntityType             `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        entityJSON             `json:"-"`
 }
 
 // entityJSON contains the JSON metadata for the struct [Entity]

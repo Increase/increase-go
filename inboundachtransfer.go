@@ -175,8 +175,9 @@ type InboundACHTransfer struct {
 	TransferReturn InboundACHTransferTransferReturn `json:"transfer_return,required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer`.
-	Type InboundACHTransferType `json:"type,required"`
-	JSON inboundACHTransferJSON `json:"-"`
+	Type        InboundACHTransferType `json:"type,required"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
+	JSON        inboundACHTransferJSON `json:"-"`
 }
 
 // inboundACHTransferJSON contains the JSON metadata for the struct
