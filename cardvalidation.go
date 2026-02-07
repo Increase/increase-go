@@ -344,22 +344,22 @@ func (r CardValidationAcceptanceCardholderStreetAddressResult) IsKnown() bool {
 
 // What object created the validation, either via the API or the dashboard.
 type CardValidationCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey CardValidationCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category CardValidationCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey CardValidationCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication CardValidationCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication CardValidationCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User CardValidationCreatedByUser `json:"user,required,nullable"`
+	User CardValidationCreatedByUser `json:"user,nullable"`
 	JSON cardValidationCreatedByJSON `json:"-"`
 }
 
 // cardValidationCreatedByJSON contains the JSON metadata for the struct
 // [CardValidationCreatedBy]
 type cardValidationCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -372,6 +372,23 @@ func (r *CardValidationCreatedBy) UnmarshalJSON(data []byte) (err error) {
 
 func (r cardValidationCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type CardValidationCreatedByCategory string
+
+const (
+	CardValidationCreatedByCategoryAPIKey           CardValidationCreatedByCategory = "api_key"
+	CardValidationCreatedByCategoryOAuthApplication CardValidationCreatedByCategory = "oauth_application"
+	CardValidationCreatedByCategoryUser             CardValidationCreatedByCategory = "user"
+)
+
+func (r CardValidationCreatedByCategory) IsKnown() bool {
+	switch r {
+	case CardValidationCreatedByCategoryAPIKey, CardValidationCreatedByCategoryOAuthApplication, CardValidationCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -395,23 +412,6 @@ func (r *CardValidationCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
 
 func (r cardValidationCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type CardValidationCreatedByCategory string
-
-const (
-	CardValidationCreatedByCategoryAPIKey           CardValidationCreatedByCategory = "api_key"
-	CardValidationCreatedByCategoryOAuthApplication CardValidationCreatedByCategory = "oauth_application"
-	CardValidationCreatedByCategoryUser             CardValidationCreatedByCategory = "user"
-)
-
-func (r CardValidationCreatedByCategory) IsKnown() bool {
-	switch r {
-	case CardValidationCreatedByCategoryAPIKey, CardValidationCreatedByCategoryOAuthApplication, CardValidationCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.

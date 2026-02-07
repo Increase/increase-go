@@ -230,22 +230,22 @@ func (r fednowTransferAcknowledgementJSON) RawJSON() string {
 
 // What object created the transfer, either via the API or the dashboard.
 type FednowTransferCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey FednowTransferCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category FednowTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey FednowTransferCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication FednowTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication FednowTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User FednowTransferCreatedByUser `json:"user,required,nullable"`
+	User FednowTransferCreatedByUser `json:"user,nullable"`
 	JSON fednowTransferCreatedByJSON `json:"-"`
 }
 
 // fednowTransferCreatedByJSON contains the JSON metadata for the struct
 // [FednowTransferCreatedBy]
 type fednowTransferCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -258,6 +258,23 @@ func (r *FednowTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
 
 func (r fednowTransferCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type FednowTransferCreatedByCategory string
+
+const (
+	FednowTransferCreatedByCategoryAPIKey           FednowTransferCreatedByCategory = "api_key"
+	FednowTransferCreatedByCategoryOAuthApplication FednowTransferCreatedByCategory = "oauth_application"
+	FednowTransferCreatedByCategoryUser             FednowTransferCreatedByCategory = "user"
+)
+
+func (r FednowTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case FednowTransferCreatedByCategoryAPIKey, FednowTransferCreatedByCategoryOAuthApplication, FednowTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -281,23 +298,6 @@ func (r *FednowTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
 
 func (r fednowTransferCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type FednowTransferCreatedByCategory string
-
-const (
-	FednowTransferCreatedByCategoryAPIKey           FednowTransferCreatedByCategory = "api_key"
-	FednowTransferCreatedByCategoryOAuthApplication FednowTransferCreatedByCategory = "oauth_application"
-	FednowTransferCreatedByCategoryUser             FednowTransferCreatedByCategory = "user"
-)
-
-func (r FednowTransferCreatedByCategory) IsKnown() bool {
-	switch r {
-	case FednowTransferCreatedByCategoryAPIKey, FednowTransferCreatedByCategoryOAuthApplication, FednowTransferCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.
