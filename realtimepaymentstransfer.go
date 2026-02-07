@@ -304,22 +304,22 @@ func (r realTimePaymentsTransferCancellationJSON) RawJSON() string {
 
 // What object created the transfer, either via the API or the dashboard.
 type RealTimePaymentsTransferCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey RealTimePaymentsTransferCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category RealTimePaymentsTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey RealTimePaymentsTransferCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication RealTimePaymentsTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication RealTimePaymentsTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User RealTimePaymentsTransferCreatedByUser `json:"user,required,nullable"`
+	User RealTimePaymentsTransferCreatedByUser `json:"user,nullable"`
 	JSON realTimePaymentsTransferCreatedByJSON `json:"-"`
 }
 
 // realTimePaymentsTransferCreatedByJSON contains the JSON metadata for the struct
 // [RealTimePaymentsTransferCreatedBy]
 type realTimePaymentsTransferCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -332,6 +332,23 @@ func (r *RealTimePaymentsTransferCreatedBy) UnmarshalJSON(data []byte) (err erro
 
 func (r realTimePaymentsTransferCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type RealTimePaymentsTransferCreatedByCategory string
+
+const (
+	RealTimePaymentsTransferCreatedByCategoryAPIKey           RealTimePaymentsTransferCreatedByCategory = "api_key"
+	RealTimePaymentsTransferCreatedByCategoryOAuthApplication RealTimePaymentsTransferCreatedByCategory = "oauth_application"
+	RealTimePaymentsTransferCreatedByCategoryUser             RealTimePaymentsTransferCreatedByCategory = "user"
+)
+
+func (r RealTimePaymentsTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case RealTimePaymentsTransferCreatedByCategoryAPIKey, RealTimePaymentsTransferCreatedByCategoryOAuthApplication, RealTimePaymentsTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -355,23 +372,6 @@ func (r *RealTimePaymentsTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (er
 
 func (r realTimePaymentsTransferCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type RealTimePaymentsTransferCreatedByCategory string
-
-const (
-	RealTimePaymentsTransferCreatedByCategoryAPIKey           RealTimePaymentsTransferCreatedByCategory = "api_key"
-	RealTimePaymentsTransferCreatedByCategoryOAuthApplication RealTimePaymentsTransferCreatedByCategory = "oauth_application"
-	RealTimePaymentsTransferCreatedByCategoryUser             RealTimePaymentsTransferCreatedByCategory = "user"
-)
-
-func (r RealTimePaymentsTransferCreatedByCategory) IsKnown() bool {
-	switch r {
-	case RealTimePaymentsTransferCreatedByCategoryAPIKey, RealTimePaymentsTransferCreatedByCategoryOAuthApplication, RealTimePaymentsTransferCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.

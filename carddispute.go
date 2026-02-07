@@ -314,91 +314,91 @@ type CardDisputeVisaNetworkEvent struct {
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
 	Category CardDisputeVisaNetworkEventsCategory `json:"category,required"`
-	// A Card Dispute Chargeback Accepted Visa Network Event object. This field will be
-	// present in the JSON response if and only if `category` is equal to
-	// `chargeback_accepted`. Contains the details specific to a chargeback accepted
-	// Visa Card Dispute Network Event, which represents that a chargeback has been
-	// accepted by the merchant.
-	ChargebackAccepted CardDisputeVisaNetworkEventsChargebackAccepted `json:"chargeback_accepted,required,nullable"`
-	// A Card Dispute Chargeback Submitted Visa Network Event object. This field will
-	// be present in the JSON response if and only if `category` is equal to
-	// `chargeback_submitted`. Contains the details specific to a chargeback submitted
-	// Visa Card Dispute Network Event, which represents that a chargeback has been
-	// submitted to the network.
-	ChargebackSubmitted CardDisputeVisaNetworkEventsChargebackSubmitted `json:"chargeback_submitted,required,nullable"`
-	// A Card Dispute Chargeback Timed Out Visa Network Event object. This field will
-	// be present in the JSON response if and only if `category` is equal to
-	// `chargeback_timed_out`. Contains the details specific to a chargeback timed out
-	// Visa Card Dispute Network Event, which represents that the chargeback has timed
-	// out in the user's favor.
-	ChargebackTimedOut CardDisputeVisaNetworkEventsChargebackTimedOut `json:"chargeback_timed_out,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute Network Event was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The dispute financial transaction that resulted from the network event, if any.
 	DisputeFinancialTransactionID string `json:"dispute_financial_transaction_id,required,nullable"`
+	// A Card Dispute Chargeback Accepted Visa Network Event object. This field will be
+	// present in the JSON response if and only if `category` is equal to
+	// `chargeback_accepted`. Contains the details specific to a chargeback accepted
+	// Visa Card Dispute Network Event, which represents that a chargeback has been
+	// accepted by the merchant.
+	ChargebackAccepted CardDisputeVisaNetworkEventsChargebackAccepted `json:"chargeback_accepted,nullable"`
+	// A Card Dispute Chargeback Submitted Visa Network Event object. This field will
+	// be present in the JSON response if and only if `category` is equal to
+	// `chargeback_submitted`. Contains the details specific to a chargeback submitted
+	// Visa Card Dispute Network Event, which represents that a chargeback has been
+	// submitted to the network.
+	ChargebackSubmitted CardDisputeVisaNetworkEventsChargebackSubmitted `json:"chargeback_submitted,nullable"`
+	// A Card Dispute Chargeback Timed Out Visa Network Event object. This field will
+	// be present in the JSON response if and only if `category` is equal to
+	// `chargeback_timed_out`. Contains the details specific to a chargeback timed out
+	// Visa Card Dispute Network Event, which represents that the chargeback has timed
+	// out in the user's favor.
+	ChargebackTimedOut CardDisputeVisaNetworkEventsChargebackTimedOut `json:"chargeback_timed_out,nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Decline Submitted Visa Network Event
 	// object. This field will be present in the JSON response if and only if
 	// `category` is equal to `merchant_prearbitration_decline_submitted`. Contains the
 	// details specific to a merchant prearbitration decline submitted Visa Card
 	// Dispute Network Event, which represents that the user has declined the
 	// merchant's request for a prearbitration request decision in their favor.
-	MerchantPrearbitrationDeclineSubmitted CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted `json:"merchant_prearbitration_decline_submitted,required,nullable"`
+	MerchantPrearbitrationDeclineSubmitted CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted `json:"merchant_prearbitration_decline_submitted,nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Received Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `merchant_prearbitration_received`. Contains the details specific to a merchant
 	// prearbitration received Visa Card Dispute Network Event, which represents that
 	// the merchant has issued a prearbitration request in the user's favor.
-	MerchantPrearbitrationReceived CardDisputeVisaNetworkEventsMerchantPrearbitrationReceived `json:"merchant_prearbitration_received,required,nullable"`
+	MerchantPrearbitrationReceived CardDisputeVisaNetworkEventsMerchantPrearbitrationReceived `json:"merchant_prearbitration_received,nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Timed Out Visa Network Event object.
 	// This field will be present in the JSON response if and only if `category` is
 	// equal to `merchant_prearbitration_timed_out`. Contains the details specific to a
 	// merchant prearbitration timed out Visa Card Dispute Network Event, which
 	// represents that the user has timed out responding to the merchant's
 	// prearbitration request.
-	MerchantPrearbitrationTimedOut CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut `json:"merchant_prearbitration_timed_out,required,nullable"`
+	MerchantPrearbitrationTimedOut CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut `json:"merchant_prearbitration_timed_out,nullable"`
 	// A Card Dispute Re-presented Visa Network Event object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `represented`. Contains the details specific to a re-presented Visa Card Dispute
 	// Network Event, which represents that the merchant has declined the user's
 	// chargeback and has re-presented the payment.
-	Represented CardDisputeVisaNetworkEventsRepresented `json:"represented,required,nullable"`
+	Represented CardDisputeVisaNetworkEventsRepresented `json:"represented,nullable"`
 	// A Card Dispute Re-presentment Timed Out Visa Network Event object. This field
 	// will be present in the JSON response if and only if `category` is equal to
 	// `representment_timed_out`. Contains the details specific to a re-presentment
 	// time-out Visa Card Dispute Network Event, which represents that the user did not
 	// respond to the re-presentment by the merchant within the time limit.
-	RepresentmentTimedOut CardDisputeVisaNetworkEventsRepresentmentTimedOut `json:"representment_timed_out,required,nullable"`
+	RepresentmentTimedOut CardDisputeVisaNetworkEventsRepresentmentTimedOut `json:"representment_timed_out,nullable"`
 	// A Card Dispute User Pre-Arbitration Accepted Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_accepted`. Contains the details specific to a user
 	// prearbitration accepted Visa Card Dispute Network Event, which represents that
 	// the merchant has accepted the user's prearbitration request in the user's favor.
-	UserPrearbitrationAccepted CardDisputeVisaNetworkEventsUserPrearbitrationAccepted `json:"user_prearbitration_accepted,required,nullable"`
+	UserPrearbitrationAccepted CardDisputeVisaNetworkEventsUserPrearbitrationAccepted `json:"user_prearbitration_accepted,nullable"`
 	// A Card Dispute User Pre-Arbitration Declined Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_declined`. Contains the details specific to a user
 	// prearbitration declined Visa Card Dispute Network Event, which represents that
 	// the merchant has declined the user's prearbitration request.
-	UserPrearbitrationDeclined CardDisputeVisaNetworkEventsUserPrearbitrationDeclined `json:"user_prearbitration_declined,required,nullable"`
+	UserPrearbitrationDeclined CardDisputeVisaNetworkEventsUserPrearbitrationDeclined `json:"user_prearbitration_declined,nullable"`
 	// A Card Dispute User Pre-Arbitration Submitted Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_submitted`. Contains the details specific to a user
 	// prearbitration submitted Visa Card Dispute Network Event, which represents that
 	// the user's request for prearbitration has been submitted to the network.
-	UserPrearbitrationSubmitted CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted `json:"user_prearbitration_submitted,required,nullable"`
+	UserPrearbitrationSubmitted CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted `json:"user_prearbitration_submitted,nullable"`
 	// A Card Dispute User Pre-Arbitration Timed Out Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_timed_out`. Contains the details specific to a user
 	// prearbitration timed out Visa Card Dispute Network Event, which represents that
 	// the merchant has timed out responding to the user's prearbitration request.
-	UserPrearbitrationTimedOut CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut `json:"user_prearbitration_timed_out,required,nullable"`
+	UserPrearbitrationTimedOut CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut `json:"user_prearbitration_timed_out,nullable"`
 	// A Card Dispute User Withdrawal Submitted Visa Network Event object. This field
 	// will be present in the JSON response if and only if `category` is equal to
 	// `user_withdrawal_submitted`. Contains the details specific to a user withdrawal
 	// submitted Visa Card Dispute Network Event, which represents that the user's
 	// request to withdraw the dispute has been submitted to the network.
-	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted,required,nullable"`
+	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted,nullable"`
 	JSON                    cardDisputeVisaNetworkEventJSON                     `json:"-"`
 }
 
@@ -407,11 +407,11 @@ type CardDisputeVisaNetworkEvent struct {
 type cardDisputeVisaNetworkEventJSON struct {
 	AttachmentFiles                        apijson.Field
 	Category                               apijson.Field
+	CreatedAt                              apijson.Field
+	DisputeFinancialTransactionID          apijson.Field
 	ChargebackAccepted                     apijson.Field
 	ChargebackSubmitted                    apijson.Field
 	ChargebackTimedOut                     apijson.Field
-	CreatedAt                              apijson.Field
-	DisputeFinancialTransactionID          apijson.Field
 	MerchantPrearbitrationDeclineSubmitted apijson.Field
 	MerchantPrearbitrationReceived         apijson.Field
 	MerchantPrearbitrationTimedOut         apijson.Field
@@ -1450,11 +1450,6 @@ type CardDisputeVisaUserSubmission struct {
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
 	Category CardDisputeVisaUserSubmissionsCategory `json:"category,required"`
-	// A Visa Card Dispute Chargeback User Submission Chargeback Details object. This
-	// field will be present in the JSON response if and only if `category` is equal to
-	// `chargeback`. Contains the details specific to a Visa chargeback User Submission
-	// for a Card Dispute.
-	Chargeback CardDisputeVisaUserSubmissionsChargeback `json:"chargeback,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute User Submission was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
@@ -1467,21 +1462,26 @@ type CardDisputeVisaUserSubmission struct {
 	// The reason for Increase requesting further information from the user for the
 	// Visa Card Dispute.
 	FurtherInformationRequestedReason string `json:"further_information_requested_reason,required,nullable"`
-	// A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object.
-	// This field will be present in the JSON response if and only if `category` is
-	// equal to `merchant_prearbitration_decline`. Contains the details specific to a
-	// merchant prearbitration decline Visa Card Dispute User Submission.
-	MerchantPrearbitrationDecline CardDisputeVisaUserSubmissionsMerchantPrearbitrationDecline `json:"merchant_prearbitration_decline,required,nullable"`
 	// The status of the Visa Card Dispute User Submission.
 	Status CardDisputeVisaUserSubmissionsStatus `json:"status,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute User Submission was updated.
 	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	// A Visa Card Dispute Chargeback User Submission Chargeback Details object. This
+	// field will be present in the JSON response if and only if `category` is equal to
+	// `chargeback`. Contains the details specific to a Visa chargeback User Submission
+	// for a Card Dispute.
+	Chargeback CardDisputeVisaUserSubmissionsChargeback `json:"chargeback,nullable"`
+	// A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object.
+	// This field will be present in the JSON response if and only if `category` is
+	// equal to `merchant_prearbitration_decline`. Contains the details specific to a
+	// merchant prearbitration decline Visa Card Dispute User Submission.
+	MerchantPrearbitrationDecline CardDisputeVisaUserSubmissionsMerchantPrearbitrationDecline `json:"merchant_prearbitration_decline,nullable"`
 	// A Visa Card Dispute User-Initiated Pre-Arbitration User Submission object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration`. Contains the details specific to a user-initiated
 	// pre-arbitration Visa Card Dispute User Submission.
-	UserPrearbitration CardDisputeVisaUserSubmissionsUserPrearbitration `json:"user_prearbitration,required,nullable"`
+	UserPrearbitration CardDisputeVisaUserSubmissionsUserPrearbitration `json:"user_prearbitration,nullable"`
 	JSON               cardDisputeVisaUserSubmissionJSON                `json:"-"`
 }
 
@@ -1492,14 +1492,14 @@ type cardDisputeVisaUserSubmissionJSON struct {
 	Amount                            apijson.Field
 	AttachmentFiles                   apijson.Field
 	Category                          apijson.Field
-	Chargeback                        apijson.Field
 	CreatedAt                         apijson.Field
 	Explanation                       apijson.Field
 	FurtherInformationRequestedAt     apijson.Field
 	FurtherInformationRequestedReason apijson.Field
-	MerchantPrearbitrationDecline     apijson.Field
 	Status                            apijson.Field
 	UpdatedAt                         apijson.Field
+	Chargeback                        apijson.Field
+	MerchantPrearbitrationDecline     apijson.Field
 	UserPrearbitration                apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -1549,6 +1549,24 @@ const (
 func (r CardDisputeVisaUserSubmissionsCategory) IsKnown() bool {
 	switch r {
 	case CardDisputeVisaUserSubmissionsCategoryChargeback, CardDisputeVisaUserSubmissionsCategoryMerchantPrearbitrationDecline, CardDisputeVisaUserSubmissionsCategoryUserPrearbitration:
+		return true
+	}
+	return false
+}
+
+// The status of the Visa Card Dispute User Submission.
+type CardDisputeVisaUserSubmissionsStatus string
+
+const (
+	CardDisputeVisaUserSubmissionsStatusAbandoned                   CardDisputeVisaUserSubmissionsStatus = "abandoned"
+	CardDisputeVisaUserSubmissionsStatusAccepted                    CardDisputeVisaUserSubmissionsStatus = "accepted"
+	CardDisputeVisaUserSubmissionsStatusFurtherInformationRequested CardDisputeVisaUserSubmissionsStatus = "further_information_requested"
+	CardDisputeVisaUserSubmissionsStatusPendingReviewing            CardDisputeVisaUserSubmissionsStatus = "pending_reviewing"
+)
+
+func (r CardDisputeVisaUserSubmissionsStatus) IsKnown() bool {
+	switch r {
+	case CardDisputeVisaUserSubmissionsStatusAbandoned, CardDisputeVisaUserSubmissionsStatusAccepted, CardDisputeVisaUserSubmissionsStatusFurtherInformationRequested, CardDisputeVisaUserSubmissionsStatusPendingReviewing:
 		return true
 	}
 	return false
@@ -4353,24 +4371,6 @@ func (r *CardDisputeVisaUserSubmissionsMerchantPrearbitrationDecline) UnmarshalJ
 
 func (r cardDisputeVisaUserSubmissionsMerchantPrearbitrationDeclineJSON) RawJSON() string {
 	return r.raw
-}
-
-// The status of the Visa Card Dispute User Submission.
-type CardDisputeVisaUserSubmissionsStatus string
-
-const (
-	CardDisputeVisaUserSubmissionsStatusAbandoned                   CardDisputeVisaUserSubmissionsStatus = "abandoned"
-	CardDisputeVisaUserSubmissionsStatusAccepted                    CardDisputeVisaUserSubmissionsStatus = "accepted"
-	CardDisputeVisaUserSubmissionsStatusFurtherInformationRequested CardDisputeVisaUserSubmissionsStatus = "further_information_requested"
-	CardDisputeVisaUserSubmissionsStatusPendingReviewing            CardDisputeVisaUserSubmissionsStatus = "pending_reviewing"
-)
-
-func (r CardDisputeVisaUserSubmissionsStatus) IsKnown() bool {
-	switch r {
-	case CardDisputeVisaUserSubmissionsStatusAbandoned, CardDisputeVisaUserSubmissionsStatusAccepted, CardDisputeVisaUserSubmissionsStatusFurtherInformationRequested, CardDisputeVisaUserSubmissionsStatusPendingReviewing:
-		return true
-	}
-	return false
 }
 
 // A Visa Card Dispute User-Initiated Pre-Arbitration User Submission object. This

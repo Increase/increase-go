@@ -294,10 +294,10 @@ type ACHTransferAddenda struct {
 	// over time; your application should be able to handle such additions gracefully.
 	Category ACHTransferAddendaCategory `json:"category,required"`
 	// Unstructured `payment_related_information` passed through with the transfer.
-	Freeform ACHTransferAddendaFreeform `json:"freeform,required,nullable"`
+	Freeform ACHTransferAddendaFreeform `json:"freeform,nullable"`
 	// Structured ASC X12 820 remittance advice records. Please reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
-	PaymentOrderRemittanceAdvice ACHTransferAddendaPaymentOrderRemittanceAdvice `json:"payment_order_remittance_advice,required,nullable"`
+	PaymentOrderRemittanceAdvice ACHTransferAddendaPaymentOrderRemittanceAdvice `json:"payment_order_remittance_advice,nullable"`
 	JSON                         achTransferAddendaJSON                         `json:"-"`
 }
 
@@ -492,22 +492,22 @@ func (r achTransferCancellationJSON) RawJSON() string {
 
 // What object created the transfer, either via the API or the dashboard.
 type ACHTransferCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey ACHTransferCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category ACHTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey ACHTransferCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication ACHTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication ACHTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User ACHTransferCreatedByUser `json:"user,required,nullable"`
+	User ACHTransferCreatedByUser `json:"user,nullable"`
 	JSON achTransferCreatedByJSON `json:"-"`
 }
 
 // achTransferCreatedByJSON contains the JSON metadata for the struct
 // [ACHTransferCreatedBy]
 type achTransferCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -520,6 +520,23 @@ func (r *ACHTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
 
 func (r achTransferCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type ACHTransferCreatedByCategory string
+
+const (
+	ACHTransferCreatedByCategoryAPIKey           ACHTransferCreatedByCategory = "api_key"
+	ACHTransferCreatedByCategoryOAuthApplication ACHTransferCreatedByCategory = "oauth_application"
+	ACHTransferCreatedByCategoryUser             ACHTransferCreatedByCategory = "user"
+)
+
+func (r ACHTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case ACHTransferCreatedByCategoryAPIKey, ACHTransferCreatedByCategoryOAuthApplication, ACHTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -543,23 +560,6 @@ func (r *ACHTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
 
 func (r achTransferCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type ACHTransferCreatedByCategory string
-
-const (
-	ACHTransferCreatedByCategoryAPIKey           ACHTransferCreatedByCategory = "api_key"
-	ACHTransferCreatedByCategoryOAuthApplication ACHTransferCreatedByCategory = "oauth_application"
-	ACHTransferCreatedByCategoryUser             ACHTransferCreatedByCategory = "user"
-)
-
-func (r ACHTransferCreatedByCategory) IsKnown() bool {
-	switch r {
-	case ACHTransferCreatedByCategoryAPIKey, ACHTransferCreatedByCategoryOAuthApplication, ACHTransferCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.

@@ -270,22 +270,22 @@ func (r wireTransferCancellationJSON) RawJSON() string {
 
 // What object created the transfer, either via the API or the dashboard.
 type WireTransferCreatedBy struct {
-	// If present, details about the API key that created the transfer.
-	APIKey WireTransferCreatedByAPIKey `json:"api_key,required,nullable"`
 	// The type of object that created this transfer.
 	Category WireTransferCreatedByCategory `json:"category,required"`
+	// If present, details about the API key that created the transfer.
+	APIKey WireTransferCreatedByAPIKey `json:"api_key,nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication WireTransferCreatedByOAuthApplication `json:"oauth_application,required,nullable"`
+	OAuthApplication WireTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
 	// If present, details about the User that created the transfer.
-	User WireTransferCreatedByUser `json:"user,required,nullable"`
+	User WireTransferCreatedByUser `json:"user,nullable"`
 	JSON wireTransferCreatedByJSON `json:"-"`
 }
 
 // wireTransferCreatedByJSON contains the JSON metadata for the struct
 // [WireTransferCreatedBy]
 type wireTransferCreatedByJSON struct {
-	APIKey           apijson.Field
 	Category         apijson.Field
+	APIKey           apijson.Field
 	OAuthApplication apijson.Field
 	User             apijson.Field
 	raw              string
@@ -298,6 +298,23 @@ func (r *WireTransferCreatedBy) UnmarshalJSON(data []byte) (err error) {
 
 func (r wireTransferCreatedByJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of object that created this transfer.
+type WireTransferCreatedByCategory string
+
+const (
+	WireTransferCreatedByCategoryAPIKey           WireTransferCreatedByCategory = "api_key"
+	WireTransferCreatedByCategoryOAuthApplication WireTransferCreatedByCategory = "oauth_application"
+	WireTransferCreatedByCategoryUser             WireTransferCreatedByCategory = "user"
+)
+
+func (r WireTransferCreatedByCategory) IsKnown() bool {
+	switch r {
+	case WireTransferCreatedByCategoryAPIKey, WireTransferCreatedByCategoryOAuthApplication, WireTransferCreatedByCategoryUser:
+		return true
+	}
+	return false
 }
 
 // If present, details about the API key that created the transfer.
@@ -321,23 +338,6 @@ func (r *WireTransferCreatedByAPIKey) UnmarshalJSON(data []byte) (err error) {
 
 func (r wireTransferCreatedByAPIKeyJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of object that created this transfer.
-type WireTransferCreatedByCategory string
-
-const (
-	WireTransferCreatedByCategoryAPIKey           WireTransferCreatedByCategory = "api_key"
-	WireTransferCreatedByCategoryOAuthApplication WireTransferCreatedByCategory = "oauth_application"
-	WireTransferCreatedByCategoryUser             WireTransferCreatedByCategory = "user"
-)
-
-func (r WireTransferCreatedByCategory) IsKnown() bool {
-	switch r {
-	case WireTransferCreatedByCategoryAPIKey, WireTransferCreatedByCategoryOAuthApplication, WireTransferCreatedByCategoryUser:
-		return true
-	}
-	return false
 }
 
 // If present, details about the OAuth Application that created the transfer.
@@ -579,10 +579,10 @@ type WireTransferRemittance struct {
 	Category WireTransferRemittanceCategory `json:"category,required"`
 	// Internal Revenue Service (IRS) tax repayment information. Required if `category`
 	// is equal to `tax`.
-	Tax WireTransferRemittanceTax `json:"tax,required,nullable"`
+	Tax WireTransferRemittanceTax `json:"tax,nullable"`
 	// Unstructured remittance information. Required if `category` is equal to
 	// `unstructured`.
-	Unstructured WireTransferRemittanceUnstructured `json:"unstructured,required,nullable"`
+	Unstructured WireTransferRemittanceUnstructured `json:"unstructured,nullable"`
 	JSON         wireTransferRemittanceJSON         `json:"-"`
 }
 

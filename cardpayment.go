@@ -123,78 +123,80 @@ func (r cardPaymentJSON) RawJSON() string {
 }
 
 type CardPaymentElement struct {
-	// A Card Authentication object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_authentication`. Card Authentications
-	// are attempts to authenticate a transaction or a card with 3DS.
-	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication,required,nullable"`
-	// A Card Authorization object. This field will be present in the JSON response if
-	// and only if `category` is equal to `card_authorization`. Card Authorizations are
-	// temporary holds placed on a customers funds with the intent to later clear a
-	// transaction.
-	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization,required,nullable"`
-	// A Card Authorization Expiration object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_authorization_expiration`.
-	// Card Authorization Expirations are cancellations of authorizations that were
-	// never settled by the acquirer.
-	CardAuthorizationExpiration CardPaymentElementsCardAuthorizationExpiration `json:"card_authorization_expiration,required,nullable"`
-	// A Card Balance Inquiry object. This field will be present in the JSON response
-	// if and only if `category` is equal to `card_balance_inquiry`. Card Balance
-	// Inquiries are transactions that allow merchants to check the available balance
-	// on a card without placing a hold on funds, commonly used when a customer
-	// requests their balance at an ATM.
-	CardBalanceInquiry CardPaymentElementsCardBalanceInquiry `json:"card_balance_inquiry,required,nullable"`
-	// A Card Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_decline`.
-	CardDecline CardPaymentElementsCardDecline `json:"card_decline,required,nullable"`
-	// A Card Financial object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_financial`. Card Financials are temporary
-	// holds placed on a customers funds with the intent to later clear a transaction.
-	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial,required,nullable"`
-	// A Card Fuel Confirmation object. This field will be present in the JSON response
-	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
-	// Confirmations update the amount of a Card Authorization after a fuel pump
-	// transaction is completed.
-	CardFuelConfirmation CardPaymentElementsCardFuelConfirmation `json:"card_fuel_confirmation,required,nullable"`
-	// A Card Increment object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_increment`. Card Increments increase the
-	// pending amount of an authorized transaction.
-	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment,required,nullable"`
-	// A Card Refund object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_refund`. Card Refunds move money back to
-	// the cardholder. While they are usually connected to a Card Settlement an
-	// acquirer can also refund money directly to a card without relation to a
-	// transaction.
-	CardRefund CardPaymentElementsCardRefund `json:"card_refund,required,nullable"`
-	// A Card Reversal object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
-	// or the entirety of an existing Card Authorization.
-	CardReversal CardPaymentElementsCardReversal `json:"card_reversal,required,nullable"`
-	// A Card Settlement object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_settlement`. Card Settlements are card
-	// transactions that have cleared and settled. While a settlement is usually
-	// preceded by an authorization, an acquirer can also directly clear a transaction
-	// without first authorizing it.
-	CardSettlement CardPaymentElementsCardSettlement `json:"card_settlement,required,nullable"`
-	// An Inbound Card Validation object. This field will be present in the JSON
-	// response if and only if `category` is equal to `card_validation`. Inbound Card
-	// Validations are requests from a merchant to verify that a card number and
-	// optionally its address and/or Card Verification Value are valid.
-	CardValidation CardPaymentElementsCardValidation `json:"card_validation,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
 	Category CardPaymentElementsCategory `json:"category,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the card payment element was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// A Card Authentication object. This field will be present in the JSON response if
+	// and only if `category` is equal to `card_authentication`. Card Authentications
+	// are attempts to authenticate a transaction or a card with 3DS.
+	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication,nullable"`
+	// A Card Authorization object. This field will be present in the JSON response if
+	// and only if `category` is equal to `card_authorization`. Card Authorizations are
+	// temporary holds placed on a customers funds with the intent to later clear a
+	// transaction.
+	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization,nullable"`
+	// A Card Authorization Expiration object. This field will be present in the JSON
+	// response if and only if `category` is equal to `card_authorization_expiration`.
+	// Card Authorization Expirations are cancellations of authorizations that were
+	// never settled by the acquirer.
+	CardAuthorizationExpiration CardPaymentElementsCardAuthorizationExpiration `json:"card_authorization_expiration,nullable"`
+	// A Card Balance Inquiry object. This field will be present in the JSON response
+	// if and only if `category` is equal to `card_balance_inquiry`. Card Balance
+	// Inquiries are transactions that allow merchants to check the available balance
+	// on a card without placing a hold on funds, commonly used when a customer
+	// requests their balance at an ATM.
+	CardBalanceInquiry CardPaymentElementsCardBalanceInquiry `json:"card_balance_inquiry,nullable"`
+	// A Card Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_decline`.
+	CardDecline CardPaymentElementsCardDecline `json:"card_decline,nullable"`
+	// A Card Financial object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_financial`. Card Financials are temporary
+	// holds placed on a customers funds with the intent to later clear a transaction.
+	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial,nullable"`
+	// A Card Fuel Confirmation object. This field will be present in the JSON response
+	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
+	// Confirmations update the amount of a Card Authorization after a fuel pump
+	// transaction is completed.
+	CardFuelConfirmation CardPaymentElementsCardFuelConfirmation `json:"card_fuel_confirmation,nullable"`
+	// A Card Increment object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_increment`. Card Increments increase the
+	// pending amount of an authorized transaction.
+	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment,nullable"`
+	// A Card Refund object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_refund`. Card Refunds move money back to
+	// the cardholder. While they are usually connected to a Card Settlement an
+	// acquirer can also refund money directly to a card without relation to a
+	// transaction.
+	CardRefund CardPaymentElementsCardRefund `json:"card_refund,nullable"`
+	// A Card Reversal object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
+	// or the entirety of an existing Card Authorization.
+	CardReversal CardPaymentElementsCardReversal `json:"card_reversal,nullable"`
+	// A Card Settlement object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_settlement`. Card Settlements are card
+	// transactions that have cleared and settled. While a settlement is usually
+	// preceded by an authorization, an acquirer can also directly clear a transaction
+	// without first authorizing it.
+	CardSettlement CardPaymentElementsCardSettlement `json:"card_settlement,nullable"`
+	// An Inbound Card Validation object. This field will be present in the JSON
+	// response if and only if `category` is equal to `card_validation`. Inbound Card
+	// Validations are requests from a merchant to verify that a card number and
+	// optionally its address and/or Card Verification Value are valid.
+	CardValidation CardPaymentElementsCardValidation `json:"card_validation,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other CardPaymentElementsOther `json:"other,required,nullable"`
+	Other CardPaymentElementsOther `json:"other,nullable"`
 	JSON  cardPaymentElementJSON   `json:"-"`
 }
 
 // cardPaymentElementJSON contains the JSON metadata for the struct
 // [CardPaymentElement]
 type cardPaymentElementJSON struct {
+	Category                    apijson.Field
+	CreatedAt                   apijson.Field
 	CardAuthentication          apijson.Field
 	CardAuthorization           apijson.Field
 	CardAuthorizationExpiration apijson.Field
@@ -207,8 +209,6 @@ type cardPaymentElementJSON struct {
 	CardReversal                apijson.Field
 	CardSettlement              apijson.Field
 	CardValidation              apijson.Field
-	Category                    apijson.Field
-	CreatedAt                   apijson.Field
 	Other                       apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
@@ -220,6 +220,34 @@ func (r *CardPaymentElement) UnmarshalJSON(data []byte) (err error) {
 
 func (r cardPaymentElementJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
+type CardPaymentElementsCategory string
+
+const (
+	CardPaymentElementsCategoryCardAuthorization           CardPaymentElementsCategory = "card_authorization"
+	CardPaymentElementsCategoryCardAuthentication          CardPaymentElementsCategory = "card_authentication"
+	CardPaymentElementsCategoryCardBalanceInquiry          CardPaymentElementsCategory = "card_balance_inquiry"
+	CardPaymentElementsCategoryCardValidation              CardPaymentElementsCategory = "card_validation"
+	CardPaymentElementsCategoryCardDecline                 CardPaymentElementsCategory = "card_decline"
+	CardPaymentElementsCategoryCardReversal                CardPaymentElementsCategory = "card_reversal"
+	CardPaymentElementsCategoryCardAuthorizationExpiration CardPaymentElementsCategory = "card_authorization_expiration"
+	CardPaymentElementsCategoryCardIncrement               CardPaymentElementsCategory = "card_increment"
+	CardPaymentElementsCategoryCardSettlement              CardPaymentElementsCategory = "card_settlement"
+	CardPaymentElementsCategoryCardRefund                  CardPaymentElementsCategory = "card_refund"
+	CardPaymentElementsCategoryCardFuelConfirmation        CardPaymentElementsCategory = "card_fuel_confirmation"
+	CardPaymentElementsCategoryCardFinancial               CardPaymentElementsCategory = "card_financial"
+	CardPaymentElementsCategoryOther                       CardPaymentElementsCategory = "other"
+)
+
+func (r CardPaymentElementsCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardAuthentication, CardPaymentElementsCategoryCardBalanceInquiry, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryCardFinancial, CardPaymentElementsCategoryOther:
+		return true
+	}
+	return false
 }
 
 // A Card Authentication object. This field will be present in the JSON response if
@@ -7748,34 +7776,6 @@ func (r *CardPaymentElementsCardValidationVerificationCardholderName) UnmarshalJ
 
 func (r cardPaymentElementsCardValidationVerificationCardholderNameJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of the resource. We may add additional possible values for this enum
-// over time; your application should be able to handle such additions gracefully.
-type CardPaymentElementsCategory string
-
-const (
-	CardPaymentElementsCategoryCardAuthorization           CardPaymentElementsCategory = "card_authorization"
-	CardPaymentElementsCategoryCardAuthentication          CardPaymentElementsCategory = "card_authentication"
-	CardPaymentElementsCategoryCardBalanceInquiry          CardPaymentElementsCategory = "card_balance_inquiry"
-	CardPaymentElementsCategoryCardValidation              CardPaymentElementsCategory = "card_validation"
-	CardPaymentElementsCategoryCardDecline                 CardPaymentElementsCategory = "card_decline"
-	CardPaymentElementsCategoryCardReversal                CardPaymentElementsCategory = "card_reversal"
-	CardPaymentElementsCategoryCardAuthorizationExpiration CardPaymentElementsCategory = "card_authorization_expiration"
-	CardPaymentElementsCategoryCardIncrement               CardPaymentElementsCategory = "card_increment"
-	CardPaymentElementsCategoryCardSettlement              CardPaymentElementsCategory = "card_settlement"
-	CardPaymentElementsCategoryCardRefund                  CardPaymentElementsCategory = "card_refund"
-	CardPaymentElementsCategoryCardFuelConfirmation        CardPaymentElementsCategory = "card_fuel_confirmation"
-	CardPaymentElementsCategoryCardFinancial               CardPaymentElementsCategory = "card_financial"
-	CardPaymentElementsCategoryOther                       CardPaymentElementsCategory = "other"
-)
-
-func (r CardPaymentElementsCategory) IsKnown() bool {
-	switch r {
-	case CardPaymentElementsCategoryCardAuthorization, CardPaymentElementsCategoryCardAuthentication, CardPaymentElementsCategoryCardBalanceInquiry, CardPaymentElementsCategoryCardValidation, CardPaymentElementsCategoryCardDecline, CardPaymentElementsCategoryCardReversal, CardPaymentElementsCategoryCardAuthorizationExpiration, CardPaymentElementsCategoryCardIncrement, CardPaymentElementsCategoryCardSettlement, CardPaymentElementsCategoryCardRefund, CardPaymentElementsCategoryCardFuelConfirmation, CardPaymentElementsCategoryCardFinancial, CardPaymentElementsCategoryOther:
-		return true
-	}
-	return false
 }
 
 // If the category of this Transaction source is equal to `other`, this field will

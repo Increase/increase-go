@@ -176,35 +176,35 @@ func (r DeclinedTransactionRouteType) IsKnown() bool {
 // additional undocumented keys may appear in this object. These should be treated
 // as deprecated and will be removed in the future.
 type DeclinedTransactionSource struct {
-	// An ACH Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `ach_decline`.
-	ACHDecline DeclinedTransactionSourceACHDecline `json:"ach_decline,required,nullable"`
-	// A Card Decline object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_decline`.
-	CardDecline DeclinedTransactionSourceCardDecline `json:"card_decline,required,nullable"`
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
 	Category DeclinedTransactionSourceCategory `json:"category,required"`
+	// An ACH Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `ach_decline`.
+	ACHDecline DeclinedTransactionSourceACHDecline `json:"ach_decline,nullable"`
+	// A Card Decline object. This field will be present in the JSON response if and
+	// only if `category` is equal to `card_decline`.
+	CardDecline DeclinedTransactionSourceCardDecline `json:"card_decline,nullable"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
-	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,required,nullable"`
+	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,nullable"`
 	// A Check Deposit Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_rejection`.
-	CheckDepositRejection DeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection,required,nullable"`
+	CheckDepositRejection DeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection,nullable"`
 	// An Inbound FedNow Transfer Decline object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_fednow_transfer_decline`.
-	InboundFednowTransferDecline DeclinedTransactionSourceInboundFednowTransferDecline `json:"inbound_fednow_transfer_decline,required,nullable"`
+	InboundFednowTransferDecline DeclinedTransactionSourceInboundFednowTransferDecline `json:"inbound_fednow_transfer_decline,nullable"`
 	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,required,nullable"`
+	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other DeclinedTransactionSourceOther `json:"other,required,nullable"`
+	Other DeclinedTransactionSourceOther `json:"other,nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
-	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,required,nullable"`
+	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,nullable"`
 	ExtraFields map[string]interface{}               `json:"-,extras"`
 	JSON        declinedTransactionSourceJSON        `json:"-"`
 }
@@ -212,9 +212,9 @@ type DeclinedTransactionSource struct {
 // declinedTransactionSourceJSON contains the JSON metadata for the struct
 // [DeclinedTransactionSource]
 type declinedTransactionSourceJSON struct {
+	Category                               apijson.Field
 	ACHDecline                             apijson.Field
 	CardDecline                            apijson.Field
-	Category                               apijson.Field
 	CheckDecline                           apijson.Field
 	CheckDepositRejection                  apijson.Field
 	InboundFednowTransferDecline           apijson.Field
@@ -231,6 +231,29 @@ func (r *DeclinedTransactionSource) UnmarshalJSON(data []byte) (err error) {
 
 func (r declinedTransactionSourceJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of the resource. We may add additional possible values for this enum
+// over time; your application should be able to handle such additions gracefully.
+type DeclinedTransactionSourceCategory string
+
+const (
+	DeclinedTransactionSourceCategoryACHDecline                             DeclinedTransactionSourceCategory = "ach_decline"
+	DeclinedTransactionSourceCategoryCardDecline                            DeclinedTransactionSourceCategory = "card_decline"
+	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
+	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
+	DeclinedTransactionSourceCategoryInboundFednowTransferDecline           DeclinedTransactionSourceCategory = "inbound_fednow_transfer_decline"
+	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
+	DeclinedTransactionSourceCategoryCheckDepositRejection                  DeclinedTransactionSourceCategory = "check_deposit_rejection"
+	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
+)
+
+func (r DeclinedTransactionSourceCategory) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryInboundFednowTransferDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryCheckDepositRejection, DeclinedTransactionSourceCategoryOther:
+		return true
+	}
+	return false
 }
 
 // An ACH Decline object. This field will be present in the JSON response if and
@@ -1316,29 +1339,6 @@ func (r *DeclinedTransactionSourceCardDeclineVerificationCardholderName) Unmarsh
 
 func (r declinedTransactionSourceCardDeclineVerificationCardholderNameJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of the resource. We may add additional possible values for this enum
-// over time; your application should be able to handle such additions gracefully.
-type DeclinedTransactionSourceCategory string
-
-const (
-	DeclinedTransactionSourceCategoryACHDecline                             DeclinedTransactionSourceCategory = "ach_decline"
-	DeclinedTransactionSourceCategoryCardDecline                            DeclinedTransactionSourceCategory = "card_decline"
-	DeclinedTransactionSourceCategoryCheckDecline                           DeclinedTransactionSourceCategory = "check_decline"
-	DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline DeclinedTransactionSourceCategory = "inbound_real_time_payments_transfer_decline"
-	DeclinedTransactionSourceCategoryInboundFednowTransferDecline           DeclinedTransactionSourceCategory = "inbound_fednow_transfer_decline"
-	DeclinedTransactionSourceCategoryWireDecline                            DeclinedTransactionSourceCategory = "wire_decline"
-	DeclinedTransactionSourceCategoryCheckDepositRejection                  DeclinedTransactionSourceCategory = "check_deposit_rejection"
-	DeclinedTransactionSourceCategoryOther                                  DeclinedTransactionSourceCategory = "other"
-)
-
-func (r DeclinedTransactionSourceCategory) IsKnown() bool {
-	switch r {
-	case DeclinedTransactionSourceCategoryACHDecline, DeclinedTransactionSourceCategoryCardDecline, DeclinedTransactionSourceCategoryCheckDecline, DeclinedTransactionSourceCategoryInboundRealTimePaymentsTransferDecline, DeclinedTransactionSourceCategoryInboundFednowTransferDecline, DeclinedTransactionSourceCategoryWireDecline, DeclinedTransactionSourceCategoryCheckDepositRejection, DeclinedTransactionSourceCategoryOther:
-		return true
-	}
-	return false
 }
 
 // A Check Decline object. This field will be present in the JSON response if and
