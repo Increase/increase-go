@@ -115,6 +115,9 @@ type Export struct {
 	// Details of the entity CSV export. This field will be present when the `category`
 	// is equal to `entity_csv`.
 	EntityCsv ExportEntityCsv `json:"entity_csv,required,nullable"`
+	// Details of the fee CSV export. This field will be present when the `category` is
+	// equal to `fee_csv`.
+	FeeCsv ExportFeeCsv `json:"fee_csv,required,nullable"`
 	// Details of the Form 1099-INT export. This field will be present when the
 	// `category` is equal to `form_1099_int`.
 	Form1099Int ExportForm1099Int `json:"form_1099_int,required,nullable"`
@@ -161,6 +164,7 @@ type exportJSON struct {
 	CreatedAt                    apijson.Field
 	DashboardTableCsv            apijson.Field
 	EntityCsv                    apijson.Field
+	FeeCsv                       apijson.Field
 	Form1099Int                  apijson.Field
 	Form1099Misc                 apijson.Field
 	FundingInstructions          apijson.Field
@@ -416,12 +420,13 @@ const (
 	ExportCategoryFundingInstructions          ExportCategory = "funding_instructions"
 	ExportCategoryForm1099Int                  ExportCategory = "form_1099_int"
 	ExportCategoryForm1099Misc                 ExportCategory = "form_1099_misc"
+	ExportCategoryFeeCsv                       ExportCategory = "fee_csv"
 	ExportCategoryVoidedCheck                  ExportCategory = "voided_check"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryVoidedCheck:
+	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryFeeCsv, ExportCategoryVoidedCheck:
 		return true
 	}
 	return false
@@ -465,6 +470,57 @@ func (r *ExportEntityCsv) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r exportEntityCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details of the fee CSV export. This field will be present when the `category` is
+// equal to `fee_csv`.
+type ExportFeeCsv struct {
+	// Filter fees by their created date. The time range must not include any fees that
+	// are part of an open fee statement.
+	CreatedAt ExportFeeCsvCreatedAt `json:"created_at,required,nullable"`
+	JSON      exportFeeCsvJSON      `json:"-"`
+}
+
+// exportFeeCsvJSON contains the JSON metadata for the struct [ExportFeeCsv]
+type exportFeeCsvJSON struct {
+	CreatedAt   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportFeeCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportFeeCsvJSON) RawJSON() string {
+	return r.raw
+}
+
+// Filter fees by their created date. The time range must not include any fees that
+// are part of an open fee statement.
+type ExportFeeCsvCreatedAt struct {
+	// Filter fees created after this time.
+	After time.Time `json:"after,required,nullable" format:"date-time"`
+	// Filter fees created before this time.
+	Before time.Time                 `json:"before,required,nullable" format:"date-time"`
+	JSON   exportFeeCsvCreatedAtJSON `json:"-"`
+}
+
+// exportFeeCsvCreatedAtJSON contains the JSON metadata for the struct
+// [ExportFeeCsvCreatedAt]
+type exportFeeCsvCreatedAtJSON struct {
+	After       apijson.Field
+	Before      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportFeeCsvCreatedAt) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportFeeCsvCreatedAtJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1052,12 +1108,13 @@ const (
 	ExportListParamsCategoryFundingInstructions          ExportListParamsCategory = "funding_instructions"
 	ExportListParamsCategoryForm1099Int                  ExportListParamsCategory = "form_1099_int"
 	ExportListParamsCategoryForm1099Misc                 ExportListParamsCategory = "form_1099_misc"
+	ExportListParamsCategoryFeeCsv                       ExportListParamsCategory = "fee_csv"
 	ExportListParamsCategoryVoidedCheck                  ExportListParamsCategory = "voided_check"
 )
 
 func (r ExportListParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryVoidedCheck:
+	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryFeeCsv, ExportListParamsCategoryVoidedCheck:
 		return true
 	}
 	return false
