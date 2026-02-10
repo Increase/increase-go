@@ -141,7 +141,10 @@ type Export struct {
 	Type ExportType `json:"type,required"`
 	// Details of the vendor CSV export. This field will be present when the `category`
 	// is equal to `vendor_csv`.
-	VendorCsv   ExportVendorCsv        `json:"vendor_csv,required,nullable"`
+	VendorCsv ExportVendorCsv `json:"vendor_csv,required,nullable"`
+	// Details of the voided check export. This field will be present when the
+	// `category` is equal to `voided_check`.
+	VoidedCheck ExportVoidedCheck      `json:"voided_check,required,nullable"`
 	ExtraFields map[string]interface{} `json:"-,extras"`
 	JSON        exportJSON             `json:"-"`
 }
@@ -167,6 +170,7 @@ type exportJSON struct {
 	TransactionCsv               apijson.Field
 	Type                         apijson.Field
 	VendorCsv                    apijson.Field
+	VoidedCheck                  apijson.Field
 	raw                          string
 	ExtraFields                  map[string]apijson.Field
 }
@@ -412,11 +416,12 @@ const (
 	ExportCategoryFundingInstructions          ExportCategory = "funding_instructions"
 	ExportCategoryForm1099Int                  ExportCategory = "form_1099_int"
 	ExportCategoryForm1099Misc                 ExportCategory = "form_1099_misc"
+	ExportCategoryVoidedCheck                  ExportCategory = "voided_check"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc:
+	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryVoidedCheck:
 		return true
 	}
 	return false
@@ -679,6 +684,55 @@ func (r exportVendorCsvJSON) RawJSON() string {
 	return r.raw
 }
 
+// Details of the voided check export. This field will be present when the
+// `category` is equal to `voided_check`.
+type ExportVoidedCheck struct {
+	// The Account Number for the voided check.
+	AccountNumberID string `json:"account_number_id,required"`
+	// The payer information printed on the check.
+	Payer []ExportVoidedCheckPayer `json:"payer,required"`
+	JSON  exportVoidedCheckJSON    `json:"-"`
+}
+
+// exportVoidedCheckJSON contains the JSON metadata for the struct
+// [ExportVoidedCheck]
+type exportVoidedCheckJSON struct {
+	AccountNumberID apijson.Field
+	Payer           apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *ExportVoidedCheck) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportVoidedCheckJSON) RawJSON() string {
+	return r.raw
+}
+
+type ExportVoidedCheckPayer struct {
+	// The contents of the line.
+	Line string                     `json:"line,required"`
+	JSON exportVoidedCheckPayerJSON `json:"-"`
+}
+
+// exportVoidedCheckPayerJSON contains the JSON metadata for the struct
+// [ExportVoidedCheckPayer]
+type exportVoidedCheckPayerJSON struct {
+	Line        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ExportVoidedCheckPayer) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportVoidedCheckPayerJSON) RawJSON() string {
+	return r.raw
+}
+
 type ExportNewParams struct {
 	// The type of Export to create.
 	Category param.Field[ExportNewParamsCategory] `json:"category,required"`
@@ -707,6 +761,9 @@ type ExportNewParams struct {
 	TransactionCsv param.Field[ExportNewParamsTransactionCsv] `json:"transaction_csv"`
 	// Options for the created export. Required if `category` is equal to `vendor_csv`.
 	VendorCsv param.Field[ExportNewParamsVendorCsv] `json:"vendor_csv"`
+	// Options for the created export. Required if `category` is equal to
+	// `voided_check`.
+	VoidedCheck param.Field[ExportNewParamsVoidedCheck] `json:"voided_check"`
 }
 
 func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
@@ -726,11 +783,12 @@ const (
 	ExportNewParamsCategoryVendorCsv                    ExportNewParamsCategory = "vendor_csv"
 	ExportNewParamsCategoryAccountVerificationLetter    ExportNewParamsCategory = "account_verification_letter"
 	ExportNewParamsCategoryFundingInstructions          ExportNewParamsCategory = "funding_instructions"
+	ExportNewParamsCategoryVoidedCheck                  ExportNewParamsCategory = "voided_check"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions:
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryVoidedCheck:
 		return true
 	}
 	return false
@@ -929,6 +987,28 @@ func (r ExportNewParamsVendorCsv) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Options for the created export. Required if `category` is equal to
+// `voided_check`.
+type ExportNewParamsVoidedCheck struct {
+	// The Account Number for the voided check.
+	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	// The payer information to be printed on the check.
+	Payer param.Field[[]ExportNewParamsVoidedCheckPayer] `json:"payer"`
+}
+
+func (r ExportNewParamsVoidedCheck) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type ExportNewParamsVoidedCheckPayer struct {
+	// The contents of the line.
+	Line param.Field[string] `json:"line,required"`
+}
+
+func (r ExportNewParamsVoidedCheckPayer) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type ExportListParams struct {
 	// Filter Exports for those with the specified category.
 	Category  param.Field[ExportListParamsCategory]  `query:"category"`
@@ -972,11 +1052,12 @@ const (
 	ExportListParamsCategoryFundingInstructions          ExportListParamsCategory = "funding_instructions"
 	ExportListParamsCategoryForm1099Int                  ExportListParamsCategory = "form_1099_int"
 	ExportListParamsCategoryForm1099Misc                 ExportListParamsCategory = "form_1099_misc"
+	ExportListParamsCategoryVoidedCheck                  ExportListParamsCategory = "voided_check"
 )
 
 func (r ExportListParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc:
+	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryVoidedCheck:
 		return true
 	}
 	return false

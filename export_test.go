@@ -78,6 +78,12 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		VendorCsv: increase.F(increase.ExportNewParamsVendorCsv{}),
+		VoidedCheck: increase.F(increase.ExportNewParamsVoidedCheck{
+			AccountNumberID: increase.F("account_number_id"),
+			Payer: increase.F([]increase.ExportNewParamsVoidedCheckPayer{{
+				Line: increase.F("x"),
+			}}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
