@@ -90,6 +90,8 @@ func (r *InboundWireTransferService) Reverse(ctx context.Context, inboundWireTra
 type InboundWireTransfer struct {
 	// The inbound wire transfer's identifier.
 	ID string `json:"id,required"`
+	// If the transfer is accepted, this will contain details of the acceptance.
+	Acceptance InboundWireTransferAcceptance `json:"acceptance,required,nullable"`
 	// The Account to which the transfer belongs.
 	AccountID string `json:"account_id,required"`
 	// The identifier of the Account Number to which this transfer was sent.
@@ -128,8 +130,7 @@ type InboundWireTransfer struct {
 	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number,required,nullable"`
 	// The sending bank's identifier for the wire transfer.
 	InstructionIdentification string `json:"instruction_identification,required,nullable"`
-	// Information about the reversal of the inbound wire transfer if it has been
-	// reversed.
+	// If the transfer is reversed, this will contain details of the reversal.
 	Reversal InboundWireTransferReversal `json:"reversal,required,nullable"`
 	// The status of the transfer.
 	Status InboundWireTransferStatus `json:"status,required"`
@@ -152,6 +153,7 @@ type InboundWireTransfer struct {
 // [InboundWireTransfer]
 type inboundWireTransferJSON struct {
 	ID                                 apijson.Field
+	Acceptance                         apijson.Field
 	AccountID                          apijson.Field
 	AccountNumberID                    apijson.Field
 	Amount                             apijson.Field
@@ -187,8 +189,34 @@ func (r inboundWireTransferJSON) RawJSON() string {
 	return r.raw
 }
 
-// Information about the reversal of the inbound wire transfer if it has been
-// reversed.
+// If the transfer is accepted, this will contain details of the acceptance.
+type InboundWireTransferAcceptance struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was accepted.
+	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	// The identifier of the transaction for the accepted transfer.
+	TransactionID string                            `json:"transaction_id,required"`
+	JSON          inboundWireTransferAcceptanceJSON `json:"-"`
+}
+
+// inboundWireTransferAcceptanceJSON contains the JSON metadata for the struct
+// [InboundWireTransferAcceptance]
+type inboundWireTransferAcceptanceJSON struct {
+	AcceptedAt    apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *InboundWireTransferAcceptance) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r inboundWireTransferAcceptanceJSON) RawJSON() string {
+	return r.raw
+}
+
+// If the transfer is reversed, this will contain details of the reversal.
 type InboundWireTransferReversal struct {
 	// The reason for the reversal.
 	Reason InboundWireTransferReversalReason `json:"reason,required"`
