@@ -124,7 +124,7 @@ type DigitalCardProfile struct {
 	// A website the user can visit to view and receive support for their card.
 	ContactWebsite string `json:"contact_website,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the Card Dispute was created.
+	// the Digital Card Profile was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// A description you can use to identify the Card Profile.
 	Description string `json:"description,required"`

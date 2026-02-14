@@ -660,7 +660,7 @@ func (r InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstit
 type InboundACHTransferNotificationOfChange struct {
 	// The new account number provided in the notification of change.
 	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
-	// The new account number provided in the notification of change.
+	// The new routing number provided in the notification of change.
 	UpdatedRoutingNumber string                                     `json:"updated_routing_number,required,nullable"`
 	JSON                 inboundACHTransferNotificationOfChangeJSON `json:"-"`
 }

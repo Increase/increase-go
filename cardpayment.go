@@ -135,7 +135,7 @@ type CardPaymentElement struct {
 	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`. Card Authorizations are
-	// temporary holds placed on a customers funds with the intent to later clear a
+	// temporary holds placed on a customer's funds with the intent to later clear a
 	// transaction.
 	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization,nullable"`
 	// A Card Authorization Expiration object. This field will be present in the JSON
@@ -154,7 +154,7 @@ type CardPaymentElement struct {
 	CardDecline CardPaymentElementsCardDecline `json:"card_decline,nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_financial`. Card Financials are temporary
-	// holds placed on a customers funds with the intent to later clear a transaction.
+	// holds placed on a customer's funds with the intent to later clear a transaction.
 	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial,nullable"`
 	// A Card Fuel Confirmation object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
@@ -167,7 +167,7 @@ type CardPaymentElement struct {
 	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment,nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`. Card Refunds move money back to
-	// the cardholder. While they are usually connected to a Card Settlement an
+	// the cardholder. While they are usually connected to a Card Settlement, an
 	// acquirer can also refund money directly to a card without relation to a
 	// transaction.
 	CardRefund CardPaymentElementsCardRefund `json:"card_refund,nullable"`
@@ -520,7 +520,7 @@ func (r CardPaymentElementsCardAuthenticationType) IsKnown() bool {
 
 // A Card Authorization object. This field will be present in the JSON response if
 // and only if `category` is equal to `card_authorization`. Card Authorizations are
-// temporary holds placed on a customers funds with the intent to later clear a
+// temporary holds placed on a customer's funds with the intent to later clear a
 // transaction.
 type CardPaymentElementsCardAuthorization struct {
 	// The Card Authorization identifier.
@@ -3381,7 +3381,7 @@ func (r cardPaymentElementsCardDeclineVerificationCardholderNameJSON) RawJSON() 
 
 // A Card Financial object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_financial`. Card Financials are temporary
-// holds placed on a customers funds with the intent to later clear a transaction.
+// holds placed on a customer's funds with the intent to later clear a transaction.
 type CardPaymentElementsCardFinancial struct {
 	// The Card Financial identifier.
 	ID string `json:"id,required"`
@@ -4986,7 +4986,7 @@ func (r CardPaymentElementsCardIncrementType) IsKnown() bool {
 
 // A Card Refund object. This field will be present in the JSON response if and
 // only if `category` is equal to `card_refund`. Card Refunds move money back to
-// the cardholder. While they are usually connected to a Card Settlement an
+// the cardholder. While they are usually connected to a Card Settlement, an
 // acquirer can also refund money directly to a card without relation to a
 // transaction.
 type CardPaymentElementsCardRefund struct {
@@ -5003,7 +5003,7 @@ type CardPaymentElementsCardRefund struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
 	Currency CardPaymentElementsCardRefundCurrency `json:"currency,required"`
-	// Interchange assessed as a part of this transaciton.
+	// Interchange assessed as a part of this transaction.
 	Interchange CardPaymentElementsCardRefundInterchange `json:"interchange,required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
@@ -5133,7 +5133,7 @@ func (r CardPaymentElementsCardRefundCurrency) IsKnown() bool {
 	return false
 }
 
-// Interchange assessed as a part of this transaciton.
+// Interchange assessed as a part of this transaction.
 type CardPaymentElementsCardRefundInterchange struct {
 	// The interchange amount given as a string containing a decimal number in major
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
@@ -6069,7 +6069,7 @@ type CardPaymentElementsCardSettlement struct {
 	// fields.
 	PurchaseDetails CardPaymentElementsCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
 	// Surcharge amount details, if applicable. The amount is positive if the surcharge
-	// is added to to the overall transaction amount (surcharge), and negative if the
+	// is added to the overall transaction amount (surcharge), and negative if the
 	// surcharge is deducted from the overall transaction amount (discount).
 	Surcharge CardPaymentElementsCardSettlementSurcharge `json:"surcharge,required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
@@ -6864,7 +6864,7 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCo
 }
 
 // Surcharge amount details, if applicable. The amount is positive if the surcharge
-// is added to to the overall transaction amount (surcharge), and negative if the
+// is added to the overall transaction amount (surcharge), and negative if the
 // surcharge is deducted from the overall transaction amount (discount).
 type CardPaymentElementsCardSettlementSurcharge struct {
 	// The surcharge amount in the minor unit of the transaction's settlement currency.

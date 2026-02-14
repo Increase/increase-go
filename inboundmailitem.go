@@ -73,7 +73,7 @@ func (r *InboundMailItemService) ListAutoPaging(ctx context.Context, query Inbou
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Action a Inbound Mail Item
+// Action an Inbound Mail Item
 func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID string, body InboundMailItemActionParams, opts ...option.RequestOption) (res *InboundMailItem, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if inboundMailItemID == "" {
