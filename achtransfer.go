@@ -164,7 +164,7 @@ type ACHTransfer struct {
 	InboundFundsHold ACHTransferInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
 	// Your identifier for the transfer recipient.
 	IndividualID string `json:"individual_id,required,nullable"`
-	// The name of the transfer recipient. This value is information and not verified
+	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
 	IndividualName string `json:"individual_name,required,nullable"`
 	// The transfer's network.
@@ -1106,7 +1106,7 @@ type ACHTransferSubmission struct {
 	// settlement schedule) at the time the transfer was submitted.
 	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
 	// When the transfer is expected to settle in the recipient's account. Credits may
-	// be available sooner, at the receiving banks discretion. The FedACH schedule is
+	// be available sooner, at the receiving bank's discretion. The FedACH schedule is
 	// published
 	// [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 	ExpectedFundsSettlementAt time.Time `json:"expected_funds_settlement_at,required" format:"date-time"`

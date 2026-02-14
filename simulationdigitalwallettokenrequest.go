@@ -33,7 +33,7 @@ func NewSimulationDigitalWalletTokenRequestService(opts ...option.RequestOption)
 	return
 }
 
-// Simulates a user attempting add a [Card](#cards) to a digital wallet such as
+// Simulates a user attempting to add a [Card](#cards) to a digital wallet such as
 // Apple Pay.
 func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, body SimulationDigitalWalletTokenRequestNewParams, opts ...option.RequestOption) (res *SimulationDigitalWalletTokenRequestNewResponse, err error) {
 	opts = slices.Concat(r.Options, opts)

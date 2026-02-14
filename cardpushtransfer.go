@@ -806,7 +806,7 @@ type CardPushTransferSubmission struct {
 	// A unique reference for the transfer.
 	SenderReference string `json:"sender_reference,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the transfer was submitted to card network.
+	// the transfer was submitted to the card network.
 	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
 	// A 6-digit trace number that identifies the transfer within a small window of
 	// time.

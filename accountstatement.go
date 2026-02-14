@@ -84,7 +84,7 @@ type AccountStatement struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Statement was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The Account's balance at the start of its statement period.
+	// The Account's balance at the end of its statement period.
 	EndingBalance int64 `json:"ending_balance,required"`
 	// The identifier of the File containing a PDF of the statement.
 	FileID string `json:"file_id,required"`
