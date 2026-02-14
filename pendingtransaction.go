@@ -234,7 +234,7 @@ type PendingTransactionSource struct {
 	BlockchainOnrampTransferInstruction PendingTransactionSourceBlockchainOnrampTransferInstruction `json:"blockchain_onramp_transfer_instruction,nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`. Card Authorizations are
-	// temporary holds placed on a customers funds with the intent to later clear a
+	// temporary holds placed on a customer's funds with the intent to later clear a
 	// transaction.
 	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,nullable"`
 	// A Card Push Transfer Instruction object. This field will be present in the JSON
@@ -485,7 +485,7 @@ func (r pendingTransactionSourceBlockchainOnrampTransferInstructionJSON) RawJSON
 
 // A Card Authorization object. This field will be present in the JSON response if
 // and only if `category` is equal to `card_authorization`. Card Authorizations are
-// temporary holds placed on a customers funds with the intent to later clear a
+// temporary holds placed on a customer's funds with the intent to later clear a
 // transaction.
 type PendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.

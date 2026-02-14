@@ -120,7 +120,7 @@ type PhysicalCardProfile struct {
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone string `json:"contact_phone,required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the Card Dispute was created.
+	// the Physical Card Profile was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The creator of this Physical Card Profile.
 	Creator PhysicalCardProfileCreator `json:"creator,required"`

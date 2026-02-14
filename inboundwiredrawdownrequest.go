@@ -82,7 +82,7 @@ type InboundWireDrawdownRequest struct {
 	// The amount being requested in cents.
 	Amount int64 `json:"amount,required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
-	// the inbound wire drawdown requested was created.
+	// the inbound wire drawdown request was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The creditor's account number.
 	CreditorAccountNumber string `json:"creditor_account_number,required"`

@@ -86,7 +86,7 @@ type BookkeepingEntry struct {
 	Amount int64 `json:"amount,required"`
 	// When the entry set was created.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// The identifier for the Account the Entry belongs to.
+	// The identifier for the Entry Set the Entry belongs to.
 	EntrySetID string `json:"entry_set_id,required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry`.

@@ -108,7 +108,7 @@ type FileLinkNewParams struct {
 	// The File to create a File Link for.
 	FileID param.Field[string] `json:"file_id,required"`
 	// The time at which the File Link will expire. The default is 1 hour from the time
-	// of the request. The maxiumum is 1 day from the time of the request.
+	// of the request. The maximum is 1 day from the time of the request.
 	ExpiresAt param.Field[time.Time] `json:"expires_at" format:"date-time"`
 }
 
