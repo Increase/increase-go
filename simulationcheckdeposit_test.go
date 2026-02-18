@@ -57,7 +57,7 @@ func TestSimulationCheckDepositReturn(t *testing.T) {
 	}
 }
 
-func TestSimulationCheckDepositSubmit(t *testing.T) {
+func TestSimulationCheckDepositSubmitWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -69,7 +69,17 @@ func TestSimulationCheckDepositSubmit(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.CheckDeposits.Submit(context.TODO(), "check_deposit_f06n9gpg7sxn8t19lfc1")
+	_, err := client.Simulations.CheckDeposits.Submit(
+		context.TODO(),
+		"check_deposit_f06n9gpg7sxn8t19lfc1",
+		increase.SimulationCheckDepositSubmitParams{
+			Scan: increase.F(increase.SimulationCheckDepositSubmitParamsScan{
+				AccountNumber: increase.F("x"),
+				RoutingNumber: increase.F("x"),
+				AuxiliaryOnUs: increase.F("x"),
+			}),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
