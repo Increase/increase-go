@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.454.1 (2026-02-19)
+
+Full Changelog: [v0.454.0...v0.454.1](https://github.com/Increase/increase-go/compare/v0.454.0...v0.454.1)
+
+### Bug Fixes
+
+* allow canceling a request while it is waiting to retry ([f8bc050](https://github.com/Increase/increase-go/commit/f8bc050930b0d2db0a370c3cf372735b225d20c5))
+
+
+### Chores
+
+* **internal:** codegen related update ([f7f48f1](https://github.com/Increase/increase-go/commit/f7f48f15a41b215871343a7e3a2b7b02c28c292e))
+* **internal:** codegen related update ([de0f5ba](https://github.com/Increase/increase-go/commit/de0f5ba6caa91e67a8f2a859c915ee0d2b71247a))
+* update mock server docs ([b9d3628](https://github.com/Increase/increase-go/commit/b9d3628895cf68bfaa1a88c5fd40d4e0d099ea58))
+
 ## 0.454.0 (2026-02-18)
 
 Full Changelog: [v0.453.0...v0.454.0](https://github.com/Increase/increase-go/compare/v0.453.0...v0.454.0)
