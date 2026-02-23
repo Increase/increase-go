@@ -1093,6 +1093,12 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
 	StandInProcessingReason PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	// The capability of the terminal being used to read the card. Shows whether a
+	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+	// reads. This reflects the highest capability of the terminal — for example, a
+	// terminal that supports both chip and magnetic stripe will be identified as
+	// chip-capable.
+	TerminalEntryCapability PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
 	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1103,6 +1109,7 @@ type pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	StandInProcessingReason     apijson.Field
+	TerminalEntryCapability     apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }
@@ -1181,6 +1188,32 @@ const (
 func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
 	switch r {
 	case PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther:
+		return true
+	}
+	return false
+}
+
+// The capability of the terminal being used to read the card. Shows whether a
+// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+// reads. This reflects the highest capability of the terminal — for example, a
+// terminal that supports both chip and magnetic stripe will be identified as
+// chip-capable.
+type PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability string
+
+const (
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityUnknown                     PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "unknown"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed             PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "terminal_not_used"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe              PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "magnetic_stripe"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityBarcode                     PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "barcode"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "optical_character_recognition"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless           PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "chip_or_contactless"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly             PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "contactless_only"
+	PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityNoCapability                PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "no_capability"
+)
+
+func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityUnknown, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityBarcode, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly, PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityNoCapability:
 		return true
 	}
 	return false

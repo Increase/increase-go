@@ -882,6 +882,12 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
 	StandInProcessingReason RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	// The capability of the terminal being used to read the card. Shows whether a
+	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+	// reads. This reflects the highest capability of the terminal — for example, a
+	// terminal that supports both chip and magnetic stripe will be identified as
+	// chip-capable.
+	TerminalEntryCapability RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
 	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -891,6 +897,7 @@ type realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	StandInProcessingReason     apijson.Field
+	TerminalEntryCapability     apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }
@@ -969,6 +976,32 @@ const (
 func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonIssuerError, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonInternalVisaError, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReasonOther:
+		return true
+	}
+	return false
+}
+
+// The capability of the terminal being used to read the card. Shows whether a
+// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+// reads. This reflects the highest capability of the terminal — for example, a
+// terminal that supports both chip and magnetic stripe will be identified as
+// chip-capable.
+type RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability string
+
+const (
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityUnknown                     RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "unknown"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed             RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "terminal_not_used"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe              RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "magnetic_stripe"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityBarcode                     RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "barcode"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "optical_character_recognition"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless           RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "chip_or_contactless"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly             RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "contactless_only"
+	RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityNoCapability                RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability = "no_capability"
+)
+
+func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityUnknown, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityBarcode, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly, RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabilityNoCapability:
 		return true
 	}
 	return false
@@ -1872,6 +1905,12 @@ type RealTimeDecisionCardBalanceInquiryNetworkDetailsVisa struct {
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
 	StandInProcessingReason RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	// The capability of the terminal being used to read the card. Shows whether a
+	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+	// reads. This reflects the highest capability of the terminal — for example, a
+	// terminal that supports both chip and magnetic stripe will be identified as
+	// chip-capable.
+	TerminalEntryCapability RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
 	JSON                    realTimeDecisionCardBalanceInquiryNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1881,6 +1920,7 @@ type realTimeDecisionCardBalanceInquiryNetworkDetailsVisaJSON struct {
 	ElectronicCommerceIndicator apijson.Field
 	PointOfServiceEntryMode     apijson.Field
 	StandInProcessingReason     apijson.Field
+	TerminalEntryCapability     apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }
@@ -1959,6 +1999,32 @@ const (
 func (r RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonIssuerError, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonInternalVisaError, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReasonOther:
+		return true
+	}
+	return false
+}
+
+// The capability of the terminal being used to read the card. Shows whether a
+// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+// reads. This reflects the highest capability of the terminal — for example, a
+// terminal that supports both chip and magnetic stripe will be identified as
+// chip-capable.
+type RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability string
+
+const (
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityUnknown                     RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "unknown"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed             RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "terminal_not_used"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe              RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "magnetic_stripe"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityBarcode                     RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "barcode"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "optical_character_recognition"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless           RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "chip_or_contactless"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly             RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "contactless_only"
+	RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityNoCapability                RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability = "no_capability"
+)
+
+func (r RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityUnknown, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityBarcode, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly, RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabilityNoCapability:
 		return true
 	}
 	return false
