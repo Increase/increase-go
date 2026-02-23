@@ -304,12 +304,13 @@ const (
 	CheckDepositDepositRejectionReasonSuspectedFraud              CheckDepositDepositRejectionReason = "suspected_fraud"
 	CheckDepositDepositRejectionReasonDepositWindowExpired        CheckDepositDepositRejectionReason = "deposit_window_expired"
 	CheckDepositDepositRejectionReasonRequestedByUser             CheckDepositDepositRejectionReason = "requested_by_user"
+	CheckDepositDepositRejectionReasonInternational               CheckDepositDepositRejectionReason = "international"
 	CheckDepositDepositRejectionReasonUnknown                     CheckDepositDepositRejectionReason = "unknown"
 )
 
 func (r CheckDepositDepositRejectionReason) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonRequestedByUser, CheckDepositDepositRejectionReasonUnknown:
+	case CheckDepositDepositRejectionReasonIncompleteImage, CheckDepositDepositRejectionReasonDuplicate, CheckDepositDepositRejectionReasonPoorImageQuality, CheckDepositDepositRejectionReasonIncorrectAmount, CheckDepositDepositRejectionReasonIncorrectRecipient, CheckDepositDepositRejectionReasonNotEligibleForMobileDeposit, CheckDepositDepositRejectionReasonMissingRequiredDataElements, CheckDepositDepositRejectionReasonSuspectedFraud, CheckDepositDepositRejectionReasonDepositWindowExpired, CheckDepositDepositRejectionReasonRequestedByUser, CheckDepositDepositRejectionReasonInternational, CheckDepositDepositRejectionReasonUnknown:
 		return true
 	}
 	return false
