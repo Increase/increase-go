@@ -44,17 +44,17 @@ func (r *SimulationInboundWireDrawdownRequestService) New(ctx context.Context, b
 
 type SimulationInboundWireDrawdownRequestNewParams struct {
 	// The amount being requested in cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The creditor's account number.
-	CreditorAccountNumber param.Field[string] `json:"creditor_account_number,required"`
+	CreditorAccountNumber param.Field[string] `json:"creditor_account_number" api:"required"`
 	// The creditor's routing number.
-	CreditorRoutingNumber param.Field[string] `json:"creditor_routing_number,required"`
+	CreditorRoutingNumber param.Field[string] `json:"creditor_routing_number" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
-	Currency param.Field[string] `json:"currency,required"`
+	Currency param.Field[string] `json:"currency" api:"required"`
 	// The Account Number to which the recipient of this request is being requested to
 	// send funds from.
-	RecipientAccountNumberID param.Field[string] `json:"recipient_account_number_id,required"`
+	RecipientAccountNumberID param.Field[string] `json:"recipient_account_number_id" api:"required"`
 	// A free-form address field set by the sender representing the first line of the
 	// creditor's address.
 	CreditorAddressLine1 param.Field[string] `json:"creditor_address_line1"`

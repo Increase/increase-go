@@ -46,13 +46,13 @@ func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, bo
 type SimulationDigitalWalletTokenRequestNewResponse struct {
 	// If the simulated tokenization attempt was declined, this field contains details
 	// as to why.
-	DeclineReason SimulationDigitalWalletTokenRequestNewResponseDeclineReason `json:"decline_reason,required,nullable"`
+	DeclineReason SimulationDigitalWalletTokenRequestNewResponseDeclineReason `json:"decline_reason" api:"required,nullable"`
 	// If the simulated tokenization attempt was accepted, this field contains the id
 	// of the Digital Wallet Token that was created.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_digital_wallet_token_request_simulation_result`.
-	Type SimulationDigitalWalletTokenRequestNewResponseType `json:"type,required"`
+	Type SimulationDigitalWalletTokenRequestNewResponseType `json:"type" api:"required"`
 	JSON simulationDigitalWalletTokenRequestNewResponseJSON `json:"-"`
 }
 
@@ -111,7 +111,7 @@ func (r SimulationDigitalWalletTokenRequestNewResponseType) IsKnown() bool {
 
 type SimulationDigitalWalletTokenRequestNewParams struct {
 	// The identifier of the Card to be authorized.
-	CardID param.Field[string] `json:"card_id,required"`
+	CardID param.Field[string] `json:"card_id" api:"required"`
 }
 
 func (r SimulationDigitalWalletTokenRequestNewParams) MarshalJSON() (data []byte, err error) {

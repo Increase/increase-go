@@ -43,7 +43,7 @@ func (r *SimulationAccountStatementService) New(ctx context.Context, body Simula
 
 type SimulationAccountStatementNewParams struct {
 	// The identifier of the Account the statement is for.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 }
 
 func (r SimulationAccountStatementNewParams) MarshalJSON() (data []byte, err error) {

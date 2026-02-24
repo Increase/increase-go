@@ -45,9 +45,9 @@ func (r *SimulationCardFuelConfirmationService) New(ctx context.Context, body Si
 type SimulationCardFuelConfirmationNewParams struct {
 	// The amount of the fuel_confirmation in minor units in the card authorization's
 	// currency.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The identifier of the Card Payment to create a fuel_confirmation on.
-	CardPaymentID param.Field[string] `json:"card_payment_id,required"`
+	CardPaymentID param.Field[string] `json:"card_payment_id" api:"required"`
 }
 
 func (r SimulationCardFuelConfirmationNewParams) MarshalJSON() (data []byte, err error) {

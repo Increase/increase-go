@@ -43,9 +43,9 @@ func (r *SimulationCardIncrementService) New(ctx context.Context, body Simulatio
 
 type SimulationCardIncrementNewParams struct {
 	// The amount of the increment in minor units in the card authorization's currency.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The identifier of the Card Payment to create an increment on.
-	CardPaymentID param.Field[string] `json:"card_payment_id,required"`
+	CardPaymentID param.Field[string] `json:"card_payment_id" api:"required"`
 	// The identifier of the Event Subscription to use. If provided, will override the
 	// default real time event subscription. Because you can only create one real time
 	// decision event subscription, you can use this field to route events to any

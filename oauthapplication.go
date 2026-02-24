@@ -79,23 +79,23 @@ func (r *OAuthApplicationService) ListAutoPaging(ctx context.Context, query OAut
 // [here](https://increase.com/documentation/oauth).
 type OAuthApplication struct {
 	// The OAuth Application's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The OAuth Application's client_id. Use this to authenticate with the OAuth
 	// Application.
-	ClientID string `json:"client_id,required"`
+	ClientID string `json:"client_id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Application was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Application was deleted.
-	DeletedAt time.Time `json:"deleted_at,required,nullable" format:"date-time"`
+	DeletedAt time.Time `json:"deleted_at" api:"required,nullable" format:"date-time"`
 	// The name you chose for this OAuth Application.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// Whether the application is active.
-	Status OAuthApplicationStatus `json:"status,required"`
+	Status OAuthApplicationStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_application`.
-	Type OAuthApplicationType `json:"type,required"`
+	Type OAuthApplicationType `json:"type" api:"required"`
 	JSON oauthApplicationJSON `json:"-"`
 }
 

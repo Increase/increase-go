@@ -52,7 +52,7 @@ func (r *SimulationCardDisputeService) Action(ctx context.Context, cardDisputeID
 type SimulationCardDisputeActionParams struct {
 	// The network of the Card Dispute. Details specific to the network are required
 	// under the sub-object with the same identifier as the network.
-	Network param.Field[SimulationCardDisputeActionParamsNetwork] `json:"network,required"`
+	Network param.Field[SimulationCardDisputeActionParamsNetwork] `json:"network" api:"required"`
 	// The Visa-specific parameters for the taking action on the dispute. Required if
 	// and only if `network` is `visa`.
 	Visa param.Field[SimulationCardDisputeActionParamsVisa] `json:"visa"`
@@ -83,7 +83,7 @@ func (r SimulationCardDisputeActionParamsNetwork) IsKnown() bool {
 type SimulationCardDisputeActionParamsVisa struct {
 	// The action to take. Details specific to the action are required under the
 	// sub-object with the same identifier as the action.
-	Action param.Field[SimulationCardDisputeActionParamsVisaAction] `json:"action,required"`
+	Action param.Field[SimulationCardDisputeActionParamsVisaAction] `json:"action" api:"required"`
 	// The parameters for accepting the chargeback. Required if and only if `action` is
 	// `accept_chargeback`.
 	AcceptChargeback param.Field[SimulationCardDisputeActionParamsVisaAcceptChargeback] `json:"accept_chargeback"`
@@ -194,7 +194,7 @@ func (r SimulationCardDisputeActionParamsVisaRepresent) MarshalJSON() (data []by
 // only if `action` is `request_further_information`.
 type SimulationCardDisputeActionParamsVisaRequestFurtherInformation struct {
 	// The reason for requesting further information from the user.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r SimulationCardDisputeActionParamsVisaRequestFurtherInformation) MarshalJSON() (data []byte, err error) {

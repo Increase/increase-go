@@ -123,7 +123,7 @@ func (r SimulationCardBalanceInquiryNewParamsDeclineReason) IsKnown() bool {
 // Fields specific to a given card network.
 type SimulationCardBalanceInquiryNewParamsNetworkDetails struct {
 	// Fields specific to the Visa network.
-	Visa param.Field[SimulationCardBalanceInquiryNewParamsNetworkDetailsVisa] `json:"visa,required"`
+	Visa param.Field[SimulationCardBalanceInquiryNewParamsNetworkDetailsVisa] `json:"visa" api:"required"`
 }
 
 func (r SimulationCardBalanceInquiryNewParamsNetworkDetails) MarshalJSON() (data []byte, err error) {

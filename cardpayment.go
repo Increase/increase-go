@@ -77,27 +77,27 @@ func (r *CardPaymentService) ListAutoPaging(ctx context.Context, query CardPayme
 // as an authorization and its corresponding settlement.
 type CardPayment struct {
 	// The Card Payment identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Account the Transaction belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Card identifier for this payment.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
 	// Payment was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The Digital Wallet Token identifier for this payment.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The interactions related to this card payment.
-	Elements []CardPaymentElement `json:"elements,required"`
+	Elements []CardPaymentElement `json:"elements" api:"required"`
 	// The Physical Card identifier for this payment.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The scheme fees associated with this card payment.
-	SchemeFees []CardPaymentSchemeFee `json:"scheme_fees,required"`
+	SchemeFees []CardPaymentSchemeFee `json:"scheme_fees" api:"required"`
 	// The summarized state of this card payment.
-	State CardPaymentState `json:"state,required"`
+	State CardPaymentState `json:"state" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_payment`.
-	Type CardPaymentType `json:"type,required"`
+	Type CardPaymentType `json:"type" api:"required"`
 	JSON cardPaymentJSON `json:"-"`
 }
 
@@ -128,70 +128,70 @@ func (r cardPaymentJSON) RawJSON() string {
 type CardPaymentElement struct {
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category CardPaymentElementsCategory `json:"category,required"`
+	Category CardPaymentElementsCategory `json:"category" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the card payment element was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A Card Authentication object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authentication`. Card Authentications
 	// are attempts to authenticate a transaction or a card with 3DS.
-	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication,nullable"`
+	CardAuthentication CardPaymentElementsCardAuthentication `json:"card_authentication" api:"nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`. Card Authorizations are
 	// temporary holds placed on a customer's funds with the intent to later clear a
 	// transaction.
-	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization,nullable"`
+	CardAuthorization CardPaymentElementsCardAuthorization `json:"card_authorization" api:"nullable"`
 	// A Card Authorization Expiration object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_authorization_expiration`.
 	// Card Authorization Expirations are cancellations of authorizations that were
 	// never settled by the acquirer.
-	CardAuthorizationExpiration CardPaymentElementsCardAuthorizationExpiration `json:"card_authorization_expiration,nullable"`
+	CardAuthorizationExpiration CardPaymentElementsCardAuthorizationExpiration `json:"card_authorization_expiration" api:"nullable"`
 	// A Card Balance Inquiry object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_balance_inquiry`. Card Balance
 	// Inquiries are transactions that allow merchants to check the available balance
 	// on a card without placing a hold on funds, commonly used when a customer
 	// requests their balance at an ATM.
-	CardBalanceInquiry CardPaymentElementsCardBalanceInquiry `json:"card_balance_inquiry,nullable"`
+	CardBalanceInquiry CardPaymentElementsCardBalanceInquiry `json:"card_balance_inquiry" api:"nullable"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
-	CardDecline CardPaymentElementsCardDecline `json:"card_decline,nullable"`
+	CardDecline CardPaymentElementsCardDecline `json:"card_decline" api:"nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_financial`. Card Financials are temporary
 	// holds placed on a customer's funds with the intent to later clear a transaction.
-	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial,nullable"`
+	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial" api:"nullable"`
 	// A Card Fuel Confirmation object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
 	// Confirmations update the amount of a Card Authorization after a fuel pump
 	// transaction is completed.
-	CardFuelConfirmation CardPaymentElementsCardFuelConfirmation `json:"card_fuel_confirmation,nullable"`
+	CardFuelConfirmation CardPaymentElementsCardFuelConfirmation `json:"card_fuel_confirmation" api:"nullable"`
 	// A Card Increment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_increment`. Card Increments increase the
 	// pending amount of an authorized transaction.
-	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment,nullable"`
+	CardIncrement CardPaymentElementsCardIncrement `json:"card_increment" api:"nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`. Card Refunds move money back to
 	// the cardholder. While they are usually connected to a Card Settlement, an
 	// acquirer can also refund money directly to a card without relation to a
 	// transaction.
-	CardRefund CardPaymentElementsCardRefund `json:"card_refund,nullable"`
+	CardRefund CardPaymentElementsCardRefund `json:"card_refund" api:"nullable"`
 	// A Card Reversal object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
 	// or the entirety of an existing Card Authorization.
-	CardReversal CardPaymentElementsCardReversal `json:"card_reversal,nullable"`
+	CardReversal CardPaymentElementsCardReversal `json:"card_reversal" api:"nullable"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`. Card Settlements are card
 	// transactions that have cleared and settled. While a settlement is usually
 	// preceded by an authorization, an acquirer can also directly clear a transaction
 	// without first authorizing it.
-	CardSettlement CardPaymentElementsCardSettlement `json:"card_settlement,nullable"`
+	CardSettlement CardPaymentElementsCardSettlement `json:"card_settlement" api:"nullable"`
 	// An Inbound Card Validation object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_validation`. Inbound Card
 	// Validations are requests from a merchant to verify that a card number and
 	// optionally its address and/or Card Verification Value are valid.
-	CardValidation CardPaymentElementsCardValidation `json:"card_validation,nullable"`
+	CardValidation CardPaymentElementsCardValidation `json:"card_validation" api:"nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other CardPaymentElementsOther `json:"other,nullable"`
+	Other CardPaymentElementsOther `json:"other" api:"nullable"`
 	JSON  cardPaymentElementJSON   `json:"-"`
 }
 
@@ -258,46 +258,46 @@ func (r CardPaymentElementsCategory) IsKnown() bool {
 // are attempts to authenticate a transaction or a card with 3DS.
 type CardPaymentElementsCardAuthentication struct {
 	// The Card Authentication identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the Card.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The category of the card authentication attempt.
-	Category CardPaymentElementsCardAuthenticationCategory `json:"category,required,nullable"`
+	Category CardPaymentElementsCardAuthenticationCategory `json:"category" api:"required,nullable"`
 	// Details about the challenge, if one was requested.
-	Challenge CardPaymentElementsCardAuthenticationChallenge `json:"challenge,required,nullable"`
+	Challenge CardPaymentElementsCardAuthenticationChallenge `json:"challenge" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
 	// Authentication was attempted.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The reason why this authentication attempt was denied, if it was.
-	DenyReason CardPaymentElementsCardAuthenticationDenyReason `json:"deny_reason,required,nullable"`
+	DenyReason CardPaymentElementsCardAuthenticationDenyReason `json:"deny_reason" api:"required,nullable"`
 	// The device channel of the card authentication attempt.
-	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel,required,nullable"`
+	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// The purchase amount in minor units.
-	PurchaseAmount int64 `json:"purchase_amount,required,nullable"`
+	PurchaseAmount int64 `json:"purchase_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// authentication attempt's purchase currency.
-	PurchaseCurrency string `json:"purchase_currency,required,nullable"`
+	PurchaseCurrency string `json:"purchase_currency" api:"required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// authentication attempt.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The status of the card authentication.
-	Status CardPaymentElementsCardAuthenticationStatus `json:"status,required"`
+	Status CardPaymentElementsCardAuthenticationStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authentication`.
-	Type        CardPaymentElementsCardAuthenticationType `json:"type,required"`
-	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	Type        CardPaymentElementsCardAuthenticationType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
 	JSON        cardPaymentElementsCardAuthenticationJSON `json:"-"`
 }
 
@@ -352,17 +352,17 @@ func (r CardPaymentElementsCardAuthenticationCategory) IsKnown() bool {
 // Details about the challenge, if one was requested.
 type CardPaymentElementsCardAuthenticationChallenge struct {
 	// Details about the challenge verification attempts, if any happened.
-	Attempts []CardPaymentElementsCardAuthenticationChallengeAttempt `json:"attempts,required"`
+	Attempts []CardPaymentElementsCardAuthenticationChallengeAttempt `json:"attempts" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
 	// Authentication Challenge was started.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The one-time code used for the Card Authentication Challenge.
-	OneTimeCode string `json:"one_time_code,required"`
+	OneTimeCode string `json:"one_time_code" api:"required"`
 	// The method used to verify the Card Authentication Challenge.
-	VerificationMethod CardPaymentElementsCardAuthenticationChallengeVerificationMethod `json:"verification_method,required"`
+	VerificationMethod CardPaymentElementsCardAuthenticationChallengeVerificationMethod `json:"verification_method" api:"required"`
 	// E.g., the email address or phone number used for the Card Authentication
 	// Challenge.
-	VerificationValue string                                             `json:"verification_value,required,nullable"`
+	VerificationValue string                                             `json:"verification_value" api:"required,nullable"`
 	JSON              cardPaymentElementsCardAuthenticationChallengeJSON `json:"-"`
 }
 
@@ -389,9 +389,9 @@ func (r cardPaymentElementsCardAuthenticationChallengeJSON) RawJSON() string {
 type CardPaymentElementsCardAuthenticationChallengeAttempt struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time of the Card
 	// Authentication Challenge Attempt.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The outcome of the Card Authentication Challenge Attempt.
-	Outcome CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome `json:"outcome,required"`
+	Outcome CardPaymentElementsCardAuthenticationChallengeAttemptsOutcome `json:"outcome" api:"required"`
 	JSON    cardPaymentElementsCardAuthenticationChallengeAttemptJSON     `json:"-"`
 }
 
@@ -527,81 +527,81 @@ func (r CardPaymentElementsCardAuthenticationType) IsKnown() bool {
 // transaction.
 type CardPaymentElementsCardAuthorization struct {
 	// The Card Authorization identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner CardPaymentElementsCardAuthorizationActioner `json:"actioner,required"`
+	Actioner CardPaymentElementsCardAuthorizationActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts CardPaymentElementsCardAuthorizationAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts CardPaymentElementsCardAuthorizationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency CardPaymentElementsCardAuthorizationCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardAuthorizationCurrency `json:"currency" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction CardPaymentElementsCardAuthorizationDirection `json:"direction,required"`
+	Direction CardPaymentElementsCardAuthorizationDirection `json:"direction" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
 	// will expire and the pending transaction will be released.
-	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails CardPaymentElementsCardAuthorizationNetworkDetails `json:"network_details,required"`
+	NetworkDetails CardPaymentElementsCardAuthorizationNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardAuthorizationNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardAuthorizationNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The pending amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory CardPaymentElementsCardAuthorizationProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory CardPaymentElementsCardAuthorizationProcessingCategory `json:"processing_category" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
-	Type CardPaymentElementsCardAuthorizationType `json:"type,required"`
+	Type CardPaymentElementsCardAuthorizationType `json:"type" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification CardPaymentElementsCardAuthorizationVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                           `json:"-,extras"`
+	Verification CardPaymentElementsCardAuthorizationVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                           `json:"-" api:"extrafields"`
 	JSON         cardPaymentElementsCardAuthorizationJSON         `json:"-"`
 }
 
@@ -671,25 +671,25 @@ func (r CardPaymentElementsCardAuthorizationActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type CardPaymentElementsCardAuthorizationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic CardPaymentElementsCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic CardPaymentElementsCardAuthorizationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental CardPaymentElementsCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental CardPaymentElementsCardAuthorizationAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription CardPaymentElementsCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription CardPaymentElementsCardAuthorizationAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge CardPaymentElementsCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative CardPaymentElementsCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative CardPaymentElementsCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare CardPaymentElementsCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare CardPaymentElementsCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit CardPaymentElementsCardAuthorizationAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit CardPaymentElementsCardAuthorizationAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown CardPaymentElementsCardAuthorizationAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown CardPaymentElementsCardAuthorizationAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision CardPaymentElementsCardAuthorizationAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision CardPaymentElementsCardAuthorizationAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   cardPaymentElementsCardAuthorizationAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -723,10 +723,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -753,10 +753,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -783,10 +783,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                            `json:"currency,required"`
+	Currency string                                                            `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -813,10 +813,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -843,10 +843,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -873,10 +873,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsTotalCumulative struct
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                   `json:"currency,required"`
+	Currency string                                                                   `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -903,10 +903,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsTotalHealthcare struct
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                   `json:"currency,required"`
+	Currency string                                                                   `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -933,10 +933,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -963,10 +963,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -993,10 +993,10 @@ type CardPaymentElementsCardAuthorizationAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardAuthorizationAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -1054,11 +1054,11 @@ func (r CardPaymentElementsCardAuthorizationDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type CardPaymentElementsCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category CardPaymentElementsCardAuthorizationNetworkDetailsCategory `json:"category,required"`
+	Category CardPaymentElementsCardAuthorizationNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse CardPaymentElementsCardAuthorizationNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardAuthorizationNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa CardPaymentElementsCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa CardPaymentElementsCardAuthorizationNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON cardPaymentElementsCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
@@ -1122,19 +1122,19 @@ type CardPaymentElementsCardAuthorizationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator CardPaymentElementsCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardPaymentElementsCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason CardPaymentElementsCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability CardPaymentElementsCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability CardPaymentElementsCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    cardPaymentElementsCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1258,17 +1258,17 @@ func (r CardPaymentElementsCardAuthorizationNetworkDetailsVisaTerminalEntryCapab
 type CardPaymentElementsCardAuthorizationNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                     `json:"transaction_id,required,nullable"`
+	TransactionID string                                                     `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -1336,12 +1336,12 @@ func (r CardPaymentElementsCardAuthorizationType) IsKnown() bool {
 type CardPaymentElementsCardAuthorizationVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode CardPaymentElementsCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode CardPaymentElementsCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress CardPaymentElementsCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress CardPaymentElementsCardAuthorizationVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName CardPaymentElementsCardAuthorizationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName CardPaymentElementsCardAuthorizationVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           cardPaymentElementsCardAuthorizationVerificationJSON           `json:"-"`
 }
 
@@ -1367,7 +1367,7 @@ func (r cardPaymentElementsCardAuthorizationVerificationJSON) RawJSON() string {
 // the back of the card.
 type CardPaymentElementsCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
+	Result CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -1409,16 +1409,16 @@ func (r CardPaymentElementsCardAuthorizationVerificationCardVerificationCodeResu
 // we verified it against.
 type CardPaymentElementsCardAuthorizationVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
+	Result CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -1466,11 +1466,11 @@ func (r CardPaymentElementsCardAuthorizationVerificationCardholderAddressResult)
 // Cardholder name provided in the authorization request.
 type CardPaymentElementsCardAuthorizationVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                             `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                             `json:"provided_middle_name" api:"required,nullable"`
 	JSON               cardPaymentElementsCardAuthorizationVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -1499,21 +1499,21 @@ func (r cardPaymentElementsCardAuthorizationVerificationCardholderNameJSON) RawJ
 // never settled by the acquirer.
 type CardPaymentElementsCardAuthorizationExpiration struct {
 	// The Card Authorization Expiration identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Card Authorization this reverses.
-	CardAuthorizationID string `json:"card_authorization_id,required"`
+	CardAuthorizationID string `json:"card_authorization_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
 	// currency.
-	Currency CardPaymentElementsCardAuthorizationExpirationCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardAuthorizationExpirationCurrency `json:"currency" api:"required"`
 	// The amount of this authorization expiration in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	ExpiredAmount int64 `json:"expired_amount,required"`
+	ExpiredAmount int64 `json:"expired_amount" api:"required"`
 	// The card network used to process this card authorization.
-	Network CardPaymentElementsCardAuthorizationExpirationNetwork `json:"network,required"`
+	Network CardPaymentElementsCardAuthorizationExpirationNetwork `json:"network" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization_expiration`.
-	Type        CardPaymentElementsCardAuthorizationExpirationType `json:"type,required"`
-	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	Type        CardPaymentElementsCardAuthorizationExpirationType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}                             `json:"-" api:"extrafields"`
 	JSON        cardPaymentElementsCardAuthorizationExpirationJSON `json:"-"`
 }
 
@@ -1593,62 +1593,62 @@ func (r CardPaymentElementsCardAuthorizationExpirationType) IsKnown() bool {
 // requests their balance at an ATM.
 type CardPaymentElementsCardBalanceInquiry struct {
 	// The Card Balance Inquiry identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts CardPaymentElementsCardBalanceInquiryAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts CardPaymentElementsCardBalanceInquiryAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The balance amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
-	Balance int64 `json:"balance,required"`
+	Balance int64 `json:"balance" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the account's
 	// currency.
-	Currency CardPaymentElementsCardBalanceInquiryCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardBalanceInquiryCurrency `json:"currency" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails CardPaymentElementsCardBalanceInquiryNetworkDetails `json:"network_details,required"`
+	NetworkDetails CardPaymentElementsCardBalanceInquiryNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardBalanceInquiryNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardBalanceInquiryNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_balance_inquiry`.
-	Type CardPaymentElementsCardBalanceInquiryType `json:"type,required"`
+	Type CardPaymentElementsCardBalanceInquiryType `json:"type" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification CardPaymentElementsCardBalanceInquiryVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                            `json:"-,extras"`
+	Verification CardPaymentElementsCardBalanceInquiryVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                            `json:"-" api:"extrafields"`
 	JSON         cardPaymentElementsCardBalanceInquiryJSON         `json:"-"`
 }
 
@@ -1693,25 +1693,25 @@ func (r cardPaymentElementsCardBalanceInquiryJSON) RawJSON() string {
 // to provide more detailed information about the transaction.
 type CardPaymentElementsCardBalanceInquiryAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic CardPaymentElementsCardBalanceInquiryAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic CardPaymentElementsCardBalanceInquiryAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental CardPaymentElementsCardBalanceInquiryAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental CardPaymentElementsCardBalanceInquiryAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original CardPaymentElementsCardBalanceInquiryAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original CardPaymentElementsCardBalanceInquiryAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription CardPaymentElementsCardBalanceInquiryAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription CardPaymentElementsCardBalanceInquiryAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge CardPaymentElementsCardBalanceInquiryAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardBalanceInquiryAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative CardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative CardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare CardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare CardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit CardPaymentElementsCardBalanceInquiryAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit CardPaymentElementsCardBalanceInquiryAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown CardPaymentElementsCardBalanceInquiryAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown CardPaymentElementsCardBalanceInquiryAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision CardPaymentElementsCardBalanceInquiryAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision CardPaymentElementsCardBalanceInquiryAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   cardPaymentElementsCardBalanceInquiryAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -1745,10 +1745,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -1775,10 +1775,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -1805,10 +1805,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -1835,10 +1835,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                 `json:"currency,required"`
+	Currency string                                                                 `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -1865,10 +1865,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                              `json:"currency,required"`
+	Currency string                                                              `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -1895,10 +1895,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalCumulative struc
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                    `json:"currency,required"`
+	Currency string                                                                    `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -1925,10 +1925,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalHealthcare struc
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                    `json:"currency,required"`
+	Currency string                                                                    `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -1955,10 +1955,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                            `json:"currency,required"`
+	Currency string                                                            `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -1985,10 +1985,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                            `json:"currency,required"`
+	Currency string                                                            `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -2015,10 +2015,10 @@ type CardPaymentElementsCardBalanceInquiryAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardBalanceInquiryAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -2059,11 +2059,11 @@ func (r CardPaymentElementsCardBalanceInquiryCurrency) IsKnown() bool {
 // Fields specific to the `network`.
 type CardPaymentElementsCardBalanceInquiryNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category CardPaymentElementsCardBalanceInquiryNetworkDetailsCategory `json:"category,required"`
+	Category CardPaymentElementsCardBalanceInquiryNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse CardPaymentElementsCardBalanceInquiryNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardBalanceInquiryNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa CardPaymentElementsCardBalanceInquiryNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa CardPaymentElementsCardBalanceInquiryNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON cardPaymentElementsCardBalanceInquiryNetworkDetailsJSON `json:"-"`
 }
 
@@ -2127,19 +2127,19 @@ type CardPaymentElementsCardBalanceInquiryNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    cardPaymentElementsCardBalanceInquiryNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -2264,17 +2264,17 @@ func (r CardPaymentElementsCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapa
 type CardPaymentElementsCardBalanceInquiryNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                      `json:"transaction_id,required,nullable"`
+	TransactionID string                                                      `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardBalanceInquiryNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -2318,12 +2318,12 @@ func (r CardPaymentElementsCardBalanceInquiryType) IsKnown() bool {
 type CardPaymentElementsCardBalanceInquiryVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode CardPaymentElementsCardBalanceInquiryVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode CardPaymentElementsCardBalanceInquiryVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress CardPaymentElementsCardBalanceInquiryVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress CardPaymentElementsCardBalanceInquiryVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName CardPaymentElementsCardBalanceInquiryVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName CardPaymentElementsCardBalanceInquiryVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           cardPaymentElementsCardBalanceInquiryVerificationJSON           `json:"-"`
 }
 
@@ -2349,7 +2349,7 @@ func (r cardPaymentElementsCardBalanceInquiryVerificationJSON) RawJSON() string 
 // the back of the card.
 type CardPaymentElementsCardBalanceInquiryVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result CardPaymentElementsCardBalanceInquiryVerificationCardVerificationCodeResult `json:"result,required"`
+	Result CardPaymentElementsCardBalanceInquiryVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardBalanceInquiryVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -2391,16 +2391,16 @@ func (r CardPaymentElementsCardBalanceInquiryVerificationCardVerificationCodeRes
 // we verified it against.
 type CardPaymentElementsCardBalanceInquiryVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result CardPaymentElementsCardBalanceInquiryVerificationCardholderAddressResult `json:"result,required"`
+	Result CardPaymentElementsCardBalanceInquiryVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardBalanceInquiryVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -2448,11 +2448,11 @@ func (r CardPaymentElementsCardBalanceInquiryVerificationCardholderAddressResult
 // Cardholder name provided in the authorization request.
 type CardPaymentElementsCardBalanceInquiryVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                              `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                              `json:"provided_middle_name" api:"required,nullable"`
 	JSON               cardPaymentElementsCardBalanceInquiryVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -2479,83 +2479,83 @@ func (r cardPaymentElementsCardBalanceInquiryVerificationCardholderNameJSON) Raw
 // only if `category` is equal to `card_decline`.
 type CardPaymentElementsCardDecline struct {
 	// The Card Decline identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner CardPaymentElementsCardDeclineActioner `json:"actioner,required"`
+	Actioner CardPaymentElementsCardDeclineActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts CardPaymentElementsCardDeclineAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts CardPaymentElementsCardDeclineAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency CardPaymentElementsCardDeclineCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardDeclineCurrency `json:"currency" api:"required"`
 	// The identifier of the declined transaction created for this Card Decline.
-	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction CardPaymentElementsCardDeclineDirection `json:"direction,required"`
+	Direction CardPaymentElementsCardDeclineDirection `json:"direction" api:"required"`
 	// The identifier of the card authorization this request attempted to incrementally
 	// authorize.
-	IncrementedCardAuthorizationID string `json:"incremented_card_authorization_id,required,nullable"`
+	IncrementedCardAuthorizationID string `json:"incremented_card_authorization_id" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails CardPaymentElementsCardDeclineNetworkDetails `json:"network_details,required"`
+	NetworkDetails CardPaymentElementsCardDeclineNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardDeclineNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardDeclineNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The declined amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory CardPaymentElementsCardDeclineProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory CardPaymentElementsCardDeclineProcessingCategory `json:"processing_category" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// This is present if a specific decline reason was given in the real-time
 	// decision.
-	RealTimeDecisionReason CardPaymentElementsCardDeclineRealTimeDecisionReason `json:"real_time_decision_reason,required,nullable"`
+	RealTimeDecisionReason CardPaymentElementsCardDeclineRealTimeDecisionReason `json:"real_time_decision_reason" api:"required,nullable"`
 	// Why the transaction was declined.
-	Reason CardPaymentElementsCardDeclineReason `json:"reason,required"`
+	Reason CardPaymentElementsCardDeclineReason `json:"reason" api:"required"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// Fields related to verification of cardholder-provided values.
-	Verification CardPaymentElementsCardDeclineVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                     `json:"-,extras"`
+	Verification CardPaymentElementsCardDeclineVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON         cardPaymentElementsCardDeclineJSON         `json:"-"`
 }
 
@@ -2626,25 +2626,25 @@ func (r CardPaymentElementsCardDeclineActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type CardPaymentElementsCardDeclineAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic CardPaymentElementsCardDeclineAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic CardPaymentElementsCardDeclineAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental CardPaymentElementsCardDeclineAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental CardPaymentElementsCardDeclineAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original CardPaymentElementsCardDeclineAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original CardPaymentElementsCardDeclineAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription CardPaymentElementsCardDeclineAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription CardPaymentElementsCardDeclineAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge CardPaymentElementsCardDeclineAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardDeclineAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative CardPaymentElementsCardDeclineAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative CardPaymentElementsCardDeclineAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare CardPaymentElementsCardDeclineAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare CardPaymentElementsCardDeclineAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit CardPaymentElementsCardDeclineAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit CardPaymentElementsCardDeclineAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown CardPaymentElementsCardDeclineAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown CardPaymentElementsCardDeclineAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision CardPaymentElementsCardDeclineAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision CardPaymentElementsCardDeclineAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   cardPaymentElementsCardDeclineAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -2678,10 +2678,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                    `json:"currency,required"`
+	Currency string                                                    `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -2707,10 +2707,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                    `json:"currency,required"`
+	Currency string                                                    `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -2736,10 +2736,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -2766,10 +2766,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -2796,10 +2796,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -2826,10 +2826,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -2856,10 +2856,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -2886,10 +2886,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                     `json:"currency,required"`
+	Currency string                                                     `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -2915,10 +2915,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                     `json:"currency,required"`
+	Currency string                                                     `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -2944,10 +2944,10 @@ type CardPaymentElementsCardDeclineAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                    `json:"currency,required"`
+	Currency string                                                    `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardDeclineAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -3004,11 +3004,11 @@ func (r CardPaymentElementsCardDeclineDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type CardPaymentElementsCardDeclineNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category CardPaymentElementsCardDeclineNetworkDetailsCategory `json:"category,required"`
+	Category CardPaymentElementsCardDeclineNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse CardPaymentElementsCardDeclineNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardDeclineNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa CardPaymentElementsCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa CardPaymentElementsCardDeclineNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON cardPaymentElementsCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
@@ -3071,19 +3071,19 @@ type CardPaymentElementsCardDeclineNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator CardPaymentElementsCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardPaymentElementsCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason CardPaymentElementsCardDeclineNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability CardPaymentElementsCardDeclineNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability CardPaymentElementsCardDeclineNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    cardPaymentElementsCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -3207,17 +3207,17 @@ func (r CardPaymentElementsCardDeclineNetworkDetailsVisaTerminalEntryCapability)
 type CardPaymentElementsCardDeclineNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                               `json:"transaction_id,required,nullable"`
+	TransactionID string                                               `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -3324,12 +3324,12 @@ func (r CardPaymentElementsCardDeclineReason) IsKnown() bool {
 type CardPaymentElementsCardDeclineVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode CardPaymentElementsCardDeclineVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode CardPaymentElementsCardDeclineVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress CardPaymentElementsCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress CardPaymentElementsCardDeclineVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName CardPaymentElementsCardDeclineVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName CardPaymentElementsCardDeclineVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           cardPaymentElementsCardDeclineVerificationJSON           `json:"-"`
 }
 
@@ -3355,7 +3355,7 @@ func (r cardPaymentElementsCardDeclineVerificationJSON) RawJSON() string {
 // the back of the card.
 type CardPaymentElementsCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
+	Result CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -3397,16 +3397,16 @@ func (r CardPaymentElementsCardDeclineVerificationCardVerificationCodeResult) Is
 // we verified it against.
 type CardPaymentElementsCardDeclineVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result CardPaymentElementsCardDeclineVerificationCardholderAddressResult `json:"result,required"`
+	Result CardPaymentElementsCardDeclineVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -3454,11 +3454,11 @@ func (r CardPaymentElementsCardDeclineVerificationCardholderAddressResult) IsKno
 // Cardholder name provided in the authorization request.
 type CardPaymentElementsCardDeclineVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                       `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                       `json:"provided_middle_name" api:"required,nullable"`
 	JSON               cardPaymentElementsCardDeclineVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -3486,78 +3486,78 @@ func (r cardPaymentElementsCardDeclineVerificationCardholderNameJSON) RawJSON() 
 // holds placed on a customer's funds with the intent to later clear a transaction.
 type CardPaymentElementsCardFinancial struct {
 	// The Card Financial identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this financial was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner CardPaymentElementsCardFinancialActioner `json:"actioner,required"`
+	Actioner CardPaymentElementsCardFinancialActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts CardPaymentElementsCardFinancialAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts CardPaymentElementsCardFinancialAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency CardPaymentElementsCardFinancialCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardFinancialCurrency `json:"currency" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction CardPaymentElementsCardFinancialDirection `json:"direction,required"`
+	Direction CardPaymentElementsCardFinancialDirection `json:"direction" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails CardPaymentElementsCardFinancialNetworkDetails `json:"network_details,required"`
+	NetworkDetails CardPaymentElementsCardFinancialNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardFinancialNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardFinancialNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The pending amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the financial, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory CardPaymentElementsCardFinancialProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory CardPaymentElementsCardFinancialProcessingCategory `json:"processing_category" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_financial`.
-	Type CardPaymentElementsCardFinancialType `json:"type,required"`
+	Type CardPaymentElementsCardFinancialType `json:"type" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification CardPaymentElementsCardFinancialVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                       `json:"-,extras"`
+	Verification CardPaymentElementsCardFinancialVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                       `json:"-" api:"extrafields"`
 	JSON         cardPaymentElementsCardFinancialJSON         `json:"-"`
 }
 
@@ -3626,25 +3626,25 @@ func (r CardPaymentElementsCardFinancialActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type CardPaymentElementsCardFinancialAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic CardPaymentElementsCardFinancialAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic CardPaymentElementsCardFinancialAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental CardPaymentElementsCardFinancialAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental CardPaymentElementsCardFinancialAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original CardPaymentElementsCardFinancialAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original CardPaymentElementsCardFinancialAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription CardPaymentElementsCardFinancialAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription CardPaymentElementsCardFinancialAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge CardPaymentElementsCardFinancialAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardFinancialAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit CardPaymentElementsCardFinancialAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit CardPaymentElementsCardFinancialAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown CardPaymentElementsCardFinancialAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown CardPaymentElementsCardFinancialAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision CardPaymentElementsCardFinancialAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision CardPaymentElementsCardFinancialAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   cardPaymentElementsCardFinancialAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -3678,10 +3678,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -3708,10 +3708,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -3738,10 +3738,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -3768,10 +3768,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                            `json:"currency,required"`
+	Currency string                                                            `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -3798,10 +3798,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                         `json:"currency,required"`
+	Currency string                                                         `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -3828,10 +3828,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -3858,10 +3858,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -3888,10 +3888,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -3918,10 +3918,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -3948,10 +3948,10 @@ type CardPaymentElementsCardFinancialAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardFinancialAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -4009,11 +4009,11 @@ func (r CardPaymentElementsCardFinancialDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type CardPaymentElementsCardFinancialNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category CardPaymentElementsCardFinancialNetworkDetailsCategory `json:"category,required"`
+	Category CardPaymentElementsCardFinancialNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse CardPaymentElementsCardFinancialNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardFinancialNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa CardPaymentElementsCardFinancialNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa CardPaymentElementsCardFinancialNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON cardPaymentElementsCardFinancialNetworkDetailsJSON `json:"-"`
 }
 
@@ -4076,19 +4076,19 @@ type CardPaymentElementsCardFinancialNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator CardPaymentElementsCardFinancialNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardPaymentElementsCardFinancialNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason CardPaymentElementsCardFinancialNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability CardPaymentElementsCardFinancialNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability CardPaymentElementsCardFinancialNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    cardPaymentElementsCardFinancialNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -4212,17 +4212,17 @@ func (r CardPaymentElementsCardFinancialNetworkDetailsVisaTerminalEntryCapabilit
 type CardPaymentElementsCardFinancialNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                 `json:"transaction_id,required,nullable"`
+	TransactionID string                                                 `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardFinancialNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -4290,12 +4290,12 @@ func (r CardPaymentElementsCardFinancialType) IsKnown() bool {
 type CardPaymentElementsCardFinancialVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode CardPaymentElementsCardFinancialVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode CardPaymentElementsCardFinancialVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress CardPaymentElementsCardFinancialVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress CardPaymentElementsCardFinancialVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName CardPaymentElementsCardFinancialVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName CardPaymentElementsCardFinancialVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           cardPaymentElementsCardFinancialVerificationJSON           `json:"-"`
 }
 
@@ -4321,7 +4321,7 @@ func (r cardPaymentElementsCardFinancialVerificationJSON) RawJSON() string {
 // the back of the card.
 type CardPaymentElementsCardFinancialVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult `json:"result,required"`
+	Result CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardFinancialVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -4363,16 +4363,16 @@ func (r CardPaymentElementsCardFinancialVerificationCardVerificationCodeResult) 
 // we verified it against.
 type CardPaymentElementsCardFinancialVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result CardPaymentElementsCardFinancialVerificationCardholderAddressResult `json:"result,required"`
+	Result CardPaymentElementsCardFinancialVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardFinancialVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -4420,11 +4420,11 @@ func (r CardPaymentElementsCardFinancialVerificationCardholderAddressResult) IsK
 // Cardholder name provided in the authorization request.
 type CardPaymentElementsCardFinancialVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                         `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                         `json:"provided_middle_name" api:"required,nullable"`
 	JSON               cardPaymentElementsCardFinancialVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -4453,26 +4453,26 @@ func (r cardPaymentElementsCardFinancialVerificationCardholderNameJSON) RawJSON(
 // transaction is completed.
 type CardPaymentElementsCardFuelConfirmation struct {
 	// The Card Fuel Confirmation identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Card Authorization this updates.
-	CardAuthorizationID string `json:"card_authorization_id,required"`
+	CardAuthorizationID string `json:"card_authorization_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
 	// currency.
-	Currency CardPaymentElementsCardFuelConfirmationCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardFuelConfirmationCurrency `json:"currency" api:"required"`
 	// The card network used to process this card authorization.
-	Network CardPaymentElementsCardFuelConfirmationNetwork `json:"network,required"`
+	Network CardPaymentElementsCardFuelConfirmationNetwork `json:"network" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardFuelConfirmationNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardFuelConfirmationNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The identifier of the Pending Transaction associated with this Card Fuel
 	// Confirmation.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_fuel_confirmation`.
-	Type CardPaymentElementsCardFuelConfirmationType `json:"type,required"`
+	Type CardPaymentElementsCardFuelConfirmationType `json:"type" api:"required"`
 	// The updated authorization amount after this fuel confirmation, in the minor unit
 	// of the transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64                                       `json:"updated_authorization_amount,required"`
-	ExtraFields                map[string]interface{}                      `json:"-,extras"`
+	UpdatedAuthorizationAmount int64                                       `json:"updated_authorization_amount" api:"required"`
+	ExtraFields                map[string]interface{}                      `json:"-" api:"extrafields"`
 	JSON                       cardPaymentElementsCardFuelConfirmationJSON `json:"-"`
 }
 
@@ -4535,17 +4535,17 @@ func (r CardPaymentElementsCardFuelConfirmationNetwork) IsKnown() bool {
 type CardPaymentElementsCardFuelConfirmationNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                        `json:"transaction_id,required,nullable"`
+	TransactionID string                                                        `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardFuelConfirmationNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -4590,47 +4590,47 @@ func (r CardPaymentElementsCardFuelConfirmationType) IsKnown() bool {
 // pending amount of an authorized transaction.
 type CardPaymentElementsCardIncrement struct {
 	// The Card Increment identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner CardPaymentElementsCardIncrementActioner `json:"actioner,required"`
+	Actioner CardPaymentElementsCardIncrementActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts CardPaymentElementsCardIncrementAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts CardPaymentElementsCardIncrementAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The amount of this increment in the minor unit of the transaction's currency.
 	// For dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier for the Card Authorization this increments.
-	CardAuthorizationID string `json:"card_authorization_id,required"`
+	CardAuthorizationID string `json:"card_authorization_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
 	// currency.
-	Currency CardPaymentElementsCardIncrementCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardIncrementCurrency `json:"currency" api:"required"`
 	// The card network used to process this card authorization.
-	Network CardPaymentElementsCardIncrementNetwork `json:"network,required"`
+	Network CardPaymentElementsCardIncrementNetwork `json:"network" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardIncrementNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardIncrementNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// The identifier of the Pending Transaction associated with this Card Increment.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The amount of this increment in the minor unit of the transaction's presentment
 	// currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// incremental authorization.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_increment`.
-	Type CardPaymentElementsCardIncrementType `json:"type,required"`
+	Type CardPaymentElementsCardIncrementType `json:"type" api:"required"`
 	// The updated authorization amount after this increment, in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64                                `json:"updated_authorization_amount,required"`
-	ExtraFields                map[string]interface{}               `json:"-,extras"`
+	UpdatedAuthorizationAmount int64                                `json:"updated_authorization_amount" api:"required"`
+	ExtraFields                map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON                       cardPaymentElementsCardIncrementJSON `json:"-"`
 }
 
@@ -4687,25 +4687,25 @@ func (r CardPaymentElementsCardIncrementActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type CardPaymentElementsCardIncrementAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic CardPaymentElementsCardIncrementAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic CardPaymentElementsCardIncrementAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental CardPaymentElementsCardIncrementAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental CardPaymentElementsCardIncrementAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original CardPaymentElementsCardIncrementAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original CardPaymentElementsCardIncrementAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription CardPaymentElementsCardIncrementAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription CardPaymentElementsCardIncrementAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge CardPaymentElementsCardIncrementAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardIncrementAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative CardPaymentElementsCardIncrementAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative CardPaymentElementsCardIncrementAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare CardPaymentElementsCardIncrementAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare CardPaymentElementsCardIncrementAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit CardPaymentElementsCardIncrementAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit CardPaymentElementsCardIncrementAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown CardPaymentElementsCardIncrementAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown CardPaymentElementsCardIncrementAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision CardPaymentElementsCardIncrementAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision CardPaymentElementsCardIncrementAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   cardPaymentElementsCardIncrementAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -4739,10 +4739,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -4769,10 +4769,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -4799,10 +4799,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -4829,10 +4829,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                            `json:"currency,required"`
+	Currency string                                                            `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -4859,10 +4859,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                         `json:"currency,required"`
+	Currency string                                                         `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -4889,10 +4889,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -4919,10 +4919,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -4949,10 +4949,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -4979,10 +4979,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -5009,10 +5009,10 @@ type CardPaymentElementsCardIncrementAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardIncrementAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -5070,17 +5070,17 @@ func (r CardPaymentElementsCardIncrementNetwork) IsKnown() bool {
 type CardPaymentElementsCardIncrementNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                 `json:"transaction_id,required,nullable"`
+	TransactionID string                                                 `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardIncrementNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -5126,51 +5126,51 @@ func (r CardPaymentElementsCardIncrementType) IsKnown() bool {
 // transaction.
 type CardPaymentElementsCardRefund struct {
 	// The Card Refund identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// Cashback debited for this transaction, if eligible. Cashback is paid out in
 	// aggregate, monthly.
-	Cashback CardPaymentElementsCardRefundCashback `json:"cashback,required,nullable"`
+	Cashback CardPaymentElementsCardRefundCashback `json:"cashback" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency CardPaymentElementsCardRefundCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardRefundCurrency `json:"currency" api:"required"`
 	// Interchange assessed as a part of this transaction.
-	Interchange CardPaymentElementsCardRefundInterchange `json:"interchange,required,nullable"`
+	Interchange CardPaymentElementsCardRefundInterchange `json:"interchange" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city" api:"required"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Network-specific identifiers for this refund.
-	NetworkIdentifiers CardPaymentElementsCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardRefundNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
-	PurchaseDetails CardPaymentElementsCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
+	PurchaseDetails CardPaymentElementsCardRefundPurchaseDetails `json:"purchase_details" api:"required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type        CardPaymentElementsCardRefundType `json:"type,required"`
-	ExtraFields map[string]interface{}            `json:"-,extras"`
+	Type        CardPaymentElementsCardRefundType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}            `json:"-" api:"extrafields"`
 	JSON        cardPaymentElementsCardRefundJSON `json:"-"`
 }
 
@@ -5214,9 +5214,9 @@ type CardPaymentElementsCardRefundCashback struct {
 	// The cashback amount given as a string containing a decimal number. The amount is
 	// a positive number if it will be credited to you (e.g., settlements) and a
 	// negative number if it will be debited (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
-	Currency CardPaymentElementsCardRefundCashbackCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardRefundCashbackCurrency `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardRefundCashbackJSON     `json:"-"`
 }
 
@@ -5274,12 +5274,12 @@ type CardPaymentElementsCardRefundInterchange struct {
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
 	// (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The card network specific interchange code.
-	Code string `json:"code,required,nullable"`
+	Code string `json:"code" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
 	// reimbursement.
-	Currency CardPaymentElementsCardRefundInterchangeCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardRefundInterchangeCurrency `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardRefundInterchangeJSON     `json:"-"`
 }
 
@@ -5321,15 +5321,15 @@ func (r CardPaymentElementsCardRefundInterchangeCurrency) IsKnown() bool {
 type CardPaymentElementsCardRefundNetworkIdentifiers struct {
 	// A network assigned business ID that identifies the acquirer that processed this
 	// transaction.
-	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	AcquirerBusinessID string `json:"acquirer_business_id" api:"required"`
 	// A globally unique identifier for this settlement.
-	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	AcquirerReferenceNumber string `json:"acquirer_reference_number" api:"required"`
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                              `json:"transaction_id,required,nullable"`
+	TransactionID string                                              `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardRefundNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -5356,27 +5356,27 @@ func (r cardPaymentElementsCardRefundNetworkIdentifiersJSON) RawJSON() string {
 // fields.
 type CardPaymentElementsCardRefundPurchaseDetails struct {
 	// Fields specific to car rentals.
-	CarRental CardPaymentElementsCardRefundPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	CarRental CardPaymentElementsCardRefundPurchaseDetailsCarRental `json:"car_rental" api:"required,nullable"`
 	// An identifier from the merchant for the customer or consumer.
-	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier" api:"required,nullable"`
 	// The state or provincial tax amount in minor units.
-	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	LocalTaxAmount int64 `json:"local_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	LocalTaxCurrency string `json:"local_tax_currency" api:"required,nullable"`
 	// Fields specific to lodging.
-	Lodging CardPaymentElementsCardRefundPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	Lodging CardPaymentElementsCardRefundPurchaseDetailsLodging `json:"lodging" api:"required,nullable"`
 	// The national tax amount in minor units.
-	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	NationalTaxAmount int64 `json:"national_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	NationalTaxCurrency string `json:"national_tax_currency" api:"required,nullable"`
 	// An identifier from the merchant for the purchase to the issuer and cardholder.
-	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	PurchaseIdentifier string `json:"purchase_identifier" api:"required,nullable"`
 	// The format of the purchase identifier.
-	PurchaseIdentifierFormat CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	PurchaseIdentifierFormat CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format" api:"required,nullable"`
 	// Fields specific to travel.
-	Travel CardPaymentElementsCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
+	Travel CardPaymentElementsCardRefundPurchaseDetailsTravel `json:"travel" api:"required,nullable"`
 	JSON   cardPaymentElementsCardRefundPurchaseDetailsJSON   `json:"-"`
 }
 
@@ -5408,45 +5408,45 @@ func (r cardPaymentElementsCardRefundPurchaseDetailsJSON) RawJSON() string {
 // Fields specific to car rentals.
 type CardPaymentElementsCardRefundPurchaseDetailsCarRental struct {
 	// Code indicating the vehicle's class.
-	CarClassCode string `json:"car_class_code,required,nullable"`
+	CarClassCode string `json:"car_class_code" api:"required,nullable"`
 	// Date the customer picked up the car or, in the case of a no-show or pre-pay
 	// transaction, the scheduled pick up date.
-	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	CheckoutDate time.Time `json:"checkout_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the vehicle.
-	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
 	// rate.
-	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency" api:"required,nullable"`
 	// Number of days the vehicle was rented.
-	DaysRented int64 `json:"days_rented,required,nullable"`
+	DaysRented int64 `json:"days_rented" api:"required,nullable"`
 	// Additional charges (gas, late fee, etc.) being billed.
-	ExtraCharges CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges CardPaymentElementsCardRefundPurchaseDetailsCarRentalExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Fuel charges for the vehicle.
-	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	FuelChargesAmount int64 `json:"fuel_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
 	// assessed.
-	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	FuelChargesCurrency string `json:"fuel_charges_currency" api:"required,nullable"`
 	// Any insurance being charged for the vehicle.
-	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
 	// charges assessed.
-	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	InsuranceChargesCurrency string `json:"insurance_charges_currency" api:"required,nullable"`
 	// An indicator that the cardholder is being billed for a reserved vehicle that was
 	// not actually rented (that is, a "no-show" charge).
-	NoShowIndicator CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Charges for returning the vehicle at a different location than where it was
 	// picked up.
-	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
 	// drop-off charges assessed.
-	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency" api:"required,nullable"`
 	// Name of the person renting the vehicle.
-	RenterName string `json:"renter_name,required,nullable"`
+	RenterName string `json:"renter_name" api:"required,nullable"`
 	// Weekly rate being charged for the vehicle.
-	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string                                                    `json:"weekly_rental_rate_currency,required,nullable"`
+	WeeklyRentalRateCurrency string                                                    `json:"weekly_rental_rate_currency" api:"required,nullable"`
 	JSON                     cardPaymentElementsCardRefundPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
@@ -5521,44 +5521,44 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsCarRentalNoShowIndicator) Is
 // Fields specific to lodging.
 type CardPaymentElementsCardRefundPurchaseDetailsLodging struct {
 	// Date the customer checked in.
-	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	CheckInDate time.Time `json:"check_in_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the room.
-	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
 	// rate.
-	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency" api:"required,nullable"`
 	// Additional charges (phone, late check-out, etc.) being billed.
-	ExtraCharges CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges CardPaymentElementsCardRefundPurchaseDetailsLodgingExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Folio cash advances for the room.
-	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
 	// advances.
-	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency" api:"required,nullable"`
 	// Food and beverage charges for the room.
-	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
-	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency" api:"required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
 	// actually used.
-	NoShowIndicator CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator CardPaymentElementsCardRefundPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Prepaid expenses being charged for the room.
-	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
 	// expenses.
-	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency" api:"required,nullable"`
 	// Number of nights the room was rented.
-	RoomNights int64 `json:"room_nights,required,nullable"`
+	RoomNights int64 `json:"room_nights" api:"required,nullable"`
 	// Total room tax being charged.
-	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
 	// tax.
-	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency" api:"required,nullable"`
 	// Total tax being charged for the room.
-	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	TotalTaxAmount int64 `json:"total_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string                                                  `json:"total_tax_currency,required,nullable"`
+	TotalTaxCurrency string                                                  `json:"total_tax_currency" api:"required,nullable"`
 	JSON             cardPaymentElementsCardRefundPurchaseDetailsLodgingJSON `json:"-"`
 }
 
@@ -5653,29 +5653,29 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsPurchaseIdentifierFormat) Is
 // Fields specific to travel.
 type CardPaymentElementsCardRefundPurchaseDetailsTravel struct {
 	// Ancillary purchases in addition to the airfare.
-	Ancillary CardPaymentElementsCardRefundPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	Ancillary CardPaymentElementsCardRefundPurchaseDetailsTravelAncillary `json:"ancillary" api:"required,nullable"`
 	// Indicates the computerized reservation system used to book the ticket.
-	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	ComputerizedReservationSystem string `json:"computerized_reservation_system" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Date of departure.
-	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	DepartureDate time.Time `json:"departure_date" api:"required,nullable" format:"date"`
 	// Code for the originating city or airport.
-	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	OriginationCityAirportCode string `json:"origination_city_airport_code" api:"required,nullable"`
 	// Name of the passenger.
-	PassengerName string `json:"passenger_name,required,nullable"`
+	PassengerName string `json:"passenger_name" api:"required,nullable"`
 	// Indicates whether this ticket is non-refundable.
-	RestrictedTicketIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	RestrictedTicketIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator" api:"required,nullable"`
 	// Indicates why a ticket was changed.
-	TicketChangeIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	TicketChangeIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator" api:"required,nullable"`
 	// Ticket number.
-	TicketNumber string `json:"ticket_number,required,nullable"`
+	TicketNumber string `json:"ticket_number" api:"required,nullable"`
 	// Code for the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	TravelAgencyCode string `json:"travel_agency_code" api:"required,nullable"`
 	// Name of the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	TravelAgencyName string `json:"travel_agency_name" api:"required,nullable"`
 	// Fields specific to each leg of the journey.
-	TripLegs []CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	TripLegs []CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs" api:"required,nullable"`
 	JSON     cardPaymentElementsCardRefundPurchaseDetailsTravelJSON      `json:"-"`
 }
 
@@ -5711,15 +5711,15 @@ type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
 	// baggage fee for a passenger transport ticket, this field should contain the
 	// ticket document number for the other purchase.
-	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Name of the passenger or description of the ancillary purchase.
-	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	PassengerNameOrDescription string `json:"passenger_name_or_description" api:"required,nullable"`
 	// Additional travel charges, such as baggage fees.
-	Services []CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	Services []CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService `json:"services" api:"required"`
 	// Ticket document number.
-	TicketDocumentNumber string                                                          `json:"ticket_document_number,required,nullable"`
+	TicketDocumentNumber string                                                          `json:"ticket_document_number" api:"required,nullable"`
 	JSON                 cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
@@ -5764,9 +5764,9 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryCreditReasonI
 
 type CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
-	Category CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	Category CardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category" api:"required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string                                                                 `json:"sub_category,required,nullable"`
+	SubCategory string                                                                 `json:"sub_category" api:"required,nullable"`
 	JSON        cardPaymentElementsCardRefundPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
@@ -5881,17 +5881,17 @@ func (r CardPaymentElementsCardRefundPurchaseDetailsTravelTicketChangeIndicator)
 
 type CardPaymentElementsCardRefundPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
-	CarrierCode string `json:"carrier_code,required,nullable"`
+	CarrierCode string `json:"carrier_code" api:"required,nullable"`
 	// Code for the destination city or airport.
-	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	DestinationCityAirportCode string `json:"destination_city_airport_code" api:"required,nullable"`
 	// Fare basis code.
-	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	FareBasisCode string `json:"fare_basis_code" api:"required,nullable"`
 	// Flight number.
-	FlightNumber string `json:"flight_number,required,nullable"`
+	FlightNumber string `json:"flight_number" api:"required,nullable"`
 	// Service class (e.g., first class, business class, etc.).
-	ServiceClass string `json:"service_class,required,nullable"`
+	ServiceClass string `json:"service_class" api:"required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
-	StopOverCode CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	StopOverCode CardPaymentElementsCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code" api:"required,nullable"`
 	JSON         cardPaymentElementsCardRefundPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
@@ -5955,59 +5955,59 @@ func (r CardPaymentElementsCardRefundType) IsKnown() bool {
 // or the entirety of an existing Card Authorization.
 type CardPaymentElementsCardReversal struct {
 	// The Card Reversal identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Card Authorization this reverses.
-	CardAuthorizationID string `json:"card_authorization_id,required"`
+	CardAuthorizationID string `json:"card_authorization_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
 	// currency.
-	Currency CardPaymentElementsCardReversalCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardReversalCurrency `json:"currency" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required,nullable"`
+	MerchantCountry string `json:"merchant_country" api:"required,nullable"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// The card network used to process this card authorization.
-	Network CardPaymentElementsCardReversalNetwork `json:"network,required"`
+	Network CardPaymentElementsCardReversalNetwork `json:"network" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardReversalNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardReversalNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The identifier of the Pending Transaction associated with this Card Reversal.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
 	// presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The amount of this reversal in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	ReversalAmount int64 `json:"reversal_amount,required"`
+	ReversalAmount int64 `json:"reversal_amount" api:"required"`
 	// The amount of this reversal in the minor unit of the transaction's presentment
 	// currency. For dollars, for example, this is cents.
-	ReversalPresentmentAmount int64 `json:"reversal_presentment_amount,required"`
+	ReversalPresentmentAmount int64 `json:"reversal_presentment_amount" api:"required"`
 	// Why this reversal was initiated.
-	ReversalReason CardPaymentElementsCardReversalReversalReason `json:"reversal_reason,required,nullable"`
+	ReversalReason CardPaymentElementsCardReversalReversalReason `json:"reversal_reason" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_reversal`.
-	Type CardPaymentElementsCardReversalType `json:"type,required"`
+	Type CardPaymentElementsCardReversalType `json:"type" api:"required"`
 	// The amount left pending on the Card Authorization in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount,required"`
+	UpdatedAuthorizationAmount int64 `json:"updated_authorization_amount" api:"required"`
 	// The amount left pending on the Card Authorization in the minor unit of the
 	// transaction's presentment currency. For dollars, for example, this is cents.
-	UpdatedAuthorizationPresentmentAmount int64                               `json:"updated_authorization_presentment_amount,required"`
-	ExtraFields                           map[string]interface{}              `json:"-,extras"`
+	UpdatedAuthorizationPresentmentAmount int64                               `json:"updated_authorization_presentment_amount" api:"required"`
+	ExtraFields                           map[string]interface{}              `json:"-" api:"extrafields"`
 	JSON                                  cardPaymentElementsCardReversalJSON `json:"-"`
 }
 
@@ -6083,17 +6083,17 @@ func (r CardPaymentElementsCardReversalNetwork) IsKnown() bool {
 type CardPaymentElementsCardReversalNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                `json:"transaction_id,required,nullable"`
+	TransactionID string                                                `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardReversalNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -6157,62 +6157,62 @@ func (r CardPaymentElementsCardReversalType) IsKnown() bool {
 // without first authorizing it.
 type CardPaymentElementsCardSettlement struct {
 	// The Card Settlement identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The Card Authorization that was created prior to this Card Settlement, if one
 	// exists.
-	CardAuthorization string `json:"card_authorization,required,nullable"`
+	CardAuthorization string `json:"card_authorization" api:"required,nullable"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// Cashback earned on this transaction, if eligible. Cashback is paid out in
 	// aggregate, monthly.
-	Cashback CardPaymentElementsCardSettlementCashback `json:"cashback,required,nullable"`
+	Cashback CardPaymentElementsCardSettlementCashback `json:"cashback" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency CardPaymentElementsCardSettlementCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardSettlementCurrency `json:"currency" api:"required"`
 	// Interchange assessed as a part of this transaction.
-	Interchange CardPaymentElementsCardSettlementInterchange `json:"interchange,required,nullable"`
+	Interchange CardPaymentElementsCardSettlementInterchange `json:"interchange" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city" api:"required"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// The card network on which this transaction was processed.
-	Network CardPaymentElementsCardSettlementNetwork `json:"network,required"`
+	Network CardPaymentElementsCardSettlementNetwork `json:"network" api:"required"`
 	// Network-specific identifiers for this refund.
-	NetworkIdentifiers CardPaymentElementsCardSettlementNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardSettlementNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
-	PurchaseDetails CardPaymentElementsCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
+	PurchaseDetails CardPaymentElementsCardSettlementPurchaseDetails `json:"purchase_details" api:"required,nullable"`
 	// Surcharge amount details, if applicable. The amount is positive if the surcharge
 	// is added to the overall transaction amount (surcharge), and negative if the
 	// surcharge is deducted from the overall transaction amount (discount).
-	Surcharge CardPaymentElementsCardSettlementSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardSettlementSurcharge `json:"surcharge" api:"required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type        CardPaymentElementsCardSettlementType `json:"type,required"`
-	ExtraFields map[string]interface{}                `json:"-,extras"`
+	Type        CardPaymentElementsCardSettlementType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}                `json:"-" api:"extrafields"`
 	JSON        cardPaymentElementsCardSettlementJSON `json:"-"`
 }
 
@@ -6260,9 +6260,9 @@ type CardPaymentElementsCardSettlementCashback struct {
 	// The cashback amount given as a string containing a decimal number. The amount is
 	// a positive number if it will be credited to you (e.g., settlements) and a
 	// negative number if it will be debited (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
-	Currency CardPaymentElementsCardSettlementCashbackCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardSettlementCashbackCurrency `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardSettlementCashbackJSON     `json:"-"`
 }
 
@@ -6320,12 +6320,12 @@ type CardPaymentElementsCardSettlementInterchange struct {
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
 	// (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The card network specific interchange code.
-	Code string `json:"code,required,nullable"`
+	Code string `json:"code" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
 	// reimbursement.
-	Currency CardPaymentElementsCardSettlementInterchangeCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardSettlementInterchangeCurrency `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardSettlementInterchangeJSON     `json:"-"`
 }
 
@@ -6383,15 +6383,15 @@ func (r CardPaymentElementsCardSettlementNetwork) IsKnown() bool {
 type CardPaymentElementsCardSettlementNetworkIdentifiers struct {
 	// A network assigned business ID that identifies the acquirer that processed this
 	// transaction.
-	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	AcquirerBusinessID string `json:"acquirer_business_id" api:"required"`
 	// A globally unique identifier for this settlement.
-	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	AcquirerReferenceNumber string `json:"acquirer_reference_number" api:"required"`
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                  `json:"transaction_id,required,nullable"`
+	TransactionID string                                                  `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardSettlementNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -6418,27 +6418,27 @@ func (r cardPaymentElementsCardSettlementNetworkIdentifiersJSON) RawJSON() strin
 // fields.
 type CardPaymentElementsCardSettlementPurchaseDetails struct {
 	// Fields specific to car rentals.
-	CarRental CardPaymentElementsCardSettlementPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	CarRental CardPaymentElementsCardSettlementPurchaseDetailsCarRental `json:"car_rental" api:"required,nullable"`
 	// An identifier from the merchant for the customer or consumer.
-	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier" api:"required,nullable"`
 	// The state or provincial tax amount in minor units.
-	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	LocalTaxAmount int64 `json:"local_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	LocalTaxCurrency string `json:"local_tax_currency" api:"required,nullable"`
 	// Fields specific to lodging.
-	Lodging CardPaymentElementsCardSettlementPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	Lodging CardPaymentElementsCardSettlementPurchaseDetailsLodging `json:"lodging" api:"required,nullable"`
 	// The national tax amount in minor units.
-	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	NationalTaxAmount int64 `json:"national_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	NationalTaxCurrency string `json:"national_tax_currency" api:"required,nullable"`
 	// An identifier from the merchant for the purchase to the issuer and cardholder.
-	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	PurchaseIdentifier string `json:"purchase_identifier" api:"required,nullable"`
 	// The format of the purchase identifier.
-	PurchaseIdentifierFormat CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	PurchaseIdentifierFormat CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format" api:"required,nullable"`
 	// Fields specific to travel.
-	Travel CardPaymentElementsCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
+	Travel CardPaymentElementsCardSettlementPurchaseDetailsTravel `json:"travel" api:"required,nullable"`
 	JSON   cardPaymentElementsCardSettlementPurchaseDetailsJSON   `json:"-"`
 }
 
@@ -6470,45 +6470,45 @@ func (r cardPaymentElementsCardSettlementPurchaseDetailsJSON) RawJSON() string {
 // Fields specific to car rentals.
 type CardPaymentElementsCardSettlementPurchaseDetailsCarRental struct {
 	// Code indicating the vehicle's class.
-	CarClassCode string `json:"car_class_code,required,nullable"`
+	CarClassCode string `json:"car_class_code" api:"required,nullable"`
 	// Date the customer picked up the car or, in the case of a no-show or pre-pay
 	// transaction, the scheduled pick up date.
-	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	CheckoutDate time.Time `json:"checkout_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the vehicle.
-	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
 	// rate.
-	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency" api:"required,nullable"`
 	// Number of days the vehicle was rented.
-	DaysRented int64 `json:"days_rented,required,nullable"`
+	DaysRented int64 `json:"days_rented" api:"required,nullable"`
 	// Additional charges (gas, late fee, etc.) being billed.
-	ExtraCharges CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges CardPaymentElementsCardSettlementPurchaseDetailsCarRentalExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Fuel charges for the vehicle.
-	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	FuelChargesAmount int64 `json:"fuel_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
 	// assessed.
-	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	FuelChargesCurrency string `json:"fuel_charges_currency" api:"required,nullable"`
 	// Any insurance being charged for the vehicle.
-	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
 	// charges assessed.
-	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	InsuranceChargesCurrency string `json:"insurance_charges_currency" api:"required,nullable"`
 	// An indicator that the cardholder is being billed for a reserved vehicle that was
 	// not actually rented (that is, a "no-show" charge).
-	NoShowIndicator CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Charges for returning the vehicle at a different location than where it was
 	// picked up.
-	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
 	// drop-off charges assessed.
-	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency" api:"required,nullable"`
 	// Name of the person renting the vehicle.
-	RenterName string `json:"renter_name,required,nullable"`
+	RenterName string `json:"renter_name" api:"required,nullable"`
 	// Weekly rate being charged for the vehicle.
-	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string                                                        `json:"weekly_rental_rate_currency,required,nullable"`
+	WeeklyRentalRateCurrency string                                                        `json:"weekly_rental_rate_currency" api:"required,nullable"`
 	JSON                     cardPaymentElementsCardSettlementPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
@@ -6584,44 +6584,44 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsCarRentalNoShowIndicator
 // Fields specific to lodging.
 type CardPaymentElementsCardSettlementPurchaseDetailsLodging struct {
 	// Date the customer checked in.
-	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	CheckInDate time.Time `json:"check_in_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the room.
-	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
 	// rate.
-	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency" api:"required,nullable"`
 	// Additional charges (phone, late check-out, etc.) being billed.
-	ExtraCharges CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges CardPaymentElementsCardSettlementPurchaseDetailsLodgingExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Folio cash advances for the room.
-	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
 	// advances.
-	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency" api:"required,nullable"`
 	// Food and beverage charges for the room.
-	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
-	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency" api:"required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
 	// actually used.
-	NoShowIndicator CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator CardPaymentElementsCardSettlementPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Prepaid expenses being charged for the room.
-	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
 	// expenses.
-	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency" api:"required,nullable"`
 	// Number of nights the room was rented.
-	RoomNights int64 `json:"room_nights,required,nullable"`
+	RoomNights int64 `json:"room_nights" api:"required,nullable"`
 	// Total room tax being charged.
-	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
 	// tax.
-	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency" api:"required,nullable"`
 	// Total tax being charged for the room.
-	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	TotalTaxAmount int64 `json:"total_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string                                                      `json:"total_tax_currency,required,nullable"`
+	TotalTaxCurrency string                                                      `json:"total_tax_currency" api:"required,nullable"`
 	JSON             cardPaymentElementsCardSettlementPurchaseDetailsLodgingJSON `json:"-"`
 }
 
@@ -6717,29 +6717,29 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsPurchaseIdentifierFormat
 // Fields specific to travel.
 type CardPaymentElementsCardSettlementPurchaseDetailsTravel struct {
 	// Ancillary purchases in addition to the airfare.
-	Ancillary CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	Ancillary CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillary `json:"ancillary" api:"required,nullable"`
 	// Indicates the computerized reservation system used to book the ticket.
-	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	ComputerizedReservationSystem string `json:"computerized_reservation_system" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Date of departure.
-	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	DepartureDate time.Time `json:"departure_date" api:"required,nullable" format:"date"`
 	// Code for the originating city or airport.
-	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	OriginationCityAirportCode string `json:"origination_city_airport_code" api:"required,nullable"`
 	// Name of the passenger.
-	PassengerName string `json:"passenger_name,required,nullable"`
+	PassengerName string `json:"passenger_name" api:"required,nullable"`
 	// Indicates whether this ticket is non-refundable.
-	RestrictedTicketIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	RestrictedTicketIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator" api:"required,nullable"`
 	// Indicates why a ticket was changed.
-	TicketChangeIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	TicketChangeIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator" api:"required,nullable"`
 	// Ticket number.
-	TicketNumber string `json:"ticket_number,required,nullable"`
+	TicketNumber string `json:"ticket_number" api:"required,nullable"`
 	// Code for the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	TravelAgencyCode string `json:"travel_agency_code" api:"required,nullable"`
 	// Name of the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	TravelAgencyName string `json:"travel_agency_name" api:"required,nullable"`
 	// Fields specific to each leg of the journey.
-	TripLegs []CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	TripLegs []CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs" api:"required,nullable"`
 	JSON     cardPaymentElementsCardSettlementPurchaseDetailsTravelJSON      `json:"-"`
 }
 
@@ -6775,15 +6775,15 @@ type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
 	// baggage fee for a passenger transport ticket, this field should contain the
 	// ticket document number for the other purchase.
-	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Name of the passenger or description of the ancillary purchase.
-	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	PassengerNameOrDescription string `json:"passenger_name_or_description" api:"required,nullable"`
 	// Additional travel charges, such as baggage fees.
-	Services []CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	Services []CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService `json:"services" api:"required"`
 	// Ticket document number.
-	TicketDocumentNumber string                                                              `json:"ticket_document_number,required,nullable"`
+	TicketDocumentNumber string                                                              `json:"ticket_document_number" api:"required,nullable"`
 	JSON                 cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
@@ -6828,9 +6828,9 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryCreditRea
 
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
-	Category CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	Category CardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category" api:"required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string                                                                     `json:"sub_category,required,nullable"`
+	SubCategory string                                                                     `json:"sub_category" api:"required,nullable"`
 	JSON        cardPaymentElementsCardSettlementPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
@@ -6945,17 +6945,17 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelTicketChangeIndica
 
 type CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
-	CarrierCode string `json:"carrier_code,required,nullable"`
+	CarrierCode string `json:"carrier_code" api:"required,nullable"`
 	// Code for the destination city or airport.
-	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	DestinationCityAirportCode string `json:"destination_city_airport_code" api:"required,nullable"`
 	// Fare basis code.
-	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	FareBasisCode string `json:"fare_basis_code" api:"required,nullable"`
 	// Flight number.
-	FlightNumber string `json:"flight_number,required,nullable"`
+	FlightNumber string `json:"flight_number" api:"required,nullable"`
 	// Service class (e.g., first class, business class, etc.).
-	ServiceClass string `json:"service_class,required,nullable"`
+	ServiceClass string `json:"service_class" api:"required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
-	StopOverCode CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	StopOverCode CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code" api:"required,nullable"`
 	JSON         cardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
@@ -7003,10 +7003,10 @@ func (r CardPaymentElementsCardSettlementPurchaseDetailsTravelTripLegsStopOverCo
 // surcharge is deducted from the overall transaction amount (discount).
 type CardPaymentElementsCardSettlementSurcharge struct {
 	// The surcharge amount in the minor unit of the transaction's settlement currency.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The surcharge amount in the minor unit of the transaction's presentment
 	// currency.
-	PresentmentAmount int64                                          `json:"presentment_amount,required"`
+	PresentmentAmount int64                                          `json:"presentment_amount" api:"required"`
 	JSON              cardPaymentElementsCardSettlementSurchargeJSON `json:"-"`
 }
 
@@ -7049,62 +7049,62 @@ func (r CardPaymentElementsCardSettlementType) IsKnown() bool {
 // optionally its address and/or Card Verification Value are valid.
 type CardPaymentElementsCardValidation struct {
 	// The Card Validation identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner CardPaymentElementsCardValidationActioner `json:"actioner,required"`
+	Actioner CardPaymentElementsCardValidationActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts CardPaymentElementsCardValidationAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts CardPaymentElementsCardValidationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency CardPaymentElementsCardValidationCurrency `json:"currency,required"`
+	Currency CardPaymentElementsCardValidationCurrency `json:"currency" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails CardPaymentElementsCardValidationNetworkDetails `json:"network_details,required"`
+	NetworkDetails CardPaymentElementsCardValidationNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers CardPaymentElementsCardValidationNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers CardPaymentElementsCardValidationNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_card_validation`.
-	Type CardPaymentElementsCardValidationType `json:"type,required"`
+	Type CardPaymentElementsCardValidationType `json:"type" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification CardPaymentElementsCardValidationVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                        `json:"-,extras"`
+	Verification CardPaymentElementsCardValidationVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                        `json:"-" api:"extrafields"`
 	JSON         cardPaymentElementsCardValidationJSON         `json:"-"`
 }
 
@@ -7167,25 +7167,25 @@ func (r CardPaymentElementsCardValidationActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type CardPaymentElementsCardValidationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic CardPaymentElementsCardValidationAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic CardPaymentElementsCardValidationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental CardPaymentElementsCardValidationAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental CardPaymentElementsCardValidationAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original CardPaymentElementsCardValidationAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original CardPaymentElementsCardValidationAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription CardPaymentElementsCardValidationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription CardPaymentElementsCardValidationAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge CardPaymentElementsCardValidationAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge CardPaymentElementsCardValidationAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative CardPaymentElementsCardValidationAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative CardPaymentElementsCardValidationAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare CardPaymentElementsCardValidationAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare CardPaymentElementsCardValidationAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit CardPaymentElementsCardValidationAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit CardPaymentElementsCardValidationAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown CardPaymentElementsCardValidationAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown CardPaymentElementsCardValidationAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision CardPaymentElementsCardValidationAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision CardPaymentElementsCardValidationAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   cardPaymentElementsCardValidationAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -7219,10 +7219,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -7249,10 +7249,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -7279,10 +7279,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                         `json:"currency,required"`
+	Currency string                                                         `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -7309,10 +7309,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -7339,10 +7339,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -7369,10 +7369,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -7399,10 +7399,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -7429,10 +7429,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -7459,10 +7459,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -7489,10 +7489,10 @@ type CardPaymentElementsCardValidationAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     cardPaymentElementsCardValidationAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -7533,11 +7533,11 @@ func (r CardPaymentElementsCardValidationCurrency) IsKnown() bool {
 // Fields specific to the `network`.
 type CardPaymentElementsCardValidationNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category CardPaymentElementsCardValidationNetworkDetailsCategory `json:"category,required"`
+	Category CardPaymentElementsCardValidationNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse CardPaymentElementsCardValidationNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse CardPaymentElementsCardValidationNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa CardPaymentElementsCardValidationNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa CardPaymentElementsCardValidationNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON cardPaymentElementsCardValidationNetworkDetailsJSON `json:"-"`
 }
 
@@ -7600,19 +7600,19 @@ type CardPaymentElementsCardValidationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator CardPaymentElementsCardValidationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode CardPaymentElementsCardValidationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason CardPaymentElementsCardValidationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability CardPaymentElementsCardValidationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability CardPaymentElementsCardValidationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    cardPaymentElementsCardValidationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -7736,17 +7736,17 @@ func (r CardPaymentElementsCardValidationNetworkDetailsVisaTerminalEntryCapabili
 type CardPaymentElementsCardValidationNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                  `json:"transaction_id,required,nullable"`
+	TransactionID string                                                  `json:"transaction_id" api:"required,nullable"`
 	JSON          cardPaymentElementsCardValidationNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -7789,12 +7789,12 @@ func (r CardPaymentElementsCardValidationType) IsKnown() bool {
 type CardPaymentElementsCardValidationVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode CardPaymentElementsCardValidationVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode CardPaymentElementsCardValidationVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress CardPaymentElementsCardValidationVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress CardPaymentElementsCardValidationVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName CardPaymentElementsCardValidationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName CardPaymentElementsCardValidationVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           cardPaymentElementsCardValidationVerificationJSON           `json:"-"`
 }
 
@@ -7820,7 +7820,7 @@ func (r cardPaymentElementsCardValidationVerificationJSON) RawJSON() string {
 // the back of the card.
 type CardPaymentElementsCardValidationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result CardPaymentElementsCardValidationVerificationCardVerificationCodeResult `json:"result,required"`
+	Result CardPaymentElementsCardValidationVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardValidationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -7862,16 +7862,16 @@ func (r CardPaymentElementsCardValidationVerificationCardVerificationCodeResult)
 // we verified it against.
 type CardPaymentElementsCardValidationVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result CardPaymentElementsCardValidationVerificationCardholderAddressResult `json:"result,required"`
+	Result CardPaymentElementsCardValidationVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   cardPaymentElementsCardValidationVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -7919,11 +7919,11 @@ func (r CardPaymentElementsCardValidationVerificationCardholderAddressResult) Is
 // Cardholder name provided in the authorization request.
 type CardPaymentElementsCardValidationVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                          `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                          `json:"provided_middle_name" api:"required,nullable"`
 	JSON               cardPaymentElementsCardValidationVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -7969,21 +7969,21 @@ func (r cardPaymentElementsOtherJSON) RawJSON() string {
 
 type CardPaymentSchemeFee struct {
 	// The fee amount given as a string containing a decimal number.
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
 	// created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
 	// reimbursement.
-	Currency CardPaymentSchemeFeesCurrency `json:"currency,required"`
+	Currency CardPaymentSchemeFeesCurrency `json:"currency" api:"required"`
 	// The type of fee being assessed.
-	FeeType CardPaymentSchemeFeesFeeType `json:"fee_type,required"`
+	FeeType CardPaymentSchemeFeesFeeType `json:"fee_type" api:"required"`
 	// The fixed component of the fee, if applicable, given in major units of the fee
 	// amount.
-	FixedComponent string `json:"fixed_component,required,nullable"`
+	FixedComponent string `json:"fixed_component" api:"required,nullable"`
 	// The variable rate component of the fee, if applicable, given as a decimal (e.g.,
 	// 0.015 for 1.5%).
-	VariableRate string                   `json:"variable_rate,required,nullable"`
+	VariableRate string                   `json:"variable_rate" api:"required,nullable"`
 	JSON         cardPaymentSchemeFeeJSON `json:"-"`
 }
 
@@ -8071,25 +8071,25 @@ func (r CardPaymentSchemeFeesFeeType) IsKnown() bool {
 type CardPaymentState struct {
 	// The total authorized amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	AuthorizedAmount int64 `json:"authorized_amount,required"`
+	AuthorizedAmount int64 `json:"authorized_amount" api:"required"`
 	// The total amount from fuel confirmations in the minor unit of the transaction's
 	// currency. For dollars, for example, this is cents.
-	FuelConfirmedAmount int64 `json:"fuel_confirmed_amount,required"`
+	FuelConfirmedAmount int64 `json:"fuel_confirmed_amount" api:"required"`
 	// The total incrementally updated authorized amount in the minor unit of the
 	// transaction's currency. For dollars, for example, this is cents.
-	IncrementedAmount int64 `json:"incremented_amount,required"`
+	IncrementedAmount int64 `json:"incremented_amount" api:"required"`
 	// The total refund authorized amount in the minor unit of the transaction's
 	// currency. For dollars, for example, this is cents.
-	RefundAuthorizedAmount int64 `json:"refund_authorized_amount,required"`
+	RefundAuthorizedAmount int64 `json:"refund_authorized_amount" api:"required"`
 	// The total refunded amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	RefundedAmount int64 `json:"refunded_amount,required"`
+	RefundedAmount int64 `json:"refunded_amount" api:"required"`
 	// The total reversed amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	ReversedAmount int64 `json:"reversed_amount,required"`
+	ReversedAmount int64 `json:"reversed_amount" api:"required"`
 	// The total settled amount in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	SettledAmount int64                `json:"settled_amount,required"`
+	SettledAmount int64                `json:"settled_amount" api:"required"`
 	JSON          cardPaymentStateJSON `json:"-"`
 }
 

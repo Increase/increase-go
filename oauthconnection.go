@@ -78,22 +78,22 @@ func (r *OAuthConnectionService) ListAutoPaging(ctx context.Context, query OAuth
 // [here](https://increase.com/documentation/oauth).
 type OAuthConnection struct {
 	// The OAuth Connection's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Connection was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp when the OAuth
 	// Connection was deleted.
-	DeletedAt time.Time `json:"deleted_at,required,nullable" format:"date-time"`
+	DeletedAt time.Time `json:"deleted_at" api:"required,nullable" format:"date-time"`
 	// The identifier of the Group that has authorized your OAuth application.
-	GroupID string `json:"group_id,required"`
+	GroupID string `json:"group_id" api:"required"`
 	// The identifier of the OAuth application this connection is for.
-	OAuthApplicationID string `json:"oauth_application_id,required"`
+	OAuthApplicationID string `json:"oauth_application_id" api:"required"`
 	// Whether the connection is active.
-	Status OAuthConnectionStatus `json:"status,required"`
+	Status OAuthConnectionStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_connection`.
-	Type OAuthConnectionType `json:"type,required"`
+	Type OAuthConnectionType `json:"type" api:"required"`
 	JSON oauthConnectionJSON `json:"-"`
 }
 

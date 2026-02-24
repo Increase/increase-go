@@ -46,9 +46,9 @@ func (r *SimulationInboundRealTimePaymentsTransferService) New(ctx context.Conte
 type SimulationInboundRealTimePaymentsTransferNewParams struct {
 	// The identifier of the Account Number the inbound Real-Time Payments Transfer is
 	// for.
-	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id" api:"required"`
 	// The transfer amount in USD cents. Must be positive.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The account number of the account that sent the transfer.
 	DebtorAccountNumber param.Field[string] `json:"debtor_account_number"`
 	// The name provided by the sender of the transfer.

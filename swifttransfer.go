@@ -108,59 +108,59 @@ func (r *SwiftTransferService) Cancel(ctx context.Context, swiftTransferID strin
 // Swift Transfers send funds internationally.
 type SwiftTransfer struct {
 	// The Swift transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account to which the transfer belongs.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The creditor's account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The bank identification code (BIC) of the creditor.
-	BankIdentificationCode string `json:"bank_identification_code,required"`
+	BankIdentificationCode string `json:"bank_identification_code" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy SwiftTransferCreatedBy `json:"created_by,required"`
+	CreatedBy SwiftTransferCreatedBy `json:"created_by" api:"required"`
 	// The creditor's address.
-	CreditorAddress SwiftTransferCreditorAddress `json:"creditor_address,required"`
+	CreditorAddress SwiftTransferCreditorAddress `json:"creditor_address" api:"required"`
 	// The creditor's name.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The debtor's address.
-	DebtorAddress SwiftTransferDebtorAddress `json:"debtor_address,required"`
+	DebtorAddress SwiftTransferDebtorAddress `json:"debtor_address" api:"required"`
 	// The debtor's name.
-	DebtorName string `json:"debtor_name,required"`
+	DebtorName string `json:"debtor_name" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The amount that was instructed to be transferred in minor units of the
 	// `instructed_currency`.
-	InstructedAmount int64 `json:"instructed_amount,required"`
+	InstructedAmount int64 `json:"instructed_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code of the
 	// instructed amount.
-	InstructedCurrency SwiftTransferInstructedCurrency `json:"instructed_currency,required"`
+	InstructedCurrency SwiftTransferInstructedCurrency `json:"instructed_currency" api:"required"`
 	// The ID for the pending transaction representing the transfer.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The creditor's bank account routing or transit number. Required in certain
 	// countries.
-	RoutingNumber string `json:"routing_number,required,nullable"`
+	RoutingNumber string `json:"routing_number" api:"required,nullable"`
 	// The Account Number included in the transfer as the debtor's account number.
-	SourceAccountNumberID string `json:"source_account_number_id,required"`
+	SourceAccountNumberID string `json:"source_account_number_id" api:"required"`
 	// The lifecycle status of the transfer.
-	Status SwiftTransferStatus `json:"status,required"`
+	Status SwiftTransferStatus `json:"status" api:"required"`
 	// The ID for the transaction funding the transfer. This will be populated after
 	// the transfer is initiated.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `swift_transfer`.
-	Type SwiftTransferType `json:"type,required"`
+	Type SwiftTransferType `json:"type" api:"required"`
 	// The Unique End-to-end Transaction Reference
 	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
 	// for the transfer.
-	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required"`
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required"`
 	// The unstructured remittance information that was included with the transfer.
-	UnstructuredRemittanceInformation string            `json:"unstructured_remittance_information,required"`
+	UnstructuredRemittanceInformation string            `json:"unstructured_remittance_information" api:"required"`
 	JSON                              swiftTransferJSON `json:"-"`
 }
 
@@ -203,13 +203,13 @@ func (r swiftTransferJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type SwiftTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category SwiftTransferCreatedByCategory `json:"category,required"`
+	Category SwiftTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey SwiftTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey SwiftTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication SwiftTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication SwiftTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User SwiftTransferCreatedByUser `json:"user,nullable"`
+	User SwiftTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON swiftTransferCreatedByJSON `json:"-"`
 }
 
@@ -252,7 +252,7 @@ func (r SwiftTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type SwiftTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                           `json:"description,required,nullable"`
+	Description string                           `json:"description" api:"required,nullable"`
 	JSON        swiftTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -275,7 +275,7 @@ func (r swiftTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type SwiftTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                     `json:"name,required"`
+	Name string                                     `json:"name" api:"required"`
 	JSON swiftTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -298,7 +298,7 @@ func (r swiftTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type SwiftTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                         `json:"email,required"`
+	Email string                         `json:"email" api:"required"`
 	JSON  swiftTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -321,19 +321,19 @@ func (r swiftTransferCreatedByUserJSON) RawJSON() string {
 // The creditor's address.
 type SwiftTransferCreditorAddress struct {
 	// The city, district, town, or village of the address.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The two-letter
 	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
 	// the country of the address.
-	Country string `json:"country,required"`
+	Country string `json:"country" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The ZIP or postal code of the address.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The state, province, or region of the address. Required in certain countries.
-	State string                           `json:"state,required,nullable"`
+	State string                           `json:"state" api:"required,nullable"`
 	JSON  swiftTransferCreditorAddressJSON `json:"-"`
 }
 
@@ -361,19 +361,19 @@ func (r swiftTransferCreditorAddressJSON) RawJSON() string {
 // The debtor's address.
 type SwiftTransferDebtorAddress struct {
 	// The city, district, town, or village of the address.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The two-letter
 	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
 	// the country of the address.
-	Country string `json:"country,required"`
+	Country string `json:"country" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The ZIP or postal code of the address.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The state, province, or region of the address. Required in certain countries.
-	State string                         `json:"state,required,nullable"`
+	State string                         `json:"state" api:"required,nullable"`
 	JSON  swiftTransferDebtorAddressJSON `json:"-"`
 }
 
@@ -454,30 +454,30 @@ func (r SwiftTransferType) IsKnown() bool {
 
 type SwiftTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The creditor's account number.
-	AccountNumber param.Field[string] `json:"account_number,required"`
+	AccountNumber param.Field[string] `json:"account_number" api:"required"`
 	// The bank identification code (BIC) of the creditor. If it ends with the
 	// three-character branch code, this must be 11 characters long. Otherwise this
 	// must be 8 characters and the branch code will be assumed to be `XXX`.
-	BankIdentificationCode param.Field[string] `json:"bank_identification_code,required"`
+	BankIdentificationCode param.Field[string] `json:"bank_identification_code" api:"required"`
 	// The creditor's address.
-	CreditorAddress param.Field[SwiftTransferNewParamsCreditorAddress] `json:"creditor_address,required"`
+	CreditorAddress param.Field[SwiftTransferNewParamsCreditorAddress] `json:"creditor_address" api:"required"`
 	// The creditor's name.
-	CreditorName param.Field[string] `json:"creditor_name,required"`
+	CreditorName param.Field[string] `json:"creditor_name" api:"required"`
 	// The debtor's address.
-	DebtorAddress param.Field[SwiftTransferNewParamsDebtorAddress] `json:"debtor_address,required"`
+	DebtorAddress param.Field[SwiftTransferNewParamsDebtorAddress] `json:"debtor_address" api:"required"`
 	// The debtor's name.
-	DebtorName param.Field[string] `json:"debtor_name,required"`
+	DebtorName param.Field[string] `json:"debtor_name" api:"required"`
 	// The amount, in minor units of `instructed_currency`, to send to the creditor.
-	InstructedAmount param.Field[int64] `json:"instructed_amount,required"`
+	InstructedAmount param.Field[int64] `json:"instructed_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code of the
 	// instructed amount.
-	InstructedCurrency param.Field[SwiftTransferNewParamsInstructedCurrency] `json:"instructed_currency,required"`
+	InstructedCurrency param.Field[SwiftTransferNewParamsInstructedCurrency] `json:"instructed_currency" api:"required"`
 	// The Account Number to include in the transfer as the debtor's account number.
-	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
 	// Unstructured remittance information to include in the transfer.
-	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information,required"`
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information" api:"required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The creditor's bank account routing or transit number. Required in certain
@@ -492,13 +492,13 @@ func (r SwiftTransferNewParams) MarshalJSON() (data []byte, err error) {
 // The creditor's address.
 type SwiftTransferNewParamsCreditorAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter
 	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
 	// the country of the address.
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The ZIP or postal code of the address. Required in certain countries.
@@ -514,13 +514,13 @@ func (r SwiftTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err e
 // The debtor's address.
 type SwiftTransferNewParamsDebtorAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter
 	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
 	// the country of the address.
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The ZIP or postal code of the address. Required in certain countries.

@@ -47,11 +47,11 @@ func (r *SimulationInboundCheckDepositService) New(ctx context.Context, body Sim
 
 type SimulationInboundCheckDepositNewParams struct {
 	// The identifier of the Account Number the Inbound Check Deposit will be against.
-	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id" api:"required"`
 	// The check amount in cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The check number on the check to be deposited.
-	CheckNumber param.Field[string] `json:"check_number,required"`
+	CheckNumber param.Field[string] `json:"check_number" api:"required"`
 	// Simulate the outcome of
 	// [payee name checking](https://increase.com/documentation/positive-pay#payee-name-mismatches).
 	// Defaults to `not_evaluated`.

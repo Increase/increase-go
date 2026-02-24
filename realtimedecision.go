@@ -65,32 +65,32 @@ func (r *RealTimeDecisionService) Action(ctx context.Context, realTimeDecisionID
 // [Real-Time Decisions guide](https://increase.com/documentation/real-time-decisions).
 type RealTimeDecision struct {
 	// The Real-Time Decision identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Fields related to a 3DS authentication attempt.
-	CardAuthentication RealTimeDecisionCardAuthentication `json:"card_authentication,required,nullable"`
+	CardAuthentication RealTimeDecisionCardAuthentication `json:"card_authentication" api:"required,nullable"`
 	// Fields related to a 3DS authentication attempt.
-	CardAuthenticationChallenge RealTimeDecisionCardAuthenticationChallenge `json:"card_authentication_challenge,required,nullable"`
+	CardAuthenticationChallenge RealTimeDecisionCardAuthenticationChallenge `json:"card_authentication_challenge" api:"required,nullable"`
 	// Fields related to a card authorization.
-	CardAuthorization RealTimeDecisionCardAuthorization `json:"card_authorization,required,nullable"`
+	CardAuthorization RealTimeDecisionCardAuthorization `json:"card_authorization" api:"required,nullable"`
 	// Fields related to a card balance inquiry.
-	CardBalanceInquiry RealTimeDecisionCardBalanceInquiry `json:"card_balance_inquiry,required,nullable"`
+	CardBalanceInquiry RealTimeDecisionCardBalanceInquiry `json:"card_balance_inquiry" api:"required,nullable"`
 	// The category of the Real-Time Decision.
-	Category RealTimeDecisionCategory `json:"category,required"`
+	Category RealTimeDecisionCategory `json:"category" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Real-Time Decision was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Fields related to a digital wallet authentication attempt.
-	DigitalWalletAuthentication RealTimeDecisionDigitalWalletAuthentication `json:"digital_wallet_authentication,required,nullable"`
+	DigitalWalletAuthentication RealTimeDecisionDigitalWalletAuthentication `json:"digital_wallet_authentication" api:"required,nullable"`
 	// Fields related to a digital wallet token provisioning attempt.
-	DigitalWalletToken RealTimeDecisionDigitalWalletToken `json:"digital_wallet_token,required,nullable"`
+	DigitalWalletToken RealTimeDecisionDigitalWalletToken `json:"digital_wallet_token" api:"required,nullable"`
 	// The status of the Real-Time Decision.
-	Status RealTimeDecisionStatus `json:"status,required"`
+	Status RealTimeDecisionStatus `json:"status" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// your application can no longer respond to the Real-Time Decision.
-	TimeoutAt time.Time `json:"timeout_at,required" format:"date-time"`
+	TimeoutAt time.Time `json:"timeout_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_decision`.
-	Type RealTimeDecisionType `json:"type,required"`
+	Type RealTimeDecisionType `json:"type" api:"required"`
 	JSON realTimeDecisionJSON `json:"-"`
 }
 
@@ -124,14 +124,14 @@ func (r realTimeDecisionJSON) RawJSON() string {
 // Fields related to a 3DS authentication attempt.
 type RealTimeDecisionCardAuthentication struct {
 	// The identifier of the Account the card belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier of the Card that is being tokenized.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// Whether or not the authentication attempt was approved.
-	Decision RealTimeDecisionCardAuthenticationDecision `json:"decision,required,nullable"`
+	Decision RealTimeDecisionCardAuthenticationDecision `json:"decision" api:"required,nullable"`
 	// The identifier of the Card Payment this authentication attempt will belong to.
 	// Available in the API once the card authentication has completed.
-	UpcomingCardPaymentID string                                 `json:"upcoming_card_payment_id,required"`
+	UpcomingCardPaymentID string                                 `json:"upcoming_card_payment_id" api:"required"`
 	JSON                  realTimeDecisionCardAuthenticationJSON `json:"-"`
 }
 
@@ -174,16 +174,16 @@ func (r RealTimeDecisionCardAuthenticationDecision) IsKnown() bool {
 // Fields related to a 3DS authentication attempt.
 type RealTimeDecisionCardAuthenticationChallenge struct {
 	// The identifier of the Account the card belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier of the Card that is being tokenized.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The identifier of the Card Payment this authentication challenge attempt belongs
 	// to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The one-time code delivered to the cardholder.
-	OneTimeCode string `json:"one_time_code,required"`
+	OneTimeCode string `json:"one_time_code" api:"required"`
 	// Whether or not the challenge was delivered to the cardholder.
-	Result RealTimeDecisionCardAuthenticationChallengeResult `json:"result,required,nullable"`
+	Result RealTimeDecisionCardAuthenticationChallengeResult `json:"result" api:"required,nullable"`
 	JSON   realTimeDecisionCardAuthenticationChallengeJSON   `json:"-"`
 }
 
@@ -226,84 +226,84 @@ func (r RealTimeDecisionCardAuthenticationChallengeResult) IsKnown() bool {
 // Fields related to a card authorization.
 type RealTimeDecisionCardAuthorization struct {
 	// The identifier of the Account the authorization will debit.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts RealTimeDecisionCardAuthorizationAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts RealTimeDecisionCardAuthorizationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// Present if and only if `decision` is `approve`. Contains information related to
 	// the approval of the authorization.
-	Approval RealTimeDecisionCardAuthorizationApproval `json:"approval,required,nullable"`
+	Approval RealTimeDecisionCardAuthorizationApproval `json:"approval" api:"required,nullable"`
 	// The identifier of the Card that is being authorized.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// Whether or not the authorization was approved.
-	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision,required,nullable"`
+	Decision RealTimeDecisionCardAuthorizationDecision `json:"decision" api:"required,nullable"`
 	// Present if and only if `decision` is `decline`. Contains information related to
 	// the reason the authorization was declined.
-	Decline RealTimeDecisionCardAuthorizationDecline `json:"decline,required,nullable"`
+	Decline RealTimeDecisionCardAuthorizationDecline `json:"decline" api:"required,nullable"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction RealTimeDecisionCardAuthorizationDirection `json:"direction,required"`
+	Direction RealTimeDecisionCardAuthorizationDirection `json:"direction" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails `json:"network_details,required"`
+	NetworkDetails RealTimeDecisionCardAuthorizationNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers RealTimeDecisionCardAuthorizationNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers RealTimeDecisionCardAuthorizationNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// Whether or not the authorization supports partial approvals.
-	PartialApprovalCapability RealTimeDecisionCardAuthorizationPartialApprovalCapability `json:"partial_approval_capability,required"`
+	PartialApprovalCapability RealTimeDecisionCardAuthorizationPartialApprovalCapability `json:"partial_approval_capability" api:"required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The amount of the attempted authorization in the currency the card user sees at
 	// the time of purchase, in the minor unit of that currency. For dollars, for
 	// example, this is cents.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// user sees at the time of purchase.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory RealTimeDecisionCardAuthorizationProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory RealTimeDecisionCardAuthorizationProcessingCategory `json:"processing_category" api:"required"`
 	// Fields specific to the type of request, such as an incremental authorization.
-	RequestDetails RealTimeDecisionCardAuthorizationRequestDetails `json:"request_details,required"`
+	RequestDetails RealTimeDecisionCardAuthorizationRequestDetails `json:"request_details" api:"required"`
 	// The amount of the attempted authorization in the currency it will be settled in.
 	// This currency is the same as that of the Account the card belongs to.
-	SettlementAmount int64 `json:"settlement_amount,required"`
+	SettlementAmount int64 `json:"settlement_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the currency the
 	// transaction will be settled in.
-	SettlementCurrency string `json:"settlement_currency,required"`
+	SettlementCurrency string `json:"settlement_currency" api:"required"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// The identifier of the Card Payment this authorization will belong to. Available
 	// in the API once the card authorization has completed.
-	UpcomingCardPaymentID string `json:"upcoming_card_payment_id,required"`
+	UpcomingCardPaymentID string `json:"upcoming_card_payment_id" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification RealTimeDecisionCardAuthorizationVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                        `json:"-,extras"`
+	Verification RealTimeDecisionCardAuthorizationVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                        `json:"-" api:"extrafields"`
 	JSON         realTimeDecisionCardAuthorizationJSON         `json:"-"`
 }
 
@@ -356,25 +356,25 @@ func (r realTimeDecisionCardAuthorizationJSON) RawJSON() string {
 // to provide more detailed information about the transaction.
 type RealTimeDecisionCardAuthorizationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic RealTimeDecisionCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic RealTimeDecisionCardAuthorizationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental RealTimeDecisionCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental RealTimeDecisionCardAuthorizationAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription RealTimeDecisionCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription RealTimeDecisionCardAuthorizationAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge RealTimeDecisionCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge RealTimeDecisionCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative RealTimeDecisionCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative RealTimeDecisionCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare RealTimeDecisionCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare RealTimeDecisionCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit RealTimeDecisionCardAuthorizationAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit RealTimeDecisionCardAuthorizationAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown RealTimeDecisionCardAuthorizationAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown RealTimeDecisionCardAuthorizationAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision RealTimeDecisionCardAuthorizationAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision RealTimeDecisionCardAuthorizationAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   realTimeDecisionCardAuthorizationAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -408,10 +408,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -438,10 +438,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -468,10 +468,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                         `json:"currency,required"`
+	Currency string                                                         `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -498,10 +498,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -528,10 +528,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -558,10 +558,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -588,10 +588,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -618,10 +618,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -648,10 +648,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -678,10 +678,10 @@ type RealTimeDecisionCardAuthorizationAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardAuthorizationAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -708,7 +708,7 @@ func (r realTimeDecisionCardAuthorizationAdditionalAmountsVisionJSON) RawJSON() 
 type RealTimeDecisionCardAuthorizationApproval struct {
 	// If the authorization was partially approved, this field contains the approved
 	// amount in the minor unit of the settlement currency.
-	PartialAmount int64                                         `json:"partial_amount,required,nullable"`
+	PartialAmount int64                                         `json:"partial_amount" api:"required,nullable"`
 	JSON          realTimeDecisionCardAuthorizationApprovalJSON `json:"-"`
 }
 
@@ -748,7 +748,7 @@ func (r RealTimeDecisionCardAuthorizationDecision) IsKnown() bool {
 // the reason the authorization was declined.
 type RealTimeDecisionCardAuthorizationDecline struct {
 	// The reason the authorization was declined.
-	Reason RealTimeDecisionCardAuthorizationDeclineReason `json:"reason,required"`
+	Reason RealTimeDecisionCardAuthorizationDeclineReason `json:"reason" api:"required"`
 	JSON   realTimeDecisionCardAuthorizationDeclineJSON   `json:"-"`
 }
 
@@ -808,11 +808,11 @@ func (r RealTimeDecisionCardAuthorizationDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type RealTimeDecisionCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category,required"`
+	Category RealTimeDecisionCardAuthorizationNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse RealTimeDecisionCardAuthorizationNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse RealTimeDecisionCardAuthorizationNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa RealTimeDecisionCardAuthorizationNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON realTimeDecisionCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
@@ -875,19 +875,19 @@ type RealTimeDecisionCardAuthorizationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator RealTimeDecisionCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode RealTimeDecisionCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason RealTimeDecisionCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    realTimeDecisionCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1011,17 +1011,17 @@ func (r RealTimeDecisionCardAuthorizationNetworkDetailsVisaTerminalEntryCapabili
 type RealTimeDecisionCardAuthorizationNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                  `json:"transaction_id,required,nullable"`
+	TransactionID string                                                  `json:"transaction_id" api:"required,nullable"`
 	JSON          realTimeDecisionCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -1089,11 +1089,11 @@ func (r RealTimeDecisionCardAuthorizationProcessingCategory) IsKnown() bool {
 type RealTimeDecisionCardAuthorizationRequestDetails struct {
 	// The type of this request (e.g., an initial authorization or an incremental
 	// authorization).
-	Category RealTimeDecisionCardAuthorizationRequestDetailsCategory `json:"category,required"`
+	Category RealTimeDecisionCardAuthorizationRequestDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the category `incremental_authorization`.
-	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization,required,nullable"`
+	IncrementalAuthorization RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization `json:"incremental_authorization" api:"required,nullable"`
 	// Fields specific to the category `initial_authorization`.
-	InitialAuthorization RealTimeDecisionCardAuthorizationRequestDetailsInitialAuthorization `json:"initial_authorization,required,nullable"`
+	InitialAuthorization RealTimeDecisionCardAuthorizationRequestDetailsInitialAuthorization `json:"initial_authorization" api:"required,nullable"`
 	JSON                 realTimeDecisionCardAuthorizationRequestDetailsJSON                 `json:"-"`
 }
 
@@ -1135,10 +1135,10 @@ func (r RealTimeDecisionCardAuthorizationRequestDetailsCategory) IsKnown() bool 
 // Fields specific to the category `incremental_authorization`.
 type RealTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorization struct {
 	// The card payment for this authorization and increment.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The identifier of the card authorization this request is attempting to
 	// increment.
-	OriginalCardAuthorizationID string                                                                      `json:"original_card_authorization_id,required"`
+	OriginalCardAuthorizationID string                                                                      `json:"original_card_authorization_id" api:"required"`
 	JSON                        realTimeDecisionCardAuthorizationRequestDetailsIncrementalAuthorizationJSON `json:"-"`
 }
 
@@ -1185,12 +1185,12 @@ func (r realTimeDecisionCardAuthorizationRequestDetailsInitialAuthorizationJSON)
 type RealTimeDecisionCardAuthorizationVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode RealTimeDecisionCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode RealTimeDecisionCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress RealTimeDecisionCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress RealTimeDecisionCardAuthorizationVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName RealTimeDecisionCardAuthorizationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName RealTimeDecisionCardAuthorizationVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           realTimeDecisionCardAuthorizationVerificationJSON           `json:"-"`
 }
 
@@ -1216,7 +1216,7 @@ func (r realTimeDecisionCardAuthorizationVerificationJSON) RawJSON() string {
 // the back of the card.
 type RealTimeDecisionCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
+	Result RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   realTimeDecisionCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -1258,16 +1258,16 @@ func (r RealTimeDecisionCardAuthorizationVerificationCardVerificationCodeResult)
 // we verified it against.
 type RealTimeDecisionCardAuthorizationVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
+	Result RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   realTimeDecisionCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -1315,11 +1315,11 @@ func (r RealTimeDecisionCardAuthorizationVerificationCardholderAddressResult) Is
 // Cardholder name provided in the authorization request.
 type RealTimeDecisionCardAuthorizationVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                          `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                          `json:"provided_middle_name" api:"required,nullable"`
 	JSON               realTimeDecisionCardAuthorizationVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -1345,58 +1345,58 @@ func (r realTimeDecisionCardAuthorizationVerificationCardholderNameJSON) RawJSON
 // Fields related to a card balance inquiry.
 type RealTimeDecisionCardBalanceInquiry struct {
 	// The identifier of the Account the authorization will debit.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts RealTimeDecisionCardBalanceInquiryAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts RealTimeDecisionCardBalanceInquiryAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// Present if and only if `decision` is `approve`. Contains information related to
 	// the approval of the balance inquiry.
-	Approval RealTimeDecisionCardBalanceInquiryApproval `json:"approval,required,nullable"`
+	Approval RealTimeDecisionCardBalanceInquiryApproval `json:"approval" api:"required,nullable"`
 	// The identifier of the Card that is being authorized.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// Whether or not the authorization was approved.
-	Decision RealTimeDecisionCardBalanceInquiryDecision `json:"decision,required,nullable"`
+	Decision RealTimeDecisionCardBalanceInquiryDecision `json:"decision" api:"required,nullable"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails RealTimeDecisionCardBalanceInquiryNetworkDetails `json:"network_details,required"`
+	NetworkDetails RealTimeDecisionCardBalanceInquiryNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers RealTimeDecisionCardBalanceInquiryNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers RealTimeDecisionCardBalanceInquiryNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// The identifier of the Card Payment this authorization will belong to. Available
 	// in the API once the card authorization has completed.
-	UpcomingCardPaymentID string `json:"upcoming_card_payment_id,required"`
+	UpcomingCardPaymentID string `json:"upcoming_card_payment_id" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification RealTimeDecisionCardBalanceInquiryVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                         `json:"-,extras"`
+	Verification RealTimeDecisionCardBalanceInquiryVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                         `json:"-" api:"extrafields"`
 	JSON         realTimeDecisionCardBalanceInquiryJSON         `json:"-"`
 }
 
@@ -1440,25 +1440,25 @@ func (r realTimeDecisionCardBalanceInquiryJSON) RawJSON() string {
 // to provide more detailed information about the transaction.
 type RealTimeDecisionCardBalanceInquiryAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic RealTimeDecisionCardBalanceInquiryAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic RealTimeDecisionCardBalanceInquiryAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental RealTimeDecisionCardBalanceInquiryAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental RealTimeDecisionCardBalanceInquiryAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original RealTimeDecisionCardBalanceInquiryAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original RealTimeDecisionCardBalanceInquiryAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription RealTimeDecisionCardBalanceInquiryAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription RealTimeDecisionCardBalanceInquiryAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge RealTimeDecisionCardBalanceInquiryAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge RealTimeDecisionCardBalanceInquiryAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative RealTimeDecisionCardBalanceInquiryAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative RealTimeDecisionCardBalanceInquiryAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare RealTimeDecisionCardBalanceInquiryAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare RealTimeDecisionCardBalanceInquiryAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit RealTimeDecisionCardBalanceInquiryAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit RealTimeDecisionCardBalanceInquiryAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown RealTimeDecisionCardBalanceInquiryAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown RealTimeDecisionCardBalanceInquiryAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision RealTimeDecisionCardBalanceInquiryAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision RealTimeDecisionCardBalanceInquiryAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   realTimeDecisionCardBalanceInquiryAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -1492,10 +1492,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -1522,10 +1522,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -1552,10 +1552,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -1582,10 +1582,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                              `json:"currency,required"`
+	Currency string                                                              `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -1612,10 +1612,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -1642,10 +1642,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                 `json:"currency,required"`
+	Currency string                                                                 `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -1672,10 +1672,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                 `json:"currency,required"`
+	Currency string                                                                 `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -1702,10 +1702,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                         `json:"currency,required"`
+	Currency string                                                         `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -1732,10 +1732,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                         `json:"currency,required"`
+	Currency string                                                         `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -1762,10 +1762,10 @@ type RealTimeDecisionCardBalanceInquiryAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                        `json:"currency,required"`
+	Currency string                                                        `json:"currency" api:"required"`
 	JSON     realTimeDecisionCardBalanceInquiryAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -1792,7 +1792,7 @@ func (r realTimeDecisionCardBalanceInquiryAdditionalAmountsVisionJSON) RawJSON()
 type RealTimeDecisionCardBalanceInquiryApproval struct {
 	// If the balance inquiry was approved, this field contains the balance in the
 	// minor unit of the settlement currency.
-	Balance int64                                          `json:"balance,required"`
+	Balance int64                                          `json:"balance" api:"required"`
 	JSON    realTimeDecisionCardBalanceInquiryApprovalJSON `json:"-"`
 }
 
@@ -1831,11 +1831,11 @@ func (r RealTimeDecisionCardBalanceInquiryDecision) IsKnown() bool {
 // Fields specific to the `network`.
 type RealTimeDecisionCardBalanceInquiryNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category RealTimeDecisionCardBalanceInquiryNetworkDetailsCategory `json:"category,required"`
+	Category RealTimeDecisionCardBalanceInquiryNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse RealTimeDecisionCardBalanceInquiryNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse RealTimeDecisionCardBalanceInquiryNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa RealTimeDecisionCardBalanceInquiryNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa RealTimeDecisionCardBalanceInquiryNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON realTimeDecisionCardBalanceInquiryNetworkDetailsJSON `json:"-"`
 }
 
@@ -1898,19 +1898,19 @@ type RealTimeDecisionCardBalanceInquiryNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    realTimeDecisionCardBalanceInquiryNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -2034,17 +2034,17 @@ func (r RealTimeDecisionCardBalanceInquiryNetworkDetailsVisaTerminalEntryCapabil
 type RealTimeDecisionCardBalanceInquiryNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                   `json:"transaction_id,required,nullable"`
+	TransactionID string                                                   `json:"transaction_id" api:"required,nullable"`
 	JSON          realTimeDecisionCardBalanceInquiryNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -2071,12 +2071,12 @@ func (r realTimeDecisionCardBalanceInquiryNetworkIdentifiersJSON) RawJSON() stri
 type RealTimeDecisionCardBalanceInquiryVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode RealTimeDecisionCardBalanceInquiryVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode RealTimeDecisionCardBalanceInquiryVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress RealTimeDecisionCardBalanceInquiryVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress RealTimeDecisionCardBalanceInquiryVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName RealTimeDecisionCardBalanceInquiryVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName RealTimeDecisionCardBalanceInquiryVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           realTimeDecisionCardBalanceInquiryVerificationJSON           `json:"-"`
 }
 
@@ -2102,7 +2102,7 @@ func (r realTimeDecisionCardBalanceInquiryVerificationJSON) RawJSON() string {
 // the back of the card.
 type RealTimeDecisionCardBalanceInquiryVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result RealTimeDecisionCardBalanceInquiryVerificationCardVerificationCodeResult `json:"result,required"`
+	Result RealTimeDecisionCardBalanceInquiryVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   realTimeDecisionCardBalanceInquiryVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -2144,16 +2144,16 @@ func (r RealTimeDecisionCardBalanceInquiryVerificationCardVerificationCodeResult
 // we verified it against.
 type RealTimeDecisionCardBalanceInquiryVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result RealTimeDecisionCardBalanceInquiryVerificationCardholderAddressResult `json:"result,required"`
+	Result RealTimeDecisionCardBalanceInquiryVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   realTimeDecisionCardBalanceInquiryVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -2201,11 +2201,11 @@ func (r RealTimeDecisionCardBalanceInquiryVerificationCardholderAddressResult) I
 // Cardholder name provided in the authorization request.
 type RealTimeDecisionCardBalanceInquiryVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                           `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                           `json:"provided_middle_name" api:"required,nullable"`
 	JSON               realTimeDecisionCardBalanceInquiryVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -2251,20 +2251,20 @@ func (r RealTimeDecisionCategory) IsKnown() bool {
 // Fields related to a digital wallet authentication attempt.
 type RealTimeDecisionDigitalWalletAuthentication struct {
 	// The identifier of the Card that is being tokenized.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The channel to send the card user their one-time passcode.
-	Channel RealTimeDecisionDigitalWalletAuthenticationChannel `json:"channel,required"`
+	Channel RealTimeDecisionDigitalWalletAuthenticationChannel `json:"channel" api:"required"`
 	// The digital wallet app being used.
-	DigitalWallet RealTimeDecisionDigitalWalletAuthenticationDigitalWallet `json:"digital_wallet,required"`
+	DigitalWallet RealTimeDecisionDigitalWalletAuthenticationDigitalWallet `json:"digital_wallet" api:"required"`
 	// The email to send the one-time passcode to if `channel` is equal to `email`.
-	Email string `json:"email,required,nullable"`
+	Email string `json:"email" api:"required,nullable"`
 	// The one-time passcode to send the card user.
-	OneTimePasscode string `json:"one_time_passcode,required"`
+	OneTimePasscode string `json:"one_time_passcode" api:"required"`
 	// The phone number to send the one-time passcode to if `channel` is equal to
 	// `sms`.
-	Phone string `json:"phone,required,nullable"`
+	Phone string `json:"phone" api:"required,nullable"`
 	// Whether your application successfully delivered the one-time passcode.
-	Result RealTimeDecisionDigitalWalletAuthenticationResult `json:"result,required,nullable"`
+	Result RealTimeDecisionDigitalWalletAuthenticationResult `json:"result" api:"required,nullable"`
 	JSON   realTimeDecisionDigitalWalletAuthenticationJSON   `json:"-"`
 }
 
@@ -2343,14 +2343,14 @@ func (r RealTimeDecisionDigitalWalletAuthenticationResult) IsKnown() bool {
 // Fields related to a digital wallet token provisioning attempt.
 type RealTimeDecisionDigitalWalletToken struct {
 	// The identifier of the Card that is being tokenized.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
-	Decision RealTimeDecisionDigitalWalletTokenDecision `json:"decision,required,nullable"`
+	Decision RealTimeDecisionDigitalWalletTokenDecision `json:"decision" api:"required,nullable"`
 	// Device that is being used to provision the digital wallet token.
-	Device RealTimeDecisionDigitalWalletTokenDevice `json:"device,required"`
+	Device RealTimeDecisionDigitalWalletTokenDevice `json:"device" api:"required"`
 	// The digital wallet app being used.
-	DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet,required"`
+	DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet" api:"required"`
 	JSON          realTimeDecisionDigitalWalletTokenJSON          `json:"-"`
 }
 
@@ -2393,7 +2393,7 @@ func (r RealTimeDecisionDigitalWalletTokenDecision) IsKnown() bool {
 // Device that is being used to provision the digital wallet token.
 type RealTimeDecisionDigitalWalletTokenDevice struct {
 	// ID assigned to the device by the digital wallet provider.
-	Identifier string                                       `json:"identifier,required,nullable"`
+	Identifier string                                       `json:"identifier" api:"required,nullable"`
 	JSON       realTimeDecisionDigitalWalletTokenDeviceJSON `json:"-"`
 }
 
@@ -2493,7 +2493,7 @@ func (r RealTimeDecisionActionParams) MarshalJSON() (data []byte, err error) {
 // object contains your response to the authentication.
 type RealTimeDecisionActionParamsCardAuthentication struct {
 	// Whether the card authentication attempt should be approved or declined.
-	Decision param.Field[RealTimeDecisionActionParamsCardAuthenticationDecision] `json:"decision,required"`
+	Decision param.Field[RealTimeDecisionActionParamsCardAuthenticationDecision] `json:"decision" api:"required"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthentication) MarshalJSON() (data []byte, err error) {
@@ -2522,7 +2522,7 @@ func (r RealTimeDecisionActionParamsCardAuthenticationDecision) IsKnown() bool {
 type RealTimeDecisionActionParamsCardAuthenticationChallenge struct {
 	// Whether the card authentication challenge was successfully delivered to the
 	// cardholder.
-	Result param.Field[RealTimeDecisionActionParamsCardAuthenticationChallengeResult] `json:"result,required"`
+	Result param.Field[RealTimeDecisionActionParamsCardAuthenticationChallengeResult] `json:"result" api:"required"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthenticationChallenge) MarshalJSON() (data []byte, err error) {
@@ -2550,7 +2550,7 @@ func (r RealTimeDecisionActionParamsCardAuthenticationChallengeResult) IsKnown()
 // contains your response to the authorization.
 type RealTimeDecisionActionParamsCardAuthorization struct {
 	// Whether the card authorization should be approved or declined.
-	Decision param.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision,required"`
+	Decision param.Field[RealTimeDecisionActionParamsCardAuthorizationDecision] `json:"decision" api:"required"`
 	// If your application approves the authorization, this contains metadata about
 	// your decision to approve. Your response here is advisory to the acquiring bank.
 	// The bank may choose to reverse the authorization if you approve the transaction
@@ -2613,9 +2613,9 @@ func (r RealTimeDecisionActionParamsCardAuthorizationApproval) MarshalJSON() (da
 // guide.
 type RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResult struct {
 	// Your decision on the address line of the provided address.
-	Line1 param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1] `json:"line1,required"`
+	Line1 param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultLine1] `json:"line1" api:"required"`
 	// Your decision on the postal code of the provided address.
-	PostalCode param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode] `json:"postal_code,required"`
+	PostalCode param.Field[RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResultPostalCode] `json:"postal_code" api:"required"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVerificationResult) MarshalJSON() (data []byte, err error) {
@@ -2659,7 +2659,7 @@ func (r RealTimeDecisionActionParamsCardAuthorizationApprovalCardholderAddressVe
 type RealTimeDecisionActionParamsCardAuthorizationDecline struct {
 	// The reason the card authorization was declined. This translates to a specific
 	// decline code that is sent to the card network.
-	Reason param.Field[RealTimeDecisionActionParamsCardAuthorizationDeclineReason] `json:"reason,required"`
+	Reason param.Field[RealTimeDecisionActionParamsCardAuthorizationDeclineReason] `json:"reason" api:"required"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthorizationDecline) MarshalJSON() (data []byte, err error) {
@@ -2691,7 +2691,7 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDeclineReason) IsKnown() bo
 // contains your response to the inquiry.
 type RealTimeDecisionActionParamsCardBalanceInquiry struct {
 	// Whether the card balance inquiry should be approved or declined.
-	Decision param.Field[RealTimeDecisionActionParamsCardBalanceInquiryDecision] `json:"decision,required"`
+	Decision param.Field[RealTimeDecisionActionParamsCardBalanceInquiryDecision] `json:"decision" api:"required"`
 	// If your application approves the balance inquiry, this contains metadata about
 	// your decision to approve.
 	Approval param.Field[RealTimeDecisionActionParamsCardBalanceInquiryApproval] `json:"approval"`
@@ -2721,7 +2721,7 @@ func (r RealTimeDecisionActionParamsCardBalanceInquiryDecision) IsKnown() bool {
 // your decision to approve.
 type RealTimeDecisionActionParamsCardBalanceInquiryApproval struct {
 	// The balance on the card in the settlement currency of the transaction.
-	Balance param.Field[int64] `json:"balance,required"`
+	Balance param.Field[int64] `json:"balance" api:"required"`
 }
 
 func (r RealTimeDecisionActionParamsCardBalanceInquiryApproval) MarshalJSON() (data []byte, err error) {
@@ -2732,7 +2732,7 @@ func (r RealTimeDecisionActionParamsCardBalanceInquiryApproval) MarshalJSON() (d
 // this object contains your response to the authentication.
 type RealTimeDecisionActionParamsDigitalWalletAuthentication struct {
 	// Whether your application was able to deliver the one-time passcode.
-	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result,required"`
+	Result param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationResult] `json:"result" api:"required"`
 	// If your application was able to deliver the one-time passcode, this contains
 	// metadata about the delivery. Exactly one of `phone` or `email` must be provided.
 	Success param.Field[RealTimeDecisionActionParamsDigitalWalletAuthenticationSuccess] `json:"success"`

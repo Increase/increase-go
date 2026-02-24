@@ -98,22 +98,22 @@ func (r *BookkeepingAccountService) Balance(ctx context.Context, bookkeepingAcco
 // [guide to Bookkeeping](https://increase.com/documentation/bookkeeping#bookkeeping).
 type BookkeepingAccount struct {
 	// The account identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The API Account associated with this bookkeeping account.
-	AccountID string `json:"account_id,required,nullable"`
+	AccountID string `json:"account_id" api:"required,nullable"`
 	// The compliance category of the account.
-	ComplianceCategory BookkeepingAccountComplianceCategory `json:"compliance_category,required,nullable"`
+	ComplianceCategory BookkeepingAccountComplianceCategory `json:"compliance_category" api:"required,nullable"`
 	// The Entity associated with this bookkeeping account.
-	EntityID string `json:"entity_id,required,nullable"`
+	EntityID string `json:"entity_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The name you choose for the account.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_account`.
-	Type BookkeepingAccountType `json:"type,required"`
+	Type BookkeepingAccountType `json:"type" api:"required"`
 	JSON bookkeepingAccountJSON `json:"-"`
 }
 
@@ -176,12 +176,12 @@ func (r BookkeepingAccountType) IsKnown() bool {
 type BookkeepingBalanceLookup struct {
 	// The Bookkeeping Account's current balance, representing the sum of all
 	// Bookkeeping Entries on the Bookkeeping Account.
-	Balance int64 `json:"balance,required"`
+	Balance int64 `json:"balance" api:"required"`
 	// The identifier for the account for which the balance was queried.
-	BookkeepingAccountID string `json:"bookkeeping_account_id,required"`
+	BookkeepingAccountID string `json:"bookkeeping_account_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_balance_lookup`.
-	Type BookkeepingBalanceLookupType `json:"type,required"`
+	Type BookkeepingBalanceLookupType `json:"type" api:"required"`
 	JSON bookkeepingBalanceLookupJSON `json:"-"`
 }
 
@@ -221,7 +221,7 @@ func (r BookkeepingBalanceLookupType) IsKnown() bool {
 
 type BookkeepingAccountNewParams struct {
 	// The name you choose for the account.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The account, if `compliance_category` is `commingled_cash`.
 	AccountID param.Field[string] `json:"account_id"`
 	// The account compliance category.
@@ -252,7 +252,7 @@ func (r BookkeepingAccountNewParamsComplianceCategory) IsKnown() bool {
 
 type BookkeepingAccountUpdateParams struct {
 	// The name you choose for the account.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 }
 
 func (r BookkeepingAccountUpdateParams) MarshalJSON() (data []byte, err error) {

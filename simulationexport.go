@@ -45,7 +45,7 @@ func (r *SimulationExportService) New(ctx context.Context, body SimulationExport
 
 type SimulationExportNewParams struct {
 	// The type of Export to create.
-	Category param.Field[SimulationExportNewParamsCategory] `json:"category,required"`
+	Category param.Field[SimulationExportNewParamsCategory] `json:"category" api:"required"`
 	// Options for the created export. Required if `category` is equal to
 	// `form_1099_int`.
 	Form1099Int param.Field[SimulationExportNewParamsForm1099Int] `json:"form_1099_int"`
@@ -74,7 +74,7 @@ func (r SimulationExportNewParamsCategory) IsKnown() bool {
 // `form_1099_int`.
 type SimulationExportNewParamsForm1099Int struct {
 	// The identifier of the Account the tax document is for.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 }
 
 func (r SimulationExportNewParamsForm1099Int) MarshalJSON() (data []byte, err error) {

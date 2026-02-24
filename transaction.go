@@ -78,37 +78,37 @@ func (r *TransactionService) ListAutoPaging(ctx context.Context, query Transacti
 // more, see [Transactions and Transfers](/documentation/transactions-transfers).
 type Transaction struct {
 	// The Transaction identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Account the Transaction belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occurred.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transaction's
 	// Account.
-	Currency TransactionCurrency `json:"currency,required"`
+	Currency TransactionCurrency `json:"currency" api:"required"`
 	// An informational message describing this transaction. Use the fields in `source`
 	// to get more detailed information. This field appears as the line-item on the
 	// statement.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The identifier for the route this Transaction came through. Routes are things
 	// like cards and ACH details.
-	RouteID string `json:"route_id,required,nullable"`
+	RouteID string `json:"route_id" api:"required,nullable"`
 	// The type of the route this Transaction came through.
-	RouteType TransactionRouteType `json:"route_type,required,nullable"`
+	RouteType TransactionRouteType `json:"route_type" api:"required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Transaction. Note that for backwards compatibility reasons, additional
 	// undocumented keys may appear in this object. These should be treated as
 	// deprecated and will be removed in the future.
-	Source TransactionSource `json:"source,required"`
+	Source TransactionSource `json:"source" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `transaction`.
-	Type        TransactionType        `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        TransactionType        `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        transactionJSON        `json:"-"`
 }
 
@@ -177,197 +177,197 @@ func (r TransactionRouteType) IsKnown() bool {
 type TransactionSource struct {
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category TransactionSourceCategory `json:"category,required"`
+	Category TransactionSourceCategory `json:"category" api:"required"`
 	// An Account Revenue Payment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_revenue_payment`. An
 	// Account Revenue Payment represents a payment made to an account from the bank.
 	// Account revenue is a type of non-interest income.
-	AccountRevenuePayment TransactionSourceAccountRevenuePayment `json:"account_revenue_payment,nullable"`
+	AccountRevenuePayment TransactionSourceAccountRevenuePayment `json:"account_revenue_payment" api:"nullable"`
 	// An Account Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_intention`. Two
 	// Account Transfer Intentions are created from each Account Transfer. One
 	// decrements the source account, and the other increments the destination account.
-	AccountTransferIntention TransactionSourceAccountTransferIntention `json:"account_transfer_intention,nullable"`
+	AccountTransferIntention TransactionSourceAccountTransferIntention `json:"account_transfer_intention" api:"nullable"`
 	// An ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_intention`. An ACH
 	// Transfer Intention is created from an ACH Transfer. It reflects the intention to
 	// move money into or out of an Increase account via the ACH network.
-	ACHTransferIntention TransactionSourceACHTransferIntention `json:"ach_transfer_intention,nullable"`
+	ACHTransferIntention TransactionSourceACHTransferIntention `json:"ach_transfer_intention" api:"nullable"`
 	// An ACH Transfer Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_rejection`. An ACH
 	// Transfer Rejection is created when an ACH Transfer is rejected by Increase. It
 	// offsets the ACH Transfer Intention. These rejections are rare.
-	ACHTransferRejection TransactionSourceACHTransferRejection `json:"ach_transfer_rejection,nullable"`
+	ACHTransferRejection TransactionSourceACHTransferRejection `json:"ach_transfer_rejection" api:"nullable"`
 	// An ACH Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer
 	// Return is created when an ACH Transfer is returned by the receiving bank. It
 	// offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
 	// the first two business days after the transfer is initiated, but can occur much
 	// later.
-	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return,nullable"`
+	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return" api:"nullable"`
 	// A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_offramp_transfer_settlement`.
-	BlockchainOfframpTransferSettlement TransactionSourceBlockchainOfframpTransferSettlement `json:"blockchain_offramp_transfer_settlement,nullable"`
+	BlockchainOfframpTransferSettlement TransactionSourceBlockchainOfframpTransferSettlement `json:"blockchain_offramp_transfer_settlement" api:"nullable"`
 	// A Blockchain On-Ramp Transfer Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_onramp_transfer_intention`.
-	BlockchainOnrampTransferIntention TransactionSourceBlockchainOnrampTransferIntention `json:"blockchain_onramp_transfer_intention,nullable"`
+	BlockchainOnrampTransferIntention TransactionSourceBlockchainOnrampTransferIntention `json:"blockchain_onramp_transfer_intention" api:"nullable"`
 	// A Legacy Card Dispute Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_acceptance`.
 	// Contains the details of a successful Card Dispute.
-	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance,nullable"`
+	CardDisputeAcceptance TransactionSourceCardDisputeAcceptance `json:"card_dispute_acceptance" api:"nullable"`
 	// A Card Dispute Financial object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_dispute_financial`. Financial event
 	// related to a Card Dispute.
-	CardDisputeFinancial TransactionSourceCardDisputeFinancial `json:"card_dispute_financial,nullable"`
+	CardDisputeFinancial TransactionSourceCardDisputeFinancial `json:"card_dispute_financial" api:"nullable"`
 	// A Legacy Card Dispute Loss object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_dispute_loss`. Contains the
 	// details of a lost Card Dispute.
-	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss,nullable"`
+	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss" api:"nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_financial`. Card Financials are temporary
 	// holds placed on a customer's funds with the intent to later clear a transaction.
-	CardFinancial TransactionSourceCardFinancial `json:"card_financial,nullable"`
+	CardFinancial TransactionSourceCardFinancial `json:"card_financial" api:"nullable"`
 	// A Card Push Transfer Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_push_transfer_acceptance`.
 	// A Card Push Transfer Acceptance is created when an Outbound Card Push Transfer
 	// sent from Increase is accepted by the receiving bank.
-	CardPushTransferAcceptance TransactionSourceCardPushTransferAcceptance `json:"card_push_transfer_acceptance,nullable"`
+	CardPushTransferAcceptance TransactionSourceCardPushTransferAcceptance `json:"card_push_transfer_acceptance" api:"nullable"`
 	// A Card Refund object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_refund`. Card Refunds move money back to
 	// the cardholder. While they are usually connected to a Card Settlement, an
 	// acquirer can also refund money directly to a card without relation to a
 	// transaction.
-	CardRefund TransactionSourceCardRefund `json:"card_refund,nullable"`
+	CardRefund TransactionSourceCardRefund `json:"card_refund" api:"nullable"`
 	// A Card Revenue Payment object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_revenue_payment`. Card Revenue
 	// Payments reflect earnings from fees on card transactions.
-	CardRevenuePayment TransactionSourceCardRevenuePayment `json:"card_revenue_payment,nullable"`
+	CardRevenuePayment TransactionSourceCardRevenuePayment `json:"card_revenue_payment" api:"nullable"`
 	// A Card Settlement object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_settlement`. Card Settlements are card
 	// transactions that have cleared and settled. While a settlement is usually
 	// preceded by an authorization, an acquirer can also directly clear a transaction
 	// without first authorizing it.
-	CardSettlement TransactionSourceCardSettlement `json:"card_settlement,nullable"`
+	CardSettlement TransactionSourceCardSettlement `json:"card_settlement" api:"nullable"`
 	// A Cashback Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `cashback_payment`. A Cashback Payment
 	// represents the cashback paid to a cardholder for a given period. Cashback is
 	// usually paid monthly for the prior month's transactions.
-	CashbackPayment TransactionSourceCashbackPayment `json:"cashback_payment,nullable"`
+	CashbackPayment TransactionSourceCashbackPayment `json:"cashback_payment" api:"nullable"`
 	// A Check Deposit Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_acceptance`. A
 	// Check Deposit Acceptance is created when a Check Deposit is processed and its
 	// details confirmed. Check Deposits may be returned by the receiving bank, which
 	// will appear as a Check Deposit Return.
-	CheckDepositAcceptance TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance,nullable"`
+	CheckDepositAcceptance TransactionSourceCheckDepositAcceptance `json:"check_deposit_acceptance" api:"nullable"`
 	// A Check Deposit Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_deposit_return`. A Check Deposit
 	// Return is created when a Check Deposit is returned by the bank holding the
 	// account it was drawn against. Check Deposits may be returned for a variety of
 	// reasons, including insufficient funds or a mismatched account number. Usually,
 	// checks are returned within the first 7 days after the deposit is made.
-	CheckDepositReturn TransactionSourceCheckDepositReturn `json:"check_deposit_return,nullable"`
+	CheckDepositReturn TransactionSourceCheckDepositReturn `json:"check_deposit_return" api:"nullable"`
 	// A Check Transfer Deposit object. This field will be present in the JSON response
 	// if and only if `category` is equal to `check_transfer_deposit`. An Inbound Check
 	// is a check drawn on an Increase account that has been deposited by an external
 	// bank account. These types of checks are not pre-registered.
-	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit,nullable"`
+	CheckTransferDeposit TransactionSourceCheckTransferDeposit `json:"check_transfer_deposit" api:"nullable"`
 	// A FedNow Transfer Acknowledgement object. This field will be present in the JSON
 	// response if and only if `category` is equal to
 	// `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
 	// when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
-	FednowTransferAcknowledgement TransactionSourceFednowTransferAcknowledgement `json:"fednow_transfer_acknowledgement,nullable"`
+	FednowTransferAcknowledgement TransactionSourceFednowTransferAcknowledgement `json:"fednow_transfer_acknowledgement" api:"nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
 	// made to Increase.
-	FeePayment TransactionSourceFeePayment `json:"fee_payment,nullable"`
+	FeePayment TransactionSourceFeePayment `json:"fee_payment" api:"nullable"`
 	// An Inbound ACH Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_ach_transfer`. An
 	// Inbound ACH Transfer Intention is created when an ACH transfer is initiated at
 	// another bank and received by Increase.
-	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer,nullable"`
+	InboundACHTransfer TransactionSourceInboundACHTransfer `json:"inbound_ach_transfer" api:"nullable"`
 	// An Inbound ACH Transfer Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_ach_transfer_return_intention`. An Inbound ACH Transfer Return
 	// Intention is created when an ACH transfer is initiated at another bank and
 	// returned by Increase.
-	InboundACHTransferReturnIntention TransactionSourceInboundACHTransferReturnIntention `json:"inbound_ach_transfer_return_intention,nullable"`
+	InboundACHTransferReturnIntention TransactionSourceInboundACHTransferReturnIntention `json:"inbound_ach_transfer_return_intention" api:"nullable"`
 	// An Inbound Check Adjustment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_check_adjustment`. An
 	// Inbound Check Adjustment is created when Increase receives an adjustment for a
 	// check or return deposited through Check21.
-	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment,nullable"`
+	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment" api:"nullable"`
 	// An Inbound Check Deposit Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return
 	// Intention is created when Increase receives an Inbound Check and the User
 	// requests that it be returned.
-	InboundCheckDepositReturnIntention TransactionSourceInboundCheckDepositReturnIntention `json:"inbound_check_deposit_return_intention,nullable"`
+	InboundCheckDepositReturnIntention TransactionSourceInboundCheckDepositReturnIntention `json:"inbound_check_deposit_return_intention" api:"nullable"`
 	// An Inbound FedNow Transfer Confirmation object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `inbound_fednow_transfer_confirmation`. An Inbound FedNow Transfer Confirmation
 	// is created when a FedNow transfer is initiated at another bank and received by
 	// Increase.
-	InboundFednowTransferConfirmation TransactionSourceInboundFednowTransferConfirmation `json:"inbound_fednow_transfer_confirmation,nullable"`
+	InboundFednowTransferConfirmation TransactionSourceInboundFednowTransferConfirmation `json:"inbound_fednow_transfer_confirmation" api:"nullable"`
 	// An Inbound Real-Time Payments Transfer Confirmation object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time
 	// Payments Transfer Confirmation is created when a Real-Time Payments transfer is
 	// initiated at another bank and received by Increase.
-	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation,nullable"`
+	InboundRealTimePaymentsTransferConfirmation TransactionSourceInboundRealTimePaymentsTransferConfirmation `json:"inbound_real_time_payments_transfer_confirmation" api:"nullable"`
 	// An Inbound Wire Reversal object. This field will be present in the JSON response
 	// if and only if `category` is equal to `inbound_wire_reversal`. An Inbound Wire
 	// Reversal represents a reversal of a wire transfer that was initiated via
 	// Increase. The other bank is sending the money back. This most often happens when
 	// the original destination account details were incorrect.
-	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal,nullable"`
+	InboundWireReversal TransactionSourceInboundWireReversal `json:"inbound_wire_reversal" api:"nullable"`
 	// An Inbound Wire Transfer Intention object. This field will be present in the
 	// JSON response if and only if `category` is equal to `inbound_wire_transfer`. An
 	// Inbound Wire Transfer Intention is created when a wire transfer is initiated at
 	// another bank and received by Increase.
-	InboundWireTransfer TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer,nullable"`
+	InboundWireTransfer TransactionSourceInboundWireTransfer `json:"inbound_wire_transfer" api:"nullable"`
 	// An Inbound Wire Transfer Reversal Intention object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `inbound_wire_transfer_reversal`. An Inbound Wire Transfer Reversal Intention is
 	// created when Increase has received a wire and the User requests that it be
 	// reversed.
-	InboundWireTransferReversal TransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,nullable"`
+	InboundWireTransferReversal TransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal" api:"nullable"`
 	// An Interest Payment object. This field will be present in the JSON response if
 	// and only if `category` is equal to `interest_payment`. An Interest Payment
 	// represents a payment of interest on an account. Interest is usually paid
 	// monthly.
-	InterestPayment TransactionSourceInterestPayment `json:"interest_payment,nullable"`
+	InterestPayment TransactionSourceInterestPayment `json:"interest_payment" api:"nullable"`
 	// An Internal Source object. This field will be present in the JSON response if
 	// and only if `category` is equal to `internal_source`. A transaction between the
 	// user and Increase. See the `reason` attribute for more information.
-	InternalSource TransactionSourceInternalSource `json:"internal_source,nullable"`
+	InternalSource TransactionSourceInternalSource `json:"internal_source" api:"nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other TransactionSourceOther `json:"other,nullable"`
+	Other TransactionSourceOther `json:"other" api:"nullable"`
 	// A Real-Time Payments Transfer Acknowledgement object. This field will be present
 	// in the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
 	// Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
 	// is acknowledged by the receiving bank.
-	RealTimePaymentsTransferAcknowledgement TransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement,nullable"`
+	RealTimePaymentsTransferAcknowledgement TransactionSourceRealTimePaymentsTransferAcknowledgement `json:"real_time_payments_transfer_acknowledgement" api:"nullable"`
 	// A Sample Funds object. This field will be present in the JSON response if and
 	// only if `category` is equal to `sample_funds`. Sample funds for testing
 	// purposes.
-	SampleFunds TransactionSourceSampleFunds `json:"sample_funds,nullable"`
+	SampleFunds TransactionSourceSampleFunds `json:"sample_funds" api:"nullable"`
 	// A Swift Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `swift_transfer_intention`. A
 	// Swift Transfer initiated via Increase.
-	SwiftTransferIntention TransactionSourceSwiftTransferIntention `json:"swift_transfer_intention,nullable"`
+	SwiftTransferIntention TransactionSourceSwiftTransferIntention `json:"swift_transfer_intention" api:"nullable"`
 	// A Swift Transfer Return object. This field will be present in the JSON response
 	// if and only if `category` is equal to `swift_transfer_return`. A Swift Transfer
 	// Return is created when a Swift Transfer is returned by the receiving bank.
-	SwiftTransferReturn TransactionSourceSwiftTransferReturn `json:"swift_transfer_return,nullable"`
+	SwiftTransferReturn TransactionSourceSwiftTransferReturn `json:"swift_transfer_return" api:"nullable"`
 	// A Wire Transfer Intention object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_intention`. A Wire
 	// Transfer initiated via Increase and sent to a different bank.
-	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention,nullable"`
-	ExtraFields           map[string]interface{}                 `json:"-,extras"`
+	WireTransferIntention TransactionSourceWireTransferIntention `json:"wire_transfer_intention" api:"nullable"`
+	ExtraFields           map[string]interface{}                 `json:"-" api:"extrafields"`
 	JSON                  transactionSourceJSON                  `json:"-"`
 }
 
@@ -484,12 +484,12 @@ func (r TransactionSourceCategory) IsKnown() bool {
 // Account revenue is a type of non-interest income.
 type TransactionSourceAccountRevenuePayment struct {
 	// The account on which the account revenue was accrued.
-	AccruedOnAccountID string `json:"accrued_on_account_id,required"`
+	AccruedOnAccountID string `json:"accrued_on_account_id" api:"required"`
 	// The end of the period for which this transaction paid account revenue.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	PeriodEnd time.Time `json:"period_end" api:"required" format:"date-time"`
 	// The start of the period for which this transaction paid account revenue.
-	PeriodStart time.Time                                  `json:"period_start,required" format:"date-time"`
-	ExtraFields map[string]interface{}                     `json:"-,extras"`
+	PeriodStart time.Time                                  `json:"period_start" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON        transactionSourceAccountRevenuePaymentJSON `json:"-"`
 }
 
@@ -518,19 +518,19 @@ func (r transactionSourceAccountRevenuePaymentJSON) RawJSON() string {
 type TransactionSourceAccountTransferIntention struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency TransactionSourceAccountTransferIntentionCurrency `json:"currency,required"`
+	Currency TransactionSourceAccountTransferIntentionCurrency `json:"currency" api:"required"`
 	// The description you chose to give the transfer.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The identifier of the Account to where the Account Transfer was sent.
-	DestinationAccountID string `json:"destination_account_id,required"`
+	DestinationAccountID string `json:"destination_account_id" api:"required"`
 	// The identifier of the Account from where the Account Transfer was sent.
-	SourceAccountID string `json:"source_account_id,required"`
+	SourceAccountID string `json:"source_account_id" api:"required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID  string                                        `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                        `json:"-,extras"`
+	TransferID  string                                        `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                        `json:"-" api:"extrafields"`
 	JSON        transactionSourceAccountTransferIntentionJSON `json:"-"`
 }
 
@@ -577,18 +577,18 @@ func (r TransactionSourceAccountTransferIntentionCurrency) IsKnown() bool {
 // move money into or out of an Increase account via the ACH network.
 type TransactionSourceACHTransferIntention struct {
 	// The account number for the destination account.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// A description set when the ACH Transfer was created.
-	StatementDescriptor string `json:"statement_descriptor,required"`
+	StatementDescriptor string `json:"statement_descriptor" api:"required"`
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID  string                                    `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	TransferID  string                                    `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
 	JSON        transactionSourceACHTransferIntentionJSON `json:"-"`
 }
 
@@ -618,8 +618,8 @@ func (r transactionSourceACHTransferIntentionJSON) RawJSON() string {
 // offsets the ACH Transfer Intention. These rejections are rare.
 type TransactionSourceACHTransferRejection struct {
 	// The identifier of the ACH Transfer that led to this Transaction.
-	TransferID  string                                    `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	TransferID  string                                    `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
 	JSON        transactionSourceACHTransferRejectionJSON `json:"-"`
 }
 
@@ -648,22 +648,22 @@ func (r transactionSourceACHTransferRejectionJSON) RawJSON() string {
 type TransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The three character ACH return code, in the range R01 to R85.
-	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
+	RawReturnReasonCode string `json:"raw_return_reason_code" api:"required"`
 	// Why the ACH Transfer was returned. This reason code is sent by the receiving
 	// bank back to Increase.
-	ReturnReasonCode TransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
+	ReturnReasonCode TransactionSourceACHTransferReturnReturnReasonCode `json:"return_reason_code" api:"required"`
 	// A 15 digit number that was generated by the bank that initiated the return. The
 	// trace number of the return is different than that of the original transfer. ACH
 	// trace numbers are not unique, but along with the amount and date this number can
 	// be used to identify the ACH return at the bank that initiated it.
-	TraceNumber string `json:"trace_number,required"`
+	TraceNumber string `json:"trace_number" api:"required"`
 	// The identifier of the Transaction associated with this return.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID  string                                 `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                 `json:"-,extras"`
+	TransferID  string                                 `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                 `json:"-" api:"extrafields"`
 	JSON        transactionSourceACHTransferReturnJSON `json:"-"`
 }
 
@@ -778,10 +778,10 @@ func (r TransactionSourceACHTransferReturnReturnReasonCode) IsKnown() bool {
 // `blockchain_offramp_transfer_settlement`.
 type TransactionSourceBlockchainOfframpTransferSettlement struct {
 	// The identifier of the Blockchain Address the funds were received at.
-	SourceBlockchainAddressID string `json:"source_blockchain_address_id,required"`
+	SourceBlockchainAddressID string `json:"source_blockchain_address_id" api:"required"`
 	// The identifier of the Blockchain Off-Ramp Transfer that led to this Transaction.
-	TransferID  string                                                   `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                   `json:"-,extras"`
+	TransferID  string                                                   `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                   `json:"-" api:"extrafields"`
 	JSON        transactionSourceBlockchainOfframpTransferSettlementJSON `json:"-"`
 }
 
@@ -807,10 +807,10 @@ func (r transactionSourceBlockchainOfframpTransferSettlementJSON) RawJSON() stri
 // `blockchain_onramp_transfer_intention`.
 type TransactionSourceBlockchainOnrampTransferIntention struct {
 	// The blockchain address the funds were sent to.
-	DestinationBlockchainAddress string `json:"destination_blockchain_address,required"`
+	DestinationBlockchainAddress string `json:"destination_blockchain_address" api:"required"`
 	// The identifier of the Blockchain On-Ramp Transfer that led to this Transaction.
-	TransferID  string                                                 `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                 `json:"-,extras"`
+	TransferID  string                                                 `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                 `json:"-" api:"extrafields"`
 	JSON        transactionSourceBlockchainOnrampTransferIntentionJSON `json:"-"`
 }
 
@@ -837,11 +837,11 @@ func (r transactionSourceBlockchainOnrampTransferIntentionJSON) RawJSON() string
 type TransactionSourceCardDisputeAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was accepted.
-	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required" format:"date-time"`
 	// The identifier of the Transaction that was created to return the disputed funds
 	// to your account.
-	TransactionID string                                     `json:"transaction_id,required"`
-	ExtraFields   map[string]interface{}                     `json:"-,extras"`
+	TransactionID string                                     `json:"transaction_id" api:"required"`
+	ExtraFields   map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON          transactionSourceCardDisputeAcceptanceJSON `json:"-"`
 }
 
@@ -867,17 +867,17 @@ func (r transactionSourceCardDisputeAcceptanceJSON) RawJSON() string {
 // related to a Card Dispute.
 type TransactionSourceCardDisputeFinancial struct {
 	// The amount of the financial event.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The network that the Card Dispute is associated with.
-	Network TransactionSourceCardDisputeFinancialNetwork `json:"network,required"`
+	Network TransactionSourceCardDisputeFinancialNetwork `json:"network" api:"required"`
 	// The identifier of the Transaction that was created to credit or debit the
 	// disputed funds to or from your account.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// Information for events related to card dispute for card payments processed over
 	// Visa's network. This field will be present in the JSON response if and only if
 	// `network` is equal to `visa`.
-	Visa        TransactionSourceCardDisputeFinancialVisa `json:"visa,required,nullable"`
-	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	Visa        TransactionSourceCardDisputeFinancialVisa `json:"visa" api:"required,nullable"`
+	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
 	JSON        transactionSourceCardDisputeFinancialJSON `json:"-"`
 }
 
@@ -921,7 +921,7 @@ func (r TransactionSourceCardDisputeFinancialNetwork) IsKnown() bool {
 // `network` is equal to `visa`.
 type TransactionSourceCardDisputeFinancialVisa struct {
 	// The type of card dispute financial event.
-	EventType TransactionSourceCardDisputeFinancialVisaEventType `json:"event_type,required"`
+	EventType TransactionSourceCardDisputeFinancialVisaEventType `json:"event_type" api:"required"`
 	JSON      transactionSourceCardDisputeFinancialVisaJSON      `json:"-"`
 }
 
@@ -967,14 +967,14 @@ func (r TransactionSourceCardDisputeFinancialVisaEventType) IsKnown() bool {
 // details of a lost Card Dispute.
 type TransactionSourceCardDisputeLoss struct {
 	// Why the Card Dispute was lost.
-	Explanation string `json:"explanation,required"`
+	Explanation string `json:"explanation" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was lost.
-	LostAt time.Time `json:"lost_at,required" format:"date-time"`
+	LostAt time.Time `json:"lost_at" api:"required" format:"date-time"`
 	// The identifier of the Transaction that was created to debit the disputed funds
 	// from your account.
-	TransactionID string                               `json:"transaction_id,required"`
-	ExtraFields   map[string]interface{}               `json:"-,extras"`
+	TransactionID string                               `json:"transaction_id" api:"required"`
+	ExtraFields   map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON          transactionSourceCardDisputeLossJSON `json:"-"`
 }
 
@@ -1001,78 +1001,78 @@ func (r transactionSourceCardDisputeLossJSON) RawJSON() string {
 // holds placed on a customer's funds with the intent to later clear a transaction.
 type TransactionSourceCardFinancial struct {
 	// The Card Financial identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this financial was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner TransactionSourceCardFinancialActioner `json:"actioner,required"`
+	Actioner TransactionSourceCardFinancialActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts TransactionSourceCardFinancialAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts TransactionSourceCardFinancialAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency TransactionSourceCardFinancialCurrency `json:"currency,required"`
+	Currency TransactionSourceCardFinancialCurrency `json:"currency" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction TransactionSourceCardFinancialDirection `json:"direction,required"`
+	Direction TransactionSourceCardFinancialDirection `json:"direction" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails TransactionSourceCardFinancialNetworkDetails `json:"network_details,required"`
+	NetworkDetails TransactionSourceCardFinancialNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers TransactionSourceCardFinancialNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers TransactionSourceCardFinancialNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The pending amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the financial, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory TransactionSourceCardFinancialProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory TransactionSourceCardFinancialProcessingCategory `json:"processing_category" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_financial`.
-	Type TransactionSourceCardFinancialType `json:"type,required"`
+	Type TransactionSourceCardFinancialType `json:"type" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification TransactionSourceCardFinancialVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                     `json:"-,extras"`
+	Verification TransactionSourceCardFinancialVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON         transactionSourceCardFinancialJSON         `json:"-"`
 }
 
@@ -1141,25 +1141,25 @@ func (r TransactionSourceCardFinancialActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type TransactionSourceCardFinancialAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic TransactionSourceCardFinancialAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic TransactionSourceCardFinancialAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental TransactionSourceCardFinancialAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental TransactionSourceCardFinancialAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original TransactionSourceCardFinancialAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original TransactionSourceCardFinancialAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription TransactionSourceCardFinancialAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription TransactionSourceCardFinancialAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge TransactionSourceCardFinancialAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge TransactionSourceCardFinancialAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative TransactionSourceCardFinancialAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative TransactionSourceCardFinancialAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare TransactionSourceCardFinancialAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare TransactionSourceCardFinancialAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit TransactionSourceCardFinancialAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit TransactionSourceCardFinancialAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown TransactionSourceCardFinancialAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown TransactionSourceCardFinancialAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision TransactionSourceCardFinancialAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision TransactionSourceCardFinancialAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   transactionSourceCardFinancialAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -1193,10 +1193,10 @@ type TransactionSourceCardFinancialAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                    `json:"currency,required"`
+	Currency string                                                    `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -1222,10 +1222,10 @@ type TransactionSourceCardFinancialAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                    `json:"currency,required"`
+	Currency string                                                    `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -1251,10 +1251,10 @@ type TransactionSourceCardFinancialAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                      `json:"currency,required"`
+	Currency string                                                      `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -1281,10 +1281,10 @@ type TransactionSourceCardFinancialAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -1311,10 +1311,10 @@ type TransactionSourceCardFinancialAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                       `json:"currency,required"`
+	Currency string                                                       `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -1341,10 +1341,10 @@ type TransactionSourceCardFinancialAdditionalAmountsTotalCumulative struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -1371,10 +1371,10 @@ type TransactionSourceCardFinancialAdditionalAmountsTotalHealthcare struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -1401,10 +1401,10 @@ type TransactionSourceCardFinancialAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                     `json:"currency,required"`
+	Currency string                                                     `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -1430,10 +1430,10 @@ type TransactionSourceCardFinancialAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                     `json:"currency,required"`
+	Currency string                                                     `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -1459,10 +1459,10 @@ type TransactionSourceCardFinancialAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                    `json:"currency,required"`
+	Currency string                                                    `json:"currency" api:"required"`
 	JSON     transactionSourceCardFinancialAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -1519,11 +1519,11 @@ func (r TransactionSourceCardFinancialDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type TransactionSourceCardFinancialNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category TransactionSourceCardFinancialNetworkDetailsCategory `json:"category,required"`
+	Category TransactionSourceCardFinancialNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse TransactionSourceCardFinancialNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse TransactionSourceCardFinancialNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa TransactionSourceCardFinancialNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa TransactionSourceCardFinancialNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON transactionSourceCardFinancialNetworkDetailsJSON `json:"-"`
 }
 
@@ -1586,19 +1586,19 @@ type TransactionSourceCardFinancialNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator TransactionSourceCardFinancialNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator TransactionSourceCardFinancialNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode TransactionSourceCardFinancialNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode TransactionSourceCardFinancialNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability TransactionSourceCardFinancialNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability TransactionSourceCardFinancialNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    transactionSourceCardFinancialNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1722,17 +1722,17 @@ func (r TransactionSourceCardFinancialNetworkDetailsVisaTerminalEntryCapability)
 type TransactionSourceCardFinancialNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                               `json:"transaction_id,required,nullable"`
+	TransactionID string                                               `json:"transaction_id" api:"required,nullable"`
 	JSON          transactionSourceCardFinancialNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -1800,12 +1800,12 @@ func (r TransactionSourceCardFinancialType) IsKnown() bool {
 type TransactionSourceCardFinancialVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode TransactionSourceCardFinancialVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode TransactionSourceCardFinancialVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress TransactionSourceCardFinancialVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress TransactionSourceCardFinancialVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName TransactionSourceCardFinancialVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName TransactionSourceCardFinancialVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           transactionSourceCardFinancialVerificationJSON           `json:"-"`
 }
 
@@ -1831,7 +1831,7 @@ func (r transactionSourceCardFinancialVerificationJSON) RawJSON() string {
 // the back of the card.
 type TransactionSourceCardFinancialVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result TransactionSourceCardFinancialVerificationCardVerificationCodeResult `json:"result,required"`
+	Result TransactionSourceCardFinancialVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   transactionSourceCardFinancialVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -1873,16 +1873,16 @@ func (r TransactionSourceCardFinancialVerificationCardVerificationCodeResult) Is
 // we verified it against.
 type TransactionSourceCardFinancialVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result TransactionSourceCardFinancialVerificationCardholderAddressResult `json:"result,required"`
+	Result TransactionSourceCardFinancialVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   transactionSourceCardFinancialVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -1930,11 +1930,11 @@ func (r TransactionSourceCardFinancialVerificationCardholderAddressResult) IsKno
 // Cardholder name provided in the authorization request.
 type TransactionSourceCardFinancialVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                       `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                       `json:"provided_middle_name" api:"required,nullable"`
 	JSON               transactionSourceCardFinancialVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -1963,10 +1963,10 @@ func (r transactionSourceCardFinancialVerificationCardholderNameJSON) RawJSON() 
 // sent from Increase is accepted by the receiving bank.
 type TransactionSourceCardPushTransferAcceptance struct {
 	// The transfer amount in USD cents.
-	SettlementAmount int64 `json:"settlement_amount,required"`
+	SettlementAmount int64 `json:"settlement_amount" api:"required"`
 	// The identifier of the Card Push Transfer that led to this Transaction.
-	TransferID  string                                          `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                          `json:"-,extras"`
+	TransferID  string                                          `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                          `json:"-" api:"extrafields"`
 	JSON        transactionSourceCardPushTransferAcceptanceJSON `json:"-"`
 }
 
@@ -1994,51 +1994,51 @@ func (r transactionSourceCardPushTransferAcceptanceJSON) RawJSON() string {
 // transaction.
 type TransactionSourceCardRefund struct {
 	// The Card Refund identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// Cashback debited for this transaction, if eligible. Cashback is paid out in
 	// aggregate, monthly.
-	Cashback TransactionSourceCardRefundCashback `json:"cashback,required,nullable"`
+	Cashback TransactionSourceCardRefundCashback `json:"cashback" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency TransactionSourceCardRefundCurrency `json:"currency,required"`
+	Currency TransactionSourceCardRefundCurrency `json:"currency" api:"required"`
 	// Interchange assessed as a part of this transaction.
-	Interchange TransactionSourceCardRefundInterchange `json:"interchange,required,nullable"`
+	Interchange TransactionSourceCardRefundInterchange `json:"interchange" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city" api:"required"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Network-specific identifiers for this refund.
-	NetworkIdentifiers TransactionSourceCardRefundNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers TransactionSourceCardRefundNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
-	PurchaseDetails TransactionSourceCardRefundPurchaseDetails `json:"purchase_details,required,nullable"`
+	PurchaseDetails TransactionSourceCardRefundPurchaseDetails `json:"purchase_details" api:"required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_refund`.
-	Type        TransactionSourceCardRefundType `json:"type,required"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
+	Type        TransactionSourceCardRefundType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}          `json:"-" api:"extrafields"`
 	JSON        transactionSourceCardRefundJSON `json:"-"`
 }
 
@@ -2082,9 +2082,9 @@ type TransactionSourceCardRefundCashback struct {
 	// The cashback amount given as a string containing a decimal number. The amount is
 	// a positive number if it will be credited to you (e.g., settlements) and a
 	// negative number if it will be debited (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
-	Currency TransactionSourceCardRefundCashbackCurrency `json:"currency,required"`
+	Currency TransactionSourceCardRefundCashbackCurrency `json:"currency" api:"required"`
 	JSON     transactionSourceCardRefundCashbackJSON     `json:"-"`
 }
 
@@ -2142,12 +2142,12 @@ type TransactionSourceCardRefundInterchange struct {
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
 	// (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The card network specific interchange code.
-	Code string `json:"code,required,nullable"`
+	Code string `json:"code" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
 	// reimbursement.
-	Currency TransactionSourceCardRefundInterchangeCurrency `json:"currency,required"`
+	Currency TransactionSourceCardRefundInterchangeCurrency `json:"currency" api:"required"`
 	JSON     transactionSourceCardRefundInterchangeJSON     `json:"-"`
 }
 
@@ -2189,15 +2189,15 @@ func (r TransactionSourceCardRefundInterchangeCurrency) IsKnown() bool {
 type TransactionSourceCardRefundNetworkIdentifiers struct {
 	// A network assigned business ID that identifies the acquirer that processed this
 	// transaction.
-	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	AcquirerBusinessID string `json:"acquirer_business_id" api:"required"`
 	// A globally unique identifier for this settlement.
-	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	AcquirerReferenceNumber string `json:"acquirer_reference_number" api:"required"`
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                            `json:"transaction_id,required,nullable"`
+	TransactionID string                                            `json:"transaction_id" api:"required,nullable"`
 	JSON          transactionSourceCardRefundNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -2224,27 +2224,27 @@ func (r transactionSourceCardRefundNetworkIdentifiersJSON) RawJSON() string {
 // fields.
 type TransactionSourceCardRefundPurchaseDetails struct {
 	// Fields specific to car rentals.
-	CarRental TransactionSourceCardRefundPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	CarRental TransactionSourceCardRefundPurchaseDetailsCarRental `json:"car_rental" api:"required,nullable"`
 	// An identifier from the merchant for the customer or consumer.
-	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier" api:"required,nullable"`
 	// The state or provincial tax amount in minor units.
-	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	LocalTaxAmount int64 `json:"local_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	LocalTaxCurrency string `json:"local_tax_currency" api:"required,nullable"`
 	// Fields specific to lodging.
-	Lodging TransactionSourceCardRefundPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	Lodging TransactionSourceCardRefundPurchaseDetailsLodging `json:"lodging" api:"required,nullable"`
 	// The national tax amount in minor units.
-	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	NationalTaxAmount int64 `json:"national_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	NationalTaxCurrency string `json:"national_tax_currency" api:"required,nullable"`
 	// An identifier from the merchant for the purchase to the issuer and cardholder.
-	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	PurchaseIdentifier string `json:"purchase_identifier" api:"required,nullable"`
 	// The format of the purchase identifier.
-	PurchaseIdentifierFormat TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	PurchaseIdentifierFormat TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format" api:"required,nullable"`
 	// Fields specific to travel.
-	Travel TransactionSourceCardRefundPurchaseDetailsTravel `json:"travel,required,nullable"`
+	Travel TransactionSourceCardRefundPurchaseDetailsTravel `json:"travel" api:"required,nullable"`
 	JSON   transactionSourceCardRefundPurchaseDetailsJSON   `json:"-"`
 }
 
@@ -2276,45 +2276,45 @@ func (r transactionSourceCardRefundPurchaseDetailsJSON) RawJSON() string {
 // Fields specific to car rentals.
 type TransactionSourceCardRefundPurchaseDetailsCarRental struct {
 	// Code indicating the vehicle's class.
-	CarClassCode string `json:"car_class_code,required,nullable"`
+	CarClassCode string `json:"car_class_code" api:"required,nullable"`
 	// Date the customer picked up the car or, in the case of a no-show or pre-pay
 	// transaction, the scheduled pick up date.
-	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	CheckoutDate time.Time `json:"checkout_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the vehicle.
-	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
 	// rate.
-	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency" api:"required,nullable"`
 	// Number of days the vehicle was rented.
-	DaysRented int64 `json:"days_rented,required,nullable"`
+	DaysRented int64 `json:"days_rented" api:"required,nullable"`
 	// Additional charges (gas, late fee, etc.) being billed.
-	ExtraCharges TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges TransactionSourceCardRefundPurchaseDetailsCarRentalExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Fuel charges for the vehicle.
-	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	FuelChargesAmount int64 `json:"fuel_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
 	// assessed.
-	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	FuelChargesCurrency string `json:"fuel_charges_currency" api:"required,nullable"`
 	// Any insurance being charged for the vehicle.
-	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
 	// charges assessed.
-	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	InsuranceChargesCurrency string `json:"insurance_charges_currency" api:"required,nullable"`
 	// An indicator that the cardholder is being billed for a reserved vehicle that was
 	// not actually rented (that is, a "no-show" charge).
-	NoShowIndicator TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Charges for returning the vehicle at a different location than where it was
 	// picked up.
-	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
 	// drop-off charges assessed.
-	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency" api:"required,nullable"`
 	// Name of the person renting the vehicle.
-	RenterName string `json:"renter_name,required,nullable"`
+	RenterName string `json:"renter_name" api:"required,nullable"`
 	// Weekly rate being charged for the vehicle.
-	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string                                                  `json:"weekly_rental_rate_currency,required,nullable"`
+	WeeklyRentalRateCurrency string                                                  `json:"weekly_rental_rate_currency" api:"required,nullable"`
 	JSON                     transactionSourceCardRefundPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
@@ -2389,44 +2389,44 @@ func (r TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator) IsKn
 // Fields specific to lodging.
 type TransactionSourceCardRefundPurchaseDetailsLodging struct {
 	// Date the customer checked in.
-	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	CheckInDate time.Time `json:"check_in_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the room.
-	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
 	// rate.
-	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency" api:"required,nullable"`
 	// Additional charges (phone, late check-out, etc.) being billed.
-	ExtraCharges TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges TransactionSourceCardRefundPurchaseDetailsLodgingExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Folio cash advances for the room.
-	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
 	// advances.
-	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency" api:"required,nullable"`
 	// Food and beverage charges for the room.
-	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
-	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency" api:"required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
 	// actually used.
-	NoShowIndicator TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator TransactionSourceCardRefundPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Prepaid expenses being charged for the room.
-	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
 	// expenses.
-	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency" api:"required,nullable"`
 	// Number of nights the room was rented.
-	RoomNights int64 `json:"room_nights,required,nullable"`
+	RoomNights int64 `json:"room_nights" api:"required,nullable"`
 	// Total room tax being charged.
-	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
 	// tax.
-	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency" api:"required,nullable"`
 	// Total tax being charged for the room.
-	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	TotalTaxAmount int64 `json:"total_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string                                                `json:"total_tax_currency,required,nullable"`
+	TotalTaxCurrency string                                                `json:"total_tax_currency" api:"required,nullable"`
 	JSON             transactionSourceCardRefundPurchaseDetailsLodgingJSON `json:"-"`
 }
 
@@ -2521,29 +2521,29 @@ func (r TransactionSourceCardRefundPurchaseDetailsPurchaseIdentifierFormat) IsKn
 // Fields specific to travel.
 type TransactionSourceCardRefundPurchaseDetailsTravel struct {
 	// Ancillary purchases in addition to the airfare.
-	Ancillary TransactionSourceCardRefundPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	Ancillary TransactionSourceCardRefundPurchaseDetailsTravelAncillary `json:"ancillary" api:"required,nullable"`
 	// Indicates the computerized reservation system used to book the ticket.
-	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	ComputerizedReservationSystem string `json:"computerized_reservation_system" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator TransactionSourceCardRefundPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Date of departure.
-	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	DepartureDate time.Time `json:"departure_date" api:"required,nullable" format:"date"`
 	// Code for the originating city or airport.
-	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	OriginationCityAirportCode string `json:"origination_city_airport_code" api:"required,nullable"`
 	// Name of the passenger.
-	PassengerName string `json:"passenger_name,required,nullable"`
+	PassengerName string `json:"passenger_name" api:"required,nullable"`
 	// Indicates whether this ticket is non-refundable.
-	RestrictedTicketIndicator TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	RestrictedTicketIndicator TransactionSourceCardRefundPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator" api:"required,nullable"`
 	// Indicates why a ticket was changed.
-	TicketChangeIndicator TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	TicketChangeIndicator TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator" api:"required,nullable"`
 	// Ticket number.
-	TicketNumber string `json:"ticket_number,required,nullable"`
+	TicketNumber string `json:"ticket_number" api:"required,nullable"`
 	// Code for the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	TravelAgencyCode string `json:"travel_agency_code" api:"required,nullable"`
 	// Name of the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	TravelAgencyName string `json:"travel_agency_name" api:"required,nullable"`
 	// Fields specific to each leg of the journey.
-	TripLegs []TransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	TripLegs []TransactionSourceCardRefundPurchaseDetailsTravelTripLeg `json:"trip_legs" api:"required,nullable"`
 	JSON     transactionSourceCardRefundPurchaseDetailsTravelJSON      `json:"-"`
 }
 
@@ -2579,15 +2579,15 @@ type TransactionSourceCardRefundPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
 	// baggage fee for a passenger transport ticket, this field should contain the
 	// ticket document number for the other purchase.
-	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Name of the passenger or description of the ancillary purchase.
-	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	PassengerNameOrDescription string `json:"passenger_name_or_description" api:"required,nullable"`
 	// Additional travel charges, such as baggage fees.
-	Services []TransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	Services []TransactionSourceCardRefundPurchaseDetailsTravelAncillaryService `json:"services" api:"required"`
 	// Ticket document number.
-	TicketDocumentNumber string                                                        `json:"ticket_document_number,required,nullable"`
+	TicketDocumentNumber string                                                        `json:"ticket_document_number" api:"required,nullable"`
 	JSON                 transactionSourceCardRefundPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
@@ -2632,9 +2632,9 @@ func (r TransactionSourceCardRefundPurchaseDetailsTravelAncillaryCreditReasonInd
 
 type TransactionSourceCardRefundPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
-	Category TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	Category TransactionSourceCardRefundPurchaseDetailsTravelAncillaryServicesCategory `json:"category" api:"required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string                                                               `json:"sub_category,required,nullable"`
+	SubCategory string                                                               `json:"sub_category" api:"required,nullable"`
 	JSON        transactionSourceCardRefundPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
@@ -2749,17 +2749,17 @@ func (r TransactionSourceCardRefundPurchaseDetailsTravelTicketChangeIndicator) I
 
 type TransactionSourceCardRefundPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
-	CarrierCode string `json:"carrier_code,required,nullable"`
+	CarrierCode string `json:"carrier_code" api:"required,nullable"`
 	// Code for the destination city or airport.
-	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	DestinationCityAirportCode string `json:"destination_city_airport_code" api:"required,nullable"`
 	// Fare basis code.
-	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	FareBasisCode string `json:"fare_basis_code" api:"required,nullable"`
 	// Flight number.
-	FlightNumber string `json:"flight_number,required,nullable"`
+	FlightNumber string `json:"flight_number" api:"required,nullable"`
 	// Service class (e.g., first class, business class, etc.).
-	ServiceClass string `json:"service_class,required,nullable"`
+	ServiceClass string `json:"service_class" api:"required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
-	StopOverCode TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	StopOverCode TransactionSourceCardRefundPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code" api:"required,nullable"`
 	JSON         transactionSourceCardRefundPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
@@ -2824,17 +2824,17 @@ func (r TransactionSourceCardRefundType) IsKnown() bool {
 type TransactionSourceCardRevenuePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency TransactionSourceCardRevenuePaymentCurrency `json:"currency,required"`
+	Currency TransactionSourceCardRevenuePaymentCurrency `json:"currency" api:"required"`
 	// The end of the period for which this transaction paid interest.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	PeriodEnd time.Time `json:"period_end" api:"required" format:"date-time"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time `json:"period_start,required" format:"date-time"`
+	PeriodStart time.Time `json:"period_start" api:"required" format:"date-time"`
 	// The account the card belonged to.
-	TransactedOnAccountID string                                  `json:"transacted_on_account_id,required,nullable"`
-	ExtraFields           map[string]interface{}                  `json:"-,extras"`
+	TransactedOnAccountID string                                  `json:"transacted_on_account_id" api:"required,nullable"`
+	ExtraFields           map[string]interface{}                  `json:"-" api:"extrafields"`
 	JSON                  transactionSourceCardRevenuePaymentJSON `json:"-"`
 }
 
@@ -2881,62 +2881,62 @@ func (r TransactionSourceCardRevenuePaymentCurrency) IsKnown() bool {
 // without first authorizing it.
 type TransactionSourceCardSettlement struct {
 	// The Card Settlement identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The amount in the minor unit of the transaction's settlement currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The Card Authorization that was created prior to this Card Settlement, if one
 	// exists.
-	CardAuthorization string `json:"card_authorization,required,nullable"`
+	CardAuthorization string `json:"card_authorization" api:"required,nullable"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// Cashback earned on this transaction, if eligible. Cashback is paid out in
 	// aggregate, monthly.
-	Cashback TransactionSourceCardSettlementCashback `json:"cashback,required,nullable"`
+	Cashback TransactionSourceCardSettlementCashback `json:"cashback" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's settlement currency.
-	Currency TransactionSourceCardSettlementCurrency `json:"currency,required"`
+	Currency TransactionSourceCardSettlementCurrency `json:"currency" api:"required"`
 	// Interchange assessed as a part of this transaction.
-	Interchange TransactionSourceCardSettlementInterchange `json:"interchange,required,nullable"`
+	Interchange TransactionSourceCardSettlementInterchange `json:"interchange" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The 4-digit MCC describing the merchant's business.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required"`
+	MerchantCity string `json:"merchant_city" api:"required"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// The card network on which this transaction was processed.
-	Network TransactionSourceCardSettlementNetwork `json:"network,required"`
+	Network TransactionSourceCardSettlementNetwork `json:"network" api:"required"`
 	// Network-specific identifiers for this refund.
-	NetworkIdentifiers TransactionSourceCardSettlementNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers TransactionSourceCardSettlementNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// Additional details about the card purchase, such as tax and industry-specific
 	// fields.
-	PurchaseDetails TransactionSourceCardSettlementPurchaseDetails `json:"purchase_details,required,nullable"`
+	PurchaseDetails TransactionSourceCardSettlementPurchaseDetails `json:"purchase_details" api:"required,nullable"`
 	// Surcharge amount details, if applicable. The amount is positive if the surcharge
 	// is added to the overall transaction amount (surcharge), and negative if the
 	// surcharge is deducted from the overall transaction amount (discount).
-	Surcharge TransactionSourceCardSettlementSurcharge `json:"surcharge,required,nullable"`
+	Surcharge TransactionSourceCardSettlementSurcharge `json:"surcharge" api:"required,nullable"`
 	// The identifier of the Transaction associated with this Transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_settlement`.
-	Type        TransactionSourceCardSettlementType `json:"type,required"`
-	ExtraFields map[string]interface{}              `json:"-,extras"`
+	Type        TransactionSourceCardSettlementType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}              `json:"-" api:"extrafields"`
 	JSON        transactionSourceCardSettlementJSON `json:"-"`
 }
 
@@ -2984,9 +2984,9 @@ type TransactionSourceCardSettlementCashback struct {
 	// The cashback amount given as a string containing a decimal number. The amount is
 	// a positive number if it will be credited to you (e.g., settlements) and a
 	// negative number if it will be debited (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
-	Currency TransactionSourceCardSettlementCashbackCurrency `json:"currency,required"`
+	Currency TransactionSourceCardSettlementCashbackCurrency `json:"currency" api:"required"`
 	JSON     transactionSourceCardSettlementCashbackJSON     `json:"-"`
 }
 
@@ -3044,12 +3044,12 @@ type TransactionSourceCardSettlementInterchange struct {
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
 	// (e.g., refunds).
-	Amount string `json:"amount,required"`
+	Amount string `json:"amount" api:"required"`
 	// The card network specific interchange code.
-	Code string `json:"code,required,nullable"`
+	Code string `json:"code" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
 	// reimbursement.
-	Currency TransactionSourceCardSettlementInterchangeCurrency `json:"currency,required"`
+	Currency TransactionSourceCardSettlementInterchangeCurrency `json:"currency" api:"required"`
 	JSON     transactionSourceCardSettlementInterchangeJSON     `json:"-"`
 }
 
@@ -3107,15 +3107,15 @@ func (r TransactionSourceCardSettlementNetwork) IsKnown() bool {
 type TransactionSourceCardSettlementNetworkIdentifiers struct {
 	// A network assigned business ID that identifies the acquirer that processed this
 	// transaction.
-	AcquirerBusinessID string `json:"acquirer_business_id,required"`
+	AcquirerBusinessID string `json:"acquirer_business_id" api:"required"`
 	// A globally unique identifier for this settlement.
-	AcquirerReferenceNumber string `json:"acquirer_reference_number,required"`
+	AcquirerReferenceNumber string `json:"acquirer_reference_number" api:"required"`
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                `json:"transaction_id,required,nullable"`
+	TransactionID string                                                `json:"transaction_id" api:"required,nullable"`
 	JSON          transactionSourceCardSettlementNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -3142,27 +3142,27 @@ func (r transactionSourceCardSettlementNetworkIdentifiersJSON) RawJSON() string 
 // fields.
 type TransactionSourceCardSettlementPurchaseDetails struct {
 	// Fields specific to car rentals.
-	CarRental TransactionSourceCardSettlementPurchaseDetailsCarRental `json:"car_rental,required,nullable"`
+	CarRental TransactionSourceCardSettlementPurchaseDetailsCarRental `json:"car_rental" api:"required,nullable"`
 	// An identifier from the merchant for the customer or consumer.
-	CustomerReferenceIdentifier string `json:"customer_reference_identifier,required,nullable"`
+	CustomerReferenceIdentifier string `json:"customer_reference_identifier" api:"required,nullable"`
 	// The state or provincial tax amount in minor units.
-	LocalTaxAmount int64 `json:"local_tax_amount,required,nullable"`
+	LocalTaxAmount int64 `json:"local_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	LocalTaxCurrency string `json:"local_tax_currency,required,nullable"`
+	LocalTaxCurrency string `json:"local_tax_currency" api:"required,nullable"`
 	// Fields specific to lodging.
-	Lodging TransactionSourceCardSettlementPurchaseDetailsLodging `json:"lodging,required,nullable"`
+	Lodging TransactionSourceCardSettlementPurchaseDetailsLodging `json:"lodging" api:"required,nullable"`
 	// The national tax amount in minor units.
-	NationalTaxAmount int64 `json:"national_tax_amount,required,nullable"`
+	NationalTaxAmount int64 `json:"national_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
 	// assessed.
-	NationalTaxCurrency string `json:"national_tax_currency,required,nullable"`
+	NationalTaxCurrency string `json:"national_tax_currency" api:"required,nullable"`
 	// An identifier from the merchant for the purchase to the issuer and cardholder.
-	PurchaseIdentifier string `json:"purchase_identifier,required,nullable"`
+	PurchaseIdentifier string `json:"purchase_identifier" api:"required,nullable"`
 	// The format of the purchase identifier.
-	PurchaseIdentifierFormat TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format,required,nullable"`
+	PurchaseIdentifierFormat TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat `json:"purchase_identifier_format" api:"required,nullable"`
 	// Fields specific to travel.
-	Travel TransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel,required,nullable"`
+	Travel TransactionSourceCardSettlementPurchaseDetailsTravel `json:"travel" api:"required,nullable"`
 	JSON   transactionSourceCardSettlementPurchaseDetailsJSON   `json:"-"`
 }
 
@@ -3194,45 +3194,45 @@ func (r transactionSourceCardSettlementPurchaseDetailsJSON) RawJSON() string {
 // Fields specific to car rentals.
 type TransactionSourceCardSettlementPurchaseDetailsCarRental struct {
 	// Code indicating the vehicle's class.
-	CarClassCode string `json:"car_class_code,required,nullable"`
+	CarClassCode string `json:"car_class_code" api:"required,nullable"`
 	// Date the customer picked up the car or, in the case of a no-show or pre-pay
 	// transaction, the scheduled pick up date.
-	CheckoutDate time.Time `json:"checkout_date,required,nullable" format:"date"`
+	CheckoutDate time.Time `json:"checkout_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the vehicle.
-	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount,required,nullable"`
+	DailyRentalRateAmount int64 `json:"daily_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
 	// rate.
-	DailyRentalRateCurrency string `json:"daily_rental_rate_currency,required,nullable"`
+	DailyRentalRateCurrency string `json:"daily_rental_rate_currency" api:"required,nullable"`
 	// Number of days the vehicle was rented.
-	DaysRented int64 `json:"days_rented,required,nullable"`
+	DaysRented int64 `json:"days_rented" api:"required,nullable"`
 	// Additional charges (gas, late fee, etc.) being billed.
-	ExtraCharges TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges TransactionSourceCardSettlementPurchaseDetailsCarRentalExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Fuel charges for the vehicle.
-	FuelChargesAmount int64 `json:"fuel_charges_amount,required,nullable"`
+	FuelChargesAmount int64 `json:"fuel_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
 	// assessed.
-	FuelChargesCurrency string `json:"fuel_charges_currency,required,nullable"`
+	FuelChargesCurrency string `json:"fuel_charges_currency" api:"required,nullable"`
 	// Any insurance being charged for the vehicle.
-	InsuranceChargesAmount int64 `json:"insurance_charges_amount,required,nullable"`
+	InsuranceChargesAmount int64 `json:"insurance_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
 	// charges assessed.
-	InsuranceChargesCurrency string `json:"insurance_charges_currency,required,nullable"`
+	InsuranceChargesCurrency string `json:"insurance_charges_currency" api:"required,nullable"`
 	// An indicator that the cardholder is being billed for a reserved vehicle that was
 	// not actually rented (that is, a "no-show" charge).
-	NoShowIndicator TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Charges for returning the vehicle at a different location than where it was
 	// picked up.
-	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount,required,nullable"`
+	OneWayDropOffChargesAmount int64 `json:"one_way_drop_off_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
 	// drop-off charges assessed.
-	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency,required,nullable"`
+	OneWayDropOffChargesCurrency string `json:"one_way_drop_off_charges_currency" api:"required,nullable"`
 	// Name of the person renting the vehicle.
-	RenterName string `json:"renter_name,required,nullable"`
+	RenterName string `json:"renter_name" api:"required,nullable"`
 	// Weekly rate being charged for the vehicle.
-	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount,required,nullable"`
+	WeeklyRentalRateAmount int64 `json:"weekly_rental_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
 	// rental rate.
-	WeeklyRentalRateCurrency string                                                      `json:"weekly_rental_rate_currency,required,nullable"`
+	WeeklyRentalRateCurrency string                                                      `json:"weekly_rental_rate_currency" api:"required,nullable"`
 	JSON                     transactionSourceCardSettlementPurchaseDetailsCarRentalJSON `json:"-"`
 }
 
@@ -3308,44 +3308,44 @@ func (r TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator) 
 // Fields specific to lodging.
 type TransactionSourceCardSettlementPurchaseDetailsLodging struct {
 	// Date the customer checked in.
-	CheckInDate time.Time `json:"check_in_date,required,nullable" format:"date"`
+	CheckInDate time.Time `json:"check_in_date" api:"required,nullable" format:"date"`
 	// Daily rate being charged for the room.
-	DailyRoomRateAmount int64 `json:"daily_room_rate_amount,required,nullable"`
+	DailyRoomRateAmount int64 `json:"daily_room_rate_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
 	// rate.
-	DailyRoomRateCurrency string `json:"daily_room_rate_currency,required,nullable"`
+	DailyRoomRateCurrency string `json:"daily_room_rate_currency" api:"required,nullable"`
 	// Additional charges (phone, late check-out, etc.) being billed.
-	ExtraCharges TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges `json:"extra_charges,required,nullable"`
+	ExtraCharges TransactionSourceCardSettlementPurchaseDetailsLodgingExtraCharges `json:"extra_charges" api:"required,nullable"`
 	// Folio cash advances for the room.
-	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount,required,nullable"`
+	FolioCashAdvancesAmount int64 `json:"folio_cash_advances_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
 	// advances.
-	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency,required,nullable"`
+	FolioCashAdvancesCurrency string `json:"folio_cash_advances_currency" api:"required,nullable"`
 	// Food and beverage charges for the room.
-	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount,required,nullable"`
+	FoodBeverageChargesAmount int64 `json:"food_beverage_charges_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
 	// beverage charges.
-	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency,required,nullable"`
+	FoodBeverageChargesCurrency string `json:"food_beverage_charges_currency" api:"required,nullable"`
 	// Indicator that the cardholder is being billed for a reserved room that was not
 	// actually used.
-	NoShowIndicator TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator,required,nullable"`
+	NoShowIndicator TransactionSourceCardSettlementPurchaseDetailsLodgingNoShowIndicator `json:"no_show_indicator" api:"required,nullable"`
 	// Prepaid expenses being charged for the room.
-	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount,required,nullable"`
+	PrepaidExpensesAmount int64 `json:"prepaid_expenses_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
 	// expenses.
-	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency,required,nullable"`
+	PrepaidExpensesCurrency string `json:"prepaid_expenses_currency" api:"required,nullable"`
 	// Number of nights the room was rented.
-	RoomNights int64 `json:"room_nights,required,nullable"`
+	RoomNights int64 `json:"room_nights" api:"required,nullable"`
 	// Total room tax being charged.
-	TotalRoomTaxAmount int64 `json:"total_room_tax_amount,required,nullable"`
+	TotalRoomTaxAmount int64 `json:"total_room_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
 	// tax.
-	TotalRoomTaxCurrency string `json:"total_room_tax_currency,required,nullable"`
+	TotalRoomTaxCurrency string `json:"total_room_tax_currency" api:"required,nullable"`
 	// Total tax being charged for the room.
-	TotalTaxAmount int64 `json:"total_tax_amount,required,nullable"`
+	TotalTaxAmount int64 `json:"total_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
 	// assessed.
-	TotalTaxCurrency string                                                    `json:"total_tax_currency,required,nullable"`
+	TotalTaxCurrency string                                                    `json:"total_tax_currency" api:"required,nullable"`
 	JSON             transactionSourceCardSettlementPurchaseDetailsLodgingJSON `json:"-"`
 }
 
@@ -3440,29 +3440,29 @@ func (r TransactionSourceCardSettlementPurchaseDetailsPurchaseIdentifierFormat) 
 // Fields specific to travel.
 type TransactionSourceCardSettlementPurchaseDetailsTravel struct {
 	// Ancillary purchases in addition to the airfare.
-	Ancillary TransactionSourceCardSettlementPurchaseDetailsTravelAncillary `json:"ancillary,required,nullable"`
+	Ancillary TransactionSourceCardSettlementPurchaseDetailsTravelAncillary `json:"ancillary" api:"required,nullable"`
 	// Indicates the computerized reservation system used to book the ticket.
-	ComputerizedReservationSystem string `json:"computerized_reservation_system,required,nullable"`
+	ComputerizedReservationSystem string `json:"computerized_reservation_system" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator TransactionSourceCardSettlementPurchaseDetailsTravelCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Date of departure.
-	DepartureDate time.Time `json:"departure_date,required,nullable" format:"date"`
+	DepartureDate time.Time `json:"departure_date" api:"required,nullable" format:"date"`
 	// Code for the originating city or airport.
-	OriginationCityAirportCode string `json:"origination_city_airport_code,required,nullable"`
+	OriginationCityAirportCode string `json:"origination_city_airport_code" api:"required,nullable"`
 	// Name of the passenger.
-	PassengerName string `json:"passenger_name,required,nullable"`
+	PassengerName string `json:"passenger_name" api:"required,nullable"`
 	// Indicates whether this ticket is non-refundable.
-	RestrictedTicketIndicator TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator,required,nullable"`
+	RestrictedTicketIndicator TransactionSourceCardSettlementPurchaseDetailsTravelRestrictedTicketIndicator `json:"restricted_ticket_indicator" api:"required,nullable"`
 	// Indicates why a ticket was changed.
-	TicketChangeIndicator TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator,required,nullable"`
+	TicketChangeIndicator TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicator `json:"ticket_change_indicator" api:"required,nullable"`
 	// Ticket number.
-	TicketNumber string `json:"ticket_number,required,nullable"`
+	TicketNumber string `json:"ticket_number" api:"required,nullable"`
 	// Code for the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyCode string `json:"travel_agency_code,required,nullable"`
+	TravelAgencyCode string `json:"travel_agency_code" api:"required,nullable"`
 	// Name of the travel agency if the ticket was issued by a travel agency.
-	TravelAgencyName string `json:"travel_agency_name,required,nullable"`
+	TravelAgencyName string `json:"travel_agency_name" api:"required,nullable"`
 	// Fields specific to each leg of the journey.
-	TripLegs []TransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs,required,nullable"`
+	TripLegs []TransactionSourceCardSettlementPurchaseDetailsTravelTripLeg `json:"trip_legs" api:"required,nullable"`
 	JSON     transactionSourceCardSettlementPurchaseDetailsTravelJSON      `json:"-"`
 }
 
@@ -3498,15 +3498,15 @@ type TransactionSourceCardSettlementPurchaseDetailsTravelAncillary struct {
 	// If this purchase has a connection or relationship to another purchase, such as a
 	// baggage fee for a passenger transport ticket, this field should contain the
 	// ticket document number for the other purchase.
-	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number,required,nullable"`
+	ConnectedTicketDocumentNumber string `json:"connected_ticket_document_number" api:"required,nullable"`
 	// Indicates the reason for a credit to the cardholder.
-	CreditReasonIndicator TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator,required,nullable"`
+	CreditReasonIndicator TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReasonIndicator `json:"credit_reason_indicator" api:"required,nullable"`
 	// Name of the passenger or description of the ancillary purchase.
-	PassengerNameOrDescription string `json:"passenger_name_or_description,required,nullable"`
+	PassengerNameOrDescription string `json:"passenger_name_or_description" api:"required,nullable"`
 	// Additional travel charges, such as baggage fees.
-	Services []TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services,required"`
+	Services []TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService `json:"services" api:"required"`
 	// Ticket document number.
-	TicketDocumentNumber string                                                            `json:"ticket_document_number,required,nullable"`
+	TicketDocumentNumber string                                                            `json:"ticket_document_number" api:"required,nullable"`
 	JSON                 transactionSourceCardSettlementPurchaseDetailsTravelAncillaryJSON `json:"-"`
 }
 
@@ -3551,9 +3551,9 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryCreditReaso
 
 type TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryService struct {
 	// Category of the ancillary service.
-	Category TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category,required,nullable"`
+	Category TransactionSourceCardSettlementPurchaseDetailsTravelAncillaryServicesCategory `json:"category" api:"required,nullable"`
 	// Sub-category of the ancillary service, free-form.
-	SubCategory string                                                                   `json:"sub_category,required,nullable"`
+	SubCategory string                                                                   `json:"sub_category" api:"required,nullable"`
 	JSON        transactionSourceCardSettlementPurchaseDetailsTravelAncillaryServiceJSON `json:"-"`
 }
 
@@ -3668,17 +3668,17 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelTicketChangeIndicato
 
 type TransactionSourceCardSettlementPurchaseDetailsTravelTripLeg struct {
 	// Carrier code (e.g., United Airlines, Jet Blue, etc.).
-	CarrierCode string `json:"carrier_code,required,nullable"`
+	CarrierCode string `json:"carrier_code" api:"required,nullable"`
 	// Code for the destination city or airport.
-	DestinationCityAirportCode string `json:"destination_city_airport_code,required,nullable"`
+	DestinationCityAirportCode string `json:"destination_city_airport_code" api:"required,nullable"`
 	// Fare basis code.
-	FareBasisCode string `json:"fare_basis_code,required,nullable"`
+	FareBasisCode string `json:"fare_basis_code" api:"required,nullable"`
 	// Flight number.
-	FlightNumber string `json:"flight_number,required,nullable"`
+	FlightNumber string `json:"flight_number" api:"required,nullable"`
 	// Service class (e.g., first class, business class, etc.).
-	ServiceClass string `json:"service_class,required,nullable"`
+	ServiceClass string `json:"service_class" api:"required,nullable"`
 	// Indicates whether a stopover is allowed on this ticket.
-	StopOverCode TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code,required,nullable"`
+	StopOverCode TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode `json:"stop_over_code" api:"required,nullable"`
 	JSON         transactionSourceCardSettlementPurchaseDetailsTravelTripLegJSON          `json:"-"`
 }
 
@@ -3726,10 +3726,10 @@ func (r TransactionSourceCardSettlementPurchaseDetailsTravelTripLegsStopOverCode
 // surcharge is deducted from the overall transaction amount (discount).
 type TransactionSourceCardSettlementSurcharge struct {
 	// The surcharge amount in the minor unit of the transaction's settlement currency.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The surcharge amount in the minor unit of the transaction's presentment
 	// currency.
-	PresentmentAmount int64                                        `json:"presentment_amount,required"`
+	PresentmentAmount int64                                        `json:"presentment_amount" api:"required"`
 	JSON              transactionSourceCardSettlementSurchargeJSON `json:"-"`
 }
 
@@ -3772,18 +3772,18 @@ func (r TransactionSourceCardSettlementType) IsKnown() bool {
 // usually paid monthly for the prior month's transactions.
 type TransactionSourceCashbackPayment struct {
 	// The card on which the cashback was accrued.
-	AccruedOnCardID string `json:"accrued_on_card_id,required,nullable"`
+	AccruedOnCardID string `json:"accrued_on_card_id" api:"required,nullable"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency TransactionSourceCashbackPaymentCurrency `json:"currency,required"`
+	Currency TransactionSourceCashbackPaymentCurrency `json:"currency" api:"required"`
 	// The end of the period for which this transaction paid cashback.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	PeriodEnd time.Time `json:"period_end" api:"required" format:"date-time"`
 	// The start of the period for which this transaction paid cashback.
-	PeriodStart time.Time                            `json:"period_start,required" format:"date-time"`
-	ExtraFields map[string]interface{}               `json:"-,extras"`
+	PeriodStart time.Time                            `json:"period_start" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON        transactionSourceCashbackPaymentJSON `json:"-"`
 }
 
@@ -3831,25 +3831,25 @@ func (r TransactionSourceCashbackPaymentCurrency) IsKnown() bool {
 type TransactionSourceCheckDepositAcceptance struct {
 	// The account number printed on the check. This is an account at the bank that
 	// issued the check.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number for business checks.
-	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	AuxiliaryOnUs string `json:"auxiliary_on_us" api:"required,nullable"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID string `json:"check_deposit_id,required"`
+	CheckDepositID string `json:"check_deposit_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency TransactionSourceCheckDepositAcceptanceCurrency `json:"currency,required"`
+	Currency TransactionSourceCheckDepositAcceptanceCurrency `json:"currency" api:"required"`
 	// The routing number printed on the check. This is a routing number for the bank
 	// that issued the check.
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
-	SerialNumber string                                      `json:"serial_number,required,nullable"`
-	ExtraFields  map[string]interface{}                      `json:"-,extras"`
+	SerialNumber string                                      `json:"serial_number" api:"required,nullable"`
+	ExtraFields  map[string]interface{}                      `json:"-" api:"extrafields"`
 	JSON         transactionSourceCheckDepositAcceptanceJSON `json:"-"`
 }
 
@@ -3899,22 +3899,22 @@ func (r TransactionSourceCheckDepositAcceptanceCurrency) IsKnown() bool {
 // checks are returned within the first 7 days after the deposit is made.
 type TransactionSourceCheckDepositReturn struct {
 	// The returned amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID string `json:"check_deposit_id,required"`
+	CheckDepositID string `json:"check_deposit_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency TransactionSourceCheckDepositReturnCurrency `json:"currency,required"`
+	Currency TransactionSourceCheckDepositReturnCurrency `json:"currency" api:"required"`
 	// Why this check was returned by the bank holding the account it was drawn
 	// against.
-	ReturnReason TransactionSourceCheckDepositReturnReturnReason `json:"return_reason,required"`
+	ReturnReason TransactionSourceCheckDepositReturnReturnReason `json:"return_reason" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date-time"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string                                  `json:"transaction_id,required"`
-	ExtraFields   map[string]interface{}                  `json:"-,extras"`
+	TransactionID string                                  `json:"transaction_id" api:"required"`
+	ExtraFields   map[string]interface{}                  `json:"-" api:"extrafields"`
 	JSON          transactionSourceCheckDepositReturnJSON `json:"-"`
 }
 
@@ -4003,27 +4003,27 @@ func (r TransactionSourceCheckDepositReturnReturnReason) IsKnown() bool {
 type TransactionSourceCheckTransferDeposit struct {
 	// The identifier of the API File object containing an image of the back of the
 	// deposited check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// bank depositing this check. In some rare cases, this is not transmitted via
 	// Check21 and the value will be null.
-	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
+	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number" api:"required,nullable"`
 	// When the check was deposited.
-	DepositedAt time.Time `json:"deposited_at,required" format:"date-time"`
+	DepositedAt time.Time `json:"deposited_at" api:"required" format:"date-time"`
 	// The identifier of the API File object containing an image of the front of the
 	// deposited check.
-	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
 	// The identifier of the Inbound Check Deposit object associated with this
 	// transaction.
-	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
+	InboundCheckDepositID string `json:"inbound_check_deposit_id" api:"required,nullable"`
 	// The identifier of the Transaction object created when the check was deposited.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// The identifier of the Check Transfer object that was deposited.
-	TransferID string `json:"transfer_id,required,nullable"`
+	TransferID string `json:"transfer_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_deposit`.
-	Type        TransactionSourceCheckTransferDepositType `json:"type,required"`
-	ExtraFields map[string]interface{}                    `json:"-,extras"`
+	Type        TransactionSourceCheckTransferDepositType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
 	JSON        transactionSourceCheckTransferDepositJSON `json:"-"`
 }
 
@@ -4072,8 +4072,8 @@ func (r TransactionSourceCheckTransferDepositType) IsKnown() bool {
 // when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
 type TransactionSourceFednowTransferAcknowledgement struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
-	TransferID  string                                             `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	TransferID  string                                             `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                             `json:"-" api:"extrafields"`
 	JSON        transactionSourceFednowTransferAcknowledgementJSON `json:"-"`
 }
 
@@ -4099,15 +4099,15 @@ func (r transactionSourceFednowTransferAcknowledgementJSON) RawJSON() string {
 type TransactionSourceFeePayment struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency TransactionSourceFeePaymentCurrency `json:"currency,required"`
+	Currency TransactionSourceFeePaymentCurrency `json:"currency" api:"required"`
 	// The start of this payment's fee period, usually the first day of a month.
-	FeePeriodStart time.Time `json:"fee_period_start,required" format:"date"`
+	FeePeriodStart time.Time `json:"fee_period_start" api:"required" format:"date"`
 	// The Program for which this fee was incurred.
-	ProgramID   string                          `json:"program_id,required,nullable"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
+	ProgramID   string                          `json:"program_id" api:"required,nullable"`
+	ExtraFields map[string]interface{}          `json:"-" api:"extrafields"`
 	JSON        transactionSourceFeePaymentJSON `json:"-"`
 }
 
@@ -4152,34 +4152,34 @@ func (r TransactionSourceFeePaymentCurrency) IsKnown() bool {
 // another bank and received by Increase.
 type TransactionSourceInboundACHTransfer struct {
 	// Additional information sent from the originator.
-	Addenda TransactionSourceInboundACHTransferAddenda `json:"addenda,required,nullable"`
+	Addenda TransactionSourceInboundACHTransferAddenda `json:"addenda" api:"required,nullable"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The description of the date of the transfer, usually in the format `YYMMDD`.
-	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
+	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date" api:"required,nullable"`
 	// Data set by the originator.
-	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
+	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data" api:"required,nullable"`
 	// An informational description of the transfer.
-	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
+	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description" api:"required"`
 	// An identifier for the originating company. This is generally, but not always, a
 	// stable identifier across multiple transfers.
-	OriginatorCompanyID string `json:"originator_company_id,required"`
+	OriginatorCompanyID string `json:"originator_company_id" api:"required"`
 	// A name set by the originator to identify themselves.
-	OriginatorCompanyName string `json:"originator_company_name,required"`
+	OriginatorCompanyName string `json:"originator_company_name" api:"required"`
 	// The originator's identifier for the transfer recipient.
-	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
+	ReceiverIDNumber string `json:"receiver_id_number" api:"required,nullable"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by Increase.
-	ReceiverName string `json:"receiver_name,required,nullable"`
+	ReceiverName string `json:"receiver_name" api:"required,nullable"`
 	// A 15 digit number recorded in the Nacha file and available to both the
 	// originating and receiving bank. Along with the amount, date, and originating
 	// routing number, this can be used to identify the ACH transfer at either bank.
 	// ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
-	TraceNumber string `json:"trace_number,required"`
+	TraceNumber string `json:"trace_number" api:"required"`
 	// The Inbound ACH Transfer's identifier.
-	TransferID  string                                  `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                  `json:"-,extras"`
+	TransferID  string                                  `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                  `json:"-" api:"extrafields"`
 	JSON        transactionSourceInboundACHTransferJSON `json:"-"`
 }
 
@@ -4212,9 +4212,9 @@ func (r transactionSourceInboundACHTransferJSON) RawJSON() string {
 // Additional information sent from the originator.
 type TransactionSourceInboundACHTransferAddenda struct {
 	// The type of addendum.
-	Category TransactionSourceInboundACHTransferAddendaCategory `json:"category,required"`
+	Category TransactionSourceInboundACHTransferAddendaCategory `json:"category" api:"required"`
 	// Unstructured `payment_related_information` passed through by the originator.
-	Freeform TransactionSourceInboundACHTransferAddendaFreeform `json:"freeform,required,nullable"`
+	Freeform TransactionSourceInboundACHTransferAddendaFreeform `json:"freeform" api:"required,nullable"`
 	JSON     transactionSourceInboundACHTransferAddendaJSON     `json:"-"`
 }
 
@@ -4253,7 +4253,7 @@ func (r TransactionSourceInboundACHTransferAddendaCategory) IsKnown() bool {
 // Unstructured `payment_related_information` passed through by the originator.
 type TransactionSourceInboundACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum received from the originator.
-	Entries []TransactionSourceInboundACHTransferAddendaFreeformEntry `json:"entries,required"`
+	Entries []TransactionSourceInboundACHTransferAddendaFreeformEntry `json:"entries" api:"required"`
 	JSON    transactionSourceInboundACHTransferAddendaFreeformJSON    `json:"-"`
 }
 
@@ -4275,7 +4275,7 @@ func (r transactionSourceInboundACHTransferAddendaFreeformJSON) RawJSON() string
 
 type TransactionSourceInboundACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation string                                                      `json:"payment_related_information,required"`
+	PaymentRelatedInformation string                                                      `json:"payment_related_information" api:"required"`
 	JSON                      transactionSourceInboundACHTransferAddendaFreeformEntryJSON `json:"-"`
 }
 
@@ -4303,8 +4303,8 @@ func (r transactionSourceInboundACHTransferAddendaFreeformEntryJSON) RawJSON() s
 // returned by Increase.
 type TransactionSourceInboundACHTransferReturnIntention struct {
 	// The ID of the Inbound ACH Transfer that is being returned.
-	InboundACHTransferID string                                                 `json:"inbound_ach_transfer_id,required"`
-	ExtraFields          map[string]interface{}                                 `json:"-,extras"`
+	InboundACHTransferID string                                                 `json:"inbound_ach_transfer_id" api:"required"`
+	ExtraFields          map[string]interface{}                                 `json:"-" api:"extrafields"`
 	JSON                 transactionSourceInboundACHTransferReturnIntentionJSON `json:"-"`
 }
 
@@ -4330,12 +4330,12 @@ func (r transactionSourceInboundACHTransferReturnIntentionJSON) RawJSON() string
 // check or return deposited through Check21.
 type TransactionSourceInboundCheckAdjustment struct {
 	// The ID of the transaction that was adjusted.
-	AdjustedTransactionID string `json:"adjusted_transaction_id,required"`
+	AdjustedTransactionID string `json:"adjusted_transaction_id" api:"required"`
 	// The amount of the check adjustment.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The reason for the adjustment.
-	Reason      TransactionSourceInboundCheckAdjustmentReason `json:"reason,required"`
-	ExtraFields map[string]interface{}                        `json:"-,extras"`
+	Reason      TransactionSourceInboundCheckAdjustmentReason `json:"reason" api:"required"`
+	ExtraFields map[string]interface{}                        `json:"-" api:"extrafields"`
 	JSON        transactionSourceInboundCheckAdjustmentJSON   `json:"-"`
 }
 
@@ -4383,10 +4383,10 @@ func (r TransactionSourceInboundCheckAdjustmentReason) IsKnown() bool {
 // requests that it be returned.
 type TransactionSourceInboundCheckDepositReturnIntention struct {
 	// The ID of the Inbound Check Deposit that is being returned.
-	InboundCheckDepositID string `json:"inbound_check_deposit_id,required"`
+	InboundCheckDepositID string `json:"inbound_check_deposit_id" api:"required"`
 	// The identifier of the Check Transfer object that was deposited.
-	TransferID  string                                                  `json:"transfer_id,required,nullable"`
-	ExtraFields map[string]interface{}                                  `json:"-,extras"`
+	TransferID  string                                                  `json:"transfer_id" api:"required,nullable"`
+	ExtraFields map[string]interface{}                                  `json:"-" api:"extrafields"`
 	JSON        transactionSourceInboundCheckDepositReturnIntentionJSON `json:"-"`
 }
 
@@ -4414,8 +4414,8 @@ func (r transactionSourceInboundCheckDepositReturnIntentionJSON) RawJSON() strin
 // Increase.
 type TransactionSourceInboundFednowTransferConfirmation struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
-	TransferID  string                                                 `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                 `json:"-,extras"`
+	TransferID  string                                                 `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                 `json:"-" api:"extrafields"`
 	JSON        transactionSourceInboundFednowTransferConfirmationJSON `json:"-"`
 }
 
@@ -4443,25 +4443,25 @@ func (r transactionSourceInboundFednowTransferConfirmationJSON) RawJSON() string
 type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	// The amount in the minor unit of the transfer's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real-Time Payments transfer.
-	Currency TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency,required"`
+	Currency TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency `json:"currency" api:"required"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	DebtorAccountNumber string `json:"debtor_account_number" api:"required"`
 	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
+	DebtorName string `json:"debtor_name" api:"required"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information,required,nullable"`
+	RemittanceInformation string `json:"remittance_information" api:"required,nullable"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
+	TransactionIdentification string `json:"transaction_identification" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID  string                                                           `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                           `json:"-,extras"`
+	TransferID  string                                                           `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                           `json:"-" api:"extrafields"`
 	JSON        transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
@@ -4513,38 +4513,38 @@ func (r TransactionSourceInboundRealTimePaymentsTransferConfirmationCurrency) Is
 // the original destination account details were incorrect.
 type TransactionSourceInboundWireReversal struct {
 	// The amount that was reversed in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the reversal was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The debtor's routing number.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required,nullable"`
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required,nullable"`
 	// The description on the reversal message from Fedwire, set by the reversing bank.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The Fedwire cycle date for the wire reversal. The "Fedwire day" begins at 9:00
 	// PM Eastern Time on the evening before the `cycle date`.
-	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	InputCycleDate time.Time `json:"input_cycle_date" api:"required" format:"date"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
+	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required"`
 	// The Fedwire sequence number.
-	InputSequenceNumber string `json:"input_sequence_number,required"`
+	InputSequenceNumber string `json:"input_sequence_number" api:"required"`
 	// The Fedwire input source identifier.
-	InputSource string `json:"input_source,required"`
+	InputSource string `json:"input_source" api:"required"`
 	// The sending bank's identifier for the reversal.
-	InstructionIdentification string `json:"instruction_identification,required,nullable"`
+	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
 	// Additional information about the reason for the reversal.
-	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information,required,nullable"`
+	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information" api:"required,nullable"`
 	// A code provided by the sending bank giving a reason for the reversal. The common
 	// return reason codes are
 	// [documented here](/documentation/wire-reversals#reversal-reason-codes).
-	ReturnReasonCode string `json:"return_reason_code,required,nullable"`
+	ReturnReasonCode string `json:"return_reason_code" api:"required,nullable"`
 	// An Increase-generated description of the `return_reason_code`.
-	ReturnReasonCodeDescription string `json:"return_reason_code_description,required,nullable"`
+	ReturnReasonCodeDescription string `json:"return_reason_code_description" api:"required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// The ID for the Wire Transfer that is being reversed.
-	WireTransferID string                                   `json:"wire_transfer_id,required"`
-	ExtraFields    map[string]interface{}                   `json:"-,extras"`
+	WireTransferID string                                   `json:"wire_transfer_id" api:"required"`
+	ExtraFields    map[string]interface{}                   `json:"-" api:"extrafields"`
 	JSON           transactionSourceInboundWireReversalJSON `json:"-"`
 }
 
@@ -4583,45 +4583,45 @@ func (r transactionSourceInboundWireReversalJSON) RawJSON() string {
 // another bank and received by Increase.
 type TransactionSourceInboundWireTransfer struct {
 	// The amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine1 string `json:"creditor_address_line1,required,nullable"`
+	CreditorAddressLine1 string `json:"creditor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine2 string `json:"creditor_address_line2,required,nullable"`
+	CreditorAddressLine2 string `json:"creditor_address_line2" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine3 string `json:"creditor_address_line3,required,nullable"`
+	CreditorAddressLine3 string `json:"creditor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
-	CreditorName string `json:"creditor_name,required,nullable"`
+	CreditorName string `json:"creditor_name" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine1 string `json:"debtor_address_line1,required,nullable"`
+	DebtorAddressLine1 string `json:"debtor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine2 string `json:"debtor_address_line2,required,nullable"`
+	DebtorAddressLine2 string `json:"debtor_address_line2" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine3 string `json:"debtor_address_line3,required,nullable"`
+	DebtorAddressLine3 string `json:"debtor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
-	DebtorName string `json:"debtor_name,required,nullable"`
+	DebtorName string `json:"debtor_name" api:"required,nullable"`
 	// An Increase-constructed description of the transfer.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// A free-form reference string set by the sender, to help identify the transfer.
-	EndToEndIdentification string `json:"end_to_end_identification,required,nullable"`
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// A unique identifier available to the originating and receiving banks, commonly
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required,nullable"`
 	// The American Banking Association (ABA) routing number of the bank that sent the
 	// wire.
-	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number,required,nullable"`
+	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.
-	InstructionIdentification string `json:"instruction_identification,required,nullable"`
+	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
 	// The ID of the Inbound Wire Transfer object that resulted in this Transaction.
-	TransferID string `json:"transfer_id,required"`
+	TransferID string `json:"transfer_id" api:"required"`
 	// The Unique End-to-end Transaction Reference
 	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
 	// of the transfer.
-	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
 	// A free-form message set by the sender.
-	UnstructuredRemittanceInformation string                                   `json:"unstructured_remittance_information,required,nullable"`
-	ExtraFields                       map[string]interface{}                   `json:"-,extras"`
+	UnstructuredRemittanceInformation string                                   `json:"unstructured_remittance_information" api:"required,nullable"`
+	ExtraFields                       map[string]interface{}                   `json:"-" api:"extrafields"`
 	JSON                              transactionSourceInboundWireTransferJSON `json:"-"`
 }
 
@@ -4664,8 +4664,8 @@ func (r transactionSourceInboundWireTransferJSON) RawJSON() string {
 // reversed.
 type TransactionSourceInboundWireTransferReversal struct {
 	// The ID of the Inbound Wire Transfer that is being reversed.
-	InboundWireTransferID string                                           `json:"inbound_wire_transfer_id,required"`
-	ExtraFields           map[string]interface{}                           `json:"-,extras"`
+	InboundWireTransferID string                                           `json:"inbound_wire_transfer_id" api:"required"`
+	ExtraFields           map[string]interface{}                           `json:"-" api:"extrafields"`
 	JSON                  transactionSourceInboundWireTransferReversalJSON `json:"-"`
 }
 
@@ -4691,18 +4691,18 @@ func (r transactionSourceInboundWireTransferReversalJSON) RawJSON() string {
 // monthly.
 type TransactionSourceInterestPayment struct {
 	// The account on which the interest was accrued.
-	AccruedOnAccountID string `json:"accrued_on_account_id,required"`
+	AccruedOnAccountID string `json:"accrued_on_account_id" api:"required"`
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency TransactionSourceInterestPaymentCurrency `json:"currency,required"`
+	Currency TransactionSourceInterestPaymentCurrency `json:"currency" api:"required"`
 	// The end of the period for which this transaction paid interest.
-	PeriodEnd time.Time `json:"period_end,required" format:"date-time"`
+	PeriodEnd time.Time `json:"period_end" api:"required" format:"date-time"`
 	// The start of the period for which this transaction paid interest.
-	PeriodStart time.Time                            `json:"period_start,required" format:"date-time"`
-	ExtraFields map[string]interface{}               `json:"-,extras"`
+	PeriodStart time.Time                            `json:"period_start" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON        transactionSourceInterestPaymentJSON `json:"-"`
 }
 
@@ -4748,14 +4748,14 @@ func (r TransactionSourceInterestPaymentCurrency) IsKnown() bool {
 type TransactionSourceInternalSource struct {
 	// The amount in the minor unit of the transaction's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
 	// currency.
-	Currency TransactionSourceInternalSourceCurrency `json:"currency,required"`
+	Currency TransactionSourceInternalSourceCurrency `json:"currency" api:"required"`
 	// An Internal Source is a transaction between you and Increase. This describes the
 	// reason for the transaction.
-	Reason      TransactionSourceInternalSourceReason `json:"reason,required"`
-	ExtraFields map[string]interface{}                `json:"-,extras"`
+	Reason      TransactionSourceInternalSourceReason `json:"reason" api:"required"`
+	ExtraFields map[string]interface{}                `json:"-" api:"extrafields"`
 	JSON        transactionSourceInternalSourceJSON   `json:"-"`
 }
 
@@ -4854,16 +4854,16 @@ func (r transactionSourceOtherJSON) RawJSON() string {
 // is acknowledged by the receiving bank.
 type TransactionSourceRealTimePaymentsTransferAcknowledgement struct {
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The destination account number.
-	DestinationAccountNumber string `json:"destination_account_number,required"`
+	DestinationAccountNumber string `json:"destination_account_number" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	DestinationRoutingNumber string `json:"destination_routing_number,required"`
+	DestinationRoutingNumber string `json:"destination_routing_number" api:"required"`
 	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation string `json:"remittance_information,required"`
+	RemittanceInformation string `json:"remittance_information" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID  string                                                       `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                       `json:"-,extras"`
+	TransferID  string                                                       `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                       `json:"-" api:"extrafields"`
 	JSON        transactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
@@ -4893,8 +4893,8 @@ func (r transactionSourceRealTimePaymentsTransferAcknowledgementJSON) RawJSON() 
 // purposes.
 type TransactionSourceSampleFunds struct {
 	// Where the sample funds came from.
-	Originator  string                           `json:"originator,required"`
-	ExtraFields map[string]interface{}           `json:"-,extras"`
+	Originator  string                           `json:"originator" api:"required"`
+	ExtraFields map[string]interface{}           `json:"-" api:"extrafields"`
 	JSON        transactionSourceSampleFundsJSON `json:"-"`
 }
 
@@ -4919,8 +4919,8 @@ func (r transactionSourceSampleFundsJSON) RawJSON() string {
 // Swift Transfer initiated via Increase.
 type TransactionSourceSwiftTransferIntention struct {
 	// The identifier of the Swift Transfer that led to this Transaction.
-	TransferID  string                                      `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                      `json:"-,extras"`
+	TransferID  string                                      `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                      `json:"-" api:"extrafields"`
 	JSON        transactionSourceSwiftTransferIntentionJSON `json:"-"`
 }
 
@@ -4945,8 +4945,8 @@ func (r transactionSourceSwiftTransferIntentionJSON) RawJSON() string {
 // Return is created when a Swift Transfer is returned by the receiving bank.
 type TransactionSourceSwiftTransferReturn struct {
 	// The identifier of the Swift Transfer that led to this Transaction.
-	TransferID  string                                   `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                   `json:"-,extras"`
+	TransferID  string                                   `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                   `json:"-" api:"extrafields"`
 	JSON        transactionSourceSwiftTransferReturnJSON `json:"-"`
 }
 
@@ -4971,16 +4971,16 @@ func (r transactionSourceSwiftTransferReturnJSON) RawJSON() string {
 // Transfer initiated via Increase and sent to a different bank.
 type TransactionSourceWireTransferIntention struct {
 	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient string `json:"message_to_recipient,required"`
+	MessageToRecipient string `json:"message_to_recipient" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The identifier of the Wire Transfer that led to this Transaction.
-	TransferID  string                                     `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                     `json:"-,extras"`
+	TransferID  string                                     `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON        transactionSourceWireTransferIntentionJSON `json:"-"`
 }
 

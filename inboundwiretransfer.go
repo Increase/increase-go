@@ -89,63 +89,63 @@ func (r *InboundWireTransferService) Reverse(ctx context.Context, inboundWireTra
 // your account.
 type InboundWireTransfer struct {
 	// The inbound wire transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// If the transfer is accepted, this will contain details of the acceptance.
-	Acceptance InboundWireTransferAcceptance `json:"acceptance,required,nullable"`
+	Acceptance InboundWireTransferAcceptance `json:"acceptance" api:"required,nullable"`
 	// The Account to which the transfer belongs.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier of the Account Number to which this transfer was sent.
-	AccountNumberID string `json:"account_number_id,required"`
+	AccountNumberID string `json:"account_number_id" api:"required"`
 	// The amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the inbound wire transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine1 string `json:"creditor_address_line1,required,nullable"`
+	CreditorAddressLine1 string `json:"creditor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine2 string `json:"creditor_address_line2,required,nullable"`
+	CreditorAddressLine2 string `json:"creditor_address_line2" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine3 string `json:"creditor_address_line3,required,nullable"`
+	CreditorAddressLine3 string `json:"creditor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
-	CreditorName string `json:"creditor_name,required,nullable"`
+	CreditorName string `json:"creditor_name" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine1 string `json:"debtor_address_line1,required,nullable"`
+	DebtorAddressLine1 string `json:"debtor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine2 string `json:"debtor_address_line2,required,nullable"`
+	DebtorAddressLine2 string `json:"debtor_address_line2" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine3 string `json:"debtor_address_line3,required,nullable"`
+	DebtorAddressLine3 string `json:"debtor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
-	DebtorName string `json:"debtor_name,required,nullable"`
+	DebtorName string `json:"debtor_name" api:"required,nullable"`
 	// An Increase-constructed description of the transfer.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// A free-form reference string set by the sender, to help identify the transfer.
-	EndToEndIdentification string `json:"end_to_end_identification,required,nullable"`
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// A unique identifier available to the originating and receiving banks, commonly
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required,nullable"`
 	// The American Banking Association (ABA) routing number of the bank that sent the
 	// wire.
-	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number,required,nullable"`
+	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.
-	InstructionIdentification string `json:"instruction_identification,required,nullable"`
+	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
 	// If the transfer is reversed, this will contain details of the reversal.
-	Reversal InboundWireTransferReversal `json:"reversal,required,nullable"`
+	Reversal InboundWireTransferReversal `json:"reversal" api:"required,nullable"`
 	// The status of the transfer.
-	Status InboundWireTransferStatus `json:"status,required"`
+	Status InboundWireTransferStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_transfer`.
-	Type InboundWireTransferType `json:"type,required"`
+	Type InboundWireTransferType `json:"type" api:"required"`
 	// The Unique End-to-end Transaction Reference
 	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
 	// of the transfer.
-	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
 	// A free-form message set by the sender.
-	UnstructuredRemittanceInformation string `json:"unstructured_remittance_information,required,nullable"`
+	UnstructuredRemittanceInformation string `json:"unstructured_remittance_information" api:"required,nullable"`
 	// The wire drawdown request the inbound wire transfer is fulfilling.
-	WireDrawdownRequestID string                  `json:"wire_drawdown_request_id,required,nullable"`
-	ExtraFields           map[string]interface{}  `json:"-,extras"`
+	WireDrawdownRequestID string                  `json:"wire_drawdown_request_id" api:"required,nullable"`
+	ExtraFields           map[string]interface{}  `json:"-" api:"extrafields"`
 	JSON                  inboundWireTransferJSON `json:"-"`
 }
 
@@ -193,9 +193,9 @@ func (r inboundWireTransferJSON) RawJSON() string {
 type InboundWireTransferAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was accepted.
-	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required" format:"date-time"`
 	// The identifier of the transaction for the accepted transfer.
-	TransactionID string                            `json:"transaction_id,required"`
+	TransactionID string                            `json:"transaction_id" api:"required"`
 	JSON          inboundWireTransferAcceptanceJSON `json:"-"`
 }
 
@@ -219,10 +219,10 @@ func (r inboundWireTransferAcceptanceJSON) RawJSON() string {
 // If the transfer is reversed, this will contain details of the reversal.
 type InboundWireTransferReversal struct {
 	// The reason for the reversal.
-	Reason InboundWireTransferReversalReason `json:"reason,required"`
+	Reason InboundWireTransferReversalReason `json:"reason" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was reversed.
-	ReversedAt time.Time                       `json:"reversed_at,required" format:"date-time"`
+	ReversedAt time.Time                       `json:"reversed_at" api:"required" format:"date-time"`
 	JSON       inboundWireTransferReversalJSON `json:"-"`
 }
 
@@ -379,7 +379,7 @@ func (r InboundWireTransferListParamsStatusIn) IsKnown() bool {
 
 type InboundWireTransferReverseParams struct {
 	// Reason for the reversal.
-	Reason param.Field[InboundWireTransferReverseParamsReason] `json:"reason,required"`
+	Reason param.Field[InboundWireTransferReverseParamsReason] `json:"reason" api:"required"`
 }
 
 func (r InboundWireTransferReverseParams) MarshalJSON() (data []byte, err error) {

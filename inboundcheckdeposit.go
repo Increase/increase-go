@@ -101,59 +101,59 @@ func (r *InboundCheckDepositService) Return(ctx context.Context, inboundCheckDep
 // against your account.
 type InboundCheckDeposit struct {
 	// The deposit's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// If the Inbound Check Deposit was accepted, the
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which this
 	// took place.
-	AcceptedAt time.Time `json:"accepted_at,required,nullable" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required,nullable" format:"date-time"`
 	// The Account the check is being deposited against.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Account Number the check is being deposited against.
-	AccountNumberID string `json:"account_number_id,required,nullable"`
+	AccountNumberID string `json:"account_number_id" api:"required,nullable"`
 	// If the deposit or the return was adjusted by the sending institution, this will
 	// contain details of the adjustments.
-	Adjustments []InboundCheckDepositAdjustment `json:"adjustments,required"`
+	Adjustments []InboundCheckDepositAdjustment `json:"adjustments" api:"required"`
 	// The deposited amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID for the File containing the image of the back of the check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// bank depositing this check. In some rare cases, this is not transmitted via
 	// Check21 and the value will be null.
-	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number,required,nullable"`
+	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number" api:"required,nullable"`
 	// The check number printed on the check being deposited.
-	CheckNumber string `json:"check_number,required,nullable"`
+	CheckNumber string `json:"check_number" api:"required,nullable"`
 	// If this deposit is for an existing Check Transfer, the identifier of that Check
 	// Transfer.
-	CheckTransferID string `json:"check_transfer_id,required,nullable"`
+	CheckTransferID string `json:"check_transfer_id" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the deposit was attempted.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the deposit.
-	Currency InboundCheckDepositCurrency `json:"currency,required"`
+	Currency InboundCheckDepositCurrency `json:"currency" api:"required"`
 	// If the Inbound Check Deposit was declined, the
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which this
 	// took place.
-	DeclinedAt time.Time `json:"declined_at,required,nullable" format:"date-time"`
+	DeclinedAt time.Time `json:"declined_at" api:"required,nullable" format:"date-time"`
 	// If the deposit attempt has been rejected, the identifier of the Declined
 	// Transaction object created as a result of the failed deposit.
-	DeclinedTransactionID string `json:"declined_transaction_id,required,nullable"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required,nullable"`
 	// If you requested a return of this deposit, this will contain details of the
 	// return.
-	DepositReturn InboundCheckDepositDepositReturn `json:"deposit_return,required,nullable"`
+	DepositReturn InboundCheckDepositDepositReturn `json:"deposit_return" api:"required,nullable"`
 	// The ID for the File containing the image of the front of the check.
-	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
 	// Whether the details on the check match the recipient name of the check transfer.
 	// This is an optional feature, contact sales to enable.
-	PayeeNameAnalysis InboundCheckDepositPayeeNameAnalysis `json:"payee_name_analysis,required"`
+	PayeeNameAnalysis InboundCheckDepositPayeeNameAnalysis `json:"payee_name_analysis" api:"required"`
 	// The status of the Inbound Check Deposit.
-	Status InboundCheckDepositStatus `json:"status,required"`
+	Status InboundCheckDepositStatus `json:"status" api:"required"`
 	// If the deposit attempt has been accepted, the identifier of the Transaction
 	// object created as a result of the successful deposit.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_check_deposit`.
-	Type InboundCheckDepositType `json:"type,required"`
+	Type InboundCheckDepositType `json:"type" api:"required"`
 	JSON inboundCheckDepositJSON `json:"-"`
 }
 
@@ -194,13 +194,13 @@ func (r inboundCheckDepositJSON) RawJSON() string {
 
 type InboundCheckDepositAdjustment struct {
 	// The time at which the return adjustment was received.
-	AdjustedAt time.Time `json:"adjusted_at,required" format:"date-time"`
+	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
 	// The amount of the adjustment.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The reason for the adjustment.
-	Reason InboundCheckDepositAdjustmentsReason `json:"reason,required"`
+	Reason InboundCheckDepositAdjustmentsReason `json:"reason" api:"required"`
 	// The id of the transaction for the adjustment.
-	TransactionID string                            `json:"transaction_id,required"`
+	TransactionID string                            `json:"transaction_id" api:"required"`
 	JSON          inboundCheckDepositAdjustmentJSON `json:"-"`
 }
 
@@ -261,11 +261,11 @@ func (r InboundCheckDepositCurrency) IsKnown() bool {
 // return.
 type InboundCheckDepositDepositReturn struct {
 	// The reason the deposit was returned.
-	Reason InboundCheckDepositDepositReturnReason `json:"reason,required"`
+	Reason InboundCheckDepositDepositReturnReason `json:"reason" api:"required"`
 	// The time at which the deposit was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date-time"`
 	// The id of the transaction for the returned deposit.
-	TransactionID string                               `json:"transaction_id,required"`
+	TransactionID string                               `json:"transaction_id" api:"required"`
 	JSON          inboundCheckDepositDepositReturnJSON `json:"-"`
 }
 
@@ -409,7 +409,7 @@ func (r InboundCheckDepositListParamsCreatedAt) URLQuery() (v url.Values) {
 
 type InboundCheckDepositReturnParams struct {
 	// The reason to return the Inbound Check Deposit.
-	Reason param.Field[InboundCheckDepositReturnParamsReason] `json:"reason,required"`
+	Reason param.Field[InboundCheckDepositReturnParamsReason] `json:"reason" api:"required"`
 }
 
 func (r InboundCheckDepositReturnParams) MarshalJSON() (data []byte, err error) {

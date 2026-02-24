@@ -43,9 +43,9 @@ func (r *SimulationInboundMailItemService) New(ctx context.Context, body Simulat
 
 type SimulationInboundMailItemNewParams struct {
 	// The amount of the check to be simulated, in cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The identifier of the Lockbox to simulate inbound mail to.
-	LockboxID param.Field[string] `json:"lockbox_id,required"`
+	LockboxID param.Field[string] `json:"lockbox_id" api:"required"`
 	// The file containing the PDF contents. If not present, a default check image file
 	// will be used.
 	ContentsFileID param.Field[string] `json:"contents_file_id"`

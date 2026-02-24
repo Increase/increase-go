@@ -53,21 +53,21 @@ func (r *IntrafiBalanceService) IntrafiBalance(ctx context.Context, accountID st
 // as needed once per business day.
 type IntrafiBalance struct {
 	// The identifier of this balance.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Each entry represents a balance held at a different bank. IntraFi separates the
 	// total balance across many participating banks in the network.
-	Balances []IntrafiBalanceBalance `json:"balances,required"`
+	Balances []IntrafiBalanceBalance `json:"balances" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the account
 	// currency.
-	Currency IntrafiBalanceCurrency `json:"currency,required"`
+	Currency IntrafiBalanceCurrency `json:"currency" api:"required"`
 	// The date this balance reflects.
-	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
+	EffectiveDate time.Time `json:"effective_date" api:"required" format:"date"`
 	// The total balance, in minor units of `currency`. Increase reports this balance
 	// to IntraFi daily.
-	TotalBalance int64 `json:"total_balance,required"`
+	TotalBalance int64 `json:"total_balance" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `intrafi_balance`.
-	Type IntrafiBalanceType `json:"type,required"`
+	Type IntrafiBalanceType `json:"type" api:"required"`
 	JSON intrafiBalanceJSON `json:"-"`
 }
 
@@ -93,17 +93,17 @@ func (r intrafiBalanceJSON) RawJSON() string {
 
 type IntrafiBalanceBalance struct {
 	// The identifier of this balance.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The balance, in minor units of `currency`, held with this bank.
-	Balance int64 `json:"balance,required"`
+	Balance int64 `json:"balance" api:"required"`
 	// The name of the bank holding these funds.
-	Bank string `json:"bank,required"`
+	Bank string `json:"bank" api:"required"`
 	// The primary location of the bank.
-	BankLocation IntrafiBalanceBalancesBankLocation `json:"bank_location,required,nullable"`
+	BankLocation IntrafiBalanceBalancesBankLocation `json:"bank_location" api:"required,nullable"`
 	// The Federal Deposit Insurance Corporation (FDIC) certificate number of the bank.
 	// Because many banks have the same or similar names, this can be used to uniquely
 	// identify the institution.
-	FdicCertificateNumber string                    `json:"fdic_certificate_number,required"`
+	FdicCertificateNumber string                    `json:"fdic_certificate_number" api:"required"`
 	JSON                  intrafiBalanceBalanceJSON `json:"-"`
 }
 
@@ -130,9 +130,9 @@ func (r intrafiBalanceBalanceJSON) RawJSON() string {
 // The primary location of the bank.
 type IntrafiBalanceBalancesBankLocation struct {
 	// The bank's city.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The bank's state.
-	State string                                 `json:"state,required"`
+	State string                                 `json:"state" api:"required"`
 	JSON  intrafiBalanceBalancesBankLocationJSON `json:"-"`
 }
 

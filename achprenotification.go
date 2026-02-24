@@ -85,53 +85,53 @@ func (r *ACHPrenotificationService) ListAutoPaging(ctx context.Context, query AC
 // Automated Clearing House (ACH).
 type ACHPrenotification struct {
 	// The ACH Prenotification's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The account that sent the ACH Prenotification.
-	AccountID string `json:"account_id,required,nullable"`
+	AccountID string `json:"account_id" api:"required,nullable"`
 	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// Additional information for the recipient.
-	Addendum string `json:"addendum,required,nullable"`
+	Addendum string `json:"addendum" api:"required,nullable"`
 	// The description of the date of the notification.
-	CompanyDescriptiveDate string `json:"company_descriptive_date,required,nullable"`
+	CompanyDescriptiveDate string `json:"company_descriptive_date" api:"required,nullable"`
 	// Optional data associated with the notification.
-	CompanyDiscretionaryData string `json:"company_discretionary_data,required,nullable"`
+	CompanyDiscretionaryData string `json:"company_discretionary_data" api:"required,nullable"`
 	// The description of the notification.
-	CompanyEntryDescription string `json:"company_entry_description,required,nullable"`
+	CompanyEntryDescription string `json:"company_entry_description" api:"required,nullable"`
 	// The name by which you know the company.
-	CompanyName string `json:"company_name,required,nullable"`
+	CompanyName string `json:"company_name" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the prenotification was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// If the notification is for a future credit or debit.
-	CreditDebitIndicator ACHPrenotificationCreditDebitIndicator `json:"credit_debit_indicator,required,nullable"`
+	CreditDebitIndicator ACHPrenotificationCreditDebitIndicator `json:"credit_debit_indicator" api:"required,nullable"`
 	// The effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
-	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date-time"`
+	EffectiveDate time.Time `json:"effective_date" api:"required,nullable" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// Your identifier for the recipient.
-	IndividualID string `json:"individual_id,required,nullable"`
+	IndividualID string `json:"individual_id" api:"required,nullable"`
 	// The name of the recipient. This value is informational and not verified by the
 	// recipient's bank.
-	IndividualName string `json:"individual_name,required,nullable"`
+	IndividualName string `json:"individual_name" api:"required,nullable"`
 	// If the receiving bank notifies that future transfers should use different
 	// details, this will contain those details.
-	NotificationsOfChange []ACHPrenotificationNotificationsOfChange `json:"notifications_of_change,required"`
+	NotificationsOfChange []ACHPrenotificationNotificationsOfChange `json:"notifications_of_change" api:"required"`
 	// If your prenotification is returned, this will contain details of the return.
-	PrenotificationReturn ACHPrenotificationPrenotificationReturn `json:"prenotification_return,required,nullable"`
+	PrenotificationReturn ACHPrenotificationPrenotificationReturn `json:"prenotification_return" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The
 	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
 	// to use for the ACH Prenotification.
-	StandardEntryClassCode ACHPrenotificationStandardEntryClassCode `json:"standard_entry_class_code,required,nullable"`
+	StandardEntryClassCode ACHPrenotificationStandardEntryClassCode `json:"standard_entry_class_code" api:"required,nullable"`
 	// The lifecycle status of the ACH Prenotification.
-	Status ACHPrenotificationStatus `json:"status,required"`
+	Status ACHPrenotificationStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_prenotification`.
-	Type ACHPrenotificationType `json:"type,required"`
+	Type ACHPrenotificationType `json:"type" api:"required"`
 	JSON achPrenotificationJSON `json:"-"`
 }
 
@@ -189,16 +189,16 @@ func (r ACHPrenotificationCreditDebitIndicator) IsKnown() bool {
 type ACHPrenotificationNotificationsOfChange struct {
 	// The required type of change that is being signaled by the receiving financial
 	// institution.
-	ChangeCode ACHPrenotificationNotificationsOfChangeChangeCode `json:"change_code,required"`
+	ChangeCode ACHPrenotificationNotificationsOfChangeChangeCode `json:"change_code" api:"required"`
 	// The corrected data that should be used in future ACHs to this account. This may
 	// contain the suggested new account number or routing number. When the
 	// `change_code` is `incorrect_transaction_code`, this field contains an integer.
 	// Numbers starting with a 2 encourage changing the `funding` parameter to
 	// checking; numbers starting with a 3 encourage changing to savings.
-	CorrectedData string `json:"corrected_data,required"`
+	CorrectedData string `json:"corrected_data" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt time.Time                                   `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time                                   `json:"created_at" api:"required" format:"date-time"`
 	JSON      achPrenotificationNotificationsOfChangeJSON `json:"-"`
 }
 
@@ -258,9 +258,9 @@ func (r ACHPrenotificationNotificationsOfChangeChangeCode) IsKnown() bool {
 type ACHPrenotificationPrenotificationReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Prenotification was returned.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Why the Prenotification was returned.
-	ReturnReasonCode ACHPrenotificationPrenotificationReturnReturnReasonCode `json:"return_reason_code,required"`
+	ReturnReasonCode ACHPrenotificationPrenotificationReturnReturnReasonCode `json:"return_reason_code" api:"required"`
 	JSON             achPrenotificationPrenotificationReturnJSON             `json:"-"`
 }
 
@@ -421,12 +421,12 @@ func (r ACHPrenotificationType) IsKnown() bool {
 
 type ACHPrenotificationNewParams struct {
 	// The Increase identifier for the account that will send the ACH Prenotification.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The account number for the destination account.
-	AccountNumber param.Field[string] `json:"account_number,required"`
+	AccountNumber param.Field[string] `json:"account_number" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber param.Field[string] `json:"routing_number,required"`
+	RoutingNumber param.Field[string] `json:"routing_number" api:"required"`
 	// Additional information that will be sent to the recipient.
 	Addendum param.Field[string] `json:"addendum"`
 	// The description of the date of the ACH Prenotification.

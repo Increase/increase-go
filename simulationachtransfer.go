@@ -117,9 +117,9 @@ func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID
 
 type SimulationACHTransferNewNotificationOfChangeParams struct {
 	// The reason for the notification of change.
-	ChangeCode param.Field[SimulationACHTransferNewNotificationOfChangeParamsChangeCode] `json:"change_code,required"`
+	ChangeCode param.Field[SimulationACHTransferNewNotificationOfChangeParamsChangeCode] `json:"change_code" api:"required"`
 	// The corrected data for the notification of change (e.g., a new routing number).
-	CorrectedData param.Field[string] `json:"corrected_data,required"`
+	CorrectedData param.Field[string] `json:"corrected_data" api:"required"`
 }
 
 func (r SimulationACHTransferNewNotificationOfChangeParams) MarshalJSON() (data []byte, err error) {

@@ -183,54 +183,54 @@ func (r *EntityService) UpdateIndustryCode(ctx context.Context, entityID string,
 // corporations, partnerships, government authorities, or trusts.
 type Entity struct {
 	// The entity's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Details of the corporation entity. Will be present if `structure` is equal to
 	// `corporation`.
-	Corporation EntityCorporation `json:"corporation,required,nullable"`
+	Corporation EntityCorporation `json:"corporation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Entity
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The entity's description for display purposes.
-	Description string `json:"description,required,nullable"`
+	Description string `json:"description" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Entity's details were most recently confirmed.
-	DetailsConfirmedAt time.Time `json:"details_confirmed_at,required,nullable" format:"date-time"`
+	DetailsConfirmedAt time.Time `json:"details_confirmed_at" api:"required,nullable" format:"date-time"`
 	// Details of the government authority entity. Will be present if `structure` is
 	// equal to `government_authority`.
-	GovernmentAuthority EntityGovernmentAuthority `json:"government_authority,required,nullable"`
+	GovernmentAuthority EntityGovernmentAuthority `json:"government_authority" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// Details of the joint entity. Will be present if `structure` is equal to `joint`.
-	Joint EntityJoint `json:"joint,required,nullable"`
+	Joint EntityJoint `json:"joint" api:"required,nullable"`
 	// Details of the natural person entity. Will be present if `structure` is equal to
 	// `natural_person`.
-	NaturalPerson EntityNaturalPerson `json:"natural_person,required,nullable"`
+	NaturalPerson EntityNaturalPerson `json:"natural_person" api:"required,nullable"`
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
-	RiskRating EntityRiskRating `json:"risk_rating,required,nullable"`
+	RiskRating EntityRiskRating `json:"risk_rating" api:"required,nullable"`
 	// The status of the entity.
-	Status EntityStatus `json:"status,required"`
+	Status EntityStatus `json:"status" api:"required"`
 	// The entity's legal structure.
-	Structure EntityStructure `json:"structure,required"`
+	Structure EntityStructure `json:"structure" api:"required"`
 	// Additional documentation associated with the entity. This is limited to the
 	// first 10 documents for an entity. If an entity has more than 10 documents, use
 	// the GET /entity_supplemental_documents list endpoint to retrieve them.
-	SupplementalDocuments []EntitySupplementalDocument `json:"supplemental_documents,required"`
+	SupplementalDocuments []EntitySupplementalDocument `json:"supplemental_documents" api:"required"`
 	// The terms that the Entity agreed to. Not all programs are required to submit
 	// this data.
-	TermsAgreements []EntityTermsAgreement `json:"terms_agreements,required"`
+	TermsAgreements []EntityTermsAgreement `json:"terms_agreements" api:"required"`
 	// If you are using a third-party service for identity verification, you can use
 	// this field to associate this Entity with the identifier that represents them in
 	// that service.
-	ThirdPartyVerification EntityThirdPartyVerification `json:"third_party_verification,required,nullable"`
+	ThirdPartyVerification EntityThirdPartyVerification `json:"third_party_verification" api:"required,nullable"`
 	// Details of the trust entity. Will be present if `structure` is equal to `trust`.
-	Trust EntityTrust `json:"trust,required,nullable"`
+	Trust EntityTrust `json:"trust" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity`.
-	Type        EntityType             `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        EntityType             `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        entityJSON             `json:"-"`
 }
 
@@ -269,24 +269,24 @@ func (r entityJSON) RawJSON() string {
 // `corporation`.
 type EntityCorporation struct {
 	// The corporation's address.
-	Address EntityCorporationAddress `json:"address,required"`
+	Address EntityCorporationAddress `json:"address" api:"required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwners []EntityCorporationBeneficialOwner `json:"beneficial_owners,required"`
+	BeneficialOwners []EntityCorporationBeneficialOwner `json:"beneficial_owners" api:"required"`
 	// An email address for the business.
-	Email string `json:"email,required,nullable"`
+	Email string `json:"email" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
 	// corporation's state of incorporation.
-	IncorporationState string `json:"incorporation_state,required,nullable"`
+	IncorporationState string `json:"incorporation_state" api:"required,nullable"`
 	// The numeric North American Industry Classification System (NAICS) code submitted
 	// for the corporation.
-	IndustryCode string `json:"industry_code,required,nullable"`
+	IndustryCode string `json:"industry_code" api:"required,nullable"`
 	// The legal name of the corporation.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier string `json:"tax_identifier,required,nullable"`
+	TaxIdentifier string `json:"tax_identifier" api:"required,nullable"`
 	// The website of the corporation.
-	Website string                `json:"website,required,nullable"`
+	Website string                `json:"website" api:"required,nullable"`
 	JSON    entityCorporationJSON `json:"-"`
 }
 
@@ -316,16 +316,16 @@ func (r entityCorporationJSON) RawJSON() string {
 // The corporation's address.
 type EntityCorporationAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                       `json:"zip,required"`
+	Zip  string                       `json:"zip" api:"required"`
 	JSON entityCorporationAddressJSON `json:"-"`
 }
 
@@ -351,13 +351,13 @@ func (r entityCorporationAddressJSON) RawJSON() string {
 
 type EntityCorporationBeneficialOwner struct {
 	// The identifier of this beneficial owner.
-	BeneficialOwnerID string `json:"beneficial_owner_id,required"`
+	BeneficialOwnerID string `json:"beneficial_owner_id" api:"required"`
 	// This person's role or title within the entity.
-	CompanyTitle string `json:"company_title,required,nullable"`
+	CompanyTitle string `json:"company_title" api:"required,nullable"`
 	// Personal details for the beneficial owner.
-	Individual EntityCorporationBeneficialOwnersIndividual `json:"individual,required"`
+	Individual EntityCorporationBeneficialOwnersIndividual `json:"individual" api:"required"`
 	// Why this person is considered a beneficial owner of the entity.
-	Prong EntityCorporationBeneficialOwnersProng `json:"prong,required"`
+	Prong EntityCorporationBeneficialOwnersProng `json:"prong" api:"required"`
 	JSON  entityCorporationBeneficialOwnerJSON   `json:"-"`
 }
 
@@ -383,13 +383,13 @@ func (r entityCorporationBeneficialOwnerJSON) RawJSON() string {
 // Personal details for the beneficial owner.
 type EntityCorporationBeneficialOwnersIndividual struct {
 	// The person's address.
-	Address EntityCorporationBeneficialOwnersIndividualAddress `json:"address,required"`
+	Address EntityCorporationBeneficialOwnersIndividualAddress `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth time.Time `json:"date_of_birth,required" format:"date"`
+	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification,required"`
+	Identification EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification" api:"required"`
 	// The person's legal name.
-	Name string                                          `json:"name,required"`
+	Name string                                          `json:"name" api:"required"`
 	JSON entityCorporationBeneficialOwnersIndividualJSON `json:"-"`
 }
 
@@ -415,18 +415,18 @@ func (r entityCorporationBeneficialOwnersIndividualJSON) RawJSON() string {
 // The person's address.
 type EntityCorporationBeneficialOwnersIndividualAddress struct {
 	// The city, district, town, or village of the address.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-	Country string `json:"country,required"`
+	Country string `json:"country" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
 	// state, province, or region of the address.
-	State string `json:"state,required,nullable"`
+	State string `json:"state" api:"required,nullable"`
 	// The ZIP or postal code of the address.
-	Zip  string                                                 `json:"zip,required,nullable"`
+	Zip  string                                                 `json:"zip" api:"required,nullable"`
 	JSON entityCorporationBeneficialOwnersIndividualAddressJSON `json:"-"`
 }
 
@@ -454,11 +454,11 @@ func (r entityCorporationBeneficialOwnersIndividualAddressJSON) RawJSON() string
 // A means of verifying the person's identity.
 type EntityCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod `json:"method,required"`
+	Method EntityCorporationBeneficialOwnersIndividualIdentificationMethod `json:"method" api:"required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string                                                        `json:"number_last4,required"`
-	ExtraFields map[string]interface{}                                        `json:"-,extras"`
+	NumberLast4 string                                                        `json:"number_last4" api:"required"`
+	ExtraFields map[string]interface{}                                        `json:"-" api:"extrafields"`
 	JSON        entityCorporationBeneficialOwnersIndividualIdentificationJSON `json:"-"`
 }
 
@@ -519,17 +519,17 @@ func (r EntityCorporationBeneficialOwnersProng) IsKnown() bool {
 // equal to `government_authority`.
 type EntityGovernmentAuthority struct {
 	// The government authority's address.
-	Address EntityGovernmentAuthorityAddress `json:"address,required"`
+	Address EntityGovernmentAuthorityAddress `json:"address" api:"required"`
 	// The identifying details of authorized persons of the government authority.
-	AuthorizedPersons []EntityGovernmentAuthorityAuthorizedPerson `json:"authorized_persons,required"`
+	AuthorizedPersons []EntityGovernmentAuthorityAuthorizedPerson `json:"authorized_persons" api:"required"`
 	// The category of the government authority.
-	Category EntityGovernmentAuthorityCategory `json:"category,required"`
+	Category EntityGovernmentAuthorityCategory `json:"category" api:"required"`
 	// The government authority's name.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The Employer Identification Number (EIN) of the government authority.
-	TaxIdentifier string `json:"tax_identifier,required,nullable"`
+	TaxIdentifier string `json:"tax_identifier" api:"required,nullable"`
 	// The government authority's website.
-	Website string                        `json:"website,required,nullable"`
+	Website string                        `json:"website" api:"required,nullable"`
 	JSON    entityGovernmentAuthorityJSON `json:"-"`
 }
 
@@ -557,16 +557,16 @@ func (r entityGovernmentAuthorityJSON) RawJSON() string {
 // The government authority's address.
 type EntityGovernmentAuthorityAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                               `json:"zip,required"`
+	Zip  string                               `json:"zip" api:"required"`
 	JSON entityGovernmentAuthorityAddressJSON `json:"-"`
 }
 
@@ -592,9 +592,9 @@ func (r entityGovernmentAuthorityAddressJSON) RawJSON() string {
 
 type EntityGovernmentAuthorityAuthorizedPerson struct {
 	// The identifier of this authorized person.
-	AuthorizedPersonID string `json:"authorized_person_id,required"`
+	AuthorizedPersonID string `json:"authorized_person_id" api:"required"`
 	// The person's legal name.
-	Name string                                        `json:"name,required"`
+	Name string                                        `json:"name" api:"required"`
 	JSON entityGovernmentAuthorityAuthorizedPersonJSON `json:"-"`
 }
 
@@ -636,9 +636,9 @@ func (r EntityGovernmentAuthorityCategory) IsKnown() bool {
 // Details of the joint entity. Will be present if `structure` is equal to `joint`.
 type EntityJoint struct {
 	// The two individuals that share control of the entity.
-	Individuals []EntityJointIndividual `json:"individuals,required"`
+	Individuals []EntityJointIndividual `json:"individuals" api:"required"`
 	// The entity's name.
-	Name string          `json:"name,required"`
+	Name string          `json:"name" api:"required"`
 	JSON entityJointJSON `json:"-"`
 }
 
@@ -660,13 +660,13 @@ func (r entityJointJSON) RawJSON() string {
 
 type EntityJointIndividual struct {
 	// The person's address.
-	Address EntityJointIndividualsAddress `json:"address,required"`
+	Address EntityJointIndividualsAddress `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth time.Time `json:"date_of_birth,required" format:"date"`
+	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityJointIndividualsIdentification `json:"identification,required"`
+	Identification EntityJointIndividualsIdentification `json:"identification" api:"required"`
 	// The person's legal name.
-	Name string                    `json:"name,required"`
+	Name string                    `json:"name" api:"required"`
 	JSON entityJointIndividualJSON `json:"-"`
 }
 
@@ -692,16 +692,16 @@ func (r entityJointIndividualJSON) RawJSON() string {
 // The person's address.
 type EntityJointIndividualsAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                            `json:"zip,required"`
+	Zip  string                            `json:"zip" api:"required"`
 	JSON entityJointIndividualsAddressJSON `json:"-"`
 }
 
@@ -728,11 +728,11 @@ func (r entityJointIndividualsAddressJSON) RawJSON() string {
 // A means of verifying the person's identity.
 type EntityJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method EntityJointIndividualsIdentificationMethod `json:"method,required"`
+	Method EntityJointIndividualsIdentificationMethod `json:"method" api:"required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string                                   `json:"number_last4,required"`
-	ExtraFields map[string]interface{}                   `json:"-,extras"`
+	NumberLast4 string                                   `json:"number_last4" api:"required"`
+	ExtraFields map[string]interface{}                   `json:"-" api:"extrafields"`
 	JSON        entityJointIndividualsIdentificationJSON `json:"-"`
 }
 
@@ -776,13 +776,13 @@ func (r EntityJointIndividualsIdentificationMethod) IsKnown() bool {
 // `natural_person`.
 type EntityNaturalPerson struct {
 	// The person's address.
-	Address EntityNaturalPersonAddress `json:"address,required"`
+	Address EntityNaturalPersonAddress `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth time.Time `json:"date_of_birth,required" format:"date"`
+	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityNaturalPersonIdentification `json:"identification,required"`
+	Identification EntityNaturalPersonIdentification `json:"identification" api:"required"`
 	// The person's legal name.
-	Name string                  `json:"name,required"`
+	Name string                  `json:"name" api:"required"`
 	JSON entityNaturalPersonJSON `json:"-"`
 }
 
@@ -808,16 +808,16 @@ func (r entityNaturalPersonJSON) RawJSON() string {
 // The person's address.
 type EntityNaturalPersonAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                         `json:"zip,required"`
+	Zip  string                         `json:"zip" api:"required"`
 	JSON entityNaturalPersonAddressJSON `json:"-"`
 }
 
@@ -844,11 +844,11 @@ func (r entityNaturalPersonAddressJSON) RawJSON() string {
 // A means of verifying the person's identity.
 type EntityNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method EntityNaturalPersonIdentificationMethod `json:"method,required"`
+	Method EntityNaturalPersonIdentificationMethod `json:"method" api:"required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string                                `json:"number_last4,required"`
-	ExtraFields map[string]interface{}                `json:"-,extras"`
+	NumberLast4 string                                `json:"number_last4" api:"required"`
+	ExtraFields map[string]interface{}                `json:"-" api:"extrafields"`
 	JSON        entityNaturalPersonIdentificationJSON `json:"-"`
 }
 
@@ -893,9 +893,9 @@ func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
 type EntityRiskRating struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
 	// rating was performed.
-	RatedAt time.Time `json:"rated_at,required" format:"date-time"`
+	RatedAt time.Time `json:"rated_at" api:"required" format:"date-time"`
 	// The rating given to this entity.
-	Rating EntityRiskRatingRating `json:"rating,required"`
+	Rating EntityRiskRatingRating `json:"rating" api:"required"`
 	JSON   entityRiskRatingJSON   `json:"-"`
 }
 
@@ -971,11 +971,11 @@ func (r EntityStructure) IsKnown() bool {
 
 type EntityTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
-	AgreedAt time.Time `json:"agreed_at,required" format:"date-time"`
+	AgreedAt time.Time `json:"agreed_at" api:"required" format:"date-time"`
 	// The IP address the Entity accessed reviewed the terms from.
-	IPAddress string `json:"ip_address,required"`
+	IPAddress string `json:"ip_address" api:"required"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
-	TermsURL string                   `json:"terms_url,required"`
+	TermsURL string                   `json:"terms_url" api:"required"`
 	JSON     entityTermsAgreementJSON `json:"-"`
 }
 
@@ -1002,9 +1002,9 @@ func (r entityTermsAgreementJSON) RawJSON() string {
 // that service.
 type EntityThirdPartyVerification struct {
 	// The reference identifier for the third party verification.
-	Reference string `json:"reference,required"`
+	Reference string `json:"reference" api:"required"`
 	// The vendor that was used to perform the verification.
-	Vendor EntityThirdPartyVerificationVendor `json:"vendor,required"`
+	Vendor EntityThirdPartyVerificationVendor `json:"vendor" api:"required"`
 	JSON   entityThirdPartyVerificationJSON   `json:"-"`
 }
 
@@ -1046,22 +1046,22 @@ func (r EntityThirdPartyVerificationVendor) IsKnown() bool {
 // Details of the trust entity. Will be present if `structure` is equal to `trust`.
 type EntityTrust struct {
 	// The trust's address.
-	Address EntityTrustAddress `json:"address,required"`
+	Address EntityTrustAddress `json:"address" api:"required"`
 	// Whether the trust is `revocable` or `irrevocable`.
-	Category EntityTrustCategory `json:"category,required"`
+	Category EntityTrustCategory `json:"category" api:"required"`
 	// The ID for the File containing the formation document of the trust.
-	FormationDocumentFileID string `json:"formation_document_file_id,required,nullable"`
+	FormationDocumentFileID string `json:"formation_document_file_id" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
 	// which the trust was formed.
-	FormationState string `json:"formation_state,required,nullable"`
+	FormationState string `json:"formation_state" api:"required,nullable"`
 	// The grantor of the trust. Will be present if the `category` is `revocable`.
-	Grantor EntityTrustGrantor `json:"grantor,required,nullable"`
+	Grantor EntityTrustGrantor `json:"grantor" api:"required,nullable"`
 	// The trust's name.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The Employer Identification Number (EIN) of the trust itself.
-	TaxIdentifier string `json:"tax_identifier,required,nullable"`
+	TaxIdentifier string `json:"tax_identifier" api:"required,nullable"`
 	// The trustees of the trust.
-	Trustees []EntityTrustTrustee `json:"trustees,required"`
+	Trustees []EntityTrustTrustee `json:"trustees" api:"required"`
 	JSON     entityTrustJSON      `json:"-"`
 }
 
@@ -1090,16 +1090,16 @@ func (r entityTrustJSON) RawJSON() string {
 // The trust's address.
 type EntityTrustAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                 `json:"zip,required"`
+	Zip  string                 `json:"zip" api:"required"`
 	JSON entityTrustAddressJSON `json:"-"`
 }
 
@@ -1142,13 +1142,13 @@ func (r EntityTrustCategory) IsKnown() bool {
 // The grantor of the trust. Will be present if the `category` is `revocable`.
 type EntityTrustGrantor struct {
 	// The person's address.
-	Address EntityTrustGrantorAddress `json:"address,required"`
+	Address EntityTrustGrantorAddress `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth time.Time `json:"date_of_birth,required" format:"date"`
+	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityTrustGrantorIdentification `json:"identification,required"`
+	Identification EntityTrustGrantorIdentification `json:"identification" api:"required"`
 	// The person's legal name.
-	Name string                 `json:"name,required"`
+	Name string                 `json:"name" api:"required"`
 	JSON entityTrustGrantorJSON `json:"-"`
 }
 
@@ -1174,16 +1174,16 @@ func (r entityTrustGrantorJSON) RawJSON() string {
 // The person's address.
 type EntityTrustGrantorAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                        `json:"zip,required"`
+	Zip  string                        `json:"zip" api:"required"`
 	JSON entityTrustGrantorAddressJSON `json:"-"`
 }
 
@@ -1210,11 +1210,11 @@ func (r entityTrustGrantorAddressJSON) RawJSON() string {
 // A means of verifying the person's identity.
 type EntityTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method EntityTrustGrantorIdentificationMethod `json:"method,required"`
+	Method EntityTrustGrantorIdentificationMethod `json:"method" api:"required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string                               `json:"number_last4,required"`
-	ExtraFields map[string]interface{}               `json:"-,extras"`
+	NumberLast4 string                               `json:"number_last4" api:"required"`
+	ExtraFields map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON        entityTrustGrantorIdentificationJSON `json:"-"`
 }
 
@@ -1257,9 +1257,9 @@ func (r EntityTrustGrantorIdentificationMethod) IsKnown() bool {
 type EntityTrustTrustee struct {
 	// The individual trustee of the trust. Will be present if the trustee's
 	// `structure` is equal to `individual`.
-	Individual EntityTrustTrusteesIndividual `json:"individual,required,nullable"`
+	Individual EntityTrustTrusteesIndividual `json:"individual" api:"required,nullable"`
 	// The structure of the trustee. Will always be equal to `individual`.
-	Structure EntityTrustTrusteesStructure `json:"structure,required"`
+	Structure EntityTrustTrusteesStructure `json:"structure" api:"required"`
 	JSON      entityTrustTrusteeJSON       `json:"-"`
 }
 
@@ -1284,13 +1284,13 @@ func (r entityTrustTrusteeJSON) RawJSON() string {
 // `structure` is equal to `individual`.
 type EntityTrustTrusteesIndividual struct {
 	// The person's address.
-	Address EntityTrustTrusteesIndividualAddress `json:"address,required"`
+	Address EntityTrustTrusteesIndividualAddress `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth time.Time `json:"date_of_birth,required" format:"date"`
+	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityTrustTrusteesIndividualIdentification `json:"identification,required"`
+	Identification EntityTrustTrusteesIndividualIdentification `json:"identification" api:"required"`
 	// The person's legal name.
-	Name string                            `json:"name,required"`
+	Name string                            `json:"name" api:"required"`
 	JSON entityTrustTrusteesIndividualJSON `json:"-"`
 }
 
@@ -1316,16 +1316,16 @@ func (r entityTrustTrusteesIndividualJSON) RawJSON() string {
 // The person's address.
 type EntityTrustTrusteesIndividualAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip  string                                   `json:"zip,required"`
+	Zip  string                                   `json:"zip" api:"required"`
 	JSON entityTrustTrusteesIndividualAddressJSON `json:"-"`
 }
 
@@ -1352,11 +1352,11 @@ func (r entityTrustTrusteesIndividualAddressJSON) RawJSON() string {
 // A means of verifying the person's identity.
 type EntityTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method EntityTrustTrusteesIndividualIdentificationMethod `json:"method,required"`
+	Method EntityTrustTrusteesIndividualIdentificationMethod `json:"method" api:"required"`
 	// The last 4 digits of the identification number that can be used to verify the
 	// individual's identity.
-	NumberLast4 string                                          `json:"number_last4,required"`
-	ExtraFields map[string]interface{}                          `json:"-,extras"`
+	NumberLast4 string                                          `json:"number_last4" api:"required"`
+	ExtraFields map[string]interface{}                          `json:"-" api:"extrafields"`
 	JSON        entityTrustTrusteesIndividualIdentificationJSON `json:"-"`
 }
 
@@ -1429,7 +1429,7 @@ func (r EntityType) IsKnown() bool {
 
 type EntityNewParams struct {
 	// The type of Entity to create.
-	Structure param.Field[EntityNewParamsStructure] `json:"structure,required"`
+	Structure param.Field[EntityNewParamsStructure] `json:"structure" api:"required"`
 	// Details of the corporation entity to create. Required if `structure` is equal to
 	// `corporation`.
 	Corporation param.Field[EntityNewParamsCorporation] `json:"corporation"`
@@ -1491,15 +1491,15 @@ func (r EntityNewParamsStructure) IsKnown() bool {
 type EntityNewParamsCorporation struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
-	Address param.Field[EntityNewParamsCorporationAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsCorporationAddress] `json:"address" api:"required"`
 	// The identifying details of each person who owns 25% or more of the business and
 	// one control person, like the CEO, CFO, or other executive. You can submit
 	// between 1 and 5 people to this list.
-	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwner] `json:"beneficial_owners,required"`
+	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwner] `json:"beneficial_owners" api:"required"`
 	// The legal name of the corporation.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier param.Field[string] `json:"tax_identifier,required"`
+	TaxIdentifier param.Field[string] `json:"tax_identifier" api:"required"`
 	// If the entity is exempt from the requirement to submit beneficial owners,
 	// provide the justification. If a reason is provided, you do not need to submit a
 	// list of beneficial owners.
@@ -1527,14 +1527,14 @@ func (r EntityNewParamsCorporation) MarshalJSON() (data []byte, err error) {
 // are disallowed.
 type EntityNewParamsCorporationAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -1545,11 +1545,11 @@ func (r EntityNewParamsCorporationAddress) MarshalJSON() (data []byte, err error
 
 type EntityNewParamsCorporationBeneficialOwner struct {
 	// Personal details for the beneficial owner.
-	Individual param.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual,required"`
+	Individual param.Field[EntityNewParamsCorporationBeneficialOwnersIndividual] `json:"individual" api:"required"`
 	// Why this person is considered a beneficial owner of the entity. At least one
 	// option is required, if a person is both a control person and owner, submit an
 	// array containing both.
-	Prongs param.Field[[]EntityNewParamsCorporationBeneficialOwnersProng] `json:"prongs,required"`
+	Prongs param.Field[[]EntityNewParamsCorporationBeneficialOwnersProng] `json:"prongs" api:"required"`
 	// This person's role or title within the entity.
 	CompanyTitle param.Field[string]    `json:"company_title"`
 	ExtraFields  map[string]interface{} `json:"-,extras"`
@@ -1563,13 +1563,13 @@ func (r EntityNewParamsCorporationBeneficialOwner) MarshalJSON() (data []byte, e
 type EntityNewParamsCorporationBeneficialOwnersIndividual struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualAddress] `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentification] `json:"identification" api:"required"`
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
@@ -1585,11 +1585,11 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividual) MarshalJSON() (dat
 // PMB's are disallowed.
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -1606,10 +1606,10 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualAddress) MarshalJSON
 // A means of verifying the person's identity.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense] `json:"drivers_license"`
@@ -1649,11 +1649,11 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the front of the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The identifier of the File containing the back of the driver's license.
 	BackFileID param.Field[string] `json:"back_file_id"`
 }
@@ -1667,11 +1667,11 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriver
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the front of the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The identifier of the File containing the back of the document. Not every
 	// document has a reverse side.
 	BackFileID param.Field[string] `json:"back_file_id"`
@@ -1688,11 +1688,11 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther)
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -1739,15 +1739,15 @@ func (r EntityNewParamsCorporationBeneficialOwnershipExemptionReason) IsKnown() 
 type EntityNewParamsGovernmentAuthority struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
-	Address param.Field[EntityNewParamsGovernmentAuthorityAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsGovernmentAuthorityAddress] `json:"address" api:"required"`
 	// The identifying details of authorized officials acting on the entity's behalf.
-	AuthorizedPersons param.Field[[]EntityNewParamsGovernmentAuthorityAuthorizedPerson] `json:"authorized_persons,required"`
+	AuthorizedPersons param.Field[[]EntityNewParamsGovernmentAuthorityAuthorizedPerson] `json:"authorized_persons" api:"required"`
 	// The category of the government authority.
-	Category param.Field[EntityNewParamsGovernmentAuthorityCategory] `json:"category,required"`
+	Category param.Field[EntityNewParamsGovernmentAuthorityCategory] `json:"category" api:"required"`
 	// The legal name of the government authority.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The Employer Identification Number (EIN) for the government authority.
-	TaxIdentifier param.Field[string] `json:"tax_identifier,required"`
+	TaxIdentifier param.Field[string] `json:"tax_identifier" api:"required"`
 	// The website of the government authority.
 	Website param.Field[string] `json:"website"`
 }
@@ -1760,14 +1760,14 @@ func (r EntityNewParamsGovernmentAuthority) MarshalJSON() (data []byte, err erro
 // are disallowed.
 type EntityNewParamsGovernmentAuthorityAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -1778,7 +1778,7 @@ func (r EntityNewParamsGovernmentAuthorityAddress) MarshalJSON() (data []byte, e
 
 type EntityNewParamsGovernmentAuthorityAuthorizedPerson struct {
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 }
 
 func (r EntityNewParamsGovernmentAuthorityAuthorizedPerson) MarshalJSON() (data []byte, err error) {
@@ -1807,7 +1807,7 @@ func (r EntityNewParamsGovernmentAuthorityCategory) IsKnown() bool {
 // `joint`.
 type EntityNewParamsJoint struct {
 	// The two individuals that share control of the entity.
-	Individuals param.Field[[]EntityNewParamsJointIndividual] `json:"individuals,required"`
+	Individuals param.Field[[]EntityNewParamsJointIndividual] `json:"individuals" api:"required"`
 }
 
 func (r EntityNewParamsJoint) MarshalJSON() (data []byte, err error) {
@@ -1817,13 +1817,13 @@ func (r EntityNewParamsJoint) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsJointIndividual struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityNewParamsJointIndividualsAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsJointIndividualsAddress] `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewParamsJointIndividualsIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsJointIndividualsIdentification] `json:"identification" api:"required"`
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
@@ -1839,14 +1839,14 @@ func (r EntityNewParamsJointIndividual) MarshalJSON() (data []byte, err error) {
 // PMB's are disallowed.
 type EntityNewParamsJointIndividualsAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -1858,10 +1858,10 @@ func (r EntityNewParamsJointIndividualsAddress) MarshalJSON() (data []byte, err 
 // A means of verifying the person's identity.
 type EntityNewParamsJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense param.Field[EntityNewParamsJointIndividualsIdentificationDriversLicense] `json:"drivers_license"`
@@ -1901,11 +1901,11 @@ func (r EntityNewParamsJointIndividualsIdentificationMethod) IsKnown() bool {
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsJointIndividualsIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the front of the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The identifier of the File containing the back of the driver's license.
 	BackFileID param.Field[string] `json:"back_file_id"`
 }
@@ -1919,11 +1919,11 @@ func (r EntityNewParamsJointIndividualsIdentificationDriversLicense) MarshalJSON
 type EntityNewParamsJointIndividualsIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the front of the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The identifier of the File containing the back of the document. Not every
 	// document has a reverse side.
 	BackFileID param.Field[string] `json:"back_file_id"`
@@ -1940,11 +1940,11 @@ func (r EntityNewParamsJointIndividualsIdentificationOther) MarshalJSON() (data 
 type EntityNewParamsJointIndividualsIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// passport (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewParamsJointIndividualsIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -1958,13 +1958,13 @@ func (r EntityNewParamsJointIndividualsIdentificationPassport) MarshalJSON() (da
 type EntityNewParamsNaturalPerson struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityNewParamsNaturalPersonAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsNaturalPersonAddress] `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsNaturalPersonIdentification] `json:"identification" api:"required"`
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
@@ -1980,14 +1980,14 @@ func (r EntityNewParamsNaturalPerson) MarshalJSON() (data []byte, err error) {
 // PMB's are disallowed.
 type EntityNewParamsNaturalPersonAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -1999,10 +1999,10 @@ func (r EntityNewParamsNaturalPersonAddress) MarshalJSON() (data []byte, err err
 // A means of verifying the person's identity.
 type EntityNewParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense param.Field[EntityNewParamsNaturalPersonIdentificationDriversLicense] `json:"drivers_license"`
@@ -2042,11 +2042,11 @@ func (r EntityNewParamsNaturalPersonIdentificationMethod) IsKnown() bool {
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsNaturalPersonIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the front of the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The identifier of the File containing the back of the driver's license.
 	BackFileID param.Field[string] `json:"back_file_id"`
 }
@@ -2060,11 +2060,11 @@ func (r EntityNewParamsNaturalPersonIdentificationDriversLicense) MarshalJSON() 
 type EntityNewParamsNaturalPersonIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the front of the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The identifier of the File containing the back of the document. Not every
 	// document has a reverse side.
 	BackFileID param.Field[string] `json:"back_file_id"`
@@ -2081,11 +2081,11 @@ func (r EntityNewParamsNaturalPersonIdentificationOther) MarshalJSON() (data []b
 type EntityNewParamsNaturalPersonIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// passport (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -2097,9 +2097,9 @@ func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data 
 type EntityNewParamsRiskRating struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
 	// rating was performed.
-	RatedAt param.Field[time.Time] `json:"rated_at,required" format:"date-time"`
+	RatedAt param.Field[time.Time] `json:"rated_at" api:"required" format:"date-time"`
 	// The rating given to this entity.
-	Rating param.Field[EntityNewParamsRiskRatingRating] `json:"rating,required"`
+	Rating param.Field[EntityNewParamsRiskRatingRating] `json:"rating" api:"required"`
 }
 
 func (r EntityNewParamsRiskRating) MarshalJSON() (data []byte, err error) {
@@ -2125,7 +2125,7 @@ func (r EntityNewParamsRiskRatingRating) IsKnown() bool {
 
 type EntityNewParamsSupplementalDocument struct {
 	// The identifier of the File containing the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err error) {
@@ -2134,11 +2134,11 @@ func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err err
 
 type EntityNewParamsTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
-	AgreedAt param.Field[time.Time] `json:"agreed_at,required" format:"date-time"`
+	AgreedAt param.Field[time.Time] `json:"agreed_at" api:"required" format:"date-time"`
 	// The IP address the Entity accessed reviewed the terms from.
-	IPAddress param.Field[string] `json:"ip_address,required"`
+	IPAddress param.Field[string] `json:"ip_address" api:"required"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
-	TermsURL param.Field[string] `json:"terms_url,required"`
+	TermsURL param.Field[string] `json:"terms_url" api:"required"`
 }
 
 func (r EntityNewParamsTermsAgreement) MarshalJSON() (data []byte, err error) {
@@ -2150,9 +2150,9 @@ func (r EntityNewParamsTermsAgreement) MarshalJSON() (data []byte, err error) {
 // that service.
 type EntityNewParamsThirdPartyVerification struct {
 	// The reference identifier for the third party verification.
-	Reference param.Field[string] `json:"reference,required"`
+	Reference param.Field[string] `json:"reference" api:"required"`
 	// The vendor that was used to perform the verification.
-	Vendor param.Field[EntityNewParamsThirdPartyVerificationVendor] `json:"vendor,required"`
+	Vendor param.Field[EntityNewParamsThirdPartyVerificationVendor] `json:"vendor" api:"required"`
 }
 
 func (r EntityNewParamsThirdPartyVerification) MarshalJSON() (data []byte, err error) {
@@ -2182,15 +2182,15 @@ func (r EntityNewParamsThirdPartyVerificationVendor) IsKnown() bool {
 type EntityNewParamsTrust struct {
 	// The trust's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
-	Address param.Field[EntityNewParamsTrustAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsTrustAddress] `json:"address" api:"required"`
 	// Whether the trust is `revocable` or `irrevocable`. Irrevocable trusts require
 	// their own Employer Identification Number. Revocable trusts require information
 	// about the individual `grantor` who created the trust.
-	Category param.Field[EntityNewParamsTrustCategory] `json:"category,required"`
+	Category param.Field[EntityNewParamsTrustCategory] `json:"category" api:"required"`
 	// The legal name of the trust.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The trustees of the trust.
-	Trustees param.Field[[]EntityNewParamsTrustTrustee] `json:"trustees,required"`
+	Trustees param.Field[[]EntityNewParamsTrustTrustee] `json:"trustees" api:"required"`
 	// The identifier of the File containing the formation document of the trust.
 	FormationDocumentFileID param.Field[string] `json:"formation_document_file_id"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state in
@@ -2211,14 +2211,14 @@ func (r EntityNewParamsTrust) MarshalJSON() (data []byte, err error) {
 // are disallowed.
 type EntityNewParamsTrustAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2247,7 +2247,7 @@ func (r EntityNewParamsTrustCategory) IsKnown() bool {
 
 type EntityNewParamsTrustTrustee struct {
 	// The structure of the trustee.
-	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure,required"`
+	Structure param.Field[EntityNewParamsTrustTrusteesStructure] `json:"structure" api:"required"`
 	// Details of the individual trustee. Within the trustee object, this is required
 	// if `structure` is equal to `individual`.
 	Individual param.Field[EntityNewParamsTrustTrusteesIndividual] `json:"individual"`
@@ -2277,13 +2277,13 @@ func (r EntityNewParamsTrustTrusteesStructure) IsKnown() bool {
 type EntityNewParamsTrustTrusteesIndividual struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityNewParamsTrustTrusteesIndividualAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsTrustTrusteesIndividualAddress] `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewParamsTrustTrusteesIndividualIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsTrustTrusteesIndividualIdentification] `json:"identification" api:"required"`
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
@@ -2299,14 +2299,14 @@ func (r EntityNewParamsTrustTrusteesIndividual) MarshalJSON() (data []byte, err 
 // PMB's are disallowed.
 type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2318,10 +2318,10 @@ func (r EntityNewParamsTrustTrusteesIndividualAddress) MarshalJSON() (data []byt
 // A means of verifying the person's identity.
 type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense] `json:"drivers_license"`
@@ -2361,11 +2361,11 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationMethod) IsKnown() bo
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the front of the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The identifier of the File containing the back of the driver's license.
 	BackFileID param.Field[string] `json:"back_file_id"`
 }
@@ -2379,11 +2379,11 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense) Mars
 type EntityNewParamsTrustTrusteesIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the front of the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The identifier of the File containing the back of the document. Not every
 	// document has a reverse side.
 	BackFileID param.Field[string] `json:"back_file_id"`
@@ -2400,11 +2400,11 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationOther) MarshalJSON()
 type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// passport (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewParamsTrustTrusteesIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -2415,13 +2415,13 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationPassport) MarshalJSO
 type EntityNewParamsTrustGrantor struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityNewParamsTrustGrantorAddress] `json:"address,required"`
+	Address param.Field[EntityNewParamsTrustGrantorAddress] `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification" api:"required"`
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
@@ -2437,14 +2437,14 @@ func (r EntityNewParamsTrustGrantor) MarshalJSON() (data []byte, err error) {
 // PMB's are disallowed.
 type EntityNewParamsTrustGrantorAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2456,10 +2456,10 @@ func (r EntityNewParamsTrustGrantorAddress) MarshalJSON() (data []byte, err erro
 // A means of verifying the person's identity.
 type EntityNewParamsTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense param.Field[EntityNewParamsTrustGrantorIdentificationDriversLicense] `json:"drivers_license"`
@@ -2499,11 +2499,11 @@ func (r EntityNewParamsTrustGrantorIdentificationMethod) IsKnown() bool {
 // Required if `method` is equal to `drivers_license`.
 type EntityNewParamsTrustGrantorIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the front of the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The identifier of the File containing the back of the driver's license.
 	BackFileID param.Field[string] `json:"back_file_id"`
 }
@@ -2517,11 +2517,11 @@ func (r EntityNewParamsTrustGrantorIdentificationDriversLicense) MarshalJSON() (
 type EntityNewParamsTrustGrantorIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the front of the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The identifier of the File containing the back of the document. Not every
 	// document has a reverse side.
 	BackFileID param.Field[string] `json:"back_file_id"`
@@ -2538,11 +2538,11 @@ func (r EntityNewParamsTrustGrantorIdentificationOther) MarshalJSON() (data []by
 type EntityNewParamsTrustGrantorIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// passport (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewParamsTrustGrantorIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -2610,14 +2610,14 @@ func (r EntityUpdateParamsCorporation) MarshalJSON() (data []byte, err error) {
 // are disallowed.
 type EntityUpdateParamsCorporationAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2644,14 +2644,14 @@ func (r EntityUpdateParamsGovernmentAuthority) MarshalJSON() (data []byte, err e
 // are disallowed.
 type EntityUpdateParamsGovernmentAuthorityAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2678,14 +2678,14 @@ func (r EntityUpdateParamsNaturalPerson) MarshalJSON() (data []byte, err error) 
 // are disallowed.
 type EntityUpdateParamsNaturalPersonAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2699,9 +2699,9 @@ func (r EntityUpdateParamsNaturalPersonAddress) MarshalJSON() (data []byte, err 
 type EntityUpdateParamsRiskRating struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
 	// rating was performed.
-	RatedAt param.Field[time.Time] `json:"rated_at,required" format:"date-time"`
+	RatedAt param.Field[time.Time] `json:"rated_at" api:"required" format:"date-time"`
 	// The rating given to this entity.
-	Rating param.Field[EntityUpdateParamsRiskRatingRating] `json:"rating,required"`
+	Rating param.Field[EntityUpdateParamsRiskRatingRating] `json:"rating" api:"required"`
 }
 
 func (r EntityUpdateParamsRiskRating) MarshalJSON() (data []byte, err error) {
@@ -2730,9 +2730,9 @@ func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
 // that service.
 type EntityUpdateParamsThirdPartyVerification struct {
 	// The reference identifier for the third party verification.
-	Reference param.Field[string] `json:"reference,required"`
+	Reference param.Field[string] `json:"reference" api:"required"`
 	// The vendor that was used to perform the verification.
-	Vendor param.Field[EntityUpdateParamsThirdPartyVerificationVendor] `json:"vendor,required"`
+	Vendor param.Field[EntityUpdateParamsThirdPartyVerificationVendor] `json:"vendor" api:"required"`
 }
 
 func (r EntityUpdateParamsThirdPartyVerification) MarshalJSON() (data []byte, err error) {
@@ -2775,14 +2775,14 @@ func (r EntityUpdateParamsTrust) MarshalJSON() (data []byte, err error) {
 // are disallowed.
 type EntityUpdateParamsTrustAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -2872,7 +2872,7 @@ func (r EntityListParamsStatusIn) IsKnown() bool {
 type EntityArchiveBeneficialOwnerParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id,required"`
+	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id" api:"required"`
 }
 
 func (r EntityArchiveBeneficialOwnerParams) MarshalJSON() (data []byte, err error) {
@@ -2892,7 +2892,7 @@ func (r EntityConfirmParams) MarshalJSON() (data []byte, err error) {
 type EntityNewBeneficialOwnerParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwner param.Field[EntityNewBeneficialOwnerParamsBeneficialOwner] `json:"beneficial_owner,required"`
+	BeneficialOwner param.Field[EntityNewBeneficialOwnerParamsBeneficialOwner] `json:"beneficial_owner" api:"required"`
 }
 
 func (r EntityNewBeneficialOwnerParams) MarshalJSON() (data []byte, err error) {
@@ -2903,11 +2903,11 @@ func (r EntityNewBeneficialOwnerParams) MarshalJSON() (data []byte, err error) {
 // corporation.
 type EntityNewBeneficialOwnerParamsBeneficialOwner struct {
 	// Personal details for the beneficial owner.
-	Individual param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual] `json:"individual,required"`
+	Individual param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual] `json:"individual" api:"required"`
 	// Why this person is considered a beneficial owner of the entity. At least one
 	// option is required, if a person is both a control person and owner, submit an
 	// array containing both.
-	Prongs param.Field[[]EntityNewBeneficialOwnerParamsBeneficialOwnerProng] `json:"prongs,required"`
+	Prongs param.Field[[]EntityNewBeneficialOwnerParamsBeneficialOwnerProng] `json:"prongs" api:"required"`
 	// This person's role or title within the entity.
 	CompanyTitle param.Field[string]    `json:"company_title"`
 	ExtraFields  map[string]interface{} `json:"-,extras"`
@@ -2921,13 +2921,13 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwner) MarshalJSON() (data []byt
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress] `json:"address,required"`
+	Address param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress] `json:"address" api:"required"`
 	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth param.Field[time.Time] `json:"date_of_birth,required" format:"date"`
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification] `json:"identification,required"`
+	Identification param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification] `json:"identification" api:"required"`
 	// The person's legal name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
@@ -2943,11 +2943,11 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividual) MarshalJSON() (
 // PMB's are disallowed.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2964,10 +2964,10 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualAddress) MarshalJ
 // A means of verifying the person's identity.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
-	Method param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod] `json:"method,required"`
+	Method param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number.
-	Number param.Field[string] `json:"number,required"`
+	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
 	DriversLicense param.Field[EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationDriversLicense] `json:"drivers_license"`
@@ -3007,11 +3007,11 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationMet
 // Required if `method` is equal to `drivers_license`.
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationDriversLicense struct {
 	// The driver's license's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the front of the driver's license.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The state that issued the provided driver's license.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The identifier of the File containing the back of the driver's license.
 	BackFileID param.Field[string] `json:"back_file_id"`
 }
@@ -3025,11 +3025,11 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationDri
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationOther struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// A description of the document submitted.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the front of the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The identifier of the File containing the back of the document. Not every
 	// document has a reverse side.
 	BackFileID param.Field[string] `json:"back_file_id"`
@@ -3046,11 +3046,11 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationOth
 type EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
 	// document (e.g., `US`).
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
-	ExpirationDate param.Field[time.Time] `json:"expiration_date,required" format:"date"`
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
 	// The identifier of the File containing the passport.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r EntityNewBeneficialOwnerParamsBeneficialOwnerIndividualIdentificationPassport) MarshalJSON() (data []byte, err error) {
@@ -3075,7 +3075,7 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerProng) IsKnown() bool {
 type EntityUpdateAddressParams struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
-	Address param.Field[EntityUpdateAddressParamsAddress] `json:"address,required"`
+	Address param.Field[EntityUpdateAddressParamsAddress] `json:"address" api:"required"`
 }
 
 func (r EntityUpdateAddressParams) MarshalJSON() (data []byte, err error) {
@@ -3086,14 +3086,14 @@ func (r EntityUpdateAddressParams) MarshalJSON() (data []byte, err error) {
 // are disallowed.
 type EntityUpdateAddressParamsAddress struct {
 	// The city of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip,required"`
+	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -3105,10 +3105,10 @@ func (r EntityUpdateAddressParamsAddress) MarshalJSON() (data []byte, err error)
 type EntityUpdateBeneficialOwnerAddressParams struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
-	Address param.Field[EntityUpdateBeneficialOwnerAddressParamsAddress] `json:"address,required"`
+	Address param.Field[EntityUpdateBeneficialOwnerAddressParamsAddress] `json:"address" api:"required"`
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
-	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id,required"`
+	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id" api:"required"`
 }
 
 func (r EntityUpdateBeneficialOwnerAddressParams) MarshalJSON() (data []byte, err error) {
@@ -3119,11 +3119,11 @@ func (r EntityUpdateBeneficialOwnerAddressParams) MarshalJSON() (data []byte, er
 // PMB's are disallowed.
 type EntityUpdateBeneficialOwnerAddressParamsAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -3142,7 +3142,7 @@ type EntityUpdateIndustryCodeParams struct {
 	// corporation's primary line of business. This is a number, like `5132` for
 	// `Software Publishers`. A full list of classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
-	IndustryCode param.Field[string] `json:"industry_code,required"`
+	IndustryCode param.Field[string] `json:"industry_code" api:"required"`
 }
 
 func (r EntityUpdateIndustryCodeParams) MarshalJSON() (data []byte, err error) {

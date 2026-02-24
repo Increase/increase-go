@@ -64,7 +64,7 @@ func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, phy
 
 type SimulationPhysicalCardNewParams struct {
 	// The type of tracking event.
-	Category param.Field[SimulationPhysicalCardNewParamsCategory] `json:"category,required"`
+	Category param.Field[SimulationPhysicalCardNewParamsCategory] `json:"category" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
 	// carrier expects the card to be delivered.
 	CarrierEstimatedDeliveryAt param.Field[time.Time] `json:"carrier_estimated_delivery_at" format:"date-time"`
@@ -101,7 +101,7 @@ func (r SimulationPhysicalCardNewParamsCategory) IsKnown() bool {
 
 type SimulationPhysicalCardAdvanceShipmentParams struct {
 	// The shipment status to move the Physical Card to.
-	ShipmentStatus param.Field[SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus] `json:"shipment_status,required"`
+	ShipmentStatus param.Field[SimulationPhysicalCardAdvanceShipmentParamsShipmentStatus] `json:"shipment_status" api:"required"`
 }
 
 func (r SimulationPhysicalCardAdvanceShipmentParams) MarshalJSON() (data []byte, err error) {

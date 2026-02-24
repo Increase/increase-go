@@ -44,26 +44,26 @@ func (r *FileLinkService) New(ctx context.Context, body FileLinkNewParams, opts 
 // File Links let you generate a URL that can be used to download a File.
 type FileLink struct {
 	// The File Link identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the File
 	// Link was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the File
 	// Link will expire.
-	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
 	// The identifier of the File the File Link points to.
-	FileID string `json:"file_id,required"`
+	FileID string `json:"file_id" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `file_link`.
-	Type FileLinkType `json:"type,required"`
+	Type FileLinkType `json:"type" api:"required"`
 	// A URL where the File can be downloaded. The URL will expire after the
 	// `expires_at` time. This URL is unauthenticated and can be used to download the
 	// File without an Increase API key.
-	UnauthenticatedURL string       `json:"unauthenticated_url,required"`
+	UnauthenticatedURL string       `json:"unauthenticated_url" api:"required"`
 	JSON               fileLinkJSON `json:"-"`
 }
 
@@ -106,7 +106,7 @@ func (r FileLinkType) IsKnown() bool {
 
 type FileLinkNewParams struct {
 	// The File to create a File Link for.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 	// The time at which the File Link will expire. The default is 1 hour from the time
 	// of the request. The maximum is 1 day from the time of the request.
 	ExpiresAt param.Field[time.Time] `json:"expires_at" format:"date-time"`

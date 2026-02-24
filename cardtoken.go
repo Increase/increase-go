@@ -91,22 +91,22 @@ func (r *CardTokenService) Capabilities(ctx context.Context, cardTokenID string,
 // Transfers and Card Validations.
 type CardToken struct {
 	// The Card Token's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the card token was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date when the card
 	// expires.
-	ExpirationDate time.Time `json:"expiration_date,required" format:"date"`
+	ExpirationDate time.Time `json:"expiration_date" api:"required" format:"date"`
 	// The last 4 digits of the card number.
-	Last4 string `json:"last4,required"`
+	Last4 string `json:"last4" api:"required"`
 	// The length of the card number.
-	Length int64 `json:"length,required"`
+	Length int64 `json:"length" api:"required"`
 	// The prefix of the card number, usually 8 digits.
-	Prefix string `json:"prefix,required"`
+	Prefix string `json:"prefix" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_token`.
-	Type CardTokenType `json:"type,required"`
+	Type CardTokenType `json:"type" api:"required"`
 	JSON cardTokenJSON `json:"-"`
 }
 
@@ -152,10 +152,10 @@ func (r CardTokenType) IsKnown() bool {
 // over time based on the issuing bank's configuration of the card range.
 type CardTokenCapabilities struct {
 	// Each route represent a path e.g., a push transfer can take.
-	Routes []CardTokenCapabilitiesRoute `json:"routes,required"`
+	Routes []CardTokenCapabilitiesRoute `json:"routes" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_token_capabilities`.
-	Type CardTokenCapabilitiesType `json:"type,required"`
+	Type CardTokenCapabilitiesType `json:"type" api:"required"`
 	JSON cardTokenCapabilitiesJSON `json:"-"`
 }
 
@@ -178,11 +178,11 @@ func (r cardTokenCapabilitiesJSON) RawJSON() string {
 
 type CardTokenCapabilitiesRoute struct {
 	// Whether you can push funds to the card using cross-border Card Push Transfers.
-	CrossBorderPushTransfers CardTokenCapabilitiesRoutesCrossBorderPushTransfers `json:"cross_border_push_transfers,required"`
+	CrossBorderPushTransfers CardTokenCapabilitiesRoutesCrossBorderPushTransfers `json:"cross_border_push_transfers" api:"required"`
 	// Whether you can push funds to the card using domestic Card Push Transfers.
-	DomesticPushTransfers CardTokenCapabilitiesRoutesDomesticPushTransfers `json:"domestic_push_transfers,required"`
+	DomesticPushTransfers CardTokenCapabilitiesRoutesDomesticPushTransfers `json:"domestic_push_transfers" api:"required"`
 	// The card network route the capabilities apply to.
-	Route CardTokenCapabilitiesRoutesRoute `json:"route,required"`
+	Route CardTokenCapabilitiesRoutesRoute `json:"route" api:"required"`
 	JSON  cardTokenCapabilitiesRouteJSON   `json:"-"`
 }
 

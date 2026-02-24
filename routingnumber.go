@@ -67,20 +67,20 @@ func (r *RoutingNumberService) ListAutoPaging(ctx context.Context, query Routing
 // Routing numbers are used to identify your bank in a financial transaction.
 type RoutingNumberListResponse struct {
 	// This routing number's support for ACH Transfers.
-	ACHTransfers RoutingNumberListResponseACHTransfers `json:"ach_transfers,required"`
+	ACHTransfers RoutingNumberListResponseACHTransfers `json:"ach_transfers" api:"required"`
 	// This routing number's support for FedNow Transfers.
-	FednowTransfers RoutingNumberListResponseFednowTransfers `json:"fednow_transfers,required"`
+	FednowTransfers RoutingNumberListResponseFednowTransfers `json:"fednow_transfers" api:"required"`
 	// The name of the financial institution belonging to a routing number.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// This routing number's support for Real-Time Payments Transfers.
-	RealTimePaymentsTransfers RoutingNumberListResponseRealTimePaymentsTransfers `json:"real_time_payments_transfers,required"`
+	RealTimePaymentsTransfers RoutingNumberListResponseRealTimePaymentsTransfers `json:"real_time_payments_transfers" api:"required"`
 	// The nine digit routing number identifier.
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `routing_number`.
-	Type RoutingNumberListResponseType `json:"type,required"`
+	Type RoutingNumberListResponseType `json:"type" api:"required"`
 	// This routing number's support for Wire Transfers.
-	WireTransfers RoutingNumberListResponseWireTransfers `json:"wire_transfers,required"`
+	WireTransfers RoutingNumberListResponseWireTransfers `json:"wire_transfers" api:"required"`
 	JSON          routingNumberListResponseJSON          `json:"-"`
 }
 
@@ -188,7 +188,7 @@ func (r RoutingNumberListResponseWireTransfers) IsKnown() bool {
 
 type RoutingNumberListParams struct {
 	// Filter financial institutions by routing number.
-	RoutingNumber param.Field[string] `query:"routing_number,required"`
+	RoutingNumber param.Field[string] `query:"routing_number" api:"required"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
