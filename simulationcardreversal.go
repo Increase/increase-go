@@ -45,7 +45,7 @@ func (r *SimulationCardReversalService) New(ctx context.Context, body Simulation
 
 type SimulationCardReversalNewParams struct {
 	// The identifier of the Card Payment to create a reversal on.
-	CardPaymentID param.Field[string] `json:"card_payment_id,required"`
+	CardPaymentID param.Field[string] `json:"card_payment_id" api:"required"`
 	// The amount of the reversal in minor units in the card authorization's currency.
 	// This defaults to the authorization amount.
 	Amount param.Field[int64] `json:"amount"`

@@ -79,30 +79,30 @@ func (r *ProgramService) ListAutoPaging(ctx context.Context, query ProgramListPa
 // regulated activity, we will work together to create additional Programs for you.
 type Program struct {
 	// The Program identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Bank the Program is with.
-	Bank ProgramBank `json:"bank,required"`
+	Bank ProgramBank `json:"bank" api:"required"`
 	// The Program billing account.
-	BillingAccountID string `json:"billing_account_id,required,nullable"`
+	BillingAccountID string `json:"billing_account_id" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The default configuration for digital cards attached to this Program.
-	DefaultDigitalCardProfileID string `json:"default_digital_card_profile_id,required,nullable"`
+	DefaultDigitalCardProfileID string `json:"default_digital_card_profile_id" api:"required,nullable"`
 	// The Interest Rate currently being earned on the accounts in this program, as a
 	// string containing a decimal number. For example, a 1% interest rate would be
 	// represented as "0.01".
-	InterestRate string `json:"interest_rate,required"`
+	InterestRate string `json:"interest_rate" api:"required"`
 	// The lending details for the program.
-	Lending ProgramLending `json:"lending,required,nullable"`
+	Lending ProgramLending `json:"lending" api:"required,nullable"`
 	// The name of the Program.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `program`.
-	Type ProgramType `json:"type,required"`
+	Type ProgramType `json:"type" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Program
 	// was last updated.
-	UpdatedAt time.Time   `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time   `json:"updated_at" api:"required" format:"date-time"`
 	JSON      programJSON `json:"-"`
 }
 
@@ -150,7 +150,7 @@ func (r ProgramBank) IsKnown() bool {
 // The lending details for the program.
 type ProgramLending struct {
 	// The maximum extendable credit of the program.
-	MaximumExtendableCredit int64              `json:"maximum_extendable_credit,required"`
+	MaximumExtendableCredit int64              `json:"maximum_extendable_credit" api:"required"`
 	JSON                    programLendingJSON `json:"-"`
 }
 

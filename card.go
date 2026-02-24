@@ -138,38 +138,38 @@ func (r *CardService) UpdatePin(ctx context.Context, cardID string, body CardUpd
 // the Account upon transaction settlement.
 type Card struct {
 	// The card identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the account this card belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Card's billing address.
-	BillingAddress CardBillingAddress `json:"billing_address,required"`
+	BillingAddress CardBillingAddress `json:"billing_address" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The card's description for display purposes.
-	Description string `json:"description,required,nullable"`
+	Description string `json:"description" api:"required,nullable"`
 	// The contact information used in the two-factor steps for digital wallet card
 	// creation. At least one field must be present to complete the digital wallet
 	// steps.
-	DigitalWallet CardDigitalWallet `json:"digital_wallet,required,nullable"`
+	DigitalWallet CardDigitalWallet `json:"digital_wallet" api:"required,nullable"`
 	// The identifier for the entity associated with this card.
-	EntityID string `json:"entity_id,required,nullable"`
+	EntityID string `json:"entity_id" api:"required,nullable"`
 	// The month the card expires in M format (e.g., August is 8).
-	ExpirationMonth int64 `json:"expiration_month,required"`
+	ExpirationMonth int64 `json:"expiration_month" api:"required"`
 	// The year the card expires in YYYY format (e.g., 2025).
-	ExpirationYear int64 `json:"expiration_year,required"`
+	ExpirationYear int64 `json:"expiration_year" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The last 4 digits of the Card's Primary Account Number.
-	Last4 string `json:"last4,required"`
+	Last4 string `json:"last4" api:"required"`
 	// This indicates if payments can be made with the card.
-	Status CardStatus `json:"status,required"`
+	Status CardStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card`.
-	Type        CardType               `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        CardType               `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        cardJSON               `json:"-"`
 }
 
@@ -203,15 +203,15 @@ func (r cardJSON) RawJSON() string {
 // The Card's billing address.
 type CardBillingAddress struct {
 	// The city of the billing address.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The first line of the billing address.
-	Line1 string `json:"line1,required,nullable"`
+	Line1 string `json:"line1" api:"required,nullable"`
 	// The second line of the billing address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The postal code of the billing address.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The US state of the billing address.
-	State string                 `json:"state,required,nullable"`
+	State string                 `json:"state" api:"required,nullable"`
 	JSON  cardBillingAddressJSON `json:"-"`
 }
 
@@ -241,13 +241,13 @@ func (r cardBillingAddressJSON) RawJSON() string {
 type CardDigitalWallet struct {
 	// The digital card profile assigned to this digital card. Card profiles may also
 	// be assigned at the program level.
-	DigitalCardProfileID string `json:"digital_card_profile_id,required,nullable"`
+	DigitalCardProfileID string `json:"digital_card_profile_id" api:"required,nullable"`
 	// An email address that can be used to verify the cardholder via one-time passcode
 	// over email.
-	Email string `json:"email,required,nullable"`
+	Email string `json:"email" api:"required,nullable"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS.
-	Phone string                `json:"phone,required,nullable"`
+	Phone string                `json:"phone" api:"required,nullable"`
 	JSON  cardDigitalWalletJSON `json:"-"`
 }
 
@@ -309,22 +309,22 @@ func (r CardType) IsKnown() bool {
 // information to your users.
 type CardDetails struct {
 	// The identifier for the Card for which sensitive details have been returned.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The month the card expires in M format (e.g., August is 8).
-	ExpirationMonth int64 `json:"expiration_month,required"`
+	ExpirationMonth int64 `json:"expiration_month" api:"required"`
 	// The year the card expires in YYYY format (e.g., 2025).
-	ExpirationYear int64 `json:"expiration_year,required"`
+	ExpirationYear int64 `json:"expiration_year" api:"required"`
 	// The 4-digit PIN for the card, for use with ATMs.
-	Pin string `json:"pin,required"`
+	Pin string `json:"pin" api:"required"`
 	// The card number.
-	PrimaryAccountNumber string `json:"primary_account_number,required"`
+	PrimaryAccountNumber string `json:"primary_account_number" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_details`.
-	Type CardDetailsType `json:"type,required"`
+	Type CardDetailsType `json:"type" api:"required"`
 	// The three-digit verification code for the card. It's also known as the Card
 	// Verification Code (CVC), the Card Verification Value (CVV), or the Card
 	// Identification (CID).
-	VerificationCode string          `json:"verification_code,required"`
+	VerificationCode string          `json:"verification_code" api:"required"`
 	JSON             cardDetailsJSON `json:"-"`
 }
 
@@ -368,12 +368,12 @@ func (r CardDetailsType) IsKnown() bool {
 // An object containing the iframe URL for a Card.
 type CardIframeURL struct {
 	// The time the iframe URL will expire.
-	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
 	// The iframe URL for the Card. Treat this as an opaque URL.
-	IframeURL string `json:"iframe_url,required"`
+	IframeURL string `json:"iframe_url" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_iframe_url`.
-	Type CardIframeURLType `json:"type,required"`
+	Type CardIframeURLType `json:"type" api:"required"`
 	JSON cardIframeURLJSON `json:"-"`
 }
 
@@ -412,7 +412,7 @@ func (r CardIframeURLType) IsKnown() bool {
 
 type CardNewParams struct {
 	// The Account the card should belong to.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The card's billing address.
 	BillingAddress param.Field[CardNewParamsBillingAddress] `json:"billing_address"`
 	// The description you choose to give the card.
@@ -435,13 +435,13 @@ func (r CardNewParams) MarshalJSON() (data []byte, err error) {
 // The card's billing address.
 type CardNewParamsBillingAddress struct {
 	// The city of the billing address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the billing address.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The postal code of the billing address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state of the billing address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The second line of the billing address.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -493,13 +493,13 @@ func (r CardUpdateParams) MarshalJSON() (data []byte, err error) {
 // The card's updated billing address.
 type CardUpdateParamsBillingAddress struct {
 	// The city of the billing address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the billing address.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The postal code of the billing address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state of the billing address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The second line of the billing address.
 	Line2 param.Field[string] `json:"line2"`
 }
@@ -634,7 +634,7 @@ func (r CardNewDetailsIframeParams) MarshalJSON() (data []byte, err error) {
 
 type CardUpdatePinParams struct {
 	// The 4-digit PIN for the card, for use with ATMs.
-	Pin param.Field[string] `json:"pin,required"`
+	Pin param.Field[string] `json:"pin" api:"required"`
 }
 
 func (r CardUpdatePinParams) MarshalJSON() (data []byte, err error) {

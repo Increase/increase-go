@@ -106,19 +106,19 @@ func (r *EventService) Unwrap(payload []byte, headers http.Header, opts ...optio
 // [webhooks guide](https://increase.com/documentation/webhooks).
 type Event struct {
 	// The Event identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the object that generated this Event.
-	AssociatedObjectID string `json:"associated_object_id,required"`
+	AssociatedObjectID string `json:"associated_object_id" api:"required"`
 	// The type of the object that generated this Event.
-	AssociatedObjectType string `json:"associated_object_type,required"`
+	AssociatedObjectType string `json:"associated_object_type" api:"required"`
 	// The category of the Event. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category EventCategory `json:"category,required"`
+	Category EventCategory `json:"category" api:"required"`
 	// The time the Event was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
-	Type EventType `json:"type,required"`
+	Type EventType `json:"type" api:"required"`
 	JSON eventJSON `json:"-"`
 }
 
@@ -288,19 +288,19 @@ func (r EventType) IsKnown() bool {
 // [webhooks guide](https://increase.com/documentation/webhooks).
 type UnwrapWebhookEvent struct {
 	// The Event identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the object that generated this Event.
-	AssociatedObjectID string `json:"associated_object_id,required"`
+	AssociatedObjectID string `json:"associated_object_id" api:"required"`
 	// The type of the object that generated this Event.
-	AssociatedObjectType string `json:"associated_object_type,required"`
+	AssociatedObjectType string `json:"associated_object_type" api:"required"`
 	// The category of the Event. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category UnwrapWebhookEventCategory `json:"category,required"`
+	Category UnwrapWebhookEventCategory `json:"category" api:"required"`
 	// The time the Event was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event`.
-	Type UnwrapWebhookEventType `json:"type,required"`
+	Type UnwrapWebhookEventType `json:"type" api:"required"`
 	JSON unwrapWebhookEventJSON `json:"-"`
 }
 

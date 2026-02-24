@@ -60,11 +60,11 @@ func (r SimulationCardTokenNewParams) MarshalJSON() (data []byte, err error) {
 
 type SimulationCardTokenNewParamsCapability struct {
 	// The cross-border push transfers capability.
-	CrossBorderPushTransfers param.Field[SimulationCardTokenNewParamsCapabilitiesCrossBorderPushTransfers] `json:"cross_border_push_transfers,required"`
+	CrossBorderPushTransfers param.Field[SimulationCardTokenNewParamsCapabilitiesCrossBorderPushTransfers] `json:"cross_border_push_transfers" api:"required"`
 	// The domestic push transfers capability.
-	DomesticPushTransfers param.Field[SimulationCardTokenNewParamsCapabilitiesDomesticPushTransfers] `json:"domestic_push_transfers,required"`
+	DomesticPushTransfers param.Field[SimulationCardTokenNewParamsCapabilitiesDomesticPushTransfers] `json:"domestic_push_transfers" api:"required"`
 	// The route of the capability.
-	Route param.Field[SimulationCardTokenNewParamsCapabilitiesRoute] `json:"route,required"`
+	Route param.Field[SimulationCardTokenNewParamsCapabilitiesRoute] `json:"route" api:"required"`
 }
 
 func (r SimulationCardTokenNewParamsCapability) MarshalJSON() (data []byte, err error) {

@@ -87,22 +87,22 @@ func (r *BookkeepingEntrySetService) ListAutoPaging(ctx context.Context, query B
 // [guide to Bookkeeping](https://increase.com/documentation/bookkeeping#bookkeeping).
 type BookkeepingEntrySet struct {
 	// The entry set identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// When the entry set was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The timestamp of the entry set.
-	Date time.Time `json:"date,required" format:"date-time"`
+	Date time.Time `json:"date" api:"required" format:"date-time"`
 	// The entries.
-	Entries []BookkeepingEntrySetEntry `json:"entries,required"`
+	Entries []BookkeepingEntrySetEntry `json:"entries" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The transaction identifier, if any.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry_set`.
-	Type BookkeepingEntrySetType `json:"type,required"`
+	Type BookkeepingEntrySetType `json:"type" api:"required"`
 	JSON bookkeepingEntrySetJSON `json:"-"`
 }
 
@@ -130,11 +130,11 @@ func (r bookkeepingEntrySetJSON) RawJSON() string {
 
 type BookkeepingEntrySetEntry struct {
 	// The entry identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The bookkeeping account impacted by the entry.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The amount of the entry in minor units.
-	Amount int64                        `json:"amount,required"`
+	Amount int64                        `json:"amount" api:"required"`
 	JSON   bookkeepingEntrySetEntryJSON `json:"-"`
 }
 
@@ -174,7 +174,7 @@ func (r BookkeepingEntrySetType) IsKnown() bool {
 
 type BookkeepingEntrySetNewParams struct {
 	// The bookkeeping entries.
-	Entries param.Field[[]BookkeepingEntrySetNewParamsEntry] `json:"entries,required"`
+	Entries param.Field[[]BookkeepingEntrySetNewParamsEntry] `json:"entries" api:"required"`
 	// The date of the transaction. Optional if `transaction_id` is provided, in which
 	// case we use the `date` of that transaction. Required otherwise.
 	Date param.Field[time.Time] `json:"date" format:"date-time"`
@@ -188,11 +188,11 @@ func (r BookkeepingEntrySetNewParams) MarshalJSON() (data []byte, err error) {
 
 type BookkeepingEntrySetNewParamsEntry struct {
 	// The identifier for the Bookkeeping Account impacted by this entry.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The entry amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents. Debit entries have positive amounts; credit entries have
 	// negative amounts.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 }
 
 func (r BookkeepingEntrySetNewParamsEntry) MarshalJSON() (data []byte, err error) {

@@ -110,40 +110,40 @@ func (r *PhysicalCardProfileService) Clone(ctx context.Context, physicalCardProf
 // [physical card artwork](https://increase.com/documentation/card-art-physical-cards).
 type PhysicalCardProfile struct {
 	// The Card Profile identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the File containing the physical card's back image. This will
 	// be missing until the image has been post-processed.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The identifier of the File containing the physical card's carrier image. This
 	// will be missing until the image has been post-processed.
-	CarrierImageFileID string `json:"carrier_image_file_id,required,nullable"`
+	CarrierImageFileID string `json:"carrier_image_file_id" api:"required,nullable"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone string `json:"contact_phone,required,nullable"`
+	ContactPhone string `json:"contact_phone" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Physical Card Profile was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The creator of this Physical Card Profile.
-	Creator PhysicalCardProfileCreator `json:"creator,required"`
+	Creator PhysicalCardProfileCreator `json:"creator" api:"required"`
 	// A description you can use to identify the Physical Card Profile.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The identifier of the File containing the physical card's front image. This will
 	// be missing until the image has been post-processed.
-	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// Whether this Physical Card Profile is the default for all cards in its Increase
 	// group.
-	IsDefault bool `json:"is_default,required"`
+	IsDefault bool `json:"is_default" api:"required"`
 	// The identifier for the Program this Physical Card Profile belongs to.
-	ProgramID string `json:"program_id,required"`
+	ProgramID string `json:"program_id" api:"required"`
 	// The status of the Physical Card Profile.
-	Status PhysicalCardProfileStatus `json:"status,required"`
+	Status PhysicalCardProfileStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card_profile`.
-	Type        PhysicalCardProfileType `json:"type,required"`
-	ExtraFields map[string]interface{}  `json:"-,extras"`
+	Type        PhysicalCardProfileType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}  `json:"-" api:"extrafields"`
 	JSON        physicalCardProfileJSON `json:"-"`
 }
 
@@ -229,15 +229,15 @@ func (r PhysicalCardProfileType) IsKnown() bool {
 
 type PhysicalCardProfileNewParams struct {
 	// The identifier of the File containing the physical card's carrier image.
-	CarrierImageFileID param.Field[string] `json:"carrier_image_file_id,required"`
+	CarrierImageFileID param.Field[string] `json:"carrier_image_file_id" api:"required"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone param.Field[string] `json:"contact_phone,required"`
+	ContactPhone param.Field[string] `json:"contact_phone" api:"required"`
 	// A description you can use to identify the Card Profile.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier of the File containing the physical card's front image.
-	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
+	FrontImageFileID param.Field[string] `json:"front_image_file_id" api:"required"`
 	// The identifier for the Program that this Physical Card Profile falls under.
-	ProgramID param.Field[string] `json:"program_id,required"`
+	ProgramID param.Field[string] `json:"program_id" api:"required"`
 	// Text printed on the front of the card. Reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
 	FrontText param.Field[PhysicalCardProfileNewParamsFrontText] `json:"front_text"`
@@ -251,7 +251,7 @@ func (r PhysicalCardProfileNewParams) MarshalJSON() (data []byte, err error) {
 // [support@increase.com](mailto:support@increase.com) for more information.
 type PhysicalCardProfileNewParamsFrontText struct {
 	// The first line of text on the front of the card.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of text on the front of the card. Providing a second line moves
 	// the first line slightly higher and prints the second line in the spot where the
 	// first line would have otherwise been printed.
@@ -344,7 +344,7 @@ func (r PhysicalCardProfileCloneParams) MarshalJSON() (data []byte, err error) {
 // [support@increase.com](mailto:support@increase.com) for more information.
 type PhysicalCardProfileCloneParamsFrontText struct {
 	// The first line of text on the front of the card.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of text on the front of the card. Providing a second line moves
 	// the first line slightly higher and prints the second line in the spot where the
 	// first line would have otherwise been printed.

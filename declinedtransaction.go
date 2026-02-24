@@ -78,36 +78,36 @@ func (r *DeclinedTransactionService) ListAutoPaging(ctx context.Context, query D
 // insufficient balance or your Limits are triggered.
 type DeclinedTransaction struct {
 	// The Declined Transaction identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Account the Declined Transaction belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Declined Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
 	// Transaction occurred.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Declined
 	// Transaction's currency. This will match the currency on the Declined
 	// Transaction's Account.
-	Currency DeclinedTransactionCurrency `json:"currency,required"`
+	Currency DeclinedTransactionCurrency `json:"currency" api:"required"`
 	// This is the description the vendor provides.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The identifier for the route this Declined Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID string `json:"route_id,required,nullable"`
+	RouteID string `json:"route_id" api:"required,nullable"`
 	// The type of the route this Declined Transaction came through.
-	RouteType DeclinedTransactionRouteType `json:"route_type,required,nullable"`
+	RouteType DeclinedTransactionRouteType `json:"route_type" api:"required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Declined Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location. Note that for backwards compatibility reasons,
 	// additional undocumented keys may appear in this object. These should be treated
 	// as deprecated and will be removed in the future.
-	Source DeclinedTransactionSource `json:"source,required"`
+	Source DeclinedTransactionSource `json:"source" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `declined_transaction`.
-	Type        DeclinedTransactionType `json:"type,required"`
-	ExtraFields map[string]interface{}  `json:"-,extras"`
+	Type        DeclinedTransactionType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}  `json:"-" api:"extrafields"`
 	JSON        declinedTransactionJSON `json:"-"`
 }
 
@@ -178,34 +178,34 @@ func (r DeclinedTransactionRouteType) IsKnown() bool {
 type DeclinedTransactionSource struct {
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category DeclinedTransactionSourceCategory `json:"category,required"`
+	Category DeclinedTransactionSourceCategory `json:"category" api:"required"`
 	// An ACH Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `ach_decline`.
-	ACHDecline DeclinedTransactionSourceACHDecline `json:"ach_decline,nullable"`
+	ACHDecline DeclinedTransactionSourceACHDecline `json:"ach_decline" api:"nullable"`
 	// A Card Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `card_decline`.
-	CardDecline DeclinedTransactionSourceCardDecline `json:"card_decline,nullable"`
+	CardDecline DeclinedTransactionSourceCardDecline `json:"card_decline" api:"nullable"`
 	// A Check Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `check_decline`.
-	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline,nullable"`
+	CheckDecline DeclinedTransactionSourceCheckDecline `json:"check_decline" api:"nullable"`
 	// A Check Deposit Rejection object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_rejection`.
-	CheckDepositRejection DeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection,nullable"`
+	CheckDepositRejection DeclinedTransactionSourceCheckDepositRejection `json:"check_deposit_rejection" api:"nullable"`
 	// An Inbound FedNow Transfer Decline object. This field will be present in the
 	// JSON response if and only if `category` is equal to
 	// `inbound_fednow_transfer_decline`.
-	InboundFednowTransferDecline DeclinedTransactionSourceInboundFednowTransferDecline `json:"inbound_fednow_transfer_decline,nullable"`
+	InboundFednowTransferDecline DeclinedTransactionSourceInboundFednowTransferDecline `json:"inbound_fednow_transfer_decline" api:"nullable"`
 	// An Inbound Real-Time Payments Transfer Decline object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `inbound_real_time_payments_transfer_decline`.
-	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline,nullable"`
+	InboundRealTimePaymentsTransferDecline DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline `json:"inbound_real_time_payments_transfer_decline" api:"nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other DeclinedTransactionSourceOther `json:"other,nullable"`
+	Other DeclinedTransactionSourceOther `json:"other" api:"nullable"`
 	// A Wire Decline object. This field will be present in the JSON response if and
 	// only if `category` is equal to `wire_decline`.
-	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline,nullable"`
-	ExtraFields map[string]interface{}               `json:"-,extras"`
+	WireDecline DeclinedTransactionSourceWireDecline `json:"wire_decline" api:"nullable"`
+	ExtraFields map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON        declinedTransactionSourceJSON        `json:"-"`
 }
 
@@ -260,31 +260,31 @@ func (r DeclinedTransactionSourceCategory) IsKnown() bool {
 // only if `category` is equal to `ach_decline`.
 type DeclinedTransactionSourceACHDecline struct {
 	// The ACH Decline's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The declined amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Inbound ACH Transfer object associated with this decline.
-	InboundACHTransferID string `json:"inbound_ach_transfer_id,required"`
+	InboundACHTransferID string `json:"inbound_ach_transfer_id" api:"required"`
 	// The descriptive date of the transfer.
-	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
+	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date" api:"required,nullable"`
 	// The additional information included with the transfer.
-	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
+	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data" api:"required,nullable"`
 	// The identifier of the company that initiated the transfer.
-	OriginatorCompanyID string `json:"originator_company_id,required"`
+	OriginatorCompanyID string `json:"originator_company_id" api:"required"`
 	// The name of the company that initiated the transfer.
-	OriginatorCompanyName string `json:"originator_company_name,required"`
+	OriginatorCompanyName string `json:"originator_company_name" api:"required"`
 	// Why the ACH transfer was declined.
-	Reason DeclinedTransactionSourceACHDeclineReason `json:"reason,required"`
+	Reason DeclinedTransactionSourceACHDeclineReason `json:"reason" api:"required"`
 	// The id of the receiver of the transfer.
-	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
+	ReceiverIDNumber string `json:"receiver_id_number" api:"required,nullable"`
 	// The name of the receiver of the transfer.
-	ReceiverName string `json:"receiver_name,required,nullable"`
+	ReceiverName string `json:"receiver_name" api:"required,nullable"`
 	// The trace number of the transfer.
-	TraceNumber string `json:"trace_number,required"`
+	TraceNumber string `json:"trace_number" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_decline`.
-	Type        DeclinedTransactionSourceACHDeclineType `json:"type,required"`
-	ExtraFields map[string]interface{}                  `json:"-,extras"`
+	Type        DeclinedTransactionSourceACHDeclineType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}                  `json:"-" api:"extrafields"`
 	JSON        declinedTransactionSourceACHDeclineJSON `json:"-"`
 }
 
@@ -366,83 +366,83 @@ func (r DeclinedTransactionSourceACHDeclineType) IsKnown() bool {
 // only if `category` is equal to `card_decline`.
 type DeclinedTransactionSourceCardDecline struct {
 	// The Card Decline identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner DeclinedTransactionSourceCardDeclineActioner `json:"actioner,required"`
+	Actioner DeclinedTransactionSourceCardDeclineActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts DeclinedTransactionSourceCardDeclineAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts DeclinedTransactionSourceCardDeclineAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency,required"`
+	Currency DeclinedTransactionSourceCardDeclineCurrency `json:"currency" api:"required"`
 	// The identifier of the declined transaction created for this Card Decline.
-	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction DeclinedTransactionSourceCardDeclineDirection `json:"direction,required"`
+	Direction DeclinedTransactionSourceCardDeclineDirection `json:"direction" api:"required"`
 	// The identifier of the card authorization this request attempted to incrementally
 	// authorize.
-	IncrementedCardAuthorizationID string `json:"incremented_card_authorization_id,required,nullable"`
+	IncrementedCardAuthorizationID string `json:"incremented_card_authorization_id" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails DeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details,required"`
+	NetworkDetails DeclinedTransactionSourceCardDeclineNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers DeclinedTransactionSourceCardDeclineNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers DeclinedTransactionSourceCardDeclineNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The declined amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory DeclinedTransactionSourceCardDeclineProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory DeclinedTransactionSourceCardDeclineProcessingCategory `json:"processing_category" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// This is present if a specific decline reason was given in the real-time
 	// decision.
-	RealTimeDecisionReason DeclinedTransactionSourceCardDeclineRealTimeDecisionReason `json:"real_time_decision_reason,required,nullable"`
+	RealTimeDecisionReason DeclinedTransactionSourceCardDeclineRealTimeDecisionReason `json:"real_time_decision_reason" api:"required,nullable"`
 	// Why the transaction was declined.
-	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason,required"`
+	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason" api:"required"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// Fields related to verification of cardholder-provided values.
-	Verification DeclinedTransactionSourceCardDeclineVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                           `json:"-,extras"`
+	Verification DeclinedTransactionSourceCardDeclineVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                           `json:"-" api:"extrafields"`
 	JSON         declinedTransactionSourceCardDeclineJSON         `json:"-"`
 }
 
@@ -513,25 +513,25 @@ func (r DeclinedTransactionSourceCardDeclineActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type DeclinedTransactionSourceCardDeclineAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic DeclinedTransactionSourceCardDeclineAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic DeclinedTransactionSourceCardDeclineAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental DeclinedTransactionSourceCardDeclineAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental DeclinedTransactionSourceCardDeclineAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription DeclinedTransactionSourceCardDeclineAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription DeclinedTransactionSourceCardDeclineAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge DeclinedTransactionSourceCardDeclineAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge DeclinedTransactionSourceCardDeclineAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative DeclinedTransactionSourceCardDeclineAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative DeclinedTransactionSourceCardDeclineAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare DeclinedTransactionSourceCardDeclineAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare DeclinedTransactionSourceCardDeclineAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit DeclinedTransactionSourceCardDeclineAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit DeclinedTransactionSourceCardDeclineAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown DeclinedTransactionSourceCardDeclineAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown DeclinedTransactionSourceCardDeclineAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision DeclinedTransactionSourceCardDeclineAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision DeclinedTransactionSourceCardDeclineAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   declinedTransactionSourceCardDeclineAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -565,10 +565,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -595,10 +595,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -625,10 +625,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                            `json:"currency,required"`
+	Currency string                                                            `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -655,10 +655,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsPrescription struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -685,10 +685,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsSurcharge struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                             `json:"currency,required"`
+	Currency string                                                             `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -715,10 +715,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsTotalCumulative struct
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                   `json:"currency,required"`
+	Currency string                                                                   `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -745,10 +745,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsTotalHealthcare struct
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                   `json:"currency,required"`
+	Currency string                                                                   `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -775,10 +775,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -805,10 +805,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                           `json:"currency,required"`
+	Currency string                                                           `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -835,10 +835,10 @@ type DeclinedTransactionSourceCardDeclineAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                          `json:"currency,required"`
+	Currency string                                                          `json:"currency" api:"required"`
 	JSON     declinedTransactionSourceCardDeclineAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -896,11 +896,11 @@ func (r DeclinedTransactionSourceCardDeclineDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type DeclinedTransactionSourceCardDeclineNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category DeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category,required"`
+	Category DeclinedTransactionSourceCardDeclineNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse DeclinedTransactionSourceCardDeclineNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse DeclinedTransactionSourceCardDeclineNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa DeclinedTransactionSourceCardDeclineNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON declinedTransactionSourceCardDeclineNetworkDetailsJSON `json:"-"`
 }
 
@@ -964,19 +964,19 @@ type DeclinedTransactionSourceCardDeclineNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator DeclinedTransactionSourceCardDeclineNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode DeclinedTransactionSourceCardDeclineNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason DeclinedTransactionSourceCardDeclineNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability DeclinedTransactionSourceCardDeclineNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability DeclinedTransactionSourceCardDeclineNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    declinedTransactionSourceCardDeclineNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1100,17 +1100,17 @@ func (r DeclinedTransactionSourceCardDeclineNetworkDetailsVisaTerminalEntryCapab
 type DeclinedTransactionSourceCardDeclineNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                     `json:"transaction_id,required,nullable"`
+	TransactionID string                                                     `json:"transaction_id" api:"required,nullable"`
 	JSON          declinedTransactionSourceCardDeclineNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -1217,12 +1217,12 @@ func (r DeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
 type DeclinedTransactionSourceCardDeclineVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress DeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress DeclinedTransactionSourceCardDeclineVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName DeclinedTransactionSourceCardDeclineVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName DeclinedTransactionSourceCardDeclineVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           declinedTransactionSourceCardDeclineVerificationJSON           `json:"-"`
 }
 
@@ -1248,7 +1248,7 @@ func (r declinedTransactionSourceCardDeclineVerificationJSON) RawJSON() string {
 // the back of the card.
 type DeclinedTransactionSourceCardDeclineVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result,required"`
+	Result DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   declinedTransactionSourceCardDeclineVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -1290,16 +1290,16 @@ func (r DeclinedTransactionSourceCardDeclineVerificationCardVerificationCodeResu
 // we verified it against.
 type DeclinedTransactionSourceCardDeclineVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result,required"`
+	Result DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   declinedTransactionSourceCardDeclineVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -1347,11 +1347,11 @@ func (r DeclinedTransactionSourceCardDeclineVerificationCardholderAddressResult)
 // Cardholder name provided in the authorization request.
 type DeclinedTransactionSourceCardDeclineVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                             `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                             `json:"provided_middle_name" api:"required,nullable"`
 	JSON               declinedTransactionSourceCardDeclineVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -1378,24 +1378,24 @@ func (r declinedTransactionSourceCardDeclineVerificationCardholderNameJSON) RawJ
 // only if `category` is equal to `check_decline`.
 type DeclinedTransactionSourceCheckDecline struct {
 	// The declined amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// A computer-readable number printed on the MICR line of business checks, usually
 	// the check number. This is useful for positive pay checks, but can be unreliably
 	// transmitted by the bank of first deposit.
-	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	AuxiliaryOnUs string `json:"auxiliary_on_us" api:"required,nullable"`
 	// The identifier of the API File object containing an image of the back of the
 	// declined check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The identifier of the Check Transfer object associated with this decline.
-	CheckTransferID string `json:"check_transfer_id,required,nullable"`
+	CheckTransferID string `json:"check_transfer_id" api:"required,nullable"`
 	// The identifier of the API File object containing an image of the front of the
 	// declined check.
-	FrontImageFileID string `json:"front_image_file_id,required,nullable"`
+	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
 	// The identifier of the Inbound Check Deposit object associated with this decline.
-	InboundCheckDepositID string `json:"inbound_check_deposit_id,required,nullable"`
+	InboundCheckDepositID string `json:"inbound_check_deposit_id" api:"required,nullable"`
 	// Why the check was declined.
-	Reason      DeclinedTransactionSourceCheckDeclineReason `json:"reason,required"`
-	ExtraFields map[string]interface{}                      `json:"-,extras"`
+	Reason      DeclinedTransactionSourceCheckDeclineReason `json:"reason" api:"required"`
+	ExtraFields map[string]interface{}                      `json:"-" api:"extrafields"`
 	JSON        declinedTransactionSourceCheckDeclineJSON   `json:"-"`
 }
 
@@ -1458,20 +1458,20 @@ func (r DeclinedTransactionSourceCheckDeclineReason) IsKnown() bool {
 type DeclinedTransactionSourceCheckDepositRejection struct {
 	// The rejected amount in the minor unit of check's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Check Deposit that was rejected.
-	CheckDepositID string `json:"check_deposit_id,required"`
+	CheckDepositID string `json:"check_deposit_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency DeclinedTransactionSourceCheckDepositRejectionCurrency `json:"currency,required"`
+	Currency DeclinedTransactionSourceCheckDepositRejectionCurrency `json:"currency" api:"required"`
 	// The identifier of the associated declined transaction.
-	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required"`
 	// Why the check deposit was rejected.
-	Reason DeclinedTransactionSourceCheckDepositRejectionReason `json:"reason,required"`
+	Reason DeclinedTransactionSourceCheckDepositRejectionReason `json:"reason" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt  time.Time                                          `json:"rejected_at,required" format:"date-time"`
-	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	RejectedAt  time.Time                                          `json:"rejected_at" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}                             `json:"-" api:"extrafields"`
 	JSON        declinedTransactionSourceCheckDepositRejectionJSON `json:"-"`
 }
 
@@ -1543,10 +1543,10 @@ func (r DeclinedTransactionSourceCheckDepositRejectionReason) IsKnown() bool {
 // `inbound_fednow_transfer_decline`.
 type DeclinedTransactionSourceInboundFednowTransferDecline struct {
 	// Why the transfer was declined.
-	Reason DeclinedTransactionSourceInboundFednowTransferDeclineReason `json:"reason,required"`
+	Reason DeclinedTransactionSourceInboundFednowTransferDeclineReason `json:"reason" api:"required"`
 	// The identifier of the FedNow Transfer that led to this declined transaction.
-	TransferID  string                                                    `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                    `json:"-,extras"`
+	TransferID  string                                                    `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                    `json:"-" api:"extrafields"`
 	JSON        declinedTransactionSourceInboundFednowTransferDeclineJSON `json:"-"`
 }
 
@@ -1593,27 +1593,27 @@ func (r DeclinedTransactionSourceInboundFednowTransferDeclineReason) IsKnown() b
 type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the declined
 	// transfer's currency. This will always be "USD" for a Real-Time Payments
 	// transfer.
-	Currency DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency,required"`
+	Currency DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineCurrency `json:"currency" api:"required"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	DebtorAccountNumber string `json:"debtor_account_number" api:"required"`
 	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
+	DebtorName string `json:"debtor_name" api:"required"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// Why the transfer was declined.
-	Reason DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
+	Reason DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason" api:"required"`
 	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information,required,nullable"`
+	RemittanceInformation string `json:"remittance_information" api:"required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
+	TransactionIdentification string `json:"transaction_identification" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string                                                              `json:"transfer_id,required"`
+	TransferID string                                                              `json:"transfer_id" api:"required"`
 	JSON       declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
@@ -1705,10 +1705,10 @@ func (r declinedTransactionSourceOtherJSON) RawJSON() string {
 // only if `category` is equal to `wire_decline`.
 type DeclinedTransactionSourceWireDecline struct {
 	// The identifier of the Inbound Wire Transfer that was declined.
-	InboundWireTransferID string `json:"inbound_wire_transfer_id,required"`
+	InboundWireTransferID string `json:"inbound_wire_transfer_id" api:"required"`
 	// Why the wire transfer was declined.
-	Reason      DeclinedTransactionSourceWireDeclineReason `json:"reason,required"`
-	ExtraFields map[string]interface{}                     `json:"-,extras"`
+	Reason      DeclinedTransactionSourceWireDeclineReason `json:"reason" api:"required"`
+	ExtraFields map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON        declinedTransactionSourceWireDeclineJSON   `json:"-"`
 }
 

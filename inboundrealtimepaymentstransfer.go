@@ -77,40 +77,40 @@ func (r *InboundRealTimePaymentsTransferService) ListAutoPaging(ctx context.Cont
 // initiated outside of Increase to your account.
 type InboundRealTimePaymentsTransfer struct {
 	// The inbound Real-Time Payments transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account to which the transfer was sent.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier of the Account Number to which this transfer was sent.
-	AccountNumberID string `json:"account_number_id,required"`
+	AccountNumberID string `json:"account_number_id" api:"required"`
 	// The amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your transfer is confirmed, this will contain details of the confirmation.
-	Confirmation InboundRealTimePaymentsTransferConfirmation `json:"confirmation,required,nullable"`
+	Confirmation InboundRealTimePaymentsTransferConfirmation `json:"confirmation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a Real-Time Payments transfer.
-	Currency InboundRealTimePaymentsTransferCurrency `json:"currency,required"`
+	Currency InboundRealTimePaymentsTransferCurrency `json:"currency" api:"required"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	DebtorAccountNumber string `json:"debtor_account_number" api:"required"`
 	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
+	DebtorName string `json:"debtor_name" api:"required"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// If your transfer is declined, this will contain details of the decline.
-	Decline InboundRealTimePaymentsTransferDecline `json:"decline,required,nullable"`
+	Decline InboundRealTimePaymentsTransferDecline `json:"decline" api:"required,nullable"`
 	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information,required,nullable"`
+	RemittanceInformation string `json:"remittance_information" api:"required,nullable"`
 	// The lifecycle status of the transfer.
-	Status InboundRealTimePaymentsTransferStatus `json:"status,required"`
+	Status InboundRealTimePaymentsTransferStatus `json:"status" api:"required"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string `json:"transaction_identification,required"`
+	TransactionIdentification string `json:"transaction_identification" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_real_time_payments_transfer`.
-	Type InboundRealTimePaymentsTransferType `json:"type,required"`
+	Type InboundRealTimePaymentsTransferType `json:"type" api:"required"`
 	JSON inboundRealTimePaymentsTransferJSON `json:"-"`
 }
 
@@ -148,9 +148,9 @@ func (r inboundRealTimePaymentsTransferJSON) RawJSON() string {
 // If your transfer is confirmed, this will contain details of the confirmation.
 type InboundRealTimePaymentsTransferConfirmation struct {
 	// The time at which the transfer was confirmed.
-	ConfirmedAt time.Time `json:"confirmed_at,required" format:"date-time"`
+	ConfirmedAt time.Time `json:"confirmed_at" api:"required" format:"date-time"`
 	// The id of the transaction for the confirmed transfer.
-	TransactionID string                                          `json:"transaction_id,required"`
+	TransactionID string                                          `json:"transaction_id" api:"required"`
 	JSON          inboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
@@ -190,11 +190,11 @@ func (r InboundRealTimePaymentsTransferCurrency) IsKnown() bool {
 // If your transfer is declined, this will contain details of the decline.
 type InboundRealTimePaymentsTransferDecline struct {
 	// The time at which the transfer was declined.
-	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
+	DeclinedAt time.Time `json:"declined_at" api:"required" format:"date-time"`
 	// The id of the transaction for the declined transfer.
-	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required"`
 	// The reason for the transfer decline.
-	Reason InboundRealTimePaymentsTransferDeclineReason `json:"reason,required"`
+	Reason InboundRealTimePaymentsTransferDeclineReason `json:"reason" api:"required"`
 	JSON   inboundRealTimePaymentsTransferDeclineJSON   `json:"-"`
 }
 

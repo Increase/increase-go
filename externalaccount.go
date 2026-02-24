@@ -97,30 +97,30 @@ func (r *ExternalAccountService) ListAutoPaging(ctx context.Context, query Exter
 // Increase. You can use this API to store their details for reuse.
 type ExternalAccount struct {
 	// The External Account's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The type of entity that owns the External Account.
-	AccountHolder ExternalAccountAccountHolder `json:"account_holder,required"`
+	AccountHolder ExternalAccountAccountHolder `json:"account_holder" api:"required"`
 	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the External Account was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The External Account's description for display purposes.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The type of the account to which the transfer will be sent.
-	Funding ExternalAccountFunding `json:"funding,required"`
+	Funding ExternalAccountFunding `json:"funding" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The External Account's status.
-	Status ExternalAccountStatus `json:"status,required"`
+	Status ExternalAccountStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `external_account`.
-	Type        ExternalAccountType    `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        ExternalAccountType    `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        externalAccountJSON    `json:"-"`
 }
 
@@ -217,12 +217,12 @@ func (r ExternalAccountType) IsKnown() bool {
 
 type ExternalAccountNewParams struct {
 	// The account number for the destination account.
-	AccountNumber param.Field[string] `json:"account_number,required"`
+	AccountNumber param.Field[string] `json:"account_number" api:"required"`
 	// The name you choose for the Account.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber param.Field[string] `json:"routing_number,required"`
+	RoutingNumber param.Field[string] `json:"routing_number" api:"required"`
 	// The type of entity that owns the External Account.
 	AccountHolder param.Field[ExternalAccountNewParamsAccountHolder] `json:"account_holder"`
 	// The type of the destination account. Defaults to `checking`.

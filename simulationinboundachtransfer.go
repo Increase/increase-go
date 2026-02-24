@@ -52,11 +52,11 @@ func (r *SimulationInboundACHTransferService) New(ctx context.Context, body Simu
 
 type SimulationInboundACHTransferNewParams struct {
 	// The identifier of the Account Number the inbound ACH Transfer is for.
-	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id" api:"required"`
 	// The transfer amount in cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// Additional information to include in the transfer.
 	Addenda param.Field[SimulationInboundACHTransferNewParamsAddenda] `json:"addenda"`
 	// The description of the date of the transfer.
@@ -87,7 +87,7 @@ func (r SimulationInboundACHTransferNewParams) MarshalJSON() (data []byte, err e
 // Additional information to include in the transfer.
 type SimulationInboundACHTransferNewParamsAddenda struct {
 	// The type of addenda to simulate being sent with the transfer.
-	Category param.Field[SimulationInboundACHTransferNewParamsAddendaCategory] `json:"category,required"`
+	Category param.Field[SimulationInboundACHTransferNewParamsAddendaCategory] `json:"category" api:"required"`
 	// Unstructured `payment_related_information` passed through with the transfer.
 	Freeform param.Field[SimulationInboundACHTransferNewParamsAddendaFreeform] `json:"freeform"`
 }
@@ -114,7 +114,7 @@ func (r SimulationInboundACHTransferNewParamsAddendaCategory) IsKnown() bool {
 // Unstructured `payment_related_information` passed through with the transfer.
 type SimulationInboundACHTransferNewParamsAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer.
-	Entries param.Field[[]SimulationInboundACHTransferNewParamsAddendaFreeformEntry] `json:"entries,required"`
+	Entries param.Field[[]SimulationInboundACHTransferNewParamsAddendaFreeformEntry] `json:"entries" api:"required"`
 }
 
 func (r SimulationInboundACHTransferNewParamsAddendaFreeform) MarshalJSON() (data []byte, err error) {
@@ -123,7 +123,7 @@ func (r SimulationInboundACHTransferNewParamsAddendaFreeform) MarshalJSON() (dat
 
 type SimulationInboundACHTransferNewParamsAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation param.Field[string] `json:"payment_related_information,required"`
+	PaymentRelatedInformation param.Field[string] `json:"payment_related_information" api:"required"`
 }
 
 func (r SimulationInboundACHTransferNewParamsAddendaFreeformEntry) MarshalJSON() (data []byte, err error) {

@@ -85,57 +85,57 @@ func (r *CardValidationService) ListAutoPaging(ctx context.Context, query CardVa
 // funds to or pulling funds from a card.
 type CardValidation struct {
 	// The Card Validation's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// If the validation is accepted by the recipient bank, this will contain
 	// supplemental details.
-	Acceptance CardValidationAcceptance `json:"acceptance,required,nullable"`
+	Acceptance CardValidationAcceptance `json:"acceptance" api:"required,nullable"`
 	// The identifier of the Account from which to send the validation.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The ID of the Card Token that was used to validate the card.
-	CardTokenID string `json:"card_token_id,required"`
+	CardTokenID string `json:"card_token_id" api:"required"`
 	// The cardholder's first name.
-	CardholderFirstName string `json:"cardholder_first_name,required,nullable"`
+	CardholderFirstName string `json:"cardholder_first_name" api:"required,nullable"`
 	// The cardholder's last name.
-	CardholderLastName string `json:"cardholder_last_name,required,nullable"`
+	CardholderLastName string `json:"cardholder_last_name" api:"required,nullable"`
 	// The cardholder's middle name.
-	CardholderMiddleName string `json:"cardholder_middle_name,required,nullable"`
+	CardholderMiddleName string `json:"cardholder_middle_name" api:"required,nullable"`
 	// The postal code of the cardholder's address.
-	CardholderPostalCode string `json:"cardholder_postal_code,required,nullable"`
+	CardholderPostalCode string `json:"cardholder_postal_code" api:"required,nullable"`
 	// The cardholder's street address.
-	CardholderStreetAddress string `json:"cardholder_street_address,required,nullable"`
+	CardholderStreetAddress string `json:"cardholder_street_address" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the validation was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the validation, either via the API or the dashboard.
-	CreatedBy CardValidationCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy CardValidationCreatedBy `json:"created_by" api:"required,nullable"`
 	// If the validation is rejected by the card network or the destination financial
 	// institution, this will contain supplemental details.
-	Decline CardValidationDecline `json:"decline,required,nullable"`
+	Decline CardValidationDecline `json:"decline" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// A four-digit code (MCC) identifying the type of business or service provided by
 	// the merchant.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city where the merchant (typically your business) is located.
-	MerchantCityName string `json:"merchant_city_name,required"`
+	MerchantCityName string `json:"merchant_city_name" api:"required"`
 	// The merchant name that will appear in the cardholder’s statement descriptor.
 	// Typically your business name.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// The postal code for the merchant’s (typically your business’s) location.
-	MerchantPostalCode string `json:"merchant_postal_code,required"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required"`
 	// The U.S. state where the merchant (typically your business) is located.
-	MerchantState string `json:"merchant_state,required"`
+	MerchantState string `json:"merchant_state" api:"required"`
 	// The lifecycle status of the validation.
-	Status CardValidationStatus `json:"status,required"`
+	Status CardValidationStatus `json:"status" api:"required"`
 	// After the validation is submitted to the card network, this will contain
 	// supplemental details.
-	Submission CardValidationSubmission `json:"submission,required,nullable"`
+	Submission CardValidationSubmission `json:"submission" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_validation`.
-	Type        CardValidationType     `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        CardValidationType     `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        cardValidationJSON     `json:"-"`
 }
 
@@ -179,25 +179,25 @@ func (r cardValidationJSON) RawJSON() string {
 type CardValidationAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the validation was accepted by the issuing bank.
-	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required" format:"date-time"`
 	// The authorization identification response from the issuing bank.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required"`
 	// The result of the Card Verification Value 2 match.
-	CardVerificationValue2Result CardValidationAcceptanceCardVerificationValue2Result `json:"card_verification_value2_result,required,nullable"`
+	CardVerificationValue2Result CardValidationAcceptanceCardVerificationValue2Result `json:"card_verification_value2_result" api:"required,nullable"`
 	// The result of the cardholder first name match.
-	CardholderFirstNameResult CardValidationAcceptanceCardholderFirstNameResult `json:"cardholder_first_name_result,required,nullable"`
+	CardholderFirstNameResult CardValidationAcceptanceCardholderFirstNameResult `json:"cardholder_first_name_result" api:"required,nullable"`
 	// The result of the cardholder full name match.
-	CardholderFullNameResult CardValidationAcceptanceCardholderFullNameResult `json:"cardholder_full_name_result,required,nullable"`
+	CardholderFullNameResult CardValidationAcceptanceCardholderFullNameResult `json:"cardholder_full_name_result" api:"required,nullable"`
 	// The result of the cardholder last name match.
-	CardholderLastNameResult CardValidationAcceptanceCardholderLastNameResult `json:"cardholder_last_name_result,required,nullable"`
+	CardholderLastNameResult CardValidationAcceptanceCardholderLastNameResult `json:"cardholder_last_name_result" api:"required,nullable"`
 	// The result of the cardholder middle name match.
-	CardholderMiddleNameResult CardValidationAcceptanceCardholderMiddleNameResult `json:"cardholder_middle_name_result,required,nullable"`
+	CardholderMiddleNameResult CardValidationAcceptanceCardholderMiddleNameResult `json:"cardholder_middle_name_result" api:"required,nullable"`
 	// The result of the cardholder postal code match.
-	CardholderPostalCodeResult CardValidationAcceptanceCardholderPostalCodeResult `json:"cardholder_postal_code_result,required,nullable"`
+	CardholderPostalCodeResult CardValidationAcceptanceCardholderPostalCodeResult `json:"cardholder_postal_code_result" api:"required,nullable"`
 	// The result of the cardholder street address match.
-	CardholderStreetAddressResult CardValidationAcceptanceCardholderStreetAddressResult `json:"cardholder_street_address_result,required,nullable"`
+	CardholderStreetAddressResult CardValidationAcceptanceCardholderStreetAddressResult `json:"cardholder_street_address_result" api:"required,nullable"`
 	// A unique identifier for the transaction on the card network.
-	NetworkTransactionIdentifier string                       `json:"network_transaction_identifier,required,nullable"`
+	NetworkTransactionIdentifier string                       `json:"network_transaction_identifier" api:"required,nullable"`
 	JSON                         cardValidationAcceptanceJSON `json:"-"`
 }
 
@@ -345,13 +345,13 @@ func (r CardValidationAcceptanceCardholderStreetAddressResult) IsKnown() bool {
 // What object created the validation, either via the API or the dashboard.
 type CardValidationCreatedBy struct {
 	// The type of object that created this transfer.
-	Category CardValidationCreatedByCategory `json:"category,required"`
+	Category CardValidationCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey CardValidationCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey CardValidationCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication CardValidationCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication CardValidationCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User CardValidationCreatedByUser `json:"user,nullable"`
+	User CardValidationCreatedByUser `json:"user" api:"nullable"`
 	JSON cardValidationCreatedByJSON `json:"-"`
 }
 
@@ -394,7 +394,7 @@ func (r CardValidationCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type CardValidationCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                            `json:"description,required,nullable"`
+	Description string                            `json:"description" api:"required,nullable"`
 	JSON        cardValidationCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -417,7 +417,7 @@ func (r cardValidationCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type CardValidationCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                      `json:"name,required"`
+	Name string                                      `json:"name" api:"required"`
 	JSON cardValidationCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -440,7 +440,7 @@ func (r cardValidationCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type CardValidationCreatedByUser struct {
 	// The email address of the User.
-	Email string                          `json:"email,required"`
+	Email string                          `json:"email" api:"required"`
 	JSON  cardValidationCreatedByUserJSON `json:"-"`
 }
 
@@ -465,11 +465,11 @@ func (r cardValidationCreatedByUserJSON) RawJSON() string {
 type CardValidationDecline struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the validation was declined.
-	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
+	DeclinedAt time.Time `json:"declined_at" api:"required" format:"date-time"`
 	// A unique identifier for the transaction on the card network.
-	NetworkTransactionIdentifier string `json:"network_transaction_identifier,required,nullable"`
+	NetworkTransactionIdentifier string `json:"network_transaction_identifier" api:"required,nullable"`
 	// The reason why the validation was declined.
-	Reason CardValidationDeclineReason `json:"reason,required"`
+	Reason CardValidationDeclineReason `json:"reason" api:"required"`
 	JSON   cardValidationDeclineJSON   `json:"-"`
 }
 
@@ -571,13 +571,13 @@ func (r CardValidationStatus) IsKnown() bool {
 type CardValidationSubmission struct {
 	// A 12-digit retrieval reference number that identifies the validation. Usually a
 	// combination of a timestamp and the trace number.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the validation was submitted to the card network.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required" format:"date-time"`
 	// A 6-digit trace number that identifies the validation within a short time
 	// window.
-	TraceNumber string                       `json:"trace_number,required"`
+	TraceNumber string                       `json:"trace_number" api:"required"`
 	JSON        cardValidationSubmissionJSON `json:"-"`
 }
 
@@ -617,22 +617,22 @@ func (r CardValidationType) IsKnown() bool {
 
 type CardValidationNewParams struct {
 	// The identifier of the Account from which to send the validation.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The Increase identifier for the Card Token that represents the card number
 	// you're validating.
-	CardTokenID param.Field[string] `json:"card_token_id,required"`
+	CardTokenID param.Field[string] `json:"card_token_id" api:"required"`
 	// A four-digit code (MCC) identifying the type of business or service provided by
 	// the merchant.
-	MerchantCategoryCode param.Field[string] `json:"merchant_category_code,required"`
+	MerchantCategoryCode param.Field[string] `json:"merchant_category_code" api:"required"`
 	// The city where the merchant (typically your business) is located.
-	MerchantCityName param.Field[string] `json:"merchant_city_name,required"`
+	MerchantCityName param.Field[string] `json:"merchant_city_name" api:"required"`
 	// The merchant name that will appear in the cardholder’s statement descriptor.
 	// Typically your business name.
-	MerchantName param.Field[string] `json:"merchant_name,required"`
+	MerchantName param.Field[string] `json:"merchant_name" api:"required"`
 	// The postal code for the merchant’s (typically your business’s) location.
-	MerchantPostalCode param.Field[string] `json:"merchant_postal_code,required"`
+	MerchantPostalCode param.Field[string] `json:"merchant_postal_code" api:"required"`
 	// The U.S. state where the merchant (typically your business) is located.
-	MerchantState param.Field[string] `json:"merchant_state,required"`
+	MerchantState param.Field[string] `json:"merchant_state" api:"required"`
 	// The cardholder's first name.
 	CardholderFirstName param.Field[string] `json:"cardholder_first_name"`
 	// The cardholder's last name.

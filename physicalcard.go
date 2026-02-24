@@ -100,27 +100,27 @@ func (r *PhysicalCardService) ListAutoPaging(ctx context.Context, query Physical
 // pricing!
 type PhysicalCard struct {
 	// The physical card identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Card this Physical Card represents.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// Details about the cardholder, as it appears on the printed card.
-	Cardholder PhysicalCardCardholder `json:"cardholder,required"`
+	Cardholder PhysicalCardCardholder `json:"cardholder" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Physical Card was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The Physical Card Profile used for this Physical Card.
-	PhysicalCardProfileID string `json:"physical_card_profile_id,required,nullable"`
+	PhysicalCardProfileID string `json:"physical_card_profile_id" api:"required,nullable"`
 	// The details used to ship this physical card.
-	Shipment PhysicalCardShipment `json:"shipment,required"`
+	Shipment PhysicalCardShipment `json:"shipment" api:"required"`
 	// The status of the Physical Card.
-	Status PhysicalCardStatus `json:"status,required"`
+	Status PhysicalCardStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card`.
-	Type PhysicalCardType `json:"type,required"`
+	Type PhysicalCardType `json:"type" api:"required"`
 	JSON physicalCardJSON `json:"-"`
 }
 
@@ -150,9 +150,9 @@ func (r physicalCardJSON) RawJSON() string {
 // Details about the cardholder, as it appears on the printed card.
 type PhysicalCardCardholder struct {
 	// The cardholder's first name.
-	FirstName string `json:"first_name,required"`
+	FirstName string `json:"first_name" api:"required"`
 	// The cardholder's last name.
-	LastName string                     `json:"last_name,required"`
+	LastName string                     `json:"last_name" api:"required"`
 	JSON     physicalCardCardholderJSON `json:"-"`
 }
 
@@ -176,19 +176,19 @@ func (r physicalCardCardholderJSON) RawJSON() string {
 // The details used to ship this physical card.
 type PhysicalCardShipment struct {
 	// The location to where the card's packing label is addressed.
-	Address PhysicalCardShipmentAddress `json:"address,required"`
+	Address PhysicalCardShipmentAddress `json:"address" api:"required"`
 	// The shipping method.
-	Method PhysicalCardShipmentMethod `json:"method,required"`
+	Method PhysicalCardShipmentMethod `json:"method" api:"required"`
 	// When this physical card should be produced by the card printer. The default
 	// timeline is the day after the card printer receives the order, except for
 	// `FEDEX_PRIORITY_OVERNIGHT` cards, which default to `SAME_DAY`. To use faster
 	// production methods, please reach out to
 	// [support@increase.com](mailto:support@increase.com).
-	Schedule PhysicalCardShipmentSchedule `json:"schedule,required"`
+	Schedule PhysicalCardShipmentSchedule `json:"schedule" api:"required"`
 	// The status of this shipment.
-	Status PhysicalCardShipmentStatus `json:"status,required"`
+	Status PhysicalCardShipmentStatus `json:"status" api:"required"`
 	// Tracking details for the shipment.
-	Tracking PhysicalCardShipmentTracking `json:"tracking,required,nullable"`
+	Tracking PhysicalCardShipmentTracking `json:"tracking" api:"required,nullable"`
 	JSON     physicalCardShipmentJSON     `json:"-"`
 }
 
@@ -215,21 +215,21 @@ func (r physicalCardShipmentJSON) RawJSON() string {
 // The location to where the card's packing label is addressed.
 type PhysicalCardShipmentAddress struct {
 	// The city of the shipping address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The country of the shipping address.
-	Country string `json:"country,required"`
+	Country string `json:"country" api:"required"`
 	// The first line of the shipping address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the shipping address.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The third line of the shipping address.
-	Line3 string `json:"line3,required,nullable"`
+	Line3 string `json:"line3" api:"required,nullable"`
 	// The name of the recipient.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The postal code of the shipping address.
-	PostalCode string `json:"postal_code,required"`
+	PostalCode string `json:"postal_code" api:"required"`
 	// The state of the shipping address.
-	State string                          `json:"state,required"`
+	State string                          `json:"state" api:"required"`
 	JSON  physicalCardShipmentAddressJSON `json:"-"`
 }
 
@@ -319,17 +319,17 @@ func (r PhysicalCardShipmentStatus) IsKnown() bool {
 // Tracking details for the shipment.
 type PhysicalCardShipmentTracking struct {
 	// The tracking number. Not available for USPS shipments.
-	Number string `json:"number,required,nullable"`
+	Number string `json:"number" api:"required,nullable"`
 	// For returned shipments, the tracking number of the return shipment.
-	ReturnNumber string `json:"return_number,required,nullable"`
+	ReturnNumber string `json:"return_number" api:"required,nullable"`
 	// For returned shipments, this describes why the package was returned.
-	ReturnReason string `json:"return_reason,required,nullable"`
+	ReturnReason string `json:"return_reason" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the fulfillment provider marked the card as ready for pick-up by the shipment
 	// carrier.
-	ShippedAt time.Time `json:"shipped_at,required" format:"date-time"`
+	ShippedAt time.Time `json:"shipped_at" api:"required" format:"date-time"`
 	// Tracking updates relating to the physical card's delivery.
-	Updates []PhysicalCardShipmentTrackingUpdate `json:"updates,required"`
+	Updates []PhysicalCardShipmentTrackingUpdate `json:"updates" api:"required"`
 	JSON    physicalCardShipmentTrackingJSON     `json:"-"`
 }
 
@@ -356,18 +356,18 @@ func (r physicalCardShipmentTrackingJSON) RawJSON() string {
 type PhysicalCardShipmentTrackingUpdate struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
 	// carrier expects the card to be delivered.
-	CarrierEstimatedDeliveryAt time.Time `json:"carrier_estimated_delivery_at,required,nullable" format:"date-time"`
+	CarrierEstimatedDeliveryAt time.Time `json:"carrier_estimated_delivery_at" api:"required,nullable" format:"date-time"`
 	// The type of tracking event.
-	Category PhysicalCardShipmentTrackingUpdatesCategory `json:"category,required"`
+	Category PhysicalCardShipmentTrackingUpdatesCategory `json:"category" api:"required"`
 	// The city where the event took place.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the tracking event took place.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The postal code where the event took place.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The state where the event took place.
-	State string                                 `json:"state,required,nullable"`
+	State string                                 `json:"state" api:"required,nullable"`
 	JSON  physicalCardShipmentTrackingUpdateJSON `json:"-"`
 }
 
@@ -446,11 +446,11 @@ func (r PhysicalCardType) IsKnown() bool {
 
 type PhysicalCardNewParams struct {
 	// The underlying card representing this physical card.
-	CardID param.Field[string] `json:"card_id,required"`
+	CardID param.Field[string] `json:"card_id" api:"required"`
 	// Details about the cardholder, as it will appear on the physical card.
-	Cardholder param.Field[PhysicalCardNewParamsCardholder] `json:"cardholder,required"`
+	Cardholder param.Field[PhysicalCardNewParamsCardholder] `json:"cardholder" api:"required"`
 	// The details used to ship this physical card.
-	Shipment param.Field[PhysicalCardNewParamsShipment] `json:"shipment,required"`
+	Shipment param.Field[PhysicalCardNewParamsShipment] `json:"shipment" api:"required"`
 	// The physical card profile to use for this physical card. The latest default
 	// physical card profile will be used if not provided.
 	PhysicalCardProfileID param.Field[string] `json:"physical_card_profile_id"`
@@ -463,9 +463,9 @@ func (r PhysicalCardNewParams) MarshalJSON() (data []byte, err error) {
 // Details about the cardholder, as it will appear on the physical card.
 type PhysicalCardNewParamsCardholder struct {
 	// The cardholder's first name.
-	FirstName param.Field[string] `json:"first_name,required"`
+	FirstName param.Field[string] `json:"first_name" api:"required"`
 	// The cardholder's last name.
-	LastName param.Field[string] `json:"last_name,required"`
+	LastName param.Field[string] `json:"last_name" api:"required"`
 }
 
 func (r PhysicalCardNewParamsCardholder) MarshalJSON() (data []byte, err error) {
@@ -475,9 +475,9 @@ func (r PhysicalCardNewParamsCardholder) MarshalJSON() (data []byte, err error) 
 // The details used to ship this physical card.
 type PhysicalCardNewParamsShipment struct {
 	// The address to where the card should be shipped.
-	Address param.Field[PhysicalCardNewParamsShipmentAddress] `json:"address,required"`
+	Address param.Field[PhysicalCardNewParamsShipmentAddress] `json:"address" api:"required"`
 	// The shipping method to use.
-	Method param.Field[PhysicalCardNewParamsShipmentMethod] `json:"method,required"`
+	Method param.Field[PhysicalCardNewParamsShipmentMethod] `json:"method" api:"required"`
 	// When this physical card should be produced by the card printer. The default
 	// timeline is the day after the card printer receives the order, except for
 	// `FEDEX_PRIORITY_OVERNIGHT` cards, which default to `SAME_DAY`. To use faster
@@ -493,15 +493,15 @@ func (r PhysicalCardNewParamsShipment) MarshalJSON() (data []byte, err error) {
 // The address to where the card should be shipped.
 type PhysicalCardNewParamsShipmentAddress struct {
 	// The city of the shipping address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the shipping address.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The name of the recipient.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The postal code of the shipping address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The state of the shipping address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The two-character ISO 3166-1 code of the country where the card should be
 	// shipped (e.g., `US`). Please reach out to
 	// [support@increase.com](mailto:support@increase.com) to ship cards
@@ -559,7 +559,7 @@ func (r PhysicalCardNewParamsShipmentSchedule) IsKnown() bool {
 
 type PhysicalCardUpdateParams struct {
 	// The status to update the Physical Card to.
-	Status param.Field[PhysicalCardUpdateParamsStatus] `json:"status,required"`
+	Status param.Field[PhysicalCardUpdateParamsStatus] `json:"status" api:"required"`
 }
 
 func (r PhysicalCardUpdateParams) MarshalJSON() (data []byte, err error) {

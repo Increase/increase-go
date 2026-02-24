@@ -62,7 +62,7 @@ func (r SimulationRealTimePaymentsTransferCompleteParams) MarshalJSON() (data []
 // If set, the simulation will reject the transfer.
 type SimulationRealTimePaymentsTransferCompleteParamsRejection struct {
 	// The reason code that the simulated rejection will have.
-	RejectReasonCode param.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code,required"`
+	RejectReasonCode param.Field[SimulationRealTimePaymentsTransferCompleteParamsRejectionRejectReasonCode] `json:"reject_reason_code" api:"required"`
 }
 
 func (r SimulationRealTimePaymentsTransferCompleteParamsRejection) MarshalJSON() (data []byte, err error) {

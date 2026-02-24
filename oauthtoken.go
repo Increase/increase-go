@@ -46,14 +46,14 @@ func (r *OAuthTokenService) New(ctx context.Context, body OAuthTokenNewParams, o
 type OAuthToken struct {
 	// You may use this token in place of an API key to make OAuth requests on a user's
 	// behalf.
-	AccessToken string `json:"access_token,required"`
+	AccessToken string `json:"access_token" api:"required"`
 	// The Group's identifier. A Group is the top-level organization in Increase.
-	GroupID string `json:"group_id,required"`
+	GroupID string `json:"group_id" api:"required"`
 	// The type of OAuth token.
-	TokenType OAuthTokenTokenType `json:"token_type,required"`
+	TokenType OAuthTokenTokenType `json:"token_type" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `oauth_token`.
-	Type OAuthTokenType `json:"type,required"`
+	Type OAuthTokenType `json:"type" api:"required"`
 	JSON oauthTokenJSON `json:"-"`
 }
 
@@ -109,7 +109,7 @@ func (r OAuthTokenType) IsKnown() bool {
 type OAuthTokenNewParams struct {
 	// The credential you request in exchange for the code. In Production, this is
 	// always `authorization_code`. In Sandbox, you can pass either enum value.
-	GrantType param.Field[OAuthTokenNewParamsGrantType] `json:"grant_type,required"`
+	GrantType param.Field[OAuthTokenNewParamsGrantType] `json:"grant_type" api:"required"`
 	// The public identifier for your application.
 	ClientID param.Field[string] `json:"client_id"`
 	// The secret that confirms you own the application. This is redundant given that

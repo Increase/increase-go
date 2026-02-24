@@ -122,75 +122,75 @@ func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID 
 // check.
 type CheckTransfer struct {
 	// The Check transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the Account from which funds will be transferred.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The account number printed on the check.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval CheckTransferApproval `json:"approval,required,nullable"`
+	Approval CheckTransferApproval `json:"approval" api:"required,nullable"`
 	// If the Check Transfer was successfully deposited, this will contain the
 	// identifier of the Inbound Check Deposit object with details of the deposit.
-	ApprovedInboundCheckDepositID string `json:"approved_inbound_check_deposit_id,required,nullable"`
+	ApprovedInboundCheckDepositID string `json:"approved_inbound_check_deposit_id" api:"required,nullable"`
 	// How the account's available balance should be checked.
-	BalanceCheck CheckTransferBalanceCheck `json:"balance_check,required,nullable"`
+	BalanceCheck CheckTransferBalanceCheck `json:"balance_check" api:"required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation CheckTransferCancellation `json:"cancellation,required,nullable"`
+	Cancellation CheckTransferCancellation `json:"cancellation" api:"required,nullable"`
 	// The check number printed on the check.
-	CheckNumber string `json:"check_number,required"`
+	CheckNumber string `json:"check_number" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy CheckTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy CheckTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency CheckTransferCurrency `json:"currency,required"`
+	Currency CheckTransferCurrency `json:"currency" api:"required"`
 	// Whether Increase will print and mail the check or if you will do it yourself.
-	FulfillmentMethod CheckTransferFulfillmentMethod `json:"fulfillment_method,required"`
+	FulfillmentMethod CheckTransferFulfillmentMethod `json:"fulfillment_method" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// If the check has been mailed by Increase, this will contain details of the
 	// shipment.
-	Mailing CheckTransferMailing `json:"mailing,required,nullable"`
+	Mailing CheckTransferMailing `json:"mailing" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// Details relating to the physical check that Increase will print and mail. Will
 	// be present if and only if `fulfillment_method` is equal to `physical_check`.
-	PhysicalCheck CheckTransferPhysicalCheck `json:"physical_check,required,nullable"`
+	PhysicalCheck CheckTransferPhysicalCheck `json:"physical_check" api:"required,nullable"`
 	// The routing number printed on the check.
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
-	SourceAccountNumberID string `json:"source_account_number_id,required,nullable"`
+	SourceAccountNumberID string `json:"source_account_number_id" api:"required,nullable"`
 	// The lifecycle status of the transfer.
-	Status CheckTransferStatus `json:"status,required"`
+	Status CheckTransferStatus `json:"status" api:"required"`
 	// After a stop-payment is requested on the check, this will contain supplemental
 	// details.
-	StopPaymentRequest CheckTransferStopPaymentRequest `json:"stop_payment_request,required,nullable"`
+	StopPaymentRequest CheckTransferStopPaymentRequest `json:"stop_payment_request" api:"required,nullable"`
 	// After the transfer is submitted, this will contain supplemental details.
-	Submission CheckTransferSubmission `json:"submission,required,nullable"`
+	Submission CheckTransferSubmission `json:"submission" api:"required,nullable"`
 	// Details relating to the custom fulfillment you will perform. Will be present if
 	// and only if `fulfillment_method` is equal to `third_party`.
-	ThirdParty CheckTransferThirdParty `json:"third_party,required,nullable"`
+	ThirdParty CheckTransferThirdParty `json:"third_party" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer`.
-	Type CheckTransferType `json:"type,required"`
+	Type CheckTransferType `json:"type" api:"required"`
 	// If set, the check will be valid on or before this date. After this date, the
 	// check transfer will be automatically stopped and deposits will not be accepted.
 	// For checks printed by Increase, this date is included on the check as its
 	// expiry.
-	ValidUntilDate time.Time              `json:"valid_until_date,required,nullable" format:"date"`
-	ExtraFields    map[string]interface{} `json:"-,extras"`
+	ValidUntilDate time.Time              `json:"valid_until_date" api:"required,nullable" format:"date"`
+	ExtraFields    map[string]interface{} `json:"-" api:"extrafields"`
 	JSON           checkTransferJSON      `json:"-"`
 }
 
@@ -238,10 +238,10 @@ func (r checkTransferJSON) RawJSON() string {
 type CheckTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	ApprovedAt time.Time `json:"approved_at" api:"required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string                    `json:"approved_by,required,nullable"`
+	ApprovedBy string                    `json:"approved_by" api:"required,nullable"`
 	JSON       checkTransferApprovalJSON `json:"-"`
 }
 
@@ -283,10 +283,10 @@ func (r CheckTransferBalanceCheck) IsKnown() bool {
 type CheckTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string                        `json:"canceled_by,required,nullable"`
+	CanceledBy string                        `json:"canceled_by" api:"required,nullable"`
 	JSON       checkTransferCancellationJSON `json:"-"`
 }
 
@@ -310,13 +310,13 @@ func (r checkTransferCancellationJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type CheckTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category CheckTransferCreatedByCategory `json:"category,required"`
+	Category CheckTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey CheckTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey CheckTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication CheckTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication CheckTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User CheckTransferCreatedByUser `json:"user,nullable"`
+	User CheckTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON checkTransferCreatedByJSON `json:"-"`
 }
 
@@ -359,7 +359,7 @@ func (r CheckTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type CheckTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                           `json:"description,required,nullable"`
+	Description string                           `json:"description" api:"required,nullable"`
 	JSON        checkTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -382,7 +382,7 @@ func (r checkTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type CheckTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                     `json:"name,required"`
+	Name string                                     `json:"name" api:"required"`
 	JSON checkTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -405,7 +405,7 @@ func (r checkTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type CheckTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                         `json:"email,required"`
+	Email string                         `json:"email" api:"required"`
 	JSON  checkTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -462,8 +462,8 @@ func (r CheckTransferFulfillmentMethod) IsKnown() bool {
 type CheckTransferMailing struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
-	MailedAt    time.Time                `json:"mailed_at,required" format:"date-time"`
-	ExtraFields map[string]interface{}   `json:"-,extras"`
+	MailedAt    time.Time                `json:"mailed_at" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}   `json:"-" api:"extrafields"`
 	JSON        checkTransferMailingJSON `json:"-"`
 }
 
@@ -487,30 +487,30 @@ func (r checkTransferMailingJSON) RawJSON() string {
 // be present if and only if `fulfillment_method` is equal to `physical_check`.
 type CheckTransferPhysicalCheck struct {
 	// The ID of the file for the check attachment.
-	AttachmentFileID string `json:"attachment_file_id,required,nullable"`
+	AttachmentFileID string `json:"attachment_file_id" api:"required,nullable"`
 	// The ID of the file for the check voucher image.
-	CheckVoucherImageFileID string `json:"check_voucher_image_file_id,required,nullable"`
+	CheckVoucherImageFileID string `json:"check_voucher_image_file_id" api:"required,nullable"`
 	// Details for where Increase will mail the check.
-	MailingAddress CheckTransferPhysicalCheckMailingAddress `json:"mailing_address,required"`
+	MailingAddress CheckTransferPhysicalCheckMailingAddress `json:"mailing_address" api:"required"`
 	// The descriptor that will be printed on the memo field on the check.
-	Memo string `json:"memo,required,nullable"`
+	Memo string `json:"memo" api:"required,nullable"`
 	// The descriptor that will be printed on the letter included with the check.
-	Note string `json:"note,required,nullable"`
+	Note string `json:"note" api:"required,nullable"`
 	// The payer of the check. This will be printed on the top-left portion of the
 	// check and defaults to the return address if unspecified.
-	Payer []CheckTransferPhysicalCheckPayer `json:"payer,required"`
+	Payer []CheckTransferPhysicalCheckPayer `json:"payer" api:"required"`
 	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name,required"`
+	RecipientName string `json:"recipient_name" api:"required"`
 	// The return address to be printed on the check.
-	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address,required,nullable"`
+	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required,nullable"`
 	// The shipping method for the check.
-	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method,required,nullable"`
+	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method" api:"required,nullable"`
 	// The text that will appear as the signature on the check in cursive font. If
 	// blank, the check will be printed with 'No signature required'.
-	SignatureText string `json:"signature_text,required,nullable"`
+	SignatureText string `json:"signature_text" api:"required,nullable"`
 	// Tracking updates relating to the physical check's delivery.
-	TrackingUpdates []CheckTransferPhysicalCheckTrackingUpdate `json:"tracking_updates,required"`
-	ExtraFields     map[string]interface{}                     `json:"-,extras"`
+	TrackingUpdates []CheckTransferPhysicalCheckTrackingUpdate `json:"tracking_updates" api:"required"`
+	ExtraFields     map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON            checkTransferPhysicalCheckJSON             `json:"-"`
 }
 
@@ -543,20 +543,20 @@ func (r checkTransferPhysicalCheckJSON) RawJSON() string {
 // Details for where Increase will mail the check.
 type CheckTransferPhysicalCheckMailingAddress struct {
 	// The city of the check's destination.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The street address of the check's destination.
-	Line1 string `json:"line1,required,nullable"`
+	Line1 string `json:"line1" api:"required,nullable"`
 	// The second line of the address of the check's destination.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The name component of the check's mailing address.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// The phone number to be used in case of delivery issues at the check's mailing
 	// address. Only used for FedEx overnight shipping.
-	Phone string `json:"phone,required,nullable"`
+	Phone string `json:"phone" api:"required,nullable"`
 	// The postal code of the check's destination.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The state of the check's destination.
-	State string                                       `json:"state,required,nullable"`
+	State string                                       `json:"state" api:"required,nullable"`
 	JSON  checkTransferPhysicalCheckMailingAddressJSON `json:"-"`
 }
 
@@ -584,7 +584,7 @@ func (r checkTransferPhysicalCheckMailingAddressJSON) RawJSON() string {
 
 type CheckTransferPhysicalCheckPayer struct {
 	// The contents of the line.
-	Contents string                              `json:"contents,required"`
+	Contents string                              `json:"contents" api:"required"`
 	JSON     checkTransferPhysicalCheckPayerJSON `json:"-"`
 }
 
@@ -607,20 +607,20 @@ func (r checkTransferPhysicalCheckPayerJSON) RawJSON() string {
 // The return address to be printed on the check.
 type CheckTransferPhysicalCheckReturnAddress struct {
 	// The city of the check's destination.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The street address of the check's destination.
-	Line1 string `json:"line1,required,nullable"`
+	Line1 string `json:"line1" api:"required,nullable"`
 	// The second line of the address of the check's destination.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The name component of the check's return address.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// The shipper's phone number to be used in case of delivery issues. Only used for
 	// FedEx overnight shipping.
-	Phone string `json:"phone,required,nullable"`
+	Phone string `json:"phone" api:"required,nullable"`
 	// The postal code of the check's destination.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The state of the check's destination.
-	State string                                      `json:"state,required,nullable"`
+	State string                                      `json:"state" api:"required,nullable"`
 	JSON  checkTransferPhysicalCheckReturnAddressJSON `json:"-"`
 }
 
@@ -664,12 +664,12 @@ func (r CheckTransferPhysicalCheckShippingMethod) IsKnown() bool {
 
 type CheckTransferPhysicalCheckTrackingUpdate struct {
 	// The type of tracking event.
-	Category CheckTransferPhysicalCheckTrackingUpdatesCategory `json:"category,required"`
+	Category CheckTransferPhysicalCheckTrackingUpdatesCategory `json:"category" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the tracking event took place.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The postal code where the event took place.
-	PostalCode string                                       `json:"postal_code,required"`
+	PostalCode string                                       `json:"postal_code" api:"required"`
 	JSON       checkTransferPhysicalCheckTrackingUpdateJSON `json:"-"`
 }
 
@@ -738,15 +738,15 @@ func (r CheckTransferStatus) IsKnown() bool {
 // details.
 type CheckTransferStopPaymentRequest struct {
 	// The reason why this transfer was stopped.
-	Reason CheckTransferStopPaymentRequestReason `json:"reason,required"`
+	Reason CheckTransferStopPaymentRequestReason `json:"reason" api:"required"`
 	// The time the stop-payment was requested.
-	RequestedAt time.Time `json:"requested_at,required" format:"date-time"`
+	RequestedAt time.Time `json:"requested_at" api:"required" format:"date-time"`
 	// The ID of the check transfer that was stopped.
-	TransferID string `json:"transfer_id,required"`
+	TransferID string `json:"transfer_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_transfer_stop_payment_request`.
-	Type        CheckTransferStopPaymentRequestType `json:"type,required"`
-	ExtraFields map[string]interface{}              `json:"-,extras"`
+	Type        CheckTransferStopPaymentRequestType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}              `json:"-" api:"extrafields"`
 	JSON        checkTransferStopPaymentRequestJSON `json:"-"`
 }
 
@@ -808,15 +808,15 @@ func (r CheckTransferStopPaymentRequestType) IsKnown() bool {
 type CheckTransferSubmission struct {
 	// The ID of the file corresponding to an image of the check that was mailed, if
 	// available.
-	PreviewFileID string `json:"preview_file_id,required,nullable"`
+	PreviewFileID string `json:"preview_file_id" api:"required,nullable"`
 	// The address we submitted to the printer. This is what is physically printed on
 	// the check.
-	SubmittedAddress CheckTransferSubmissionSubmittedAddress `json:"submitted_address,required"`
+	SubmittedAddress CheckTransferSubmissionSubmittedAddress `json:"submitted_address" api:"required"`
 	// When this check was submitted to our check printer.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required" format:"date-time"`
 	// The tracking number for the check shipment.
-	TrackingNumber string                      `json:"tracking_number,required,nullable"`
-	ExtraFields    map[string]interface{}      `json:"-,extras"`
+	TrackingNumber string                      `json:"tracking_number" api:"required,nullable"`
+	ExtraFields    map[string]interface{}      `json:"-" api:"extrafields"`
 	JSON           checkTransferSubmissionJSON `json:"-"`
 }
 
@@ -843,17 +843,17 @@ func (r checkTransferSubmissionJSON) RawJSON() string {
 // the check.
 type CheckTransferSubmissionSubmittedAddress struct {
 	// The submitted address city.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The submitted address line 1.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The submitted address line 2.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The submitted recipient name.
-	RecipientName string `json:"recipient_name,required"`
+	RecipientName string `json:"recipient_name" api:"required"`
 	// The submitted address state.
-	State string `json:"state,required"`
+	State string `json:"state" api:"required"`
 	// The submitted address zip.
-	Zip  string                                      `json:"zip,required"`
+	Zip  string                                      `json:"zip" api:"required"`
 	JSON checkTransferSubmissionSubmittedAddressJSON `json:"-"`
 }
 
@@ -882,8 +882,8 @@ func (r checkTransferSubmissionSubmittedAddressJSON) RawJSON() string {
 // and only if `fulfillment_method` is equal to `third_party`.
 type CheckTransferThirdParty struct {
 	// The name that you will print on the check.
-	RecipientName string                      `json:"recipient_name,required,nullable"`
-	ExtraFields   map[string]interface{}      `json:"-,extras"`
+	RecipientName string                      `json:"recipient_name" api:"required,nullable"`
+	ExtraFields   map[string]interface{}      `json:"-" api:"extrafields"`
 	JSON          checkTransferThirdPartyJSON `json:"-"`
 }
 
@@ -921,14 +921,14 @@ func (r CheckTransferType) IsKnown() bool {
 
 type CheckTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The transfer amount in USD cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// Whether Increase will print and mail the check or if you will do it yourself.
-	FulfillmentMethod param.Field[CheckTransferNewParamsFulfillmentMethod] `json:"fulfillment_method,required"`
+	FulfillmentMethod param.Field[CheckTransferNewParamsFulfillmentMethod] `json:"fulfillment_method" api:"required"`
 	// The identifier of the Account Number from which to send the transfer and print
 	// on the check.
-	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
 	// How the account's available balance should be checked. If omitted, the default
 	// behavior is `balance_check: full`.
 	BalanceCheck param.Field[CheckTransferNewParamsBalanceCheck] `json:"balance_check"`
@@ -995,11 +995,11 @@ func (r CheckTransferNewParamsBalanceCheck) IsKnown() bool {
 // included if any other `fulfillment_method` is provided.
 type CheckTransferNewParamsPhysicalCheck struct {
 	// Details for where Increase will mail the check.
-	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address,required"`
+	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address" api:"required"`
 	// The descriptor that will be printed on the memo field on the check.
-	Memo param.Field[string] `json:"memo,required"`
+	Memo param.Field[string] `json:"memo" api:"required"`
 	// The name that will be printed on the check in the 'To:' field.
-	RecipientName param.Field[string] `json:"recipient_name,required"`
+	RecipientName param.Field[string] `json:"recipient_name" api:"required"`
 	// The ID of a File to be attached to the check. This must have
 	// `purpose: check_attachment`. For details on pricing and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
@@ -1034,13 +1034,13 @@ func (r CheckTransferNewParamsPhysicalCheck) MarshalJSON() (data []byte, err err
 // Details for where Increase will mail the check.
 type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	// The city component of the check's destination address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address component of the check's destination address.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The postal code component of the check's destination address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state component of the check's destination address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The second line of the address component of the check's destination address.
 	Line2 param.Field[string] `json:"line2"`
 	// The name component of the check's destination address. Defaults to the provided
@@ -1058,7 +1058,7 @@ func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data [
 
 type CheckTransferNewParamsPhysicalCheckPayer struct {
 	// The contents of the line.
-	Contents param.Field[string] `json:"contents,required"`
+	Contents param.Field[string] `json:"contents" api:"required"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheckPayer) MarshalJSON() (data []byte, err error) {
@@ -1070,15 +1070,15 @@ func (r CheckTransferNewParamsPhysicalCheckPayer) MarshalJSON() (data []byte, er
 // them.
 type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 	// The city of the return address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the return address.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The name of the return address.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The postal code of the return address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state of the return address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The second line of the return address.
 	Line2 param.Field[string] `json:"line2"`
 	// The phone number to associate with the shipper. The phone number is only used

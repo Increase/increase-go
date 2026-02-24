@@ -102,27 +102,27 @@ func (r *IntrafiAccountEnrollmentService) Unenroll(ctx context.Context, intrafiA
 // availability.
 type IntrafiAccountEnrollment struct {
 	// The identifier of this enrollment at IntraFi.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the Increase Account being swept into the network.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the enrollment was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The contact email for the account owner, to be shared with IntraFi.
-	EmailAddress string `json:"email_address,required,nullable"`
+	EmailAddress string `json:"email_address" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The identifier of the account in IntraFi's system. This identifier will be
 	// printed on any IntraFi statements or documents.
-	IntrafiID string `json:"intrafi_id,required"`
+	IntrafiID string `json:"intrafi_id" api:"required"`
 	// The status of the account in the network. An account takes about one business
 	// day to go from `pending_enrolling` to `enrolled`.
-	Status IntrafiAccountEnrollmentStatus `json:"status,required"`
+	Status IntrafiAccountEnrollmentStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `intrafi_account_enrollment`.
-	Type IntrafiAccountEnrollmentType `json:"type,required"`
+	Type IntrafiAccountEnrollmentType `json:"type" api:"required"`
 	JSON intrafiAccountEnrollmentJSON `json:"-"`
 }
 
@@ -187,9 +187,9 @@ func (r IntrafiAccountEnrollmentType) IsKnown() bool {
 
 type IntrafiAccountEnrollmentNewParams struct {
 	// The identifier for the account to be added to IntraFi.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The contact email for the account owner, to be shared with IntraFi.
-	EmailAddress param.Field[string] `json:"email_address,required" format:"email"`
+	EmailAddress param.Field[string] `json:"email_address" api:"required" format:"email"`
 }
 
 func (r IntrafiAccountEnrollmentNewParams) MarshalJSON() (data []byte, err error) {

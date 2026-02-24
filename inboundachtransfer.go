@@ -113,70 +113,70 @@ func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundA
 // account.
 type InboundACHTransfer struct {
 	// The inbound ACH transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// If your transfer is accepted, this will contain details of the acceptance.
-	Acceptance InboundACHTransferAcceptance `json:"acceptance,required,nullable"`
+	Acceptance InboundACHTransferAcceptance `json:"acceptance" api:"required,nullable"`
 	// The Account to which the transfer belongs.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier of the Account Number to which this transfer was sent.
-	AccountNumberID string `json:"account_number_id,required"`
+	AccountNumberID string `json:"account_number_id" api:"required"`
 	// Additional information sent from the originator.
-	Addenda InboundACHTransferAddenda `json:"addenda,required,nullable"`
+	Addenda InboundACHTransferAddenda `json:"addenda" api:"required,nullable"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The time at which the transfer will be automatically resolved.
-	AutomaticallyResolvesAt time.Time `json:"automatically_resolves_at,required" format:"date-time"`
+	AutomaticallyResolvesAt time.Time `json:"automatically_resolves_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the inbound ACH transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// If your transfer is declined, this will contain details of the decline.
-	Decline InboundACHTransferDecline `json:"decline,required,nullable"`
+	Decline InboundACHTransferDecline `json:"decline" api:"required,nullable"`
 	// The direction of the transfer.
-	Direction InboundACHTransferDirection `json:"direction,required"`
+	Direction InboundACHTransferDirection `json:"direction" api:"required"`
 	// The effective date of the transfer. This is sent by the sending bank and is a
 	// factor in determining funds availability.
-	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
+	EffectiveDate time.Time `json:"effective_date" api:"required" format:"date"`
 	// If the Inbound ACH Transfer has a Standard Entry Class Code of IAT, this will
 	// contain fields pertaining to the International ACH Transaction.
-	InternationalAddenda InboundACHTransferInternationalAddenda `json:"international_addenda,required,nullable"`
+	InternationalAddenda InboundACHTransferInternationalAddenda `json:"international_addenda" api:"required,nullable"`
 	// If you initiate a notification of change in response to the transfer, this will
 	// contain its details.
-	NotificationOfChange InboundACHTransferNotificationOfChange `json:"notification_of_change,required,nullable"`
+	NotificationOfChange InboundACHTransferNotificationOfChange `json:"notification_of_change" api:"required,nullable"`
 	// The descriptive date of the transfer.
-	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date,required,nullable"`
+	OriginatorCompanyDescriptiveDate string `json:"originator_company_descriptive_date" api:"required,nullable"`
 	// The additional information included with the transfer.
-	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data,required,nullable"`
+	OriginatorCompanyDiscretionaryData string `json:"originator_company_discretionary_data" api:"required,nullable"`
 	// The description of the transfer.
-	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description,required"`
+	OriginatorCompanyEntryDescription string `json:"originator_company_entry_description" api:"required"`
 	// The id of the company that initiated the transfer.
-	OriginatorCompanyID string `json:"originator_company_id,required"`
+	OriginatorCompanyID string `json:"originator_company_id" api:"required"`
 	// The name of the company that initiated the transfer.
-	OriginatorCompanyName string `json:"originator_company_name,required"`
+	OriginatorCompanyName string `json:"originator_company_name" api:"required"`
 	// The American Banking Association (ABA) routing number of the bank originating
 	// the transfer.
-	OriginatorRoutingNumber string `json:"originator_routing_number,required"`
+	OriginatorRoutingNumber string `json:"originator_routing_number" api:"required"`
 	// The id of the receiver of the transfer.
-	ReceiverIDNumber string `json:"receiver_id_number,required,nullable"`
+	ReceiverIDNumber string `json:"receiver_id_number" api:"required,nullable"`
 	// The name of the receiver of the transfer.
-	ReceiverName string `json:"receiver_name,required,nullable"`
+	ReceiverName string `json:"receiver_name" api:"required,nullable"`
 	// A subhash containing information about when and how the transfer settled at the
 	// Federal Reserve.
-	Settlement InboundACHTransferSettlement `json:"settlement,required"`
+	Settlement InboundACHTransferSettlement `json:"settlement" api:"required"`
 	// The Standard Entry Class (SEC) code of the transfer.
-	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
+	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code" api:"required"`
 	// The status of the transfer.
-	Status InboundACHTransferStatus `json:"status,required"`
+	Status InboundACHTransferStatus `json:"status" api:"required"`
 	// A 15 digit number set by the sending bank and transmitted to the receiving bank.
 	// Along with the amount, date, and originating routing number, this can be used to
 	// identify the ACH transfer. ACH trace numbers are not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
-	TraceNumber string `json:"trace_number,required"`
+	TraceNumber string `json:"trace_number" api:"required"`
 	// If your transfer is returned, this will contain details of the return.
-	TransferReturn InboundACHTransferTransferReturn `json:"transfer_return,required,nullable"`
+	TransferReturn InboundACHTransferTransferReturn `json:"transfer_return" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_ach_transfer`.
-	Type        InboundACHTransferType `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        InboundACHTransferType `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        inboundACHTransferJSON `json:"-"`
 }
 
@@ -225,9 +225,9 @@ func (r inboundACHTransferJSON) RawJSON() string {
 // If your transfer is accepted, this will contain details of the acceptance.
 type InboundACHTransferAcceptance struct {
 	// The time at which the transfer was accepted.
-	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required" format:"date-time"`
 	// The id of the transaction for the accepted transfer.
-	TransactionID string                           `json:"transaction_id,required"`
+	TransactionID string                           `json:"transaction_id" api:"required"`
 	JSON          inboundACHTransferAcceptanceJSON `json:"-"`
 }
 
@@ -251,9 +251,9 @@ func (r inboundACHTransferAcceptanceJSON) RawJSON() string {
 // Additional information sent from the originator.
 type InboundACHTransferAddenda struct {
 	// The type of addendum.
-	Category InboundACHTransferAddendaCategory `json:"category,required"`
+	Category InboundACHTransferAddendaCategory `json:"category" api:"required"`
 	// Unstructured `payment_related_information` passed through by the originator.
-	Freeform InboundACHTransferAddendaFreeform `json:"freeform,required,nullable"`
+	Freeform InboundACHTransferAddendaFreeform `json:"freeform" api:"required,nullable"`
 	JSON     inboundACHTransferAddendaJSON     `json:"-"`
 }
 
@@ -292,7 +292,7 @@ func (r InboundACHTransferAddendaCategory) IsKnown() bool {
 // Unstructured `payment_related_information` passed through by the originator.
 type InboundACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum received from the originator.
-	Entries []InboundACHTransferAddendaFreeformEntry `json:"entries,required"`
+	Entries []InboundACHTransferAddendaFreeformEntry `json:"entries" api:"required"`
 	JSON    inboundACHTransferAddendaFreeformJSON    `json:"-"`
 }
 
@@ -314,7 +314,7 @@ func (r inboundACHTransferAddendaFreeformJSON) RawJSON() string {
 
 type InboundACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation string                                     `json:"payment_related_information,required"`
+	PaymentRelatedInformation string                                     `json:"payment_related_information" api:"required"`
 	JSON                      inboundACHTransferAddendaFreeformEntryJSON `json:"-"`
 }
 
@@ -337,11 +337,11 @@ func (r inboundACHTransferAddendaFreeformEntryJSON) RawJSON() string {
 // If your transfer is declined, this will contain details of the decline.
 type InboundACHTransferDecline struct {
 	// The time at which the transfer was declined.
-	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
+	DeclinedAt time.Time `json:"declined_at" api:"required" format:"date-time"`
 	// The id of the transaction for the declined transfer.
-	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required"`
 	// The reason for the transfer decline.
-	Reason InboundACHTransferDeclineReason `json:"reason,required"`
+	Reason InboundACHTransferDeclineReason `json:"reason" api:"required"`
 	JSON   inboundACHTransferDeclineJSON   `json:"-"`
 }
 
@@ -415,90 +415,90 @@ func (r InboundACHTransferDirection) IsKnown() bool {
 type InboundACHTransferInternationalAddenda struct {
 	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
 	// country code of the destination country.
-	DestinationCountryCode string `json:"destination_country_code,required"`
+	DestinationCountryCode string `json:"destination_country_code" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
 	// destination bank account.
-	DestinationCurrencyCode string `json:"destination_currency_code,required"`
+	DestinationCurrencyCode string `json:"destination_currency_code" api:"required"`
 	// A description of how the foreign exchange rate was calculated.
-	ForeignExchangeIndicator InboundACHTransferInternationalAddendaForeignExchangeIndicator `json:"foreign_exchange_indicator,required"`
+	ForeignExchangeIndicator InboundACHTransferInternationalAddendaForeignExchangeIndicator `json:"foreign_exchange_indicator" api:"required"`
 	// Depending on the `foreign_exchange_reference_indicator`, an exchange rate or a
 	// reference to a well-known rate.
-	ForeignExchangeReference string `json:"foreign_exchange_reference,required,nullable"`
+	ForeignExchangeReference string `json:"foreign_exchange_reference" api:"required,nullable"`
 	// An instruction of how to interpret the `foreign_exchange_reference` field for
 	// this Transaction.
-	ForeignExchangeReferenceIndicator InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator,required"`
+	ForeignExchangeReferenceIndicator InboundACHTransferInternationalAddendaForeignExchangeReferenceIndicator `json:"foreign_exchange_reference_indicator" api:"required"`
 	// The amount in the minor unit of the foreign payment currency. For dollars, for
 	// example, this is cents.
-	ForeignPaymentAmount int64 `json:"foreign_payment_amount,required"`
+	ForeignPaymentAmount int64 `json:"foreign_payment_amount" api:"required"`
 	// A reference number in the foreign banking infrastructure.
-	ForeignTraceNumber string `json:"foreign_trace_number,required,nullable"`
+	ForeignTraceNumber string `json:"foreign_trace_number" api:"required,nullable"`
 	// The type of transfer. Set by the originator.
-	InternationalTransactionTypeCode InboundACHTransferInternationalAddendaInternationalTransactionTypeCode `json:"international_transaction_type_code,required"`
+	InternationalTransactionTypeCode InboundACHTransferInternationalAddendaInternationalTransactionTypeCode `json:"international_transaction_type_code" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code for the
 	// originating bank account.
-	OriginatingCurrencyCode string `json:"originating_currency_code,required"`
+	OriginatingCurrencyCode string `json:"originating_currency_code" api:"required"`
 	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
 	// country code of the originating branch country.
-	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country,required"`
+	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country" api:"required"`
 	// An identifier for the originating bank. One of an International Bank Account
 	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
 	// domestic identifier like a US Routing Number.
-	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id,required"`
+	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id" api:"required"`
 	// An instruction of how to interpret the
 	// `originating_depository_financial_institution_id` field for this Transaction.
-	OriginatingDepositoryFinancialInstitutionIDQualifier InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier,required"`
+	OriginatingDepositoryFinancialInstitutionIDQualifier InboundACHTransferInternationalAddendaOriginatingDepositoryFinancialInstitutionIDQualifier `json:"originating_depository_financial_institution_id_qualifier" api:"required"`
 	// The name of the originating bank. Sometimes this will refer to an American bank
 	// and obscure the correspondent foreign bank.
-	OriginatingDepositoryFinancialInstitutionName string `json:"originating_depository_financial_institution_name,required"`
+	OriginatingDepositoryFinancialInstitutionName string `json:"originating_depository_financial_institution_name" api:"required"`
 	// A portion of the originator address. This may be incomplete.
-	OriginatorCity string `json:"originator_city,required"`
+	OriginatorCity string `json:"originator_city" api:"required"`
 	// A portion of the originator address. The
 	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
 	// code of the originator country.
-	OriginatorCountry string `json:"originator_country,required"`
+	OriginatorCountry string `json:"originator_country" api:"required"`
 	// An identifier for the originating company. This is generally stable across
 	// multiple ACH transfers.
-	OriginatorIdentification string `json:"originator_identification,required"`
+	OriginatorIdentification string `json:"originator_identification" api:"required"`
 	// Either the name of the originator or an intermediary money transmitter.
-	OriginatorName string `json:"originator_name,required"`
+	OriginatorName string `json:"originator_name" api:"required"`
 	// A portion of the originator address. This may be incomplete.
-	OriginatorPostalCode string `json:"originator_postal_code,required,nullable"`
+	OriginatorPostalCode string `json:"originator_postal_code" api:"required,nullable"`
 	// A portion of the originator address. This may be incomplete.
-	OriginatorStateOrProvince string `json:"originator_state_or_province,required,nullable"`
+	OriginatorStateOrProvince string `json:"originator_state_or_province" api:"required,nullable"`
 	// A portion of the originator address. This may be incomplete.
-	OriginatorStreetAddress string `json:"originator_street_address,required"`
+	OriginatorStreetAddress string `json:"originator_street_address" api:"required"`
 	// A description field set by the originator.
-	PaymentRelatedInformation string `json:"payment_related_information,required,nullable"`
+	PaymentRelatedInformation string `json:"payment_related_information" api:"required,nullable"`
 	// A description field set by the originator.
-	PaymentRelatedInformation2 string `json:"payment_related_information2,required,nullable"`
+	PaymentRelatedInformation2 string `json:"payment_related_information2" api:"required,nullable"`
 	// A portion of the receiver address. This may be incomplete.
-	ReceiverCity string `json:"receiver_city,required"`
+	ReceiverCity string `json:"receiver_city" api:"required"`
 	// A portion of the receiver address. The
 	// [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2 country
 	// code of the receiver country.
-	ReceiverCountry string `json:"receiver_country,required"`
+	ReceiverCountry string `json:"receiver_country" api:"required"`
 	// An identification number the originator uses for the receiver.
-	ReceiverIdentificationNumber string `json:"receiver_identification_number,required,nullable"`
+	ReceiverIdentificationNumber string `json:"receiver_identification_number" api:"required,nullable"`
 	// A portion of the receiver address. This may be incomplete.
-	ReceiverPostalCode string `json:"receiver_postal_code,required,nullable"`
+	ReceiverPostalCode string `json:"receiver_postal_code" api:"required,nullable"`
 	// A portion of the receiver address. This may be incomplete.
-	ReceiverStateOrProvince string `json:"receiver_state_or_province,required,nullable"`
+	ReceiverStateOrProvince string `json:"receiver_state_or_province" api:"required,nullable"`
 	// A portion of the receiver address. This may be incomplete.
-	ReceiverStreetAddress string `json:"receiver_street_address,required"`
+	ReceiverStreetAddress string `json:"receiver_street_address" api:"required"`
 	// The name of the receiver of the transfer. This is not verified by Increase.
-	ReceivingCompanyOrIndividualName string `json:"receiving_company_or_individual_name,required"`
+	ReceivingCompanyOrIndividualName string `json:"receiving_company_or_individual_name" api:"required"`
 	// The [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), Alpha-2
 	// country code of the receiving bank country.
-	ReceivingDepositoryFinancialInstitutionCountry string `json:"receiving_depository_financial_institution_country,required"`
+	ReceivingDepositoryFinancialInstitutionCountry string `json:"receiving_depository_financial_institution_country" api:"required"`
 	// An identifier for the receiving bank. One of an International Bank Account
 	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
 	// domestic identifier like a US Routing Number.
-	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id,required"`
+	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id" api:"required"`
 	// An instruction of how to interpret the
 	// `receiving_depository_financial_institution_id` field for this Transaction.
-	ReceivingDepositoryFinancialInstitutionIDQualifier InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier,required"`
+	ReceivingDepositoryFinancialInstitutionIDQualifier InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstitutionIDQualifier `json:"receiving_depository_financial_institution_id_qualifier" api:"required"`
 	// The name of the receiving bank, as set by the sending financial institution.
-	ReceivingDepositoryFinancialInstitutionName string                                     `json:"receiving_depository_financial_institution_name,required"`
+	ReceivingDepositoryFinancialInstitutionName string                                     `json:"receiving_depository_financial_institution_name" api:"required"`
 	JSON                                        inboundACHTransferInternationalAddendaJSON `json:"-"`
 }
 
@@ -659,9 +659,9 @@ func (r InboundACHTransferInternationalAddendaReceivingDepositoryFinancialInstit
 // contain its details.
 type InboundACHTransferNotificationOfChange struct {
 	// The new account number provided in the notification of change.
-	UpdatedAccountNumber string `json:"updated_account_number,required,nullable"`
+	UpdatedAccountNumber string `json:"updated_account_number" api:"required,nullable"`
 	// The new routing number provided in the notification of change.
-	UpdatedRoutingNumber string                                     `json:"updated_routing_number,required,nullable"`
+	UpdatedRoutingNumber string                                     `json:"updated_routing_number" api:"required,nullable"`
 	JSON                 inboundACHTransferNotificationOfChangeJSON `json:"-"`
 }
 
@@ -687,9 +687,9 @@ func (r inboundACHTransferNotificationOfChangeJSON) RawJSON() string {
 type InboundACHTransferSettlement struct {
 	// When the funds for this transfer settle at the recipient bank at the Federal
 	// Reserve.
-	SettledAt time.Time `json:"settled_at,required" format:"date-time"`
+	SettledAt time.Time `json:"settled_at" api:"required" format:"date-time"`
 	// The settlement schedule this transfer follows.
-	SettlementSchedule InboundACHTransferSettlementSettlementSchedule `json:"settlement_schedule,required"`
+	SettlementSchedule InboundACHTransferSettlementSettlementSchedule `json:"settlement_schedule" api:"required"`
 	JSON               inboundACHTransferSettlementJSON               `json:"-"`
 }
 
@@ -777,11 +777,11 @@ func (r InboundACHTransferStatus) IsKnown() bool {
 // If your transfer is returned, this will contain details of the return.
 type InboundACHTransferTransferReturn struct {
 	// The reason for the transfer return.
-	Reason InboundACHTransferTransferReturnReason `json:"reason,required"`
+	Reason InboundACHTransferTransferReturnReason `json:"reason" api:"required"`
 	// The time at which the transfer was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date-time"`
 	// The id of the transaction for the returned transfer.
-	TransactionID string                               `json:"transaction_id,required"`
+	TransactionID string                               `json:"transaction_id" api:"required"`
 	JSON          inboundACHTransferTransferReturnJSON `json:"-"`
 }
 
@@ -974,7 +974,7 @@ func (r InboundACHTransferDeclineParamsReason) IsKnown() bool {
 type InboundACHTransferTransferReturnParams struct {
 	// The reason why this transfer will be returned. The most usual return codes are
 	// `payment_stopped` for debits and `credit_entry_refused_by_receiver` for credits.
-	Reason param.Field[InboundACHTransferTransferReturnParamsReason] `json:"reason,required"`
+	Reason param.Field[InboundACHTransferTransferReturnParamsReason] `json:"reason" api:"required"`
 }
 
 func (r InboundACHTransferTransferReturnParams) MarshalJSON() (data []byte, err error) {

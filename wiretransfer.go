@@ -109,66 +109,66 @@ func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string,
 // accessible by Fedwire.
 type WireTransfer struct {
 	// The wire transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account to which the transfer belongs.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval WireTransferApproval `json:"approval,required,nullable"`
+	Approval WireTransferApproval `json:"approval" api:"required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation WireTransferCancellation `json:"cancellation,required,nullable"`
+	Cancellation WireTransferCancellation `json:"cancellation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy WireTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy WireTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// The person or business that is receiving the funds from the transfer.
-	Creditor WireTransferCreditor `json:"creditor,required,nullable"`
+	Creditor WireTransferCreditor `json:"creditor" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For wire transfers this is always equal to `usd`.
-	Currency WireTransferCurrency `json:"currency,required"`
+	Currency WireTransferCurrency `json:"currency" api:"required"`
 	// The person or business whose funds are being transferred.
-	Debtor WireTransferDebtor `json:"debtor,required,nullable"`
+	Debtor WireTransferDebtor `json:"debtor" api:"required,nullable"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The ID of an Inbound Wire Drawdown Request in response to which this transfer
 	// was sent.
-	InboundWireDrawdownRequestID string `json:"inbound_wire_drawdown_request_id,required,nullable"`
+	InboundWireDrawdownRequestID string `json:"inbound_wire_drawdown_request_id" api:"required,nullable"`
 	// The transfer's network.
-	Network WireTransferNetwork `json:"network,required"`
+	Network WireTransferNetwork `json:"network" api:"required"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// Remittance information sent with the wire transfer.
-	Remittance WireTransferRemittance `json:"remittance,required,nullable"`
+	Remittance WireTransferRemittance `json:"remittance" api:"required,nullable"`
 	// If your transfer is reversed, this will contain details of the reversal.
-	Reversal WireTransferReversal `json:"reversal,required,nullable"`
+	Reversal WireTransferReversal `json:"reversal" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The Account Number that was passed to the wire's recipient.
-	SourceAccountNumberID string `json:"source_account_number_id,required,nullable"`
+	SourceAccountNumberID string `json:"source_account_number_id" api:"required,nullable"`
 	// The lifecycle status of the transfer.
-	Status WireTransferStatus `json:"status,required"`
+	Status WireTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to Fedwire, this will contain supplemental
 	// details.
-	Submission WireTransferSubmission `json:"submission,required,nullable"`
+	Submission WireTransferSubmission `json:"submission" api:"required,nullable"`
 	// The ID for the transaction funding the transfer.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
-	Type        WireTransferType       `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        WireTransferType       `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        wireTransferJSON       `json:"-"`
 }
 
@@ -215,10 +215,10 @@ func (r wireTransferJSON) RawJSON() string {
 type WireTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	ApprovedAt time.Time `json:"approved_at" api:"required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string                   `json:"approved_by,required,nullable"`
+	ApprovedBy string                   `json:"approved_by" api:"required,nullable"`
 	JSON       wireTransferApprovalJSON `json:"-"`
 }
 
@@ -244,10 +244,10 @@ func (r wireTransferApprovalJSON) RawJSON() string {
 type WireTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string                       `json:"canceled_by,required,nullable"`
+	CanceledBy string                       `json:"canceled_by" api:"required,nullable"`
 	JSON       wireTransferCancellationJSON `json:"-"`
 }
 
@@ -271,13 +271,13 @@ func (r wireTransferCancellationJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type WireTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category WireTransferCreatedByCategory `json:"category,required"`
+	Category WireTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey WireTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey WireTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication WireTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication WireTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User WireTransferCreatedByUser `json:"user,nullable"`
+	User WireTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON wireTransferCreatedByJSON `json:"-"`
 }
 
@@ -320,7 +320,7 @@ func (r WireTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type WireTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                          `json:"description,required,nullable"`
+	Description string                          `json:"description" api:"required,nullable"`
 	JSON        wireTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -343,7 +343,7 @@ func (r wireTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type WireTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                    `json:"name,required"`
+	Name string                                    `json:"name" api:"required"`
 	JSON wireTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -366,7 +366,7 @@ func (r wireTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type WireTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                        `json:"email,required"`
+	Email string                        `json:"email" api:"required"`
 	JSON  wireTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -389,9 +389,9 @@ func (r wireTransferCreatedByUserJSON) RawJSON() string {
 // The person or business that is receiving the funds from the transfer.
 type WireTransferCreditor struct {
 	// The person or business's address.
-	Address WireTransferCreditorAddress `json:"address,required,nullable"`
+	Address WireTransferCreditorAddress `json:"address" api:"required,nullable"`
 	// The person or business's name.
-	Name string                   `json:"name,required,nullable"`
+	Name string                   `json:"name" api:"required,nullable"`
 	JSON wireTransferCreditorJSON `json:"-"`
 }
 
@@ -415,7 +415,7 @@ func (r wireTransferCreditorJSON) RawJSON() string {
 // The person or business's address.
 type WireTransferCreditorAddress struct {
 	// Unstructured address lines.
-	Unstructured WireTransferCreditorAddressUnstructured `json:"unstructured,required,nullable"`
+	Unstructured WireTransferCreditorAddressUnstructured `json:"unstructured" api:"required,nullable"`
 	JSON         wireTransferCreditorAddressJSON         `json:"-"`
 }
 
@@ -438,11 +438,11 @@ func (r wireTransferCreditorAddressJSON) RawJSON() string {
 // Unstructured address lines.
 type WireTransferCreditorAddressUnstructured struct {
 	// The first line.
-	Line1 string `json:"line1,required,nullable"`
+	Line1 string `json:"line1" api:"required,nullable"`
 	// The second line.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The third line.
-	Line3 string                                      `json:"line3,required,nullable"`
+	Line3 string                                      `json:"line3" api:"required,nullable"`
 	JSON  wireTransferCreditorAddressUnstructuredJSON `json:"-"`
 }
 
@@ -483,9 +483,9 @@ func (r WireTransferCurrency) IsKnown() bool {
 // The person or business whose funds are being transferred.
 type WireTransferDebtor struct {
 	// The person or business's address.
-	Address WireTransferDebtorAddress `json:"address,required,nullable"`
+	Address WireTransferDebtorAddress `json:"address" api:"required,nullable"`
 	// The person or business's name.
-	Name string                 `json:"name,required,nullable"`
+	Name string                 `json:"name" api:"required,nullable"`
 	JSON wireTransferDebtorJSON `json:"-"`
 }
 
@@ -509,7 +509,7 @@ func (r wireTransferDebtorJSON) RawJSON() string {
 // The person or business's address.
 type WireTransferDebtorAddress struct {
 	// Unstructured address lines.
-	Unstructured WireTransferDebtorAddressUnstructured `json:"unstructured,required,nullable"`
+	Unstructured WireTransferDebtorAddressUnstructured `json:"unstructured" api:"required,nullable"`
 	JSON         wireTransferDebtorAddressJSON         `json:"-"`
 }
 
@@ -532,11 +532,11 @@ func (r wireTransferDebtorAddressJSON) RawJSON() string {
 // Unstructured address lines.
 type WireTransferDebtorAddressUnstructured struct {
 	// The first line.
-	Line1 string `json:"line1,required,nullable"`
+	Line1 string `json:"line1" api:"required,nullable"`
 	// The second line.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The third line.
-	Line3 string                                    `json:"line3,required,nullable"`
+	Line3 string                                    `json:"line3" api:"required,nullable"`
 	JSON  wireTransferDebtorAddressUnstructuredJSON `json:"-"`
 }
 
@@ -576,13 +576,13 @@ func (r WireTransferNetwork) IsKnown() bool {
 // Remittance information sent with the wire transfer.
 type WireTransferRemittance struct {
 	// The type of remittance information being passed.
-	Category WireTransferRemittanceCategory `json:"category,required"`
+	Category WireTransferRemittanceCategory `json:"category" api:"required"`
 	// Internal Revenue Service (IRS) tax repayment information. Required if `category`
 	// is equal to `tax`.
-	Tax WireTransferRemittanceTax `json:"tax,nullable"`
+	Tax WireTransferRemittanceTax `json:"tax" api:"nullable"`
 	// Unstructured remittance information. Required if `category` is equal to
 	// `unstructured`.
-	Unstructured WireTransferRemittanceUnstructured `json:"unstructured,nullable"`
+	Unstructured WireTransferRemittanceUnstructured `json:"unstructured" api:"nullable"`
 	JSON         wireTransferRemittanceJSON         `json:"-"`
 }
 
@@ -625,12 +625,12 @@ func (r WireTransferRemittanceCategory) IsKnown() bool {
 type WireTransferRemittanceTax struct {
 	// The month and year the tax payment is for, in YYYY-MM-DD format. The day is
 	// ignored.
-	Date time.Time `json:"date,required" format:"date"`
+	Date time.Time `json:"date" api:"required" format:"date"`
 	// The 9-digit Tax Identification Number (TIN) or Employer Identification Number
 	// (EIN).
-	IdentificationNumber string `json:"identification_number,required"`
+	IdentificationNumber string `json:"identification_number" api:"required"`
 	// The 5-character tax type code.
-	TypeCode string                        `json:"type_code,required"`
+	TypeCode string                        `json:"type_code" api:"required"`
 	JSON     wireTransferRemittanceTaxJSON `json:"-"`
 }
 
@@ -656,7 +656,7 @@ func (r wireTransferRemittanceTaxJSON) RawJSON() string {
 // `unstructured`.
 type WireTransferRemittanceUnstructured struct {
 	// The message to the beneficiary.
-	Message string                                 `json:"message,required"`
+	Message string                                 `json:"message" api:"required"`
 	JSON    wireTransferRemittanceUnstructuredJSON `json:"-"`
 }
 
@@ -679,38 +679,38 @@ func (r wireTransferRemittanceUnstructuredJSON) RawJSON() string {
 // If your transfer is reversed, this will contain details of the reversal.
 type WireTransferReversal struct {
 	// The amount that was reversed in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the reversal was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The debtor's routing number.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required,nullable"`
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required,nullable"`
 	// The description on the reversal message from Fedwire, set by the reversing bank.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The Fedwire cycle date for the wire reversal. The "Fedwire day" begins at 9:00
 	// PM Eastern Time on the evening before the `cycle date`.
-	InputCycleDate time.Time `json:"input_cycle_date,required" format:"date"`
+	InputCycleDate time.Time `json:"input_cycle_date" api:"required" format:"date"`
 	// The Fedwire transaction identifier.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
+	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required"`
 	// The Fedwire sequence number.
-	InputSequenceNumber string `json:"input_sequence_number,required"`
+	InputSequenceNumber string `json:"input_sequence_number" api:"required"`
 	// The Fedwire input source identifier.
-	InputSource string `json:"input_source,required"`
+	InputSource string `json:"input_source" api:"required"`
 	// The sending bank's identifier for the reversal.
-	InstructionIdentification string `json:"instruction_identification,required,nullable"`
+	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
 	// Additional information about the reason for the reversal.
-	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information,required,nullable"`
+	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information" api:"required,nullable"`
 	// A code provided by the sending bank giving a reason for the reversal. The common
 	// return reason codes are
 	// [documented here](/documentation/wire-reversals#reversal-reason-codes).
-	ReturnReasonCode string `json:"return_reason_code,required,nullable"`
+	ReturnReasonCode string `json:"return_reason_code" api:"required,nullable"`
 	// An Increase-generated description of the `return_reason_code`.
-	ReturnReasonCodeDescription string `json:"return_reason_code_description,required,nullable"`
+	ReturnReasonCodeDescription string `json:"return_reason_code_description" api:"required,nullable"`
 	// The ID for the Transaction associated with the transfer reversal.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// The ID for the Wire Transfer that is being reversed.
-	WireTransferID string                   `json:"wire_transfer_id,required"`
-	ExtraFields    map[string]interface{}   `json:"-,extras"`
+	WireTransferID string                   `json:"wire_transfer_id" api:"required"`
+	ExtraFields    map[string]interface{}   `json:"-" api:"extrafields"`
 	JSON           wireTransferReversalJSON `json:"-"`
 }
 
@@ -770,9 +770,9 @@ func (r WireTransferStatus) IsKnown() bool {
 // details.
 type WireTransferSubmission struct {
 	// The accountability data for the submission.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required"`
+	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required"`
 	// When this wire transfer was submitted to Fedwire.
-	SubmittedAt time.Time                  `json:"submitted_at,required" format:"date-time"`
+	SubmittedAt time.Time                  `json:"submitted_at" api:"required" format:"date-time"`
 	JSON        wireTransferSubmissionJSON `json:"-"`
 }
 
@@ -811,13 +811,13 @@ func (r WireTransferType) IsKnown() bool {
 
 type WireTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The transfer amount in USD cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The person or business that is receiving the funds from the transfer.
-	Creditor param.Field[WireTransferNewParamsCreditor] `json:"creditor,required"`
+	Creditor param.Field[WireTransferNewParamsCreditor] `json:"creditor" api:"required"`
 	// Additional remittance information related to the wire transfer.
-	Remittance param.Field[WireTransferNewParamsRemittance] `json:"remittance,required"`
+	Remittance param.Field[WireTransferNewParamsRemittance] `json:"remittance" api:"required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number"`
 	// The person or business whose funds are being transferred. This is only necessary
@@ -846,7 +846,7 @@ func (r WireTransferNewParams) MarshalJSON() (data []byte, err error) {
 // The person or business that is receiving the funds from the transfer.
 type WireTransferNewParamsCreditor struct {
 	// The person or business's name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The person or business's address.
 	Address param.Field[WireTransferNewParamsCreditorAddress] `json:"address"`
 }
@@ -858,7 +858,7 @@ func (r WireTransferNewParamsCreditor) MarshalJSON() (data []byte, err error) {
 // The person or business's address.
 type WireTransferNewParamsCreditorAddress struct {
 	// Unstructured address lines.
-	Unstructured param.Field[WireTransferNewParamsCreditorAddressUnstructured] `json:"unstructured,required"`
+	Unstructured param.Field[WireTransferNewParamsCreditorAddressUnstructured] `json:"unstructured" api:"required"`
 }
 
 func (r WireTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err error) {
@@ -868,7 +868,7 @@ func (r WireTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err er
 // Unstructured address lines.
 type WireTransferNewParamsCreditorAddressUnstructured struct {
 	// The address line 1.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The address line 2.
 	Line2 param.Field[string] `json:"line2"`
 	// The address line 3.
@@ -882,7 +882,7 @@ func (r WireTransferNewParamsCreditorAddressUnstructured) MarshalJSON() (data []
 // Additional remittance information related to the wire transfer.
 type WireTransferNewParamsRemittance struct {
 	// The type of remittance information being passed.
-	Category param.Field[WireTransferNewParamsRemittanceCategory] `json:"category,required"`
+	Category param.Field[WireTransferNewParamsRemittanceCategory] `json:"category" api:"required"`
 	// Internal Revenue Service (IRS) tax repayment information. Required if `category`
 	// is equal to `tax`.
 	Tax param.Field[WireTransferNewParamsRemittanceTax] `json:"tax"`
@@ -916,12 +916,12 @@ func (r WireTransferNewParamsRemittanceCategory) IsKnown() bool {
 type WireTransferNewParamsRemittanceTax struct {
 	// The month and year the tax payment is for, in YYYY-MM-DD format. The day is
 	// ignored.
-	Date param.Field[time.Time] `json:"date,required" format:"date"`
+	Date param.Field[time.Time] `json:"date" api:"required" format:"date"`
 	// The 9-digit Tax Identification Number (TIN) or Employer Identification Number
 	// (EIN).
-	IdentificationNumber param.Field[string] `json:"identification_number,required"`
+	IdentificationNumber param.Field[string] `json:"identification_number" api:"required"`
 	// The 5-character tax type code.
-	TypeCode param.Field[string] `json:"type_code,required"`
+	TypeCode param.Field[string] `json:"type_code" api:"required"`
 }
 
 func (r WireTransferNewParamsRemittanceTax) MarshalJSON() (data []byte, err error) {
@@ -932,7 +932,7 @@ func (r WireTransferNewParamsRemittanceTax) MarshalJSON() (data []byte, err erro
 // `unstructured`.
 type WireTransferNewParamsRemittanceUnstructured struct {
 	// The information.
-	Message param.Field[string] `json:"message,required"`
+	Message param.Field[string] `json:"message" api:"required"`
 }
 
 func (r WireTransferNewParamsRemittanceUnstructured) MarshalJSON() (data []byte, err error) {
@@ -944,7 +944,7 @@ func (r WireTransferNewParamsRemittanceUnstructured) MarshalJSON() (data []byte,
 // associated entity's details.
 type WireTransferNewParamsDebtor struct {
 	// The person or business's name.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The person or business's address.
 	Address param.Field[WireTransferNewParamsDebtorAddress] `json:"address"`
 }
@@ -956,7 +956,7 @@ func (r WireTransferNewParamsDebtor) MarshalJSON() (data []byte, err error) {
 // The person or business's address.
 type WireTransferNewParamsDebtorAddress struct {
 	// Unstructured address lines.
-	Unstructured param.Field[WireTransferNewParamsDebtorAddressUnstructured] `json:"unstructured,required"`
+	Unstructured param.Field[WireTransferNewParamsDebtorAddressUnstructured] `json:"unstructured" api:"required"`
 }
 
 func (r WireTransferNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
@@ -966,7 +966,7 @@ func (r WireTransferNewParamsDebtorAddress) MarshalJSON() (data []byte, err erro
 // Unstructured address lines.
 type WireTransferNewParamsDebtorAddressUnstructured struct {
 	// The address line 1.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The address line 2.
 	Line2 param.Field[string] `json:"line2"`
 	// The address line 3.

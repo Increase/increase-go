@@ -88,27 +88,27 @@ func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID s
 // Inbound Mail Items represent pieces of physical mail delivered to a Lockbox.
 type InboundMailItem struct {
 	// The Inbound Mail Item identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The checks in the mail item.
-	Checks []InboundMailItemCheck `json:"checks,required"`
+	Checks []InboundMailItemCheck `json:"checks" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Inbound
 	// Mail Item was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The identifier for the File containing the scanned contents of the mail item.
-	FileID string `json:"file_id,required"`
+	FileID string `json:"file_id" api:"required"`
 	// The identifier for the Lockbox that received this mail item. For mail items that
 	// could not be processed due to an invalid address, this will be null.
-	LockboxID string `json:"lockbox_id,required,nullable"`
+	LockboxID string `json:"lockbox_id" api:"required,nullable"`
 	// The recipient name as written on the mail item.
-	RecipientName string `json:"recipient_name,required,nullable"`
+	RecipientName string `json:"recipient_name" api:"required,nullable"`
 	// If the mail item has been rejected, why it was rejected.
-	RejectionReason InboundMailItemRejectionReason `json:"rejection_reason,required,nullable"`
+	RejectionReason InboundMailItemRejectionReason `json:"rejection_reason" api:"required,nullable"`
 	// If the mail item has been processed.
-	Status InboundMailItemStatus `json:"status,required"`
+	Status InboundMailItemStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_mail_item`.
-	Type        InboundMailItemType    `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        InboundMailItemType    `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        inboundMailItemJSON    `json:"-"`
 }
 
@@ -138,15 +138,15 @@ func (r inboundMailItemJSON) RawJSON() string {
 // Inbound Mail Item Checks represent the checks in an Inbound Mail Item.
 type InboundMailItemCheck struct {
 	// The amount of the check.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier for the File containing the back of the check.
-	BackFileID string `json:"back_file_id,required,nullable"`
+	BackFileID string `json:"back_file_id" api:"required,nullable"`
 	// The identifier of the Check Deposit if this check was deposited.
-	CheckDepositID string `json:"check_deposit_id,required,nullable"`
+	CheckDepositID string `json:"check_deposit_id" api:"required,nullable"`
 	// The identifier for the File containing the front of the check.
-	FrontFileID string `json:"front_file_id,required,nullable"`
+	FrontFileID string `json:"front_file_id" api:"required,nullable"`
 	// The status of the Inbound Mail Item Check.
-	Status InboundMailItemChecksStatus `json:"status,required,nullable"`
+	Status InboundMailItemChecksStatus `json:"status" api:"required,nullable"`
 	JSON   inboundMailItemCheckJSON    `json:"-"`
 }
 
@@ -283,7 +283,7 @@ func (r InboundMailItemListParamsCreatedAt) URLQuery() (v url.Values) {
 
 type InboundMailItemActionParams struct {
 	// The actions to perform on the Inbound Mail Item.
-	Checks param.Field[[]InboundMailItemActionParamsCheck] `json:"checks,required"`
+	Checks param.Field[[]InboundMailItemActionParamsCheck] `json:"checks" api:"required"`
 }
 
 func (r InboundMailItemActionParams) MarshalJSON() (data []byte, err error) {
@@ -292,7 +292,7 @@ func (r InboundMailItemActionParams) MarshalJSON() (data []byte, err error) {
 
 type InboundMailItemActionParamsCheck struct {
 	// The action to perform on the Inbound Mail Item.
-	Action param.Field[InboundMailItemActionParamsChecksAction] `json:"action,required"`
+	Action param.Field[InboundMailItemActionParamsChecksAction] `json:"action" api:"required"`
 	// The identifier of the Account to deposit the check into. If not provided, the
 	// check will be deposited into the Account associated with the Lockbox.
 	Account param.Field[string] `json:"account"`

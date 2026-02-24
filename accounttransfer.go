@@ -113,52 +113,52 @@ func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID s
 // the transfer is approved).
 type AccountTransfer struct {
 	// The Account Transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account from which the transfer originated.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The transfer amount in cents. This will always be positive and indicates the
 	// amount of money leaving the originating account.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval AccountTransferApproval `json:"approval,required,nullable"`
+	Approval AccountTransferApproval `json:"approval" api:"required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation AccountTransferCancellation `json:"cancellation,required,nullable"`
+	Cancellation AccountTransferCancellation `json:"cancellation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy AccountTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy AccountTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency.
-	Currency AccountTransferCurrency `json:"currency,required"`
+	Currency AccountTransferCurrency `json:"currency" api:"required"`
 	// An internal-facing description for the transfer for display in the API and
 	// dashboard. This will also show in the description of the created Transactions.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The destination Account's identifier.
-	DestinationAccountID string `json:"destination_account_id,required"`
+	DestinationAccountID string `json:"destination_account_id" api:"required"`
 	// The identifier of the Transaction on the destination Account representing the
 	// received funds.
-	DestinationTransactionID string `json:"destination_transaction_id,required,nullable"`
+	DestinationTransactionID string `json:"destination_transaction_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The lifecycle status of the transfer.
-	Status AccountTransferStatus `json:"status,required"`
+	Status AccountTransferStatus `json:"status" api:"required"`
 	// The identifier of the Transaction on the originating account representing the
 	// transferred funds.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_transfer`.
-	Type        AccountTransferType    `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        AccountTransferType    `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        accountTransferJSON    `json:"-"`
 }
 
@@ -197,10 +197,10 @@ func (r accountTransferJSON) RawJSON() string {
 type AccountTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	ApprovedAt time.Time `json:"approved_at" api:"required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string                      `json:"approved_by,required,nullable"`
+	ApprovedBy string                      `json:"approved_by" api:"required,nullable"`
 	JSON       accountTransferApprovalJSON `json:"-"`
 }
 
@@ -226,10 +226,10 @@ func (r accountTransferApprovalJSON) RawJSON() string {
 type AccountTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string                          `json:"canceled_by,required,nullable"`
+	CanceledBy string                          `json:"canceled_by" api:"required,nullable"`
 	JSON       accountTransferCancellationJSON `json:"-"`
 }
 
@@ -253,13 +253,13 @@ func (r accountTransferCancellationJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type AccountTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category AccountTransferCreatedByCategory `json:"category,required"`
+	Category AccountTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey AccountTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey AccountTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication AccountTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication AccountTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User AccountTransferCreatedByUser `json:"user,nullable"`
+	User AccountTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON accountTransferCreatedByJSON `json:"-"`
 }
 
@@ -302,7 +302,7 @@ func (r AccountTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type AccountTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                             `json:"description,required,nullable"`
+	Description string                             `json:"description" api:"required,nullable"`
 	JSON        accountTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -325,7 +325,7 @@ func (r accountTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type AccountTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                       `json:"name,required"`
+	Name string                                       `json:"name" api:"required"`
 	JSON accountTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -348,7 +348,7 @@ func (r accountTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type AccountTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                           `json:"email,required"`
+	Email string                           `json:"email" api:"required"`
 	JSON  accountTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -419,15 +419,15 @@ func (r AccountTransferType) IsKnown() bool {
 
 type AccountTransferNewParams struct {
 	// The identifier for the originating Account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The transfer amount in the minor unit of the account currency. For dollars, for
 	// example, this is cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// An internal-facing description for the transfer for display in the API and
 	// dashboard. This will also show in the description of the created Transactions.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// The identifier for the destination Account that will receive the transfer.
-	DestinationAccountID param.Field[string] `json:"destination_account_id,required"`
+	DestinationAccountID param.Field[string] `json:"destination_account_id" api:"required"`
 	// Whether the transfer should require explicit approval via the dashboard or API.
 	// For more information, see
 	// [Transfer Approvals](/documentation/transfer-approvals).

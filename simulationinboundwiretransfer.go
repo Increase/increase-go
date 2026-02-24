@@ -42,9 +42,9 @@ func (r *SimulationInboundWireTransferService) New(ctx context.Context, body Sim
 
 type SimulationInboundWireTransferNewParams struct {
 	// The identifier of the Account Number the inbound Wire Transfer is for.
-	AccountNumberID param.Field[string] `json:"account_number_id,required"`
+	AccountNumberID param.Field[string] `json:"account_number_id" api:"required"`
 	// The transfer amount in cents. Must be positive.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The sending bank will set creditor_address_line1 in production. You can simulate
 	// any value here.
 	CreditorAddressLine1 param.Field[string] `json:"creditor_address_line1"`

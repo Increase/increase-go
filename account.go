@@ -122,57 +122,57 @@ func (r *AccountService) Close(ctx context.Context, accountID string, opts ...op
 // transfers, and send payments. They earn interest and have depository insurance.
 type Account struct {
 	// The Account identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The account revenue rate currently being earned on the account, as a string
 	// containing a decimal number. For example, a 1% account revenue rate would be
 	// represented as "0.01". Account revenue is a type of non-interest income accrued
 	// on the account.
-	AccountRevenueRate string `json:"account_revenue_rate,required,nullable"`
+	AccountRevenueRate string `json:"account_revenue_rate" api:"required,nullable"`
 	// The bank the Account is with.
-	Bank AccountBank `json:"bank,required"`
+	Bank AccountBank `json:"bank" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was closed.
-	ClosedAt time.Time `json:"closed_at,required,nullable" format:"date-time"`
+	ClosedAt time.Time `json:"closed_at" api:"required,nullable" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Account
 	// currency.
-	Currency AccountCurrency `json:"currency,required"`
+	Currency AccountCurrency `json:"currency" api:"required"`
 	// The identifier for the Entity the Account belongs to.
-	EntityID string `json:"entity_id,required"`
+	EntityID string `json:"entity_id" api:"required"`
 	// Whether the Account is funded by a loan or by deposits.
-	Funding AccountFunding `json:"funding,required"`
+	Funding AccountFunding `json:"funding" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
-	InformationalEntityID string `json:"informational_entity_id,required,nullable"`
+	InformationalEntityID string `json:"informational_entity_id" api:"required,nullable"`
 	// The interest accrued but not yet paid, expressed as a string containing a
 	// floating-point value.
-	InterestAccrued string `json:"interest_accrued,required"`
+	InterestAccrued string `json:"interest_accrued" api:"required"`
 	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
 	// interest was accrued.
-	InterestAccruedAt time.Time `json:"interest_accrued_at,required,nullable" format:"date"`
+	InterestAccruedAt time.Time `json:"interest_accrued_at" api:"required,nullable" format:"date"`
 	// The interest rate currently being earned on the account, as a string containing
 	// a decimal number. For example, a 1% interest rate would be represented as
 	// "0.01".
-	InterestRate string `json:"interest_rate,required"`
+	InterestRate string `json:"interest_rate" api:"required"`
 	// The Account's loan-related information, if the Account is a loan account.
-	Loan AccountLoan `json:"loan,required,nullable"`
+	Loan AccountLoan `json:"loan" api:"required,nullable"`
 	// The name you choose for the Account.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The identifier of the Program determining the compliance and commercial terms of
 	// this Account.
-	ProgramID string `json:"program_id,required"`
+	ProgramID string `json:"program_id" api:"required"`
 	// The status of the Account.
-	Status AccountStatus `json:"status,required"`
+	Status AccountStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account`.
-	Type        AccountType            `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        AccountType            `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        accountJSON            `json:"-"`
 }
 
@@ -260,16 +260,16 @@ func (r AccountFunding) IsKnown() bool {
 // The Account's loan-related information, if the Account is a loan account.
 type AccountLoan struct {
 	// The maximum amount of money that can be borrowed on the Account.
-	CreditLimit int64 `json:"credit_limit,required"`
+	CreditLimit int64 `json:"credit_limit" api:"required"`
 	// The number of days after the statement date that the Account can be past due
 	// before being considered delinquent.
-	GracePeriodDays int64 `json:"grace_period_days,required"`
+	GracePeriodDays int64 `json:"grace_period_days" api:"required"`
 	// The date on which the loan matures.
-	MaturityDate time.Time `json:"maturity_date,required,nullable" format:"date"`
+	MaturityDate time.Time `json:"maturity_date" api:"required,nullable" format:"date"`
 	// The day of the month on which the loan statement is generated.
-	StatementDayOfMonth int64 `json:"statement_day_of_month,required"`
+	StatementDayOfMonth int64 `json:"statement_day_of_month" api:"required"`
 	// The type of payment for the loan.
-	StatementPaymentType AccountLoanStatementPaymentType `json:"statement_payment_type,required"`
+	StatementPaymentType AccountLoanStatementPaymentType `json:"statement_payment_type" api:"required"`
 	JSON                 accountLoanJSON                 `json:"-"`
 }
 
@@ -344,18 +344,18 @@ func (r AccountType) IsKnown() bool {
 // time.
 type BalanceLookup struct {
 	// The identifier for the account for which the balance was queried.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Account's available balance, representing the current balance less any open
 	// Pending Transactions on the Account.
-	AvailableBalance int64 `json:"available_balance,required"`
+	AvailableBalance int64 `json:"available_balance" api:"required"`
 	// The Account's current balance, representing the sum of all posted Transactions
 	// on the Account.
-	CurrentBalance int64 `json:"current_balance,required"`
+	CurrentBalance int64 `json:"current_balance" api:"required"`
 	// The loan balances for the Account.
-	Loan BalanceLookupLoan `json:"loan,required,nullable"`
+	Loan BalanceLookupLoan `json:"loan" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
-	Type BalanceLookupType `json:"type,required"`
+	Type BalanceLookupType `json:"type" api:"required"`
 	JSON balanceLookupJSON `json:"-"`
 }
 
@@ -382,11 +382,11 @@ func (r balanceLookupJSON) RawJSON() string {
 type BalanceLookupLoan struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the loan
 	// payment is due.
-	DueAt time.Time `json:"due_at,required,nullable" format:"date-time"`
+	DueAt time.Time `json:"due_at" api:"required,nullable" format:"date-time"`
 	// The total amount due on the loan.
-	DueBalance int64 `json:"due_balance,required"`
+	DueBalance int64 `json:"due_balance" api:"required"`
 	// The amount past due on the loan.
-	PastDueBalance int64                 `json:"past_due_balance,required"`
+	PastDueBalance int64                 `json:"past_due_balance" api:"required"`
 	JSON           balanceLookupLoanJSON `json:"-"`
 }
 
@@ -426,7 +426,7 @@ func (r BalanceLookupType) IsKnown() bool {
 
 type AccountNewParams struct {
 	// The name you choose for the Account.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// The identifier for the Entity that will own the Account.
 	EntityID param.Field[string] `json:"entity_id"`
 	// Whether the Account is funded by a loan or by deposits.
@@ -464,14 +464,14 @@ func (r AccountNewParamsFunding) IsKnown() bool {
 // The loan details for the account.
 type AccountNewParamsLoan struct {
 	// The maximum amount of money that can be drawn from the Account.
-	CreditLimit param.Field[int64] `json:"credit_limit,required"`
+	CreditLimit param.Field[int64] `json:"credit_limit" api:"required"`
 	// The number of days after the statement date that the Account can be past due
 	// before being considered delinquent.
-	GracePeriodDays param.Field[int64] `json:"grace_period_days,required"`
+	GracePeriodDays param.Field[int64] `json:"grace_period_days" api:"required"`
 	// The day of the month on which the loan statement is generated.
-	StatementDayOfMonth param.Field[int64] `json:"statement_day_of_month,required"`
+	StatementDayOfMonth param.Field[int64] `json:"statement_day_of_month" api:"required"`
 	// The type of statement payment for the account.
-	StatementPaymentType param.Field[AccountNewParamsLoanStatementPaymentType] `json:"statement_payment_type,required"`
+	StatementPaymentType param.Field[AccountNewParamsLoanStatementPaymentType] `json:"statement_payment_type" api:"required"`
 	// The date on which the loan matures.
 	MaturityDate param.Field[time.Time] `json:"maturity_date" format:"date"`
 }
@@ -510,7 +510,7 @@ func (r AccountUpdateParams) MarshalJSON() (data []byte, err error) {
 // The loan details for the account.
 type AccountUpdateParamsLoan struct {
 	// The maximum amount of money that can be drawn from the Account.
-	CreditLimit param.Field[int64] `json:"credit_limit,required"`
+	CreditLimit param.Field[int64] `json:"credit_limit" api:"required"`
 }
 
 func (r AccountUpdateParamsLoan) MarshalJSON() (data []byte, err error) {

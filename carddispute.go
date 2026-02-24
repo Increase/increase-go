@@ -109,45 +109,45 @@ func (r *CardDisputeService) Withdraw(ctx context.Context, cardDisputeID string,
 // we'll work with the card networks to return the funds if appropriate.
 type CardDispute struct {
 	// The Card Dispute identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The amount of the dispute.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The Card that the Card Dispute is associated with.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The identifier of the Transaction that was disputed.
-	DisputedTransactionID string `json:"disputed_transaction_id,required"`
+	DisputedTransactionID string `json:"disputed_transaction_id" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// If the Card Dispute's status is `lost`, this will contain details of the lost
 	// dispute.
-	Loss CardDisputeLoss `json:"loss,required,nullable"`
+	Loss CardDisputeLoss `json:"loss" api:"required,nullable"`
 	// The network that the Card Dispute is associated with.
-	Network CardDisputeNetwork `json:"network,required"`
+	Network CardDisputeNetwork `json:"network" api:"required"`
 	// The status of the Card Dispute.
-	Status CardDisputeStatus `json:"status,required"`
+	Status CardDisputeStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_dispute`.
-	Type CardDisputeType `json:"type,required"`
+	Type CardDisputeType `json:"type" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the user submission is required by. Present only if status is
 	// `user_submission_required` and a user submission is required by a certain time.
 	// Otherwise, this will be `nil`.
-	UserSubmissionRequiredBy time.Time `json:"user_submission_required_by,required,nullable" format:"date-time"`
+	UserSubmissionRequiredBy time.Time `json:"user_submission_required_by" api:"required,nullable" format:"date-time"`
 	// Card Dispute information for card payments processed over Visa's network. This
 	// field will be present in the JSON response if and only if `network` is equal to
 	// `visa`.
-	Visa CardDisputeVisa `json:"visa,required,nullable"`
+	Visa CardDisputeVisa `json:"visa" api:"required,nullable"`
 	// If the Card Dispute's status is `won`, this will contain details of the won
 	// dispute.
-	Win CardDisputeWin `json:"win,required,nullable"`
+	Win CardDisputeWin `json:"win" api:"required,nullable"`
 	// If the Card Dispute has been withdrawn, this will contain details of the
 	// withdrawal.
-	Withdrawal CardDisputeWithdrawal `json:"withdrawal,required,nullable"`
+	Withdrawal CardDisputeWithdrawal `json:"withdrawal" api:"required,nullable"`
 	JSON       cardDisputeJSON       `json:"-"`
 }
 
@@ -184,9 +184,9 @@ func (r cardDisputeJSON) RawJSON() string {
 type CardDisputeLoss struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was lost.
-	LostAt time.Time `json:"lost_at,required" format:"date-time"`
+	LostAt time.Time `json:"lost_at" api:"required" format:"date-time"`
 	// The reason the Card Dispute was lost.
-	Reason CardDisputeLossReason `json:"reason,required"`
+	Reason CardDisputeLossReason `json:"reason" api:"required"`
 	JSON   cardDisputeLossJSON   `json:"-"`
 }
 
@@ -280,13 +280,13 @@ func (r CardDisputeType) IsKnown() bool {
 // `visa`.
 type CardDisputeVisa struct {
 	// The network events for the Card Dispute.
-	NetworkEvents []CardDisputeVisaNetworkEvent `json:"network_events,required"`
+	NetworkEvents []CardDisputeVisaNetworkEvent `json:"network_events" api:"required"`
 	// The category of the currently required user submission if the user wishes to
 	// proceed with the dispute. Present if and only if status is
 	// `user_submission_required`. Otherwise, this will be `nil`.
-	RequiredUserSubmissionCategory CardDisputeVisaRequiredUserSubmissionCategory `json:"required_user_submission_category,required,nullable"`
+	RequiredUserSubmissionCategory CardDisputeVisaRequiredUserSubmissionCategory `json:"required_user_submission_category" api:"required,nullable"`
 	// The user submissions for the Card Dispute.
-	UserSubmissions []CardDisputeVisaUserSubmission `json:"user_submissions,required"`
+	UserSubmissions []CardDisputeVisaUserSubmission `json:"user_submissions" api:"required"`
 	JSON            cardDisputeVisaJSON             `json:"-"`
 }
 
@@ -309,96 +309,96 @@ func (r cardDisputeVisaJSON) RawJSON() string {
 
 type CardDisputeVisaNetworkEvent struct {
 	// The files attached to the Visa Card Dispute User Submission.
-	AttachmentFiles []CardDisputeVisaNetworkEventsAttachmentFile `json:"attachment_files,required"`
+	AttachmentFiles []CardDisputeVisaNetworkEventsAttachmentFile `json:"attachment_files" api:"required"`
 	// The category of the user submission. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
-	Category CardDisputeVisaNetworkEventsCategory `json:"category,required"`
+	Category CardDisputeVisaNetworkEventsCategory `json:"category" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute Network Event was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The dispute financial transaction that resulted from the network event, if any.
-	DisputeFinancialTransactionID string `json:"dispute_financial_transaction_id,required,nullable"`
+	DisputeFinancialTransactionID string `json:"dispute_financial_transaction_id" api:"required,nullable"`
 	// A Card Dispute Chargeback Accepted Visa Network Event object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `chargeback_accepted`. Contains the details specific to a chargeback accepted
 	// Visa Card Dispute Network Event, which represents that a chargeback has been
 	// accepted by the merchant.
-	ChargebackAccepted CardDisputeVisaNetworkEventsChargebackAccepted `json:"chargeback_accepted,nullable"`
+	ChargebackAccepted CardDisputeVisaNetworkEventsChargebackAccepted `json:"chargeback_accepted" api:"nullable"`
 	// A Card Dispute Chargeback Submitted Visa Network Event object. This field will
 	// be present in the JSON response if and only if `category` is equal to
 	// `chargeback_submitted`. Contains the details specific to a chargeback submitted
 	// Visa Card Dispute Network Event, which represents that a chargeback has been
 	// submitted to the network.
-	ChargebackSubmitted CardDisputeVisaNetworkEventsChargebackSubmitted `json:"chargeback_submitted,nullable"`
+	ChargebackSubmitted CardDisputeVisaNetworkEventsChargebackSubmitted `json:"chargeback_submitted" api:"nullable"`
 	// A Card Dispute Chargeback Timed Out Visa Network Event object. This field will
 	// be present in the JSON response if and only if `category` is equal to
 	// `chargeback_timed_out`. Contains the details specific to a chargeback timed out
 	// Visa Card Dispute Network Event, which represents that the chargeback has timed
 	// out in the user's favor.
-	ChargebackTimedOut CardDisputeVisaNetworkEventsChargebackTimedOut `json:"chargeback_timed_out,nullable"`
+	ChargebackTimedOut CardDisputeVisaNetworkEventsChargebackTimedOut `json:"chargeback_timed_out" api:"nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Decline Submitted Visa Network Event
 	// object. This field will be present in the JSON response if and only if
 	// `category` is equal to `merchant_prearbitration_decline_submitted`. Contains the
 	// details specific to a merchant prearbitration decline submitted Visa Card
 	// Dispute Network Event, which represents that the user has declined the
 	// merchant's request for a prearbitration request decision in their favor.
-	MerchantPrearbitrationDeclineSubmitted CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted `json:"merchant_prearbitration_decline_submitted,nullable"`
+	MerchantPrearbitrationDeclineSubmitted CardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmitted `json:"merchant_prearbitration_decline_submitted" api:"nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Received Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `merchant_prearbitration_received`. Contains the details specific to a merchant
 	// prearbitration received Visa Card Dispute Network Event, which represents that
 	// the merchant has issued a prearbitration request in the user's favor.
-	MerchantPrearbitrationReceived CardDisputeVisaNetworkEventsMerchantPrearbitrationReceived `json:"merchant_prearbitration_received,nullable"`
+	MerchantPrearbitrationReceived CardDisputeVisaNetworkEventsMerchantPrearbitrationReceived `json:"merchant_prearbitration_received" api:"nullable"`
 	// A Card Dispute Merchant Pre-Arbitration Timed Out Visa Network Event object.
 	// This field will be present in the JSON response if and only if `category` is
 	// equal to `merchant_prearbitration_timed_out`. Contains the details specific to a
 	// merchant prearbitration timed out Visa Card Dispute Network Event, which
 	// represents that the user has timed out responding to the merchant's
 	// prearbitration request.
-	MerchantPrearbitrationTimedOut CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut `json:"merchant_prearbitration_timed_out,nullable"`
+	MerchantPrearbitrationTimedOut CardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOut `json:"merchant_prearbitration_timed_out" api:"nullable"`
 	// A Card Dispute Re-presented Visa Network Event object. This field will be
 	// present in the JSON response if and only if `category` is equal to
 	// `represented`. Contains the details specific to a re-presented Visa Card Dispute
 	// Network Event, which represents that the merchant has declined the user's
 	// chargeback and has re-presented the payment.
-	Represented CardDisputeVisaNetworkEventsRepresented `json:"represented,nullable"`
+	Represented CardDisputeVisaNetworkEventsRepresented `json:"represented" api:"nullable"`
 	// A Card Dispute Re-presentment Timed Out Visa Network Event object. This field
 	// will be present in the JSON response if and only if `category` is equal to
 	// `representment_timed_out`. Contains the details specific to a re-presentment
 	// time-out Visa Card Dispute Network Event, which represents that the user did not
 	// respond to the re-presentment by the merchant within the time limit.
-	RepresentmentTimedOut CardDisputeVisaNetworkEventsRepresentmentTimedOut `json:"representment_timed_out,nullable"`
+	RepresentmentTimedOut CardDisputeVisaNetworkEventsRepresentmentTimedOut `json:"representment_timed_out" api:"nullable"`
 	// A Card Dispute User Pre-Arbitration Accepted Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_accepted`. Contains the details specific to a user
 	// prearbitration accepted Visa Card Dispute Network Event, which represents that
 	// the merchant has accepted the user's prearbitration request in the user's favor.
-	UserPrearbitrationAccepted CardDisputeVisaNetworkEventsUserPrearbitrationAccepted `json:"user_prearbitration_accepted,nullable"`
+	UserPrearbitrationAccepted CardDisputeVisaNetworkEventsUserPrearbitrationAccepted `json:"user_prearbitration_accepted" api:"nullable"`
 	// A Card Dispute User Pre-Arbitration Declined Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_declined`. Contains the details specific to a user
 	// prearbitration declined Visa Card Dispute Network Event, which represents that
 	// the merchant has declined the user's prearbitration request.
-	UserPrearbitrationDeclined CardDisputeVisaNetworkEventsUserPrearbitrationDeclined `json:"user_prearbitration_declined,nullable"`
+	UserPrearbitrationDeclined CardDisputeVisaNetworkEventsUserPrearbitrationDeclined `json:"user_prearbitration_declined" api:"nullable"`
 	// A Card Dispute User Pre-Arbitration Submitted Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_submitted`. Contains the details specific to a user
 	// prearbitration submitted Visa Card Dispute Network Event, which represents that
 	// the user's request for prearbitration has been submitted to the network.
-	UserPrearbitrationSubmitted CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted `json:"user_prearbitration_submitted,nullable"`
+	UserPrearbitrationSubmitted CardDisputeVisaNetworkEventsUserPrearbitrationSubmitted `json:"user_prearbitration_submitted" api:"nullable"`
 	// A Card Dispute User Pre-Arbitration Timed Out Visa Network Event object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration_timed_out`. Contains the details specific to a user
 	// prearbitration timed out Visa Card Dispute Network Event, which represents that
 	// the merchant has timed out responding to the user's prearbitration request.
-	UserPrearbitrationTimedOut CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut `json:"user_prearbitration_timed_out,nullable"`
+	UserPrearbitrationTimedOut CardDisputeVisaNetworkEventsUserPrearbitrationTimedOut `json:"user_prearbitration_timed_out" api:"nullable"`
 	// A Card Dispute User Withdrawal Submitted Visa Network Event object. This field
 	// will be present in the JSON response if and only if `category` is equal to
 	// `user_withdrawal_submitted`. Contains the details specific to a user withdrawal
 	// submitted Visa Card Dispute Network Event, which represents that the user's
 	// request to withdraw the dispute has been submitted to the network.
-	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted,nullable"`
+	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted" api:"nullable"`
 	JSON                    cardDisputeVisaNetworkEventJSON                     `json:"-"`
 }
 
@@ -436,7 +436,7 @@ func (r cardDisputeVisaNetworkEventJSON) RawJSON() string {
 
 type CardDisputeVisaNetworkEventsAttachmentFile struct {
 	// The ID of the file attached to the Card Dispute.
-	FileID string                                         `json:"file_id,required"`
+	FileID string                                         `json:"file_id" api:"required"`
 	JSON   cardDisputeVisaNetworkEventsAttachmentFileJSON `json:"-"`
 }
 
@@ -591,29 +591,29 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationDeclineSubmittedJSON) 
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceived struct {
 	// Cardholder no longer disputes details. Present if and only if `reason` is
 	// `cardholder_no_longer_disputes`.
-	CardholderNoLongerDisputes CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCardholderNoLongerDisputes `json:"cardholder_no_longer_disputes,required,nullable"`
+	CardholderNoLongerDisputes CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCardholderNoLongerDisputes `json:"cardholder_no_longer_disputes" api:"required,nullable"`
 	// Compelling evidence details. Present if and only if `reason` is
 	// `compelling_evidence`.
-	CompellingEvidence CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvidence `json:"compelling_evidence,required,nullable"`
+	CompellingEvidence CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvidence `json:"compelling_evidence" api:"required,nullable"`
 	// Credit or reversal processed details. Present if and only if `reason` is
 	// `credit_or_reversal_processed`.
-	CreditOrReversalProcessed CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCreditOrReversalProcessed `json:"credit_or_reversal_processed,required,nullable"`
+	CreditOrReversalProcessed CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCreditOrReversalProcessed `json:"credit_or_reversal_processed" api:"required,nullable"`
 	// Delayed charge transaction details. Present if and only if `reason` is
 	// `delayed_charge_transaction`.
-	DelayedChargeTransaction CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedDelayedChargeTransaction `json:"delayed_charge_transaction,required,nullable"`
+	DelayedChargeTransaction CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedDelayedChargeTransaction `json:"delayed_charge_transaction" api:"required,nullable"`
 	// Evidence of imprint details. Present if and only if `reason` is
 	// `evidence_of_imprint`.
-	EvidenceOfImprint CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedEvidenceOfImprint `json:"evidence_of_imprint,required,nullable"`
+	EvidenceOfImprint CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedEvidenceOfImprint `json:"evidence_of_imprint" api:"required,nullable"`
 	// Invalid dispute details. Present if and only if `reason` is `invalid_dispute`.
-	InvalidDispute CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDispute `json:"invalid_dispute,required,nullable"`
+	InvalidDispute CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDispute `json:"invalid_dispute" api:"required,nullable"`
 	// Non-fiat currency or non-fungible token received details. Present if and only if
 	// `reason` is `non_fiat_currency_or_non_fungible_token_received`.
-	NonFiatCurrencyOrNonFungibleTokenReceived CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedNonFiatCurrencyOrNonFungibleTokenReceived `json:"non_fiat_currency_or_non_fungible_token_received,required,nullable"`
+	NonFiatCurrencyOrNonFungibleTokenReceived CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedNonFiatCurrencyOrNonFungibleTokenReceived `json:"non_fiat_currency_or_non_fungible_token_received" api:"required,nullable"`
 	// Prior undisputed non-fraud transactions details. Present if and only if `reason`
 	// is `prior_undisputed_non_fraud_transactions`.
-	PriorUndisputedNonFraudTransactions CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedPriorUndisputedNonFraudTransactions `json:"prior_undisputed_non_fraud_transactions,required,nullable"`
+	PriorUndisputedNonFraudTransactions CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedPriorUndisputedNonFraudTransactions `json:"prior_undisputed_non_fraud_transactions" api:"required,nullable"`
 	// The reason the merchant re-presented the dispute.
-	Reason CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedReason `json:"reason,required"`
+	Reason CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedReason `json:"reason" api:"required"`
 	JSON   cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedJSON   `json:"-"`
 }
 
@@ -647,7 +647,7 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedJSON) RawJSON(
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCardholderNoLongerDisputes struct {
 	// Explanation for why the merchant believes the cardholder no longer disputes the
 	// transaction.
-	Explanation string                                                                                   `json:"explanation,required,nullable"`
+	Explanation string                                                                                   `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCardholderNoLongerDisputesJSON `json:"-"`
 }
 
@@ -672,9 +672,9 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCardholderNoLo
 // `compelling_evidence`.
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvidence struct {
 	// The category of compelling evidence provided by the merchant.
-	Category CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvidenceCategory `json:"category,required"`
+	Category CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvidenceCategory `json:"category" api:"required"`
 	// Explanation of the compelling evidence provided by the merchant.
-	Explanation string                                                                           `json:"explanation,required,nullable"`
+	Explanation string                                                                           `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvidenceJSON `json:"-"`
 }
 
@@ -730,14 +730,14 @@ func (r CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCompellingEvid
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCreditOrReversalProcessed struct {
 	// The amount of the credit or reversal in the minor unit of its currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the credit or
 	// reversal's currency.
-	Currency string `json:"currency,required"`
+	Currency string `json:"currency" api:"required"`
 	// Explanation for why the merchant believes the credit or reversal was processed.
-	Explanation string `json:"explanation,required,nullable"`
+	Explanation string `json:"explanation" api:"required,nullable"`
 	// The date the credit or reversal was processed.
-	ProcessedAt time.Time                                                                               `json:"processed_at,required" format:"date"`
+	ProcessedAt time.Time                                                                               `json:"processed_at" api:"required" format:"date"`
 	JSON        cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCreditOrReversalProcessedJSON `json:"-"`
 }
 
@@ -765,7 +765,7 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedCreditOrRevers
 // `delayed_charge_transaction`.
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedDelayedChargeTransaction struct {
 	// Additional details about the delayed charge transaction.
-	Explanation string                                                                                 `json:"explanation,required,nullable"`
+	Explanation string                                                                                 `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedDelayedChargeTransactionJSON `json:"-"`
 }
 
@@ -790,7 +790,7 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedDelayedChargeT
 // `evidence_of_imprint`.
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedEvidenceOfImprint struct {
 	// Explanation of the evidence of imprint.
-	Explanation string                                                                          `json:"explanation,required,nullable"`
+	Explanation string                                                                          `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedEvidenceOfImprintJSON `json:"-"`
 }
 
@@ -814,9 +814,9 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedEvidenceOfImpr
 // Invalid dispute details. Present if and only if `reason` is `invalid_dispute`.
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDispute struct {
 	// Explanation for why the dispute is considered invalid by the merchant.
-	Explanation string `json:"explanation,required,nullable"`
+	Explanation string `json:"explanation" api:"required,nullable"`
 	// The reason a merchant considers the dispute invalid.
-	Reason CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDisputeReason `json:"reason,required"`
+	Reason CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDisputeReason `json:"reason" api:"required"`
 	JSON   cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDisputeJSON   `json:"-"`
 }
 
@@ -858,11 +858,11 @@ func (r CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedInvalidDispute
 // `reason` is `non_fiat_currency_or_non_fungible_token_received`.
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedNonFiatCurrencyOrNonFungibleTokenReceived struct {
 	// Blockchain transaction hash.
-	BlockchainTransactionHash string `json:"blockchain_transaction_hash,required"`
+	BlockchainTransactionHash string `json:"blockchain_transaction_hash" api:"required"`
 	// Destination wallet address.
-	DestinationWalletAddress string `json:"destination_wallet_address,required"`
+	DestinationWalletAddress string `json:"destination_wallet_address" api:"required"`
 	// Prior approved transactions.
-	PriorApprovedTransactions string                                                                                                  `json:"prior_approved_transactions,required,nullable"`
+	PriorApprovedTransactions string                                                                                                  `json:"prior_approved_transactions" api:"required,nullable"`
 	JSON                      cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedNonFiatCurrencyOrNonFungibleTokenReceivedJSON `json:"-"`
 }
 
@@ -890,7 +890,7 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedNonFiatCurrenc
 type CardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedPriorUndisputedNonFraudTransactions struct {
 	// Explanation of the prior undisputed non-fraud transactions provided by the
 	// merchant.
-	Explanation string                                                                                            `json:"explanation,required,nullable"`
+	Explanation string                                                                                            `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsMerchantPrearbitrationReceivedPriorUndisputedNonFraudTransactionsJSON `json:"-"`
 }
 
@@ -967,26 +967,26 @@ func (r cardDisputeVisaNetworkEventsMerchantPrearbitrationTimedOutJSON) RawJSON(
 type CardDisputeVisaNetworkEventsRepresented struct {
 	// Cardholder no longer disputes details. Present if and only if `reason` is
 	// `cardholder_no_longer_disputes`.
-	CardholderNoLongerDisputes CardDisputeVisaNetworkEventsRepresentedCardholderNoLongerDisputes `json:"cardholder_no_longer_disputes,required,nullable"`
+	CardholderNoLongerDisputes CardDisputeVisaNetworkEventsRepresentedCardholderNoLongerDisputes `json:"cardholder_no_longer_disputes" api:"required,nullable"`
 	// Credit or reversal processed details. Present if and only if `reason` is
 	// `credit_or_reversal_processed`.
-	CreditOrReversalProcessed CardDisputeVisaNetworkEventsRepresentedCreditOrReversalProcessed `json:"credit_or_reversal_processed,required,nullable"`
+	CreditOrReversalProcessed CardDisputeVisaNetworkEventsRepresentedCreditOrReversalProcessed `json:"credit_or_reversal_processed" api:"required,nullable"`
 	// Invalid dispute details. Present if and only if `reason` is `invalid_dispute`.
-	InvalidDispute CardDisputeVisaNetworkEventsRepresentedInvalidDispute `json:"invalid_dispute,required,nullable"`
+	InvalidDispute CardDisputeVisaNetworkEventsRepresentedInvalidDispute `json:"invalid_dispute" api:"required,nullable"`
 	// Non-fiat currency or non-fungible token as described details. Present if and
 	// only if `reason` is `non_fiat_currency_or_non_fungible_token_as_described`.
-	NonFiatCurrencyOrNonFungibleTokenAsDescribed CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed `json:"non_fiat_currency_or_non_fungible_token_as_described,required,nullable"`
+	NonFiatCurrencyOrNonFungibleTokenAsDescribed CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenAsDescribed `json:"non_fiat_currency_or_non_fungible_token_as_described" api:"required,nullable"`
 	// Non-fiat currency or non-fungible token received details. Present if and only if
 	// `reason` is `non_fiat_currency_or_non_fungible_token_received`.
-	NonFiatCurrencyOrNonFungibleTokenReceived CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceived `json:"non_fiat_currency_or_non_fungible_token_received,required,nullable"`
+	NonFiatCurrencyOrNonFungibleTokenReceived CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceived `json:"non_fiat_currency_or_non_fungible_token_received" api:"required,nullable"`
 	// Proof of cash disbursement details. Present if and only if `reason` is
 	// `proof_of_cash_disbursement`.
-	ProofOfCashDisbursement CardDisputeVisaNetworkEventsRepresentedProofOfCashDisbursement `json:"proof_of_cash_disbursement,required,nullable"`
+	ProofOfCashDisbursement CardDisputeVisaNetworkEventsRepresentedProofOfCashDisbursement `json:"proof_of_cash_disbursement" api:"required,nullable"`
 	// The reason the merchant re-presented the dispute.
-	Reason CardDisputeVisaNetworkEventsRepresentedReason `json:"reason,required"`
+	Reason CardDisputeVisaNetworkEventsRepresentedReason `json:"reason" api:"required"`
 	// Reversal issued by merchant details. Present if and only if `reason` is
 	// `reversal_issued`.
-	ReversalIssued CardDisputeVisaNetworkEventsRepresentedReversalIssued `json:"reversal_issued,required,nullable"`
+	ReversalIssued CardDisputeVisaNetworkEventsRepresentedReversalIssued `json:"reversal_issued" api:"required,nullable"`
 	JSON           cardDisputeVisaNetworkEventsRepresentedJSON           `json:"-"`
 }
 
@@ -1018,7 +1018,7 @@ func (r cardDisputeVisaNetworkEventsRepresentedJSON) RawJSON() string {
 type CardDisputeVisaNetworkEventsRepresentedCardholderNoLongerDisputes struct {
 	// Explanation for why the merchant believes the cardholder no longer disputes the
 	// transaction.
-	Explanation string                                                                `json:"explanation,required,nullable"`
+	Explanation string                                                                `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsRepresentedCardholderNoLongerDisputesJSON `json:"-"`
 }
 
@@ -1044,14 +1044,14 @@ func (r cardDisputeVisaNetworkEventsRepresentedCardholderNoLongerDisputesJSON) R
 type CardDisputeVisaNetworkEventsRepresentedCreditOrReversalProcessed struct {
 	// The amount of the credit or reversal in the minor unit of its currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the credit or
 	// reversal's currency.
-	Currency string `json:"currency,required"`
+	Currency string `json:"currency" api:"required"`
 	// Explanation for why the merchant believes the credit or reversal was processed.
-	Explanation string `json:"explanation,required,nullable"`
+	Explanation string `json:"explanation" api:"required,nullable"`
 	// The date the credit or reversal was processed.
-	ProcessedAt time.Time                                                            `json:"processed_at,required" format:"date"`
+	ProcessedAt time.Time                                                            `json:"processed_at" api:"required" format:"date"`
 	JSON        cardDisputeVisaNetworkEventsRepresentedCreditOrReversalProcessedJSON `json:"-"`
 }
 
@@ -1078,9 +1078,9 @@ func (r cardDisputeVisaNetworkEventsRepresentedCreditOrReversalProcessedJSON) Ra
 // Invalid dispute details. Present if and only if `reason` is `invalid_dispute`.
 type CardDisputeVisaNetworkEventsRepresentedInvalidDispute struct {
 	// Explanation for why the dispute is considered invalid by the merchant.
-	Explanation string `json:"explanation,required,nullable"`
+	Explanation string `json:"explanation" api:"required,nullable"`
 	// The reason a merchant considers the dispute invalid.
-	Reason CardDisputeVisaNetworkEventsRepresentedInvalidDisputeReason `json:"reason,required"`
+	Reason CardDisputeVisaNetworkEventsRepresentedInvalidDisputeReason `json:"reason" api:"required"`
 	JSON   cardDisputeVisaNetworkEventsRepresentedInvalidDisputeJSON   `json:"-"`
 }
 
@@ -1175,11 +1175,11 @@ func (r cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleToken
 // `reason` is `non_fiat_currency_or_non_fungible_token_received`.
 type CardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceived struct {
 	// Blockchain transaction hash.
-	BlockchainTransactionHash string `json:"blockchain_transaction_hash,required"`
+	BlockchainTransactionHash string `json:"blockchain_transaction_hash" api:"required"`
 	// Destination wallet address.
-	DestinationWalletAddress string `json:"destination_wallet_address,required"`
+	DestinationWalletAddress string `json:"destination_wallet_address" api:"required"`
 	// Prior approved transactions.
-	PriorApprovedTransactions string                                                                               `json:"prior_approved_transactions,required,nullable"`
+	PriorApprovedTransactions string                                                                               `json:"prior_approved_transactions" api:"required,nullable"`
 	JSON                      cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleTokenReceivedJSON `json:"-"`
 }
 
@@ -1207,7 +1207,7 @@ func (r cardDisputeVisaNetworkEventsRepresentedNonFiatCurrencyOrNonFungibleToken
 type CardDisputeVisaNetworkEventsRepresentedProofOfCashDisbursement struct {
 	// Explanation for why the merchant believes the evidence provides proof of cash
 	// disbursement.
-	Explanation string                                                             `json:"explanation,required,nullable"`
+	Explanation string                                                             `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsRepresentedProofOfCashDisbursementJSON `json:"-"`
 }
 
@@ -1253,7 +1253,7 @@ func (r CardDisputeVisaNetworkEventsRepresentedReason) IsKnown() bool {
 // `reversal_issued`.
 type CardDisputeVisaNetworkEventsRepresentedReversalIssued struct {
 	// Explanation of the reversal issued by the merchant.
-	Explanation string                                                    `json:"explanation,required,nullable"`
+	Explanation string                                                    `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeVisaNetworkEventsRepresentedReversalIssuedJSON `json:"-"`
 }
 
@@ -1440,48 +1440,48 @@ func (r CardDisputeVisaRequiredUserSubmissionCategory) IsKnown() bool {
 type CardDisputeVisaUserSubmission struct {
 	// The date and time at which the Visa Card Dispute User Submission was reviewed
 	// and accepted.
-	AcceptedAt time.Time `json:"accepted_at,required,nullable" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required,nullable" format:"date-time"`
 	// The amount of the dispute if it is different from the amount of a prior user
 	// submission or the disputed transaction.
-	Amount int64 `json:"amount,required,nullable"`
+	Amount int64 `json:"amount" api:"required,nullable"`
 	// The files attached to the Visa Card Dispute User Submission.
-	AttachmentFiles []CardDisputeVisaUserSubmissionsAttachmentFile `json:"attachment_files,required"`
+	AttachmentFiles []CardDisputeVisaUserSubmissionsAttachmentFile `json:"attachment_files" api:"required"`
 	// The category of the user submission. We may add additional possible values for
 	// this enum over time; your application should be able to handle such additions
 	// gracefully.
-	Category CardDisputeVisaUserSubmissionsCategory `json:"category,required"`
+	Category CardDisputeVisaUserSubmissionsCategory `json:"category" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute User Submission was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The free-form explanation provided to Increase to provide more context for the
 	// user submission. This field is not sent directly to the card networks.
-	Explanation string `json:"explanation,required,nullable"`
+	Explanation string `json:"explanation" api:"required,nullable"`
 	// The date and time at which Increase requested further information from the user
 	// for the Visa Card Dispute.
-	FurtherInformationRequestedAt time.Time `json:"further_information_requested_at,required,nullable" format:"date-time"`
+	FurtherInformationRequestedAt time.Time `json:"further_information_requested_at" api:"required,nullable" format:"date-time"`
 	// The reason for Increase requesting further information from the user for the
 	// Visa Card Dispute.
-	FurtherInformationRequestedReason string `json:"further_information_requested_reason,required,nullable"`
+	FurtherInformationRequestedReason string `json:"further_information_requested_reason" api:"required,nullable"`
 	// The status of the Visa Card Dispute User Submission.
-	Status CardDisputeVisaUserSubmissionsStatus `json:"status,required"`
+	Status CardDisputeVisaUserSubmissionsStatus `json:"status" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute User Submission was updated.
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// A Visa Card Dispute Chargeback User Submission Chargeback Details object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `chargeback`. Contains the details specific to a Visa chargeback User Submission
 	// for a Card Dispute.
-	Chargeback CardDisputeVisaUserSubmissionsChargeback `json:"chargeback,nullable"`
+	Chargeback CardDisputeVisaUserSubmissionsChargeback `json:"chargeback" api:"nullable"`
 	// A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object.
 	// This field will be present in the JSON response if and only if `category` is
 	// equal to `merchant_prearbitration_decline`. Contains the details specific to a
 	// merchant prearbitration decline Visa Card Dispute User Submission.
-	MerchantPrearbitrationDecline CardDisputeVisaUserSubmissionsMerchantPrearbitrationDecline `json:"merchant_prearbitration_decline,nullable"`
+	MerchantPrearbitrationDecline CardDisputeVisaUserSubmissionsMerchantPrearbitrationDecline `json:"merchant_prearbitration_decline" api:"nullable"`
 	// A Visa Card Dispute User-Initiated Pre-Arbitration User Submission object. This
 	// field will be present in the JSON response if and only if `category` is equal to
 	// `user_prearbitration`. Contains the details specific to a user-initiated
 	// pre-arbitration Visa Card Dispute User Submission.
-	UserPrearbitration CardDisputeVisaUserSubmissionsUserPrearbitration `json:"user_prearbitration,nullable"`
+	UserPrearbitration CardDisputeVisaUserSubmissionsUserPrearbitration `json:"user_prearbitration" api:"nullable"`
 	JSON               cardDisputeVisaUserSubmissionJSON                `json:"-"`
 }
 
@@ -1515,7 +1515,7 @@ func (r cardDisputeVisaUserSubmissionJSON) RawJSON() string {
 
 type CardDisputeVisaUserSubmissionsAttachmentFile struct {
 	// The ID of the file attached to the Card Dispute.
-	FileID string                                           `json:"file_id,required"`
+	FileID string                                           `json:"file_id" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsAttachmentFileJSON `json:"-"`
 }
 
@@ -1578,61 +1578,61 @@ func (r CardDisputeVisaUserSubmissionsStatus) IsKnown() bool {
 // for a Card Dispute.
 type CardDisputeVisaUserSubmissionsChargeback struct {
 	// Authorization. Present if and only if `category` is `authorization`.
-	Authorization CardDisputeVisaUserSubmissionsChargebackAuthorization `json:"authorization,required,nullable"`
+	Authorization CardDisputeVisaUserSubmissionsChargebackAuthorization `json:"authorization" api:"required,nullable"`
 	// Category.
-	Category CardDisputeVisaUserSubmissionsChargebackCategory `json:"category,required"`
+	Category CardDisputeVisaUserSubmissionsChargebackCategory `json:"category" api:"required"`
 	// Canceled merchandise. Present if and only if `category` is
 	// `consumer_canceled_merchandise`.
-	ConsumerCanceledMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandise `json:"consumer_canceled_merchandise,required,nullable"`
+	ConsumerCanceledMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandise `json:"consumer_canceled_merchandise" api:"required,nullable"`
 	// Canceled recurring transaction. Present if and only if `category` is
 	// `consumer_canceled_recurring_transaction`.
-	ConsumerCanceledRecurringTransaction CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransaction `json:"consumer_canceled_recurring_transaction,required,nullable"`
+	ConsumerCanceledRecurringTransaction CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransaction `json:"consumer_canceled_recurring_transaction" api:"required,nullable"`
 	// Canceled services. Present if and only if `category` is
 	// `consumer_canceled_services`.
-	ConsumerCanceledServices CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServices `json:"consumer_canceled_services,required,nullable"`
+	ConsumerCanceledServices CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServices `json:"consumer_canceled_services" api:"required,nullable"`
 	// Counterfeit merchandise. Present if and only if `category` is
 	// `consumer_counterfeit_merchandise`.
-	ConsumerCounterfeitMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerCounterfeitMerchandise `json:"consumer_counterfeit_merchandise,required,nullable"`
+	ConsumerCounterfeitMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerCounterfeitMerchandise `json:"consumer_counterfeit_merchandise" api:"required,nullable"`
 	// Credit not processed. Present if and only if `category` is
 	// `consumer_credit_not_processed`.
-	ConsumerCreditNotProcessed CardDisputeVisaUserSubmissionsChargebackConsumerCreditNotProcessed `json:"consumer_credit_not_processed,required,nullable"`
+	ConsumerCreditNotProcessed CardDisputeVisaUserSubmissionsChargebackConsumerCreditNotProcessed `json:"consumer_credit_not_processed" api:"required,nullable"`
 	// Damaged or defective merchandise. Present if and only if `category` is
 	// `consumer_damaged_or_defective_merchandise`.
-	ConsumerDamagedOrDefectiveMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandise `json:"consumer_damaged_or_defective_merchandise,required,nullable"`
+	ConsumerDamagedOrDefectiveMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandise `json:"consumer_damaged_or_defective_merchandise" api:"required,nullable"`
 	// Merchandise misrepresentation. Present if and only if `category` is
 	// `consumer_merchandise_misrepresentation`.
-	ConsumerMerchandiseMisrepresentation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentation `json:"consumer_merchandise_misrepresentation,required,nullable"`
+	ConsumerMerchandiseMisrepresentation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentation `json:"consumer_merchandise_misrepresentation" api:"required,nullable"`
 	// Merchandise not as described. Present if and only if `category` is
 	// `consumer_merchandise_not_as_described`.
-	ConsumerMerchandiseNotAsDescribed CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribed `json:"consumer_merchandise_not_as_described,required,nullable"`
+	ConsumerMerchandiseNotAsDescribed CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribed `json:"consumer_merchandise_not_as_described" api:"required,nullable"`
 	// Merchandise not received. Present if and only if `category` is
 	// `consumer_merchandise_not_received`.
-	ConsumerMerchandiseNotReceived CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceived `json:"consumer_merchandise_not_received,required,nullable"`
+	ConsumerMerchandiseNotReceived CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceived `json:"consumer_merchandise_not_received" api:"required,nullable"`
 	// Non-receipt of cash. Present if and only if `category` is
 	// `consumer_non_receipt_of_cash`.
-	ConsumerNonReceiptOfCash CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash `json:"consumer_non_receipt_of_cash,required,nullable"`
+	ConsumerNonReceiptOfCash CardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCash `json:"consumer_non_receipt_of_cash" api:"required,nullable"`
 	// Original Credit Transaction (OCT) not accepted. Present if and only if
 	// `category` is `consumer_original_credit_transaction_not_accepted`.
-	ConsumerOriginalCreditTransactionNotAccepted CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAccepted `json:"consumer_original_credit_transaction_not_accepted,required,nullable"`
+	ConsumerOriginalCreditTransactionNotAccepted CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAccepted `json:"consumer_original_credit_transaction_not_accepted" api:"required,nullable"`
 	// Merchandise quality issue. Present if and only if `category` is
 	// `consumer_quality_merchandise`.
-	ConsumerQualityMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandise `json:"consumer_quality_merchandise,required,nullable"`
+	ConsumerQualityMerchandise CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandise `json:"consumer_quality_merchandise" api:"required,nullable"`
 	// Services quality issue. Present if and only if `category` is
 	// `consumer_quality_services`.
-	ConsumerQualityServices CardDisputeVisaUserSubmissionsChargebackConsumerQualityServices `json:"consumer_quality_services,required,nullable"`
+	ConsumerQualityServices CardDisputeVisaUserSubmissionsChargebackConsumerQualityServices `json:"consumer_quality_services" api:"required,nullable"`
 	// Services misrepresentation. Present if and only if `category` is
 	// `consumer_services_misrepresentation`.
-	ConsumerServicesMisrepresentation CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentation `json:"consumer_services_misrepresentation,required,nullable"`
+	ConsumerServicesMisrepresentation CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentation `json:"consumer_services_misrepresentation" api:"required,nullable"`
 	// Services not as described. Present if and only if `category` is
 	// `consumer_services_not_as_described`.
-	ConsumerServicesNotAsDescribed CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribed `json:"consumer_services_not_as_described,required,nullable"`
+	ConsumerServicesNotAsDescribed CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribed `json:"consumer_services_not_as_described" api:"required,nullable"`
 	// Services not received. Present if and only if `category` is
 	// `consumer_services_not_received`.
-	ConsumerServicesNotReceived CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceived `json:"consumer_services_not_received,required,nullable"`
+	ConsumerServicesNotReceived CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceived `json:"consumer_services_not_received" api:"required,nullable"`
 	// Fraud. Present if and only if `category` is `fraud`.
-	Fraud CardDisputeVisaUserSubmissionsChargebackFraud `json:"fraud,required,nullable"`
+	Fraud CardDisputeVisaUserSubmissionsChargebackFraud `json:"fraud" api:"required,nullable"`
 	// Processing error. Present if and only if `category` is `processing_error`.
-	ProcessingError CardDisputeVisaUserSubmissionsChargebackProcessingError `json:"processing_error,required,nullable"`
+	ProcessingError CardDisputeVisaUserSubmissionsChargebackProcessingError `json:"processing_error" api:"required,nullable"`
 	JSON            cardDisputeVisaUserSubmissionsChargebackJSON            `json:"-"`
 }
 
@@ -1674,7 +1674,7 @@ func (r cardDisputeVisaUserSubmissionsChargebackJSON) RawJSON() string {
 // Authorization. Present if and only if `category` is `authorization`.
 type CardDisputeVisaUserSubmissionsChargebackAuthorization struct {
 	// Account status.
-	AccountStatus CardDisputeVisaUserSubmissionsChargebackAuthorizationAccountStatus `json:"account_status,required"`
+	AccountStatus CardDisputeVisaUserSubmissionsChargebackAuthorizationAccountStatus `json:"account_status" api:"required"`
 	JSON          cardDisputeVisaUserSubmissionsChargebackAuthorizationJSON          `json:"-"`
 }
 
@@ -1748,21 +1748,21 @@ func (r CardDisputeVisaUserSubmissionsChargebackCategory) IsKnown() bool {
 // `consumer_canceled_merchandise`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandise struct {
 	// Cardholder cancellation.
-	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellation `json:"cardholder_cancellation,required,nullable"`
+	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellation `json:"cardholder_cancellation" api:"required,nullable"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturned `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotReturned `json:"not_returned" api:"required,nullable"`
 	// Purchase explanation.
-	PurchaseExplanation string `json:"purchase_explanation,required"`
+	PurchaseExplanation string `json:"purchase_explanation" api:"required"`
 	// Received or expected at.
-	ReceivedOrExpectedAt time.Time `json:"received_or_expected_at,required" format:"date"`
+	ReceivedOrExpectedAt time.Time `json:"received_or_expected_at" api:"required" format:"date"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
-	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnAttempted `json:"return_attempted,required,nullable"`
+	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnAttempted `json:"return_attempted" api:"required,nullable"`
 	// Return outcome.
-	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnOutcome `json:"return_outcome,required"`
+	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnOutcome `json:"return_outcome" api:"required"`
 	// Returned. Present if and only if `return_outcome` is `returned`.
-	Returned CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturned `json:"returned,required,nullable"`
+	Returned CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturned `json:"returned" api:"required,nullable"`
 	JSON     cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseJSON     `json:"-"`
 }
 
@@ -1793,13 +1793,13 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseJSON)
 // Cardholder cancellation.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellation struct {
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Canceled prior to ship date.
-	CanceledPriorToShipDate CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellationCanceledPriorToShipDate `json:"canceled_prior_to_ship_date,required"`
+	CanceledPriorToShipDate CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellationCanceledPriorToShipDate `json:"canceled_prior_to_ship_date" api:"required"`
 	// Cancellation policy provided.
-	CancellationPolicyProvided CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvided `json:"cancellation_policy_provided,required"`
+	CancellationPolicyProvided CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvided `json:"cancellation_policy_provided" api:"required"`
 	// Reason.
-	Reason string                                                                                        `json:"reason,required"`
+	Reason string                                                                                        `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseCardholderCancellationJSON `json:"-"`
 }
 
@@ -1895,13 +1895,13 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseNotRe
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation string `json:"attempt_explanation,required"`
+	AttemptExplanation string `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnAttemptedAttemptReason `json:"attempt_reason,required"`
+	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnAttemptedAttemptReason `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt time.Time `json:"attempted_at,required" format:"date"`
+	AttemptedAt time.Time `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition string                                                                                 `json:"merchandise_disposition,required"`
+	MerchandiseDisposition string                                                                                 `json:"merchandise_disposition" api:"required"`
 	JSON                   cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnAttemptedJSON `json:"-"`
 }
 
@@ -1964,15 +1964,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseRetur
 // Returned. Present if and only if `return_outcome` is `returned`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at,required,nullable" format:"date"`
+	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at" api:"required,nullable" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
-	OtherExplanation string `json:"other_explanation,required,nullable"`
+	OtherExplanation string `json:"other_explanation" api:"required,nullable"`
 	// Return method.
-	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnedReturnMethod `json:"return_method,required"`
+	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnedReturnMethod `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date"`
 	// Tracking number.
-	TrackingNumber string                                                                          `json:"tracking_number,required,nullable"`
+	TrackingNumber string                                                                          `json:"tracking_number" api:"required,nullable"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseReturnedJSON `json:"-"`
 }
 
@@ -2021,13 +2021,13 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledMerchandiseRetur
 // `consumer_canceled_recurring_transaction`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransaction struct {
 	// Cancellation target.
-	CancellationTarget CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionCancellationTarget `json:"cancellation_target,required"`
+	CancellationTarget CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionCancellationTarget `json:"cancellation_target" api:"required"`
 	// Merchant contact methods.
-	MerchantContactMethods CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionMerchantContactMethods `json:"merchant_contact_methods,required"`
+	MerchantContactMethods CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionMerchantContactMethods `json:"merchant_contact_methods" api:"required"`
 	// Other form of payment explanation.
-	OtherFormOfPaymentExplanation string `json:"other_form_of_payment_explanation,required,nullable"`
+	OtherFormOfPaymentExplanation string `json:"other_form_of_payment_explanation" api:"required,nullable"`
 	// Transaction or account canceled at.
-	TransactionOrAccountCanceledAt time.Time                                                                        `json:"transaction_or_account_canceled_at,required" format:"date"`
+	TransactionOrAccountCanceledAt time.Time                                                                        `json:"transaction_or_account_canceled_at" api:"required" format:"date"`
 	JSON                           cardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionJSON `json:"-"`
 }
 
@@ -2070,17 +2070,17 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransac
 // Merchant contact methods.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionMerchantContactMethods struct {
 	// Application name.
-	ApplicationName string `json:"application_name,required,nullable"`
+	ApplicationName string `json:"application_name" api:"required,nullable"`
 	// Call center phone number.
-	CallCenterPhoneNumber string `json:"call_center_phone_number,required,nullable"`
+	CallCenterPhoneNumber string `json:"call_center_phone_number" api:"required,nullable"`
 	// Email address.
-	EmailAddress string `json:"email_address,required,nullable"`
+	EmailAddress string `json:"email_address" api:"required,nullable"`
 	// In person address.
-	InPersonAddress string `json:"in_person_address,required,nullable"`
+	InPersonAddress string `json:"in_person_address" api:"required,nullable"`
 	// Mailing address.
-	MailingAddress string `json:"mailing_address,required,nullable"`
+	MailingAddress string `json:"mailing_address" api:"required,nullable"`
 	// Text phone number.
-	TextPhoneNumber string                                                                                                 `json:"text_phone_number,required,nullable"`
+	TextPhoneNumber string                                                                                                 `json:"text_phone_number" api:"required,nullable"`
 	JSON            cardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransactionMerchantContactMethodsJSON `json:"-"`
 }
 
@@ -2110,23 +2110,23 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledRecurringTransac
 // `consumer_canceled_services`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServices struct {
 	// Cardholder cancellation.
-	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardholderCancellation `json:"cardholder_cancellation,required"`
+	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardholderCancellation `json:"cardholder_cancellation" api:"required"`
 	// Contracted at.
-	ContractedAt time.Time `json:"contracted_at,required" format:"date"`
+	ContractedAt time.Time `json:"contracted_at" api:"required" format:"date"`
 	// Guaranteed reservation explanation. Present if and only if `service_type` is
 	// `guaranteed_reservation`.
-	GuaranteedReservation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesGuaranteedReservation `json:"guaranteed_reservation,required,nullable"`
+	GuaranteedReservation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesGuaranteedReservation `json:"guaranteed_reservation" api:"required,nullable"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Other service type explanation. Present if and only if `service_type` is
 	// `other`.
-	Other CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOther `json:"other,required,nullable"`
+	Other CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesOther `json:"other" api:"required,nullable"`
 	// Purchase explanation.
-	PurchaseExplanation string `json:"purchase_explanation,required"`
+	PurchaseExplanation string `json:"purchase_explanation" api:"required"`
 	// Service type.
-	ServiceType CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesServiceType `json:"service_type,required"`
+	ServiceType CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesServiceType `json:"service_type" api:"required"`
 	// Timeshare explanation. Present if and only if `service_type` is `timeshare`.
-	Timeshare CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshare `json:"timeshare,required,nullable"`
+	Timeshare CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshare `json:"timeshare" api:"required,nullable"`
 	JSON      cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesJSON      `json:"-"`
 }
 
@@ -2157,11 +2157,11 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesJSON) Ra
 // Cardholder cancellation.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardholderCancellation struct {
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Cancellation policy provided.
-	CancellationPolicyProvided CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardholderCancellationCancellationPolicyProvided `json:"cancellation_policy_provided,required"`
+	CancellationPolicyProvided CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardholderCancellationCancellationPolicyProvided `json:"cancellation_policy_provided" api:"required"`
 	// Reason.
-	Reason string                                                                                     `json:"reason,required"`
+	Reason string                                                                                     `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardholderCancellationJSON `json:"-"`
 }
 
@@ -2204,7 +2204,7 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesCardhold
 // `guaranteed_reservation`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesGuaranteedReservation struct {
 	// Explanation.
-	Explanation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesGuaranteedReservationExplanation `json:"explanation,required"`
+	Explanation CardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesGuaranteedReservationExplanation `json:"explanation" api:"required"`
 	JSON        cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesGuaranteedReservationJSON        `json:"-"`
 }
 
@@ -2322,13 +2322,13 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCanceledServicesTimeshar
 // `consumer_counterfeit_merchandise`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCounterfeitMerchandise struct {
 	// Counterfeit explanation.
-	CounterfeitExplanation string `json:"counterfeit_explanation,required"`
+	CounterfeitExplanation string `json:"counterfeit_explanation" api:"required"`
 	// Disposition explanation.
-	DispositionExplanation string `json:"disposition_explanation,required"`
+	DispositionExplanation string `json:"disposition_explanation" api:"required"`
 	// Order explanation.
-	OrderExplanation string `json:"order_explanation,required"`
+	OrderExplanation string `json:"order_explanation" api:"required"`
 	// Received at.
-	ReceivedAt time.Time                                                                  `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time                                                                  `json:"received_at" api:"required" format:"date"`
 	JSON       cardDisputeVisaUserSubmissionsChargebackConsumerCounterfeitMerchandiseJSON `json:"-"`
 }
 
@@ -2356,9 +2356,9 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCounterfeitMerchandiseJS
 // `consumer_credit_not_processed`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerCreditNotProcessed struct {
 	// Canceled or returned at.
-	CanceledOrReturnedAt time.Time `json:"canceled_or_returned_at,required,nullable" format:"date"`
+	CanceledOrReturnedAt time.Time `json:"canceled_or_returned_at" api:"required,nullable" format:"date"`
 	// Credit expected at.
-	CreditExpectedAt time.Time                                                              `json:"credit_expected_at,required,nullable" format:"date"`
+	CreditExpectedAt time.Time                                                              `json:"credit_expected_at" api:"required,nullable" format:"date"`
 	JSON             cardDisputeVisaUserSubmissionsChargebackConsumerCreditNotProcessedJSON `json:"-"`
 }
 
@@ -2384,19 +2384,19 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerCreditNotProcessedJSON) 
 // `consumer_damaged_or_defective_merchandise`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandise struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned `json:"not_returned" api:"required,nullable"`
 	// Order and issue explanation.
-	OrderAndIssueExplanation string `json:"order_and_issue_explanation,required"`
+	OrderAndIssueExplanation string `json:"order_and_issue_explanation" api:"required"`
 	// Received at.
-	ReceivedAt time.Time `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time `json:"received_at" api:"required" format:"date"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
-	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted `json:"return_attempted,required,nullable"`
+	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted `json:"return_attempted" api:"required,nullable"`
 	// Return outcome.
-	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnOutcome `json:"return_outcome,required"`
+	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnOutcome `json:"return_outcome" api:"required"`
 	// Returned. Present if and only if `return_outcome` is `returned`.
-	Returned CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturned `json:"returned,required,nullable"`
+	Returned CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturned `json:"returned" api:"required,nullable"`
 	JSON     cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseJSON     `json:"-"`
 }
 
@@ -2463,13 +2463,13 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMercha
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation string `json:"attempt_explanation,required"`
+	AttemptExplanation string `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReason `json:"attempt_reason,required"`
+	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReason `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt time.Time `json:"attempted_at,required" format:"date"`
+	AttemptedAt time.Time `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition string                                                                                           `json:"merchandise_disposition,required"`
+	MerchandiseDisposition string                                                                                           `json:"merchandise_disposition" api:"required"`
 	JSON                   cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttemptedJSON `json:"-"`
 }
 
@@ -2532,15 +2532,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMercha
 // Returned. Present if and only if `return_outcome` is `returned`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at,required,nullable" format:"date"`
+	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at" api:"required,nullable" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
-	OtherExplanation string `json:"other_explanation,required,nullable"`
+	OtherExplanation string `json:"other_explanation" api:"required,nullable"`
 	// Return method.
-	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnedReturnMethod `json:"return_method,required"`
+	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnedReturnMethod `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date"`
 	// Tracking number.
-	TrackingNumber string                                                                                    `json:"tracking_number,required,nullable"`
+	TrackingNumber string                                                                                    `json:"tracking_number" api:"required,nullable"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMerchandiseReturnedJSON `json:"-"`
 }
 
@@ -2589,21 +2589,21 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerDamagedOrDefectiveMercha
 // `consumer_merchandise_misrepresentation`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentation struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Misrepresentation explanation.
-	MisrepresentationExplanation string `json:"misrepresentation_explanation,required"`
+	MisrepresentationExplanation string `json:"misrepresentation_explanation" api:"required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturned `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationNotReturned `json:"not_returned" api:"required,nullable"`
 	// Purchase explanation.
-	PurchaseExplanation string `json:"purchase_explanation,required"`
+	PurchaseExplanation string `json:"purchase_explanation" api:"required"`
 	// Received at.
-	ReceivedAt time.Time `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time `json:"received_at" api:"required" format:"date"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
-	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnAttempted `json:"return_attempted,required,nullable"`
+	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnAttempted `json:"return_attempted" api:"required,nullable"`
 	// Return outcome.
-	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnOutcome `json:"return_outcome,required"`
+	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnOutcome `json:"return_outcome" api:"required"`
 	// Returned. Present if and only if `return_outcome` is `returned`.
-	Returned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturned `json:"returned,required,nullable"`
+	Returned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturned `json:"returned" api:"required,nullable"`
 	JSON     cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationJSON     `json:"-"`
 }
 
@@ -2671,13 +2671,13 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresenta
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation string `json:"attempt_explanation,required"`
+	AttemptExplanation string `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReason `json:"attempt_reason,required"`
+	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReason `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt time.Time `json:"attempted_at,required" format:"date"`
+	AttemptedAt time.Time `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition string                                                                                          `json:"merchandise_disposition,required"`
+	MerchandiseDisposition string                                                                                          `json:"merchandise_disposition" api:"required"`
 	JSON                   cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnAttemptedJSON `json:"-"`
 }
 
@@ -2740,15 +2740,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresenta
 // Returned. Present if and only if `return_outcome` is `returned`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at,required,nullable" format:"date"`
+	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at" api:"required,nullable" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
-	OtherExplanation string `json:"other_explanation,required,nullable"`
+	OtherExplanation string `json:"other_explanation" api:"required,nullable"`
 	// Return method.
-	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnedReturnMethod `json:"return_method,required"`
+	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnedReturnMethod `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date"`
 	// Tracking number.
-	TrackingNumber string                                                                                   `json:"tracking_number,required,nullable"`
+	TrackingNumber string                                                                                   `json:"tracking_number" api:"required,nullable"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresentationReturnedJSON `json:"-"`
 }
 
@@ -2797,15 +2797,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseMisrepresenta
 // `consumer_merchandise_not_as_described`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribed struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Received at.
-	ReceivedAt time.Time `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time `json:"received_at" api:"required" format:"date"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
-	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnAttempted `json:"return_attempted,required,nullable"`
+	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnAttempted `json:"return_attempted" api:"required,nullable"`
 	// Return outcome.
-	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnOutcome `json:"return_outcome,required"`
+	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnOutcome `json:"return_outcome" api:"required"`
 	// Returned. Present if and only if `return_outcome` is `returned`.
-	Returned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturned `json:"returned,required,nullable"`
+	Returned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturned `json:"returned" api:"required,nullable"`
 	JSON     cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedJSON     `json:"-"`
 }
 
@@ -2849,13 +2849,13 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribe
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation string `json:"attempt_explanation,required"`
+	AttemptExplanation string `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnAttemptedAttemptReason `json:"attempt_reason,required"`
+	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnAttemptedAttemptReason `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt time.Time `json:"attempted_at,required" format:"date"`
+	AttemptedAt time.Time `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition string                                                                                       `json:"merchandise_disposition,required"`
+	MerchandiseDisposition string                                                                                       `json:"merchandise_disposition" api:"required"`
 	JSON                   cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnAttemptedJSON `json:"-"`
 }
 
@@ -2917,15 +2917,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribe
 // Returned. Present if and only if `return_outcome` is `returned`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at,required,nullable" format:"date"`
+	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at" api:"required,nullable" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
-	OtherExplanation string `json:"other_explanation,required,nullable"`
+	OtherExplanation string `json:"other_explanation" api:"required,nullable"`
 	// Return method.
-	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnedReturnMethod `json:"return_method,required"`
+	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnedReturnMethod `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date"`
 	// Tracking number.
-	TrackingNumber string                                                                                `json:"tracking_number,required,nullable"`
+	TrackingNumber string                                                                                `json:"tracking_number" api:"required,nullable"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribedReturnedJSON `json:"-"`
 }
 
@@ -2974,29 +2974,29 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotAsDescribe
 // `consumer_merchandise_not_received`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceived struct {
 	// Cancellation outcome.
-	CancellationOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCancellationOutcome `json:"cancellation_outcome,required"`
+	CancellationOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCancellationOutcome `json:"cancellation_outcome" api:"required"`
 	// Cardholder cancellation prior to expected receipt. Present if and only if
 	// `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
-	CardholderCancellationPriorToExpectedReceipt CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt `json:"cardholder_cancellation_prior_to_expected_receipt,required,nullable"`
+	CardholderCancellationPriorToExpectedReceipt CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt `json:"cardholder_cancellation_prior_to_expected_receipt" api:"required,nullable"`
 	// Delayed. Present if and only if `delivery_issue` is `delayed`.
-	Delayed CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayed `json:"delayed,required,nullable"`
+	Delayed CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayed `json:"delayed" api:"required,nullable"`
 	// Delivered to wrong location. Present if and only if `delivery_issue` is
 	// `delivered_to_wrong_location`.
-	DeliveredToWrongLocation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDeliveredToWrongLocation `json:"delivered_to_wrong_location,required,nullable"`
+	DeliveredToWrongLocation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDeliveredToWrongLocation `json:"delivered_to_wrong_location" api:"required,nullable"`
 	// Delivery issue.
-	DeliveryIssue CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDeliveryIssue `json:"delivery_issue,required"`
+	DeliveryIssue CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDeliveryIssue `json:"delivery_issue" api:"required"`
 	// Last expected receipt at.
-	LastExpectedReceiptAt time.Time `json:"last_expected_receipt_at,required" format:"date"`
+	LastExpectedReceiptAt time.Time `json:"last_expected_receipt_at" api:"required" format:"date"`
 	// Merchant cancellation. Present if and only if `cancellation_outcome` is
 	// `merchant_cancellation`.
-	MerchantCancellation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantCancellation `json:"merchant_cancellation,required,nullable"`
+	MerchantCancellation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantCancellation `json:"merchant_cancellation" api:"required,nullable"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// No cancellation. Present if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellation `json:"no_cancellation,required,nullable"`
+	NoCancellation CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedNoCancellation `json:"no_cancellation" api:"required,nullable"`
 	// Purchase information and explanation.
-	PurchaseInfoAndExplanation string                                                                     `json:"purchase_info_and_explanation,required"`
+	PurchaseInfoAndExplanation string                                                                     `json:"purchase_info_and_explanation" api:"required"`
 	JSON                       cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedJSON `json:"-"`
 }
 
@@ -3047,9 +3047,9 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCa
 // `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt struct {
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason string                                                                                                                 `json:"reason,required,nullable"`
+	Reason string                                                                                                                 `json:"reason" api:"required,nullable"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceiptJSON `json:"-"`
 }
 
@@ -3074,15 +3074,15 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedCa
 // Delayed. Present if and only if `delivery_issue` is `delayed`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayed struct {
 	// Explanation.
-	Explanation string `json:"explanation,required"`
+	Explanation string `json:"explanation" api:"required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturned `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedNotReturned `json:"not_returned" api:"required,nullable"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
-	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted `json:"return_attempted,required,nullable"`
+	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted `json:"return_attempted" api:"required,nullable"`
 	// Return outcome.
-	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnOutcome `json:"return_outcome,required"`
+	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnOutcome `json:"return_outcome" api:"required"`
 	// Returned. Present if and only if `return_outcome` is `returned`.
-	Returned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturned `json:"returned,required,nullable"`
+	Returned CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturned `json:"returned" api:"required,nullable"`
 	JSON     cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedJSON     `json:"-"`
 }
 
@@ -3131,7 +3131,7 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDe
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted struct {
 	// Attempted at.
-	AttemptedAt time.Time                                                                                        `json:"attempted_at,required" format:"date"`
+	AttemptedAt time.Time                                                                                        `json:"attempted_at" api:"required" format:"date"`
 	JSON        cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnAttemptedJSON `json:"-"`
 }
 
@@ -3172,9 +3172,9 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDe
 // Returned. Present if and only if `return_outcome` is `returned`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at,required" format:"date"`
+	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at" api:"required" format:"date"`
 	// Returned at.
-	ReturnedAt time.Time                                                                                 `json:"returned_at,required" format:"date"`
+	ReturnedAt time.Time                                                                                 `json:"returned_at" api:"required" format:"date"`
 	JSON       cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDelayedReturnedJSON `json:"-"`
 }
 
@@ -3200,7 +3200,7 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDe
 // `delivered_to_wrong_location`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDeliveredToWrongLocation struct {
 	// Agreed location.
-	AgreedLocation string                                                                                             `json:"agreed_location,required"`
+	AgreedLocation string                                                                                             `json:"agreed_location" api:"required"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDeliveredToWrongLocationJSON `json:"-"`
 }
 
@@ -3241,7 +3241,7 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedDe
 // `merchant_cancellation`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantCancellation struct {
 	// Canceled at.
-	CanceledAt time.Time                                                                                      `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time                                                                                      `json:"canceled_at" api:"required" format:"date"`
 	JSON       cardDisputeVisaUserSubmissionsChargebackConsumerMerchandiseNotReceivedMerchantCancellationJSON `json:"-"`
 }
 
@@ -3326,9 +3326,9 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerNonReceiptOfCashJSON) Ra
 // `category` is `consumer_original_credit_transaction_not_accepted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAccepted struct {
 	// Explanation.
-	Explanation string `json:"explanation,required"`
+	Explanation string `json:"explanation" api:"required"`
 	// Reason.
-	Reason CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAcceptedReason `json:"reason,required"`
+	Reason CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAcceptedReason `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactionNotAcceptedJSON   `json:"-"`
 }
 
@@ -3370,23 +3370,23 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerOriginalCreditTransactio
 // `consumer_quality_merchandise`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandise struct {
 	// Expected at.
-	ExpectedAt time.Time `json:"expected_at,required" format:"date"`
+	ExpectedAt time.Time `json:"expected_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Not returned. Present if and only if `return_outcome` is `not_returned`.
-	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturned `json:"not_returned,required,nullable"`
+	NotReturned CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotReturned `json:"not_returned" api:"required,nullable"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
-	OngoingNegotiations CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseOngoingNegotiations `json:"ongoing_negotiations,required,nullable"`
+	OngoingNegotiations CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseOngoingNegotiations `json:"ongoing_negotiations" api:"required,nullable"`
 	// Purchase information and quality issue.
-	PurchaseInfoAndQualityIssue string `json:"purchase_info_and_quality_issue,required"`
+	PurchaseInfoAndQualityIssue string `json:"purchase_info_and_quality_issue" api:"required"`
 	// Received at.
-	ReceivedAt time.Time `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time `json:"received_at" api:"required" format:"date"`
 	// Return attempted. Present if and only if `return_outcome` is `return_attempted`.
-	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnAttempted `json:"return_attempted,required,nullable"`
+	ReturnAttempted CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnAttempted `json:"return_attempted" api:"required,nullable"`
 	// Return outcome.
-	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnOutcome `json:"return_outcome,required"`
+	ReturnOutcome CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnOutcome `json:"return_outcome" api:"required"`
 	// Returned. Present if and only if `return_outcome` is `returned`.
-	Returned CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturned `json:"returned,required,nullable"`
+	Returned CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturned `json:"returned" api:"required,nullable"`
 	JSON     cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseJSON     `json:"-"`
 }
 
@@ -3456,11 +3456,11 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseNotRet
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseOngoingNegotiations struct {
 	// Explanation of the previous ongoing negotiations between the cardholder and
 	// merchant.
-	Explanation string `json:"explanation,required"`
+	Explanation string `json:"explanation" api:"required"`
 	// Date the cardholder first notified the issuer of the dispute.
-	IssuerFirstNotifiedAt time.Time `json:"issuer_first_notified_at,required" format:"date"`
+	IssuerFirstNotifiedAt time.Time `json:"issuer_first_notified_at" api:"required" format:"date"`
 	// Started at.
-	StartedAt time.Time                                                                                 `json:"started_at,required" format:"date"`
+	StartedAt time.Time                                                                                 `json:"started_at" api:"required" format:"date"`
 	JSON      cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseOngoingNegotiationsJSON `json:"-"`
 }
 
@@ -3486,13 +3486,13 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseOngoin
 // Return attempted. Present if and only if `return_outcome` is `return_attempted`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation string `json:"attempt_explanation,required"`
+	AttemptExplanation string `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnAttemptedAttemptReason `json:"attempt_reason,required"`
+	AttemptReason CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnAttemptedAttemptReason `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt time.Time `json:"attempted_at,required" format:"date"`
+	AttemptedAt time.Time `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition string                                                                                `json:"merchandise_disposition,required"`
+	MerchandiseDisposition string                                                                                `json:"merchandise_disposition" api:"required"`
 	JSON                   cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnAttemptedJSON `json:"-"`
 }
 
@@ -3555,15 +3555,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturn
 // Returned. Present if and only if `return_outcome` is `returned`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at,required,nullable" format:"date"`
+	MerchantReceivedReturnAt time.Time `json:"merchant_received_return_at" api:"required,nullable" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
-	OtherExplanation string `json:"other_explanation,required,nullable"`
+	OtherExplanation string `json:"other_explanation" api:"required,nullable"`
 	// Return method.
-	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnedReturnMethod `json:"return_method,required"`
+	ReturnMethod CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnedReturnMethod `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date"`
 	// Tracking number.
-	TrackingNumber string                                                                         `json:"tracking_number,required,nullable"`
+	TrackingNumber string                                                                         `json:"tracking_number" api:"required,nullable"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturnedJSON `json:"-"`
 }
 
@@ -3612,21 +3612,21 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerQualityMerchandiseReturn
 // `consumer_quality_services`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityServices struct {
 	// Cardholder cancellation.
-	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderCancellation `json:"cardholder_cancellation,required"`
+	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderCancellation `json:"cardholder_cancellation" api:"required"`
 	// Cardholder paid to have work redone.
-	CardholderPaidToHaveWorkRedone CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderPaidToHaveWorkRedone `json:"cardholder_paid_to_have_work_redone,required,nullable"`
+	CardholderPaidToHaveWorkRedone CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderPaidToHaveWorkRedone `json:"cardholder_paid_to_have_work_redone" api:"required,nullable"`
 	// Non-fiat currency or non-fungible token related and not matching description.
-	NonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesNonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription `json:"non_fiat_currency_or_non_fungible_token_related_and_not_matching_description,required"`
+	NonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesNonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription `json:"non_fiat_currency_or_non_fungible_token_related_and_not_matching_description" api:"required"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
-	OngoingNegotiations CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesOngoingNegotiations `json:"ongoing_negotiations,required,nullable"`
+	OngoingNegotiations CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesOngoingNegotiations `json:"ongoing_negotiations" api:"required,nullable"`
 	// Purchase information and quality issue.
-	PurchaseInfoAndQualityIssue string `json:"purchase_info_and_quality_issue,required"`
+	PurchaseInfoAndQualityIssue string `json:"purchase_info_and_quality_issue" api:"required"`
 	// Whether the dispute is related to the quality of food from an eating place or
 	// restaurant. Must be provided when Merchant Category Code (MCC) is 5812, 5813
 	// or 5814.
-	RestaurantFoodRelated CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesRestaurantFoodRelated `json:"restaurant_food_related,required,nullable"`
+	RestaurantFoodRelated CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesRestaurantFoodRelated `json:"restaurant_food_related" api:"required,nullable"`
 	// Services received at.
-	ServicesReceivedAt time.Time                                                           `json:"services_received_at,required" format:"date"`
+	ServicesReceivedAt time.Time                                                           `json:"services_received_at" api:"required" format:"date"`
 	JSON               cardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesJSON `json:"-"`
 }
 
@@ -3656,11 +3656,11 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesJSON) Raw
 // Cardholder cancellation.
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderCancellationAcceptedByMerchant `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderCancellationAcceptedByMerchant `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason string                                                                                    `json:"reason,required"`
+	Reason string                                                                                    `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesCardholderCancellationJSON `json:"-"`
 }
 
@@ -3735,11 +3735,11 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesNonFiatCu
 type CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesOngoingNegotiations struct {
 	// Explanation of the previous ongoing negotiations between the cardholder and
 	// merchant.
-	Explanation string `json:"explanation,required"`
+	Explanation string `json:"explanation" api:"required"`
 	// Date the cardholder first notified the issuer of the dispute.
-	IssuerFirstNotifiedAt time.Time `json:"issuer_first_notified_at,required" format:"date"`
+	IssuerFirstNotifiedAt time.Time `json:"issuer_first_notified_at" api:"required" format:"date"`
 	// Started at.
-	StartedAt time.Time                                                                              `json:"started_at,required" format:"date"`
+	StartedAt time.Time                                                                              `json:"started_at" api:"required" format:"date"`
 	JSON      cardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesOngoingNegotiationsJSON `json:"-"`
 }
 
@@ -3784,15 +3784,15 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerQualityServicesRestauran
 // `consumer_services_misrepresentation`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentation struct {
 	// Cardholder cancellation.
-	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationCardholderCancellation `json:"cardholder_cancellation,required"`
+	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationCardholderCancellation `json:"cardholder_cancellation" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Misrepresentation explanation.
-	MisrepresentationExplanation string `json:"misrepresentation_explanation,required"`
+	MisrepresentationExplanation string `json:"misrepresentation_explanation" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation string `json:"purchase_explanation,required"`
+	PurchaseExplanation string `json:"purchase_explanation" api:"required"`
 	// Received at.
-	ReceivedAt time.Time                                                                     `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time                                                                     `json:"received_at" api:"required" format:"date"`
 	JSON       cardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationJSON `json:"-"`
 }
 
@@ -3820,11 +3820,11 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentatio
 // Cardholder cancellation.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationCardholderCancellationAcceptedByMerchant `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationCardholderCancellationAcceptedByMerchant `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason string                                                                                              `json:"reason,required"`
+	Reason string                                                                                              `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentationCardholderCancellationJSON `json:"-"`
 }
 
@@ -3883,13 +3883,13 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerServicesMisrepresentatio
 // `consumer_services_not_as_described`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribed struct {
 	// Cardholder cancellation.
-	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellation `json:"cardholder_cancellation,required"`
+	CardholderCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellation `json:"cardholder_cancellation" api:"required"`
 	// Explanation of what was ordered and was not as described.
-	Explanation string `json:"explanation,required"`
+	Explanation string `json:"explanation" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Received at.
-	ReceivedAt time.Time                                                                  `json:"received_at,required" format:"date"`
+	ReceivedAt time.Time                                                                  `json:"received_at" api:"required" format:"date"`
 	JSON       cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedJSON `json:"-"`
 }
 
@@ -3916,11 +3916,11 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedJS
 // Cardholder cancellation.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellationAcceptedByMerchant `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellationAcceptedByMerchant `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason string                                                                                           `json:"reason,required"`
+	Reason string                                                                                           `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedCardholderCancellationJSON `json:"-"`
 }
 
@@ -3979,22 +3979,22 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotAsDescribedMe
 // `consumer_services_not_received`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceived struct {
 	// Cancellation outcome.
-	CancellationOutcome CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCancellationOutcome `json:"cancellation_outcome,required"`
+	CancellationOutcome CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCancellationOutcome `json:"cancellation_outcome" api:"required"`
 	// Cardholder cancellation prior to expected receipt. Present if and only if
 	// `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
-	CardholderCancellationPriorToExpectedReceipt CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt `json:"cardholder_cancellation_prior_to_expected_receipt,required,nullable"`
+	CardholderCancellationPriorToExpectedReceipt CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt `json:"cardholder_cancellation_prior_to_expected_receipt" api:"required,nullable"`
 	// Last expected receipt at.
-	LastExpectedReceiptAt time.Time `json:"last_expected_receipt_at,required" format:"date"`
+	LastExpectedReceiptAt time.Time `json:"last_expected_receipt_at" api:"required" format:"date"`
 	// Merchant cancellation. Present if and only if `cancellation_outcome` is
 	// `merchant_cancellation`.
-	MerchantCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantCancellation `json:"merchant_cancellation,required,nullable"`
+	MerchantCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantCancellation `json:"merchant_cancellation" api:"required,nullable"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// No cancellation. Present if and only if `cancellation_outcome` is
 	// `no_cancellation`.
-	NoCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellation `json:"no_cancellation,required,nullable"`
+	NoCancellation CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCancellation `json:"no_cancellation" api:"required,nullable"`
 	// Purchase information and explanation.
-	PurchaseInfoAndExplanation string                                                                  `json:"purchase_info_and_explanation,required"`
+	PurchaseInfoAndExplanation string                                                                  `json:"purchase_info_and_explanation" api:"required"`
 	JSON                       cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedJSON `json:"-"`
 }
 
@@ -4042,9 +4042,9 @@ func (r CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCance
 // `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt struct {
 	// Canceled at.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason string                                                                                                              `json:"reason,required,nullable"`
+	Reason string                                                                                                              `json:"reason" api:"required,nullable"`
 	JSON   cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceiptJSON `json:"-"`
 }
 
@@ -4070,7 +4070,7 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedCardh
 // `merchant_cancellation`.
 type CardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantCancellation struct {
 	// Canceled at.
-	CanceledAt time.Time                                                                                   `json:"canceled_at,required" format:"date"`
+	CanceledAt time.Time                                                                                   `json:"canceled_at" api:"required" format:"date"`
 	JSON       cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedMerchantCancellationJSON `json:"-"`
 }
 
@@ -4132,7 +4132,7 @@ func (r cardDisputeVisaUserSubmissionsChargebackConsumerServicesNotReceivedNoCan
 // Fraud. Present if and only if `category` is `fraud`.
 type CardDisputeVisaUserSubmissionsChargebackFraud struct {
 	// Fraud type.
-	FraudType CardDisputeVisaUserSubmissionsChargebackFraudFraudType `json:"fraud_type,required"`
+	FraudType CardDisputeVisaUserSubmissionsChargebackFraudFraudType `json:"fraud_type" api:"required"`
 	JSON      cardDisputeVisaUserSubmissionsChargebackFraudJSON      `json:"-"`
 }
 
@@ -4181,16 +4181,16 @@ func (r CardDisputeVisaUserSubmissionsChargebackFraudFraudType) IsKnown() bool {
 type CardDisputeVisaUserSubmissionsChargebackProcessingError struct {
 	// Duplicate transaction. Present if and only if `error_reason` is
 	// `duplicate_transaction`.
-	DuplicateTransaction CardDisputeVisaUserSubmissionsChargebackProcessingErrorDuplicateTransaction `json:"duplicate_transaction,required,nullable"`
+	DuplicateTransaction CardDisputeVisaUserSubmissionsChargebackProcessingErrorDuplicateTransaction `json:"duplicate_transaction" api:"required,nullable"`
 	// Error reason.
-	ErrorReason CardDisputeVisaUserSubmissionsChargebackProcessingErrorErrorReason `json:"error_reason,required"`
+	ErrorReason CardDisputeVisaUserSubmissionsChargebackProcessingErrorErrorReason `json:"error_reason" api:"required"`
 	// Incorrect amount. Present if and only if `error_reason` is `incorrect_amount`.
-	IncorrectAmount CardDisputeVisaUserSubmissionsChargebackProcessingErrorIncorrectAmount `json:"incorrect_amount,required,nullable"`
+	IncorrectAmount CardDisputeVisaUserSubmissionsChargebackProcessingErrorIncorrectAmount `json:"incorrect_amount" api:"required,nullable"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackProcessingErrorMerchantResolutionAttempted `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted CardDisputeVisaUserSubmissionsChargebackProcessingErrorMerchantResolutionAttempted `json:"merchant_resolution_attempted" api:"required"`
 	// Paid by other means. Present if and only if `error_reason` is
 	// `paid_by_other_means`.
-	PaidByOtherMeans CardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeans `json:"paid_by_other_means,required,nullable"`
+	PaidByOtherMeans CardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeans `json:"paid_by_other_means" api:"required,nullable"`
 	JSON             cardDisputeVisaUserSubmissionsChargebackProcessingErrorJSON             `json:"-"`
 }
 
@@ -4219,7 +4219,7 @@ func (r cardDisputeVisaUserSubmissionsChargebackProcessingErrorJSON) RawJSON() s
 // `duplicate_transaction`.
 type CardDisputeVisaUserSubmissionsChargebackProcessingErrorDuplicateTransaction struct {
 	// Other transaction ID.
-	OtherTransactionID string                                                                          `json:"other_transaction_id,required"`
+	OtherTransactionID string                                                                          `json:"other_transaction_id" api:"required"`
 	JSON               cardDisputeVisaUserSubmissionsChargebackProcessingErrorDuplicateTransactionJSON `json:"-"`
 }
 
@@ -4260,7 +4260,7 @@ func (r CardDisputeVisaUserSubmissionsChargebackProcessingErrorErrorReason) IsKn
 // Incorrect amount. Present if and only if `error_reason` is `incorrect_amount`.
 type CardDisputeVisaUserSubmissionsChargebackProcessingErrorIncorrectAmount struct {
 	// Expected amount.
-	ExpectedAmount int64                                                                      `json:"expected_amount,required"`
+	ExpectedAmount int64                                                                      `json:"expected_amount" api:"required"`
 	JSON           cardDisputeVisaUserSubmissionsChargebackProcessingErrorIncorrectAmountJSON `json:"-"`
 }
 
@@ -4301,9 +4301,9 @@ func (r CardDisputeVisaUserSubmissionsChargebackProcessingErrorMerchantResolutio
 // `paid_by_other_means`.
 type CardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeans struct {
 	// Other form of payment evidence.
-	OtherFormOfPaymentEvidence CardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeansOtherFormOfPaymentEvidence `json:"other_form_of_payment_evidence,required"`
+	OtherFormOfPaymentEvidence CardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeansOtherFormOfPaymentEvidence `json:"other_form_of_payment_evidence" api:"required"`
 	// Other transaction ID.
-	OtherTransactionID string                                                                      `json:"other_transaction_id,required,nullable"`
+	OtherTransactionID string                                                                      `json:"other_transaction_id" api:"required,nullable"`
 	JSON               cardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeansJSON `json:"-"`
 }
 
@@ -4352,7 +4352,7 @@ func (r CardDisputeVisaUserSubmissionsChargebackProcessingErrorPaidByOtherMeansO
 type CardDisputeVisaUserSubmissionsMerchantPrearbitrationDecline struct {
 	// The reason the user declined the merchant's request for pre-arbitration in their
 	// favor.
-	Reason string                                                          `json:"reason,required"`
+	Reason string                                                          `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsMerchantPrearbitrationDeclineJSON `json:"-"`
 }
 
@@ -4379,9 +4379,9 @@ func (r cardDisputeVisaUserSubmissionsMerchantPrearbitrationDeclineJSON) RawJSON
 // pre-arbitration Visa Card Dispute User Submission.
 type CardDisputeVisaUserSubmissionsUserPrearbitration struct {
 	// Category change details for the pre-arbitration request, if requested.
-	CategoryChange CardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChange `json:"category_change,required,nullable"`
+	CategoryChange CardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChange `json:"category_change" api:"required,nullable"`
 	// The reason for the pre-arbitration request.
-	Reason string                                               `json:"reason,required"`
+	Reason string                                               `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsUserPrearbitrationJSON `json:"-"`
 }
 
@@ -4405,9 +4405,9 @@ func (r cardDisputeVisaUserSubmissionsUserPrearbitrationJSON) RawJSON() string {
 // Category change details for the pre-arbitration request, if requested.
 type CardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChange struct {
 	// The category the dispute is being changed to.
-	Category CardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChangeCategory `json:"category,required"`
+	Category CardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChangeCategory `json:"category" api:"required"`
 	// The reason for the pre-arbitration request.
-	Reason string                                                             `json:"reason,required"`
+	Reason string                                                             `json:"reason" api:"required"`
 	JSON   cardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChangeJSON `json:"-"`
 }
 
@@ -4467,7 +4467,7 @@ func (r CardDisputeVisaUserSubmissionsUserPrearbitrationCategoryChangeCategory) 
 type CardDisputeWin struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card Dispute was won.
-	WonAt time.Time          `json:"won_at,required" format:"date-time"`
+	WonAt time.Time          `json:"won_at" api:"required" format:"date-time"`
 	JSON  cardDisputeWinJSON `json:"-"`
 }
 
@@ -4490,7 +4490,7 @@ func (r cardDisputeWinJSON) RawJSON() string {
 // withdrawal.
 type CardDisputeWithdrawal struct {
 	// The explanation for the withdrawal of the Card Dispute.
-	Explanation string                    `json:"explanation,required,nullable"`
+	Explanation string                    `json:"explanation" api:"required,nullable"`
 	JSON        cardDisputeWithdrawalJSON `json:"-"`
 }
 
@@ -4513,10 +4513,10 @@ func (r cardDisputeWithdrawalJSON) RawJSON() string {
 type CardDisputeNewParams struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
-	DisputedTransactionID param.Field[string] `json:"disputed_transaction_id,required"`
+	DisputedTransactionID param.Field[string] `json:"disputed_transaction_id" api:"required"`
 	// The network of the disputed transaction. Details specific to the network are
 	// required under the sub-object with the same identifier as the network.
-	Network param.Field[CardDisputeNewParamsNetwork] `json:"network,required"`
+	Network param.Field[CardDisputeNewParamsNetwork] `json:"network" api:"required"`
 	// The monetary amount of the part of the transaction that is being disputed. This
 	// is optional and will default to the full amount of the transaction if not
 	// provided. If provided, the amount must be less than or equal to the amount of
@@ -4555,7 +4555,7 @@ func (r CardDisputeNewParamsNetwork) IsKnown() bool {
 type CardDisputeNewParamsAttachmentFile struct {
 	// The ID of the file to be attached. The file must have a `purpose` of
 	// `card_dispute_attachment`.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r CardDisputeNewParamsAttachmentFile) MarshalJSON() (data []byte, err error) {
@@ -4566,7 +4566,7 @@ func (r CardDisputeNewParamsAttachmentFile) MarshalJSON() (data []byte, err erro
 // is `visa`.
 type CardDisputeNewParamsVisa struct {
 	// Category.
-	Category param.Field[CardDisputeNewParamsVisaCategory] `json:"category,required"`
+	Category param.Field[CardDisputeNewParamsVisaCategory] `json:"category" api:"required"`
 	// Authorization. Required if and only if `category` is `authorization`.
 	Authorization param.Field[CardDisputeNewParamsVisaAuthorization] `json:"authorization"`
 	// Canceled merchandise. Required if and only if `category` is
@@ -4663,7 +4663,7 @@ func (r CardDisputeNewParamsVisaCategory) IsKnown() bool {
 // Authorization. Required if and only if `category` is `authorization`.
 type CardDisputeNewParamsVisaAuthorization struct {
 	// Account status.
-	AccountStatus param.Field[CardDisputeNewParamsVisaAuthorizationAccountStatus] `json:"account_status,required"`
+	AccountStatus param.Field[CardDisputeNewParamsVisaAuthorizationAccountStatus] `json:"account_status" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaAuthorization) MarshalJSON() (data []byte, err error) {
@@ -4691,13 +4691,13 @@ func (r CardDisputeNewParamsVisaAuthorizationAccountStatus) IsKnown() bool {
 // `consumer_canceled_merchandise`.
 type CardDisputeNewParamsVisaConsumerCanceledMerchandise struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Received or expected at.
-	ReceivedOrExpectedAt param.Field[time.Time] `json:"received_or_expected_at,required" format:"date"`
+	ReceivedOrExpectedAt param.Field[time.Time] `json:"received_or_expected_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnOutcome] `json:"return_outcome" api:"required"`
 	// Cardholder cancellation.
 	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellation] `json:"cardholder_cancellation"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
@@ -4749,13 +4749,13 @@ func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnOutcome) IsKnow
 // Cardholder cancellation.
 type CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Canceled prior to ship date.
-	CanceledPriorToShipDate param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellationCanceledPriorToShipDate] `json:"canceled_prior_to_ship_date,required"`
+	CanceledPriorToShipDate param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellationCanceledPriorToShipDate] `json:"canceled_prior_to_ship_date" api:"required"`
 	// Cancellation policy provided.
-	CancellationPolicyProvided param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided,required"`
+	CancellationPolicyProvided param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided" api:"required"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -4806,13 +4806,13 @@ func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseNotReturned) MarshalJ
 // `return_attempted`.
 type CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -4841,9 +4841,9 @@ func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnAttemptedAttemp
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -4880,11 +4880,11 @@ func (r CardDisputeNewParamsVisaConsumerCanceledMerchandiseReturnedReturnMethod)
 // `consumer_canceled_recurring_transaction`.
 type CardDisputeNewParamsVisaConsumerCanceledRecurringTransaction struct {
 	// Cancellation target.
-	CancellationTarget param.Field[CardDisputeNewParamsVisaConsumerCanceledRecurringTransactionCancellationTarget] `json:"cancellation_target,required"`
+	CancellationTarget param.Field[CardDisputeNewParamsVisaConsumerCanceledRecurringTransactionCancellationTarget] `json:"cancellation_target" api:"required"`
 	// Merchant contact methods.
-	MerchantContactMethods param.Field[CardDisputeNewParamsVisaConsumerCanceledRecurringTransactionMerchantContactMethods] `json:"merchant_contact_methods,required"`
+	MerchantContactMethods param.Field[CardDisputeNewParamsVisaConsumerCanceledRecurringTransactionMerchantContactMethods] `json:"merchant_contact_methods" api:"required"`
 	// Transaction or account canceled at.
-	TransactionOrAccountCanceledAt param.Field[time.Time] `json:"transaction_or_account_canceled_at,required" format:"date"`
+	TransactionOrAccountCanceledAt param.Field[time.Time] `json:"transaction_or_account_canceled_at" api:"required" format:"date"`
 	// Other form of payment explanation.
 	OtherFormOfPaymentExplanation param.Field[string] `json:"other_form_of_payment_explanation"`
 }
@@ -4933,15 +4933,15 @@ func (r CardDisputeNewParamsVisaConsumerCanceledRecurringTransactionMerchantCont
 // `consumer_canceled_services`.
 type CardDisputeNewParamsVisaConsumerCanceledServices struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Contracted at.
-	ContractedAt param.Field[time.Time] `json:"contracted_at,required" format:"date"`
+	ContractedAt param.Field[time.Time] `json:"contracted_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Service type.
-	ServiceType param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesServiceType] `json:"service_type,required"`
+	ServiceType param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesServiceType] `json:"service_type" api:"required"`
 	// Guaranteed reservation explanation. Required if and only if `service_type` is
 	// `guaranteed_reservation`.
 	GuaranteedReservation param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservation] `json:"guaranteed_reservation"`
@@ -4959,11 +4959,11 @@ func (r CardDisputeNewParamsVisaConsumerCanceledServices) MarshalJSON() (data []
 // Cardholder cancellation.
 type CardDisputeNewParamsVisaConsumerCanceledServicesCardholderCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Cancellation policy provided.
-	CancellationPolicyProvided param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided,required"`
+	CancellationPolicyProvided param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided" api:"required"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerCanceledServicesCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -5023,7 +5023,7 @@ func (r CardDisputeNewParamsVisaConsumerCanceledServicesServiceType) IsKnown() b
 // `guaranteed_reservation`.
 type CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservation struct {
 	// Explanation.
-	Explanation param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservationExplanation] `json:"explanation,required"`
+	Explanation param.Field[CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservationExplanation] `json:"explanation" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerCanceledServicesGuaranteedReservation) MarshalJSON() (data []byte, err error) {
@@ -5068,13 +5068,13 @@ func (r CardDisputeNewParamsVisaConsumerCanceledServicesTimeshare) MarshalJSON()
 // `consumer_counterfeit_merchandise`.
 type CardDisputeNewParamsVisaConsumerCounterfeitMerchandise struct {
 	// Counterfeit explanation.
-	CounterfeitExplanation param.Field[string] `json:"counterfeit_explanation,required"`
+	CounterfeitExplanation param.Field[string] `json:"counterfeit_explanation" api:"required"`
 	// Disposition explanation.
-	DispositionExplanation param.Field[string] `json:"disposition_explanation,required"`
+	DispositionExplanation param.Field[string] `json:"disposition_explanation" api:"required"`
 	// Order explanation.
-	OrderExplanation param.Field[string] `json:"order_explanation,required"`
+	OrderExplanation param.Field[string] `json:"order_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerCounterfeitMerchandise) MarshalJSON() (data []byte, err error) {
@@ -5098,13 +5098,13 @@ func (r CardDisputeNewParamsVisaConsumerCreditNotProcessed) MarshalJSON() (data 
 // `consumer_damaged_or_defective_merchandise`.
 type CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandise struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Order and issue explanation.
-	OrderAndIssueExplanation param.Field[string] `json:"order_and_issue_explanation,required"`
+	OrderAndIssueExplanation param.Field[string] `json:"order_and_issue_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -5163,13 +5163,13 @@ func (r CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseNotReturned
 // `return_attempted`.
 type CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -5198,9 +5198,9 @@ func (r CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnAttem
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -5237,15 +5237,15 @@ func (r CardDisputeNewParamsVisaConsumerDamagedOrDefectiveMerchandiseReturnedRet
 // `consumer_merchandise_misrepresentation`.
 type CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentation struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Misrepresentation explanation.
-	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation,required"`
+	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -5304,13 +5304,13 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationNotReturned)
 // `return_attempted`.
 type CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -5339,9 +5339,9 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnAttemp
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -5378,11 +5378,11 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseMisrepresentationReturnedRetu
 // `consumer_merchandise_not_as_described`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribed struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnOutcome] `json:"return_outcome" api:"required"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnAttempted] `json:"return_attempted"`
@@ -5430,13 +5430,13 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnOutcome) 
 // `return_attempted`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -5465,9 +5465,9 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnAttempted
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -5504,15 +5504,15 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotAsDescribedReturnedReturnM
 // `consumer_merchandise_not_received`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceived struct {
 	// Cancellation outcome.
-	CancellationOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedCancellationOutcome] `json:"cancellation_outcome,required"`
+	CancellationOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedCancellationOutcome] `json:"cancellation_outcome" api:"required"`
 	// Delivery issue.
-	DeliveryIssue param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDeliveryIssue] `json:"delivery_issue,required"`
+	DeliveryIssue param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDeliveryIssue] `json:"delivery_issue" api:"required"`
 	// Last expected receipt at.
-	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at,required" format:"date"`
+	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase information and explanation.
-	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation,required"`
+	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation" api:"required"`
 	// Cardholder cancellation prior to expected receipt. Required if and only if
 	// `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 	CardholderCancellationPriorToExpectedReceipt param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt] `json:"cardholder_cancellation_prior_to_expected_receipt"`
@@ -5586,7 +5586,7 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantResolution
 // `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
 	Reason param.Field[string] `json:"reason"`
 }
@@ -5598,9 +5598,9 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedCardholderCancella
 // Delayed. Required if and only if `delivery_issue` is `delayed`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayed struct {
 	// Explanation.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -5643,7 +5643,7 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedNotReturned
 // `return_attempted`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnAttempted struct {
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -5653,9 +5653,9 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturnAttem
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at,required" format:"date"`
+	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" api:"required" format:"date"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturned) MarshalJSON() (data []byte, err error) {
@@ -5666,7 +5666,7 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDelayedReturned) M
 // `delivered_to_wrong_location`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDeliveredToWrongLocation struct {
 	// Agreed location.
-	AgreedLocation param.Field[string] `json:"agreed_location,required"`
+	AgreedLocation param.Field[string] `json:"agreed_location" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDeliveredToWrongLocation) MarshalJSON() (data []byte, err error) {
@@ -5677,7 +5677,7 @@ func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedDeliveredToWrongLo
 // `merchant_cancellation`.
 type CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerMerchandiseNotReceivedMerchantCancellation) MarshalJSON() (data []byte, err error) {
@@ -5706,9 +5706,9 @@ func (r CardDisputeNewParamsVisaConsumerNonReceiptOfCash) MarshalJSON() (data []
 // `category` is `consumer_original_credit_transaction_not_accepted`.
 type CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAccepted struct {
 	// Explanation.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Reason.
-	Reason param.Field[CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAcceptedReason] `json:"reason,required"`
+	Reason param.Field[CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAcceptedReason] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAccepted) MarshalJSON() (data []byte, err error) {
@@ -5735,15 +5735,15 @@ func (r CardDisputeNewParamsVisaConsumerOriginalCreditTransactionNotAcceptedReas
 // `consumer_quality_merchandise`.
 type CardDisputeNewParamsVisaConsumerQualityMerchandise struct {
 	// Expected at.
-	ExpectedAt param.Field[time.Time] `json:"expected_at,required" format:"date"`
+	ExpectedAt param.Field[time.Time] `json:"expected_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase information and quality issue.
-	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue,required"`
+	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseNotReturned] `json:"not_returned"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -5804,11 +5804,11 @@ func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseNotReturned) MarshalJS
 type CardDisputeNewParamsVisaConsumerQualityMerchandiseOngoingNegotiations struct {
 	// Explanation of the previous ongoing negotiations between the cardholder and
 	// merchant.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Date the cardholder first notified the issuer of the dispute.
-	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at,required" format:"date"`
+	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at" api:"required" format:"date"`
 	// Started at.
-	StartedAt param.Field[time.Time] `json:"started_at,required" format:"date"`
+	StartedAt param.Field[time.Time] `json:"started_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseOngoingNegotiations) MarshalJSON() (data []byte, err error) {
@@ -5819,13 +5819,13 @@ func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseOngoingNegotiations) M
 // `return_attempted`.
 type CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -5854,9 +5854,9 @@ func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnAttemptedAttempt
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeNewParamsVisaConsumerQualityMerchandiseReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -5893,13 +5893,13 @@ func (r CardDisputeNewParamsVisaConsumerQualityMerchandiseReturnedReturnMethod) 
 // `consumer_quality_services`.
 type CardDisputeNewParamsVisaConsumerQualityServices struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerQualityServicesCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerQualityServicesCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Non-fiat currency or non-fungible token related and not matching description.
-	NonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription param.Field[CardDisputeNewParamsVisaConsumerQualityServicesNonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription] `json:"non_fiat_currency_or_non_fungible_token_related_and_not_matching_description,required"`
+	NonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription param.Field[CardDisputeNewParamsVisaConsumerQualityServicesNonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription] `json:"non_fiat_currency_or_non_fungible_token_related_and_not_matching_description" api:"required"`
 	// Purchase information and quality issue.
-	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue,required"`
+	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue" api:"required"`
 	// Services received at.
-	ServicesReceivedAt param.Field[time.Time] `json:"services_received_at,required" format:"date"`
+	ServicesReceivedAt param.Field[time.Time] `json:"services_received_at" api:"required" format:"date"`
 	// Cardholder paid to have work redone.
 	CardholderPaidToHaveWorkRedone param.Field[CardDisputeNewParamsVisaConsumerQualityServicesCardholderPaidToHaveWorkRedone] `json:"cardholder_paid_to_have_work_redone"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -5917,11 +5917,11 @@ func (r CardDisputeNewParamsVisaConsumerQualityServices) MarshalJSON() (data []b
 // Cardholder cancellation.
 type CardDisputeNewParamsVisaConsumerQualityServicesCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant param.Field[CardDisputeNewParamsVisaConsumerQualityServicesCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant param.Field[CardDisputeNewParamsVisaConsumerQualityServicesCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerQualityServicesCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -5980,11 +5980,11 @@ func (r CardDisputeNewParamsVisaConsumerQualityServicesCardholderPaidToHaveWorkR
 type CardDisputeNewParamsVisaConsumerQualityServicesOngoingNegotiations struct {
 	// Explanation of the previous ongoing negotiations between the cardholder and
 	// merchant.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Date the cardholder first notified the issuer of the dispute.
-	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at,required" format:"date"`
+	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at" api:"required" format:"date"`
 	// Started at.
-	StartedAt param.Field[time.Time] `json:"started_at,required" format:"date"`
+	StartedAt param.Field[time.Time] `json:"started_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerQualityServicesOngoingNegotiations) MarshalJSON() (data []byte, err error) {
@@ -6013,15 +6013,15 @@ func (r CardDisputeNewParamsVisaConsumerQualityServicesRestaurantFoodRelated) Is
 // `consumer_services_misrepresentation`.
 type CardDisputeNewParamsVisaConsumerServicesMisrepresentation struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesMisrepresentationCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesMisrepresentationCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Misrepresentation explanation.
-	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation,required"`
+	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesMisrepresentation) MarshalJSON() (data []byte, err error) {
@@ -6031,11 +6031,11 @@ func (r CardDisputeNewParamsVisaConsumerServicesMisrepresentation) MarshalJSON()
 // Cardholder cancellation.
 type CardDisputeNewParamsVisaConsumerServicesMisrepresentationCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant param.Field[CardDisputeNewParamsVisaConsumerServicesMisrepresentationCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant param.Field[CardDisputeNewParamsVisaConsumerServicesMisrepresentationCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesMisrepresentationCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -6078,13 +6078,13 @@ func (r CardDisputeNewParamsVisaConsumerServicesMisrepresentationMerchantResolut
 // `consumer_services_not_as_described`.
 type CardDisputeNewParamsVisaConsumerServicesNotAsDescribed struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Explanation of what was ordered and was not as described.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesNotAsDescribed) MarshalJSON() (data []byte, err error) {
@@ -6094,11 +6094,11 @@ func (r CardDisputeNewParamsVisaConsumerServicesNotAsDescribed) MarshalJSON() (d
 // Cardholder cancellation.
 type CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant param.Field[CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesNotAsDescribedCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -6141,13 +6141,13 @@ func (r CardDisputeNewParamsVisaConsumerServicesNotAsDescribedMerchantResolution
 // `consumer_services_not_received`.
 type CardDisputeNewParamsVisaConsumerServicesNotReceived struct {
 	// Cancellation outcome.
-	CancellationOutcome param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedCancellationOutcome] `json:"cancellation_outcome,required"`
+	CancellationOutcome param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedCancellationOutcome] `json:"cancellation_outcome" api:"required"`
 	// Last expected receipt at.
-	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at,required" format:"date"`
+	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase information and explanation.
-	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation,required"`
+	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation" api:"required"`
 	// Cardholder cancellation prior to expected receipt. Required if and only if
 	// `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 	CardholderCancellationPriorToExpectedReceipt param.Field[CardDisputeNewParamsVisaConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt] `json:"cardholder_cancellation_prior_to_expected_receipt"`
@@ -6200,7 +6200,7 @@ func (r CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantResolutionAtt
 // `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 type CardDisputeNewParamsVisaConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
 	Reason param.Field[string] `json:"reason"`
 }
@@ -6213,7 +6213,7 @@ func (r CardDisputeNewParamsVisaConsumerServicesNotReceivedCardholderCancellatio
 // `merchant_cancellation`.
 type CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeNewParamsVisaConsumerServicesNotReceivedMerchantCancellation) MarshalJSON() (data []byte, err error) {
@@ -6232,7 +6232,7 @@ func (r CardDisputeNewParamsVisaConsumerServicesNotReceivedNoCancellation) Marsh
 // Fraud. Required if and only if `category` is `fraud`.
 type CardDisputeNewParamsVisaFraud struct {
 	// Fraud type.
-	FraudType param.Field[CardDisputeNewParamsVisaFraudFraudType] `json:"fraud_type,required"`
+	FraudType param.Field[CardDisputeNewParamsVisaFraudFraudType] `json:"fraud_type" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaFraud) MarshalJSON() (data []byte, err error) {
@@ -6267,9 +6267,9 @@ func (r CardDisputeNewParamsVisaFraudFraudType) IsKnown() bool {
 // Processing error. Required if and only if `category` is `processing_error`.
 type CardDisputeNewParamsVisaProcessingError struct {
 	// Error reason.
-	ErrorReason param.Field[CardDisputeNewParamsVisaProcessingErrorErrorReason] `json:"error_reason,required"`
+	ErrorReason param.Field[CardDisputeNewParamsVisaProcessingErrorErrorReason] `json:"error_reason" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaProcessingErrorMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeNewParamsVisaProcessingErrorMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Duplicate transaction. Required if and only if `error_reason` is
 	// `duplicate_transaction`.
 	DuplicateTransaction param.Field[CardDisputeNewParamsVisaProcessingErrorDuplicateTransaction] `json:"duplicate_transaction"`
@@ -6321,7 +6321,7 @@ func (r CardDisputeNewParamsVisaProcessingErrorMerchantResolutionAttempted) IsKn
 // `duplicate_transaction`.
 type CardDisputeNewParamsVisaProcessingErrorDuplicateTransaction struct {
 	// Other transaction ID.
-	OtherTransactionID param.Field[string] `json:"other_transaction_id,required"`
+	OtherTransactionID param.Field[string] `json:"other_transaction_id" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaProcessingErrorDuplicateTransaction) MarshalJSON() (data []byte, err error) {
@@ -6331,7 +6331,7 @@ func (r CardDisputeNewParamsVisaProcessingErrorDuplicateTransaction) MarshalJSON
 // Incorrect amount. Required if and only if `error_reason` is `incorrect_amount`.
 type CardDisputeNewParamsVisaProcessingErrorIncorrectAmount struct {
 	// Expected amount.
-	ExpectedAmount param.Field[int64] `json:"expected_amount,required"`
+	ExpectedAmount param.Field[int64] `json:"expected_amount" api:"required"`
 }
 
 func (r CardDisputeNewParamsVisaProcessingErrorIncorrectAmount) MarshalJSON() (data []byte, err error) {
@@ -6342,7 +6342,7 @@ func (r CardDisputeNewParamsVisaProcessingErrorIncorrectAmount) MarshalJSON() (d
 // `paid_by_other_means`.
 type CardDisputeNewParamsVisaProcessingErrorPaidByOtherMeans struct {
 	// Other form of payment evidence.
-	OtherFormOfPaymentEvidence param.Field[CardDisputeNewParamsVisaProcessingErrorPaidByOtherMeansOtherFormOfPaymentEvidence] `json:"other_form_of_payment_evidence,required"`
+	OtherFormOfPaymentEvidence param.Field[CardDisputeNewParamsVisaProcessingErrorPaidByOtherMeansOtherFormOfPaymentEvidence] `json:"other_form_of_payment_evidence" api:"required"`
 	// Other transaction ID.
 	OtherTransactionID param.Field[string] `json:"other_transaction_id"`
 }
@@ -6457,7 +6457,7 @@ func (r CardDisputeListParamsStatusIn) IsKnown() bool {
 type CardDisputeSubmitUserSubmissionParams struct {
 	// The network of the Card Dispute. Details specific to the network are required
 	// under the sub-object with the same identifier as the network.
-	Network param.Field[CardDisputeSubmitUserSubmissionParamsNetwork] `json:"network,required"`
+	Network param.Field[CardDisputeSubmitUserSubmissionParamsNetwork] `json:"network" api:"required"`
 	// The adjusted monetary amount of the part of the transaction that is being
 	// disputed. This is optional and will default to the most recent amount provided.
 	// If provided, the amount must be less than or equal to the amount of the
@@ -6496,7 +6496,7 @@ func (r CardDisputeSubmitUserSubmissionParamsNetwork) IsKnown() bool {
 type CardDisputeSubmitUserSubmissionParamsAttachmentFile struct {
 	// The ID of the file to be attached. The file must have a `purpose` of
 	// `card_dispute_attachment`.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsAttachmentFile) MarshalJSON() (data []byte, err error) {
@@ -6508,7 +6508,7 @@ func (r CardDisputeSubmitUserSubmissionParamsAttachmentFile) MarshalJSON() (data
 type CardDisputeSubmitUserSubmissionParamsVisa struct {
 	// The category of the user submission. Details specific to the category are
 	// required under the sub-object with the same identifier as the category.
-	Category param.Field[CardDisputeSubmitUserSubmissionParamsVisaCategory] `json:"category,required"`
+	Category param.Field[CardDisputeSubmitUserSubmissionParamsVisaCategory] `json:"category" api:"required"`
 	// The chargeback details for the user submission. Required if and only if
 	// `category` is `chargeback`.
 	Chargeback param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargeback] `json:"chargeback"`
@@ -6546,7 +6546,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaCategory) IsKnown() bool {
 // `category` is `chargeback`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargeback struct {
 	// Category.
-	Category param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackCategory] `json:"category,required"`
+	Category param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackCategory] `json:"category" api:"required"`
 	// Authorization. Required if and only if `category` is `authorization`.
 	Authorization param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackAuthorization] `json:"authorization"`
 	// Canceled merchandise. Required if and only if `category` is
@@ -6643,7 +6643,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackCategory) IsKnown() b
 // Authorization. Required if and only if `category` is `authorization`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackAuthorization struct {
 	// Account status.
-	AccountStatus param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackAuthorizationAccountStatus] `json:"account_status,required"`
+	AccountStatus param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackAuthorizationAccountStatus] `json:"account_status" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackAuthorization) MarshalJSON() (data []byte, err error) {
@@ -6671,13 +6671,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackAuthorizationAccountS
 // `consumer_canceled_merchandise`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandise struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Received or expected at.
-	ReceivedOrExpectedAt param.Field[time.Time] `json:"received_or_expected_at,required" format:"date"`
+	ReceivedOrExpectedAt param.Field[time.Time] `json:"received_or_expected_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnOutcome] `json:"return_outcome" api:"required"`
 	// Cardholder cancellation.
 	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellation] `json:"cardholder_cancellation"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
@@ -6729,13 +6729,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerch
 // Cardholder cancellation.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Canceled prior to ship date.
-	CanceledPriorToShipDate param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellationCanceledPriorToShipDate] `json:"canceled_prior_to_ship_date,required"`
+	CanceledPriorToShipDate param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellationCanceledPriorToShipDate] `json:"canceled_prior_to_ship_date" api:"required"`
 	// Cancellation policy provided.
-	CancellationPolicyProvided param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided,required"`
+	CancellationPolicyProvided param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided" api:"required"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -6786,13 +6786,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerch
 // `return_attempted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -6821,9 +6821,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerch
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerchandiseReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -6860,11 +6860,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledMerch
 // `consumer_canceled_recurring_transaction`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledRecurringTransaction struct {
 	// Cancellation target.
-	CancellationTarget param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledRecurringTransactionCancellationTarget] `json:"cancellation_target,required"`
+	CancellationTarget param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledRecurringTransactionCancellationTarget] `json:"cancellation_target" api:"required"`
 	// Merchant contact methods.
-	MerchantContactMethods param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledRecurringTransactionMerchantContactMethods] `json:"merchant_contact_methods,required"`
+	MerchantContactMethods param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledRecurringTransactionMerchantContactMethods] `json:"merchant_contact_methods" api:"required"`
 	// Transaction or account canceled at.
-	TransactionOrAccountCanceledAt param.Field[time.Time] `json:"transaction_or_account_canceled_at,required" format:"date"`
+	TransactionOrAccountCanceledAt param.Field[time.Time] `json:"transaction_or_account_canceled_at" api:"required" format:"date"`
 	// Other form of payment explanation.
 	OtherFormOfPaymentExplanation param.Field[string] `json:"other_form_of_payment_explanation"`
 }
@@ -6913,15 +6913,15 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledRecur
 // `consumer_canceled_services`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServices struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Contracted at.
-	ContractedAt param.Field[time.Time] `json:"contracted_at,required" format:"date"`
+	ContractedAt param.Field[time.Time] `json:"contracted_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Service type.
-	ServiceType param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesServiceType] `json:"service_type,required"`
+	ServiceType param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesServiceType] `json:"service_type" api:"required"`
 	// Guaranteed reservation explanation. Required if and only if `service_type` is
 	// `guaranteed_reservation`.
 	GuaranteedReservation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservation] `json:"guaranteed_reservation"`
@@ -6939,11 +6939,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServi
 // Cardholder cancellation.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesCardholderCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Cancellation policy provided.
-	CancellationPolicyProvided param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided,required"`
+	CancellationPolicyProvided param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesCardholderCancellationCancellationPolicyProvided] `json:"cancellation_policy_provided" api:"required"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -7003,7 +7003,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServi
 // `guaranteed_reservation`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservation struct {
 	// Explanation.
-	Explanation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservationExplanation] `json:"explanation,required"`
+	Explanation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservationExplanation] `json:"explanation" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServicesGuaranteedReservation) MarshalJSON() (data []byte, err error) {
@@ -7048,13 +7048,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCanceledServi
 // `consumer_counterfeit_merchandise`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCounterfeitMerchandise struct {
 	// Counterfeit explanation.
-	CounterfeitExplanation param.Field[string] `json:"counterfeit_explanation,required"`
+	CounterfeitExplanation param.Field[string] `json:"counterfeit_explanation" api:"required"`
 	// Disposition explanation.
-	DispositionExplanation param.Field[string] `json:"disposition_explanation,required"`
+	DispositionExplanation param.Field[string] `json:"disposition_explanation" api:"required"`
 	// Order explanation.
-	OrderExplanation param.Field[string] `json:"order_explanation,required"`
+	OrderExplanation param.Field[string] `json:"order_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCounterfeitMerchandise) MarshalJSON() (data []byte, err error) {
@@ -7078,13 +7078,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerCreditNotProc
 // `consumer_damaged_or_defective_merchandise`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandise struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Order and issue explanation.
-	OrderAndIssueExplanation param.Field[string] `json:"order_and_issue_explanation,required"`
+	OrderAndIssueExplanation param.Field[string] `json:"order_and_issue_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -7143,13 +7143,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefe
 // `return_attempted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -7178,9 +7178,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefe
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefectiveMerchandiseReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -7217,15 +7217,15 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerDamagedOrDefe
 // `consumer_merchandise_misrepresentation`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentation struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Misrepresentation explanation.
-	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation,required"`
+	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -7284,13 +7284,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMi
 // `return_attempted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -7319,9 +7319,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMi
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMisrepresentationReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -7358,11 +7358,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseMi
 // `consumer_merchandise_not_as_described`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribed struct {
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnOutcome] `json:"return_outcome" api:"required"`
 	// Return attempted. Required if and only if `return_outcome` is
 	// `return_attempted`.
 	ReturnAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnAttempted] `json:"return_attempted"`
@@ -7410,13 +7410,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // `return_attempted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -7445,9 +7445,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotAsDescribedReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -7484,15 +7484,15 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // `consumer_merchandise_not_received`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceived struct {
 	// Cancellation outcome.
-	CancellationOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedCancellationOutcome] `json:"cancellation_outcome,required"`
+	CancellationOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedCancellationOutcome] `json:"cancellation_outcome" api:"required"`
 	// Delivery issue.
-	DeliveryIssue param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDeliveryIssue] `json:"delivery_issue,required"`
+	DeliveryIssue param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDeliveryIssue] `json:"delivery_issue" api:"required"`
 	// Last expected receipt at.
-	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at,required" format:"date"`
+	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase information and explanation.
-	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation,required"`
+	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation" api:"required"`
 	// Cardholder cancellation prior to expected receipt. Required if and only if
 	// `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 	CardholderCancellationPriorToExpectedReceipt param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt] `json:"cardholder_cancellation_prior_to_expected_receipt"`
@@ -7566,7 +7566,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedCardholderCancellationPriorToExpectedReceipt struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
 	Reason param.Field[string] `json:"reason"`
 }
@@ -7578,9 +7578,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // Delayed. Required if and only if `delivery_issue` is `delayed`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayed struct {
 	// Explanation.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedNotReturned] `json:"not_returned"`
 	// Return attempted. Required if and only if `return_outcome` is
@@ -7623,7 +7623,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // `return_attempted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted struct {
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -7633,9 +7633,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturned struct {
 	// Merchant received return at.
-	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at,required" format:"date"`
+	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" api:"required" format:"date"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDelayedReturned) MarshalJSON() (data []byte, err error) {
@@ -7646,7 +7646,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // `delivered_to_wrong_location`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDeliveredToWrongLocation struct {
 	// Agreed location.
-	AgreedLocation param.Field[string] `json:"agreed_location,required"`
+	AgreedLocation param.Field[string] `json:"agreed_location" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedDeliveredToWrongLocation) MarshalJSON() (data []byte, err error) {
@@ -7657,7 +7657,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNo
 // `merchant_cancellation`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedMerchantCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerMerchandiseNotReceivedMerchantCancellation) MarshalJSON() (data []byte, err error) {
@@ -7686,9 +7686,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerNonReceiptOfC
 // `category` is `consumer_original_credit_transaction_not_accepted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAccepted struct {
 	// Explanation.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Reason.
-	Reason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAcceptedReason] `json:"reason,required"`
+	Reason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAcceptedReason] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCreditTransactionNotAccepted) MarshalJSON() (data []byte, err error) {
@@ -7715,15 +7715,15 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerOriginalCredi
 // `consumer_quality_merchandise`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandise struct {
 	// Expected at.
-	ExpectedAt param.Field[time.Time] `json:"expected_at,required" format:"date"`
+	ExpectedAt param.Field[time.Time] `json:"expected_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase information and quality issue.
-	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue,required"`
+	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 	// Return outcome.
-	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnOutcome] `json:"return_outcome,required"`
+	ReturnOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnOutcome] `json:"return_outcome" api:"required"`
 	// Not returned. Required if and only if `return_outcome` is `not_returned`.
 	NotReturned param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseNotReturned] `json:"not_returned"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -7784,11 +7784,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMercha
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseOngoingNegotiations struct {
 	// Explanation of the previous ongoing negotiations between the cardholder and
 	// merchant.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Date the cardholder first notified the issuer of the dispute.
-	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at,required" format:"date"`
+	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at" api:"required" format:"date"`
 	// Started at.
-	StartedAt param.Field[time.Time] `json:"started_at,required" format:"date"`
+	StartedAt param.Field[time.Time] `json:"started_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseOngoingNegotiations) MarshalJSON() (data []byte, err error) {
@@ -7799,13 +7799,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMercha
 // `return_attempted`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnAttempted struct {
 	// Attempt explanation.
-	AttemptExplanation param.Field[string] `json:"attempt_explanation,required"`
+	AttemptExplanation param.Field[string] `json:"attempt_explanation" api:"required"`
 	// Attempt reason.
-	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason,required"`
+	AttemptReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnAttemptedAttemptReason] `json:"attempt_reason" api:"required"`
 	// Attempted at.
-	AttemptedAt param.Field[time.Time] `json:"attempted_at,required" format:"date"`
+	AttemptedAt param.Field[time.Time] `json:"attempted_at" api:"required" format:"date"`
 	// Merchandise disposition.
-	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition,required"`
+	MerchandiseDisposition param.Field[string] `json:"merchandise_disposition" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnAttempted) MarshalJSON() (data []byte, err error) {
@@ -7834,9 +7834,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMercha
 // Returned. Required if and only if `return_outcome` is `returned`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturned struct {
 	// Return method.
-	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnedReturnMethod] `json:"return_method,required"`
+	ReturnMethod param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMerchandiseReturnedReturnMethod] `json:"return_method" api:"required"`
 	// Returned at.
-	ReturnedAt param.Field[time.Time] `json:"returned_at,required" format:"date"`
+	ReturnedAt param.Field[time.Time] `json:"returned_at" api:"required" format:"date"`
 	// Merchant received return at.
 	MerchantReceivedReturnAt param.Field[time.Time] `json:"merchant_received_return_at" format:"date"`
 	// Other explanation. Required if and only if the return method is `other`.
@@ -7873,13 +7873,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityMercha
 // `consumer_quality_services`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServices struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Non-fiat currency or non-fungible token related and not matching description.
-	NonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesNonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription] `json:"non_fiat_currency_or_non_fungible_token_related_and_not_matching_description,required"`
+	NonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesNonFiatCurrencyOrNonFungibleTokenRelatedAndNotMatchingDescription] `json:"non_fiat_currency_or_non_fungible_token_related_and_not_matching_description" api:"required"`
 	// Purchase information and quality issue.
-	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue,required"`
+	PurchaseInfoAndQualityIssue param.Field[string] `json:"purchase_info_and_quality_issue" api:"required"`
 	// Services received at.
-	ServicesReceivedAt param.Field[time.Time] `json:"services_received_at,required" format:"date"`
+	ServicesReceivedAt param.Field[time.Time] `json:"services_received_at" api:"required" format:"date"`
 	// Cardholder paid to have work redone.
 	CardholderPaidToHaveWorkRedone param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderPaidToHaveWorkRedone] `json:"cardholder_paid_to_have_work_redone"`
 	// Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -7897,11 +7897,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServic
 // Cardholder cancellation.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -7960,11 +7960,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServic
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesOngoingNegotiations struct {
 	// Explanation of the previous ongoing negotiations between the cardholder and
 	// merchant.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Date the cardholder first notified the issuer of the dispute.
-	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at,required" format:"date"`
+	IssuerFirstNotifiedAt param.Field[time.Time] `json:"issuer_first_notified_at" api:"required" format:"date"`
 	// Started at.
-	StartedAt param.Field[time.Time] `json:"started_at,required" format:"date"`
+	StartedAt param.Field[time.Time] `json:"started_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServicesOngoingNegotiations) MarshalJSON() (data []byte, err error) {
@@ -7993,15 +7993,15 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerQualityServic
 // `consumer_services_misrepresentation`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentation struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Misrepresentation explanation.
-	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation,required"`
+	MisrepresentationExplanation param.Field[string] `json:"misrepresentation_explanation" api:"required"`
 	// Purchase explanation.
-	PurchaseExplanation param.Field[string] `json:"purchase_explanation,required"`
+	PurchaseExplanation param.Field[string] `json:"purchase_explanation" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentation) MarshalJSON() (data []byte, err error) {
@@ -8011,11 +8011,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisre
 // Cardholder cancellation.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisrepresentationCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -8058,13 +8058,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesMisre
 // `consumer_services_not_as_described`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribed struct {
 	// Cardholder cancellation.
-	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellation] `json:"cardholder_cancellation,required"`
+	CardholderCancellation param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellation] `json:"cardholder_cancellation" api:"required"`
 	// Explanation of what was ordered and was not as described.
-	Explanation param.Field[string] `json:"explanation,required"`
+	Explanation param.Field[string] `json:"explanation" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Received at.
-	ReceivedAt param.Field[time.Time] `json:"received_at,required" format:"date"`
+	ReceivedAt param.Field[time.Time] `json:"received_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribed) MarshalJSON() (data []byte, err error) {
@@ -8074,11 +8074,11 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAs
 // Cardholder cancellation.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellation struct {
 	// Accepted by merchant.
-	AcceptedByMerchant param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant,required"`
+	AcceptedByMerchant param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellationAcceptedByMerchant] `json:"accepted_by_merchant" api:"required"`
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAsDescribedCardholderCancellation) MarshalJSON() (data []byte, err error) {
@@ -8121,13 +8121,13 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotAs
 // `consumer_services_not_received`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceived struct {
 	// Cancellation outcome.
-	CancellationOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedCancellationOutcome] `json:"cancellation_outcome,required"`
+	CancellationOutcome param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedCancellationOutcome] `json:"cancellation_outcome" api:"required"`
 	// Last expected receipt at.
-	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at,required" format:"date"`
+	LastExpectedReceiptAt param.Field[time.Time] `json:"last_expected_receipt_at" api:"required" format:"date"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Purchase information and explanation.
-	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation,required"`
+	PurchaseInfoAndExplanation param.Field[string] `json:"purchase_info_and_explanation" api:"required"`
 	// Cardholder cancellation prior to expected receipt. Required if and only if
 	// `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 	CardholderCancellationPriorToExpectedReceipt param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt] `json:"cardholder_cancellation_prior_to_expected_receipt"`
@@ -8180,7 +8180,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotRe
 // `cancellation_outcome` is `cardholder_cancellation_prior_to_expected_receipt`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedCardholderCancellationPriorToExpectedReceipt struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 	// Reason.
 	Reason param.Field[string] `json:"reason"`
 }
@@ -8193,7 +8193,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotRe
 // `merchant_cancellation`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantCancellation struct {
 	// Canceled at.
-	CanceledAt param.Field[time.Time] `json:"canceled_at,required" format:"date"`
+	CanceledAt param.Field[time.Time] `json:"canceled_at" api:"required" format:"date"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotReceivedMerchantCancellation) MarshalJSON() (data []byte, err error) {
@@ -8212,7 +8212,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackConsumerServicesNotRe
 // Fraud. Required if and only if `category` is `fraud`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackFraud struct {
 	// Fraud type.
-	FraudType param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackFraudFraudType] `json:"fraud_type,required"`
+	FraudType param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackFraudFraudType] `json:"fraud_type" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackFraud) MarshalJSON() (data []byte, err error) {
@@ -8247,9 +8247,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackFraudFraudType) IsKno
 // Processing error. Required if and only if `category` is `processing_error`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingError struct {
 	// Error reason.
-	ErrorReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorErrorReason] `json:"error_reason,required"`
+	ErrorReason param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorErrorReason] `json:"error_reason" api:"required"`
 	// Merchant resolution attempted.
-	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorMerchantResolutionAttempted] `json:"merchant_resolution_attempted,required"`
+	MerchantResolutionAttempted param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorMerchantResolutionAttempted] `json:"merchant_resolution_attempted" api:"required"`
 	// Duplicate transaction. Required if and only if `error_reason` is
 	// `duplicate_transaction`.
 	DuplicateTransaction param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorDuplicateTransaction] `json:"duplicate_transaction"`
@@ -8301,7 +8301,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorMercha
 // `duplicate_transaction`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorDuplicateTransaction struct {
 	// Other transaction ID.
-	OtherTransactionID param.Field[string] `json:"other_transaction_id,required"`
+	OtherTransactionID param.Field[string] `json:"other_transaction_id" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorDuplicateTransaction) MarshalJSON() (data []byte, err error) {
@@ -8311,7 +8311,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorDuplic
 // Incorrect amount. Required if and only if `error_reason` is `incorrect_amount`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorIncorrectAmount struct {
 	// Expected amount.
-	ExpectedAmount param.Field[int64] `json:"expected_amount,required"`
+	ExpectedAmount param.Field[int64] `json:"expected_amount" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorIncorrectAmount) MarshalJSON() (data []byte, err error) {
@@ -8322,7 +8322,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorIncorr
 // `paid_by_other_means`.
 type CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorPaidByOtherMeans struct {
 	// Other form of payment evidence.
-	OtherFormOfPaymentEvidence param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorPaidByOtherMeansOtherFormOfPaymentEvidence] `json:"other_form_of_payment_evidence,required"`
+	OtherFormOfPaymentEvidence param.Field[CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorPaidByOtherMeansOtherFormOfPaymentEvidence] `json:"other_form_of_payment_evidence" api:"required"`
 	// Other transaction ID.
 	OtherTransactionID param.Field[string] `json:"other_transaction_id"`
 }
@@ -8355,7 +8355,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaChargebackProcessingErrorPaidBy
 // if and only if `category` is `merchant_prearbitration_decline`.
 type CardDisputeSubmitUserSubmissionParamsVisaMerchantPrearbitrationDecline struct {
 	// The reason for declining the merchant's pre-arbitration request.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaMerchantPrearbitrationDecline) MarshalJSON() (data []byte, err error) {
@@ -8366,7 +8366,7 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaMerchantPrearbitrationDecline) 
 // if `category` is `user_prearbitration`.
 type CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitration struct {
 	// The reason for the pre-arbitration request.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 	// Category change details for the pre-arbitration request. Should only be
 	// populated if the category of the dispute is being changed as part of the
 	// pre-arbitration request.
@@ -8381,9 +8381,9 @@ func (r CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitration) MarshalJSON
 // populated if the category of the dispute is being changed as part of the
 // pre-arbitration request.
 type CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitrationCategoryChange struct {
-	Category param.Field[CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitrationCategoryChangeCategory] `json:"category,required"`
+	Category param.Field[CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitrationCategoryChangeCategory] `json:"category" api:"required"`
 	// The reason for the category change.
-	Reason param.Field[string] `json:"reason,required"`
+	Reason param.Field[string] `json:"reason" api:"required"`
 }
 
 func (r CardDisputeSubmitUserSubmissionParamsVisaUserPrearbitrationCategoryChange) MarshalJSON() (data []byte, err error) {

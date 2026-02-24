@@ -99,30 +99,30 @@ func (r *IntrafiExclusionService) Archive(ctx context.Context, intrafiExclusionI
 // 5 business days for an exclusion to be processed.
 type IntrafiExclusion struct {
 	// The identifier of this exclusion request.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The name of the excluded institution.
-	BankName string `json:"bank_name,required,nullable"`
+	BankName string `json:"bank_name" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the exclusion was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The entity for which this institution is excluded.
-	EntityID string `json:"entity_id,required"`
+	EntityID string `json:"entity_id" api:"required"`
 	// When this was exclusion was confirmed by IntraFi.
-	ExcludedAt time.Time `json:"excluded_at,required,nullable" format:"date-time"`
+	ExcludedAt time.Time `json:"excluded_at" api:"required,nullable" format:"date-time"`
 	// The Federal Deposit Insurance Corporation's certificate number for the
 	// institution.
-	FdicCertificateNumber string `json:"fdic_certificate_number,required,nullable"`
+	FdicCertificateNumber string `json:"fdic_certificate_number" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The status of the exclusion request.
-	Status IntrafiExclusionStatus `json:"status,required"`
+	Status IntrafiExclusionStatus `json:"status" api:"required"`
 	// When this was exclusion was submitted to IntraFi by Increase.
-	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required,nullable" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `intrafi_exclusion`.
-	Type IntrafiExclusionType `json:"type,required"`
+	Type IntrafiExclusionType `json:"type" api:"required"`
 	JSON intrafiExclusionJSON `json:"-"`
 }
 
@@ -187,12 +187,12 @@ func (r IntrafiExclusionType) IsKnown() bool {
 
 type IntrafiExclusionNewParams struct {
 	// The identifier of the Entity whose deposits will be excluded.
-	EntityID param.Field[string] `json:"entity_id,required"`
+	EntityID param.Field[string] `json:"entity_id" api:"required"`
 	// The FDIC certificate number of the financial institution to be excluded. An FDIC
 	// certificate number uniquely identifies a financial institution, and is different
 	// than a routing number. To find one, we recommend searching by Bank Name using
 	// the [FDIC's bankfind tool](https://banks.data.fdic.gov/bankfind-suite/bankfind).
-	FdicCertificateNumber param.Field[string] `json:"fdic_certificate_number,required"`
+	FdicCertificateNumber param.Field[string] `json:"fdic_certificate_number" api:"required"`
 }
 
 func (r IntrafiExclusionNewParams) MarshalJSON() (data []byte, err error) {
