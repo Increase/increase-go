@@ -50,6 +50,7 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 		DebtorAccountNumber:               increase.F("987654321"),
 		DebtorExternalAccountID:           increase.F("debtor_external_account_id"),
 		DebtorRoutingNumber:               increase.F("101050001"),
+		EndToEndIdentification:            increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error

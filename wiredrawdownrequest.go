@@ -329,6 +329,9 @@ type WireDrawdownRequestNewParams struct {
 	DebtorExternalAccountID param.Field[string] `json:"debtor_external_account_id"`
 	// The debtor's routing number.
 	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number"`
+	// A free-form reference string set by the sender mirrored back in the subsequent
+	// wire transfer.
+	EndToEndIdentification param.Field[string] `json:"end_to_end_identification"`
 }
 
 func (r WireDrawdownRequestNewParams) MarshalJSON() (data []byte, err error) {
