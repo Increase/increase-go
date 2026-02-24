@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.458.0 (2026-02-24)
+
+Full Changelog: [v0.457.0...v0.458.0](https://github.com/Increase/increase-go/compare/v0.457.0...v0.458.0)
+
+### Features
+
+* **api:** api update ([ee08545](https://github.com/Increase/increase-go/commit/ee0854543ce533822e755d129f446e7c45e7153f))
+
+
+### Chores
+
+* **internal:** move custom custom `json` tags to `api` ([8933bda](https://github.com/Increase/increase-go/commit/8933bda3cd19761640b1321ad78c635a54b6df1a))
+
 ## 0.457.0 (2026-02-23)
 
 Full Changelog: [v0.456.0...v0.457.0](https://github.com/Increase/increase-go/compare/v0.456.0...v0.457.0)
