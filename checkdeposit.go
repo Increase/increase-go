@@ -84,53 +84,53 @@ func (r *CheckDepositService) ListAutoPaging(ctx context.Context, query CheckDep
 // Check Deposits allow you to deposit images of paper checks into your account.
 type CheckDeposit struct {
 	// The deposit's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account the check was deposited into.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The deposited amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID for the File containing the image of the back of the check.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Once your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
-	DepositAcceptance CheckDepositDepositAcceptance `json:"deposit_acceptance,required,nullable"`
+	DepositAcceptance CheckDepositDepositAcceptance `json:"deposit_acceptance" api:"required,nullable"`
 	// If your deposit is rejected by Increase, this will contain details as to why it
 	// was rejected.
-	DepositRejection CheckDepositDepositRejection `json:"deposit_rejection,required,nullable"`
+	DepositRejection CheckDepositDepositRejection `json:"deposit_rejection" api:"required,nullable"`
 	// If your deposit is returned, this will contain details as to why it was
 	// returned.
-	DepositReturn CheckDepositDepositReturn `json:"deposit_return,required,nullable"`
+	DepositReturn CheckDepositDepositReturn `json:"deposit_return" api:"required,nullable"`
 	// After the check is parsed, it is submitted to the Check21 network for
 	// processing. This will contain details of the submission.
-	DepositSubmission CheckDepositDepositSubmission `json:"deposit_submission,required,nullable"`
+	DepositSubmission CheckDepositDepositSubmission `json:"deposit_submission" api:"required,nullable"`
 	// The description of the Check Deposit, for display purposes only.
-	Description string `json:"description,required,nullable"`
+	Description string `json:"description" api:"required,nullable"`
 	// The ID for the File containing the image of the front of the check.
-	FrontImageFileID string `json:"front_image_file_id,required"`
+	FrontImageFileID string `json:"front_image_file_id" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// Increase will sometimes hold the funds for Check Deposits. If funds are held,
 	// this sub-object will contain details of the hold.
-	InboundFundsHold CheckDepositInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
+	InboundFundsHold CheckDepositInboundFundsHold `json:"inbound_funds_hold" api:"required,nullable"`
 	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
 	// the identifier of the Inbound Mail Item.
-	InboundMailItemID string `json:"inbound_mail_item_id,required,nullable"`
+	InboundMailItemID string `json:"inbound_mail_item_id" api:"required,nullable"`
 	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
 	// the identifier of the Lockbox that received it.
-	LockboxID string `json:"lockbox_id,required,nullable"`
+	LockboxID string `json:"lockbox_id" api:"required,nullable"`
 	// The status of the Check Deposit.
-	Status CheckDepositStatus `json:"status,required"`
+	Status CheckDepositStatus `json:"status" api:"required"`
 	// The ID for the Transaction created by the deposit.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `check_deposit`.
-	Type        CheckDepositType       `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        CheckDepositType       `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        checkDepositJSON       `json:"-"`
 }
 
@@ -171,25 +171,25 @@ func (r checkDepositJSON) RawJSON() string {
 type CheckDepositDepositAcceptance struct {
 	// The account number printed on the check. This is an account at the bank that
 	// issued the check.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The amount to be deposited in the minor unit of the transaction's currency. For
 	// dollars, for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// An additional line of metadata printed on the check. This typically includes the
 	// check number for business checks.
-	AuxiliaryOnUs string `json:"auxiliary_on_us,required,nullable"`
+	AuxiliaryOnUs string `json:"auxiliary_on_us" api:"required,nullable"`
 	// The ID of the Check Deposit that was accepted.
-	CheckDepositID string `json:"check_deposit_id,required"`
+	CheckDepositID string `json:"check_deposit_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency CheckDepositDepositAcceptanceCurrency `json:"currency,required"`
+	Currency CheckDepositDepositAcceptanceCurrency `json:"currency" api:"required"`
 	// The routing number printed on the check. This is a routing number for the bank
 	// that issued the check.
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The check serial number, if present, for consumer checks. For business checks,
 	// the serial number is usually in the `auxiliary_on_us` field.
-	SerialNumber string                            `json:"serial_number,required,nullable"`
-	ExtraFields  map[string]interface{}            `json:"-,extras"`
+	SerialNumber string                            `json:"serial_number" api:"required,nullable"`
+	ExtraFields  map[string]interface{}            `json:"-" api:"extrafields"`
 	JSON         checkDepositDepositAcceptanceJSON `json:"-"`
 }
 
@@ -236,20 +236,20 @@ func (r CheckDepositDepositAcceptanceCurrency) IsKnown() bool {
 type CheckDepositDepositRejection struct {
 	// The rejected amount in the minor unit of check's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Check Deposit that was rejected.
-	CheckDepositID string `json:"check_deposit_id,required"`
+	CheckDepositID string `json:"check_deposit_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency CheckDepositDepositRejectionCurrency `json:"currency,required"`
+	Currency CheckDepositDepositRejectionCurrency `json:"currency" api:"required"`
 	// The identifier of the associated declined transaction.
-	DeclinedTransactionID string `json:"declined_transaction_id,required"`
+	DeclinedTransactionID string `json:"declined_transaction_id" api:"required"`
 	// Why the check deposit was rejected.
-	Reason CheckDepositDepositRejectionReason `json:"reason,required"`
+	Reason CheckDepositDepositRejectionReason `json:"reason" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was rejected.
-	RejectedAt  time.Time                        `json:"rejected_at,required" format:"date-time"`
-	ExtraFields map[string]interface{}           `json:"-,extras"`
+	RejectedAt  time.Time                        `json:"rejected_at" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}           `json:"-" api:"extrafields"`
 	JSON        checkDepositDepositRejectionJSON `json:"-"`
 }
 
@@ -320,22 +320,22 @@ func (r CheckDepositDepositRejectionReason) IsKnown() bool {
 // returned.
 type CheckDepositDepositReturn struct {
 	// The returned amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Check Deposit that was returned.
-	CheckDepositID string `json:"check_deposit_id,required"`
+	CheckDepositID string `json:"check_deposit_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency CheckDepositDepositReturnCurrency `json:"currency,required"`
+	Currency CheckDepositDepositReturnCurrency `json:"currency" api:"required"`
 	// Why this check was returned by the bank holding the account it was drawn
 	// against.
-	ReturnReason CheckDepositDepositReturnReturnReason `json:"return_reason,required"`
+	ReturnReason CheckDepositDepositReturnReturnReason `json:"return_reason" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check deposit was returned.
-	ReturnedAt time.Time `json:"returned_at,required" format:"date-time"`
+	ReturnedAt time.Time `json:"returned_at" api:"required" format:"date-time"`
 	// The identifier of the transaction that reversed the original check deposit
 	// transaction.
-	TransactionID string                        `json:"transaction_id,required"`
-	ExtraFields   map[string]interface{}        `json:"-,extras"`
+	TransactionID string                        `json:"transaction_id" api:"required"`
+	ExtraFields   map[string]interface{}        `json:"-" api:"extrafields"`
 	JSON          checkDepositDepositReturnJSON `json:"-"`
 }
 
@@ -422,14 +422,14 @@ func (r CheckDepositDepositReturnReturnReason) IsKnown() bool {
 type CheckDepositDepositSubmission struct {
 	// The ID for the File containing the check back image that was submitted to the
 	// Check21 network.
-	BackFileID string `json:"back_file_id,required"`
+	BackFileID string `json:"back_file_id" api:"required"`
 	// The ID for the File containing the check front image that was submitted to the
 	// Check21 network.
-	FrontFileID string `json:"front_file_id,required"`
+	FrontFileID string `json:"front_file_id" api:"required"`
 	// When the check deposit was submitted to the Check21 network for processing.
 	// During business days, this happens within a few hours of the check being
 	// accepted by Increase.
-	SubmittedAt time.Time                         `json:"submitted_at,required" format:"date-time"`
+	SubmittedAt time.Time                         `json:"submitted_at" api:"required" format:"date-time"`
 	JSON        checkDepositDepositSubmissionJSON `json:"-"`
 }
 
@@ -456,28 +456,28 @@ func (r checkDepositDepositSubmissionJSON) RawJSON() string {
 type CheckDepositInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
-	Currency CheckDepositInboundFundsHoldCurrency `json:"currency,required"`
+	Currency CheckDepositInboundFundsHoldCurrency `json:"currency" api:"required"`
 	// The ID of the Transaction for which funds were held.
-	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
+	HeldTransactionID string `json:"held_transaction_id" api:"required,nullable"`
 	// The ID of the Pending Transaction representing the held funds.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// When the hold was released (if it has been released).
-	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	ReleasedAt time.Time `json:"released_at" api:"required,nullable" format:"date-time"`
 	// The status of the hold.
-	Status CheckDepositInboundFundsHoldStatus `json:"status,required"`
+	Status CheckDepositInboundFundsHoldStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
-	Type        CheckDepositInboundFundsHoldType `json:"type,required"`
-	ExtraFields map[string]interface{}           `json:"-,extras"`
+	Type        CheckDepositInboundFundsHoldType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}           `json:"-" api:"extrafields"`
 	JSON        checkDepositInboundFundsHoldJSON `json:"-"`
 }
 
@@ -589,13 +589,13 @@ func (r CheckDepositType) IsKnown() bool {
 
 type CheckDepositNewParams struct {
 	// The identifier for the Account to deposit the check in.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The deposit amount in USD cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The File containing the check's back image.
-	BackImageFileID param.Field[string] `json:"back_image_file_id,required"`
+	BackImageFileID param.Field[string] `json:"back_image_file_id" api:"required"`
 	// The File containing the check's front image.
-	FrontImageFileID param.Field[string] `json:"front_image_file_id,required"`
+	FrontImageFileID param.Field[string] `json:"front_image_file_id" api:"required"`
 	// The description you choose to give the Check Deposit, for display purposes only.
 	Description param.Field[string] `json:"description"`
 }

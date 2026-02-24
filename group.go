@@ -46,17 +46,17 @@ func (r *GroupService) Get(ctx context.Context, opts ...option.RequestOption) (r
 // Learn more about OAuth [here](https://increase.com/documentation/oauth).
 type Group struct {
 	// The Group identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// If the Group is allowed to create ACH debits.
-	ACHDebitStatus GroupACHDebitStatus `json:"ach_debit_status,required"`
+	ACHDebitStatus GroupACHDebitStatus `json:"ach_debit_status" api:"required"`
 	// If the Group is activated or not.
-	ActivationStatus GroupActivationStatus `json:"activation_status,required"`
+	ActivationStatus GroupActivationStatus `json:"activation_status" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
-	Type GroupType `json:"type,required"`
+	Type GroupType `json:"type" api:"required"`
 	JSON groupJSON `json:"-"`
 }
 

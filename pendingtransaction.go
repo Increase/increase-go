@@ -106,46 +106,46 @@ func (r *PendingTransactionService) Release(ctx context.Context, pendingTransact
 // [Transactions and Transfers](/documentation/transactions-transfers).
 type PendingTransaction struct {
 	// The Pending Transaction identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the account this Pending Transaction belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction was completed.
-	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
+	CompletedAt time.Time `json:"completed_at" api:"required,nullable" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
 	// Transaction occurred.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the Pending
 	// Transaction's currency. This will match the currency on the Pending
 	// Transaction's Account.
-	Currency PendingTransactionCurrency `json:"currency,required"`
+	Currency PendingTransactionCurrency `json:"currency" api:"required"`
 	// For a Pending Transaction related to a transfer, this is the description you
 	// provide. For a Pending Transaction related to a payment, this is the description
 	// the vendor provides.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The amount that this Pending Transaction decrements the available balance of its
 	// Account. This is usually the same as `amount`, but will differ if the amount is
 	// positive.
-	HeldAmount int64 `json:"held_amount,required"`
+	HeldAmount int64 `json:"held_amount" api:"required"`
 	// The identifier for the route this Pending Transaction came through. Routes are
 	// things like cards and ACH details.
-	RouteID string `json:"route_id,required,nullable"`
+	RouteID string `json:"route_id" api:"required,nullable"`
 	// The type of the route this Pending Transaction came through.
-	RouteType PendingTransactionRouteType `json:"route_type,required,nullable"`
+	RouteType PendingTransactionRouteType `json:"route_type" api:"required,nullable"`
 	// This is an object giving more details on the network-level event that caused the
 	// Pending Transaction. For example, for a card transaction this lists the
 	// merchant's industry and location.
-	Source PendingTransactionSource `json:"source,required"`
+	Source PendingTransactionSource `json:"source" api:"required"`
 	// Whether the Pending Transaction has been confirmed and has an associated
 	// Transaction.
-	Status PendingTransactionStatus `json:"status,required"`
+	Status PendingTransactionStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `pending_transaction`.
-	Type        PendingTransactionType `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        PendingTransactionType `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        pendingTransactionJSON `json:"-"`
 }
 
@@ -217,66 +217,66 @@ func (r PendingTransactionRouteType) IsKnown() bool {
 type PendingTransactionSource struct {
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category PendingTransactionSourceCategory `json:"category,required"`
+	Category PendingTransactionSourceCategory `json:"category" api:"required"`
 	// An Account Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `account_transfer_instruction`.
-	AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction,nullable"`
+	AccountTransferInstruction PendingTransactionSourceAccountTransferInstruction `json:"account_transfer_instruction" api:"nullable"`
 	// An ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
-	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction,nullable"`
+	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction" api:"nullable"`
 	// A Blockchain Off-Ramp Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_offramp_transfer_instruction`.
-	BlockchainOfframpTransferInstruction PendingTransactionSourceBlockchainOfframpTransferInstruction `json:"blockchain_offramp_transfer_instruction,nullable"`
+	BlockchainOfframpTransferInstruction PendingTransactionSourceBlockchainOfframpTransferInstruction `json:"blockchain_offramp_transfer_instruction" api:"nullable"`
 	// A Blockchain On-Ramp Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_onramp_transfer_instruction`.
-	BlockchainOnrampTransferInstruction PendingTransactionSourceBlockchainOnrampTransferInstruction `json:"blockchain_onramp_transfer_instruction,nullable"`
+	BlockchainOnrampTransferInstruction PendingTransactionSourceBlockchainOnrampTransferInstruction `json:"blockchain_onramp_transfer_instruction" api:"nullable"`
 	// A Card Authorization object. This field will be present in the JSON response if
 	// and only if `category` is equal to `card_authorization`. Card Authorizations are
 	// temporary holds placed on a customer's funds with the intent to later clear a
 	// transaction.
-	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization,nullable"`
+	CardAuthorization PendingTransactionSourceCardAuthorization `json:"card_authorization" api:"nullable"`
 	// A Card Push Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_push_transfer_instruction`.
-	CardPushTransferInstruction PendingTransactionSourceCardPushTransferInstruction `json:"card_push_transfer_instruction,nullable"`
+	CardPushTransferInstruction PendingTransactionSourceCardPushTransferInstruction `json:"card_push_transfer_instruction" api:"nullable"`
 	// A Check Deposit Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_deposit_instruction`.
-	CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction,nullable"`
+	CheckDepositInstruction PendingTransactionSourceCheckDepositInstruction `json:"check_deposit_instruction" api:"nullable"`
 	// A Check Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `check_transfer_instruction`.
-	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction,nullable"`
+	CheckTransferInstruction PendingTransactionSourceCheckTransferInstruction `json:"check_transfer_instruction" api:"nullable"`
 	// A FedNow Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `fednow_transfer_instruction`.
-	FednowTransferInstruction PendingTransactionSourceFednowTransferInstruction `json:"fednow_transfer_instruction,nullable"`
+	FednowTransferInstruction PendingTransactionSourceFednowTransferInstruction `json:"fednow_transfer_instruction" api:"nullable"`
 	// An Inbound Funds Hold object. This field will be present in the JSON response if
 	// and only if `category` is equal to `inbound_funds_hold`. We hold funds for
 	// certain transaction types to account for return windows where funds might still
 	// be clawed back by the sending institution.
-	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold,nullable"`
+	InboundFundsHold PendingTransactionSourceInboundFundsHold `json:"inbound_funds_hold" api:"nullable"`
 	// An Inbound Wire Transfer Reversal object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_wire_transfer_reversal`.
 	// An Inbound Wire Transfer Reversal is created when Increase has received a wire
 	// and the User requests that it be reversed.
-	InboundWireTransferReversal PendingTransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal,nullable"`
+	InboundWireTransferReversal PendingTransactionSourceInboundWireTransferReversal `json:"inbound_wire_transfer_reversal" api:"nullable"`
 	// If the category of this Transaction source is equal to `other`, this field will
 	// contain an empty object, otherwise it will contain null.
-	Other PendingTransactionSourceOther `json:"other,nullable"`
+	Other PendingTransactionSourceOther `json:"other" api:"nullable"`
 	// A Real-Time Payments Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `real_time_payments_transfer_instruction`.
-	RealTimePaymentsTransferInstruction PendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction,nullable"`
+	RealTimePaymentsTransferInstruction PendingTransactionSourceRealTimePaymentsTransferInstruction `json:"real_time_payments_transfer_instruction" api:"nullable"`
 	// A Swift Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `swift_transfer_instruction`.
-	SwiftTransferInstruction PendingTransactionSourceSwiftTransferInstruction `json:"swift_transfer_instruction,nullable"`
+	SwiftTransferInstruction PendingTransactionSourceSwiftTransferInstruction `json:"swift_transfer_instruction" api:"nullable"`
 	// An User Initiated Hold object. This field will be present in the JSON response
 	// if and only if `category` is equal to `user_initiated_hold`. Created when a user
 	// initiates a hold on funds in their account.
-	UserInitiatedHold map[string]interface{} `json:"user_initiated_hold,nullable"`
+	UserInitiatedHold map[string]interface{} `json:"user_initiated_hold" api:"nullable"`
 	// A Wire Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `wire_transfer_instruction`.
-	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction,nullable"`
-	ExtraFields             map[string]interface{}                          `json:"-,extras"`
+	WireTransferInstruction PendingTransactionSourceWireTransferInstruction `json:"wire_transfer_instruction" api:"nullable"`
+	ExtraFields             map[string]interface{}                          `json:"-" api:"extrafields"`
 	JSON                    pendingTransactionSourceJSON                    `json:"-"`
 }
 
@@ -348,13 +348,13 @@ func (r PendingTransactionSourceCategory) IsKnown() bool {
 type PendingTransactionSourceAccountTransferInstruction struct {
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
 	// account currency.
-	Currency PendingTransactionSourceAccountTransferInstructionCurrency `json:"currency,required"`
+	Currency PendingTransactionSourceAccountTransferInstructionCurrency `json:"currency" api:"required"`
 	// The identifier of the Account Transfer that led to this Pending Transaction.
-	TransferID  string                                                 `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                 `json:"-,extras"`
+	TransferID  string                                                 `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                 `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceAccountTransferInstructionJSON `json:"-"`
 }
 
@@ -396,10 +396,10 @@ func (r PendingTransactionSourceAccountTransferInstructionCurrency) IsKnown() bo
 // response if and only if `category` is equal to `ach_transfer_instruction`.
 type PendingTransactionSourceACHTransferInstruction struct {
 	// The pending amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the ACH Transfer that led to this Pending Transaction.
-	TransferID  string                                             `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                             `json:"-,extras"`
+	TransferID  string                                             `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                             `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceACHTransferInstructionJSON `json:"-"`
 }
 
@@ -425,10 +425,10 @@ func (r pendingTransactionSourceACHTransferInstructionJSON) RawJSON() string {
 // `blockchain_offramp_transfer_instruction`.
 type PendingTransactionSourceBlockchainOfframpTransferInstruction struct {
 	// The identifier of the Blockchain Address the funds were received at.
-	SourceBlockchainAddressID string `json:"source_blockchain_address_id,required"`
+	SourceBlockchainAddressID string `json:"source_blockchain_address_id" api:"required"`
 	// The identifier of the Blockchain Off-Ramp Transfer that led to this Transaction.
-	TransferID  string                                                           `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                           `json:"-,extras"`
+	TransferID  string                                                           `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                           `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceBlockchainOfframpTransferInstructionJSON `json:"-"`
 }
 
@@ -455,12 +455,12 @@ func (r pendingTransactionSourceBlockchainOfframpTransferInstructionJSON) RawJSO
 // `blockchain_onramp_transfer_instruction`.
 type PendingTransactionSourceBlockchainOnrampTransferInstruction struct {
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The blockchain address the funds are being sent to.
-	DestinationBlockchainAddress string `json:"destination_blockchain_address,required"`
+	DestinationBlockchainAddress string `json:"destination_blockchain_address" api:"required"`
 	// The identifier of the Blockchain On-Ramp Transfer that led to this Pending
 	// Transaction.
-	TransferID string                                                          `json:"transfer_id,required"`
+	TransferID string                                                          `json:"transfer_id" api:"required"`
 	JSON       pendingTransactionSourceBlockchainOnrampTransferInstructionJSON `json:"-"`
 }
 
@@ -489,81 +489,81 @@ func (r pendingTransactionSourceBlockchainOnrampTransferInstructionJSON) RawJSON
 // transaction.
 type PendingTransactionSourceCardAuthorization struct {
 	// The Card Authorization identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
-	Actioner PendingTransactionSourceCardAuthorizationActioner `json:"actioner,required"`
+	Actioner PendingTransactionSourceCardAuthorizationActioner `json:"actioner" api:"required"`
 	// Additional amounts associated with the card authorization, such as ATM
 	// surcharges fees. These are usually a subset of the `amount` field and are used
 	// to provide more detailed information about the transaction.
-	AdditionalAmounts PendingTransactionSourceCardAuthorizationAdditionalAmounts `json:"additional_amounts,required"`
+	AdditionalAmounts PendingTransactionSourceCardAuthorizationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required"`
+	CardPaymentID string `json:"card_payment_id" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency,required"`
+	Currency PendingTransactionSourceCardAuthorizationCurrency `json:"currency" api:"required"`
 	// If the authorization was made via a Digital Wallet Token (such as an Apple Pay
 	// purchase), the identifier of the token that was used.
-	DigitalWalletTokenID string `json:"digital_wallet_token_id,required,nullable"`
+	DigitalWalletTokenID string `json:"digital_wallet_token_id" api:"required,nullable"`
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
-	Direction PendingTransactionSourceCardAuthorizationDirection `json:"direction,required"`
+	Direction PendingTransactionSourceCardAuthorizationDirection `json:"direction" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
 	// will expire and the pending transaction will be released.
-	ExpiresAt time.Time `json:"expires_at,required" format:"date-time"`
+	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id,required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city the merchant resides in.
-	MerchantCity string `json:"merchant_city,required,nullable"`
+	MerchantCity string `json:"merchant_city" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country,required"`
+	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The merchant descriptor of the merchant the card is transacting with.
-	MerchantDescriptor string `json:"merchant_descriptor,required"`
+	MerchantDescriptor string `json:"merchant_descriptor" api:"required"`
 	// The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
 	// ZIP code, where the first 5 and last 4 are separated by a dash.
-	MerchantPostalCode string `json:"merchant_postal_code,required,nullable"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
-	MerchantState string `json:"merchant_state,required,nullable"`
+	MerchantState string `json:"merchant_state" api:"required,nullable"`
 	// Fields specific to the `network`.
-	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details,required"`
+	NetworkDetails PendingTransactionSourceCardAuthorizationNetworkDetails `json:"network_details" api:"required"`
 	// Network-specific identifiers for a specific request or transaction.
-	NetworkIdentifiers PendingTransactionSourceCardAuthorizationNetworkIdentifiers `json:"network_identifiers,required"`
+	NetworkIdentifiers PendingTransactionSourceCardAuthorizationNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The risk score generated by the card network. For Visa this is the Visa Advanced
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
-	NetworkRiskScore int64 `json:"network_risk_score,required,nullable"`
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
 	// The identifier of the Pending Transaction associated with this Transaction.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
 	// that was used.
-	PhysicalCardID string `json:"physical_card_id,required,nullable"`
+	PhysicalCardID string `json:"physical_card_id" api:"required,nullable"`
 	// The pending amount in the minor unit of the transaction's presentment currency.
-	PresentmentAmount int64 `json:"presentment_amount,required"`
+	PresentmentAmount int64 `json:"presentment_amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's presentment currency.
-	PresentmentCurrency string `json:"presentment_currency,required"`
+	PresentmentCurrency string `json:"presentment_currency" api:"required"`
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	ProcessingCategory PendingTransactionSourceCardAuthorizationProcessingCategory `json:"processing_category,required"`
+	ProcessingCategory PendingTransactionSourceCardAuthorizationProcessingCategory `json:"processing_category" api:"required"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
-	RealTimeDecisionID string `json:"real_time_decision_id,required,nullable"`
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
-	TerminalID string `json:"terminal_id,required,nullable"`
+	TerminalID string `json:"terminal_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authorization`.
-	Type PendingTransactionSourceCardAuthorizationType `json:"type,required"`
+	Type PendingTransactionSourceCardAuthorizationType `json:"type" api:"required"`
 	// Fields related to verification of cardholder-provided values.
-	Verification PendingTransactionSourceCardAuthorizationVerification `json:"verification,required"`
-	ExtraFields  map[string]interface{}                                `json:"-,extras"`
+	Verification PendingTransactionSourceCardAuthorizationVerification `json:"verification" api:"required"`
+	ExtraFields  map[string]interface{}                                `json:"-" api:"extrafields"`
 	JSON         pendingTransactionSourceCardAuthorizationJSON         `json:"-"`
 }
 
@@ -633,25 +633,25 @@ func (r PendingTransactionSourceCardAuthorizationActioner) IsKnown() bool {
 // to provide more detailed information about the transaction.
 type PendingTransactionSourceCardAuthorizationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
-	Clinic PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic `json:"clinic,required,nullable"`
+	Clinic PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
 	// The part of this transaction amount that was for dental-related services.
-	Dental PendingTransactionSourceCardAuthorizationAdditionalAmountsDental `json:"dental,required,nullable"`
+	Dental PendingTransactionSourceCardAuthorizationAdditionalAmountsDental `json:"dental" api:"required,nullable"`
 	// The original pre-authorized amount.
-	Original PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal `json:"original,required,nullable"`
+	Original PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal `json:"original" api:"required,nullable"`
 	// The part of this transaction amount that was for healthcare prescriptions.
-	Prescription PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription `json:"prescription,required,nullable"`
+	Prescription PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription `json:"prescription" api:"required,nullable"`
 	// The surcharge amount charged for this transaction by the merchant.
-	Surcharge PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge,required,nullable"`
+	Surcharge PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge `json:"surcharge" api:"required,nullable"`
 	// The total amount of a series of incremental authorizations, optionally provided.
-	TotalCumulative PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative,required,nullable"`
+	TotalCumulative PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative `json:"total_cumulative" api:"required,nullable"`
 	// The total amount of healthcare-related additional amounts.
-	TotalHealthcare PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare,required,nullable"`
+	TotalHealthcare PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare `json:"total_healthcare" api:"required,nullable"`
 	// The part of this transaction amount that was for transit-related services.
-	Transit PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit `json:"transit,required,nullable"`
+	Transit PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit `json:"transit" api:"required,nullable"`
 	// An unknown additional amount.
-	Unknown PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown `json:"unknown,required,nullable"`
+	Unknown PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown `json:"unknown" api:"required,nullable"`
 	// The part of this transaction amount that was for vision-related services.
-	Vision PendingTransactionSourceCardAuthorizationAdditionalAmountsVision `json:"vision,required,nullable"`
+	Vision PendingTransactionSourceCardAuthorizationAdditionalAmountsVision `json:"vision" api:"required,nullable"`
 	JSON   pendingTransactionSourceCardAuthorizationAdditionalAmountsJSON   `json:"-"`
 }
 
@@ -686,10 +686,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsClinicJSON `json:"-"`
 }
 
@@ -716,10 +716,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsDental struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsDentalJSON `json:"-"`
 }
 
@@ -746,10 +746,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsOriginal struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                 `json:"currency,required"`
+	Currency string                                                                 `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsOriginalJSON `json:"-"`
 }
 
@@ -776,10 +776,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsPrescription stru
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                     `json:"currency,required"`
+	Currency string                                                                     `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsPrescriptionJSON `json:"-"`
 }
 
@@ -806,10 +806,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsSurcharge struct 
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                  `json:"currency,required"`
+	Currency string                                                                  `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsSurchargeJSON `json:"-"`
 }
 
@@ -836,10 +836,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulative s
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                        `json:"currency,required"`
+	Currency string                                                                        `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalCumulativeJSON `json:"-"`
 }
 
@@ -866,10 +866,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcare s
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                        `json:"currency,required"`
+	Currency string                                                                        `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsTotalHealthcareJSON `json:"-"`
 }
 
@@ -896,10 +896,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsTransit struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsTransitJSON `json:"-"`
 }
 
@@ -926,10 +926,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsUnknown struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                                `json:"currency,required"`
+	Currency string                                                                `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsUnknownJSON `json:"-"`
 }
 
@@ -956,10 +956,10 @@ type PendingTransactionSourceCardAuthorizationAdditionalAmountsVision struct {
 	// The amount in minor units of the `currency` field. The amount is positive if it
 	// is added to the amount (such as an ATM surcharge fee) and negative if it is
 	// subtracted from the amount (such as a discount).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
 	// amount's currency.
-	Currency string                                                               `json:"currency,required"`
+	Currency string                                                               `json:"currency" api:"required"`
 	JSON     pendingTransactionSourceCardAuthorizationAdditionalAmountsVisionJSON `json:"-"`
 }
 
@@ -1017,11 +1017,11 @@ func (r PendingTransactionSourceCardAuthorizationDirection) IsKnown() bool {
 // Fields specific to the `network`.
 type PendingTransactionSourceCardAuthorizationNetworkDetails struct {
 	// The payment network used to process this card authorization.
-	Category PendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category,required"`
+	Category PendingTransactionSourceCardAuthorizationNetworkDetailsCategory `json:"category" api:"required"`
 	// Fields specific to the `pulse` network.
-	Pulse PendingTransactionSourceCardAuthorizationNetworkDetailsPulse `json:"pulse,required,nullable"`
+	Pulse PendingTransactionSourceCardAuthorizationNetworkDetailsPulse `json:"pulse" api:"required,nullable"`
 	// Fields specific to the `visa` network.
-	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa,required,nullable"`
+	Visa PendingTransactionSourceCardAuthorizationNetworkDetailsVisa `json:"visa" api:"required,nullable"`
 	JSON pendingTransactionSourceCardAuthorizationNetworkDetailsJSON `json:"-"`
 }
 
@@ -1086,19 +1086,19 @@ type PendingTransactionSourceCardAuthorizationNetworkDetailsVisa struct {
 	// For electronic commerce transactions, this identifies the level of security used
 	// in obtaining the customer's payment credential. For mail or telephone order
 	// transactions, identifies the type of mail or telephone order.
-	ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator,required,nullable"`
+	ElectronicCommerceIndicator PendingTransactionSourceCardAuthorizationNetworkDetailsVisaElectronicCommerceIndicator `json:"electronic_commerce_indicator" api:"required,nullable"`
 	// The method used to enter the cardholder's primary account number and card
 	// expiration date.
-	PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode,required,nullable"`
+	PointOfServiceEntryMode PendingTransactionSourceCardAuthorizationNetworkDetailsVisaPointOfServiceEntryMode `json:"point_of_service_entry_mode" api:"required,nullable"`
 	// Only present when `actioner: network`. Describes why a card authorization was
 	// approved or declined by Visa through stand-in processing.
-	StandInProcessingReason PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason,required,nullable"`
+	StandInProcessingReason PendingTransactionSourceCardAuthorizationNetworkDetailsVisaStandInProcessingReason `json:"stand_in_processing_reason" api:"required,nullable"`
 	// The capability of the terminal being used to read the card. Shows whether a
 	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
 	// reads. This reflects the highest capability of the terminal — for example, a
 	// terminal that supports both chip and magnetic stripe will be identified as
 	// chip-capable.
-	TerminalEntryCapability PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability,required,nullable"`
+	TerminalEntryCapability PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntryCapability `json:"terminal_entry_capability" api:"required,nullable"`
 	JSON                    pendingTransactionSourceCardAuthorizationNetworkDetailsVisaJSON                    `json:"-"`
 }
 
@@ -1223,17 +1223,17 @@ func (r PendingTransactionSourceCardAuthorizationNetworkDetailsVisaTerminalEntry
 type PendingTransactionSourceCardAuthorizationNetworkIdentifiers struct {
 	// The randomly generated 6-character Authorization Identification Response code
 	// sent back to the acquirer in an approved response.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required,nullable"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required,nullable"`
 	// A life-cycle identifier used across e.g., an authorization and a reversal.
 	// Expected to be unique per acquirer within a window of time. For some card
 	// networks the retrieval reference number includes the trace counter.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required,nullable"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required,nullable"`
 	// A counter used to verify an individual authorization. Expected to be unique per
 	// acquirer within a window of time.
-	TraceNumber string `json:"trace_number,required,nullable"`
+	TraceNumber string `json:"trace_number" api:"required,nullable"`
 	// A globally unique transaction identifier provided by the card network, used
 	// across multiple life-cycle requests.
-	TransactionID string                                                          `json:"transaction_id,required,nullable"`
+	TransactionID string                                                          `json:"transaction_id" api:"required,nullable"`
 	JSON          pendingTransactionSourceCardAuthorizationNetworkIdentifiersJSON `json:"-"`
 }
 
@@ -1302,12 +1302,12 @@ func (r PendingTransactionSourceCardAuthorizationType) IsKnown() bool {
 type PendingTransactionSourceCardAuthorizationVerification struct {
 	// Fields related to verification of the Card Verification Code, a 3-digit code on
 	// the back of the card.
-	CardVerificationCode PendingTransactionSourceCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code,required"`
+	CardVerificationCode PendingTransactionSourceCardAuthorizationVerificationCardVerificationCode `json:"card_verification_code" api:"required"`
 	// Cardholder address provided in the authorization request and the address on file
 	// we verified it against.
-	CardholderAddress PendingTransactionSourceCardAuthorizationVerificationCardholderAddress `json:"cardholder_address,required"`
+	CardholderAddress PendingTransactionSourceCardAuthorizationVerificationCardholderAddress `json:"cardholder_address" api:"required"`
 	// Cardholder name provided in the authorization request.
-	CardholderName PendingTransactionSourceCardAuthorizationVerificationCardholderName `json:"cardholder_name,required,nullable"`
+	CardholderName PendingTransactionSourceCardAuthorizationVerificationCardholderName `json:"cardholder_name" api:"required,nullable"`
 	JSON           pendingTransactionSourceCardAuthorizationVerificationJSON           `json:"-"`
 }
 
@@ -1333,7 +1333,7 @@ func (r pendingTransactionSourceCardAuthorizationVerificationJSON) RawJSON() str
 // the back of the card.
 type PendingTransactionSourceCardAuthorizationVerificationCardVerificationCode struct {
 	// The result of verifying the Card Verification Code.
-	Result PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult `json:"result,required"`
+	Result PendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeResult `json:"result" api:"required"`
 	JSON   pendingTransactionSourceCardAuthorizationVerificationCardVerificationCodeJSON   `json:"-"`
 }
 
@@ -1375,16 +1375,16 @@ func (r PendingTransactionSourceCardAuthorizationVerificationCardVerificationCod
 // we verified it against.
 type PendingTransactionSourceCardAuthorizationVerificationCardholderAddress struct {
 	// Line 1 of the address on file for the cardholder.
-	ActualLine1 string `json:"actual_line1,required,nullable"`
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
 	// The postal code of the address on file for the cardholder.
-	ActualPostalCode string `json:"actual_postal_code,required,nullable"`
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
 	// The cardholder address line 1 provided for verification in the authorization
 	// request.
-	ProvidedLine1 string `json:"provided_line1,required,nullable"`
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
 	// The postal code provided for verification in the authorization request.
-	ProvidedPostalCode string `json:"provided_postal_code,required,nullable"`
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
 	// The address verification result returned to the card network.
-	Result PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult `json:"result,required"`
+	Result PendingTransactionSourceCardAuthorizationVerificationCardholderAddressResult `json:"result" api:"required"`
 	JSON   pendingTransactionSourceCardAuthorizationVerificationCardholderAddressJSON   `json:"-"`
 }
 
@@ -1432,11 +1432,11 @@ func (r PendingTransactionSourceCardAuthorizationVerificationCardholderAddressRe
 // Cardholder name provided in the authorization request.
 type PendingTransactionSourceCardAuthorizationVerificationCardholderName struct {
 	// The first name provided for verification in the authorization request.
-	ProvidedFirstName string `json:"provided_first_name,required,nullable"`
+	ProvidedFirstName string `json:"provided_first_name" api:"required,nullable"`
 	// The last name provided for verification in the authorization request.
-	ProvidedLastName string `json:"provided_last_name,required,nullable"`
+	ProvidedLastName string `json:"provided_last_name" api:"required,nullable"`
 	// The middle name provided for verification in the authorization request.
-	ProvidedMiddleName string                                                                  `json:"provided_middle_name,required,nullable"`
+	ProvidedMiddleName string                                                                  `json:"provided_middle_name" api:"required,nullable"`
 	JSON               pendingTransactionSourceCardAuthorizationVerificationCardholderNameJSON `json:"-"`
 }
 
@@ -1463,9 +1463,9 @@ func (r pendingTransactionSourceCardAuthorizationVerificationCardholderNameJSON)
 // response if and only if `category` is equal to `card_push_transfer_instruction`.
 type PendingTransactionSourceCardPushTransferInstruction struct {
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Card Push Transfer that led to this Pending Transaction.
-	TransferID string                                                  `json:"transfer_id,required"`
+	TransferID string                                                  `json:"transfer_id" api:"required"`
 	JSON       pendingTransactionSourceCardPushTransferInstructionJSON `json:"-"`
 }
 
@@ -1490,19 +1490,19 @@ func (r pendingTransactionSourceCardPushTransferInstructionJSON) RawJSON() strin
 // response if and only if `category` is equal to `check_deposit_instruction`.
 type PendingTransactionSourceCheckDepositInstruction struct {
 	// The pending amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the File containing the image of the back of the check that
 	// was deposited.
-	BackImageFileID string `json:"back_image_file_id,required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The identifier of the Check Deposit.
-	CheckDepositID string `json:"check_deposit_id,required,nullable"`
+	CheckDepositID string `json:"check_deposit_id" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// transaction's currency.
-	Currency PendingTransactionSourceCheckDepositInstructionCurrency `json:"currency,required"`
+	Currency PendingTransactionSourceCheckDepositInstructionCurrency `json:"currency" api:"required"`
 	// The identifier of the File containing the image of the front of the check that
 	// was deposited.
-	FrontImageFileID string                                              `json:"front_image_file_id,required"`
-	ExtraFields      map[string]interface{}                              `json:"-,extras"`
+	FrontImageFileID string                                              `json:"front_image_file_id" api:"required"`
+	ExtraFields      map[string]interface{}                              `json:"-" api:"extrafields"`
 	JSON             pendingTransactionSourceCheckDepositInstructionJSON `json:"-"`
 }
 
@@ -1546,13 +1546,13 @@ func (r PendingTransactionSourceCheckDepositInstructionCurrency) IsKnown() bool 
 // response if and only if `category` is equal to `check_transfer_instruction`.
 type PendingTransactionSourceCheckTransferInstruction struct {
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the check's
 	// currency.
-	Currency PendingTransactionSourceCheckTransferInstructionCurrency `json:"currency,required"`
+	Currency PendingTransactionSourceCheckTransferInstructionCurrency `json:"currency" api:"required"`
 	// The identifier of the Check Transfer that led to this Pending Transaction.
-	TransferID  string                                               `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                               `json:"-,extras"`
+	TransferID  string                                               `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                               `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceCheckTransferInstructionJSON `json:"-"`
 }
 
@@ -1594,8 +1594,8 @@ func (r PendingTransactionSourceCheckTransferInstructionCurrency) IsKnown() bool
 // response if and only if `category` is equal to `fednow_transfer_instruction`.
 type PendingTransactionSourceFednowTransferInstruction struct {
 	// The identifier of the FedNow Transfer that led to this Pending Transaction.
-	TransferID  string                                                `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                                `json:"-,extras"`
+	TransferID  string                                                `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                                `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceFednowTransferInstructionJSON `json:"-"`
 }
 
@@ -1622,28 +1622,28 @@ func (r pendingTransactionSourceFednowTransferInstructionJSON) RawJSON() string 
 type PendingTransactionSourceInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
-	Currency PendingTransactionSourceInboundFundsHoldCurrency `json:"currency,required"`
+	Currency PendingTransactionSourceInboundFundsHoldCurrency `json:"currency" api:"required"`
 	// The ID of the Transaction for which funds were held.
-	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
+	HeldTransactionID string `json:"held_transaction_id" api:"required,nullable"`
 	// The ID of the Pending Transaction representing the held funds.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// When the hold was released (if it has been released).
-	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	ReleasedAt time.Time `json:"released_at" api:"required,nullable" format:"date-time"`
 	// The status of the hold.
-	Status PendingTransactionSourceInboundFundsHoldStatus `json:"status,required"`
+	Status PendingTransactionSourceInboundFundsHoldStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
-	Type        PendingTransactionSourceInboundFundsHoldType `json:"type,required"`
-	ExtraFields map[string]interface{}                       `json:"-,extras"`
+	Type        PendingTransactionSourceInboundFundsHoldType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}                       `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceInboundFundsHoldJSON `json:"-"`
 }
 
@@ -1725,8 +1725,8 @@ func (r PendingTransactionSourceInboundFundsHoldType) IsKnown() bool {
 // and the User requests that it be reversed.
 type PendingTransactionSourceInboundWireTransferReversal struct {
 	// The ID of the Inbound Wire Transfer that is being reversed.
-	InboundWireTransferID string                                                  `json:"inbound_wire_transfer_id,required"`
-	ExtraFields           map[string]interface{}                                  `json:"-,extras"`
+	InboundWireTransferID string                                                  `json:"inbound_wire_transfer_id" api:"required"`
+	ExtraFields           map[string]interface{}                                  `json:"-" api:"extrafields"`
 	JSON                  pendingTransactionSourceInboundWireTransferReversalJSON `json:"-"`
 }
 
@@ -1772,10 +1772,10 @@ func (r pendingTransactionSourceOtherJSON) RawJSON() string {
 // `real_time_payments_transfer_instruction`.
 type PendingTransactionSourceRealTimePaymentsTransferInstruction struct {
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Pending
 	// Transaction.
-	TransferID string                                                          `json:"transfer_id,required"`
+	TransferID string                                                          `json:"transfer_id" api:"required"`
 	JSON       pendingTransactionSourceRealTimePaymentsTransferInstructionJSON `json:"-"`
 }
 
@@ -1801,8 +1801,8 @@ func (r pendingTransactionSourceRealTimePaymentsTransferInstructionJSON) RawJSON
 // response if and only if `category` is equal to `swift_transfer_instruction`.
 type PendingTransactionSourceSwiftTransferInstruction struct {
 	// The identifier of the Swift Transfer that led to this Pending Transaction.
-	TransferID  string                                               `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                               `json:"-,extras"`
+	TransferID  string                                               `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                               `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceSwiftTransferInstructionJSON `json:"-"`
 }
 
@@ -1826,17 +1826,17 @@ func (r pendingTransactionSourceSwiftTransferInstructionJSON) RawJSON() string {
 // response if and only if `category` is equal to `wire_transfer_instruction`.
 type PendingTransactionSourceWireTransferInstruction struct {
 	// The account number for the destination account.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The message that will show on the recipient's bank statement.
-	MessageToRecipient string `json:"message_to_recipient,required"`
+	MessageToRecipient string `json:"message_to_recipient" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The identifier of the Wire Transfer that led to this Pending Transaction.
-	TransferID  string                                              `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                              `json:"-,extras"`
+	TransferID  string                                              `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                              `json:"-" api:"extrafields"`
 	JSON        pendingTransactionSourceWireTransferInstructionJSON `json:"-"`
 }
 
@@ -1895,11 +1895,11 @@ func (r PendingTransactionType) IsKnown() bool {
 
 type PendingTransactionNewParams struct {
 	// The Account to place the hold on.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The amount to hold in the minor unit of the account's currency. For dollars, for
 	// example, this is cents. This should be a negative amount - to hold $1.00 from
 	// the account, you would pass -100.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The description you choose to give the hold.
 	Description param.Field[string] `json:"description"`
 }

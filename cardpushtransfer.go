@@ -108,79 +108,79 @@ func (r *CardPushTransferService) Cancel(ctx context.Context, cardPushTransferID
 // Card Push Transfers send funds to a recipient's payment card in real-time.
 type CardPushTransfer struct {
 	// The Card Push Transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// If the transfer is accepted by the recipient bank, this will contain
 	// supplemental details.
-	Acceptance CardPushTransferAcceptance `json:"acceptance,required,nullable"`
+	Acceptance CardPushTransferAcceptance `json:"acceptance" api:"required,nullable"`
 	// The Account from which the transfer was sent.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval CardPushTransferApproval `json:"approval,required,nullable"`
+	Approval CardPushTransferApproval `json:"approval" api:"required,nullable"`
 	// The Business Application Identifier describes the type of transaction being
 	// performed. Your program must be approved for the specified Business Application
 	// Identifier in order to use it.
-	BusinessApplicationIdentifier CardPushTransferBusinessApplicationIdentifier `json:"business_application_identifier,required"`
+	BusinessApplicationIdentifier CardPushTransferBusinessApplicationIdentifier `json:"business_application_identifier" api:"required"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation CardPushTransferCancellation `json:"cancellation,required,nullable"`
+	Cancellation CardPushTransferCancellation `json:"cancellation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy CardPushTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy CardPushTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// If the transfer is rejected by the card network or the destination financial
 	// institution, this will contain supplemental details.
-	Decline CardPushTransferDecline `json:"decline,required,nullable"`
+	Decline CardPushTransferDecline `json:"decline" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The merchant category code (MCC) of the merchant (generally your business)
 	// sending the transfer. This is a four-digit code that describes the type of
 	// business or service provided by the merchant. Your program must be approved for
 	// the specified MCC in order to use it.
-	MerchantCategoryCode string `json:"merchant_category_code,required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city name of the merchant (generally your business) sending the transfer.
-	MerchantCityName string `json:"merchant_city_name,required"`
+	MerchantCityName string `json:"merchant_city_name" api:"required"`
 	// The merchant name shows up as the statement descriptor for the transfer. This is
 	// typically the name of your business or organization.
-	MerchantName string `json:"merchant_name,required"`
+	MerchantName string `json:"merchant_name" api:"required"`
 	// For certain Business Application Identifiers, the statement descriptor is
 	// `merchant_name_prefix*sender_name`, where the `merchant_name_prefix` is a one to
 	// four character prefix that identifies the merchant.
-	MerchantNamePrefix string `json:"merchant_name_prefix,required"`
+	MerchantNamePrefix string `json:"merchant_name_prefix" api:"required"`
 	// The postal code of the merchant (generally your business) sending the transfer.
-	MerchantPostalCode string `json:"merchant_postal_code,required"`
+	MerchantPostalCode string `json:"merchant_postal_code" api:"required"`
 	// The state of the merchant (generally your business) sending the transfer.
-	MerchantState string `json:"merchant_state,required"`
+	MerchantState string `json:"merchant_state" api:"required"`
 	// The amount that was transferred. The receiving bank will have converted this to
 	// the cardholder's currency. The amount that is applied to your Increase account
 	// matches the currency of your account.
-	PresentmentAmount CardPushTransferPresentmentAmount `json:"presentment_amount,required"`
+	PresentmentAmount CardPushTransferPresentmentAmount `json:"presentment_amount" api:"required"`
 	// The name of the funds recipient.
-	RecipientName string `json:"recipient_name,required"`
+	RecipientName string `json:"recipient_name" api:"required"`
 	// The city of the sender.
-	SenderAddressCity string `json:"sender_address_city,required"`
+	SenderAddressCity string `json:"sender_address_city" api:"required"`
 	// The address line 1 of the sender.
-	SenderAddressLine1 string `json:"sender_address_line1,required"`
+	SenderAddressLine1 string `json:"sender_address_line1" api:"required"`
 	// The postal code of the sender.
-	SenderAddressPostalCode string `json:"sender_address_postal_code,required"`
+	SenderAddressPostalCode string `json:"sender_address_postal_code" api:"required"`
 	// The state of the sender.
-	SenderAddressState string `json:"sender_address_state,required"`
+	SenderAddressState string `json:"sender_address_state" api:"required"`
 	// The name of the funds originator.
-	SenderName string `json:"sender_name,required"`
+	SenderName string `json:"sender_name" api:"required"`
 	// The Account Number the recipient will see as having sent the transfer.
-	SourceAccountNumberID string `json:"source_account_number_id,required"`
+	SourceAccountNumberID string `json:"source_account_number_id" api:"required"`
 	// The lifecycle status of the transfer.
-	Status CardPushTransferStatus `json:"status,required"`
+	Status CardPushTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to the card network, this will contain
 	// supplemental details.
-	Submission CardPushTransferSubmission `json:"submission,required,nullable"`
+	Submission CardPushTransferSubmission `json:"submission" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_push_transfer`.
-	Type        CardPushTransferType   `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        CardPushTransferType   `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        cardPushTransferJSON   `json:"-"`
 }
 
@@ -231,15 +231,15 @@ func (r cardPushTransferJSON) RawJSON() string {
 type CardPushTransferAcceptance struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was accepted by the issuing bank.
-	AcceptedAt time.Time `json:"accepted_at,required" format:"date-time"`
+	AcceptedAt time.Time `json:"accepted_at" api:"required" format:"date-time"`
 	// The authorization identification response from the issuing bank.
-	AuthorizationIdentificationResponse string `json:"authorization_identification_response,required"`
+	AuthorizationIdentificationResponse string `json:"authorization_identification_response" api:"required"`
 	// The result of the Card Verification Value 2 match.
-	CardVerificationValue2Result CardPushTransferAcceptanceCardVerificationValue2Result `json:"card_verification_value2_result,required,nullable"`
+	CardVerificationValue2Result CardPushTransferAcceptanceCardVerificationValue2Result `json:"card_verification_value2_result" api:"required,nullable"`
 	// A unique identifier for the transaction on the card network.
-	NetworkTransactionIdentifier string `json:"network_transaction_identifier,required,nullable"`
+	NetworkTransactionIdentifier string `json:"network_transaction_identifier" api:"required,nullable"`
 	// The transfer amount in USD cents.
-	SettlementAmount int64                          `json:"settlement_amount,required"`
+	SettlementAmount int64                          `json:"settlement_amount" api:"required"`
 	JSON             cardPushTransferAcceptanceJSON `json:"-"`
 }
 
@@ -284,10 +284,10 @@ func (r CardPushTransferAcceptanceCardVerificationValue2Result) IsKnown() bool {
 type CardPushTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	ApprovedAt time.Time `json:"approved_at" api:"required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string                       `json:"approved_by,required,nullable"`
+	ApprovedBy string                       `json:"approved_by" api:"required,nullable"`
 	JSON       cardPushTransferApprovalJSON `json:"-"`
 }
 
@@ -343,10 +343,10 @@ func (r CardPushTransferBusinessApplicationIdentifier) IsKnown() bool {
 type CardPushTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string                           `json:"canceled_by,required,nullable"`
+	CanceledBy string                           `json:"canceled_by" api:"required,nullable"`
 	JSON       cardPushTransferCancellationJSON `json:"-"`
 }
 
@@ -370,13 +370,13 @@ func (r cardPushTransferCancellationJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type CardPushTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category CardPushTransferCreatedByCategory `json:"category,required"`
+	Category CardPushTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey CardPushTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey CardPushTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication CardPushTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication CardPushTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User CardPushTransferCreatedByUser `json:"user,nullable"`
+	User CardPushTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON cardPushTransferCreatedByJSON `json:"-"`
 }
 
@@ -419,7 +419,7 @@ func (r CardPushTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type CardPushTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                              `json:"description,required,nullable"`
+	Description string                              `json:"description" api:"required,nullable"`
 	JSON        cardPushTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -442,7 +442,7 @@ func (r cardPushTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type CardPushTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                        `json:"name,required"`
+	Name string                                        `json:"name" api:"required"`
 	JSON cardPushTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -465,7 +465,7 @@ func (r cardPushTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type CardPushTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                            `json:"email,required"`
+	Email string                            `json:"email" api:"required"`
 	JSON  cardPushTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -490,11 +490,11 @@ func (r cardPushTransferCreatedByUserJSON) RawJSON() string {
 type CardPushTransferDecline struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer declined.
-	DeclinedAt time.Time `json:"declined_at,required" format:"date-time"`
+	DeclinedAt time.Time `json:"declined_at" api:"required" format:"date-time"`
 	// A unique identifier for the transaction on the card network.
-	NetworkTransactionIdentifier string `json:"network_transaction_identifier,required,nullable"`
+	NetworkTransactionIdentifier string `json:"network_transaction_identifier" api:"required,nullable"`
 	// The reason why the transfer was declined.
-	Reason CardPushTransferDeclineReason `json:"reason,required"`
+	Reason CardPushTransferDeclineReason `json:"reason" api:"required"`
 	JSON   cardPushTransferDeclineJSON   `json:"-"`
 }
 
@@ -577,10 +577,10 @@ func (r CardPushTransferDeclineReason) IsKnown() bool {
 // matches the currency of your account.
 type CardPushTransferPresentmentAmount struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code.
-	Currency CardPushTransferPresentmentAmountCurrency `json:"currency,required"`
+	Currency CardPushTransferPresentmentAmountCurrency `json:"currency" api:"required"`
 	// The amount value represented as a string containing a decimal number in major
 	// units (so e.g., "12.34" for $12.34).
-	Value string                                `json:"value,required"`
+	Value string                                `json:"value" api:"required"`
 	JSON  cardPushTransferPresentmentAmountJSON `json:"-"`
 }
 
@@ -802,15 +802,15 @@ func (r CardPushTransferStatus) IsKnown() bool {
 type CardPushTransferSubmission struct {
 	// A 12-digit retrieval reference number that identifies the transfer. Usually a
 	// combination of a timestamp and the trace number.
-	RetrievalReferenceNumber string `json:"retrieval_reference_number,required"`
+	RetrievalReferenceNumber string `json:"retrieval_reference_number" api:"required"`
 	// A unique reference for the transfer.
-	SenderReference string `json:"sender_reference,required"`
+	SenderReference string `json:"sender_reference" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was submitted to the card network.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required" format:"date-time"`
 	// A 6-digit trace number that identifies the transfer within a small window of
 	// time.
-	TraceNumber string                         `json:"trace_number,required"`
+	TraceNumber string                         `json:"trace_number" api:"required"`
 	JSON        cardPushTransferSubmissionJSON `json:"-"`
 }
 
@@ -853,46 +853,46 @@ type CardPushTransferNewParams struct {
 	// The Business Application Identifier describes the type of transaction being
 	// performed. Your program must be approved for the specified Business Application
 	// Identifier in order to use it.
-	BusinessApplicationIdentifier param.Field[CardPushTransferNewParamsBusinessApplicationIdentifier] `json:"business_application_identifier,required"`
+	BusinessApplicationIdentifier param.Field[CardPushTransferNewParamsBusinessApplicationIdentifier] `json:"business_application_identifier" api:"required"`
 	// The Increase identifier for the Card Token that represents the card number
 	// you're pushing funds to.
-	CardTokenID param.Field[string] `json:"card_token_id,required"`
+	CardTokenID param.Field[string] `json:"card_token_id" api:"required"`
 	// The merchant category code (MCC) of the merchant (generally your business)
 	// sending the transfer. This is a four-digit code that describes the type of
 	// business or service provided by the merchant. Your program must be approved for
 	// the specified MCC in order to use it.
-	MerchantCategoryCode param.Field[string] `json:"merchant_category_code,required"`
+	MerchantCategoryCode param.Field[string] `json:"merchant_category_code" api:"required"`
 	// The city name of the merchant (generally your business) sending the transfer.
-	MerchantCityName param.Field[string] `json:"merchant_city_name,required"`
+	MerchantCityName param.Field[string] `json:"merchant_city_name" api:"required"`
 	// The merchant name shows up as the statement descriptor for the transfer. This is
 	// typically the name of your business or organization.
-	MerchantName param.Field[string] `json:"merchant_name,required"`
+	MerchantName param.Field[string] `json:"merchant_name" api:"required"`
 	// For certain Business Application Identifiers, the statement descriptor is
 	// `merchant_name_prefix*sender_name`, where the `merchant_name_prefix` is a one to
 	// four character prefix that identifies the merchant.
-	MerchantNamePrefix param.Field[string] `json:"merchant_name_prefix,required"`
+	MerchantNamePrefix param.Field[string] `json:"merchant_name_prefix" api:"required"`
 	// The postal code of the merchant (generally your business) sending the transfer.
-	MerchantPostalCode param.Field[string] `json:"merchant_postal_code,required"`
+	MerchantPostalCode param.Field[string] `json:"merchant_postal_code" api:"required"`
 	// The state of the merchant (generally your business) sending the transfer.
-	MerchantState param.Field[string] `json:"merchant_state,required"`
+	MerchantState param.Field[string] `json:"merchant_state" api:"required"`
 	// The amount to transfer. The receiving bank will convert this to the cardholder's
 	// currency. The amount that is applied to your Increase account matches the
 	// currency of your account.
-	PresentmentAmount param.Field[CardPushTransferNewParamsPresentmentAmount] `json:"presentment_amount,required"`
+	PresentmentAmount param.Field[CardPushTransferNewParamsPresentmentAmount] `json:"presentment_amount" api:"required"`
 	// The name of the funds recipient.
-	RecipientName param.Field[string] `json:"recipient_name,required"`
+	RecipientName param.Field[string] `json:"recipient_name" api:"required"`
 	// The city of the sender.
-	SenderAddressCity param.Field[string] `json:"sender_address_city,required"`
+	SenderAddressCity param.Field[string] `json:"sender_address_city" api:"required"`
 	// The address line 1 of the sender.
-	SenderAddressLine1 param.Field[string] `json:"sender_address_line1,required"`
+	SenderAddressLine1 param.Field[string] `json:"sender_address_line1" api:"required"`
 	// The postal code of the sender.
-	SenderAddressPostalCode param.Field[string] `json:"sender_address_postal_code,required"`
+	SenderAddressPostalCode param.Field[string] `json:"sender_address_postal_code" api:"required"`
 	// The state of the sender.
-	SenderAddressState param.Field[string] `json:"sender_address_state,required"`
+	SenderAddressState param.Field[string] `json:"sender_address_state" api:"required"`
 	// The name of the funds originator.
-	SenderName param.Field[string] `json:"sender_name,required"`
+	SenderName param.Field[string] `json:"sender_name" api:"required"`
 	// The identifier of the Account Number from which to send the transfer.
-	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 }
@@ -936,13 +936,13 @@ func (r CardPushTransferNewParamsBusinessApplicationIdentifier) IsKnown() bool {
 // currency of your account.
 type CardPushTransferNewParamsPresentmentAmount struct {
 	// The ISO 4217 currency code representing the currency of the amount.
-	Currency param.Field[CardPushTransferNewParamsPresentmentAmountCurrency] `json:"currency,required"`
+	Currency param.Field[CardPushTransferNewParamsPresentmentAmountCurrency] `json:"currency" api:"required"`
 	// The amount value as a decimal string in the currency's major unit. For example,
 	// for USD, '1234.56' represents 1234 dollars and 56 cents. For JPY, '1234'
 	// represents 1234 yen. A currency with minor units requires at least one decimal
 	// place and supports up to the number of decimal places defined by the currency's
 	// minor units. A currency without minor units does not support any decimal places.
-	Value param.Field[string] `json:"value,required"`
+	Value param.Field[string] `json:"value" api:"required"`
 }
 
 func (r CardPushTransferNewParamsPresentmentAmount) MarshalJSON() (data []byte, err error) {

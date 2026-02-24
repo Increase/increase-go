@@ -101,26 +101,26 @@ func (r *EventSubscriptionService) ListAutoPaging(ctx context.Context, query Eve
 // [webhooks guide](https://increase.com/documentation/webhooks).
 type EventSubscription struct {
 	// The event subscription identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The time the event subscription was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// If specified, this subscription will only receive webhooks for Events associated
 	// with this OAuth Connection.
-	OAuthConnectionID string `json:"oauth_connection_id,required,nullable"`
+	OAuthConnectionID string `json:"oauth_connection_id" api:"required,nullable"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
-	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category,required,nullable"`
+	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category" api:"required,nullable"`
 	// This indicates if we'll send notifications to this subscription.
-	Status EventSubscriptionStatus `json:"status,required"`
+	Status EventSubscriptionStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event_subscription`.
-	Type EventSubscriptionType `json:"type,required"`
+	Type EventSubscriptionType `json:"type" api:"required"`
 	// The webhook url where we'll send notifications.
-	URL  string                `json:"url,required"`
+	URL  string                `json:"url" api:"required"`
 	JSON eventSubscriptionJSON `json:"-"`
 }
 
@@ -307,7 +307,7 @@ func (r EventSubscriptionType) IsKnown() bool {
 
 type EventSubscriptionNewParams struct {
 	// The URL you'd like us to send webhooks to.
-	URL param.Field[string] `json:"url,required"`
+	URL param.Field[string] `json:"url" api:"required"`
 	// If specified, this subscription will only receive webhooks for Events associated
 	// with the specified OAuth Connection.
 	OAuthConnectionID param.Field[string] `json:"oauth_connection_id"`

@@ -78,29 +78,29 @@ func (r *AccountStatementService) ListAutoPaging(ctx context.Context, query Acco
 // its associated File.
 type AccountStatement struct {
 	// The Account Statement identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Account this Account Statement belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Statement was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The Account's balance at the end of its statement period.
-	EndingBalance int64 `json:"ending_balance,required"`
+	EndingBalance int64 `json:"ending_balance" api:"required"`
 	// The identifier of the File containing a PDF of the statement.
-	FileID string `json:"file_id,required"`
+	FileID string `json:"file_id" api:"required"`
 	// The loan balances.
-	Loan AccountStatementLoan `json:"loan,required,nullable"`
+	Loan AccountStatementLoan `json:"loan" api:"required,nullable"`
 	// The Account's balance at the start of its statement period.
-	StartingBalance int64 `json:"starting_balance,required"`
+	StartingBalance int64 `json:"starting_balance" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 	// of the period the Account Statement covers.
-	StatementPeriodEnd time.Time `json:"statement_period_end,required" format:"date-time"`
+	StatementPeriodEnd time.Time `json:"statement_period_end" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 	// start of the period the Account Statement covers.
-	StatementPeriodStart time.Time `json:"statement_period_start,required" format:"date-time"`
+	StatementPeriodStart time.Time `json:"statement_period_start" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
-	Type AccountStatementType `json:"type,required"`
+	Type AccountStatementType `json:"type" api:"required"`
 	JSON accountStatementJSON `json:"-"`
 }
 
@@ -133,11 +133,11 @@ func (r accountStatementJSON) RawJSON() string {
 type AccountStatementLoan struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the loan
 	// payment is due.
-	DueAt time.Time `json:"due_at,required,nullable" format:"date-time"`
+	DueAt time.Time `json:"due_at" api:"required,nullable" format:"date-time"`
 	// The total amount due on the loan.
-	DueBalance int64 `json:"due_balance,required"`
+	DueBalance int64 `json:"due_balance" api:"required"`
 	// The amount past due on the loan.
-	PastDueBalance int64                    `json:"past_due_balance,required"`
+	PastDueBalance int64                    `json:"past_due_balance" api:"required"`
 	JSON           accountStatementLoanJSON `json:"-"`
 }
 

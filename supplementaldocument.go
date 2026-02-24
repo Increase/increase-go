@@ -72,18 +72,18 @@ func (r *SupplementalDocumentService) ListAutoPaging(ctx context.Context, query 
 type EntitySupplementalDocument struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Supplemental Document was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The Entity the supplemental document is attached to.
-	EntityID string `json:"entity_id,required"`
+	EntityID string `json:"entity_id" api:"required"`
 	// The File containing the document.
-	FileID string `json:"file_id,required"`
+	FileID string `json:"file_id" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_supplemental_document`.
-	Type EntitySupplementalDocumentType `json:"type,required"`
+	Type EntitySupplementalDocumentType `json:"type" api:"required"`
 	JSON entitySupplementalDocumentJSON `json:"-"`
 }
 
@@ -125,9 +125,9 @@ func (r EntitySupplementalDocumentType) IsKnown() bool {
 
 type SupplementalDocumentNewParams struct {
 	// The identifier of the Entity to associate with the supplemental document.
-	EntityID param.Field[string] `json:"entity_id,required"`
+	EntityID param.Field[string] `json:"entity_id" api:"required"`
 	// The identifier of the File containing the document.
-	FileID param.Field[string] `json:"file_id,required"`
+	FileID param.Field[string] `json:"file_id" api:"required"`
 }
 
 func (r SupplementalDocumentNewParams) MarshalJSON() (data []byte, err error) {
@@ -136,7 +136,7 @@ func (r SupplementalDocumentNewParams) MarshalJSON() (data []byte, err error) {
 
 type SupplementalDocumentListParams struct {
 	// The identifier of the Entity to list supplemental documents for.
-	EntityID param.Field[string] `query:"entity_id,required"`
+	EntityID param.Field[string] `query:"entity_id" api:"required"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter records to the one with the specified `idempotency_key` you chose for

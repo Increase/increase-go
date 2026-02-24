@@ -43,7 +43,7 @@ func (r *SimulationCardAuthorizationExpirationService) New(ctx context.Context, 
 
 type SimulationCardAuthorizationExpirationNewParams struct {
 	// The identifier of the Card Payment to expire.
-	CardPaymentID param.Field[string] `json:"card_payment_id,required"`
+	CardPaymentID param.Field[string] `json:"card_payment_id" api:"required"`
 }
 
 func (r SimulationCardAuthorizationExpirationNewParams) MarshalJSON() (data []byte, err error) {

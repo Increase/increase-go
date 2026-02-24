@@ -14,15 +14,15 @@ import (
 // made and the API returns a response with a HTTP status code. Other errors are
 // not wrapped by this SDK.
 type Error struct {
-	Detail string `json:"detail,required,nullable"`
+	Detail string `json:"detail" api:"required,nullable"`
 	// All errors related to parsing the request parameters.
-	Errors     []map[string]interface{} `json:"errors,required"`
-	Reason     ErrorReason              `json:"reason,required"`
-	ResourceID string                   `json:"resource_id,required"`
-	Status     ErrorStatus              `json:"status,required"`
-	Title      string                   `json:"title,required"`
-	Type       ErrorType                `json:"type,required"`
-	RetryAfter int64                    `json:"retry_after,nullable"`
+	Errors     []map[string]interface{} `json:"errors" api:"required"`
+	Reason     ErrorReason              `json:"reason" api:"required"`
+	ResourceID string                   `json:"resource_id" api:"required"`
+	Status     ErrorStatus              `json:"status" api:"required"`
+	Title      string                   `json:"title" api:"required"`
+	Type       ErrorType                `json:"type" api:"required"`
+	RetryAfter int64                    `json:"retry_after" api:"nullable"`
 	JSON       errorJSON                `json:"-"`
 	StatusCode int
 	Request    *http.Request

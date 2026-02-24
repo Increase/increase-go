@@ -110,38 +110,38 @@ func (r *DigitalCardProfileService) Clone(ctx context.Context, digitalCardProfil
 // on [digital card artwork](https://increase.com/documentation/card-art).
 type DigitalCardProfile struct {
 	// The Card Profile identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier of the File containing the card's icon image.
-	AppIconFileID string `json:"app_icon_file_id,required"`
+	AppIconFileID string `json:"app_icon_file_id" api:"required"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID string `json:"background_image_file_id,required"`
+	BackgroundImageFileID string `json:"background_image_file_id" api:"required"`
 	// A user-facing description for the card itself.
-	CardDescription string `json:"card_description,required"`
+	CardDescription string `json:"card_description" api:"required"`
 	// An email address the user can contact to receive support for their card.
-	ContactEmail string `json:"contact_email,required,nullable"`
+	ContactEmail string `json:"contact_email" api:"required,nullable"`
 	// A phone number the user can contact to receive support for their card.
-	ContactPhone string `json:"contact_phone,required,nullable"`
+	ContactPhone string `json:"contact_phone" api:"required,nullable"`
 	// A website the user can visit to view and receive support for their card.
-	ContactWebsite string `json:"contact_website,required,nullable"`
+	ContactWebsite string `json:"contact_website" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Digital Card Profile was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A description you can use to identify the Card Profile.
-	Description string `json:"description,required"`
+	Description string `json:"description" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// A user-facing description for whoever is issuing the card.
-	IssuerName string `json:"issuer_name,required"`
+	IssuerName string `json:"issuer_name" api:"required"`
 	// The status of the Card Profile.
-	Status DigitalCardProfileStatus `json:"status,required"`
+	Status DigitalCardProfileStatus `json:"status" api:"required"`
 	// The Card's text color, specified as an RGB triple.
-	TextColor DigitalCardProfileTextColor `json:"text_color,required"`
+	TextColor DigitalCardProfileTextColor `json:"text_color" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_card_profile`.
-	Type        DigitalCardProfileType `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        DigitalCardProfileType `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        digitalCardProfileJSON `json:"-"`
 }
 
@@ -195,11 +195,11 @@ func (r DigitalCardProfileStatus) IsKnown() bool {
 // The Card's text color, specified as an RGB triple.
 type DigitalCardProfileTextColor struct {
 	// The value of the blue channel in the RGB color.
-	Blue int64 `json:"blue,required"`
+	Blue int64 `json:"blue" api:"required"`
 	// The value of the green channel in the RGB color.
-	Green int64 `json:"green,required"`
+	Green int64 `json:"green" api:"required"`
 	// The value of the red channel in the RGB color.
-	Red  int64                           `json:"red,required"`
+	Red  int64                           `json:"red" api:"required"`
 	JSON digitalCardProfileTextColorJSON `json:"-"`
 }
 
@@ -239,15 +239,15 @@ func (r DigitalCardProfileType) IsKnown() bool {
 
 type DigitalCardProfileNewParams struct {
 	// The identifier of the File containing the card's icon image.
-	AppIconFileID param.Field[string] `json:"app_icon_file_id,required"`
+	AppIconFileID param.Field[string] `json:"app_icon_file_id" api:"required"`
 	// The identifier of the File containing the card's front image.
-	BackgroundImageFileID param.Field[string] `json:"background_image_file_id,required"`
+	BackgroundImageFileID param.Field[string] `json:"background_image_file_id" api:"required"`
 	// A user-facing description for the card itself.
-	CardDescription param.Field[string] `json:"card_description,required"`
+	CardDescription param.Field[string] `json:"card_description" api:"required"`
 	// A description you can use to identify the Card Profile.
-	Description param.Field[string] `json:"description,required"`
+	Description param.Field[string] `json:"description" api:"required"`
 	// A user-facing description for whoever is issuing the card.
-	IssuerName param.Field[string] `json:"issuer_name,required"`
+	IssuerName param.Field[string] `json:"issuer_name" api:"required"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
 	// A phone number the user can contact to receive support for their card.
@@ -265,11 +265,11 @@ func (r DigitalCardProfileNewParams) MarshalJSON() (data []byte, err error) {
 // The Card's text color, specified as an RGB triple. The default is white.
 type DigitalCardProfileNewParamsTextColor struct {
 	// The value of the blue channel in the RGB color.
-	Blue param.Field[int64] `json:"blue,required"`
+	Blue param.Field[int64] `json:"blue" api:"required"`
 	// The value of the green channel in the RGB color.
-	Green param.Field[int64] `json:"green,required"`
+	Green param.Field[int64] `json:"green" api:"required"`
 	// The value of the red channel in the RGB color.
-	Red param.Field[int64] `json:"red,required"`
+	Red param.Field[int64] `json:"red" api:"required"`
 }
 
 func (r DigitalCardProfileNewParamsTextColor) MarshalJSON() (data []byte, err error) {
@@ -360,11 +360,11 @@ func (r DigitalCardProfileCloneParams) MarshalJSON() (data []byte, err error) {
 // The Card's text color, specified as an RGB triple. The default is white.
 type DigitalCardProfileCloneParamsTextColor struct {
 	// The value of the blue channel in the RGB color.
-	Blue param.Field[int64] `json:"blue,required"`
+	Blue param.Field[int64] `json:"blue" api:"required"`
 	// The value of the green channel in the RGB color.
-	Green param.Field[int64] `json:"green,required"`
+	Green param.Field[int64] `json:"green" api:"required"`
 	// The value of the red channel in the RGB color.
-	Red param.Field[int64] `json:"red,required"`
+	Red param.Field[int64] `json:"red" api:"required"`
 }
 
 func (r DigitalCardProfileCloneParamsTextColor) MarshalJSON() (data []byte, err error) {

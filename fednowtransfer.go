@@ -109,62 +109,62 @@ func (r *FednowTransferService) Cancel(ctx context.Context, fednowTransferID str
 // any other account supporting FedNow.
 type FednowTransfer struct {
 	// The FedNow Transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account from which the transfer was sent.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// If the transfer is acknowledged by the recipient bank, this will contain
 	// supplemental details.
-	Acknowledgement FednowTransferAcknowledgement `json:"acknowledgement,required,nullable"`
+	Acknowledgement FednowTransferAcknowledgement `json:"acknowledgement" api:"required,nullable"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy FednowTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy FednowTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// The name of the transfer's recipient. This is set by the sender when creating
 	// the transfer.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For FedNow transfers this is always equal to `USD`.
-	Currency FednowTransferCurrency `json:"currency,required"`
+	Currency FednowTransferCurrency `json:"currency" api:"required"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
-	DebtorName string `json:"debtor_name,required"`
+	DebtorName string `json:"debtor_name" api:"required"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// If the transfer is rejected by FedNow or the destination financial institution,
 	// this will contain supplemental details.
-	Rejection FednowTransferRejection `json:"rejection,required,nullable"`
+	Rejection FednowTransferRejection `json:"rejection" api:"required,nullable"`
 	// The destination American Bankers' Association (ABA) Routing Transit Number
 	// (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The Account Number the recipient will see as having sent the transfer.
-	SourceAccountNumberID string `json:"source_account_number_id,required"`
+	SourceAccountNumberID string `json:"source_account_number_id" api:"required"`
 	// The lifecycle status of the transfer.
-	Status FednowTransferStatus `json:"status,required"`
+	Status FednowTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to FedNow, this will contain supplemental
 	// details.
-	Submission FednowTransferSubmission `json:"submission,required,nullable"`
+	Submission FednowTransferSubmission `json:"submission" api:"required,nullable"`
 	// The Transaction funding the transfer once it is complete.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `fednow_transfer`.
-	Type FednowTransferType `json:"type,required"`
+	Type FednowTransferType `json:"type" api:"required"`
 	// The Unique End-to-end Transaction Reference
 	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
 	// of the transfer.
-	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required"`
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required"`
 	// Unstructured information that will show on the recipient's bank statement.
-	UnstructuredRemittanceInformation string             `json:"unstructured_remittance_information,required"`
+	UnstructuredRemittanceInformation string             `json:"unstructured_remittance_information" api:"required"`
 	JSON                              fednowTransferJSON `json:"-"`
 }
 
@@ -208,7 +208,7 @@ func (r fednowTransferJSON) RawJSON() string {
 // supplemental details.
 type FednowTransferAcknowledgement struct {
 	// When the transfer was acknowledged.
-	AcknowledgedAt time.Time                         `json:"acknowledged_at,required" format:"date-time"`
+	AcknowledgedAt time.Time                         `json:"acknowledged_at" api:"required" format:"date-time"`
 	JSON           fednowTransferAcknowledgementJSON `json:"-"`
 }
 
@@ -231,13 +231,13 @@ func (r fednowTransferAcknowledgementJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type FednowTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category FednowTransferCreatedByCategory `json:"category,required"`
+	Category FednowTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey FednowTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey FednowTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication FednowTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication FednowTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User FednowTransferCreatedByUser `json:"user,nullable"`
+	User FednowTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON fednowTransferCreatedByJSON `json:"-"`
 }
 
@@ -280,7 +280,7 @@ func (r FednowTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type FednowTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                            `json:"description,required,nullable"`
+	Description string                            `json:"description" api:"required,nullable"`
 	JSON        fednowTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -303,7 +303,7 @@ func (r fednowTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type FednowTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                      `json:"name,required"`
+	Name string                                      `json:"name" api:"required"`
 	JSON fednowTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -326,7 +326,7 @@ func (r fednowTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type FednowTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                          `json:"email,required"`
+	Email string                          `json:"email" api:"required"`
 	JSON  fednowTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -366,13 +366,13 @@ func (r FednowTransferCurrency) IsKnown() bool {
 // this will contain supplemental details.
 type FednowTransferRejection struct {
 	// Additional information about the rejection provided by the recipient bank.
-	RejectReasonAdditionalInformation string `json:"reject_reason_additional_information,required,nullable"`
+	RejectReasonAdditionalInformation string `json:"reject_reason_additional_information" api:"required,nullable"`
 	// The reason the transfer was rejected as provided by the recipient bank or the
 	// FedNow network.
-	RejectReasonCode FednowTransferRejectionRejectReasonCode `json:"reject_reason_code,required"`
+	RejectReasonCode FednowTransferRejectionRejectReasonCode `json:"reject_reason_code" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was rejected.
-	RejectedAt time.Time                   `json:"rejected_at,required,nullable" format:"date-time"`
+	RejectedAt time.Time                   `json:"rejected_at" api:"required,nullable" format:"date-time"`
 	JSON       fednowTransferRejectionJSON `json:"-"`
 }
 
@@ -451,10 +451,10 @@ func (r FednowTransferStatus) IsKnown() bool {
 // details.
 type FednowTransferSubmission struct {
 	// The FedNow network identification of the message submitted.
-	MessageIdentification string `json:"message_identification,required"`
+	MessageIdentification string `json:"message_identification" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was submitted to FedNow.
-	SubmittedAt time.Time                    `json:"submitted_at,required,nullable" format:"date-time"`
+	SubmittedAt time.Time                    `json:"submitted_at" api:"required,nullable" format:"date-time"`
 	JSON        fednowTransferSubmissionJSON `json:"-"`
 }
 
@@ -493,17 +493,17 @@ func (r FednowTransferType) IsKnown() bool {
 
 type FednowTransferNewParams struct {
 	// The identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The amount, in minor units, to send to the creditor.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The creditor's name.
-	CreditorName param.Field[string] `json:"creditor_name,required"`
+	CreditorName param.Field[string] `json:"creditor_name" api:"required"`
 	// The debtor's name.
-	DebtorName param.Field[string] `json:"debtor_name,required"`
+	DebtorName param.Field[string] `json:"debtor_name" api:"required"`
 	// The Account Number to include in the transfer as the debtor's account number.
-	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
 	// Unstructured remittance information to include in the transfer.
-	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information,required"`
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information" api:"required"`
 	// The creditor's account number.
 	AccountNumber param.Field[string] `json:"account_number"`
 	// The creditor's address.
@@ -526,11 +526,11 @@ func (r FednowTransferNewParams) MarshalJSON() (data []byte, err error) {
 // The creditor's address.
 type FednowTransferNewParamsCreditorAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The postal code component of the address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state component of the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1"`
 }
@@ -542,11 +542,11 @@ func (r FednowTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err 
 // The debtor's address.
 type FednowTransferNewParamsDebtorAddress struct {
 	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The postal code component of the address.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state component of the address.
-	State param.Field[string] `json:"state,required"`
+	State param.Field[string] `json:"state" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1"`
 }

@@ -109,106 +109,106 @@ func (r *ACHTransferService) Cancel(ctx context.Context, achTransferID string, o
 // accessible by the Automated Clearing House (ACH).
 type ACHTransfer struct {
 	// The ACH transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account to which the transfer belongs.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The destination account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// After the transfer is acknowledged by FedACH, this will contain supplemental
 	// details. The Federal Reserve sends an acknowledgement message for each file that
 	// Increase submits.
-	Acknowledgement ACHTransferAcknowledgement `json:"acknowledgement,required,nullable"`
+	Acknowledgement ACHTransferAcknowledgement `json:"acknowledgement" api:"required,nullable"`
 	// Additional information that will be sent to the recipient.
-	Addenda ACHTransferAddenda `json:"addenda,required,nullable"`
+	Addenda ACHTransferAddenda `json:"addenda" api:"required,nullable"`
 	// The transfer amount in USD cents. A positive amount indicates a credit transfer
 	// pushing funds to the receiving account. A negative amount indicates a debit
 	// transfer pulling funds from the receiving account.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval ACHTransferApproval `json:"approval,required,nullable"`
+	Approval ACHTransferApproval `json:"approval" api:"required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation ACHTransferCancellation `json:"cancellation,required,nullable"`
+	Cancellation ACHTransferCancellation `json:"cancellation" api:"required,nullable"`
 	// The description of the date of the transfer.
-	CompanyDescriptiveDate string `json:"company_descriptive_date,required,nullable"`
+	CompanyDescriptiveDate string `json:"company_descriptive_date" api:"required,nullable"`
 	// The data you chose to associate with the transfer.
-	CompanyDiscretionaryData string `json:"company_discretionary_data,required,nullable"`
+	CompanyDiscretionaryData string `json:"company_discretionary_data" api:"required,nullable"`
 	// The description of the transfer you set to be shown to the recipient.
-	CompanyEntryDescription string `json:"company_entry_description,required,nullable"`
+	CompanyEntryDescription string `json:"company_entry_description" api:"required,nullable"`
 	// The company ID associated with the transfer.
-	CompanyID string `json:"company_id,required"`
+	CompanyID string `json:"company_id" api:"required"`
 	// The name by which the recipient knows you.
-	CompanyName string `json:"company_name,required,nullable"`
+	CompanyName string `json:"company_name" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy ACHTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy ACHTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For ACH transfers this is always equal to `usd`.
-	Currency ACHTransferCurrency `json:"currency,required"`
+	Currency ACHTransferCurrency `json:"currency" api:"required"`
 	// The type of entity that owns the account to which the ACH Transfer is being
 	// sent.
-	DestinationAccountHolder ACHTransferDestinationAccountHolder `json:"destination_account_holder,required"`
+	DestinationAccountHolder ACHTransferDestinationAccountHolder `json:"destination_account_holder" api:"required"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
 	// The type of the account to which the transfer will be sent.
-	Funding ACHTransferFunding `json:"funding,required"`
+	Funding ACHTransferFunding `json:"funding" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// Increase will sometimes hold the funds for ACH debit transfers. If funds are
 	// held, this sub-object will contain details of the hold.
-	InboundFundsHold ACHTransferInboundFundsHold `json:"inbound_funds_hold,required,nullable"`
+	InboundFundsHold ACHTransferInboundFundsHold `json:"inbound_funds_hold" api:"required,nullable"`
 	// Your identifier for the transfer recipient.
-	IndividualID string `json:"individual_id,required,nullable"`
+	IndividualID string `json:"individual_id" api:"required,nullable"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
-	IndividualName string `json:"individual_name,required,nullable"`
+	IndividualName string `json:"individual_name" api:"required,nullable"`
 	// The transfer's network.
-	Network ACHTransferNetwork `json:"network,required"`
+	Network ACHTransferNetwork `json:"network" api:"required"`
 	// If the receiving bank accepts the transfer but notifies that future transfers
 	// should use different details, this will contain those details.
-	NotificationsOfChange []ACHTransferNotificationsOfChange `json:"notifications_of_change,required"`
+	NotificationsOfChange []ACHTransferNotificationsOfChange `json:"notifications_of_change" api:"required"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// Configuration for how the effective date of the transfer will be set. This
 	// determines same-day vs future-dated settlement timing. If not set, defaults to a
 	// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
 	// must be set.
-	PreferredEffectiveDate ACHTransferPreferredEffectiveDate `json:"preferred_effective_date,required"`
+	PreferredEffectiveDate ACHTransferPreferredEffectiveDate `json:"preferred_effective_date" api:"required"`
 	// If your transfer is returned, this will contain details of the return.
-	Return ACHTransferReturn `json:"return,required,nullable"`
+	Return ACHTransferReturn `json:"return" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// A subhash containing information about when and how the transfer settled at the
 	// Federal Reserve.
-	Settlement ACHTransferSettlement `json:"settlement,required,nullable"`
+	Settlement ACHTransferSettlement `json:"settlement" api:"required,nullable"`
 	// The
 	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
 	// to use for the transfer.
-	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code,required"`
+	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code" api:"required"`
 	// The descriptor that will show on the recipient's bank statement.
-	StatementDescriptor string `json:"statement_descriptor,required"`
+	StatementDescriptor string `json:"statement_descriptor" api:"required"`
 	// The lifecycle status of the transfer.
-	Status ACHTransferStatus `json:"status,required"`
+	Status ACHTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to FedACH, this will contain supplemental
 	// details. Increase batches transfers and submits a file to the Federal Reserve
 	// roughly every 30 minutes. The Federal Reserve processes ACH transfers during
 	// weekdays according to their
 	// [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
-	Submission ACHTransferSubmission `json:"submission,required,nullable"`
+	Submission ACHTransferSubmission `json:"submission" api:"required,nullable"`
 	// The ID for the transaction funding the transfer.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `ach_transfer`.
-	Type        ACHTransferType        `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        ACHTransferType        `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        achTransferJSON        `json:"-"`
 }
 
@@ -268,7 +268,7 @@ func (r achTransferJSON) RawJSON() string {
 type ACHTransferAcknowledgement struct {
 	// When the Federal Reserve acknowledged the submitted file containing this
 	// transfer.
-	AcknowledgedAt string                         `json:"acknowledged_at,required"`
+	AcknowledgedAt string                         `json:"acknowledged_at" api:"required"`
 	JSON           achTransferAcknowledgementJSON `json:"-"`
 }
 
@@ -292,12 +292,12 @@ func (r achTransferAcknowledgementJSON) RawJSON() string {
 type ACHTransferAddenda struct {
 	// The type of the resource. We may add additional possible values for this enum
 	// over time; your application should be able to handle such additions gracefully.
-	Category ACHTransferAddendaCategory `json:"category,required"`
+	Category ACHTransferAddendaCategory `json:"category" api:"required"`
 	// Unstructured `payment_related_information` passed through with the transfer.
-	Freeform ACHTransferAddendaFreeform `json:"freeform,nullable"`
+	Freeform ACHTransferAddendaFreeform `json:"freeform" api:"nullable"`
 	// Structured ASC X12 820 remittance advice records. Please reach out to
 	// [support@increase.com](mailto:support@increase.com) for more information.
-	PaymentOrderRemittanceAdvice ACHTransferAddendaPaymentOrderRemittanceAdvice `json:"payment_order_remittance_advice,nullable"`
+	PaymentOrderRemittanceAdvice ACHTransferAddendaPaymentOrderRemittanceAdvice `json:"payment_order_remittance_advice" api:"nullable"`
 	JSON                         achTransferAddendaJSON                         `json:"-"`
 }
 
@@ -340,7 +340,7 @@ func (r ACHTransferAddendaCategory) IsKnown() bool {
 // Unstructured `payment_related_information` passed through with the transfer.
 type ACHTransferAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer.
-	Entries []ACHTransferAddendaFreeformEntry `json:"entries,required"`
+	Entries []ACHTransferAddendaFreeformEntry `json:"entries" api:"required"`
 	JSON    achTransferAddendaFreeformJSON    `json:"-"`
 }
 
@@ -362,7 +362,7 @@ func (r achTransferAddendaFreeformJSON) RawJSON() string {
 
 type ACHTransferAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation string                              `json:"payment_related_information,required"`
+	PaymentRelatedInformation string                              `json:"payment_related_information" api:"required"`
 	JSON                      achTransferAddendaFreeformEntryJSON `json:"-"`
 }
 
@@ -386,7 +386,7 @@ func (r achTransferAddendaFreeformEntryJSON) RawJSON() string {
 // [support@increase.com](mailto:support@increase.com) for more information.
 type ACHTransferAddendaPaymentOrderRemittanceAdvice struct {
 	// ASC X12 RMR records for this specific transfer.
-	Invoices []ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice `json:"invoices,required"`
+	Invoices []ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice `json:"invoices" api:"required"`
 	JSON     achTransferAddendaPaymentOrderRemittanceAdviceJSON      `json:"-"`
 }
 
@@ -408,10 +408,10 @@ func (r achTransferAddendaPaymentOrderRemittanceAdviceJSON) RawJSON() string {
 
 type ACHTransferAddendaPaymentOrderRemittanceAdviceInvoice struct {
 	// The invoice number for this reference, determined in advance with the receiver.
-	InvoiceNumber string `json:"invoice_number,required"`
+	InvoiceNumber string `json:"invoice_number" api:"required"`
 	// The amount that was paid for this invoice in the minor unit of its currency. For
 	// dollars, for example, this is cents.
-	PaidAmount int64                                                     `json:"paid_amount,required"`
+	PaidAmount int64                                                     `json:"paid_amount" api:"required"`
 	JSON       achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON `json:"-"`
 }
 
@@ -437,10 +437,10 @@ func (r achTransferAddendaPaymentOrderRemittanceAdviceInvoiceJSON) RawJSON() str
 type ACHTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	ApprovedAt time.Time `json:"approved_at" api:"required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string                  `json:"approved_by,required,nullable"`
+	ApprovedBy string                  `json:"approved_by" api:"required,nullable"`
 	JSON       achTransferApprovalJSON `json:"-"`
 }
 
@@ -466,10 +466,10 @@ func (r achTransferApprovalJSON) RawJSON() string {
 type ACHTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string                      `json:"canceled_by,required,nullable"`
+	CanceledBy string                      `json:"canceled_by" api:"required,nullable"`
 	JSON       achTransferCancellationJSON `json:"-"`
 }
 
@@ -493,13 +493,13 @@ func (r achTransferCancellationJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type ACHTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category ACHTransferCreatedByCategory `json:"category,required"`
+	Category ACHTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey ACHTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey ACHTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication ACHTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication ACHTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User ACHTransferCreatedByUser `json:"user,nullable"`
+	User ACHTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON achTransferCreatedByJSON `json:"-"`
 }
 
@@ -542,7 +542,7 @@ func (r ACHTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type ACHTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                         `json:"description,required,nullable"`
+	Description string                         `json:"description" api:"required,nullable"`
 	JSON        achTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -565,7 +565,7 @@ func (r achTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type ACHTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                   `json:"name,required"`
+	Name string                                   `json:"name" api:"required"`
 	JSON achTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -588,7 +588,7 @@ func (r achTransferCreatedByOAuthApplicationJSON) RawJSON() string {
 // If present, details about the User that created the transfer.
 type ACHTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                       `json:"email,required"`
+	Email string                       `json:"email" api:"required"`
 	JSON  achTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -664,28 +664,28 @@ func (r ACHTransferFunding) IsKnown() bool {
 type ACHTransferInboundFundsHold struct {
 	// The held amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// When the hold will be released automatically. Certain conditions may cause it to
 	// be released before this time.
-	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at,required" format:"date-time"`
+	AutomaticallyReleasesAt time.Time `json:"automatically_releases_at" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the hold
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the hold's
 	// currency.
-	Currency ACHTransferInboundFundsHoldCurrency `json:"currency,required"`
+	Currency ACHTransferInboundFundsHoldCurrency `json:"currency" api:"required"`
 	// The ID of the Transaction for which funds were held.
-	HeldTransactionID string `json:"held_transaction_id,required,nullable"`
+	HeldTransactionID string `json:"held_transaction_id" api:"required,nullable"`
 	// The ID of the Pending Transaction representing the held funds.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// When the hold was released (if it has been released).
-	ReleasedAt time.Time `json:"released_at,required,nullable" format:"date-time"`
+	ReleasedAt time.Time `json:"released_at" api:"required,nullable" format:"date-time"`
 	// The status of the hold.
-	Status ACHTransferInboundFundsHoldStatus `json:"status,required"`
+	Status ACHTransferInboundFundsHoldStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_funds_hold`.
-	Type        ACHTransferInboundFundsHoldType `json:"type,required"`
-	ExtraFields map[string]interface{}          `json:"-,extras"`
+	Type        ACHTransferInboundFundsHoldType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}          `json:"-" api:"extrafields"`
 	JSON        achTransferInboundFundsHoldJSON `json:"-"`
 }
 
@@ -779,16 +779,16 @@ func (r ACHTransferNetwork) IsKnown() bool {
 type ACHTransferNotificationsOfChange struct {
 	// The required type of change that is being signaled by the receiving financial
 	// institution.
-	ChangeCode ACHTransferNotificationsOfChangeChangeCode `json:"change_code,required"`
+	ChangeCode ACHTransferNotificationsOfChangeChangeCode `json:"change_code" api:"required"`
 	// The corrected data that should be used in future ACHs to this account. This may
 	// contain the suggested new account number or routing number. When the
 	// `change_code` is `incorrect_transaction_code`, this field contains an integer.
 	// Numbers starting with a 2 encourage changing the `funding` parameter to
 	// checking; numbers starting with a 3 encourage changing to savings.
-	CorrectedData string `json:"corrected_data,required"`
+	CorrectedData string `json:"corrected_data" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt time.Time                            `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time                            `json:"created_at" api:"required" format:"date-time"`
 	JSON      achTransferNotificationsOfChangeJSON `json:"-"`
 }
 
@@ -851,9 +851,9 @@ func (r ACHTransferNotificationsOfChangeChangeCode) IsKnown() bool {
 type ACHTransferPreferredEffectiveDate struct {
 	// A specific date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format to
 	// use as the effective date when submitting this transfer.
-	Date time.Time `json:"date,required,nullable" format:"date"`
+	Date time.Time `json:"date" api:"required,nullable" format:"date"`
 	// A schedule by which Increase will choose an effective date for the transfer.
-	SettlementSchedule ACHTransferPreferredEffectiveDateSettlementSchedule `json:"settlement_schedule,required,nullable"`
+	SettlementSchedule ACHTransferPreferredEffectiveDateSettlementSchedule `json:"settlement_schedule" api:"required,nullable"`
 	JSON               achTransferPreferredEffectiveDateJSON               `json:"-"`
 }
 
@@ -894,22 +894,22 @@ func (r ACHTransferPreferredEffectiveDateSettlementSchedule) IsKnown() bool {
 type ACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The three character ACH return code, in the range R01 to R85.
-	RawReturnReasonCode string `json:"raw_return_reason_code,required"`
+	RawReturnReasonCode string `json:"raw_return_reason_code" api:"required"`
 	// Why the ACH Transfer was returned. This reason code is sent by the receiving
 	// bank back to Increase.
-	ReturnReasonCode ACHTransferReturnReturnReasonCode `json:"return_reason_code,required"`
+	ReturnReasonCode ACHTransferReturnReturnReasonCode `json:"return_reason_code" api:"required"`
 	// A 15 digit number that was generated by the bank that initiated the return. The
 	// trace number of the return is different than that of the original transfer. ACH
 	// trace numbers are not unique, but along with the amount and date this number can
 	// be used to identify the ACH return at the bank that initiated it.
-	TraceNumber string `json:"trace_number,required"`
+	TraceNumber string `json:"trace_number" api:"required"`
 	// The identifier of the Transaction associated with this return.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// The identifier of the ACH Transfer associated with this return.
-	TransferID  string                 `json:"transfer_id,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	TransferID  string                 `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        achTransferReturnJSON  `json:"-"`
 }
 
@@ -1024,7 +1024,7 @@ func (r ACHTransferReturnReturnReasonCode) IsKnown() bool {
 type ACHTransferSettlement struct {
 	// When the funds for this transfer have settled at the destination bank at the
 	// Federal Reserve.
-	SettledAt time.Time                 `json:"settled_at,required" format:"date-time"`
+	SettledAt time.Time                 `json:"settled_at" api:"required" format:"date-time"`
 	JSON      achTransferSettlementJSON `json:"-"`
 }
 
@@ -1099,29 +1099,29 @@ type ACHTransferSubmission struct {
 	// deposit deadline for the return entry to be made available to the ODFI no later
 	// than the opening of business on the second banking day following the Settlement
 	// Date of the original entry.".
-	AdministrativeReturnsExpectedBy time.Time `json:"administrative_returns_expected_by,required" format:"date-time"`
+	AdministrativeReturnsExpectedBy time.Time `json:"administrative_returns_expected_by" api:"required" format:"date-time"`
 	// The ACH transfer's effective date as sent to the Federal Reserve. If a specific
 	// date was configured using `preferred_effective_date`, this will match that
 	// value. Otherwise, it will be the date selected (following the specified
 	// settlement schedule) at the time the transfer was submitted.
-	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
+	EffectiveDate time.Time `json:"effective_date" api:"required" format:"date"`
 	// When the transfer is expected to settle in the recipient's account. Credits may
 	// be available sooner, at the receiving bank's discretion. The FedACH schedule is
 	// published
 	// [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
-	ExpectedFundsSettlementAt time.Time `json:"expected_funds_settlement_at,required" format:"date-time"`
+	ExpectedFundsSettlementAt time.Time `json:"expected_funds_settlement_at" api:"required" format:"date-time"`
 	// The settlement schedule the transfer is expected to follow. This expectation
 	// takes into account the `effective_date`, `submitted_at`, and the amount of the
 	// transfer.
-	ExpectedSettlementSchedule ACHTransferSubmissionExpectedSettlementSchedule `json:"expected_settlement_schedule,required"`
+	ExpectedSettlementSchedule ACHTransferSubmissionExpectedSettlementSchedule `json:"expected_settlement_schedule" api:"required"`
 	// When the ACH transfer was sent to FedACH.
-	SubmittedAt time.Time `json:"submitted_at,required" format:"date-time"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required" format:"date-time"`
 	// A 15 digit number recorded in the Nacha file and transmitted to the receiving
 	// bank. Along with the amount, date, and originating routing number, this can be
 	// used to identify the ACH transfer at the receiving bank. ACH trace numbers are
 	// not unique, but are
 	// [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
-	TraceNumber string                    `json:"trace_number,required"`
+	TraceNumber string                    `json:"trace_number" api:"required"`
 	JSON        achTransferSubmissionJSON `json:"-"`
 }
 
@@ -1182,18 +1182,18 @@ func (r ACHTransferType) IsKnown() bool {
 
 type ACHTransferNewParams struct {
 	// The Increase identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The transfer amount in USD cents. A positive amount originates a credit transfer
 	// pushing funds to the receiving account. A negative amount originates a debit
 	// transfer pulling funds from the receiving account.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// A description you choose to give the transfer. This will be saved with the
 	// transfer details, displayed in the dashboard, and returned by the API. If
 	// `individual_name` and `company_name` are not explicitly set by this API, the
 	// `statement_descriptor` will be sent in those fields to the receiving bank to
 	// help the customer recognize the transfer. You are highly encouraged to pass
 	// `individual_name` and `company_name` instead of relying on this fallback.
-	StatementDescriptor param.Field[string] `json:"statement_descriptor,required"`
+	StatementDescriptor param.Field[string] `json:"statement_descriptor" api:"required"`
 	// The account number for the destination account.
 	AccountNumber param.Field[string] `json:"account_number"`
 	// Additional information that will be sent to the recipient. This is included in
@@ -1251,7 +1251,7 @@ func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
 // the transfer data sent to the receiving bank.
 type ACHTransferNewParamsAddenda struct {
 	// The type of addenda to pass with the transfer.
-	Category param.Field[ACHTransferNewParamsAddendaCategory] `json:"category,required"`
+	Category param.Field[ACHTransferNewParamsAddendaCategory] `json:"category" api:"required"`
 	// Unstructured `payment_related_information` passed through with the transfer.
 	// Required if and only if `category` is `freeform`.
 	Freeform param.Field[ACHTransferNewParamsAddendaFreeform] `json:"freeform"`
@@ -1289,7 +1289,7 @@ type ACHTransferNewParamsAddendaFreeform struct {
 	// characters sent. Please reach out to
 	// [support@increase.com](mailto:support@increase.com) to send 2 or more addenda to
 	// a recipient expecting a specific addendum format.
-	Entries param.Field[[]ACHTransferNewParamsAddendaFreeformEntry] `json:"entries,required"`
+	Entries param.Field[[]ACHTransferNewParamsAddendaFreeformEntry] `json:"entries" api:"required"`
 }
 
 func (r ACHTransferNewParamsAddendaFreeform) MarshalJSON() (data []byte, err error) {
@@ -1298,7 +1298,7 @@ func (r ACHTransferNewParamsAddendaFreeform) MarshalJSON() (data []byte, err err
 
 type ACHTransferNewParamsAddendaFreeformEntry struct {
 	// The payment related information passed in the addendum.
-	PaymentRelatedInformation param.Field[string] `json:"payment_related_information,required"`
+	PaymentRelatedInformation param.Field[string] `json:"payment_related_information" api:"required"`
 }
 
 func (r ACHTransferNewParamsAddendaFreeformEntry) MarshalJSON() (data []byte, err error) {
@@ -1310,7 +1310,7 @@ func (r ACHTransferNewParamsAddendaFreeformEntry) MarshalJSON() (data []byte, er
 // Required if and only if `category` is `payment_order_remittance_advice`.
 type ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice struct {
 	// ASC X12 RMR records for this specific transfer.
-	Invoices param.Field[[]ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice] `json:"invoices,required"`
+	Invoices param.Field[[]ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice] `json:"invoices" api:"required"`
 }
 
 func (r ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice) MarshalJSON() (data []byte, err error) {
@@ -1319,10 +1319,10 @@ func (r ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice) MarshalJSON() (
 
 type ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice struct {
 	// The invoice number for this reference, determined in advance with the receiver.
-	InvoiceNumber param.Field[string] `json:"invoice_number,required"`
+	InvoiceNumber param.Field[string] `json:"invoice_number" api:"required"`
 	// The amount that was paid for this invoice in the minor unit of its currency. For
 	// dollars, for example, this is cents.
-	PaidAmount param.Field[int64] `json:"paid_amount,required"`
+	PaidAmount param.Field[int64] `json:"paid_amount" api:"required"`
 }
 
 func (r ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice) MarshalJSON() (data []byte, err error) {

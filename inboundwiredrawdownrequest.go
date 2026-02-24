@@ -78,57 +78,57 @@ func (r *InboundWireDrawdownRequestService) ListAutoPaging(ctx context.Context, 
 // [Wire Drawdown Requests documentation](/documentation/wire-drawdown-requests).
 type InboundWireDrawdownRequest struct {
 	// The Wire drawdown request identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The amount being requested in cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the inbound wire drawdown request was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The creditor's account number.
-	CreditorAccountNumber string `json:"creditor_account_number,required"`
+	CreditorAccountNumber string `json:"creditor_account_number" api:"required"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine1 string `json:"creditor_address_line1,required,nullable"`
+	CreditorAddressLine1 string `json:"creditor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine2 string `json:"creditor_address_line2,required,nullable"`
+	CreditorAddressLine2 string `json:"creditor_address_line2" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	CreditorAddressLine3 string `json:"creditor_address_line3,required,nullable"`
+	CreditorAddressLine3 string `json:"creditor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
-	CreditorName string `json:"creditor_name,required,nullable"`
+	CreditorName string `json:"creditor_name" api:"required,nullable"`
 	// The creditor's routing number.
-	CreditorRoutingNumber string `json:"creditor_routing_number,required"`
+	CreditorRoutingNumber string `json:"creditor_routing_number" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
 	// requested. Will always be "USD".
-	Currency string `json:"currency,required"`
+	Currency string `json:"currency" api:"required"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine1 string `json:"debtor_address_line1,required,nullable"`
+	DebtorAddressLine1 string `json:"debtor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine2 string `json:"debtor_address_line2,required,nullable"`
+	DebtorAddressLine2 string `json:"debtor_address_line2" api:"required,nullable"`
 	// A free-form address field set by the sender.
-	DebtorAddressLine3 string `json:"debtor_address_line3,required,nullable"`
+	DebtorAddressLine3 string `json:"debtor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
-	DebtorName string `json:"debtor_name,required,nullable"`
+	DebtorName string `json:"debtor_name" api:"required,nullable"`
 	// A free-form reference string set by the sender, to help identify the drawdown
 	// request.
-	EndToEndIdentification string `json:"end_to_end_identification,required,nullable"`
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// A unique identifier available to the originating and receiving banks, commonly
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
-	InputMessageAccountabilityData string `json:"input_message_accountability_data,required,nullable"`
+	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required,nullable"`
 	// The sending bank's identifier for the drawdown request.
-	InstructionIdentification string `json:"instruction_identification,required,nullable"`
+	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
 	// The Account Number from which the recipient of this request is being requested
 	// to send funds.
-	RecipientAccountNumberID string `json:"recipient_account_number_id,required"`
+	RecipientAccountNumberID string `json:"recipient_account_number_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_wire_drawdown_request`.
-	Type InboundWireDrawdownRequestType `json:"type,required"`
+	Type InboundWireDrawdownRequestType `json:"type" api:"required"`
 	// The Unique End-to-end Transaction Reference
 	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
 	// of the drawdown request.
-	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference,required,nullable"`
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
 	// A free-form message set by the sender.
-	UnstructuredRemittanceInformation string                         `json:"unstructured_remittance_information,required,nullable"`
-	ExtraFields                       map[string]interface{}         `json:"-,extras"`
+	UnstructuredRemittanceInformation string                         `json:"unstructured_remittance_information" api:"required,nullable"`
+	ExtraFields                       map[string]interface{}         `json:"-" api:"extrafields"`
 	JSON                              inboundWireDrawdownRequestJSON `json:"-"`
 }
 

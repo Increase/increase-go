@@ -77,41 +77,41 @@ func (r *InboundFednowTransferService) ListAutoPaging(ctx context.Context, query
 // your account.
 type InboundFednowTransfer struct {
 	// The inbound FedNow transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account to which the transfer was sent.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier of the Account Number to which this transfer was sent.
-	AccountNumberID string `json:"account_number_id,required"`
+	AccountNumberID string `json:"account_number_id" api:"required"`
 	// The amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your transfer is confirmed, this will contain details of the confirmation.
-	Confirmation InboundFednowTransferConfirmation `json:"confirmation,required,nullable"`
+	Confirmation InboundFednowTransferConfirmation `json:"confirmation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The name the sender of the transfer specified as the recipient of the transfer.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
 	// currency. This will always be "USD" for a FedNow transfer.
-	Currency InboundFednowTransferCurrency `json:"currency,required"`
+	Currency InboundFednowTransferCurrency `json:"currency" api:"required"`
 	// The account number of the account that sent the transfer.
-	DebtorAccountNumber string `json:"debtor_account_number,required"`
+	DebtorAccountNumber string `json:"debtor_account_number" api:"required"`
 	// The name provided by the sender of the transfer.
-	DebtorName string `json:"debtor_name,required"`
+	DebtorName string `json:"debtor_name" api:"required"`
 	// The routing number of the account that sent the transfer.
-	DebtorRoutingNumber string `json:"debtor_routing_number,required"`
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// If your transfer is declined, this will contain details of the decline.
-	Decline InboundFednowTransferDecline `json:"decline,required,nullable"`
+	Decline InboundFednowTransferDecline `json:"decline" api:"required,nullable"`
 	// The lifecycle status of the transfer.
-	Status InboundFednowTransferStatus `json:"status,required"`
+	Status InboundFednowTransferStatus `json:"status" api:"required"`
 	// The identifier of the Transaction object created when the transfer was
 	// confirmed.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_fednow_transfer`.
-	Type InboundFednowTransferType `json:"type,required"`
+	Type InboundFednowTransferType `json:"type" api:"required"`
 	// Additional information included with the transfer.
-	UnstructuredRemittanceInformation string                    `json:"unstructured_remittance_information,required,nullable"`
+	UnstructuredRemittanceInformation string                    `json:"unstructured_remittance_information" api:"required,nullable"`
 	JSON                              inboundFednowTransferJSON `json:"-"`
 }
 
@@ -149,8 +149,8 @@ func (r inboundFednowTransferJSON) RawJSON() string {
 // If your transfer is confirmed, this will contain details of the confirmation.
 type InboundFednowTransferConfirmation struct {
 	// The identifier of the FedNow Transfer that led to this Transaction.
-	TransferID  string                                `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}                `json:"-,extras"`
+	TransferID  string                                `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                `json:"-" api:"extrafields"`
 	JSON        inboundFednowTransferConfirmationJSON `json:"-"`
 }
 
@@ -189,10 +189,10 @@ func (r InboundFednowTransferCurrency) IsKnown() bool {
 // If your transfer is declined, this will contain details of the decline.
 type InboundFednowTransferDecline struct {
 	// Why the transfer was declined.
-	Reason InboundFednowTransferDeclineReason `json:"reason,required"`
+	Reason InboundFednowTransferDeclineReason `json:"reason" api:"required"`
 	// The identifier of the FedNow Transfer that led to this declined transaction.
-	TransferID  string                           `json:"transfer_id,required"`
-	ExtraFields map[string]interface{}           `json:"-,extras"`
+	TransferID  string                           `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}           `json:"-" api:"extrafields"`
 	JSON        inboundFednowTransferDeclineJSON `json:"-"`
 }
 

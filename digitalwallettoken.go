@@ -78,27 +78,27 @@ func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query Di
 // Card.
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Card this Digital Wallet Token belongs to.
-	CardID string `json:"card_id,required"`
+	CardID string `json:"card_id" api:"required"`
 	// The cardholder information given when the Digital Wallet Token was created.
-	Cardholder DigitalWalletTokenCardholder `json:"cardholder,required"`
+	Cardholder DigitalWalletTokenCardholder `json:"cardholder" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Digital Wallet Token was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The device that was used to create the Digital Wallet Token.
-	Device DigitalWalletTokenDevice `json:"device,required"`
+	Device DigitalWalletTokenDevice `json:"device" api:"required"`
 	// The redacted Dynamic Primary Account Number.
-	DynamicPrimaryAccountNumber DigitalWalletTokenDynamicPrimaryAccountNumber `json:"dynamic_primary_account_number,required,nullable"`
+	DynamicPrimaryAccountNumber DigitalWalletTokenDynamicPrimaryAccountNumber `json:"dynamic_primary_account_number" api:"required,nullable"`
 	// This indicates if payments can be made with the Digital Wallet Token.
-	Status DigitalWalletTokenStatus `json:"status,required"`
+	Status DigitalWalletTokenStatus `json:"status" api:"required"`
 	// The digital wallet app being used.
-	TokenRequestor DigitalWalletTokenTokenRequestor `json:"token_requestor,required"`
+	TokenRequestor DigitalWalletTokenTokenRequestor `json:"token_requestor" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
-	Type DigitalWalletTokenType `json:"type,required"`
+	Type DigitalWalletTokenType `json:"type" api:"required"`
 	// Updates to the Digital Wallet Token.
-	Updates []DigitalWalletTokenUpdate `json:"updates,required"`
+	Updates []DigitalWalletTokenUpdate `json:"updates" api:"required"`
 	JSON    digitalWalletTokenJSON     `json:"-"`
 }
 
@@ -130,7 +130,7 @@ func (r digitalWalletTokenJSON) RawJSON() string {
 // The cardholder information given when the Digital Wallet Token was created.
 type DigitalWalletTokenCardholder struct {
 	// Name of the cardholder, for example "John Smith".
-	Name string                           `json:"name,required,nullable"`
+	Name string                           `json:"name" api:"required,nullable"`
 	JSON digitalWalletTokenCardholderJSON `json:"-"`
 }
 
@@ -153,13 +153,13 @@ func (r digitalWalletTokenCardholderJSON) RawJSON() string {
 // The device that was used to create the Digital Wallet Token.
 type DigitalWalletTokenDevice struct {
 	// Device type.
-	DeviceType DigitalWalletTokenDeviceDeviceType `json:"device_type,required,nullable"`
+	DeviceType DigitalWalletTokenDeviceDeviceType `json:"device_type" api:"required,nullable"`
 	// ID assigned to the device by the digital wallet provider.
-	Identifier string `json:"identifier,required,nullable"`
+	Identifier string `json:"identifier" api:"required,nullable"`
 	// IP address of the device.
-	IPAddress string `json:"ip_address,required,nullable"`
+	IPAddress string `json:"ip_address" api:"required,nullable"`
 	// Name of the device, for example "My Work Phone".
-	Name string                       `json:"name,required,nullable"`
+	Name string                       `json:"name" api:"required,nullable"`
 	JSON digitalWalletTokenDeviceJSON `json:"-"`
 }
 
@@ -208,9 +208,9 @@ func (r DigitalWalletTokenDeviceDeviceType) IsKnown() bool {
 // The redacted Dynamic Primary Account Number.
 type DigitalWalletTokenDynamicPrimaryAccountNumber struct {
 	// The first 6 digits of the token's Dynamic Primary Account Number.
-	First6 string `json:"first6,required"`
+	First6 string `json:"first6" api:"required"`
 	// The last 4 digits of the token's Dynamic Primary Account Number.
-	Last4 string                                            `json:"last4,required"`
+	Last4 string                                            `json:"last4" api:"required"`
 	JSON  digitalWalletTokenDynamicPrimaryAccountNumberJSON `json:"-"`
 }
 
@@ -285,10 +285,10 @@ func (r DigitalWalletTokenType) IsKnown() bool {
 
 type DigitalWalletTokenUpdate struct {
 	// The status the update changed this Digital Wallet Token to.
-	Status DigitalWalletTokenUpdatesStatus `json:"status,required"`
+	Status DigitalWalletTokenUpdatesStatus `json:"status" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the update happened.
-	Timestamp time.Time                    `json:"timestamp,required" format:"date-time"`
+	Timestamp time.Time                    `json:"timestamp" api:"required" format:"date-time"`
 	JSON      digitalWalletTokenUpdateJSON `json:"-"`
 }
 

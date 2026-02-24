@@ -97,29 +97,29 @@ func (r *LockboxService) ListAutoPaging(ctx context.Context, query LockboxListPa
 // Increase will automatically create a Check Deposit for checks received this way.
 type Lockbox struct {
 	// The Lockbox identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Account checks sent to this lockbox will be deposited
 	// into.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The mailing address for the Lockbox.
-	Address LockboxAddress `json:"address,required"`
+	Address LockboxAddress `json:"address" api:"required"`
 	// Indicates if checks mailed to this lockbox will be deposited.
-	CheckDepositBehavior LockboxCheckDepositBehavior `json:"check_deposit_behavior,required"`
+	CheckDepositBehavior LockboxCheckDepositBehavior `json:"check_deposit_behavior" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Lockbox
 	// was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The description you choose for the Lockbox.
-	Description string `json:"description,required,nullable"`
+	Description string `json:"description" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The recipient name you choose for the Lockbox.
-	RecipientName string `json:"recipient_name,required,nullable"`
+	RecipientName string `json:"recipient_name" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `lockbox`.
-	Type        LockboxType            `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        LockboxType            `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        lockboxJSON            `json:"-"`
 }
 
@@ -149,21 +149,21 @@ func (r lockboxJSON) RawJSON() string {
 // The mailing address for the Lockbox.
 type LockboxAddress struct {
 	// The city of the address.
-	City string `json:"city,required"`
+	City string `json:"city" api:"required"`
 	// The first line of the address.
-	Line1 string `json:"line1,required"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
-	Line2 string `json:"line2,required"`
+	Line2 string `json:"line2" api:"required"`
 	// The postal code of the address.
-	PostalCode string `json:"postal_code,required"`
+	PostalCode string `json:"postal_code" api:"required"`
 	// The recipient line of the address. This will include the recipient name you
 	// provide when creating the address, as well as an ATTN suffix to help route the
 	// mail to your lockbox. Mail senders must include this ATTN line to receive mail
 	// at this Lockbox.
-	Recipient string `json:"recipient,required,nullable"`
+	Recipient string `json:"recipient" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the state of
 	// the address.
-	State string             `json:"state,required"`
+	State string             `json:"state" api:"required"`
 	JSON  lockboxAddressJSON `json:"-"`
 }
 
@@ -222,7 +222,7 @@ func (r LockboxType) IsKnown() bool {
 
 type LockboxNewParams struct {
 	// The Account checks sent to this Lockbox should be deposited into.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The description you choose for the Lockbox, for display purposes.
 	Description param.Field[string] `json:"description"`
 	// The name of the recipient that will receive mail at this location.

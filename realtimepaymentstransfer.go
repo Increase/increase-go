@@ -109,74 +109,74 @@ func (r *RealTimePaymentsTransferService) Cancel(ctx context.Context, realTimePa
 // account and any other account on the Real-Time Payments network.
 type RealTimePaymentsTransfer struct {
 	// The Real-Time Payments Transfer's identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The Account from which the transfer was sent.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// If the transfer is acknowledged by the recipient bank, this will contain
 	// supplemental details.
-	Acknowledgement RealTimePaymentsTransferAcknowledgement `json:"acknowledgement,required,nullable"`
+	Acknowledgement RealTimePaymentsTransferAcknowledgement `json:"acknowledgement" api:"required,nullable"`
 	// The transfer amount in USD cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// If your account requires approvals for transfers and the transfer was approved,
 	// this will contain details of the approval.
-	Approval RealTimePaymentsTransferApproval `json:"approval,required,nullable"`
+	Approval RealTimePaymentsTransferApproval `json:"approval" api:"required,nullable"`
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
-	Cancellation RealTimePaymentsTransferCancellation `json:"cancellation,required,nullable"`
+	Cancellation RealTimePaymentsTransferCancellation `json:"cancellation" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
-	CreatedBy RealTimePaymentsTransferCreatedBy `json:"created_by,required,nullable"`
+	CreatedBy RealTimePaymentsTransferCreatedBy `json:"created_by" api:"required,nullable"`
 	// The name of the transfer's recipient. This is set by the sender when creating
 	// the transfer.
-	CreditorName string `json:"creditor_name,required"`
+	CreditorName string `json:"creditor_name" api:"required"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For real-time payments transfers this is always equal to `USD`.
-	Currency RealTimePaymentsTransferCurrency `json:"currency,required"`
+	Currency RealTimePaymentsTransferCurrency `json:"currency" api:"required"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
-	DebtorName string `json:"debtor_name,required,nullable"`
+	DebtorName string `json:"debtor_name" api:"required,nullable"`
 	// The destination account number.
-	DestinationAccountNumber string `json:"destination_account_number,required"`
+	DestinationAccountNumber string `json:"destination_account_number" api:"required"`
 	// The destination American Bankers' Association (ABA) Routing Transit Number
 	// (RTN).
-	DestinationRoutingNumber string `json:"destination_routing_number,required"`
+	DestinationRoutingNumber string `json:"destination_routing_number" api:"required"`
 	// The identifier of the External Account the transfer was made to, if any.
-	ExternalAccountID string `json:"external_account_id,required,nullable"`
+	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
-	PendingTransactionID string `json:"pending_transaction_id,required,nullable"`
+	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// If the transfer is rejected by Real-Time Payments or the destination financial
 	// institution, this will contain supplemental details.
-	Rejection RealTimePaymentsTransferRejection `json:"rejection,required,nullable"`
+	Rejection RealTimePaymentsTransferRejection `json:"rejection" api:"required,nullable"`
 	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation string `json:"remittance_information,required"`
+	RemittanceInformation string `json:"remittance_information" api:"required"`
 	// The Account Number the recipient will see as having sent the transfer.
-	SourceAccountNumberID string `json:"source_account_number_id,required"`
+	SourceAccountNumberID string `json:"source_account_number_id" api:"required"`
 	// The lifecycle status of the transfer.
-	Status RealTimePaymentsTransferStatus `json:"status,required"`
+	Status RealTimePaymentsTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to Real-Time Payments, this will contain
 	// supplemental details.
-	Submission RealTimePaymentsTransferSubmission `json:"submission,required,nullable"`
+	Submission RealTimePaymentsTransferSubmission `json:"submission" api:"required,nullable"`
 	// The Transaction funding the transfer once it is complete.
-	TransactionID string `json:"transaction_id,required,nullable"`
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_payments_transfer`.
-	Type RealTimePaymentsTransferType `json:"type,required"`
+	Type RealTimePaymentsTransferType `json:"type" api:"required"`
 	// The name of the ultimate recipient of the transfer. Set this if the creditor is
 	// an intermediary receiving the payment for someone else.
-	UltimateCreditorName string `json:"ultimate_creditor_name,required,nullable"`
+	UltimateCreditorName string `json:"ultimate_creditor_name" api:"required,nullable"`
 	// The name of the ultimate sender of the transfer. Set this if the funds are being
 	// sent on behalf of someone who is not the account holder at Increase.
-	UltimateDebtorName string                       `json:"ultimate_debtor_name,required,nullable"`
-	ExtraFields        map[string]interface{}       `json:"-,extras"`
+	UltimateDebtorName string                       `json:"ultimate_debtor_name" api:"required,nullable"`
+	ExtraFields        map[string]interface{}       `json:"-" api:"extrafields"`
 	JSON               realTimePaymentsTransferJSON `json:"-"`
 }
 
@@ -224,7 +224,7 @@ func (r realTimePaymentsTransferJSON) RawJSON() string {
 // supplemental details.
 type RealTimePaymentsTransferAcknowledgement struct {
 	// When the transfer was acknowledged.
-	AcknowledgedAt time.Time                                   `json:"acknowledged_at,required" format:"date-time"`
+	AcknowledgedAt time.Time                                   `json:"acknowledged_at" api:"required" format:"date-time"`
 	JSON           realTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
@@ -249,10 +249,10 @@ func (r realTimePaymentsTransferAcknowledgementJSON) RawJSON() string {
 type RealTimePaymentsTransferApproval struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was approved.
-	ApprovedAt time.Time `json:"approved_at,required" format:"date-time"`
+	ApprovedAt time.Time `json:"approved_at" api:"required" format:"date-time"`
 	// If the Transfer was approved by a user in the dashboard, the email address of
 	// that user.
-	ApprovedBy string                               `json:"approved_by,required,nullable"`
+	ApprovedBy string                               `json:"approved_by" api:"required,nullable"`
 	JSON       realTimePaymentsTransferApprovalJSON `json:"-"`
 }
 
@@ -278,10 +278,10 @@ func (r realTimePaymentsTransferApprovalJSON) RawJSON() string {
 type RealTimePaymentsTransferCancellation struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Transfer was canceled.
-	CanceledAt time.Time `json:"canceled_at,required" format:"date-time"`
+	CanceledAt time.Time `json:"canceled_at" api:"required" format:"date-time"`
 	// If the Transfer was canceled by a user in the dashboard, the email address of
 	// that user.
-	CanceledBy string                                   `json:"canceled_by,required,nullable"`
+	CanceledBy string                                   `json:"canceled_by" api:"required,nullable"`
 	JSON       realTimePaymentsTransferCancellationJSON `json:"-"`
 }
 
@@ -305,13 +305,13 @@ func (r realTimePaymentsTransferCancellationJSON) RawJSON() string {
 // What object created the transfer, either via the API or the dashboard.
 type RealTimePaymentsTransferCreatedBy struct {
 	// The type of object that created this transfer.
-	Category RealTimePaymentsTransferCreatedByCategory `json:"category,required"`
+	Category RealTimePaymentsTransferCreatedByCategory `json:"category" api:"required"`
 	// If present, details about the API key that created the transfer.
-	APIKey RealTimePaymentsTransferCreatedByAPIKey `json:"api_key,nullable"`
+	APIKey RealTimePaymentsTransferCreatedByAPIKey `json:"api_key" api:"nullable"`
 	// If present, details about the OAuth Application that created the transfer.
-	OAuthApplication RealTimePaymentsTransferCreatedByOAuthApplication `json:"oauth_application,nullable"`
+	OAuthApplication RealTimePaymentsTransferCreatedByOAuthApplication `json:"oauth_application" api:"nullable"`
 	// If present, details about the User that created the transfer.
-	User RealTimePaymentsTransferCreatedByUser `json:"user,nullable"`
+	User RealTimePaymentsTransferCreatedByUser `json:"user" api:"nullable"`
 	JSON realTimePaymentsTransferCreatedByJSON `json:"-"`
 }
 
@@ -354,7 +354,7 @@ func (r RealTimePaymentsTransferCreatedByCategory) IsKnown() bool {
 // If present, details about the API key that created the transfer.
 type RealTimePaymentsTransferCreatedByAPIKey struct {
 	// The description set for the API key when it was created.
-	Description string                                      `json:"description,required,nullable"`
+	Description string                                      `json:"description" api:"required,nullable"`
 	JSON        realTimePaymentsTransferCreatedByAPIKeyJSON `json:"-"`
 }
 
@@ -377,7 +377,7 @@ func (r realTimePaymentsTransferCreatedByAPIKeyJSON) RawJSON() string {
 // If present, details about the OAuth Application that created the transfer.
 type RealTimePaymentsTransferCreatedByOAuthApplication struct {
 	// The name of the OAuth Application.
-	Name string                                                `json:"name,required"`
+	Name string                                                `json:"name" api:"required"`
 	JSON realTimePaymentsTransferCreatedByOAuthApplicationJSON `json:"-"`
 }
 
@@ -400,7 +400,7 @@ func (r realTimePaymentsTransferCreatedByOAuthApplicationJSON) RawJSON() string 
 // If present, details about the User that created the transfer.
 type RealTimePaymentsTransferCreatedByUser struct {
 	// The email address of the User.
-	Email string                                    `json:"email,required"`
+	Email string                                    `json:"email" api:"required"`
 	JSON  realTimePaymentsTransferCreatedByUserJSON `json:"-"`
 }
 
@@ -441,13 +441,13 @@ func (r RealTimePaymentsTransferCurrency) IsKnown() bool {
 type RealTimePaymentsTransferRejection struct {
 	// Additional information about the rejection provided by the recipient bank when
 	// the `reject_reason_code` is `NARRATIVE`.
-	RejectReasonAdditionalInformation string `json:"reject_reason_additional_information,required,nullable"`
+	RejectReasonAdditionalInformation string `json:"reject_reason_additional_information" api:"required,nullable"`
 	// The reason the transfer was rejected as provided by the recipient bank or the
 	// Real-Time Payments network.
-	RejectReasonCode RealTimePaymentsTransferRejectionRejectReasonCode `json:"reject_reason_code,required"`
+	RejectReasonCode RealTimePaymentsTransferRejectionRejectReasonCode `json:"reject_reason_code" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was rejected.
-	RejectedAt time.Time                             `json:"rejected_at,required,nullable" format:"date-time"`
+	RejectedAt time.Time                             `json:"rejected_at" api:"required,nullable" format:"date-time"`
 	JSON       realTimePaymentsTransferRejectionJSON `json:"-"`
 }
 
@@ -532,9 +532,9 @@ func (r RealTimePaymentsTransferStatus) IsKnown() bool {
 type RealTimePaymentsTransferSubmission struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was submitted to The Clearing House.
-	SubmittedAt time.Time `json:"submitted_at,required,nullable" format:"date-time"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required,nullable" format:"date-time"`
 	// The Real-Time Payments network identification of the transfer.
-	TransactionIdentification string                                 `json:"transaction_identification,required"`
+	TransactionIdentification string                                 `json:"transaction_identification" api:"required"`
 	JSON                      realTimePaymentsTransferSubmissionJSON `json:"-"`
 }
 
@@ -574,13 +574,13 @@ func (r RealTimePaymentsTransferType) IsKnown() bool {
 type RealTimePaymentsTransferNewParams struct {
 	// The transfer amount in USD cents. For Real-Time Payments transfers, must be
 	// positive.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The name of the transfer's recipient.
-	CreditorName param.Field[string] `json:"creditor_name,required"`
+	CreditorName param.Field[string] `json:"creditor_name" api:"required"`
 	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation param.Field[string] `json:"remittance_information,required"`
+	RemittanceInformation param.Field[string] `json:"remittance_information" api:"required"`
 	// The identifier of the Account Number from which to send the transfer.
-	SourceAccountNumberID param.Field[string] `json:"source_account_number_id,required"`
+	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
 	DebtorName param.Field[string] `json:"debtor_name"`

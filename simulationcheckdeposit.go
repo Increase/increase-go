@@ -86,9 +86,9 @@ func (r SimulationCheckDepositSubmitParams) MarshalJSON() (data []byte, err erro
 // If set, the simulation will use these values for the check's scanned MICR data.
 type SimulationCheckDepositSubmitParamsScan struct {
 	// The account number to be returned in the check deposit's scan data.
-	AccountNumber param.Field[string] `json:"account_number,required"`
+	AccountNumber param.Field[string] `json:"account_number" api:"required"`
 	// The routing number to be returned in the check deposit's scan data.
-	RoutingNumber param.Field[string] `json:"routing_number,required"`
+	RoutingNumber param.Field[string] `json:"routing_number" api:"required"`
 	// The auxiliary on-us data to be returned in the check deposit's scan data.
 	AuxiliaryOnUs param.Field[string] `json:"auxiliary_on_us"`
 }

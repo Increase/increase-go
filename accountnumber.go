@@ -100,33 +100,33 @@ func (r *AccountNumberService) ListAutoPaging(ctx context.Context, query Account
 // always know the originator of an incoming payment.
 type AccountNumber struct {
 	// The Account Number identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the account this Account Number belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The account number.
-	AccountNumber string `json:"account_number,required"`
+	AccountNumber string `json:"account_number" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Account
 	// Number was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey string `json:"idempotency_key,required,nullable"`
+	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// Properties related to how this Account Number handles inbound ACH transfers.
-	InboundACH AccountNumberInboundACH `json:"inbound_ach,required"`
+	InboundACH AccountNumberInboundACH `json:"inbound_ach" api:"required"`
 	// Properties related to how this Account Number should handle inbound check
 	// withdrawals.
-	InboundChecks AccountNumberInboundChecks `json:"inbound_checks,required"`
+	InboundChecks AccountNumberInboundChecks `json:"inbound_checks" api:"required"`
 	// The name you choose for the Account Number.
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	RoutingNumber string `json:"routing_number,required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// This indicates if payments can be made to the Account Number.
-	Status AccountNumberStatus `json:"status,required"`
+	Status AccountNumberStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
-	Type        AccountNumberType      `json:"type,required"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	Type        AccountNumberType      `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        accountNumberJSON      `json:"-"`
 }
 
@@ -159,7 +159,7 @@ func (r accountNumberJSON) RawJSON() string {
 type AccountNumberInboundACH struct {
 	// Whether ACH debits are allowed against this Account Number. Note that they will
 	// still be declined if this is `allowed` if the Account Number is not active.
-	DebitStatus AccountNumberInboundACHDebitStatus `json:"debit_status,required"`
+	DebitStatus AccountNumberInboundACHDebitStatus `json:"debit_status" api:"required"`
 	JSON        accountNumberInboundACHJSON        `json:"-"`
 }
 
@@ -200,7 +200,7 @@ func (r AccountNumberInboundACHDebitStatus) IsKnown() bool {
 // withdrawals.
 type AccountNumberInboundChecks struct {
 	// How Increase should process checks with this account number printed on them.
-	Status AccountNumberInboundChecksStatus `json:"status,required"`
+	Status AccountNumberInboundChecksStatus `json:"status" api:"required"`
 	JSON   accountNumberInboundChecksJSON   `json:"-"`
 }
 
@@ -271,9 +271,9 @@ func (r AccountNumberType) IsKnown() bool {
 
 type AccountNumberNewParams struct {
 	// The Account the Account Number should belong to.
-	AccountID param.Field[string] `json:"account_id,required"`
+	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The name you choose for the Account Number.
-	Name param.Field[string] `json:"name,required"`
+	Name param.Field[string] `json:"name" api:"required"`
 	// Options related to how this Account Number should handle inbound ACH transfers.
 	InboundACH param.Field[AccountNumberNewParamsInboundACH] `json:"inbound_ach"`
 	// Options related to how this Account Number should handle inbound check
@@ -290,7 +290,7 @@ type AccountNumberNewParamsInboundACH struct {
 	// Whether ACH debits are allowed against this Account Number. Note that ACH debits
 	// will be declined if this is `allowed` but the Account Number is not active. If
 	// you do not specify this field, the default is `allowed`.
-	DebitStatus param.Field[AccountNumberNewParamsInboundACHDebitStatus] `json:"debit_status,required"`
+	DebitStatus param.Field[AccountNumberNewParamsInboundACHDebitStatus] `json:"debit_status" api:"required"`
 }
 
 func (r AccountNumberNewParamsInboundACH) MarshalJSON() (data []byte, err error) {
@@ -320,7 +320,7 @@ func (r AccountNumberNewParamsInboundACHDebitStatus) IsKnown() bool {
 type AccountNumberNewParamsInboundChecks struct {
 	// How Increase should process checks with this account number printed on them. If
 	// you do not specify this field, the default is `check_transfers_only`.
-	Status param.Field[AccountNumberNewParamsInboundChecksStatus] `json:"status,required"`
+	Status param.Field[AccountNumberNewParamsInboundChecksStatus] `json:"status" api:"required"`
 }
 
 func (r AccountNumberNewParamsInboundChecks) MarshalJSON() (data []byte, err error) {
@@ -392,7 +392,7 @@ func (r AccountNumberUpdateParamsInboundACHDebitStatus) IsKnown() bool {
 // withdrawals.
 type AccountNumberUpdateParamsInboundChecks struct {
 	// How Increase should process checks with this account number printed on them.
-	Status param.Field[AccountNumberUpdateParamsInboundChecksStatus] `json:"status,required"`
+	Status param.Field[AccountNumberUpdateParamsInboundChecksStatus] `json:"status" api:"required"`
 }
 
 func (r AccountNumberUpdateParamsInboundChecks) MarshalJSON() (data []byte, err error) {

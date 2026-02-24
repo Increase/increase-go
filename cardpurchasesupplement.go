@@ -77,19 +77,19 @@ func (r *CardPurchaseSupplementService) ListAutoPaging(ctx context.Context, quer
 // as level 3 line item data.
 type CardPurchaseSupplement struct {
 	// The Card Purchase Supplement identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
-	CardPaymentID string `json:"card_payment_id,required,nullable"`
+	CardPaymentID string `json:"card_payment_id" api:"required,nullable"`
 	// Invoice-level information about the payment.
-	Invoice CardPurchaseSupplementInvoice `json:"invoice,required,nullable"`
+	Invoice CardPurchaseSupplementInvoice `json:"invoice" api:"required,nullable"`
 	// Line item information, such as individual products purchased.
-	LineItems []CardPurchaseSupplementLineItem `json:"line_items,required,nullable"`
+	LineItems []CardPurchaseSupplementLineItem `json:"line_items" api:"required,nullable"`
 	// The ID of the transaction.
-	TransactionID string `json:"transaction_id,required"`
+	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_purchase_supplement`.
-	Type        CardPurchaseSupplementType `json:"type,required"`
-	ExtraFields map[string]interface{}     `json:"-,extras"`
+	Type        CardPurchaseSupplementType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}     `json:"-" api:"extrafields"`
 	JSON        cardPurchaseSupplementJSON `json:"-"`
 }
 
@@ -117,39 +117,39 @@ func (r cardPurchaseSupplementJSON) RawJSON() string {
 // Invoice-level information about the payment.
 type CardPurchaseSupplementInvoice struct {
 	// Discount given to cardholder.
-	DiscountAmount int64 `json:"discount_amount,required,nullable"`
+	DiscountAmount int64 `json:"discount_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the discount.
-	DiscountCurrency string `json:"discount_currency,required,nullable"`
+	DiscountCurrency string `json:"discount_currency" api:"required,nullable"`
 	// Indicates how the merchant applied the discount.
-	DiscountTreatmentCode CardPurchaseSupplementInvoiceDiscountTreatmentCode `json:"discount_treatment_code,required,nullable"`
+	DiscountTreatmentCode CardPurchaseSupplementInvoiceDiscountTreatmentCode `json:"discount_treatment_code" api:"required,nullable"`
 	// Amount of duty taxes.
-	DutyTaxAmount int64 `json:"duty_tax_amount,required,nullable"`
+	DutyTaxAmount int64 `json:"duty_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the duty tax.
-	DutyTaxCurrency string `json:"duty_tax_currency,required,nullable"`
+	DutyTaxCurrency string `json:"duty_tax_currency" api:"required,nullable"`
 	// Date the order was taken.
-	OrderDate time.Time `json:"order_date,required,nullable" format:"date"`
+	OrderDate time.Time `json:"order_date" api:"required,nullable" format:"date"`
 	// The shipping cost.
-	ShippingAmount int64 `json:"shipping_amount,required,nullable"`
+	ShippingAmount int64 `json:"shipping_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the shipping
 	// cost.
-	ShippingCurrency string `json:"shipping_currency,required,nullable"`
+	ShippingCurrency string `json:"shipping_currency" api:"required,nullable"`
 	// Country code of the shipping destination.
-	ShippingDestinationCountryCode string `json:"shipping_destination_country_code,required,nullable"`
+	ShippingDestinationCountryCode string `json:"shipping_destination_country_code" api:"required,nullable"`
 	// Postal code of the shipping destination.
-	ShippingDestinationPostalCode string `json:"shipping_destination_postal_code,required,nullable"`
+	ShippingDestinationPostalCode string `json:"shipping_destination_postal_code" api:"required,nullable"`
 	// Postal code of the location being shipped from.
-	ShippingSourcePostalCode string `json:"shipping_source_postal_code,required,nullable"`
+	ShippingSourcePostalCode string `json:"shipping_source_postal_code" api:"required,nullable"`
 	// Taxes paid for freight and shipping.
-	ShippingTaxAmount int64 `json:"shipping_tax_amount,required,nullable"`
+	ShippingTaxAmount int64 `json:"shipping_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the shipping
 	// tax.
-	ShippingTaxCurrency string `json:"shipping_tax_currency,required,nullable"`
+	ShippingTaxCurrency string `json:"shipping_tax_currency" api:"required,nullable"`
 	// Tax rate for freight and shipping.
-	ShippingTaxRate string `json:"shipping_tax_rate,required,nullable"`
+	ShippingTaxRate string `json:"shipping_tax_rate" api:"required,nullable"`
 	// Indicates how the merchant applied taxes.
-	TaxTreatments CardPurchaseSupplementInvoiceTaxTreatments `json:"tax_treatments,required,nullable"`
+	TaxTreatments CardPurchaseSupplementInvoiceTaxTreatments `json:"tax_treatments" api:"required,nullable"`
 	// Value added tax invoice reference number.
-	UniqueValueAddedTaxInvoiceReference string                            `json:"unique_value_added_tax_invoice_reference,required,nullable"`
+	UniqueValueAddedTaxInvoiceReference string                            `json:"unique_value_added_tax_invoice_reference" api:"required,nullable"`
 	JSON                                cardPurchaseSupplementInvoiceJSON `json:"-"`
 }
 
@@ -222,41 +222,41 @@ func (r CardPurchaseSupplementInvoiceTaxTreatments) IsKnown() bool {
 
 type CardPurchaseSupplementLineItem struct {
 	// The Card Purchase Supplement Line Item identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Indicates the type of line item.
-	DetailIndicator CardPurchaseSupplementLineItemsDetailIndicator `json:"detail_indicator,required,nullable"`
+	DetailIndicator CardPurchaseSupplementLineItemsDetailIndicator `json:"detail_indicator" api:"required,nullable"`
 	// Discount amount for this specific line item.
-	DiscountAmount int64 `json:"discount_amount,required,nullable"`
+	DiscountAmount int64 `json:"discount_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the discount.
-	DiscountCurrency string `json:"discount_currency,required,nullable"`
+	DiscountCurrency string `json:"discount_currency" api:"required,nullable"`
 	// Indicates how the merchant applied the discount for this specific line item.
-	DiscountTreatmentCode CardPurchaseSupplementLineItemsDiscountTreatmentCode `json:"discount_treatment_code,required,nullable"`
+	DiscountTreatmentCode CardPurchaseSupplementLineItemsDiscountTreatmentCode `json:"discount_treatment_code" api:"required,nullable"`
 	// Code used to categorize the purchase item.
-	ItemCommodityCode string `json:"item_commodity_code,required,nullable"`
+	ItemCommodityCode string `json:"item_commodity_code" api:"required,nullable"`
 	// Description of the purchase item.
-	ItemDescriptor string `json:"item_descriptor,required,nullable"`
+	ItemDescriptor string `json:"item_descriptor" api:"required,nullable"`
 	// The number of units of the product being purchased.
-	ItemQuantity string `json:"item_quantity,required,nullable"`
+	ItemQuantity string `json:"item_quantity" api:"required,nullable"`
 	// Code used to categorize the product being purchased.
-	ProductCode string `json:"product_code,required,nullable"`
+	ProductCode string `json:"product_code" api:"required,nullable"`
 	// Sales tax amount for this line item.
-	SalesTaxAmount int64 `json:"sales_tax_amount,required,nullable"`
+	SalesTaxAmount int64 `json:"sales_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the sales tax
 	// assessed.
-	SalesTaxCurrency string `json:"sales_tax_currency,required,nullable"`
+	SalesTaxCurrency string `json:"sales_tax_currency" api:"required,nullable"`
 	// Sales tax rate for this line item.
-	SalesTaxRate string `json:"sales_tax_rate,required,nullable"`
+	SalesTaxRate string `json:"sales_tax_rate" api:"required,nullable"`
 	// Total amount of all line items.
-	TotalAmount int64 `json:"total_amount,required,nullable"`
+	TotalAmount int64 `json:"total_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total
 	// amount.
-	TotalAmountCurrency string `json:"total_amount_currency,required,nullable"`
+	TotalAmountCurrency string `json:"total_amount_currency" api:"required,nullable"`
 	// Cost of line item per unit of measure, in major units.
-	UnitCost string `json:"unit_cost,required,nullable"`
+	UnitCost string `json:"unit_cost" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the unit cost.
-	UnitCostCurrency string `json:"unit_cost_currency,required,nullable"`
+	UnitCostCurrency string `json:"unit_cost_currency" api:"required,nullable"`
 	// Code indicating unit of measure (gallons, etc.).
-	UnitOfMeasureCode string                             `json:"unit_of_measure_code,required,nullable"`
+	UnitOfMeasureCode string                             `json:"unit_of_measure_code" api:"required,nullable"`
 	JSON              cardPurchaseSupplementLineItemJSON `json:"-"`
 }
 

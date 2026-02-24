@@ -78,19 +78,19 @@ func (r *BookkeepingEntryService) ListAutoPaging(ctx context.Context, query Book
 // [guide to Bookkeeping](https://increase.com/documentation/bookkeeping#bookkeeping).
 type BookkeepingEntry struct {
 	// The entry identifier.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The identifier for the Account the Entry belongs to.
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// The Entry amount in the minor unit of its currency. For dollars, for example,
 	// this is cents.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// When the entry set was created.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The identifier for the Entry Set the Entry belongs to.
-	EntrySetID string `json:"entry_set_id,required"`
+	EntrySetID string `json:"entry_set_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `bookkeeping_entry`.
-	Type BookkeepingEntryType `json:"type,required"`
+	Type BookkeepingEntryType `json:"type" api:"required"`
 	JSON bookkeepingEntryJSON `json:"-"`
 }
 

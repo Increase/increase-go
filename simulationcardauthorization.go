@@ -51,14 +51,14 @@ type SimulationCardAuthorizationNewResponse struct {
 	// If the authorization attempt fails, this will contain the resulting
 	// [Declined Transaction](#declined-transactions) object. The Declined
 	// Transaction's `source` will be of `category: card_decline`.
-	DeclinedTransaction DeclinedTransaction `json:"declined_transaction,required,nullable"`
+	DeclinedTransaction DeclinedTransaction `json:"declined_transaction" api:"required,nullable"`
 	// If the authorization attempt succeeds, this will contain the resulting Pending
 	// Transaction object. The Pending Transaction's `source` will be of
 	// `category: card_authorization`.
-	PendingTransaction PendingTransaction `json:"pending_transaction,required,nullable"`
+	PendingTransaction PendingTransaction `json:"pending_transaction" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_card_authorization_simulation_result`.
-	Type SimulationCardAuthorizationNewResponseType `json:"type,required"`
+	Type SimulationCardAuthorizationNewResponseType `json:"type" api:"required"`
 	JSON simulationCardAuthorizationNewResponseJSON `json:"-"`
 }
 
@@ -98,7 +98,7 @@ func (r SimulationCardAuthorizationNewResponseType) IsKnown() bool {
 
 type SimulationCardAuthorizationNewParams struct {
 	// The authorization amount in cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The identifier of a Card Payment with a `card_authentication` if you want to
 	// simulate an authenticated authorization.
 	AuthenticatedCardPaymentID param.Field[string] `json:"authenticated_card_payment_id"`
@@ -185,7 +185,7 @@ func (r SimulationCardAuthorizationNewParamsDeclineReason) IsKnown() bool {
 // Fields specific to a given card network.
 type SimulationCardAuthorizationNewParamsNetworkDetails struct {
 	// Fields specific to the Visa network.
-	Visa param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisa] `json:"visa,required"`
+	Visa param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisa] `json:"visa" api:"required"`
 }
 
 func (r SimulationCardAuthorizationNewParamsNetworkDetails) MarshalJSON() (data []byte, err error) {
@@ -228,7 +228,7 @@ func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingR
 type SimulationCardAuthorizationNewParamsProcessingCategory struct {
 	// The processing category describes the intent behind the authorization, such as
 	// whether it was used for bill payments or an automatic fuel dispenser.
-	Category param.Field[SimulationCardAuthorizationNewParamsProcessingCategoryCategory] `json:"category,required"`
+	Category param.Field[SimulationCardAuthorizationNewParamsProcessingCategoryCategory] `json:"category" api:"required"`
 	// Details related to refund authorizations.
 	Refund param.Field[SimulationCardAuthorizationNewParamsProcessingCategoryRefund] `json:"refund"`
 }
