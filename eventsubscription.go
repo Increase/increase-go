@@ -114,17 +114,15 @@ type EventSubscription struct {
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
 	SelectedEventCategories []EventSubscriptionSelectedEventCategory `json:"selected_event_categories" api:"required,nullable"`
-	// If specified, this subscription will only receive webhooks for Events with the
-	// specified `category`.
-	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category" api:"required,nullable"`
 	// This indicates if we'll send notifications to this subscription.
 	Status EventSubscriptionStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `event_subscription`.
 	Type EventSubscriptionType `json:"type" api:"required"`
 	// The webhook url where we'll send notifications.
-	URL  string                `json:"url" api:"required"`
-	JSON eventSubscriptionJSON `json:"-"`
+	URL         string                 `json:"url" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        eventSubscriptionJSON  `json:"-"`
 }
 
 // eventSubscriptionJSON contains the JSON metadata for the struct
@@ -135,7 +133,6 @@ type eventSubscriptionJSON struct {
 	IdempotencyKey          apijson.Field
 	OAuthConnectionID       apijson.Field
 	SelectedEventCategories apijson.Field
-	SelectedEventCategory   apijson.Field
 	Status                  apijson.Field
 	Type                    apijson.Field
 	URL                     apijson.Field
