@@ -124,6 +124,8 @@ type FednowTransfer struct {
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// What object created the transfer, either via the API or the dashboard.
 	CreatedBy FednowTransferCreatedBy `json:"created_by" api:"required,nullable"`
+	// The creditor's address.
+	CreditorAddress FednowTransferCreditorAddress `json:"creditor_address" api:"required,nullable"`
 	// The name of the transfer's recipient. This is set by the sender when creating
 	// the transfer.
 	CreditorName string `json:"creditor_name" api:"required"`
@@ -177,6 +179,7 @@ type fednowTransferJSON struct {
 	Amount                             apijson.Field
 	CreatedAt                          apijson.Field
 	CreatedBy                          apijson.Field
+	CreditorAddress                    apijson.Field
 	CreditorName                       apijson.Field
 	Currency                           apijson.Field
 	DebtorName                         apijson.Field
@@ -343,6 +346,38 @@ func (r *FednowTransferCreatedByUser) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r fednowTransferCreatedByUserJSON) RawJSON() string {
+	return r.raw
+}
+
+// The creditor's address.
+type FednowTransferCreditorAddress struct {
+	// The city, district, town, or village of the address.
+	City string `json:"city" api:"required,nullable"`
+	// The first line of the address.
+	Line1 string `json:"line1" api:"required,nullable"`
+	// The ZIP code of the address.
+	PostalCode string `json:"postal_code" api:"required,nullable"`
+	// The address state.
+	State string                            `json:"state" api:"required,nullable"`
+	JSON  fednowTransferCreditorAddressJSON `json:"-"`
+}
+
+// fednowTransferCreditorAddressJSON contains the JSON metadata for the struct
+// [FednowTransferCreditorAddress]
+type fednowTransferCreditorAddressJSON struct {
+	City        apijson.Field
+	Line1       apijson.Field
+	PostalCode  apijson.Field
+	State       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *FednowTransferCreditorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r fednowTransferCreditorAddressJSON) RawJSON() string {
 	return r.raw
 }
 
