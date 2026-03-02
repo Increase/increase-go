@@ -2523,6 +2523,9 @@ type RealTimeDecisionActionParamsCardAuthenticationChallenge struct {
 	// Whether the card authentication challenge was successfully delivered to the
 	// cardholder.
 	Result param.Field[RealTimeDecisionActionParamsCardAuthenticationChallengeResult] `json:"result" api:"required"`
+	// If your application was able to deliver the one-time code, this contains
+	// metadata about the delivery.
+	Success param.Field[RealTimeDecisionActionParamsCardAuthenticationChallengeSuccess] `json:"success"`
 }
 
 func (r RealTimeDecisionActionParamsCardAuthenticationChallenge) MarshalJSON() (data []byte, err error) {
@@ -2544,6 +2547,20 @@ func (r RealTimeDecisionActionParamsCardAuthenticationChallengeResult) IsKnown()
 		return true
 	}
 	return false
+}
+
+// If your application was able to deliver the one-time code, this contains
+// metadata about the delivery.
+type RealTimeDecisionActionParamsCardAuthenticationChallengeSuccess struct {
+	// The email address that was used to deliver the one-time code to the cardholder.
+	Email param.Field[string] `json:"email" format:"email"`
+	// The phone number that was used to deliver the one-time code to the cardholder
+	// via SMS.
+	Phone param.Field[string] `json:"phone"`
+}
+
+func (r RealTimeDecisionActionParamsCardAuthenticationChallengeSuccess) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // If the Real-Time Decision relates to a card authorization attempt, this object
