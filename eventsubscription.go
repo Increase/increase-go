@@ -113,6 +113,9 @@ type EventSubscription struct {
 	OAuthConnectionID string `json:"oauth_connection_id" api:"required,nullable"`
 	// If specified, this subscription will only receive webhooks for Events with the
 	// specified `category`.
+	SelectedEventCategories []EventSubscriptionSelectedEventCategory `json:"selected_event_categories" api:"required,nullable"`
+	// If specified, this subscription will only receive webhooks for Events with the
+	// specified `category`.
 	SelectedEventCategory EventSubscriptionSelectedEventCategory `json:"selected_event_category" api:"required,nullable"`
 	// This indicates if we'll send notifications to this subscription.
 	Status EventSubscriptionStatus `json:"status" api:"required"`
@@ -127,16 +130,17 @@ type EventSubscription struct {
 // eventSubscriptionJSON contains the JSON metadata for the struct
 // [EventSubscription]
 type eventSubscriptionJSON struct {
-	ID                    apijson.Field
-	CreatedAt             apijson.Field
-	IdempotencyKey        apijson.Field
-	OAuthConnectionID     apijson.Field
-	SelectedEventCategory apijson.Field
-	Status                apijson.Field
-	Type                  apijson.Field
-	URL                   apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	ID                      apijson.Field
+	CreatedAt               apijson.Field
+	IdempotencyKey          apijson.Field
+	OAuthConnectionID       apijson.Field
+	SelectedEventCategories apijson.Field
+	SelectedEventCategory   apijson.Field
+	Status                  apijson.Field
+	Type                    apijson.Field
+	URL                     apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *EventSubscription) UnmarshalJSON(data []byte) (err error) {
@@ -147,125 +151,146 @@ func (r eventSubscriptionJSON) RawJSON() string {
 	return r.raw
 }
 
-// If specified, this subscription will only receive webhooks for Events with the
-// specified `category`.
-type EventSubscriptionSelectedEventCategory string
+type EventSubscriptionSelectedEventCategory struct {
+	// The category of the Event.
+	EventCategory EventSubscriptionSelectedEventCategoriesEventCategory `json:"event_category" api:"required,nullable"`
+	JSON          eventSubscriptionSelectedEventCategoryJSON            `json:"-"`
+}
+
+// eventSubscriptionSelectedEventCategoryJSON contains the JSON metadata for the
+// struct [EventSubscriptionSelectedEventCategory]
+type eventSubscriptionSelectedEventCategoryJSON struct {
+	EventCategory apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *EventSubscriptionSelectedEventCategory) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r eventSubscriptionSelectedEventCategoryJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the Event.
+type EventSubscriptionSelectedEventCategoriesEventCategory string
 
 const (
-	EventSubscriptionSelectedEventCategoryAccountCreated                                       EventSubscriptionSelectedEventCategory = "account.created"
-	EventSubscriptionSelectedEventCategoryAccountUpdated                                       EventSubscriptionSelectedEventCategory = "account.updated"
-	EventSubscriptionSelectedEventCategoryAccountNumberCreated                                 EventSubscriptionSelectedEventCategory = "account_number.created"
-	EventSubscriptionSelectedEventCategoryAccountNumberUpdated                                 EventSubscriptionSelectedEventCategory = "account_number.updated"
-	EventSubscriptionSelectedEventCategoryAccountStatementCreated                              EventSubscriptionSelectedEventCategory = "account_statement.created"
-	EventSubscriptionSelectedEventCategoryAccountTransferCreated                               EventSubscriptionSelectedEventCategory = "account_transfer.created"
-	EventSubscriptionSelectedEventCategoryAccountTransferUpdated                               EventSubscriptionSelectedEventCategory = "account_transfer.updated"
-	EventSubscriptionSelectedEventCategoryACHPrenotificationCreated                            EventSubscriptionSelectedEventCategory = "ach_prenotification.created"
-	EventSubscriptionSelectedEventCategoryACHPrenotificationUpdated                            EventSubscriptionSelectedEventCategory = "ach_prenotification.updated"
-	EventSubscriptionSelectedEventCategoryACHTransferCreated                                   EventSubscriptionSelectedEventCategory = "ach_transfer.created"
-	EventSubscriptionSelectedEventCategoryACHTransferUpdated                                   EventSubscriptionSelectedEventCategory = "ach_transfer.updated"
-	EventSubscriptionSelectedEventCategoryBlockchainAddressCreated                             EventSubscriptionSelectedEventCategory = "blockchain_address.created"
-	EventSubscriptionSelectedEventCategoryBlockchainAddressUpdated                             EventSubscriptionSelectedEventCategory = "blockchain_address.updated"
-	EventSubscriptionSelectedEventCategoryBlockchainOfframpTransferCreated                     EventSubscriptionSelectedEventCategory = "blockchain_offramp_transfer.created"
-	EventSubscriptionSelectedEventCategoryBlockchainOfframpTransferUpdated                     EventSubscriptionSelectedEventCategory = "blockchain_offramp_transfer.updated"
-	EventSubscriptionSelectedEventCategoryBlockchainOnrampTransferCreated                      EventSubscriptionSelectedEventCategory = "blockchain_onramp_transfer.created"
-	EventSubscriptionSelectedEventCategoryBlockchainOnrampTransferUpdated                      EventSubscriptionSelectedEventCategory = "blockchain_onramp_transfer.updated"
-	EventSubscriptionSelectedEventCategoryBookkeepingAccountCreated                            EventSubscriptionSelectedEventCategory = "bookkeeping_account.created"
-	EventSubscriptionSelectedEventCategoryBookkeepingAccountUpdated                            EventSubscriptionSelectedEventCategory = "bookkeeping_account.updated"
-	EventSubscriptionSelectedEventCategoryBookkeepingEntrySetUpdated                           EventSubscriptionSelectedEventCategory = "bookkeeping_entry_set.updated"
-	EventSubscriptionSelectedEventCategoryCardCreated                                          EventSubscriptionSelectedEventCategory = "card.created"
-	EventSubscriptionSelectedEventCategoryCardUpdated                                          EventSubscriptionSelectedEventCategory = "card.updated"
-	EventSubscriptionSelectedEventCategoryCardPaymentCreated                                   EventSubscriptionSelectedEventCategory = "card_payment.created"
-	EventSubscriptionSelectedEventCategoryCardPaymentUpdated                                   EventSubscriptionSelectedEventCategory = "card_payment.updated"
-	EventSubscriptionSelectedEventCategoryCardProfileCreated                                   EventSubscriptionSelectedEventCategory = "card_profile.created"
-	EventSubscriptionSelectedEventCategoryCardProfileUpdated                                   EventSubscriptionSelectedEventCategory = "card_profile.updated"
-	EventSubscriptionSelectedEventCategoryCardDisputeCreated                                   EventSubscriptionSelectedEventCategory = "card_dispute.created"
-	EventSubscriptionSelectedEventCategoryCardDisputeUpdated                                   EventSubscriptionSelectedEventCategory = "card_dispute.updated"
-	EventSubscriptionSelectedEventCategoryCheckDepositCreated                                  EventSubscriptionSelectedEventCategory = "check_deposit.created"
-	EventSubscriptionSelectedEventCategoryCheckDepositUpdated                                  EventSubscriptionSelectedEventCategory = "check_deposit.updated"
-	EventSubscriptionSelectedEventCategoryCheckTransferCreated                                 EventSubscriptionSelectedEventCategory = "check_transfer.created"
-	EventSubscriptionSelectedEventCategoryCheckTransferUpdated                                 EventSubscriptionSelectedEventCategory = "check_transfer.updated"
-	EventSubscriptionSelectedEventCategoryDeclinedTransactionCreated                           EventSubscriptionSelectedEventCategory = "declined_transaction.created"
-	EventSubscriptionSelectedEventCategoryDigitalCardProfileCreated                            EventSubscriptionSelectedEventCategory = "digital_card_profile.created"
-	EventSubscriptionSelectedEventCategoryDigitalCardProfileUpdated                            EventSubscriptionSelectedEventCategory = "digital_card_profile.updated"
-	EventSubscriptionSelectedEventCategoryDigitalWalletTokenCreated                            EventSubscriptionSelectedEventCategory = "digital_wallet_token.created"
-	EventSubscriptionSelectedEventCategoryDigitalWalletTokenUpdated                            EventSubscriptionSelectedEventCategory = "digital_wallet_token.updated"
-	EventSubscriptionSelectedEventCategoryDocumentCreated                                      EventSubscriptionSelectedEventCategory = "document.created"
-	EventSubscriptionSelectedEventCategoryEntityCreated                                        EventSubscriptionSelectedEventCategory = "entity.created"
-	EventSubscriptionSelectedEventCategoryEntityUpdated                                        EventSubscriptionSelectedEventCategory = "entity.updated"
-	EventSubscriptionSelectedEventCategoryEventSubscriptionCreated                             EventSubscriptionSelectedEventCategory = "event_subscription.created"
-	EventSubscriptionSelectedEventCategoryEventSubscriptionUpdated                             EventSubscriptionSelectedEventCategory = "event_subscription.updated"
-	EventSubscriptionSelectedEventCategoryExportCreated                                        EventSubscriptionSelectedEventCategory = "export.created"
-	EventSubscriptionSelectedEventCategoryExportUpdated                                        EventSubscriptionSelectedEventCategory = "export.updated"
-	EventSubscriptionSelectedEventCategoryExternalAccountCreated                               EventSubscriptionSelectedEventCategory = "external_account.created"
-	EventSubscriptionSelectedEventCategoryExternalAccountUpdated                               EventSubscriptionSelectedEventCategory = "external_account.updated"
-	EventSubscriptionSelectedEventCategoryFednowTransferCreated                                EventSubscriptionSelectedEventCategory = "fednow_transfer.created"
-	EventSubscriptionSelectedEventCategoryFednowTransferUpdated                                EventSubscriptionSelectedEventCategory = "fednow_transfer.updated"
-	EventSubscriptionSelectedEventCategoryFileCreated                                          EventSubscriptionSelectedEventCategory = "file.created"
-	EventSubscriptionSelectedEventCategoryGroupUpdated                                         EventSubscriptionSelectedEventCategory = "group.updated"
-	EventSubscriptionSelectedEventCategoryGroupHeartbeat                                       EventSubscriptionSelectedEventCategory = "group.heartbeat"
-	EventSubscriptionSelectedEventCategoryInboundACHTransferCreated                            EventSubscriptionSelectedEventCategory = "inbound_ach_transfer.created"
-	EventSubscriptionSelectedEventCategoryInboundACHTransferUpdated                            EventSubscriptionSelectedEventCategory = "inbound_ach_transfer.updated"
-	EventSubscriptionSelectedEventCategoryInboundACHTransferReturnCreated                      EventSubscriptionSelectedEventCategory = "inbound_ach_transfer_return.created"
-	EventSubscriptionSelectedEventCategoryInboundACHTransferReturnUpdated                      EventSubscriptionSelectedEventCategory = "inbound_ach_transfer_return.updated"
-	EventSubscriptionSelectedEventCategoryInboundCheckDepositCreated                           EventSubscriptionSelectedEventCategory = "inbound_check_deposit.created"
-	EventSubscriptionSelectedEventCategoryInboundCheckDepositUpdated                           EventSubscriptionSelectedEventCategory = "inbound_check_deposit.updated"
-	EventSubscriptionSelectedEventCategoryInboundFednowTransferCreated                         EventSubscriptionSelectedEventCategory = "inbound_fednow_transfer.created"
-	EventSubscriptionSelectedEventCategoryInboundFednowTransferUpdated                         EventSubscriptionSelectedEventCategory = "inbound_fednow_transfer.updated"
-	EventSubscriptionSelectedEventCategoryInboundMailItemCreated                               EventSubscriptionSelectedEventCategory = "inbound_mail_item.created"
-	EventSubscriptionSelectedEventCategoryInboundMailItemUpdated                               EventSubscriptionSelectedEventCategory = "inbound_mail_item.updated"
-	EventSubscriptionSelectedEventCategoryInboundRealTimePaymentsTransferCreated               EventSubscriptionSelectedEventCategory = "inbound_real_time_payments_transfer.created"
-	EventSubscriptionSelectedEventCategoryInboundRealTimePaymentsTransferUpdated               EventSubscriptionSelectedEventCategory = "inbound_real_time_payments_transfer.updated"
-	EventSubscriptionSelectedEventCategoryInboundWireDrawdownRequestCreated                    EventSubscriptionSelectedEventCategory = "inbound_wire_drawdown_request.created"
-	EventSubscriptionSelectedEventCategoryInboundWireTransferCreated                           EventSubscriptionSelectedEventCategory = "inbound_wire_transfer.created"
-	EventSubscriptionSelectedEventCategoryInboundWireTransferUpdated                           EventSubscriptionSelectedEventCategory = "inbound_wire_transfer.updated"
-	EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentCreated                      EventSubscriptionSelectedEventCategory = "intrafi_account_enrollment.created"
-	EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentUpdated                      EventSubscriptionSelectedEventCategory = "intrafi_account_enrollment.updated"
-	EventSubscriptionSelectedEventCategoryIntrafiExclusionCreated                              EventSubscriptionSelectedEventCategory = "intrafi_exclusion.created"
-	EventSubscriptionSelectedEventCategoryIntrafiExclusionUpdated                              EventSubscriptionSelectedEventCategory = "intrafi_exclusion.updated"
-	EventSubscriptionSelectedEventCategoryLegacyCardDisputeCreated                             EventSubscriptionSelectedEventCategory = "legacy_card_dispute.created"
-	EventSubscriptionSelectedEventCategoryLegacyCardDisputeUpdated                             EventSubscriptionSelectedEventCategory = "legacy_card_dispute.updated"
-	EventSubscriptionSelectedEventCategoryLockboxCreated                                       EventSubscriptionSelectedEventCategory = "lockbox.created"
-	EventSubscriptionSelectedEventCategoryLockboxUpdated                                       EventSubscriptionSelectedEventCategory = "lockbox.updated"
-	EventSubscriptionSelectedEventCategoryOAuthConnectionCreated                               EventSubscriptionSelectedEventCategory = "oauth_connection.created"
-	EventSubscriptionSelectedEventCategoryOAuthConnectionDeactivated                           EventSubscriptionSelectedEventCategory = "oauth_connection.deactivated"
-	EventSubscriptionSelectedEventCategoryCardPushTransferCreated                              EventSubscriptionSelectedEventCategory = "card_push_transfer.created"
-	EventSubscriptionSelectedEventCategoryCardPushTransferUpdated                              EventSubscriptionSelectedEventCategory = "card_push_transfer.updated"
-	EventSubscriptionSelectedEventCategoryCardValidationCreated                                EventSubscriptionSelectedEventCategory = "card_validation.created"
-	EventSubscriptionSelectedEventCategoryCardValidationUpdated                                EventSubscriptionSelectedEventCategory = "card_validation.updated"
-	EventSubscriptionSelectedEventCategoryPendingTransactionCreated                            EventSubscriptionSelectedEventCategory = "pending_transaction.created"
-	EventSubscriptionSelectedEventCategoryPendingTransactionUpdated                            EventSubscriptionSelectedEventCategory = "pending_transaction.updated"
-	EventSubscriptionSelectedEventCategoryPhysicalCardCreated                                  EventSubscriptionSelectedEventCategory = "physical_card.created"
-	EventSubscriptionSelectedEventCategoryPhysicalCardUpdated                                  EventSubscriptionSelectedEventCategory = "physical_card.updated"
-	EventSubscriptionSelectedEventCategoryPhysicalCardProfileCreated                           EventSubscriptionSelectedEventCategory = "physical_card_profile.created"
-	EventSubscriptionSelectedEventCategoryPhysicalCardProfileUpdated                           EventSubscriptionSelectedEventCategory = "physical_card_profile.updated"
-	EventSubscriptionSelectedEventCategoryPhysicalCheckCreated                                 EventSubscriptionSelectedEventCategory = "physical_check.created"
-	EventSubscriptionSelectedEventCategoryPhysicalCheckUpdated                                 EventSubscriptionSelectedEventCategory = "physical_check.updated"
-	EventSubscriptionSelectedEventCategoryProgramCreated                                       EventSubscriptionSelectedEventCategory = "program.created"
-	EventSubscriptionSelectedEventCategoryProgramUpdated                                       EventSubscriptionSelectedEventCategory = "program.updated"
-	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestCreated                   EventSubscriptionSelectedEventCategory = "proof_of_authorization_request.created"
-	EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestUpdated                   EventSubscriptionSelectedEventCategory = "proof_of_authorization_request.updated"
-	EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthorizationRequested           EventSubscriptionSelectedEventCategory = "real_time_decision.card_authorization_requested"
-	EventSubscriptionSelectedEventCategoryRealTimeDecisionCardBalanceInquiryRequested          EventSubscriptionSelectedEventCategory = "real_time_decision.card_balance_inquiry_requested"
-	EventSubscriptionSelectedEventCategoryRealTimeDecisionDigitalWalletTokenRequested          EventSubscriptionSelectedEventCategory = "real_time_decision.digital_wallet_token_requested"
-	EventSubscriptionSelectedEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested EventSubscriptionSelectedEventCategory = "real_time_decision.digital_wallet_authentication_requested"
-	EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthenticationRequested          EventSubscriptionSelectedEventCategory = "real_time_decision.card_authentication_requested"
-	EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthenticationChallengeRequested EventSubscriptionSelectedEventCategory = "real_time_decision.card_authentication_challenge_requested"
-	EventSubscriptionSelectedEventCategoryRealTimePaymentsTransferCreated                      EventSubscriptionSelectedEventCategory = "real_time_payments_transfer.created"
-	EventSubscriptionSelectedEventCategoryRealTimePaymentsTransferUpdated                      EventSubscriptionSelectedEventCategory = "real_time_payments_transfer.updated"
-	EventSubscriptionSelectedEventCategoryRealTimePaymentsRequestForPaymentCreated             EventSubscriptionSelectedEventCategory = "real_time_payments_request_for_payment.created"
-	EventSubscriptionSelectedEventCategoryRealTimePaymentsRequestForPaymentUpdated             EventSubscriptionSelectedEventCategory = "real_time_payments_request_for_payment.updated"
-	EventSubscriptionSelectedEventCategorySwiftTransferCreated                                 EventSubscriptionSelectedEventCategory = "swift_transfer.created"
-	EventSubscriptionSelectedEventCategorySwiftTransferUpdated                                 EventSubscriptionSelectedEventCategory = "swift_transfer.updated"
-	EventSubscriptionSelectedEventCategoryTransactionCreated                                   EventSubscriptionSelectedEventCategory = "transaction.created"
-	EventSubscriptionSelectedEventCategoryWireDrawdownRequestCreated                           EventSubscriptionSelectedEventCategory = "wire_drawdown_request.created"
-	EventSubscriptionSelectedEventCategoryWireDrawdownRequestUpdated                           EventSubscriptionSelectedEventCategory = "wire_drawdown_request.updated"
-	EventSubscriptionSelectedEventCategoryWireTransferCreated                                  EventSubscriptionSelectedEventCategory = "wire_transfer.created"
-	EventSubscriptionSelectedEventCategoryWireTransferUpdated                                  EventSubscriptionSelectedEventCategory = "wire_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountCreated                                       EventSubscriptionSelectedEventCategoriesEventCategory = "account.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountUpdated                                       EventSubscriptionSelectedEventCategoriesEventCategory = "account.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountNumberCreated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "account_number.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountNumberUpdated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "account_number.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountStatementCreated                              EventSubscriptionSelectedEventCategoriesEventCategory = "account_statement.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountTransferCreated                               EventSubscriptionSelectedEventCategoriesEventCategory = "account_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryAccountTransferUpdated                               EventSubscriptionSelectedEventCategoriesEventCategory = "account_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryACHPrenotificationCreated                            EventSubscriptionSelectedEventCategoriesEventCategory = "ach_prenotification.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryACHPrenotificationUpdated                            EventSubscriptionSelectedEventCategoriesEventCategory = "ach_prenotification.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryACHTransferCreated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "ach_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryACHTransferUpdated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "ach_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainAddressCreated                             EventSubscriptionSelectedEventCategoriesEventCategory = "blockchain_address.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainAddressUpdated                             EventSubscriptionSelectedEventCategoriesEventCategory = "blockchain_address.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOfframpTransferCreated                     EventSubscriptionSelectedEventCategoriesEventCategory = "blockchain_offramp_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOfframpTransferUpdated                     EventSubscriptionSelectedEventCategoriesEventCategory = "blockchain_offramp_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOnrampTransferCreated                      EventSubscriptionSelectedEventCategoriesEventCategory = "blockchain_onramp_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOnrampTransferUpdated                      EventSubscriptionSelectedEventCategoriesEventCategory = "blockchain_onramp_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBookkeepingAccountCreated                            EventSubscriptionSelectedEventCategoriesEventCategory = "bookkeeping_account.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBookkeepingAccountUpdated                            EventSubscriptionSelectedEventCategoriesEventCategory = "bookkeeping_account.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryBookkeepingEntrySetUpdated                           EventSubscriptionSelectedEventCategoriesEventCategory = "bookkeeping_entry_set.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardCreated                                          EventSubscriptionSelectedEventCategoriesEventCategory = "card.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardUpdated                                          EventSubscriptionSelectedEventCategoriesEventCategory = "card.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardPaymentCreated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "card_payment.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardPaymentUpdated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "card_payment.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardProfileCreated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "card_profile.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardProfileUpdated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "card_profile.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardDisputeCreated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "card_dispute.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardDisputeUpdated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "card_dispute.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCheckDepositCreated                                  EventSubscriptionSelectedEventCategoriesEventCategory = "check_deposit.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCheckDepositUpdated                                  EventSubscriptionSelectedEventCategoriesEventCategory = "check_deposit.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCheckTransferCreated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "check_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCheckTransferUpdated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "check_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryDeclinedTransactionCreated                           EventSubscriptionSelectedEventCategoriesEventCategory = "declined_transaction.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryDigitalCardProfileCreated                            EventSubscriptionSelectedEventCategoriesEventCategory = "digital_card_profile.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryDigitalCardProfileUpdated                            EventSubscriptionSelectedEventCategoriesEventCategory = "digital_card_profile.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryDigitalWalletTokenCreated                            EventSubscriptionSelectedEventCategoriesEventCategory = "digital_wallet_token.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryDigitalWalletTokenUpdated                            EventSubscriptionSelectedEventCategoriesEventCategory = "digital_wallet_token.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryDocumentCreated                                      EventSubscriptionSelectedEventCategoriesEventCategory = "document.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryEntityCreated                                        EventSubscriptionSelectedEventCategoriesEventCategory = "entity.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryEntityUpdated                                        EventSubscriptionSelectedEventCategoriesEventCategory = "entity.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryEventSubscriptionCreated                             EventSubscriptionSelectedEventCategoriesEventCategory = "event_subscription.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryEventSubscriptionUpdated                             EventSubscriptionSelectedEventCategoriesEventCategory = "event_subscription.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryExportCreated                                        EventSubscriptionSelectedEventCategoriesEventCategory = "export.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryExportUpdated                                        EventSubscriptionSelectedEventCategoriesEventCategory = "export.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryExternalAccountCreated                               EventSubscriptionSelectedEventCategoriesEventCategory = "external_account.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryExternalAccountUpdated                               EventSubscriptionSelectedEventCategoriesEventCategory = "external_account.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryFednowTransferCreated                                EventSubscriptionSelectedEventCategoriesEventCategory = "fednow_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryFednowTransferUpdated                                EventSubscriptionSelectedEventCategoriesEventCategory = "fednow_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryFileCreated                                          EventSubscriptionSelectedEventCategoriesEventCategory = "file.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryGroupUpdated                                         EventSubscriptionSelectedEventCategoriesEventCategory = "group.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryGroupHeartbeat                                       EventSubscriptionSelectedEventCategoriesEventCategory = "group.heartbeat"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferCreated                            EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_ach_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferUpdated                            EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_ach_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferReturnCreated                      EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_ach_transfer_return.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferReturnUpdated                      EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_ach_transfer_return.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundCheckDepositCreated                           EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_check_deposit.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundCheckDepositUpdated                           EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_check_deposit.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundFednowTransferCreated                         EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_fednow_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundFednowTransferUpdated                         EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_fednow_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundMailItemCreated                               EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_mail_item.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundMailItemUpdated                               EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_mail_item.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundRealTimePaymentsTransferCreated               EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_real_time_payments_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundRealTimePaymentsTransferUpdated               EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_real_time_payments_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundWireDrawdownRequestCreated                    EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_wire_drawdown_request.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundWireTransferCreated                           EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_wire_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryInboundWireTransferUpdated                           EventSubscriptionSelectedEventCategoriesEventCategory = "inbound_wire_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiAccountEnrollmentCreated                      EventSubscriptionSelectedEventCategoriesEventCategory = "intrafi_account_enrollment.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiAccountEnrollmentUpdated                      EventSubscriptionSelectedEventCategoriesEventCategory = "intrafi_account_enrollment.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiExclusionCreated                              EventSubscriptionSelectedEventCategoriesEventCategory = "intrafi_exclusion.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiExclusionUpdated                              EventSubscriptionSelectedEventCategoriesEventCategory = "intrafi_exclusion.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryLegacyCardDisputeCreated                             EventSubscriptionSelectedEventCategoriesEventCategory = "legacy_card_dispute.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryLegacyCardDisputeUpdated                             EventSubscriptionSelectedEventCategoriesEventCategory = "legacy_card_dispute.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryLockboxCreated                                       EventSubscriptionSelectedEventCategoriesEventCategory = "lockbox.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryLockboxUpdated                                       EventSubscriptionSelectedEventCategoriesEventCategory = "lockbox.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryOAuthConnectionCreated                               EventSubscriptionSelectedEventCategoriesEventCategory = "oauth_connection.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryOAuthConnectionDeactivated                           EventSubscriptionSelectedEventCategoriesEventCategory = "oauth_connection.deactivated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardPushTransferCreated                              EventSubscriptionSelectedEventCategoriesEventCategory = "card_push_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardPushTransferUpdated                              EventSubscriptionSelectedEventCategoriesEventCategory = "card_push_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardValidationCreated                                EventSubscriptionSelectedEventCategoriesEventCategory = "card_validation.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryCardValidationUpdated                                EventSubscriptionSelectedEventCategoriesEventCategory = "card_validation.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPendingTransactionCreated                            EventSubscriptionSelectedEventCategoriesEventCategory = "pending_transaction.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPendingTransactionUpdated                            EventSubscriptionSelectedEventCategoriesEventCategory = "pending_transaction.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardCreated                                  EventSubscriptionSelectedEventCategoriesEventCategory = "physical_card.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardUpdated                                  EventSubscriptionSelectedEventCategoriesEventCategory = "physical_card.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardProfileCreated                           EventSubscriptionSelectedEventCategoriesEventCategory = "physical_card_profile.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardProfileUpdated                           EventSubscriptionSelectedEventCategoriesEventCategory = "physical_card_profile.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCheckCreated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "physical_check.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCheckUpdated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "physical_check.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryProgramCreated                                       EventSubscriptionSelectedEventCategoriesEventCategory = "program.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryProgramUpdated                                       EventSubscriptionSelectedEventCategoriesEventCategory = "program.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryProofOfAuthorizationRequestCreated                   EventSubscriptionSelectedEventCategoriesEventCategory = "proof_of_authorization_request.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryProofOfAuthorizationRequestUpdated                   EventSubscriptionSelectedEventCategoriesEventCategory = "proof_of_authorization_request.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardAuthorizationRequested           EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_decision.card_authorization_requested"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardBalanceInquiryRequested          EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_decision.card_balance_inquiry_requested"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionDigitalWalletTokenRequested          EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_decision.digital_wallet_token_requested"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_decision.digital_wallet_authentication_requested"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardAuthenticationRequested          EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_decision.card_authentication_requested"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardAuthenticationChallengeRequested EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_decision.card_authentication_challenge_requested"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsTransferCreated                      EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_payments_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsTransferUpdated                      EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_payments_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsRequestForPaymentCreated             EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_payments_request_for_payment.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsRequestForPaymentUpdated             EventSubscriptionSelectedEventCategoriesEventCategory = "real_time_payments_request_for_payment.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategorySwiftTransferCreated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "swift_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategorySwiftTransferUpdated                                 EventSubscriptionSelectedEventCategoriesEventCategory = "swift_transfer.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryTransactionCreated                                   EventSubscriptionSelectedEventCategoriesEventCategory = "transaction.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryWireDrawdownRequestCreated                           EventSubscriptionSelectedEventCategoriesEventCategory = "wire_drawdown_request.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryWireDrawdownRequestUpdated                           EventSubscriptionSelectedEventCategoriesEventCategory = "wire_drawdown_request.updated"
+	EventSubscriptionSelectedEventCategoriesEventCategoryWireTransferCreated                                  EventSubscriptionSelectedEventCategoriesEventCategory = "wire_transfer.created"
+	EventSubscriptionSelectedEventCategoriesEventCategoryWireTransferUpdated                                  EventSubscriptionSelectedEventCategoriesEventCategory = "wire_transfer.updated"
 )
 
-func (r EventSubscriptionSelectedEventCategory) IsKnown() bool {
+func (r EventSubscriptionSelectedEventCategoriesEventCategory) IsKnown() bool {
 	switch r {
-	case EventSubscriptionSelectedEventCategoryAccountCreated, EventSubscriptionSelectedEventCategoryAccountUpdated, EventSubscriptionSelectedEventCategoryAccountNumberCreated, EventSubscriptionSelectedEventCategoryAccountNumberUpdated, EventSubscriptionSelectedEventCategoryAccountStatementCreated, EventSubscriptionSelectedEventCategoryAccountTransferCreated, EventSubscriptionSelectedEventCategoryAccountTransferUpdated, EventSubscriptionSelectedEventCategoryACHPrenotificationCreated, EventSubscriptionSelectedEventCategoryACHPrenotificationUpdated, EventSubscriptionSelectedEventCategoryACHTransferCreated, EventSubscriptionSelectedEventCategoryACHTransferUpdated, EventSubscriptionSelectedEventCategoryBlockchainAddressCreated, EventSubscriptionSelectedEventCategoryBlockchainAddressUpdated, EventSubscriptionSelectedEventCategoryBlockchainOfframpTransferCreated, EventSubscriptionSelectedEventCategoryBlockchainOfframpTransferUpdated, EventSubscriptionSelectedEventCategoryBlockchainOnrampTransferCreated, EventSubscriptionSelectedEventCategoryBlockchainOnrampTransferUpdated, EventSubscriptionSelectedEventCategoryBookkeepingAccountCreated, EventSubscriptionSelectedEventCategoryBookkeepingAccountUpdated, EventSubscriptionSelectedEventCategoryBookkeepingEntrySetUpdated, EventSubscriptionSelectedEventCategoryCardCreated, EventSubscriptionSelectedEventCategoryCardUpdated, EventSubscriptionSelectedEventCategoryCardPaymentCreated, EventSubscriptionSelectedEventCategoryCardPaymentUpdated, EventSubscriptionSelectedEventCategoryCardProfileCreated, EventSubscriptionSelectedEventCategoryCardProfileUpdated, EventSubscriptionSelectedEventCategoryCardDisputeCreated, EventSubscriptionSelectedEventCategoryCardDisputeUpdated, EventSubscriptionSelectedEventCategoryCheckDepositCreated, EventSubscriptionSelectedEventCategoryCheckDepositUpdated, EventSubscriptionSelectedEventCategoryCheckTransferCreated, EventSubscriptionSelectedEventCategoryCheckTransferUpdated, EventSubscriptionSelectedEventCategoryDeclinedTransactionCreated, EventSubscriptionSelectedEventCategoryDigitalCardProfileCreated, EventSubscriptionSelectedEventCategoryDigitalCardProfileUpdated, EventSubscriptionSelectedEventCategoryDigitalWalletTokenCreated, EventSubscriptionSelectedEventCategoryDigitalWalletTokenUpdated, EventSubscriptionSelectedEventCategoryDocumentCreated, EventSubscriptionSelectedEventCategoryEntityCreated, EventSubscriptionSelectedEventCategoryEntityUpdated, EventSubscriptionSelectedEventCategoryEventSubscriptionCreated, EventSubscriptionSelectedEventCategoryEventSubscriptionUpdated, EventSubscriptionSelectedEventCategoryExportCreated, EventSubscriptionSelectedEventCategoryExportUpdated, EventSubscriptionSelectedEventCategoryExternalAccountCreated, EventSubscriptionSelectedEventCategoryExternalAccountUpdated, EventSubscriptionSelectedEventCategoryFednowTransferCreated, EventSubscriptionSelectedEventCategoryFednowTransferUpdated, EventSubscriptionSelectedEventCategoryFileCreated, EventSubscriptionSelectedEventCategoryGroupUpdated, EventSubscriptionSelectedEventCategoryGroupHeartbeat, EventSubscriptionSelectedEventCategoryInboundACHTransferCreated, EventSubscriptionSelectedEventCategoryInboundACHTransferUpdated, EventSubscriptionSelectedEventCategoryInboundACHTransferReturnCreated, EventSubscriptionSelectedEventCategoryInboundACHTransferReturnUpdated, EventSubscriptionSelectedEventCategoryInboundCheckDepositCreated, EventSubscriptionSelectedEventCategoryInboundCheckDepositUpdated, EventSubscriptionSelectedEventCategoryInboundFednowTransferCreated, EventSubscriptionSelectedEventCategoryInboundFednowTransferUpdated, EventSubscriptionSelectedEventCategoryInboundMailItemCreated, EventSubscriptionSelectedEventCategoryInboundMailItemUpdated, EventSubscriptionSelectedEventCategoryInboundRealTimePaymentsTransferCreated, EventSubscriptionSelectedEventCategoryInboundRealTimePaymentsTransferUpdated, EventSubscriptionSelectedEventCategoryInboundWireDrawdownRequestCreated, EventSubscriptionSelectedEventCategoryInboundWireTransferCreated, EventSubscriptionSelectedEventCategoryInboundWireTransferUpdated, EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentCreated, EventSubscriptionSelectedEventCategoryIntrafiAccountEnrollmentUpdated, EventSubscriptionSelectedEventCategoryIntrafiExclusionCreated, EventSubscriptionSelectedEventCategoryIntrafiExclusionUpdated, EventSubscriptionSelectedEventCategoryLegacyCardDisputeCreated, EventSubscriptionSelectedEventCategoryLegacyCardDisputeUpdated, EventSubscriptionSelectedEventCategoryLockboxCreated, EventSubscriptionSelectedEventCategoryLockboxUpdated, EventSubscriptionSelectedEventCategoryOAuthConnectionCreated, EventSubscriptionSelectedEventCategoryOAuthConnectionDeactivated, EventSubscriptionSelectedEventCategoryCardPushTransferCreated, EventSubscriptionSelectedEventCategoryCardPushTransferUpdated, EventSubscriptionSelectedEventCategoryCardValidationCreated, EventSubscriptionSelectedEventCategoryCardValidationUpdated, EventSubscriptionSelectedEventCategoryPendingTransactionCreated, EventSubscriptionSelectedEventCategoryPendingTransactionUpdated, EventSubscriptionSelectedEventCategoryPhysicalCardCreated, EventSubscriptionSelectedEventCategoryPhysicalCardUpdated, EventSubscriptionSelectedEventCategoryPhysicalCardProfileCreated, EventSubscriptionSelectedEventCategoryPhysicalCardProfileUpdated, EventSubscriptionSelectedEventCategoryPhysicalCheckCreated, EventSubscriptionSelectedEventCategoryPhysicalCheckUpdated, EventSubscriptionSelectedEventCategoryProgramCreated, EventSubscriptionSelectedEventCategoryProgramUpdated, EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestCreated, EventSubscriptionSelectedEventCategoryProofOfAuthorizationRequestUpdated, EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthorizationRequested, EventSubscriptionSelectedEventCategoryRealTimeDecisionCardBalanceInquiryRequested, EventSubscriptionSelectedEventCategoryRealTimeDecisionDigitalWalletTokenRequested, EventSubscriptionSelectedEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested, EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthenticationRequested, EventSubscriptionSelectedEventCategoryRealTimeDecisionCardAuthenticationChallengeRequested, EventSubscriptionSelectedEventCategoryRealTimePaymentsTransferCreated, EventSubscriptionSelectedEventCategoryRealTimePaymentsTransferUpdated, EventSubscriptionSelectedEventCategoryRealTimePaymentsRequestForPaymentCreated, EventSubscriptionSelectedEventCategoryRealTimePaymentsRequestForPaymentUpdated, EventSubscriptionSelectedEventCategorySwiftTransferCreated, EventSubscriptionSelectedEventCategorySwiftTransferUpdated, EventSubscriptionSelectedEventCategoryTransactionCreated, EventSubscriptionSelectedEventCategoryWireDrawdownRequestCreated, EventSubscriptionSelectedEventCategoryWireDrawdownRequestUpdated, EventSubscriptionSelectedEventCategoryWireTransferCreated, EventSubscriptionSelectedEventCategoryWireTransferUpdated:
+	case EventSubscriptionSelectedEventCategoriesEventCategoryAccountCreated, EventSubscriptionSelectedEventCategoriesEventCategoryAccountUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryAccountNumberCreated, EventSubscriptionSelectedEventCategoriesEventCategoryAccountNumberUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryAccountStatementCreated, EventSubscriptionSelectedEventCategoriesEventCategoryAccountTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryAccountTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryACHPrenotificationCreated, EventSubscriptionSelectedEventCategoriesEventCategoryACHPrenotificationUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryACHTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryACHTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainAddressCreated, EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainAddressUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOfframpTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOfframpTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOnrampTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryBlockchainOnrampTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryBookkeepingAccountCreated, EventSubscriptionSelectedEventCategoriesEventCategoryBookkeepingAccountUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryBookkeepingEntrySetUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCardCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCardUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCardPaymentCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCardPaymentUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCardProfileCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCardProfileUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCardDisputeCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCardDisputeUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCheckDepositCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCheckDepositUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCheckTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCheckTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryDeclinedTransactionCreated, EventSubscriptionSelectedEventCategoriesEventCategoryDigitalCardProfileCreated, EventSubscriptionSelectedEventCategoriesEventCategoryDigitalCardProfileUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryDigitalWalletTokenCreated, EventSubscriptionSelectedEventCategoriesEventCategoryDigitalWalletTokenUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryDocumentCreated, EventSubscriptionSelectedEventCategoriesEventCategoryEntityCreated, EventSubscriptionSelectedEventCategoriesEventCategoryEntityUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryEventSubscriptionCreated, EventSubscriptionSelectedEventCategoriesEventCategoryEventSubscriptionUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryExportCreated, EventSubscriptionSelectedEventCategoriesEventCategoryExportUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryExternalAccountCreated, EventSubscriptionSelectedEventCategoriesEventCategoryExternalAccountUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryFednowTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryFednowTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryFileCreated, EventSubscriptionSelectedEventCategoriesEventCategoryGroupUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryGroupHeartbeat, EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferReturnCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundACHTransferReturnUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundCheckDepositCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundCheckDepositUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundFednowTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundFednowTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundMailItemCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundMailItemUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundRealTimePaymentsTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundRealTimePaymentsTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundWireDrawdownRequestCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundWireTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryInboundWireTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiAccountEnrollmentCreated, EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiAccountEnrollmentUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiExclusionCreated, EventSubscriptionSelectedEventCategoriesEventCategoryIntrafiExclusionUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryLegacyCardDisputeCreated, EventSubscriptionSelectedEventCategoriesEventCategoryLegacyCardDisputeUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryLockboxCreated, EventSubscriptionSelectedEventCategoriesEventCategoryLockboxUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryOAuthConnectionCreated, EventSubscriptionSelectedEventCategoriesEventCategoryOAuthConnectionDeactivated, EventSubscriptionSelectedEventCategoriesEventCategoryCardPushTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCardPushTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryCardValidationCreated, EventSubscriptionSelectedEventCategoriesEventCategoryCardValidationUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryPendingTransactionCreated, EventSubscriptionSelectedEventCategoriesEventCategoryPendingTransactionUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardCreated, EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardProfileCreated, EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCardProfileUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCheckCreated, EventSubscriptionSelectedEventCategoriesEventCategoryPhysicalCheckUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryProgramCreated, EventSubscriptionSelectedEventCategoriesEventCategoryProgramUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryProofOfAuthorizationRequestCreated, EventSubscriptionSelectedEventCategoriesEventCategoryProofOfAuthorizationRequestUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardAuthorizationRequested, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardBalanceInquiryRequested, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionDigitalWalletTokenRequested, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionDigitalWalletAuthenticationRequested, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardAuthenticationRequested, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimeDecisionCardAuthenticationChallengeRequested, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsRequestForPaymentCreated, EventSubscriptionSelectedEventCategoriesEventCategoryRealTimePaymentsRequestForPaymentUpdated, EventSubscriptionSelectedEventCategoriesEventCategorySwiftTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategorySwiftTransferUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryTransactionCreated, EventSubscriptionSelectedEventCategoriesEventCategoryWireDrawdownRequestCreated, EventSubscriptionSelectedEventCategoriesEventCategoryWireDrawdownRequestUpdated, EventSubscriptionSelectedEventCategoriesEventCategoryWireTransferCreated, EventSubscriptionSelectedEventCategoriesEventCategoryWireTransferUpdated:
 		return true
 	}
 	return false
