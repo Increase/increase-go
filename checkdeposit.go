@@ -97,6 +97,9 @@ type CheckDeposit struct {
 	// Once your deposit is successfully parsed and accepted by Increase, this will
 	// contain details of the parsed check.
 	DepositAcceptance CheckDepositDepositAcceptance `json:"deposit_acceptance" api:"required,nullable"`
+	// If the deposit or the return was adjusted by the receiving institution, this
+	// will contain details of the adjustments.
+	DepositAdjustments []CheckDepositDepositAdjustment `json:"deposit_adjustments" api:"required"`
 	// If your deposit is rejected by Increase, this will contain details as to why it
 	// was rejected.
 	DepositRejection CheckDepositDepositRejection `json:"deposit_rejection" api:"required,nullable"`
@@ -136,26 +139,27 @@ type CheckDeposit struct {
 
 // checkDepositJSON contains the JSON metadata for the struct [CheckDeposit]
 type checkDepositJSON struct {
-	ID                apijson.Field
-	AccountID         apijson.Field
-	Amount            apijson.Field
-	BackImageFileID   apijson.Field
-	CreatedAt         apijson.Field
-	DepositAcceptance apijson.Field
-	DepositRejection  apijson.Field
-	DepositReturn     apijson.Field
-	DepositSubmission apijson.Field
-	Description       apijson.Field
-	FrontImageFileID  apijson.Field
-	IdempotencyKey    apijson.Field
-	InboundFundsHold  apijson.Field
-	InboundMailItemID apijson.Field
-	LockboxID         apijson.Field
-	Status            apijson.Field
-	TransactionID     apijson.Field
-	Type              apijson.Field
-	raw               string
-	ExtraFields       map[string]apijson.Field
+	ID                 apijson.Field
+	AccountID          apijson.Field
+	Amount             apijson.Field
+	BackImageFileID    apijson.Field
+	CreatedAt          apijson.Field
+	DepositAcceptance  apijson.Field
+	DepositAdjustments apijson.Field
+	DepositRejection   apijson.Field
+	DepositReturn      apijson.Field
+	DepositSubmission  apijson.Field
+	Description        apijson.Field
+	FrontImageFileID   apijson.Field
+	IdempotencyKey     apijson.Field
+	InboundFundsHold   apijson.Field
+	InboundMailItemID  apijson.Field
+	LockboxID          apijson.Field
+	Status             apijson.Field
+	TransactionID      apijson.Field
+	Type               apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *CheckDeposit) UnmarshalJSON(data []byte) (err error) {
@@ -226,6 +230,56 @@ const (
 func (r CheckDepositDepositAcceptanceCurrency) IsKnown() bool {
 	switch r {
 	case CheckDepositDepositAcceptanceCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+type CheckDepositDepositAdjustment struct {
+	// The time at which the adjustment was received.
+	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
+	// The amount of the adjustment.
+	Amount int64 `json:"amount" api:"required"`
+	// The reason for the adjustment.
+	Reason CheckDepositDepositAdjustmentsReason `json:"reason" api:"required"`
+	// The id of the transaction for the adjustment.
+	TransactionID string                            `json:"transaction_id" api:"required"`
+	JSON          checkDepositDepositAdjustmentJSON `json:"-"`
+}
+
+// checkDepositDepositAdjustmentJSON contains the JSON metadata for the struct
+// [CheckDepositDepositAdjustment]
+type checkDepositDepositAdjustmentJSON struct {
+	AdjustedAt    apijson.Field
+	Amount        apijson.Field
+	Reason        apijson.Field
+	TransactionID apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *CheckDepositDepositAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkDepositDepositAdjustmentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason for the adjustment.
+type CheckDepositDepositAdjustmentsReason string
+
+const (
+	CheckDepositDepositAdjustmentsReasonLateReturn        CheckDepositDepositAdjustmentsReason = "late_return"
+	CheckDepositDepositAdjustmentsReasonWrongPayeeCredit  CheckDepositDepositAdjustmentsReason = "wrong_payee_credit"
+	CheckDepositDepositAdjustmentsReasonAdjustedAmount    CheckDepositDepositAdjustmentsReason = "adjusted_amount"
+	CheckDepositDepositAdjustmentsReasonNonConformingItem CheckDepositDepositAdjustmentsReason = "non_conforming_item"
+	CheckDepositDepositAdjustmentsReasonPaid              CheckDepositDepositAdjustmentsReason = "paid"
+)
+
+func (r CheckDepositDepositAdjustmentsReason) IsKnown() bool {
+	switch r {
+	case CheckDepositDepositAdjustmentsReasonLateReturn, CheckDepositDepositAdjustmentsReasonWrongPayeeCredit, CheckDepositDepositAdjustmentsReasonAdjustedAmount, CheckDepositDepositAdjustmentsReasonNonConformingItem, CheckDepositDepositAdjustmentsReasonPaid:
 		return true
 	}
 	return false
