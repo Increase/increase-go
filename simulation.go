@@ -24,6 +24,7 @@ type SimulationService struct {
 	CardIncrements                   *SimulationCardIncrementService
 	CardFuelConfirmations            *SimulationCardFuelConfirmationService
 	CardRefunds                      *SimulationCardRefundService
+	CardAuthentications              *SimulationCardAuthenticationService
 	CardDisputes                     *SimulationCardDisputeService
 	PhysicalCards                    *SimulationPhysicalCardService
 	DigitalWalletTokenRequests       *SimulationDigitalWalletTokenRequestService
@@ -63,6 +64,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.CardIncrements = NewSimulationCardIncrementService(opts...)
 	r.CardFuelConfirmations = NewSimulationCardFuelConfirmationService(opts...)
 	r.CardRefunds = NewSimulationCardRefundService(opts...)
+	r.CardAuthentications = NewSimulationCardAuthenticationService(opts...)
 	r.CardDisputes = NewSimulationCardDisputeService(opts...)
 	r.PhysicalCards = NewSimulationPhysicalCardService(opts...)
 	r.DigitalWalletTokenRequests = NewSimulationDigitalWalletTokenRequestService(opts...)
