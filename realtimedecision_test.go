@@ -56,6 +56,10 @@ func TestRealTimeDecisionActionWithOptionalParams(t *testing.T) {
 			}),
 			CardAuthenticationChallenge: increase.F(increase.RealTimeDecisionActionParamsCardAuthenticationChallenge{
 				Result: increase.F(increase.RealTimeDecisionActionParamsCardAuthenticationChallengeResultSuccess),
+				Success: increase.F(increase.RealTimeDecisionActionParamsCardAuthenticationChallengeSuccess{
+					Email: increase.F("dev@stainless.com"),
+					Phone: increase.F("x"),
+				}),
 			}),
 			CardAuthorization: increase.F(increase.RealTimeDecisionActionParamsCardAuthorization{
 				Decision: increase.F(increase.RealTimeDecisionActionParamsCardAuthorizationDecisionApprove),
