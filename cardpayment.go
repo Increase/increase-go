@@ -263,6 +263,10 @@ type CardPaymentElementsCardAuthentication struct {
 	CardID string `json:"card_id" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id" api:"required"`
+	// The email address of the cardholder.
+	CardholderEmail string `json:"cardholder_email" api:"required,nullable"`
+	// The name of the cardholder.
+	CardholderName string `json:"cardholder_name" api:"required,nullable"`
 	// The category of the card authentication attempt.
 	Category CardPaymentElementsCardAuthenticationCategory `json:"category" api:"required,nullable"`
 	// Details about the challenge, if one was requested.
@@ -307,6 +311,8 @@ type cardPaymentElementsCardAuthenticationJSON struct {
 	ID                   apijson.Field
 	CardID               apijson.Field
 	CardPaymentID        apijson.Field
+	CardholderEmail      apijson.Field
+	CardholderName       apijson.Field
 	Category             apijson.Field
 	Challenge            apijson.Field
 	CreatedAt            apijson.Field
