@@ -82,13 +82,13 @@ func TestEventUnwrap(t *testing.T) {
 	payload := []byte(`{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}`)
 	wh, err := standardwebhooks.NewWebhook("whsec_c2VjcmV0Cg==")
 	if err != nil {
-		t.Error("Failed to sign test webhook message")
+		t.Fatal("Failed to sign test webhook message", err)
 	}
 	msgID := "1"
 	now := time.Now()
 	sig, err := wh.Sign(msgID, now, payload)
 	if err != nil {
-		t.Error("Failed to sign test webhook message:", err)
+		t.Fatal("Failed to sign test webhook message:", err)
 	}
 	headers := make(http.Header)
 	headers.Set("webhook-signature", sig)
@@ -96,6 +96,6 @@ func TestEventUnwrap(t *testing.T) {
 	headers.Set("webhook-timestamp", strconv.FormatInt(now.Unix(), 10))
 	_, err = client.Events.Unwrap(payload, headers)
 	if err != nil {
-		t.Error("Failed to unwrap webhook:", err)
+		t.Fatal("Failed to unwrap webhook:", err)
 	}
 }
