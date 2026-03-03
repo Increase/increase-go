@@ -117,20 +117,6 @@ func (r *EntityService) ArchiveBeneficialOwner(ctx context.Context, entityID str
 	return
 }
 
-// Depending on your program, you may be required to re-confirm an Entity's details
-// on a recurring basis. After making any required updates, call this endpoint to
-// record that your user confirmed their details.
-func (r *EntityService) Confirm(ctx context.Context, entityID string, body EntityConfirmParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = slices.Concat(r.Options, opts)
-	if entityID == "" {
-		err = errors.New("missing required entity_id parameter")
-		return
-	}
-	path := fmt.Sprintf("entities/%s/confirm", entityID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
 // Create a beneficial owner for a corporate Entity
 func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string, body EntityNewBeneficialOwnerParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -143,18 +129,6 @@ func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string,
 	return
 }
 
-// Update a Natural Person or Corporation's address
-func (r *EntityService) UpdateAddress(ctx context.Context, entityID string, body EntityUpdateAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = slices.Concat(r.Options, opts)
-	if entityID == "" {
-		err = errors.New("missing required entity_id parameter")
-		return
-	}
-	path := fmt.Sprintf("entities/%s/update_address", entityID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
 // Update the address for a beneficial owner belonging to a corporate Entity
 func (r *EntityService) UpdateBeneficialOwnerAddress(ctx context.Context, entityID string, body EntityUpdateBeneficialOwnerAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -163,18 +137,6 @@ func (r *EntityService) UpdateBeneficialOwnerAddress(ctx context.Context, entity
 		return
 	}
 	path := fmt.Sprintf("entities/%s/update_beneficial_owner_address", entityID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
-// Update the industry code for a corporate Entity
-func (r *EntityService) UpdateIndustryCode(ctx context.Context, entityID string, body EntityUpdateIndustryCodeParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = slices.Concat(r.Options, opts)
-	if entityID == "" {
-		err = errors.New("missing required entity_id parameter")
-		return
-	}
-	path := fmt.Sprintf("entities/%s/update_industry_code", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
@@ -2879,16 +2841,6 @@ func (r EntityArchiveBeneficialOwnerParams) MarshalJSON() (data []byte, err erro
 	return apijson.MarshalRoot(r)
 }
 
-type EntityConfirmParams struct {
-	// When your user confirmed the Entity's details. If not provided, the current time
-	// will be used.
-	ConfirmedAt param.Field[time.Time] `json:"confirmed_at" format:"date-time"`
-}
-
-func (r EntityConfirmParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
 type EntityNewBeneficialOwnerParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
@@ -3072,36 +3024,6 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerProng) IsKnown() bool {
 	return false
 }
 
-type EntityUpdateAddressParams struct {
-	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
-	// are disallowed.
-	Address param.Field[EntityUpdateAddressParamsAddress] `json:"address" api:"required"`
-}
-
-func (r EntityUpdateAddressParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
-// are disallowed.
-type EntityUpdateAddressParamsAddress struct {
-	// The city of the address.
-	City param.Field[string] `json:"city" api:"required"`
-	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state" api:"required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip" api:"required"`
-	// The second line of the address. This might be the floor or room number.
-	Line2 param.Field[string] `json:"line2"`
-}
-
-func (r EntityUpdateAddressParamsAddress) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
 type EntityUpdateBeneficialOwnerAddressParams struct {
 	// The individual's physical address. Mail receiving locations like PO Boxes and
 	// PMB's are disallowed.
@@ -3134,17 +3056,5 @@ type EntityUpdateBeneficialOwnerAddressParamsAddress struct {
 }
 
 func (r EntityUpdateBeneficialOwnerAddressParamsAddress) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type EntityUpdateIndustryCodeParams struct {
-	// The North American Industry Classification System (NAICS) code for the
-	// corporation's primary line of business. This is a number, like `5132` for
-	// `Software Publishers`. A full list of classification codes is available
-	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
-	IndustryCode param.Field[string] `json:"industry_code" api:"required"`
-}
-
-func (r EntityUpdateIndustryCodeParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
