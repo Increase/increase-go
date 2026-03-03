@@ -468,34 +468,6 @@ func TestEntityArchiveBeneficialOwner(t *testing.T) {
 	}
 }
 
-func TestEntityConfirmWithOptionalParams(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Entities.Confirm(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntityConfirmParams{
-			ConfirmedAt: increase.F(time.Now()),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
 func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -562,40 +534,6 @@ func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestEntityUpdateAddressWithOptionalParams(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Entities.UpdateAddress(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntityUpdateAddressParams{
-			Address: increase.F(increase.EntityUpdateAddressParamsAddress{
-				City:  increase.F("New York"),
-				Line1: increase.F("33 Liberty Street"),
-				State: increase.F("NY"),
-				Zip:   increase.F("10045"),
-				Line2: increase.F("Unit 2"),
-			}),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
 func TestEntityUpdateBeneficialOwnerAddressWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -621,34 +559,6 @@ func TestEntityUpdateBeneficialOwnerAddressWithOptionalParams(t *testing.T) {
 				Zip:     increase.F("10045"),
 			}),
 			BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestEntityUpdateIndustryCode(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Entities.UpdateIndustryCode(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntityUpdateIndustryCodeParams{
-			IndustryCode: increase.F("5132"),
 		},
 	)
 	if err != nil {
