@@ -995,11 +995,12 @@ const (
 	EntityThirdPartyVerificationVendorMiddesk EntityThirdPartyVerificationVendor = "middesk"
 	EntityThirdPartyVerificationVendorOscilar EntityThirdPartyVerificationVendor = "oscilar"
 	EntityThirdPartyVerificationVendorPersona EntityThirdPartyVerificationVendor = "persona"
+	EntityThirdPartyVerificationVendorTaktile EntityThirdPartyVerificationVendor = "taktile"
 )
 
 func (r EntityThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityThirdPartyVerificationVendorAlloy, EntityThirdPartyVerificationVendorMiddesk, EntityThirdPartyVerificationVendorOscilar, EntityThirdPartyVerificationVendorPersona:
+	case EntityThirdPartyVerificationVendorAlloy, EntityThirdPartyVerificationVendorMiddesk, EntityThirdPartyVerificationVendorOscilar, EntityThirdPartyVerificationVendorPersona, EntityThirdPartyVerificationVendorTaktile:
 		return true
 	}
 	return false
@@ -2129,11 +2130,12 @@ const (
 	EntityNewParamsThirdPartyVerificationVendorMiddesk EntityNewParamsThirdPartyVerificationVendor = "middesk"
 	EntityNewParamsThirdPartyVerificationVendorOscilar EntityNewParamsThirdPartyVerificationVendor = "oscilar"
 	EntityNewParamsThirdPartyVerificationVendorPersona EntityNewParamsThirdPartyVerificationVendor = "persona"
+	EntityNewParamsThirdPartyVerificationVendorTaktile EntityNewParamsThirdPartyVerificationVendor = "taktile"
 )
 
 func (r EntityNewParamsThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityNewParamsThirdPartyVerificationVendorAlloy, EntityNewParamsThirdPartyVerificationVendorMiddesk, EntityNewParamsThirdPartyVerificationVendorOscilar, EntityNewParamsThirdPartyVerificationVendorPersona:
+	case EntityNewParamsThirdPartyVerificationVendorAlloy, EntityNewParamsThirdPartyVerificationVendorMiddesk, EntityNewParamsThirdPartyVerificationVendorOscilar, EntityNewParamsThirdPartyVerificationVendorPersona, EntityNewParamsThirdPartyVerificationVendorTaktile:
 		return true
 	}
 	return false
@@ -2709,11 +2711,12 @@ const (
 	EntityUpdateParamsThirdPartyVerificationVendorMiddesk EntityUpdateParamsThirdPartyVerificationVendor = "middesk"
 	EntityUpdateParamsThirdPartyVerificationVendorOscilar EntityUpdateParamsThirdPartyVerificationVendor = "oscilar"
 	EntityUpdateParamsThirdPartyVerificationVendorPersona EntityUpdateParamsThirdPartyVerificationVendor = "persona"
+	EntityUpdateParamsThirdPartyVerificationVendorTaktile EntityUpdateParamsThirdPartyVerificationVendor = "taktile"
 )
 
 func (r EntityUpdateParamsThirdPartyVerificationVendor) IsKnown() bool {
 	switch r {
-	case EntityUpdateParamsThirdPartyVerificationVendorAlloy, EntityUpdateParamsThirdPartyVerificationVendorMiddesk, EntityUpdateParamsThirdPartyVerificationVendorOscilar, EntityUpdateParamsThirdPartyVerificationVendorPersona:
+	case EntityUpdateParamsThirdPartyVerificationVendorAlloy, EntityUpdateParamsThirdPartyVerificationVendorMiddesk, EntityUpdateParamsThirdPartyVerificationVendorOscilar, EntityUpdateParamsThirdPartyVerificationVendorPersona, EntityUpdateParamsThirdPartyVerificationVendorTaktile:
 		return true
 	}
 	return false
