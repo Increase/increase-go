@@ -298,7 +298,7 @@ type CardPaymentElementsCardAuthentication struct {
 	// The reason why this authentication attempt was denied, if it was.
 	DenyReason CardPaymentElementsCardAuthenticationDenyReason `json:"deny_reason" api:"required,nullable"`
 	// The device channel of the card authentication attempt.
-	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel" api:"required,nullable"`
+	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
@@ -500,17 +500,95 @@ func (r CardPaymentElementsCardAuthenticationDenyReason) IsKnown() bool {
 }
 
 // The device channel of the card authentication attempt.
-type CardPaymentElementsCardAuthenticationDeviceChannel string
+type CardPaymentElementsCardAuthenticationDeviceChannel struct {
+	// Fields specific to the browser device channel.
+	Browser CardPaymentElementsCardAuthenticationDeviceChannelBrowser `json:"browser" api:"required,nullable"`
+	// The category of the device channel.
+	Category CardPaymentElementsCardAuthenticationDeviceChannelCategory `json:"category" api:"required"`
+	JSON     cardPaymentElementsCardAuthenticationDeviceChannelJSON     `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationDeviceChannelJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardAuthenticationDeviceChannel]
+type cardPaymentElementsCardAuthenticationDeviceChannelJSON struct {
+	Browser     apijson.Field
+	Category    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationDeviceChannel) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationDeviceChannelJSON) RawJSON() string {
+	return r.raw
+}
+
+// Fields specific to the browser device channel.
+type CardPaymentElementsCardAuthenticationDeviceChannelBrowser struct {
+	// The accept header from the cardholder's browser.
+	AcceptHeader string `json:"accept_header" api:"required,nullable"`
+	// The IP address of the cardholder's browser.
+	IPAddress string `json:"ip_address" api:"required,nullable"`
+	// Whether JavaScript is enabled in the cardholder's browser.
+	JavascriptEnabled CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabled `json:"javascript_enabled" api:"required,nullable"`
+	// The language of the cardholder's browser.
+	Language string `json:"language" api:"required,nullable"`
+	// The user agent of the cardholder's browser.
+	UserAgent string                                                        `json:"user_agent" api:"required,nullable"`
+	JSON      cardPaymentElementsCardAuthenticationDeviceChannelBrowserJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationDeviceChannelBrowserJSON contains the JSON
+// metadata for the struct
+// [CardPaymentElementsCardAuthenticationDeviceChannelBrowser]
+type cardPaymentElementsCardAuthenticationDeviceChannelBrowserJSON struct {
+	AcceptHeader      apijson.Field
+	IPAddress         apijson.Field
+	JavascriptEnabled apijson.Field
+	Language          apijson.Field
+	UserAgent         apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationDeviceChannelBrowser) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationDeviceChannelBrowserJSON) RawJSON() string {
+	return r.raw
+}
+
+// Whether JavaScript is enabled in the cardholder's browser.
+type CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabled string
 
 const (
-	CardPaymentElementsCardAuthenticationDeviceChannelApp                       CardPaymentElementsCardAuthenticationDeviceChannel = "app"
-	CardPaymentElementsCardAuthenticationDeviceChannelBrowser                   CardPaymentElementsCardAuthenticationDeviceChannel = "browser"
-	CardPaymentElementsCardAuthenticationDeviceChannelThreeDSRequestorInitiated CardPaymentElementsCardAuthenticationDeviceChannel = "three_ds_requestor_initiated"
+	CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabledEnabled  CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabled = "enabled"
+	CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabledDisabled CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabled = "disabled"
 )
 
-func (r CardPaymentElementsCardAuthenticationDeviceChannel) IsKnown() bool {
+func (r CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabled) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardAuthenticationDeviceChannelApp, CardPaymentElementsCardAuthenticationDeviceChannelBrowser, CardPaymentElementsCardAuthenticationDeviceChannelThreeDSRequestorInitiated:
+	case CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabledEnabled, CardPaymentElementsCardAuthenticationDeviceChannelBrowserJavascriptEnabledDisabled:
+		return true
+	}
+	return false
+}
+
+// The category of the device channel.
+type CardPaymentElementsCardAuthenticationDeviceChannelCategory string
+
+const (
+	CardPaymentElementsCardAuthenticationDeviceChannelCategoryApp                       CardPaymentElementsCardAuthenticationDeviceChannelCategory = "app"
+	CardPaymentElementsCardAuthenticationDeviceChannelCategoryBrowser                   CardPaymentElementsCardAuthenticationDeviceChannelCategory = "browser"
+	CardPaymentElementsCardAuthenticationDeviceChannelCategoryThreeDSRequestorInitiated CardPaymentElementsCardAuthenticationDeviceChannelCategory = "three_ds_requestor_initiated"
+)
+
+func (r CardPaymentElementsCardAuthenticationDeviceChannelCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationDeviceChannelCategoryApp, CardPaymentElementsCardAuthenticationDeviceChannelCategoryBrowser, CardPaymentElementsCardAuthenticationDeviceChannelCategoryThreeDSRequestorInitiated:
 		return true
 	}
 	return false
