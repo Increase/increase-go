@@ -319,8 +319,9 @@ type EntityCorporationBeneficialOwner struct {
 	// Personal details for the beneficial owner.
 	Individual EntityCorporationBeneficialOwnersIndividual `json:"individual" api:"required"`
 	// Why this person is considered a beneficial owner of the entity.
-	Prong EntityCorporationBeneficialOwnersProng `json:"prong" api:"required"`
-	JSON  entityCorporationBeneficialOwnerJSON   `json:"-"`
+	Prongs      []EntityCorporationBeneficialOwnersProng `json:"prongs" api:"required"`
+	ExtraFields map[string]interface{}                   `json:"-" api:"extrafields"`
+	JSON        entityCorporationBeneficialOwnerJSON     `json:"-"`
 }
 
 // entityCorporationBeneficialOwnerJSON contains the JSON metadata for the struct
@@ -329,7 +330,7 @@ type entityCorporationBeneficialOwnerJSON struct {
 	BeneficialOwnerID apijson.Field
 	CompanyTitle      apijson.Field
 	Individual        apijson.Field
-	Prong             apijson.Field
+	Prongs            apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
 }
@@ -461,7 +462,6 @@ func (r EntityCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown
 	return false
 }
 
-// Why this person is considered a beneficial owner of the entity.
 type EntityCorporationBeneficialOwnersProng string
 
 const (
