@@ -259,6 +259,9 @@ func (r CardPaymentElementsCategory) IsKnown() bool {
 type CardPaymentElementsCardAuthentication struct {
 	// The Card Authentication identifier.
 	ID string `json:"id" api:"required"`
+	// A unique identifier assigned by the Access Control Server (us) for this
+	// transaction.
+	AccessControlServerTransactionID string `json:"access_control_server_transaction_id" api:"required"`
 	// The city of the cardholder billing address associated with the card used for
 	// this purchase.
 	BillingAddressCity string `json:"billing_address_city" api:"required,nullable"`
@@ -299,6 +302,9 @@ type CardPaymentElementsCardAuthentication struct {
 	DenyReason CardPaymentElementsCardAuthenticationDenyReason `json:"deny_reason" api:"required,nullable"`
 	// The device channel of the card authentication attempt.
 	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel" api:"required"`
+	// A unique identifier assigned by the Directory Server (the card network) for this
+	// transaction.
+	DirectoryServerTransactionID string `json:"directory_server_transaction_id" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
@@ -329,8 +335,27 @@ type CardPaymentElementsCardAuthentication struct {
 	RequestorName string `json:"requestor_name" api:"required"`
 	// The URL of the 3DS requestor.
 	RequestorURL string `json:"requestor_url" api:"required"`
+	// The city of the shipping address associated with this purchase.
+	ShippingAddressCity string `json:"shipping_address_city" api:"required,nullable"`
+	// The country of the shipping address associated with this purchase.
+	ShippingAddressCountry string `json:"shipping_address_country" api:"required,nullable"`
+	// The first line of the shipping address associated with this purchase.
+	ShippingAddressLine1 string `json:"shipping_address_line1" api:"required,nullable"`
+	// The second line of the shipping address associated with this purchase.
+	ShippingAddressLine2 string `json:"shipping_address_line2" api:"required,nullable"`
+	// The third line of the shipping address associated with this purchase.
+	ShippingAddressLine3 string `json:"shipping_address_line3" api:"required,nullable"`
+	// The postal code of the shipping address associated with this purchase.
+	ShippingAddressPostalCode string `json:"shipping_address_postal_code" api:"required,nullable"`
+	// The US state of the shipping address associated with this purchase.
+	ShippingAddressState string `json:"shipping_address_state" api:"required,nullable"`
 	// The status of the card authentication.
 	Status CardPaymentElementsCardAuthenticationStatus `json:"status" api:"required"`
+	// A unique identifier assigned by the 3DS Server initiating the authentication
+	// attempt for this transaction.
+	ThreeDSecureServerTransactionID string `json:"three_d_secure_server_transaction_id" api:"required"`
+	// The type of transaction being authenticated.
+	TransactionType CardPaymentElementsCardAuthenticationTransactionType `json:"transaction_type" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authentication`.
 	Type        CardPaymentElementsCardAuthenticationType `json:"type" api:"required"`
@@ -342,6 +367,7 @@ type CardPaymentElementsCardAuthentication struct {
 // struct [CardPaymentElementsCardAuthentication]
 type cardPaymentElementsCardAuthenticationJSON struct {
 	ID                               apijson.Field
+	AccessControlServerTransactionID apijson.Field
 	BillingAddressCity               apijson.Field
 	BillingAddressCountry            apijson.Field
 	BillingAddressLine1              apijson.Field
@@ -358,6 +384,7 @@ type cardPaymentElementsCardAuthenticationJSON struct {
 	CreatedAt                        apijson.Field
 	DenyReason                       apijson.Field
 	DeviceChannel                    apijson.Field
+	DirectoryServerTransactionID     apijson.Field
 	MerchantAcceptorID               apijson.Field
 	MerchantCategoryCode             apijson.Field
 	MerchantCountry                  apijson.Field
@@ -370,7 +397,16 @@ type cardPaymentElementsCardAuthenticationJSON struct {
 	RequestorChallengeIndicator      apijson.Field
 	RequestorName                    apijson.Field
 	RequestorURL                     apijson.Field
+	ShippingAddressCity              apijson.Field
+	ShippingAddressCountry           apijson.Field
+	ShippingAddressLine1             apijson.Field
+	ShippingAddressLine2             apijson.Field
+	ShippingAddressLine3             apijson.Field
+	ShippingAddressPostalCode        apijson.Field
+	ShippingAddressState             apijson.Field
 	Status                           apijson.Field
+	ThreeDSecureServerTransactionID  apijson.Field
+	TransactionType                  apijson.Field
 	Type                             apijson.Field
 	raw                              string
 	ExtraFields                      map[string]apijson.Field
@@ -522,16 +558,19 @@ type CardPaymentElementsCardAuthenticationDeviceChannel struct {
 	Browser CardPaymentElementsCardAuthenticationDeviceChannelBrowser `json:"browser" api:"required,nullable"`
 	// The category of the device channel.
 	Category CardPaymentElementsCardAuthenticationDeviceChannelCategory `json:"category" api:"required"`
-	JSON     cardPaymentElementsCardAuthenticationDeviceChannelJSON     `json:"-"`
+	// Fields specific to merchant initiated transactions.
+	MerchantInitiated CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiated `json:"merchant_initiated" api:"required,nullable"`
+	JSON              cardPaymentElementsCardAuthenticationDeviceChannelJSON              `json:"-"`
 }
 
 // cardPaymentElementsCardAuthenticationDeviceChannelJSON contains the JSON
 // metadata for the struct [CardPaymentElementsCardAuthenticationDeviceChannel]
 type cardPaymentElementsCardAuthenticationDeviceChannelJSON struct {
-	Browser     apijson.Field
-	Category    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Browser           apijson.Field
+	Category          apijson.Field
+	MerchantInitiated apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardAuthenticationDeviceChannel) UnmarshalJSON(data []byte) (err error) {
@@ -611,6 +650,63 @@ func (r CardPaymentElementsCardAuthenticationDeviceChannelCategory) IsKnown() bo
 	return false
 }
 
+// Fields specific to merchant initiated transactions.
+type CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiated struct {
+	// The merchant initiated indicator for the transaction.
+	Indicator CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator `json:"indicator" api:"required"`
+	JSON      cardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedJSON      `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedJSON contains
+// the JSON metadata for the struct
+// [CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiated]
+type cardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedJSON struct {
+	Indicator   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiated) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedJSON) RawJSON() string {
+	return r.raw
+}
+
+// The merchant initiated indicator for the transaction.
+type CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator string
+
+const (
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorRecurringTransaction            CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "recurring_transaction"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorInstallmentTransaction          CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "installment_transaction"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorAddCard                         CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "add_card"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorMaintainCardInformation         CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "maintain_card_information"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorAccountVerification             CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "account_verification"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorSplitDelayedShipment            CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "split_delayed_shipment"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorTopUp                           CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "top_up"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorMailOrder                       CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "mail_order"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorTelephoneOrder                  CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "telephone_order"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorWhitelistStatusCheck            CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "whitelist_status_check"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorOtherPayment                    CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "other_payment"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorBillingAgreement                CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "billing_agreement"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorDeviceBindingStatusCheck        CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "device_binding_status_check"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorCardSecurityCodeStatusCheck     CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "card_security_code_status_check"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorDelayedShipment                 CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "delayed_shipment"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorSplitPayment                    CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "split_payment"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorFidoCredentialDeletion          CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "fido_credential_deletion"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorFidoCredentialRegistration      CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "fido_credential_registration"
+	CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorDecoupledAuthenticationFallback CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator = "decoupled_authentication_fallback"
+)
+
+func (r CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorRecurringTransaction, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorInstallmentTransaction, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorAddCard, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorMaintainCardInformation, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorAccountVerification, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorSplitDelayedShipment, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorTopUp, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorMailOrder, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorTelephoneOrder, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorWhitelistStatusCheck, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorOtherPayment, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorBillingAgreement, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorDeviceBindingStatusCheck, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorCardSecurityCodeStatusCheck, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorDelayedShipment, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorSplitPayment, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorFidoCredentialDeletion, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorFidoCredentialRegistration, CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndicatorDecoupledAuthenticationFallback:
+		return true
+	}
+	return false
+}
+
 // The 3DS requestor authentication indicator describes why the authentication
 // attempt is performed, such as for a recurring transaction.
 type CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator string
@@ -674,6 +770,25 @@ const (
 func (r CardPaymentElementsCardAuthenticationStatus) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardAuthenticationStatusDenied, CardPaymentElementsCardAuthenticationStatusAuthenticatedWithChallenge, CardPaymentElementsCardAuthenticationStatusAuthenticatedWithoutChallenge, CardPaymentElementsCardAuthenticationStatusAwaitingChallenge, CardPaymentElementsCardAuthenticationStatusValidatingChallenge, CardPaymentElementsCardAuthenticationStatusCanceled, CardPaymentElementsCardAuthenticationStatusTimedOutAwaitingChallenge, CardPaymentElementsCardAuthenticationStatusErrored, CardPaymentElementsCardAuthenticationStatusExceededAttemptThreshold:
+		return true
+	}
+	return false
+}
+
+// The type of transaction being authenticated.
+type CardPaymentElementsCardAuthenticationTransactionType string
+
+const (
+	CardPaymentElementsCardAuthenticationTransactionTypeGoodsServicePurchase     CardPaymentElementsCardAuthenticationTransactionType = "goods_service_purchase"
+	CardPaymentElementsCardAuthenticationTransactionTypeCheckAcceptance          CardPaymentElementsCardAuthenticationTransactionType = "check_acceptance"
+	CardPaymentElementsCardAuthenticationTransactionTypeAccountFunding           CardPaymentElementsCardAuthenticationTransactionType = "account_funding"
+	CardPaymentElementsCardAuthenticationTransactionTypeQuasiCashTransaction     CardPaymentElementsCardAuthenticationTransactionType = "quasi_cash_transaction"
+	CardPaymentElementsCardAuthenticationTransactionTypePrepaidActivationAndLoad CardPaymentElementsCardAuthenticationTransactionType = "prepaid_activation_and_load"
+)
+
+func (r CardPaymentElementsCardAuthenticationTransactionType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationTransactionTypeGoodsServicePurchase, CardPaymentElementsCardAuthenticationTransactionTypeCheckAcceptance, CardPaymentElementsCardAuthenticationTransactionTypeAccountFunding, CardPaymentElementsCardAuthenticationTransactionTypeQuasiCashTransaction, CardPaymentElementsCardAuthenticationTransactionTypePrepaidActivationAndLoad:
 		return true
 	}
 	return false
