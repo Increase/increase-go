@@ -992,7 +992,8 @@ type WireTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit  param.Field[int64]                        `query:"limit"`
+	Status param.Field[WireTransferListParamsStatus] `query:"status"`
 }
 
 // URLQuery serializes [WireTransferListParams]'s query parameters as `url.Values`.
@@ -1025,4 +1026,41 @@ func (r WireTransferListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type WireTransferListParamsStatus struct {
+	// Return results whose value is in the provided list. For GET requests, this
+	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]WireTransferListParamsStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [WireTransferListParamsStatus]'s query parameters as
+// `url.Values`.
+func (r WireTransferListParamsStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type WireTransferListParamsStatusIn string
+
+const (
+	WireTransferListParamsStatusInPendingApproval   WireTransferListParamsStatusIn = "pending_approval"
+	WireTransferListParamsStatusInCanceled          WireTransferListParamsStatusIn = "canceled"
+	WireTransferListParamsStatusInPendingReviewing  WireTransferListParamsStatusIn = "pending_reviewing"
+	WireTransferListParamsStatusInRejected          WireTransferListParamsStatusIn = "rejected"
+	WireTransferListParamsStatusInRequiresAttention WireTransferListParamsStatusIn = "requires_attention"
+	WireTransferListParamsStatusInPendingCreating   WireTransferListParamsStatusIn = "pending_creating"
+	WireTransferListParamsStatusInReversed          WireTransferListParamsStatusIn = "reversed"
+	WireTransferListParamsStatusInSubmitted         WireTransferListParamsStatusIn = "submitted"
+	WireTransferListParamsStatusInComplete          WireTransferListParamsStatusIn = "complete"
+)
+
+func (r WireTransferListParamsStatusIn) IsKnown() bool {
+	switch r {
+	case WireTransferListParamsStatusInPendingApproval, WireTransferListParamsStatusInCanceled, WireTransferListParamsStatusInPendingReviewing, WireTransferListParamsStatusInRejected, WireTransferListParamsStatusInRequiresAttention, WireTransferListParamsStatusInPendingCreating, WireTransferListParamsStatusInReversed, WireTransferListParamsStatusInSubmitted, WireTransferListParamsStatusInComplete:
+		return true
+	}
+	return false
 }
