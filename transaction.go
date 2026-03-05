@@ -1677,6 +1677,7 @@ type TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason str
 const (
 	TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonIssuerError                                              TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason = "issuer_error"
 	TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard                                      TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason = "invalid_physical_card"
+	TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCryptogram                                        TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason = "invalid_cryptogram"
 	TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue         TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason = "invalid_cardholder_authentication_verification_value"
 	TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInternalVisaError                                        TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason = "internal_visa_error"
 	TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason = "merchant_transaction_advisory_service_authentication_required"
@@ -1686,7 +1687,7 @@ const (
 
 func (r TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonIssuerError, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInternalVisaError, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonOther:
+	case TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonIssuerError, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCryptogram, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonInternalVisaError, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, TransactionSourceCardFinancialNetworkDetailsVisaStandInProcessingReasonOther:
 		return true
 	}
 	return false
