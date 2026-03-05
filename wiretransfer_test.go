@@ -122,6 +122,9 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 		ExternalAccountID: increase.F("external_account_id"),
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
+		Status: increase.F(increase.WireTransferListParamsStatus{
+			In: increase.F([]increase.WireTransferListParamsStatusIn{increase.WireTransferListParamsStatusInPendingApproval}),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error
