@@ -4,6 +4,8 @@ package increase
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"net/http"
 	"slices"
 
@@ -45,6 +47,19 @@ func (r *SimulationInboundCheckDepositService) New(ctx context.Context, body Sim
 	return
 }
 
+// Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit
+// must have a `status` of `accepted`.
+func (r *SimulationInboundCheckDepositService) Adjustment(ctx context.Context, inboundCheckDepositID string, body SimulationInboundCheckDepositAdjustmentParams, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if inboundCheckDepositID == "" {
+		err = errors.New("missing required inbound_check_deposit_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/inbound_check_deposits/%s/adjustment", inboundCheckDepositID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 type SimulationInboundCheckDepositNewParams struct {
 	// The identifier of the Account Number the Inbound Check Deposit will be against.
 	AccountNumberID param.Field[string] `json:"account_number_id" api:"required"`
@@ -76,6 +91,37 @@ const (
 func (r SimulationInboundCheckDepositNewParamsPayeeNameAnalysis) IsKnown() bool {
 	switch r {
 	case SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNameMatches, SimulationInboundCheckDepositNewParamsPayeeNameAnalysisDoesNotMatch, SimulationInboundCheckDepositNewParamsPayeeNameAnalysisNotEvaluated:
+		return true
+	}
+	return false
+}
+
+type SimulationInboundCheckDepositAdjustmentParams struct {
+	// The adjustment amount in cents. Defaults to the amount of the Inbound Check
+	// Deposit.
+	Amount param.Field[int64] `json:"amount"`
+	// The reason for the adjustment. Defaults to `wrong_payee_credit`.
+	Reason param.Field[SimulationInboundCheckDepositAdjustmentParamsReason] `json:"reason"`
+}
+
+func (r SimulationInboundCheckDepositAdjustmentParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The reason for the adjustment. Defaults to `wrong_payee_credit`.
+type SimulationInboundCheckDepositAdjustmentParamsReason string
+
+const (
+	SimulationInboundCheckDepositAdjustmentParamsReasonLateReturn        SimulationInboundCheckDepositAdjustmentParamsReason = "late_return"
+	SimulationInboundCheckDepositAdjustmentParamsReasonWrongPayeeCredit  SimulationInboundCheckDepositAdjustmentParamsReason = "wrong_payee_credit"
+	SimulationInboundCheckDepositAdjustmentParamsReasonAdjustedAmount    SimulationInboundCheckDepositAdjustmentParamsReason = "adjusted_amount"
+	SimulationInboundCheckDepositAdjustmentParamsReasonNonConformingItem SimulationInboundCheckDepositAdjustmentParamsReason = "non_conforming_item"
+	SimulationInboundCheckDepositAdjustmentParamsReasonPaid              SimulationInboundCheckDepositAdjustmentParamsReason = "paid"
+)
+
+func (r SimulationInboundCheckDepositAdjustmentParamsReason) IsKnown() bool {
+	switch r {
+	case SimulationInboundCheckDepositAdjustmentParamsReasonLateReturn, SimulationInboundCheckDepositAdjustmentParamsReasonWrongPayeeCredit, SimulationInboundCheckDepositAdjustmentParamsReasonAdjustedAmount, SimulationInboundCheckDepositAdjustmentParamsReasonNonConformingItem, SimulationInboundCheckDepositAdjustmentParamsReasonPaid:
 		return true
 	}
 	return false
