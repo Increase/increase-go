@@ -320,6 +320,15 @@ type CardPaymentElementsCardAuthentication struct {
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// authentication attempt.
 	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
+	// The 3DS requestor authentication indicator describes why the authentication
+	// attempt is performed, such as for a recurring transaction.
+	RequestorAuthenticationIndicator CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator `json:"requestor_authentication_indicator" api:"required,nullable"`
+	// Indicates whether a challenge is requested for this transaction.
+	RequestorChallengeIndicator CardPaymentElementsCardAuthenticationRequestorChallengeIndicator `json:"requestor_challenge_indicator" api:"required,nullable"`
+	// The name of the 3DS requestor.
+	RequestorName string `json:"requestor_name" api:"required"`
+	// The URL of the 3DS requestor.
+	RequestorURL string `json:"requestor_url" api:"required"`
 	// The status of the card authentication.
 	Status CardPaymentElementsCardAuthenticationStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -332,35 +341,39 @@ type CardPaymentElementsCardAuthentication struct {
 // cardPaymentElementsCardAuthenticationJSON contains the JSON metadata for the
 // struct [CardPaymentElementsCardAuthentication]
 type cardPaymentElementsCardAuthenticationJSON struct {
-	ID                        apijson.Field
-	BillingAddressCity        apijson.Field
-	BillingAddressCountry     apijson.Field
-	BillingAddressLine1       apijson.Field
-	BillingAddressLine2       apijson.Field
-	BillingAddressLine3       apijson.Field
-	BillingAddressPostalCode  apijson.Field
-	BillingAddressState       apijson.Field
-	CardID                    apijson.Field
-	CardPaymentID             apijson.Field
-	CardholderEmail           apijson.Field
-	CardholderName            apijson.Field
-	Category                  apijson.Field
-	Challenge                 apijson.Field
-	CreatedAt                 apijson.Field
-	DenyReason                apijson.Field
-	DeviceChannel             apijson.Field
-	MerchantAcceptorID        apijson.Field
-	MerchantCategoryCode      apijson.Field
-	MerchantCountry           apijson.Field
-	MerchantName              apijson.Field
-	PriorCardAuthenticationID apijson.Field
-	PurchaseAmount            apijson.Field
-	PurchaseCurrency          apijson.Field
-	RealTimeDecisionID        apijson.Field
-	Status                    apijson.Field
-	Type                      apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
+	ID                               apijson.Field
+	BillingAddressCity               apijson.Field
+	BillingAddressCountry            apijson.Field
+	BillingAddressLine1              apijson.Field
+	BillingAddressLine2              apijson.Field
+	BillingAddressLine3              apijson.Field
+	BillingAddressPostalCode         apijson.Field
+	BillingAddressState              apijson.Field
+	CardID                           apijson.Field
+	CardPaymentID                    apijson.Field
+	CardholderEmail                  apijson.Field
+	CardholderName                   apijson.Field
+	Category                         apijson.Field
+	Challenge                        apijson.Field
+	CreatedAt                        apijson.Field
+	DenyReason                       apijson.Field
+	DeviceChannel                    apijson.Field
+	MerchantAcceptorID               apijson.Field
+	MerchantCategoryCode             apijson.Field
+	MerchantCountry                  apijson.Field
+	MerchantName                     apijson.Field
+	PriorCardAuthenticationID        apijson.Field
+	PurchaseAmount                   apijson.Field
+	PurchaseCurrency                 apijson.Field
+	RealTimeDecisionID               apijson.Field
+	RequestorAuthenticationIndicator apijson.Field
+	RequestorChallengeIndicator      apijson.Field
+	RequestorName                    apijson.Field
+	RequestorURL                     apijson.Field
+	Status                           apijson.Field
+	Type                             apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardAuthentication) UnmarshalJSON(data []byte) (err error) {
@@ -593,6 +606,51 @@ const (
 func (r CardPaymentElementsCardAuthenticationDeviceChannelCategory) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardAuthenticationDeviceChannelCategoryApp, CardPaymentElementsCardAuthenticationDeviceChannelCategoryBrowser, CardPaymentElementsCardAuthenticationDeviceChannelCategoryThreeDSRequestorInitiated:
+		return true
+	}
+	return false
+}
+
+// The 3DS requestor authentication indicator describes why the authentication
+// attempt is performed, such as for a recurring transaction.
+type CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator string
+
+const (
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorPaymentTransaction             CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "payment_transaction"
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorRecurringTransaction           CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "recurring_transaction"
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorInstallmentTransaction         CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "installment_transaction"
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorAddCard                        CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "add_card"
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorMaintainCard                   CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "maintain_card"
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorEmvTokenCardholderVerification CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "emv_token_cardholder_verification"
+	CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorBillingAgreement               CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator = "billing_agreement"
+)
+
+func (r CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorPaymentTransaction, CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorRecurringTransaction, CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorInstallmentTransaction, CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorAddCard, CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorMaintainCard, CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorEmvTokenCardholderVerification, CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicatorBillingAgreement:
+		return true
+	}
+	return false
+}
+
+// Indicates whether a challenge is requested for this transaction.
+type CardPaymentElementsCardAuthenticationRequestorChallengeIndicator string
+
+const (
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoPreference                                                       CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "no_preference"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequested                                               CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "no_challenge_requested"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorChallengeRequested3DSRequestorPreference                           CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "challenge_requested_3ds_requestor_preference"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorChallengeRequestedMandate                                          CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "challenge_requested_mandate"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedTransactionalRiskAnalysisAlreadyPerformed      CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "no_challenge_requested_transactional_risk_analysis_already_performed"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedDataShareOnly                                  CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "no_challenge_requested_data_share_only"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedStrongConsumerAuthenticationAlreadyPerformed   CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "no_challenge_requested_strong_consumer_authentication_already_performed"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedUtilizeWhitelistExemptionIfNoChallengeRequired CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "no_challenge_requested_utilize_whitelist_exemption_if_no_challenge_required"
+	CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorChallengeRequestedWhitelistPromptRequestedIfChallengeRequired      CardPaymentElementsCardAuthenticationRequestorChallengeIndicator = "challenge_requested_whitelist_prompt_requested_if_challenge_required"
+)
+
+func (r CardPaymentElementsCardAuthenticationRequestorChallengeIndicator) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoPreference, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequested, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorChallengeRequested3DSRequestorPreference, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorChallengeRequestedMandate, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedTransactionalRiskAnalysisAlreadyPerformed, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedDataShareOnly, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedStrongConsumerAuthenticationAlreadyPerformed, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedUtilizeWhitelistExemptionIfNoChallengeRequired, CardPaymentElementsCardAuthenticationRequestorChallengeIndicatorChallengeRequestedWhitelistPromptRequestedIfChallengeRequired:
 		return true
 	}
 	return false
