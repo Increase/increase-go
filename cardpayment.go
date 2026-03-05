@@ -309,6 +309,9 @@ type CardPaymentElementsCardAuthentication struct {
 	MerchantCountry string `json:"merchant_country" api:"required"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name" api:"required"`
+	// The ID of a prior Card Authentication that the requestor used to authenticate
+	// this cardholder for a previous transaction.
+	PriorCardAuthenticationID string `json:"prior_card_authentication_id" api:"required,nullable"`
 	// The purchase amount in minor units.
 	PurchaseAmount int64 `json:"purchase_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
@@ -329,34 +332,35 @@ type CardPaymentElementsCardAuthentication struct {
 // cardPaymentElementsCardAuthenticationJSON contains the JSON metadata for the
 // struct [CardPaymentElementsCardAuthentication]
 type cardPaymentElementsCardAuthenticationJSON struct {
-	ID                       apijson.Field
-	BillingAddressCity       apijson.Field
-	BillingAddressCountry    apijson.Field
-	BillingAddressLine1      apijson.Field
-	BillingAddressLine2      apijson.Field
-	BillingAddressLine3      apijson.Field
-	BillingAddressPostalCode apijson.Field
-	BillingAddressState      apijson.Field
-	CardID                   apijson.Field
-	CardPaymentID            apijson.Field
-	CardholderEmail          apijson.Field
-	CardholderName           apijson.Field
-	Category                 apijson.Field
-	Challenge                apijson.Field
-	CreatedAt                apijson.Field
-	DenyReason               apijson.Field
-	DeviceChannel            apijson.Field
-	MerchantAcceptorID       apijson.Field
-	MerchantCategoryCode     apijson.Field
-	MerchantCountry          apijson.Field
-	MerchantName             apijson.Field
-	PurchaseAmount           apijson.Field
-	PurchaseCurrency         apijson.Field
-	RealTimeDecisionID       apijson.Field
-	Status                   apijson.Field
-	Type                     apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	ID                        apijson.Field
+	BillingAddressCity        apijson.Field
+	BillingAddressCountry     apijson.Field
+	BillingAddressLine1       apijson.Field
+	BillingAddressLine2       apijson.Field
+	BillingAddressLine3       apijson.Field
+	BillingAddressPostalCode  apijson.Field
+	BillingAddressState       apijson.Field
+	CardID                    apijson.Field
+	CardPaymentID             apijson.Field
+	CardholderEmail           apijson.Field
+	CardholderName            apijson.Field
+	Category                  apijson.Field
+	Challenge                 apijson.Field
+	CreatedAt                 apijson.Field
+	DenyReason                apijson.Field
+	DeviceChannel             apijson.Field
+	MerchantAcceptorID        apijson.Field
+	MerchantCategoryCode      apijson.Field
+	MerchantCountry           apijson.Field
+	MerchantName              apijson.Field
+	PriorCardAuthenticationID apijson.Field
+	PurchaseAmount            apijson.Field
+	PurchaseCurrency          apijson.Field
+	RealTimeDecisionID        apijson.Field
+	Status                    apijson.Field
+	Type                      apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardAuthentication) UnmarshalJSON(data []byte) (err error) {
