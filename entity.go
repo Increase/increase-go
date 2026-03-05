@@ -313,7 +313,7 @@ func (r entityCorporationAddressJSON) RawJSON() string {
 
 type EntityCorporationBeneficialOwner struct {
 	// The identifier of this beneficial owner.
-	BeneficialOwnerID string `json:"beneficial_owner_id" api:"required"`
+	ID string `json:"id" api:"required"`
 	// This person's role or title within the entity.
 	CompanyTitle string `json:"company_title" api:"required,nullable"`
 	// Personal details for the beneficial owner.
@@ -327,12 +327,12 @@ type EntityCorporationBeneficialOwner struct {
 // entityCorporationBeneficialOwnerJSON contains the JSON metadata for the struct
 // [EntityCorporationBeneficialOwner]
 type entityCorporationBeneficialOwnerJSON struct {
-	BeneficialOwnerID apijson.Field
-	CompanyTitle      apijson.Field
-	Individual        apijson.Field
-	Prongs            apijson.Field
-	raw               string
-	ExtraFields       map[string]apijson.Field
+	ID           apijson.Field
+	CompanyTitle apijson.Field
+	Individual   apijson.Field
+	Prongs       apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
 }
 
 func (r *EntityCorporationBeneficialOwner) UnmarshalJSON(data []byte) (err error) {
