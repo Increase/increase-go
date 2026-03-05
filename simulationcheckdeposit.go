@@ -34,6 +34,21 @@ func NewSimulationCheckDepositService(opts ...option.RequestOption) (r *Simulati
 	return
 }
 
+// Simulates the creation of a
+// [Check Deposit Adjustment](#check-deposit-adjustments) on a
+// [Check Deposit](#check-deposits). This Check Deposit must first have a `status`
+// of `submitted`.
+func (r *SimulationCheckDepositService) Adjustment(ctx context.Context, checkDepositID string, body SimulationCheckDepositAdjustmentParams, opts ...option.RequestOption) (res *CheckDeposit, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if checkDepositID == "" {
+		err = errors.New("missing required check_deposit_id parameter")
+		return
+	}
+	path := fmt.Sprintf("simulations/check_deposits/%s/adjustment", checkDepositID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 // Simulates the rejection of a [Check Deposit](#check-deposits) by Increase due to
 // factors like poor image quality. This Check Deposit must first have a `status`
 // of `pending`.
@@ -72,6 +87,41 @@ func (r *SimulationCheckDepositService) Submit(ctx context.Context, checkDeposit
 	path := fmt.Sprintf("simulations/check_deposits/%s/submit", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
+}
+
+type SimulationCheckDepositAdjustmentParams struct {
+	// The adjustment amount in the minor unit of the Check Deposit's currency (e.g.,
+	// cents). A negative amount means that the funds are being clawed back by the
+	// other bank and is a debit to your account. Defaults to the negative of the Check
+	// Deposit amount.
+	Amount param.Field[int64] `json:"amount"`
+	// The reason for the adjustment. Defaults to `non_conforming_item`, which is often
+	// used for a low quality image that the recipient wasn't able to handle.
+	Reason param.Field[SimulationCheckDepositAdjustmentParamsReason] `json:"reason"`
+}
+
+func (r SimulationCheckDepositAdjustmentParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The reason for the adjustment. Defaults to `non_conforming_item`, which is often
+// used for a low quality image that the recipient wasn't able to handle.
+type SimulationCheckDepositAdjustmentParamsReason string
+
+const (
+	SimulationCheckDepositAdjustmentParamsReasonLateReturn        SimulationCheckDepositAdjustmentParamsReason = "late_return"
+	SimulationCheckDepositAdjustmentParamsReasonWrongPayeeCredit  SimulationCheckDepositAdjustmentParamsReason = "wrong_payee_credit"
+	SimulationCheckDepositAdjustmentParamsReasonAdjustedAmount    SimulationCheckDepositAdjustmentParamsReason = "adjusted_amount"
+	SimulationCheckDepositAdjustmentParamsReasonNonConformingItem SimulationCheckDepositAdjustmentParamsReason = "non_conforming_item"
+	SimulationCheckDepositAdjustmentParamsReasonPaid              SimulationCheckDepositAdjustmentParamsReason = "paid"
+)
+
+func (r SimulationCheckDepositAdjustmentParamsReason) IsKnown() bool {
+	switch r {
+	case SimulationCheckDepositAdjustmentParamsReasonLateReturn, SimulationCheckDepositAdjustmentParamsReasonWrongPayeeCredit, SimulationCheckDepositAdjustmentParamsReasonAdjustedAmount, SimulationCheckDepositAdjustmentParamsReasonNonConformingItem, SimulationCheckDepositAdjustmentParamsReasonPaid:
+		return true
+	}
+	return false
 }
 
 type SimulationCheckDepositSubmitParams struct {
