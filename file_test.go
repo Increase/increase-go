@@ -29,7 +29,7 @@ func TestFileNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Files.New(context.TODO(), increase.FileNewParams{
-		File:        increase.F(io.Reader(bytes.NewBuffer([]byte("some file contents")))),
+		File:        increase.F(io.Reader(bytes.NewBuffer([]byte("Example data")))),
 		Purpose:     increase.F(increase.FileNewParamsPurposeCheckImageFront),
 		Description: increase.F("x"),
 	})
