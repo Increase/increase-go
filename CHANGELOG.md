@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.482.0 (2026-03-08)
+
+Full Changelog: [v0.481.0...v0.482.0](https://github.com/Increase/increase-go/compare/v0.481.0...v0.482.0)
+
+### Features
+
+* **api:** api update ([87d94e9](https://github.com/Increase/increase-go/commit/87d94e9c831d83dfd01b1e8d037dc6bc679e6abd))
+
+
+### Chores
+
+* **internal:** codegen related update ([fd7b83e](https://github.com/Increase/increase-go/commit/fd7b83e76db603b18e8363153eb409f46c4dbd16))
+
 ## 0.481.0 (2026-03-06)
 
 Full Changelog: [v0.480.0...v0.481.0](https://github.com/Increase/increase-go/compare/v0.480.0...v0.481.0)
