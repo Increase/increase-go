@@ -4,6 +4,7 @@ package increase
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"net/http"
@@ -80,10 +81,11 @@ func (r *EventService) Unwrap(payload []byte, headers http.Header, opts ...optio
 	if err != nil {
 		return nil, err
 	}
-	key := cfg.WebhookSecret
-	if key == "" {
+	rawKey := cfg.WebhookSecret
+	if rawKey == "" {
 		return nil, errors.New("The WebhookSecret option must be set in order to verify webhook headers")
 	}
+	key := "whsec_" + base64.StdEncoding.EncodeToString([]byte(rawKey))
 	wh, err := standardwebhooks.NewWebhook(key)
 	if err != nil {
 		return nil, err
