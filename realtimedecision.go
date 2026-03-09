@@ -155,8 +155,6 @@ type RealTimeDecisionCardAuthentication struct {
 	CardholderEmail string `json:"cardholder_email" api:"required,nullable"`
 	// The name of the cardholder.
 	CardholderName string `json:"cardholder_name" api:"required,nullable"`
-	// The category of the card authentication attempt.
-	Category RealTimeDecisionCardAuthenticationCategory `json:"category" api:"required,nullable"`
 	// Whether or not the authentication attempt was approved.
 	Decision RealTimeDecisionCardAuthenticationDecision `json:"decision" api:"required,nullable"`
 	// The device channel of the card authentication attempt.
@@ -174,17 +172,11 @@ type RealTimeDecisionCardAuthentication struct {
 	MerchantCountry string `json:"merchant_country" api:"required,nullable"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name" api:"required,nullable"`
+	// The message category of the card authentication attempt.
+	MessageCategory RealTimeDecisionCardAuthenticationMessageCategory `json:"message_category" api:"required"`
 	// The ID of a prior Card Authentication that the requestor used to authenticate
 	// this cardholder for a previous transaction.
 	PriorAuthenticatedCardPaymentID string `json:"prior_authenticated_card_payment_id" api:"required,nullable"`
-	// The purchase amount in minor units.
-	PurchaseAmount int64 `json:"purchase_amount" api:"required,nullable"`
-	// The purchase amount in the cardholder's currency (i.e., USD) estimated using
-	// daily conversion rates from the card network.
-	PurchaseAmountCardholderEstimated int64 `json:"purchase_amount_cardholder_estimated" api:"required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// authentication attempt's purchase currency.
-	PurchaseCurrency string `json:"purchase_currency" api:"required,nullable"`
 	// The 3DS requestor authentication indicator describes why the authentication
 	// attempt is performed, such as for a recurring transaction.
 	RequestorAuthenticationIndicator RealTimeDecisionCardAuthenticationRequestorAuthenticationIndicator `json:"requestor_authentication_indicator" api:"required,nullable"`
@@ -211,8 +203,6 @@ type RealTimeDecisionCardAuthentication struct {
 	// A unique identifier assigned by the 3DS Server initiating the authentication
 	// attempt for this transaction.
 	ThreeDSecureServerTransactionID string `json:"three_d_secure_server_transaction_id" api:"required"`
-	// The type of transaction being authenticated.
-	TransactionType RealTimeDecisionCardAuthenticationTransactionType `json:"transaction_type" api:"required,nullable"`
 	// The identifier of the Card Payment this authentication attempt will belong to.
 	// Available in the API once the card authentication has completed.
 	UpcomingCardPaymentID string                                 `json:"upcoming_card_payment_id" api:"required"`
@@ -222,46 +212,42 @@ type RealTimeDecisionCardAuthentication struct {
 // realTimeDecisionCardAuthenticationJSON contains the JSON metadata for the struct
 // [RealTimeDecisionCardAuthentication]
 type realTimeDecisionCardAuthenticationJSON struct {
-	AccessControlServerTransactionID  apijson.Field
-	AccountID                         apijson.Field
-	BillingAddressCity                apijson.Field
-	BillingAddressCountry             apijson.Field
-	BillingAddressLine1               apijson.Field
-	BillingAddressLine2               apijson.Field
-	BillingAddressLine3               apijson.Field
-	BillingAddressPostalCode          apijson.Field
-	BillingAddressState               apijson.Field
-	CardID                            apijson.Field
-	CardholderEmail                   apijson.Field
-	CardholderName                    apijson.Field
-	Category                          apijson.Field
-	Decision                          apijson.Field
-	DeviceChannel                     apijson.Field
-	DirectoryServerTransactionID      apijson.Field
-	MerchantAcceptorID                apijson.Field
-	MerchantCategoryCode              apijson.Field
-	MerchantCountry                   apijson.Field
-	MerchantName                      apijson.Field
-	PriorAuthenticatedCardPaymentID   apijson.Field
-	PurchaseAmount                    apijson.Field
-	PurchaseAmountCardholderEstimated apijson.Field
-	PurchaseCurrency                  apijson.Field
-	RequestorAuthenticationIndicator  apijson.Field
-	RequestorChallengeIndicator       apijson.Field
-	RequestorName                     apijson.Field
-	RequestorURL                      apijson.Field
-	ShippingAddressCity               apijson.Field
-	ShippingAddressCountry            apijson.Field
-	ShippingAddressLine1              apijson.Field
-	ShippingAddressLine2              apijson.Field
-	ShippingAddressLine3              apijson.Field
-	ShippingAddressPostalCode         apijson.Field
-	ShippingAddressState              apijson.Field
-	ThreeDSecureServerTransactionID   apijson.Field
-	TransactionType                   apijson.Field
-	UpcomingCardPaymentID             apijson.Field
-	raw                               string
-	ExtraFields                       map[string]apijson.Field
+	AccessControlServerTransactionID apijson.Field
+	AccountID                        apijson.Field
+	BillingAddressCity               apijson.Field
+	BillingAddressCountry            apijson.Field
+	BillingAddressLine1              apijson.Field
+	BillingAddressLine2              apijson.Field
+	BillingAddressLine3              apijson.Field
+	BillingAddressPostalCode         apijson.Field
+	BillingAddressState              apijson.Field
+	CardID                           apijson.Field
+	CardholderEmail                  apijson.Field
+	CardholderName                   apijson.Field
+	Decision                         apijson.Field
+	DeviceChannel                    apijson.Field
+	DirectoryServerTransactionID     apijson.Field
+	MerchantAcceptorID               apijson.Field
+	MerchantCategoryCode             apijson.Field
+	MerchantCountry                  apijson.Field
+	MerchantName                     apijson.Field
+	MessageCategory                  apijson.Field
+	PriorAuthenticatedCardPaymentID  apijson.Field
+	RequestorAuthenticationIndicator apijson.Field
+	RequestorChallengeIndicator      apijson.Field
+	RequestorName                    apijson.Field
+	RequestorURL                     apijson.Field
+	ShippingAddressCity              apijson.Field
+	ShippingAddressCountry           apijson.Field
+	ShippingAddressLine1             apijson.Field
+	ShippingAddressLine2             apijson.Field
+	ShippingAddressLine3             apijson.Field
+	ShippingAddressPostalCode        apijson.Field
+	ShippingAddressState             apijson.Field
+	ThreeDSecureServerTransactionID  apijson.Field
+	UpcomingCardPaymentID            apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthentication) UnmarshalJSON(data []byte) (err error) {
@@ -270,22 +256,6 @@ func (r *RealTimeDecisionCardAuthentication) UnmarshalJSON(data []byte) (err err
 
 func (r realTimeDecisionCardAuthenticationJSON) RawJSON() string {
 	return r.raw
-}
-
-// The category of the card authentication attempt.
-type RealTimeDecisionCardAuthenticationCategory string
-
-const (
-	RealTimeDecisionCardAuthenticationCategoryPaymentAuthentication    RealTimeDecisionCardAuthenticationCategory = "payment_authentication"
-	RealTimeDecisionCardAuthenticationCategoryNonPaymentAuthentication RealTimeDecisionCardAuthenticationCategory = "non_payment_authentication"
-)
-
-func (r RealTimeDecisionCardAuthenticationCategory) IsKnown() bool {
-	switch r {
-	case RealTimeDecisionCardAuthenticationCategoryPaymentAuthentication, RealTimeDecisionCardAuthenticationCategoryNonPaymentAuthentication:
-		return true
-	}
-	return false
 }
 
 // Whether or not the authentication attempt was approved.
@@ -459,6 +429,126 @@ func (r RealTimeDecisionCardAuthenticationDeviceChannelMerchantInitiatedIndicato
 	return false
 }
 
+// The message category of the card authentication attempt.
+type RealTimeDecisionCardAuthenticationMessageCategory struct {
+	// The category of the card authentication attempt.
+	Category RealTimeDecisionCardAuthenticationMessageCategoryCategory `json:"category" api:"required"`
+	// Fields specific to non-payment authentication attempts.
+	NonPayment RealTimeDecisionCardAuthenticationMessageCategoryNonPayment `json:"non_payment" api:"required,nullable"`
+	// Fields specific to payment authentication attempts.
+	Payment RealTimeDecisionCardAuthenticationMessageCategoryPayment `json:"payment" api:"required,nullable"`
+	JSON    realTimeDecisionCardAuthenticationMessageCategoryJSON    `json:"-"`
+}
+
+// realTimeDecisionCardAuthenticationMessageCategoryJSON contains the JSON metadata
+// for the struct [RealTimeDecisionCardAuthenticationMessageCategory]
+type realTimeDecisionCardAuthenticationMessageCategoryJSON struct {
+	Category    apijson.Field
+	NonPayment  apijson.Field
+	Payment     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthenticationMessageCategory) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthenticationMessageCategoryJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the card authentication attempt.
+type RealTimeDecisionCardAuthenticationMessageCategoryCategory string
+
+const (
+	RealTimeDecisionCardAuthenticationMessageCategoryCategoryPaymentAuthentication    RealTimeDecisionCardAuthenticationMessageCategoryCategory = "payment_authentication"
+	RealTimeDecisionCardAuthenticationMessageCategoryCategoryNonPaymentAuthentication RealTimeDecisionCardAuthenticationMessageCategoryCategory = "non_payment_authentication"
+)
+
+func (r RealTimeDecisionCardAuthenticationMessageCategoryCategory) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthenticationMessageCategoryCategoryPaymentAuthentication, RealTimeDecisionCardAuthenticationMessageCategoryCategoryNonPaymentAuthentication:
+		return true
+	}
+	return false
+}
+
+// Fields specific to non-payment authentication attempts.
+type RealTimeDecisionCardAuthenticationMessageCategoryNonPayment struct {
+	JSON realTimeDecisionCardAuthenticationMessageCategoryNonPaymentJSON `json:"-"`
+}
+
+// realTimeDecisionCardAuthenticationMessageCategoryNonPaymentJSON contains the
+// JSON metadata for the struct
+// [RealTimeDecisionCardAuthenticationMessageCategoryNonPayment]
+type realTimeDecisionCardAuthenticationMessageCategoryNonPaymentJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthenticationMessageCategoryNonPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthenticationMessageCategoryNonPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
+// Fields specific to payment authentication attempts.
+type RealTimeDecisionCardAuthenticationMessageCategoryPayment struct {
+	// The purchase amount in minor units.
+	PurchaseAmount int64 `json:"purchase_amount" api:"required"`
+	// The purchase amount in the cardholder's currency (i.e., USD) estimated using
+	// daily conversion rates from the card network.
+	PurchaseAmountCardholderEstimated int64 `json:"purchase_amount_cardholder_estimated" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// authentication attempt's purchase currency.
+	PurchaseCurrency string `json:"purchase_currency" api:"required"`
+	// The type of transaction being authenticated.
+	TransactionType RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType `json:"transaction_type" api:"required,nullable"`
+	JSON            realTimeDecisionCardAuthenticationMessageCategoryPaymentJSON            `json:"-"`
+}
+
+// realTimeDecisionCardAuthenticationMessageCategoryPaymentJSON contains the JSON
+// metadata for the struct
+// [RealTimeDecisionCardAuthenticationMessageCategoryPayment]
+type realTimeDecisionCardAuthenticationMessageCategoryPaymentJSON struct {
+	PurchaseAmount                    apijson.Field
+	PurchaseAmountCardholderEstimated apijson.Field
+	PurchaseCurrency                  apijson.Field
+	TransactionType                   apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthenticationMessageCategoryPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthenticationMessageCategoryPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of transaction being authenticated.
+type RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType string
+
+const (
+	RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeGoodsServicePurchase     RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType = "goods_service_purchase"
+	RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeCheckAcceptance          RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType = "check_acceptance"
+	RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeAccountFunding           RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType = "account_funding"
+	RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeQuasiCashTransaction     RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType = "quasi_cash_transaction"
+	RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypePrepaidActivationAndLoad RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType = "prepaid_activation_and_load"
+)
+
+func (r RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionType) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeGoodsServicePurchase, RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeCheckAcceptance, RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeAccountFunding, RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypeQuasiCashTransaction, RealTimeDecisionCardAuthenticationMessageCategoryPaymentTransactionTypePrepaidActivationAndLoad:
+		return true
+	}
+	return false
+}
+
 // The 3DS requestor authentication indicator describes why the authentication
 // attempt is performed, such as for a recurring transaction.
 type RealTimeDecisionCardAuthenticationRequestorAuthenticationIndicator string
@@ -499,25 +589,6 @@ const (
 func (r RealTimeDecisionCardAuthenticationRequestorChallengeIndicator) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorNoPreference, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorNoChallengeRequested, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorChallengeRequested3DSRequestorPreference, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorChallengeRequestedMandate, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedTransactionalRiskAnalysisAlreadyPerformed, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedDataShareOnly, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedStrongConsumerAuthenticationAlreadyPerformed, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorNoChallengeRequestedUtilizeWhitelistExemptionIfNoChallengeRequired, RealTimeDecisionCardAuthenticationRequestorChallengeIndicatorChallengeRequestedWhitelistPromptRequestedIfChallengeRequired:
-		return true
-	}
-	return false
-}
-
-// The type of transaction being authenticated.
-type RealTimeDecisionCardAuthenticationTransactionType string
-
-const (
-	RealTimeDecisionCardAuthenticationTransactionTypeGoodsServicePurchase     RealTimeDecisionCardAuthenticationTransactionType = "goods_service_purchase"
-	RealTimeDecisionCardAuthenticationTransactionTypeCheckAcceptance          RealTimeDecisionCardAuthenticationTransactionType = "check_acceptance"
-	RealTimeDecisionCardAuthenticationTransactionTypeAccountFunding           RealTimeDecisionCardAuthenticationTransactionType = "account_funding"
-	RealTimeDecisionCardAuthenticationTransactionTypeQuasiCashTransaction     RealTimeDecisionCardAuthenticationTransactionType = "quasi_cash_transaction"
-	RealTimeDecisionCardAuthenticationTransactionTypePrepaidActivationAndLoad RealTimeDecisionCardAuthenticationTransactionType = "prepaid_activation_and_load"
-)
-
-func (r RealTimeDecisionCardAuthenticationTransactionType) IsKnown() bool {
-	switch r {
-	case RealTimeDecisionCardAuthenticationTransactionTypeGoodsServicePurchase, RealTimeDecisionCardAuthenticationTransactionTypeCheckAcceptance, RealTimeDecisionCardAuthenticationTransactionTypeAccountFunding, RealTimeDecisionCardAuthenticationTransactionTypeQuasiCashTransaction, RealTimeDecisionCardAuthenticationTransactionTypePrepaidActivationAndLoad:
 		return true
 	}
 	return false

@@ -291,8 +291,6 @@ type CardPaymentElementsCardAuthentication struct {
 	CardholderEmail string `json:"cardholder_email" api:"required,nullable"`
 	// The name of the cardholder.
 	CardholderName string `json:"cardholder_name" api:"required,nullable"`
-	// The category of the card authentication attempt.
-	Category CardPaymentElementsCardAuthenticationCategory `json:"category" api:"required,nullable"`
 	// Details about the challenge, if one was requested.
 	Challenge CardPaymentElementsCardAuthenticationChallenge `json:"challenge" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
@@ -315,17 +313,11 @@ type CardPaymentElementsCardAuthentication struct {
 	MerchantCountry string `json:"merchant_country" api:"required,nullable"`
 	// The name of the merchant.
 	MerchantName string `json:"merchant_name" api:"required,nullable"`
+	// The message category of the card authentication attempt.
+	MessageCategory CardPaymentElementsCardAuthenticationMessageCategory `json:"message_category" api:"required"`
 	// The ID of a prior Card Authentication that the requestor used to authenticate
 	// this cardholder for a previous transaction.
 	PriorAuthenticatedCardPaymentID string `json:"prior_authenticated_card_payment_id" api:"required,nullable"`
-	// The purchase amount in minor units.
-	PurchaseAmount int64 `json:"purchase_amount" api:"required,nullable"`
-	// The purchase amount in the cardholder's currency (i.e., USD) estimated using
-	// daily conversion rates from the card network.
-	PurchaseAmountCardholderEstimated int64 `json:"purchase_amount_cardholder_estimated" api:"required,nullable"`
-	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
-	// authentication attempt's purchase currency.
-	PurchaseCurrency string `json:"purchase_currency" api:"required,nullable"`
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// authentication attempt.
 	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
@@ -357,8 +349,6 @@ type CardPaymentElementsCardAuthentication struct {
 	// A unique identifier assigned by the 3DS Server initiating the authentication
 	// attempt for this transaction.
 	ThreeDSecureServerTransactionID string `json:"three_d_secure_server_transaction_id" api:"required"`
-	// The type of transaction being authenticated.
-	TransactionType CardPaymentElementsCardAuthenticationTransactionType `json:"transaction_type" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authentication`.
 	Type        CardPaymentElementsCardAuthenticationType `json:"type" api:"required"`
@@ -369,51 +359,47 @@ type CardPaymentElementsCardAuthentication struct {
 // cardPaymentElementsCardAuthenticationJSON contains the JSON metadata for the
 // struct [CardPaymentElementsCardAuthentication]
 type cardPaymentElementsCardAuthenticationJSON struct {
-	ID                                apijson.Field
-	AccessControlServerTransactionID  apijson.Field
-	BillingAddressCity                apijson.Field
-	BillingAddressCountry             apijson.Field
-	BillingAddressLine1               apijson.Field
-	BillingAddressLine2               apijson.Field
-	BillingAddressLine3               apijson.Field
-	BillingAddressPostalCode          apijson.Field
-	BillingAddressState               apijson.Field
-	CardID                            apijson.Field
-	CardPaymentID                     apijson.Field
-	CardholderEmail                   apijson.Field
-	CardholderName                    apijson.Field
-	Category                          apijson.Field
-	Challenge                         apijson.Field
-	CreatedAt                         apijson.Field
-	DenyReason                        apijson.Field
-	DeviceChannel                     apijson.Field
-	DirectoryServerTransactionID      apijson.Field
-	MerchantAcceptorID                apijson.Field
-	MerchantCategoryCode              apijson.Field
-	MerchantCountry                   apijson.Field
-	MerchantName                      apijson.Field
-	PriorAuthenticatedCardPaymentID   apijson.Field
-	PurchaseAmount                    apijson.Field
-	PurchaseAmountCardholderEstimated apijson.Field
-	PurchaseCurrency                  apijson.Field
-	RealTimeDecisionID                apijson.Field
-	RequestorAuthenticationIndicator  apijson.Field
-	RequestorChallengeIndicator       apijson.Field
-	RequestorName                     apijson.Field
-	RequestorURL                      apijson.Field
-	ShippingAddressCity               apijson.Field
-	ShippingAddressCountry            apijson.Field
-	ShippingAddressLine1              apijson.Field
-	ShippingAddressLine2              apijson.Field
-	ShippingAddressLine3              apijson.Field
-	ShippingAddressPostalCode         apijson.Field
-	ShippingAddressState              apijson.Field
-	Status                            apijson.Field
-	ThreeDSecureServerTransactionID   apijson.Field
-	TransactionType                   apijson.Field
-	Type                              apijson.Field
-	raw                               string
-	ExtraFields                       map[string]apijson.Field
+	ID                               apijson.Field
+	AccessControlServerTransactionID apijson.Field
+	BillingAddressCity               apijson.Field
+	BillingAddressCountry            apijson.Field
+	BillingAddressLine1              apijson.Field
+	BillingAddressLine2              apijson.Field
+	BillingAddressLine3              apijson.Field
+	BillingAddressPostalCode         apijson.Field
+	BillingAddressState              apijson.Field
+	CardID                           apijson.Field
+	CardPaymentID                    apijson.Field
+	CardholderEmail                  apijson.Field
+	CardholderName                   apijson.Field
+	Challenge                        apijson.Field
+	CreatedAt                        apijson.Field
+	DenyReason                       apijson.Field
+	DeviceChannel                    apijson.Field
+	DirectoryServerTransactionID     apijson.Field
+	MerchantAcceptorID               apijson.Field
+	MerchantCategoryCode             apijson.Field
+	MerchantCountry                  apijson.Field
+	MerchantName                     apijson.Field
+	MessageCategory                  apijson.Field
+	PriorAuthenticatedCardPaymentID  apijson.Field
+	RealTimeDecisionID               apijson.Field
+	RequestorAuthenticationIndicator apijson.Field
+	RequestorChallengeIndicator      apijson.Field
+	RequestorName                    apijson.Field
+	RequestorURL                     apijson.Field
+	ShippingAddressCity              apijson.Field
+	ShippingAddressCountry           apijson.Field
+	ShippingAddressLine1             apijson.Field
+	ShippingAddressLine2             apijson.Field
+	ShippingAddressLine3             apijson.Field
+	ShippingAddressPostalCode        apijson.Field
+	ShippingAddressState             apijson.Field
+	Status                           apijson.Field
+	ThreeDSecureServerTransactionID  apijson.Field
+	Type                             apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardAuthentication) UnmarshalJSON(data []byte) (err error) {
@@ -422,22 +408,6 @@ func (r *CardPaymentElementsCardAuthentication) UnmarshalJSON(data []byte) (err 
 
 func (r cardPaymentElementsCardAuthenticationJSON) RawJSON() string {
 	return r.raw
-}
-
-// The category of the card authentication attempt.
-type CardPaymentElementsCardAuthenticationCategory string
-
-const (
-	CardPaymentElementsCardAuthenticationCategoryPaymentAuthentication    CardPaymentElementsCardAuthenticationCategory = "payment_authentication"
-	CardPaymentElementsCardAuthenticationCategoryNonPaymentAuthentication CardPaymentElementsCardAuthenticationCategory = "non_payment_authentication"
-)
-
-func (r CardPaymentElementsCardAuthenticationCategory) IsKnown() bool {
-	switch r {
-	case CardPaymentElementsCardAuthenticationCategoryPaymentAuthentication, CardPaymentElementsCardAuthenticationCategoryNonPaymentAuthentication:
-		return true
-	}
-	return false
 }
 
 // Details about the challenge, if one was requested.
@@ -711,6 +681,126 @@ func (r CardPaymentElementsCardAuthenticationDeviceChannelMerchantInitiatedIndic
 	return false
 }
 
+// The message category of the card authentication attempt.
+type CardPaymentElementsCardAuthenticationMessageCategory struct {
+	// The category of the card authentication attempt.
+	Category CardPaymentElementsCardAuthenticationMessageCategoryCategory `json:"category" api:"required"`
+	// Fields specific to non-payment authentication attempts.
+	NonPayment CardPaymentElementsCardAuthenticationMessageCategoryNonPayment `json:"non_payment" api:"required,nullable"`
+	// Fields specific to payment authentication attempts.
+	Payment CardPaymentElementsCardAuthenticationMessageCategoryPayment `json:"payment" api:"required,nullable"`
+	JSON    cardPaymentElementsCardAuthenticationMessageCategoryJSON    `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationMessageCategoryJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardAuthenticationMessageCategory]
+type cardPaymentElementsCardAuthenticationMessageCategoryJSON struct {
+	Category    apijson.Field
+	NonPayment  apijson.Field
+	Payment     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationMessageCategory) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationMessageCategoryJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the card authentication attempt.
+type CardPaymentElementsCardAuthenticationMessageCategoryCategory string
+
+const (
+	CardPaymentElementsCardAuthenticationMessageCategoryCategoryPaymentAuthentication    CardPaymentElementsCardAuthenticationMessageCategoryCategory = "payment_authentication"
+	CardPaymentElementsCardAuthenticationMessageCategoryCategoryNonPaymentAuthentication CardPaymentElementsCardAuthenticationMessageCategoryCategory = "non_payment_authentication"
+)
+
+func (r CardPaymentElementsCardAuthenticationMessageCategoryCategory) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationMessageCategoryCategoryPaymentAuthentication, CardPaymentElementsCardAuthenticationMessageCategoryCategoryNonPaymentAuthentication:
+		return true
+	}
+	return false
+}
+
+// Fields specific to non-payment authentication attempts.
+type CardPaymentElementsCardAuthenticationMessageCategoryNonPayment struct {
+	JSON cardPaymentElementsCardAuthenticationMessageCategoryNonPaymentJSON `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationMessageCategoryNonPaymentJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardAuthenticationMessageCategoryNonPayment]
+type cardPaymentElementsCardAuthenticationMessageCategoryNonPaymentJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationMessageCategoryNonPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationMessageCategoryNonPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
+// Fields specific to payment authentication attempts.
+type CardPaymentElementsCardAuthenticationMessageCategoryPayment struct {
+	// The purchase amount in minor units.
+	PurchaseAmount int64 `json:"purchase_amount" api:"required"`
+	// The purchase amount in the cardholder's currency (i.e., USD) estimated using
+	// daily conversion rates from the card network.
+	PurchaseAmountCardholderEstimated int64 `json:"purchase_amount_cardholder_estimated" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+	// authentication attempt's purchase currency.
+	PurchaseCurrency string `json:"purchase_currency" api:"required"`
+	// The type of transaction being authenticated.
+	TransactionType CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType `json:"transaction_type" api:"required,nullable"`
+	JSON            cardPaymentElementsCardAuthenticationMessageCategoryPaymentJSON            `json:"-"`
+}
+
+// cardPaymentElementsCardAuthenticationMessageCategoryPaymentJSON contains the
+// JSON metadata for the struct
+// [CardPaymentElementsCardAuthenticationMessageCategoryPayment]
+type cardPaymentElementsCardAuthenticationMessageCategoryPaymentJSON struct {
+	PurchaseAmount                    apijson.Field
+	PurchaseAmountCardholderEstimated apijson.Field
+	PurchaseCurrency                  apijson.Field
+	TransactionType                   apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthenticationMessageCategoryPayment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthenticationMessageCategoryPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of transaction being authenticated.
+type CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType string
+
+const (
+	CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeGoodsServicePurchase     CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType = "goods_service_purchase"
+	CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeCheckAcceptance          CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType = "check_acceptance"
+	CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeAccountFunding           CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType = "account_funding"
+	CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeQuasiCashTransaction     CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType = "quasi_cash_transaction"
+	CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypePrepaidActivationAndLoad CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType = "prepaid_activation_and_load"
+)
+
+func (r CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionType) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeGoodsServicePurchase, CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeCheckAcceptance, CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeAccountFunding, CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypeQuasiCashTransaction, CardPaymentElementsCardAuthenticationMessageCategoryPaymentTransactionTypePrepaidActivationAndLoad:
+		return true
+	}
+	return false
+}
+
 // The 3DS requestor authentication indicator describes why the authentication
 // attempt is performed, such as for a recurring transaction.
 type CardPaymentElementsCardAuthenticationRequestorAuthenticationIndicator string
@@ -774,25 +864,6 @@ const (
 func (r CardPaymentElementsCardAuthenticationStatus) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardAuthenticationStatusDenied, CardPaymentElementsCardAuthenticationStatusAuthenticatedWithChallenge, CardPaymentElementsCardAuthenticationStatusAuthenticatedWithoutChallenge, CardPaymentElementsCardAuthenticationStatusAwaitingChallenge, CardPaymentElementsCardAuthenticationStatusValidatingChallenge, CardPaymentElementsCardAuthenticationStatusCanceled, CardPaymentElementsCardAuthenticationStatusTimedOutAwaitingChallenge, CardPaymentElementsCardAuthenticationStatusErrored, CardPaymentElementsCardAuthenticationStatusExceededAttemptThreshold:
-		return true
-	}
-	return false
-}
-
-// The type of transaction being authenticated.
-type CardPaymentElementsCardAuthenticationTransactionType string
-
-const (
-	CardPaymentElementsCardAuthenticationTransactionTypeGoodsServicePurchase     CardPaymentElementsCardAuthenticationTransactionType = "goods_service_purchase"
-	CardPaymentElementsCardAuthenticationTransactionTypeCheckAcceptance          CardPaymentElementsCardAuthenticationTransactionType = "check_acceptance"
-	CardPaymentElementsCardAuthenticationTransactionTypeAccountFunding           CardPaymentElementsCardAuthenticationTransactionType = "account_funding"
-	CardPaymentElementsCardAuthenticationTransactionTypeQuasiCashTransaction     CardPaymentElementsCardAuthenticationTransactionType = "quasi_cash_transaction"
-	CardPaymentElementsCardAuthenticationTransactionTypePrepaidActivationAndLoad CardPaymentElementsCardAuthenticationTransactionType = "prepaid_activation_and_load"
-)
-
-func (r CardPaymentElementsCardAuthenticationTransactionType) IsKnown() bool {
-	switch r {
-	case CardPaymentElementsCardAuthenticationTransactionTypeGoodsServicePurchase, CardPaymentElementsCardAuthenticationTransactionTypeCheckAcceptance, CardPaymentElementsCardAuthenticationTransactionTypeAccountFunding, CardPaymentElementsCardAuthenticationTransactionTypeQuasiCashTransaction, CardPaymentElementsCardAuthenticationTransactionTypePrepaidActivationAndLoad:
 		return true
 	}
 	return false
