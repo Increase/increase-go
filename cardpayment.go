@@ -307,14 +307,14 @@ type CardPaymentElementsCardAuthentication struct {
 	DirectoryServerTransactionID string `json:"directory_server_transaction_id" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
-	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
+	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required,nullable"`
 	// The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
 	// card is transacting with.
-	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
+	MerchantCategoryCode string `json:"merchant_category_code" api:"required,nullable"`
 	// The country the merchant resides in.
-	MerchantCountry string `json:"merchant_country" api:"required"`
+	MerchantCountry string `json:"merchant_country" api:"required,nullable"`
 	// The name of the merchant.
-	MerchantName string `json:"merchant_name" api:"required"`
+	MerchantName string `json:"merchant_name" api:"required,nullable"`
 	// The ID of a prior Card Authentication that the requestor used to authenticate
 	// this cardholder for a previous transaction.
 	PriorCardAuthenticationID string `json:"prior_card_authentication_id" api:"required,nullable"`
