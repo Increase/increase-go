@@ -176,7 +176,7 @@ type RealTimeDecisionCardAuthentication struct {
 	MerchantName string `json:"merchant_name" api:"required,nullable"`
 	// The ID of a prior Card Authentication that the requestor used to authenticate
 	// this cardholder for a previous transaction.
-	PriorCardAuthenticationID string `json:"prior_card_authentication_id" api:"required,nullable"`
+	PriorAuthenticatedCardPaymentID string `json:"prior_authenticated_card_payment_id" api:"required,nullable"`
 	// The purchase amount in minor units.
 	PurchaseAmount int64 `json:"purchase_amount" api:"required,nullable"`
 	// The purchase amount in the cardholder's currency (i.e., USD) estimated using
@@ -242,7 +242,7 @@ type realTimeDecisionCardAuthenticationJSON struct {
 	MerchantCategoryCode              apijson.Field
 	MerchantCountry                   apijson.Field
 	MerchantName                      apijson.Field
-	PriorCardAuthenticationID         apijson.Field
+	PriorAuthenticatedCardPaymentID   apijson.Field
 	PurchaseAmount                    apijson.Field
 	PurchaseAmountCardholderEstimated apijson.Field
 	PurchaseCurrency                  apijson.Field
