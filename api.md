@@ -440,6 +440,17 @@ Methods:
 - <code title="post /entities/{entity_id}/create_beneficial_owner">client.Entities.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityService.NewBeneficialOwner">NewBeneficialOwner</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, entityID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityNewBeneficialOwnerParams">EntityNewBeneficialOwnerParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Entity">Entity</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /entities/{entity_id}/update_beneficial_owner_address">client.Entities.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityService.UpdateBeneficialOwnerAddress">UpdateBeneficialOwnerAddress</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, entityID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityUpdateBeneficialOwnerAddressParams">EntityUpdateBeneficialOwnerAddressParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Entity">Entity</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# BeneficialOwners
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityBeneficialOwner">EntityBeneficialOwner</a>
+
+Methods:
+
+- <code title="get /entity_beneficial_owners/{entity_beneficial_owner_id}">client.BeneficialOwners.<a href="https://pkg.go.dev/github.com/Increase/increase-go#BeneficialOwnerService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, entityBeneficialOwnerID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityBeneficialOwner">EntityBeneficialOwner</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /entity_beneficial_owners">client.BeneficialOwners.<a href="https://pkg.go.dev/github.com/Increase/increase-go#BeneficialOwnerService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#BeneficialOwnerListParams">BeneficialOwnerListParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#EntityBeneficialOwner">EntityBeneficialOwner</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # SupplementalDocuments
 
 Response Types:

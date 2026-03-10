@@ -51,6 +51,7 @@ type Client struct {
 	RoutingNumbers                   *RoutingNumberService
 	ExternalAccounts                 *ExternalAccountService
 	Entities                         *EntityService
+	BeneficialOwners                 *BeneficialOwnerService
 	SupplementalDocuments            *SupplementalDocumentService
 	Programs                         *ProgramService
 	AccountStatements                *AccountStatementService
@@ -136,6 +137,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.RoutingNumbers = NewRoutingNumberService(opts...)
 	r.ExternalAccounts = NewExternalAccountService(opts...)
 	r.Entities = NewEntityService(opts...)
+	r.BeneficialOwners = NewBeneficialOwnerService(opts...)
 	r.SupplementalDocuments = NewSupplementalDocumentService(opts...)
 	r.Programs = NewProgramService(opts...)
 	r.AccountStatements = NewAccountStatementService(opts...)
