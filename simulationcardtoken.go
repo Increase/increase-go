@@ -48,6 +48,8 @@ type SimulationCardTokenNewParams struct {
 	Expiration param.Field[time.Time] `json:"expiration" format:"date"`
 	// The last 4 digits of the card number.
 	Last4 param.Field[string] `json:"last4"`
+	// The outcome to simulate for card push transfers using this token.
+	Outcome param.Field[SimulationCardTokenNewParamsOutcome] `json:"outcome"`
 	// The prefix of the card number, usually the first 8 digits.
 	Prefix param.Field[string] `json:"prefix"`
 	// The total length of the card number, including prefix and last4.
@@ -114,6 +116,100 @@ const (
 func (r SimulationCardTokenNewParamsCapabilitiesRoute) IsKnown() bool {
 	switch r {
 	case SimulationCardTokenNewParamsCapabilitiesRouteVisa, SimulationCardTokenNewParamsCapabilitiesRouteMastercard:
+		return true
+	}
+	return false
+}
+
+// The outcome to simulate for card push transfers using this token.
+type SimulationCardTokenNewParamsOutcome struct {
+	// Whether card push transfers or validations will be approved or declined.
+	Result param.Field[SimulationCardTokenNewParamsOutcomeResult] `json:"result" api:"required"`
+	// If the result is declined, the details of the decline.
+	Decline param.Field[SimulationCardTokenNewParamsOutcomeDecline] `json:"decline"`
+}
+
+func (r SimulationCardTokenNewParamsOutcome) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Whether card push transfers or validations will be approved or declined.
+type SimulationCardTokenNewParamsOutcomeResult string
+
+const (
+	SimulationCardTokenNewParamsOutcomeResultApprove SimulationCardTokenNewParamsOutcomeResult = "approve"
+	SimulationCardTokenNewParamsOutcomeResultDecline SimulationCardTokenNewParamsOutcomeResult = "decline"
+)
+
+func (r SimulationCardTokenNewParamsOutcomeResult) IsKnown() bool {
+	switch r {
+	case SimulationCardTokenNewParamsOutcomeResultApprove, SimulationCardTokenNewParamsOutcomeResultDecline:
+		return true
+	}
+	return false
+}
+
+// If the result is declined, the details of the decline.
+type SimulationCardTokenNewParamsOutcomeDecline struct {
+	// The reason for the decline.
+	Reason param.Field[SimulationCardTokenNewParamsOutcomeDeclineReason] `json:"reason"`
+}
+
+func (r SimulationCardTokenNewParamsOutcomeDecline) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The reason for the decline.
+type SimulationCardTokenNewParamsOutcomeDeclineReason string
+
+const (
+	SimulationCardTokenNewParamsOutcomeDeclineReasonDoNotHonor                                              SimulationCardTokenNewParamsOutcomeDeclineReason = "do_not_honor"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonActivityCountLimitExceeded                              SimulationCardTokenNewParamsOutcomeDeclineReason = "activity_count_limit_exceeded"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonReferToCardIssuer                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "refer_to_card_issuer"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonReferToCardIssuerSpecialCondition                       SimulationCardTokenNewParamsOutcomeDeclineReason = "refer_to_card_issuer_special_condition"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidMerchant                                         SimulationCardTokenNewParamsOutcomeDeclineReason = "invalid_merchant"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCard                                              SimulationCardTokenNewParamsOutcomeDeclineReason = "pick_up_card"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonError                                                   SimulationCardTokenNewParamsOutcomeDeclineReason = "error"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCardSpecial                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "pick_up_card_special"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidTransaction                                      SimulationCardTokenNewParamsOutcomeDeclineReason = "invalid_transaction"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidAmount                                           SimulationCardTokenNewParamsOutcomeDeclineReason = "invalid_amount"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidAccountNumber                                    SimulationCardTokenNewParamsOutcomeDeclineReason = "invalid_account_number"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonNoSuchIssuer                                            SimulationCardTokenNewParamsOutcomeDeclineReason = "no_such_issuer"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonReEnterTransaction                                      SimulationCardTokenNewParamsOutcomeDeclineReason = "re_enter_transaction"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonNoCreditAccount                                         SimulationCardTokenNewParamsOutcomeDeclineReason = "no_credit_account"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCardLost                                          SimulationCardTokenNewParamsOutcomeDeclineReason = "pick_up_card_lost"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCardStolen                                        SimulationCardTokenNewParamsOutcomeDeclineReason = "pick_up_card_stolen"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonClosedAccount                                           SimulationCardTokenNewParamsOutcomeDeclineReason = "closed_account"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonInsufficientFunds                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "insufficient_funds"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonNoCheckingAccount                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "no_checking_account"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonNoSavingsAccount                                        SimulationCardTokenNewParamsOutcomeDeclineReason = "no_savings_account"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonExpiredCard                                             SimulationCardTokenNewParamsOutcomeDeclineReason = "expired_card"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionNotPermittedToCardholder                     SimulationCardTokenNewParamsOutcomeDeclineReason = "transaction_not_permitted_to_cardholder"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionNotAllowedAtTerminal                         SimulationCardTokenNewParamsOutcomeDeclineReason = "transaction_not_allowed_at_terminal"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonSuspectedFraud                                          SimulationCardTokenNewParamsOutcomeDeclineReason = "suspected_fraud"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonActivityAmountLimitExceeded                             SimulationCardTokenNewParamsOutcomeDeclineReason = "activity_amount_limit_exceeded"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonRestrictedCard                                          SimulationCardTokenNewParamsOutcomeDeclineReason = "restricted_card"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonSecurityViolation                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "security_violation"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionDoesNotFulfillAntiMoneyLaunderingRequirement SimulationCardTokenNewParamsOutcomeDeclineReason = "transaction_does_not_fulfill_anti_money_laundering_requirement"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonBlockedFirstUse                                         SimulationCardTokenNewParamsOutcomeDeclineReason = "blocked_first_use"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonCreditIssuerUnavailable                                 SimulationCardTokenNewParamsOutcomeDeclineReason = "credit_issuer_unavailable"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonNegativeCardVerificationValueResults                    SimulationCardTokenNewParamsOutcomeDeclineReason = "negative_card_verification_value_results"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonIssuerUnavailable                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "issuer_unavailable"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonFinancialInstitutionCannotBeFound                       SimulationCardTokenNewParamsOutcomeDeclineReason = "financial_institution_cannot_be_found"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionCannotBeCompleted                            SimulationCardTokenNewParamsOutcomeDeclineReason = "transaction_cannot_be_completed"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonDuplicateTransaction                                    SimulationCardTokenNewParamsOutcomeDeclineReason = "duplicate_transaction"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonSystemMalfunction                                       SimulationCardTokenNewParamsOutcomeDeclineReason = "system_malfunction"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonAdditionalCustomerAuthenticationRequired                SimulationCardTokenNewParamsOutcomeDeclineReason = "additional_customer_authentication_required"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonSurchargeAmountNotPermitted                             SimulationCardTokenNewParamsOutcomeDeclineReason = "surcharge_amount_not_permitted"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonDeclineForCvv2Failure                                   SimulationCardTokenNewParamsOutcomeDeclineReason = "decline_for_cvv2_failure"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonStopPaymentOrder                                        SimulationCardTokenNewParamsOutcomeDeclineReason = "stop_payment_order"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonRevocationOfAuthorizationOrder                          SimulationCardTokenNewParamsOutcomeDeclineReason = "revocation_of_authorization_order"
+	SimulationCardTokenNewParamsOutcomeDeclineReasonRevocationOfAllAuthorizationsOrder                      SimulationCardTokenNewParamsOutcomeDeclineReason = "revocation_of_all_authorizations_order"
+)
+
+func (r SimulationCardTokenNewParamsOutcomeDeclineReason) IsKnown() bool {
+	switch r {
+	case SimulationCardTokenNewParamsOutcomeDeclineReasonDoNotHonor, SimulationCardTokenNewParamsOutcomeDeclineReasonActivityCountLimitExceeded, SimulationCardTokenNewParamsOutcomeDeclineReasonReferToCardIssuer, SimulationCardTokenNewParamsOutcomeDeclineReasonReferToCardIssuerSpecialCondition, SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidMerchant, SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCard, SimulationCardTokenNewParamsOutcomeDeclineReasonError, SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCardSpecial, SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidTransaction, SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidAmount, SimulationCardTokenNewParamsOutcomeDeclineReasonInvalidAccountNumber, SimulationCardTokenNewParamsOutcomeDeclineReasonNoSuchIssuer, SimulationCardTokenNewParamsOutcomeDeclineReasonReEnterTransaction, SimulationCardTokenNewParamsOutcomeDeclineReasonNoCreditAccount, SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCardLost, SimulationCardTokenNewParamsOutcomeDeclineReasonPickUpCardStolen, SimulationCardTokenNewParamsOutcomeDeclineReasonClosedAccount, SimulationCardTokenNewParamsOutcomeDeclineReasonInsufficientFunds, SimulationCardTokenNewParamsOutcomeDeclineReasonNoCheckingAccount, SimulationCardTokenNewParamsOutcomeDeclineReasonNoSavingsAccount, SimulationCardTokenNewParamsOutcomeDeclineReasonExpiredCard, SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionNotPermittedToCardholder, SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionNotAllowedAtTerminal, SimulationCardTokenNewParamsOutcomeDeclineReasonSuspectedFraud, SimulationCardTokenNewParamsOutcomeDeclineReasonActivityAmountLimitExceeded, SimulationCardTokenNewParamsOutcomeDeclineReasonRestrictedCard, SimulationCardTokenNewParamsOutcomeDeclineReasonSecurityViolation, SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionDoesNotFulfillAntiMoneyLaunderingRequirement, SimulationCardTokenNewParamsOutcomeDeclineReasonBlockedFirstUse, SimulationCardTokenNewParamsOutcomeDeclineReasonCreditIssuerUnavailable, SimulationCardTokenNewParamsOutcomeDeclineReasonNegativeCardVerificationValueResults, SimulationCardTokenNewParamsOutcomeDeclineReasonIssuerUnavailable, SimulationCardTokenNewParamsOutcomeDeclineReasonFinancialInstitutionCannotBeFound, SimulationCardTokenNewParamsOutcomeDeclineReasonTransactionCannotBeCompleted, SimulationCardTokenNewParamsOutcomeDeclineReasonDuplicateTransaction, SimulationCardTokenNewParamsOutcomeDeclineReasonSystemMalfunction, SimulationCardTokenNewParamsOutcomeDeclineReasonAdditionalCustomerAuthenticationRequired, SimulationCardTokenNewParamsOutcomeDeclineReasonSurchargeAmountNotPermitted, SimulationCardTokenNewParamsOutcomeDeclineReasonDeclineForCvv2Failure, SimulationCardTokenNewParamsOutcomeDeclineReasonStopPaymentOrder, SimulationCardTokenNewParamsOutcomeDeclineReasonRevocationOfAuthorizationOrder, SimulationCardTokenNewParamsOutcomeDeclineReasonRevocationOfAllAuthorizationsOrder:
 		return true
 	}
 	return false
