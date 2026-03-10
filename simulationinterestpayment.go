@@ -39,7 +39,7 @@ func (r *SimulationInterestPaymentService) New(ctx context.Context, body Simulat
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/interest_payments"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationInterestPaymentNewParams struct {

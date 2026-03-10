@@ -40,7 +40,7 @@ func (r *SimulationExportService) New(ctx context.Context, body SimulationExport
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/exports"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationExportNewParams struct {

@@ -43,11 +43,11 @@ func (r *DeclinedTransactionService) Get(ctx context.Context, declinedTransactio
 	opts = slices.Concat(r.Options, opts)
 	if declinedTransactionID == "" {
 		err = errors.New("missing required declined_transaction_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("declined_transactions/%s", declinedTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Declined Transactions

@@ -43,7 +43,7 @@ func (r *IntrafiAccountEnrollmentService) New(ctx context.Context, body IntrafiA
 	opts = slices.Concat(r.Options, opts)
 	path := "intrafi_account_enrollments"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Get an IntraFi Account Enrollment
@@ -51,11 +51,11 @@ func (r *IntrafiAccountEnrollmentService) Get(ctx context.Context, intrafiAccoun
 	opts = slices.Concat(r.Options, opts)
 	if intrafiAccountEnrollmentID == "" {
 		err = errors.New("missing required intrafi_account_enrollment_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("intrafi_account_enrollments/%s", intrafiAccountEnrollmentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List IntraFi Account Enrollments
@@ -86,11 +86,11 @@ func (r *IntrafiAccountEnrollmentService) Unenroll(ctx context.Context, intrafiA
 	opts = slices.Concat(r.Options, opts)
 	if intrafiAccountEnrollmentID == "" {
 		err = errors.New("missing required intrafi_account_enrollment_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("intrafi_account_enrollments/%s/unenroll", intrafiAccountEnrollmentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // IntraFi is a

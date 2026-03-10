@@ -43,11 +43,11 @@ func (r *TransactionService) Get(ctx context.Context, transactionID string, opts
 	opts = slices.Concat(r.Options, opts)
 	if transactionID == "" {
 		err = errors.New("missing required transaction_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("transactions/%s", transactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Transactions

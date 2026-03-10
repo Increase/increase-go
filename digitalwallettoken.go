@@ -43,11 +43,11 @@ func (r *DigitalWalletTokenService) Get(ctx context.Context, digitalWalletTokenI
 	opts = slices.Concat(r.Options, opts)
 	if digitalWalletTokenID == "" {
 		err = errors.New("missing required digital_wallet_token_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("digital_wallet_tokens/%s", digitalWalletTokenID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Digital Wallet Tokens

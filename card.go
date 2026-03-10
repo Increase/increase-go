@@ -43,7 +43,7 @@ func (r *CardService) New(ctx context.Context, body CardNewParams, opts ...optio
 	opts = slices.Concat(r.Options, opts)
 	path := "cards"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Card
@@ -51,11 +51,11 @@ func (r *CardService) Get(ctx context.Context, cardID string, opts ...option.Req
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("cards/%s", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a Card
@@ -63,11 +63,11 @@ func (r *CardService) Update(ctx context.Context, cardID string, body CardUpdate
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("cards/%s", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Cards
@@ -100,11 +100,11 @@ func (r *CardService) NewDetailsIframe(ctx context.Context, cardID string, body 
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("cards/%s/create_details_iframe", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Sensitive details for a Card include the primary account number, expiry, card
@@ -113,11 +113,11 @@ func (r *CardService) Details(ctx context.Context, cardID string, opts ...option
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("cards/%s/details", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a Card's PIN
@@ -125,11 +125,11 @@ func (r *CardService) UpdatePin(ctx context.Context, cardID string, body CardUpd
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
 		err = errors.New("missing required card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("cards/%s/update_pin", cardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Cards are commercial credit cards. They'll immediately work for online purchases

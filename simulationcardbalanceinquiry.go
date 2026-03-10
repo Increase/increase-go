@@ -37,7 +37,7 @@ func (r *SimulationCardBalanceInquiryService) New(ctx context.Context, body Simu
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_balance_inquiries"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardBalanceInquiryNewParams struct {

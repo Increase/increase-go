@@ -40,7 +40,7 @@ func (r *SimulationCardReversalService) New(ctx context.Context, body Simulation
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_reversals"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardReversalNewParams struct {

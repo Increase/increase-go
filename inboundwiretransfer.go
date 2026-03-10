@@ -43,11 +43,11 @@ func (r *InboundWireTransferService) Get(ctx context.Context, inboundWireTransfe
 	opts = slices.Concat(r.Options, opts)
 	if inboundWireTransferID == "" {
 		err = errors.New("missing required inbound_wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_wire_transfers/%s", inboundWireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound Wire Transfers
@@ -78,11 +78,11 @@ func (r *InboundWireTransferService) Reverse(ctx context.Context, inboundWireTra
 	opts = slices.Concat(r.Options, opts)
 	if inboundWireTransferID == "" {
 		err = errors.New("missing required inbound_wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_wire_transfers/%s/reverse", inboundWireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // An Inbound Wire Transfer is a wire transfer initiated outside of Increase to

@@ -47,7 +47,7 @@ func (r *PendingTransactionService) New(ctx context.Context, body PendingTransac
 	opts = slices.Concat(r.Options, opts)
 	path := "pending_transactions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Pending Transaction
@@ -55,11 +55,11 @@ func (r *PendingTransactionService) Get(ctx context.Context, pendingTransactionI
 	opts = slices.Concat(r.Options, opts)
 	if pendingTransactionID == "" {
 		err = errors.New("missing required pending_transaction_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("pending_transactions/%s", pendingTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Pending Transactions
@@ -93,11 +93,11 @@ func (r *PendingTransactionService) Release(ctx context.Context, pendingTransact
 	opts = slices.Concat(r.Options, opts)
 	if pendingTransactionID == "" {
 		err = errors.New("missing required pending_transaction_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("pending_transactions/%s/release", pendingTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Pending Transactions are potential future additions and removals of money from

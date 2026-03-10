@@ -43,11 +43,11 @@ func (r *InboundRealTimePaymentsTransferService) Get(ctx context.Context, inboun
 	opts = slices.Concat(r.Options, opts)
 	if inboundRealTimePaymentsTransferID == "" {
 		err = errors.New("missing required inbound_real_time_payments_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_real_time_payments_transfers/%s", inboundRealTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound Real-Time Payments Transfers

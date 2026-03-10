@@ -38,7 +38,7 @@ func (r *SimulationCardTokenService) New(ctx context.Context, body SimulationCar
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_tokens"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardTokenNewParams struct {

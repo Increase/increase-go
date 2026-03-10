@@ -41,11 +41,11 @@ func (r *IntrafiBalanceService) IntrafiBalance(ctx context.Context, accountID st
 	opts = slices.Concat(r.Options, opts)
 	if accountID == "" {
 		err = errors.New("missing required account_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("accounts/%s/intrafi_balance", accountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // When using IntraFi, each account's balance over the standard FDIC insurance

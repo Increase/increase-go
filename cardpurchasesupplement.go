@@ -43,11 +43,11 @@ func (r *CardPurchaseSupplementService) Get(ctx context.Context, cardPurchaseSup
 	opts = slices.Concat(r.Options, opts)
 	if cardPurchaseSupplementID == "" {
 		err = errors.New("missing required card_purchase_supplement_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_purchase_supplements/%s", cardPurchaseSupplementID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Card Purchase Supplements

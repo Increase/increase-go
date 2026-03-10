@@ -43,11 +43,11 @@ func (r *InboundMailItemService) Get(ctx context.Context, inboundMailItemID stri
 	opts = slices.Concat(r.Options, opts)
 	if inboundMailItemID == "" {
 		err = errors.New("missing required inbound_mail_item_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_mail_items/%s", inboundMailItemID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound Mail Items
@@ -78,11 +78,11 @@ func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID s
 	opts = slices.Concat(r.Options, opts)
 	if inboundMailItemID == "" {
 		err = errors.New("missing required inbound_mail_item_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_mail_items/%s/action", inboundMailItemID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Inbound Mail Items represent pieces of physical mail delivered to a Lockbox.

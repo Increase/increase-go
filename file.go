@@ -49,7 +49,7 @@ func (r *FileService) New(ctx context.Context, body FileNewParams, opts ...optio
 	opts = slices.Concat(r.Options, opts)
 	path := "files"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a File
@@ -57,11 +57,11 @@ func (r *FileService) Get(ctx context.Context, fileID string, opts ...option.Req
 	opts = slices.Concat(r.Options, opts)
 	if fileID == "" {
 		err = errors.New("missing required file_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("files/%s", fileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Files

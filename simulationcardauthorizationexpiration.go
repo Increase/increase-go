@@ -38,7 +38,7 @@ func (r *SimulationCardAuthorizationExpirationService) New(ctx context.Context, 
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_authorization_expirations"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardAuthorizationExpirationNewParams struct {

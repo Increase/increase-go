@@ -43,11 +43,11 @@ func (r *InboundACHTransferService) Get(ctx context.Context, inboundACHTransferI
 	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound ACH Transfers
@@ -78,11 +78,11 @@ func (r *InboundACHTransferService) NewNotificationOfChange(ctx context.Context,
 	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/create_notification_of_change", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Decline an Inbound ACH Transfer
@@ -90,11 +90,11 @@ func (r *InboundACHTransferService) Decline(ctx context.Context, inboundACHTrans
 	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/decline", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Return an Inbound ACH Transfer
@@ -102,11 +102,11 @@ func (r *InboundACHTransferService) TransferReturn(ctx context.Context, inboundA
 	opts = slices.Concat(r.Options, opts)
 	if inboundACHTransferID == "" {
 		err = errors.New("missing required inbound_ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_ach_transfers/%s/transfer_return", inboundACHTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // An Inbound ACH Transfer is an ACH transfer initiated outside of Increase to your

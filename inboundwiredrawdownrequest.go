@@ -43,11 +43,11 @@ func (r *InboundWireDrawdownRequestService) Get(ctx context.Context, inboundWire
 	opts = slices.Concat(r.Options, opts)
 	if inboundWireDrawdownRequestID == "" {
 		err = errors.New("missing required inbound_wire_drawdown_request_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_wire_drawdown_requests/%s", inboundWireDrawdownRequestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound Wire Drawdown Requests

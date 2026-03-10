@@ -43,7 +43,7 @@ func (r *CardValidationService) New(ctx context.Context, body CardValidationNewP
 	opts = slices.Concat(r.Options, opts)
 	path := "card_validations"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Card Validation
@@ -51,11 +51,11 @@ func (r *CardValidationService) Get(ctx context.Context, cardValidationID string
 	opts = slices.Concat(r.Options, opts)
 	if cardValidationID == "" {
 		err = errors.New("missing required card_validation_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_validations/%s", cardValidationID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Card Validations

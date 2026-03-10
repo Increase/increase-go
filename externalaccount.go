@@ -43,7 +43,7 @@ func (r *ExternalAccountService) New(ctx context.Context, body ExternalAccountNe
 	opts = slices.Concat(r.Options, opts)
 	path := "external_accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an External Account
@@ -51,11 +51,11 @@ func (r *ExternalAccountService) Get(ctx context.Context, externalAccountID stri
 	opts = slices.Concat(r.Options, opts)
 	if externalAccountID == "" {
 		err = errors.New("missing required external_account_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("external_accounts/%s", externalAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update an External Account
@@ -63,11 +63,11 @@ func (r *ExternalAccountService) Update(ctx context.Context, externalAccountID s
 	opts = slices.Concat(r.Options, opts)
 	if externalAccountID == "" {
 		err = errors.New("missing required external_account_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("external_accounts/%s", externalAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List External Accounts

@@ -43,7 +43,7 @@ func (r *SwiftTransferService) New(ctx context.Context, body SwiftTransferNewPar
 	opts = slices.Concat(r.Options, opts)
 	path := "swift_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Swift Transfer
@@ -51,11 +51,11 @@ func (r *SwiftTransferService) Get(ctx context.Context, swiftTransferID string, 
 	opts = slices.Concat(r.Options, opts)
 	if swiftTransferID == "" {
 		err = errors.New("missing required swift_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("swift_transfers/%s", swiftTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Swift Transfers
@@ -86,11 +86,11 @@ func (r *SwiftTransferService) Approve(ctx context.Context, swiftTransferID stri
 	opts = slices.Concat(r.Options, opts)
 	if swiftTransferID == "" {
 		err = errors.New("missing required swift_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("swift_transfers/%s/approve", swiftTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancel a pending Swift Transfer
@@ -98,11 +98,11 @@ func (r *SwiftTransferService) Cancel(ctx context.Context, swiftTransferID strin
 	opts = slices.Concat(r.Options, opts)
 	if swiftTransferID == "" {
 		err = errors.New("missing required swift_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("swift_transfers/%s/cancel", swiftTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Swift Transfers send funds internationally.

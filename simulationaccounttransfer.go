@@ -40,9 +40,9 @@ func (r *SimulationAccountTransferService) Complete(ctx context.Context, account
 	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/account_transfers/%s/complete", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }

@@ -44,11 +44,11 @@ func (r *SimulationACHTransferService) Acknowledge(ctx context.Context, achTrans
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/acknowledge", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates receiving a Notification of Change for an
@@ -57,11 +57,11 @@ func (r *SimulationACHTransferService) NewNotificationOfChange(ctx context.Conte
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/create_notification_of_change", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the return of an [ACH Transfer](#ach-transfers) by the Federal Reserve
@@ -71,11 +71,11 @@ func (r *SimulationACHTransferService) Return(ctx context.Context, achTransferID
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/return", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the settlement of an [ACH Transfer](#ach-transfers) by the Federal
@@ -91,11 +91,11 @@ func (r *SimulationACHTransferService) Settle(ctx context.Context, achTransferID
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/settle", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the submission of an [ACH Transfer](#ach-transfers) to the Federal
@@ -108,11 +108,11 @@ func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/ach_transfers/%s/submit", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationACHTransferNewNotificationOfChangeParams struct {

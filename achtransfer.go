@@ -43,7 +43,7 @@ func (r *ACHTransferService) New(ctx context.Context, body ACHTransferNewParams,
 	opts = slices.Concat(r.Options, opts)
 	path := "ach_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an ACH Transfer
@@ -51,11 +51,11 @@ func (r *ACHTransferService) Get(ctx context.Context, achTransferID string, opts
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("ach_transfers/%s", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List ACH Transfers
@@ -86,11 +86,11 @@ func (r *ACHTransferService) Approve(ctx context.Context, achTransferID string, 
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("ach_transfers/%s/approve", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancels an ACH Transfer in a pending_approval state.
@@ -98,11 +98,11 @@ func (r *ACHTransferService) Cancel(ctx context.Context, achTransferID string, o
 	opts = slices.Concat(r.Options, opts)
 	if achTransferID == "" {
 		err = errors.New("missing required ach_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("ach_transfers/%s/cancel", achTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // ACH transfers move funds between your Increase account and any other account

@@ -43,7 +43,7 @@ func (r *CheckTransferService) New(ctx context.Context, body CheckTransferNewPar
 	opts = slices.Concat(r.Options, opts)
 	path := "check_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Check Transfer
@@ -51,11 +51,11 @@ func (r *CheckTransferService) Get(ctx context.Context, checkTransferID string, 
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("check_transfers/%s", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Check Transfers
@@ -86,11 +86,11 @@ func (r *CheckTransferService) Approve(ctx context.Context, checkTransferID stri
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("check_transfers/%s/approve", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancel a Check Transfer with the `pending_approval` status. See
@@ -99,11 +99,11 @@ func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID strin
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("check_transfers/%s/cancel", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Stop payment on a Check Transfer
@@ -111,11 +111,11 @@ func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID 
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("check_transfers/%s/stop_payment", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Check Transfers move funds from your Increase account by mailing a physical

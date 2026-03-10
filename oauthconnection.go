@@ -43,11 +43,11 @@ func (r *OAuthConnectionService) Get(ctx context.Context, oauthConnectionID stri
 	opts = slices.Concat(r.Options, opts)
 	if oauthConnectionID == "" {
 		err = errors.New("missing required oauth_connection_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("oauth_connections/%s", oauthConnectionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List OAuth Connections

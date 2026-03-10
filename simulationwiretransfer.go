@@ -40,11 +40,11 @@ func (r *SimulationWireTransferService) Reverse(ctx context.Context, wireTransfe
 	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/wire_transfers/%s/reverse", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the submission of a [Wire Transfer](#wire-transfers) to the Federal
@@ -54,9 +54,9 @@ func (r *SimulationWireTransferService) Submit(ctx context.Context, wireTransfer
 	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/wire_transfers/%s/submit", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }

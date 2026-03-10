@@ -42,11 +42,11 @@ func (r *SimulationCardDisputeService) Action(ctx context.Context, cardDisputeID
 	opts = slices.Concat(r.Options, opts)
 	if cardDisputeID == "" {
 		err = errors.New("missing required card_dispute_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/card_disputes/%s/action", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardDisputeActionParams struct {

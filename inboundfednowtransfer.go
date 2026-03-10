@@ -43,11 +43,11 @@ func (r *InboundFednowTransferService) Get(ctx context.Context, inboundFednowTra
 	opts = slices.Concat(r.Options, opts)
 	if inboundFednowTransferID == "" {
 		err = errors.New("missing required inbound_fednow_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_fednow_transfers/%s", inboundFednowTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound FedNow Transfers

@@ -43,7 +43,7 @@ func (r *PhysicalCardService) New(ctx context.Context, body PhysicalCardNewParam
 	opts = slices.Concat(r.Options, opts)
 	path := "physical_cards"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Physical Card
@@ -51,11 +51,11 @@ func (r *PhysicalCardService) Get(ctx context.Context, physicalCardID string, op
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("physical_cards/%s", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a Physical Card
@@ -63,11 +63,11 @@ func (r *PhysicalCardService) Update(ctx context.Context, physicalCardID string,
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("physical_cards/%s", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Physical Cards
