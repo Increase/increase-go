@@ -32,8 +32,14 @@ func TestSimulationCardTokenNewWithOptionalParams(t *testing.T) {
 			DomesticPushTransfers:    increase.F(increase.SimulationCardTokenNewParamsCapabilitiesDomesticPushTransfersSupported),
 			Route:                    increase.F(increase.SimulationCardTokenNewParamsCapabilitiesRouteVisa),
 		}}),
-		Expiration:                 increase.F(time.Now()),
-		Last4:                      increase.F("1234"),
+		Expiration: increase.F(time.Now()),
+		Last4:      increase.F("1234"),
+		Outcome: increase.F(increase.SimulationCardTokenNewParamsOutcome{
+			Result: increase.F(increase.SimulationCardTokenNewParamsOutcomeResultApprove),
+			Decline: increase.F(increase.SimulationCardTokenNewParamsOutcomeDecline{
+				Reason: increase.F(increase.SimulationCardTokenNewParamsOutcomeDeclineReasonDoNotHonor),
+			}),
+		}),
 		Prefix:                     increase.F("41234567"),
 		PrimaryAccountNumberLength: increase.F(int64(16)),
 	})
