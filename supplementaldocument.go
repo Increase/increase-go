@@ -41,7 +41,7 @@ func (r *SupplementalDocumentService) New(ctx context.Context, body Supplemental
 	opts = slices.Concat(r.Options, opts)
 	path := "entity_supplemental_documents"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Entity Supplemental Document Submissions

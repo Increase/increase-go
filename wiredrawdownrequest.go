@@ -43,7 +43,7 @@ func (r *WireDrawdownRequestService) New(ctx context.Context, body WireDrawdownR
 	opts = slices.Concat(r.Options, opts)
 	path := "wire_drawdown_requests"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Wire Drawdown Request
@@ -51,11 +51,11 @@ func (r *WireDrawdownRequestService) Get(ctx context.Context, wireDrawdownReques
 	opts = slices.Concat(r.Options, opts)
 	if wireDrawdownRequestID == "" {
 		err = errors.New("missing required wire_drawdown_request_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("wire_drawdown_requests/%s", wireDrawdownRequestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Wire Drawdown Requests

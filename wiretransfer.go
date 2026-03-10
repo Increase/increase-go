@@ -43,7 +43,7 @@ func (r *WireTransferService) New(ctx context.Context, body WireTransferNewParam
 	opts = slices.Concat(r.Options, opts)
 	path := "wire_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Wire Transfer
@@ -51,11 +51,11 @@ func (r *WireTransferService) Get(ctx context.Context, wireTransferID string, op
 	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("wire_transfers/%s", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Wire Transfers
@@ -86,11 +86,11 @@ func (r *WireTransferService) Approve(ctx context.Context, wireTransferID string
 	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("wire_transfers/%s/approve", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancel a pending Wire Transfer
@@ -98,11 +98,11 @@ func (r *WireTransferService) Cancel(ctx context.Context, wireTransferID string,
 	opts = slices.Concat(r.Options, opts)
 	if wireTransferID == "" {
 		err = errors.New("missing required wire_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("wire_transfers/%s/cancel", wireTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Wire transfers move funds between your Increase account and any other account

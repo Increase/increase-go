@@ -43,11 +43,11 @@ func (r *AccountStatementService) Get(ctx context.Context, accountStatementID st
 	opts = slices.Concat(r.Options, opts)
 	if accountStatementID == "" {
 		err = errors.New("missing required account_statement_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("account_statements/%s", accountStatementID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Account Statements

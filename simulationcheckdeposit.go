@@ -42,11 +42,11 @@ func (r *SimulationCheckDepositService) Adjustment(ctx context.Context, checkDep
 	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/adjustment", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the rejection of a [Check Deposit](#check-deposits) by Increase due to
@@ -56,11 +56,11 @@ func (r *SimulationCheckDepositService) Reject(ctx context.Context, checkDeposit
 	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/reject", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the return of a [Check Deposit](#check-deposits). This Check Deposit
@@ -69,11 +69,11 @@ func (r *SimulationCheckDepositService) Return(ctx context.Context, checkDeposit
 	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/return", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates the submission of a [Check Deposit](#check-deposits) to the Federal
@@ -82,11 +82,11 @@ func (r *SimulationCheckDepositService) Submit(ctx context.Context, checkDeposit
 	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/check_deposits/%s/submit", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCheckDepositAdjustmentParams struct {

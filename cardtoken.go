@@ -43,11 +43,11 @@ func (r *CardTokenService) Get(ctx context.Context, cardTokenID string, opts ...
 	opts = slices.Concat(r.Options, opts)
 	if cardTokenID == "" {
 		err = errors.New("missing required card_token_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_tokens/%s", cardTokenID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Card Tokens
@@ -80,11 +80,11 @@ func (r *CardTokenService) Capabilities(ctx context.Context, cardTokenID string,
 	opts = slices.Concat(r.Options, opts)
 	if cardTokenID == "" {
 		err = errors.New("missing required card_token_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_tokens/%s/capabilities", cardTokenID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Card Tokens represent a tokenized card number that can be used for Card Push

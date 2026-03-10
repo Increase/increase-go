@@ -43,11 +43,11 @@ func (r *OAuthApplicationService) Get(ctx context.Context, oauthApplicationID st
 	opts = slices.Concat(r.Options, opts)
 	if oauthApplicationID == "" {
 		err = errors.New("missing required oauth_application_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("oauth_applications/%s", oauthApplicationID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List OAuth Applications

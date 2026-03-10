@@ -43,7 +43,7 @@ func (r *CheckDepositService) New(ctx context.Context, body CheckDepositNewParam
 	opts = slices.Concat(r.Options, opts)
 	path := "check_deposits"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Check Deposit
@@ -51,11 +51,11 @@ func (r *CheckDepositService) Get(ctx context.Context, checkDepositID string, op
 	opts = slices.Concat(r.Options, opts)
 	if checkDepositID == "" {
 		err = errors.New("missing required check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("check_deposits/%s", checkDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Check Deposits

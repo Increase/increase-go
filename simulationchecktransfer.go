@@ -40,9 +40,9 @@ func (r *SimulationCheckTransferService) Mail(ctx context.Context, checkTransfer
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
 		err = errors.New("missing required check_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/check_transfers/%s/mail", checkTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }

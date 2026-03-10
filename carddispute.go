@@ -43,7 +43,7 @@ func (r *CardDisputeService) New(ctx context.Context, body CardDisputeNewParams,
 	opts = slices.Concat(r.Options, opts)
 	path := "card_disputes"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Card Dispute
@@ -51,11 +51,11 @@ func (r *CardDisputeService) Get(ctx context.Context, cardDisputeID string, opts
 	opts = slices.Concat(r.Options, opts)
 	if cardDisputeID == "" {
 		err = errors.New("missing required card_dispute_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_disputes/%s", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Card Disputes
@@ -86,11 +86,11 @@ func (r *CardDisputeService) SubmitUserSubmission(ctx context.Context, cardDispu
 	opts = slices.Concat(r.Options, opts)
 	if cardDisputeID == "" {
 		err = errors.New("missing required card_dispute_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_disputes/%s/submit_user_submission", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Withdraw a Card Dispute
@@ -98,11 +98,11 @@ func (r *CardDisputeService) Withdraw(ctx context.Context, cardDisputeID string,
 	opts = slices.Concat(r.Options, opts)
 	if cardDisputeID == "" {
 		err = errors.New("missing required card_dispute_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_disputes/%s/withdraw", cardDisputeID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // If unauthorized activity occurs on a card, you can create a Card Dispute and

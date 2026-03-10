@@ -41,7 +41,7 @@ func (r *SimulationCardSettlementService) New(ctx context.Context, body Simulati
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_settlements"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardSettlementNewParams struct {

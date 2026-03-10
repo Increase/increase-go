@@ -44,7 +44,7 @@ func (r *SimulationInboundCheckDepositService) New(ctx context.Context, body Sim
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_check_deposits"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit
@@ -53,11 +53,11 @@ func (r *SimulationInboundCheckDepositService) Adjustment(ctx context.Context, i
 	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/inbound_check_deposits/%s/adjustment", inboundCheckDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationInboundCheckDepositNewParams struct {

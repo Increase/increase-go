@@ -38,7 +38,7 @@ func (r *SimulationAccountStatementService) New(ctx context.Context, body Simula
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/account_statements"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationAccountStatementNewParams struct {

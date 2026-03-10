@@ -37,7 +37,7 @@ func (r *GroupService) Get(ctx context.Context, opts ...option.RequestOption) (r
 	opts = slices.Concat(r.Options, opts)
 	path := "groups/current"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Groups represent organizations using Increase. You can retrieve information

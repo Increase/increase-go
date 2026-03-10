@@ -40,7 +40,7 @@ func (r *SimulationProgramService) New(ctx context.Context, body SimulationProgr
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/programs"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationProgramNewParams struct {

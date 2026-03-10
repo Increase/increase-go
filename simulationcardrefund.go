@@ -38,7 +38,7 @@ func (r *SimulationCardRefundService) New(ctx context.Context, body SimulationCa
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_refunds"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardRefundNewParams struct {

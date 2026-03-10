@@ -47,7 +47,7 @@ func (r *SimulationInboundACHTransferService) New(ctx context.Context, body Simu
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_ach_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationInboundACHTransferNewParams struct {

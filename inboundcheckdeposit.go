@@ -43,11 +43,11 @@ func (r *InboundCheckDepositService) Get(ctx context.Context, inboundCheckDeposi
 	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_check_deposits/%s", inboundCheckDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Inbound Check Deposits
@@ -78,11 +78,11 @@ func (r *InboundCheckDepositService) Decline(ctx context.Context, inboundCheckDe
 	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_check_deposits/%s/decline", inboundCheckDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Return an Inbound Check Deposit
@@ -90,11 +90,11 @@ func (r *InboundCheckDepositService) Return(ctx context.Context, inboundCheckDep
 	opts = slices.Concat(r.Options, opts)
 	if inboundCheckDepositID == "" {
 		err = errors.New("missing required inbound_check_deposit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("inbound_check_deposits/%s/return", inboundCheckDepositID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Inbound Check Deposits are records of third-parties attempting to deposit checks

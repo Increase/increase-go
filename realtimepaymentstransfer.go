@@ -43,7 +43,7 @@ func (r *RealTimePaymentsTransferService) New(ctx context.Context, body RealTime
 	opts = slices.Concat(r.Options, opts)
 	path := "real_time_payments_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Real-Time Payments Transfer
@@ -51,11 +51,11 @@ func (r *RealTimePaymentsTransferService) Get(ctx context.Context, realTimePayme
 	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("real_time_payments_transfers/%s", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Real-Time Payments Transfers
@@ -86,11 +86,11 @@ func (r *RealTimePaymentsTransferService) Approve(ctx context.Context, realTimeP
 	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("real_time_payments_transfers/%s/approve", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancels a Real-Time Payments Transfer in a pending_approval state.
@@ -98,11 +98,11 @@ func (r *RealTimePaymentsTransferService) Cancel(ctx context.Context, realTimePa
 	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("real_time_payments_transfers/%s/cancel", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Real-Time Payments transfers move funds, within seconds, between your Increase

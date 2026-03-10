@@ -41,7 +41,7 @@ func (r *SimulationCardAuthenticationService) New(ctx context.Context, body Simu
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_authentications"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates an attempt at a Card Authentication Challenge. This updates the
@@ -52,11 +52,11 @@ func (r *SimulationCardAuthenticationService) ChallengeAttempts(ctx context.Cont
 	opts = slices.Concat(r.Options, opts)
 	if cardPaymentID == "" {
 		err = errors.New("missing required card_payment_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/card_authentications/%s/challenge_attempts", cardPaymentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Simulates starting a Card Authentication Challenge for an existing Card
@@ -69,11 +69,11 @@ func (r *SimulationCardAuthenticationService) Challenges(ctx context.Context, ca
 	opts = slices.Concat(r.Options, opts)
 	if cardPaymentID == "" {
 		err = errors.New("missing required card_payment_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/card_authentications/%s/challenges", cardPaymentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardAuthenticationNewParams struct {

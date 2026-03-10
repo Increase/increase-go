@@ -43,7 +43,7 @@ func (r *AccountNumberService) New(ctx context.Context, body AccountNumberNewPar
 	opts = slices.Concat(r.Options, opts)
 	path := "account_numbers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an Account Number
@@ -51,11 +51,11 @@ func (r *AccountNumberService) Get(ctx context.Context, accountNumberID string, 
 	opts = slices.Concat(r.Options, opts)
 	if accountNumberID == "" {
 		err = errors.New("missing required account_number_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("account_numbers/%s", accountNumberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update an Account Number
@@ -63,11 +63,11 @@ func (r *AccountNumberService) Update(ctx context.Context, accountNumberID strin
 	opts = slices.Concat(r.Options, opts)
 	if accountNumberID == "" {
 		err = errors.New("missing required account_number_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("account_numbers/%s", accountNumberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Account Numbers

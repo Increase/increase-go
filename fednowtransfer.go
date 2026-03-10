@@ -43,7 +43,7 @@ func (r *FednowTransferService) New(ctx context.Context, body FednowTransferNewP
 	opts = slices.Concat(r.Options, opts)
 	path := "fednow_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a FedNow Transfer
@@ -51,11 +51,11 @@ func (r *FednowTransferService) Get(ctx context.Context, fednowTransferID string
 	opts = slices.Concat(r.Options, opts)
 	if fednowTransferID == "" {
 		err = errors.New("missing required fednow_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("fednow_transfers/%s", fednowTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List FedNow Transfers
@@ -86,11 +86,11 @@ func (r *FednowTransferService) Approve(ctx context.Context, fednowTransferID st
 	opts = slices.Concat(r.Options, opts)
 	if fednowTransferID == "" {
 		err = errors.New("missing required fednow_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("fednow_transfers/%s/approve", fednowTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancel a pending FedNow Transfer
@@ -98,11 +98,11 @@ func (r *FednowTransferService) Cancel(ctx context.Context, fednowTransferID str
 	opts = slices.Concat(r.Options, opts)
 	if fednowTransferID == "" {
 		err = errors.New("missing required fednow_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("fednow_transfers/%s/cancel", fednowTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // FedNow transfers move funds, within seconds, between your Increase account and
