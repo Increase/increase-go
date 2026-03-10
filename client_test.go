@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Accounts.New(context.Background(), increase.AccountNewParams{
+	_, _ = client.Accounts.New(context.Background(), increase.AccountNewParams{
 		Name:      increase.F("New Account!"),
 		EntityID:  increase.F("entity_n8y8tnk2p9339ti393yi"),
 		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
