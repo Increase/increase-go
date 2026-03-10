@@ -38,9 +38,9 @@ func (r *SimulationPendingTransactionService) ReleaseInboundFundsHold(ctx contex
 	opts = slices.Concat(r.Options, opts)
 	if pendingTransactionID == "" {
 		err = errors.New("missing required pending_transaction_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/pending_transactions/%s/release_inbound_funds_hold", pendingTransactionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }

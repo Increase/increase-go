@@ -43,7 +43,7 @@ func (r *AccountTransferService) New(ctx context.Context, body AccountTransferNe
 	opts = slices.Concat(r.Options, opts)
 	path := "account_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an Account Transfer
@@ -51,11 +51,11 @@ func (r *AccountTransferService) Get(ctx context.Context, accountTransferID stri
 	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("account_transfers/%s", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Account Transfers
@@ -86,11 +86,11 @@ func (r *AccountTransferService) Approve(ctx context.Context, accountTransferID 
 	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("account_transfers/%s/approve", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancels an Account Transfer in status `pending_approval`.
@@ -98,11 +98,11 @@ func (r *AccountTransferService) Cancel(ctx context.Context, accountTransferID s
 	opts = slices.Concat(r.Options, opts)
 	if accountTransferID == "" {
 		err = errors.New("missing required account_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("account_transfers/%s/cancel", accountTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Account transfers move funds between your own accounts at Increase (accounting

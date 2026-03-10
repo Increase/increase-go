@@ -43,7 +43,7 @@ func (r *LockboxService) New(ctx context.Context, body LockboxNewParams, opts ..
 	opts = slices.Concat(r.Options, opts)
 	path := "lockboxes"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Lockbox
@@ -51,11 +51,11 @@ func (r *LockboxService) Get(ctx context.Context, lockboxID string, opts ...opti
 	opts = slices.Concat(r.Options, opts)
 	if lockboxID == "" {
 		err = errors.New("missing required lockbox_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lockboxes/%s", lockboxID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a Lockbox
@@ -63,11 +63,11 @@ func (r *LockboxService) Update(ctx context.Context, lockboxID string, body Lock
 	opts = slices.Concat(r.Options, opts)
 	if lockboxID == "" {
 		err = errors.New("missing required lockbox_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lockboxes/%s", lockboxID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Lockboxes

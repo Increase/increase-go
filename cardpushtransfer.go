@@ -43,7 +43,7 @@ func (r *CardPushTransferService) New(ctx context.Context, body CardPushTransfer
 	opts = slices.Concat(r.Options, opts)
 	path := "card_push_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Card Push Transfer
@@ -51,11 +51,11 @@ func (r *CardPushTransferService) Get(ctx context.Context, cardPushTransferID st
 	opts = slices.Concat(r.Options, opts)
 	if cardPushTransferID == "" {
 		err = errors.New("missing required card_push_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_push_transfers/%s", cardPushTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Card Push Transfers
@@ -86,11 +86,11 @@ func (r *CardPushTransferService) Approve(ctx context.Context, cardPushTransferI
 	opts = slices.Concat(r.Options, opts)
 	if cardPushTransferID == "" {
 		err = errors.New("missing required card_push_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_push_transfers/%s/approve", cardPushTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Cancels a Card Push Transfer in a pending_approval state.
@@ -98,11 +98,11 @@ func (r *CardPushTransferService) Cancel(ctx context.Context, cardPushTransferID
 	opts = slices.Concat(r.Options, opts)
 	if cardPushTransferID == "" {
 		err = errors.New("missing required card_push_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("card_push_transfers/%s/cancel", cardPushTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Card Push Transfers send funds to a recipient's payment card in real-time.

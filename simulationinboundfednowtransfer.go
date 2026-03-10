@@ -38,7 +38,7 @@ func (r *SimulationInboundFednowTransferService) New(ctx context.Context, body S
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_fednow_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationInboundFednowTransferNewParams struct {

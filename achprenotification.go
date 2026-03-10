@@ -43,7 +43,7 @@ func (r *ACHPrenotificationService) New(ctx context.Context, body ACHPrenotifica
 	opts = slices.Concat(r.Options, opts)
 	path := "ach_prenotifications"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an ACH Prenotification
@@ -51,11 +51,11 @@ func (r *ACHPrenotificationService) Get(ctx context.Context, achPrenotificationI
 	opts = slices.Concat(r.Options, opts)
 	if achPrenotificationID == "" {
 		err = errors.New("missing required ach_prenotification_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("ach_prenotifications/%s", achPrenotificationID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List ACH Prenotifications

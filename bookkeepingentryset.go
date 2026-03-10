@@ -43,7 +43,7 @@ func (r *BookkeepingEntrySetService) New(ctx context.Context, body BookkeepingEn
 	opts = slices.Concat(r.Options, opts)
 	path := "bookkeeping_entry_sets"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Bookkeeping Entry Set
@@ -51,11 +51,11 @@ func (r *BookkeepingEntrySetService) Get(ctx context.Context, bookkeepingEntrySe
 	opts = slices.Concat(r.Options, opts)
 	if bookkeepingEntrySetID == "" {
 		err = errors.New("missing required bookkeeping_entry_set_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("bookkeeping_entry_sets/%s", bookkeepingEntrySetID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Bookkeeping Entry Sets

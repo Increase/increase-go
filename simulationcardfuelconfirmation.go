@@ -39,7 +39,7 @@ func (r *SimulationCardFuelConfirmationService) New(ctx context.Context, body Si
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_fuel_confirmations"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardFuelConfirmationNewParams struct {

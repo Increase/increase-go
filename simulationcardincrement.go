@@ -38,7 +38,7 @@ func (r *SimulationCardIncrementService) New(ctx context.Context, body Simulatio
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_increments"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationCardIncrementNewParams struct {

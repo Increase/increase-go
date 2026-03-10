@@ -40,11 +40,11 @@ func (r *RealTimeDecisionService) Get(ctx context.Context, realTimeDecisionID st
 	opts = slices.Concat(r.Options, opts)
 	if realTimeDecisionID == "" {
 		err = errors.New("missing required real_time_decision_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("real_time_decisions/%s", realTimeDecisionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Action a Real-Time Decision
@@ -52,11 +52,11 @@ func (r *RealTimeDecisionService) Action(ctx context.Context, realTimeDecisionID
 	opts = slices.Concat(r.Options, opts)
 	if realTimeDecisionID == "" {
 		err = errors.New("missing required real_time_decision_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("real_time_decisions/%s/action", realTimeDecisionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Real Time Decisions are created when your application needs to take action in

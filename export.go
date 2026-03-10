@@ -43,7 +43,7 @@ func (r *ExportService) New(ctx context.Context, body ExportNewParams, opts ...o
 	opts = slices.Concat(r.Options, opts)
 	path := "exports"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an Export
@@ -51,11 +51,11 @@ func (r *ExportService) Get(ctx context.Context, exportID string, opts ...option
 	opts = slices.Concat(r.Options, opts)
 	if exportID == "" {
 		err = errors.New("missing required export_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("exports/%s", exportID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Exports

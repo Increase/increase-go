@@ -43,7 +43,7 @@ func (r *BookkeepingAccountService) New(ctx context.Context, body BookkeepingAcc
 	opts = slices.Concat(r.Options, opts)
 	path := "bookkeeping_accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a Bookkeeping Account
@@ -51,11 +51,11 @@ func (r *BookkeepingAccountService) Update(ctx context.Context, bookkeepingAccou
 	opts = slices.Concat(r.Options, opts)
 	if bookkeepingAccountID == "" {
 		err = errors.New("missing required bookkeeping_account_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("bookkeeping_accounts/%s", bookkeepingAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Bookkeeping Accounts
@@ -86,11 +86,11 @@ func (r *BookkeepingAccountService) Balance(ctx context.Context, bookkeepingAcco
 	opts = slices.Concat(r.Options, opts)
 	if bookkeepingAccountID == "" {
 		err = errors.New("missing required bookkeeping_account_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("bookkeeping_accounts/%s/balance", bookkeepingAccountID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Accounts are T-accounts. They can store accounting entries. Your compliance

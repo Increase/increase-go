@@ -43,7 +43,7 @@ func (r *PhysicalCardProfileService) New(ctx context.Context, body PhysicalCardP
 	opts = slices.Concat(r.Options, opts)
 	path := "physical_card_profiles"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Card Profile
@@ -51,11 +51,11 @@ func (r *PhysicalCardProfileService) Get(ctx context.Context, physicalCardProfil
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
 		err = errors.New("missing required physical_card_profile_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("physical_card_profiles/%s", physicalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Physical Card Profiles
@@ -86,11 +86,11 @@ func (r *PhysicalCardProfileService) Archive(ctx context.Context, physicalCardPr
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
 		err = errors.New("missing required physical_card_profile_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("physical_card_profiles/%s/archive", physicalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Clone a Physical Card Profile
@@ -98,11 +98,11 @@ func (r *PhysicalCardProfileService) Clone(ctx context.Context, physicalCardProf
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
 		err = errors.New("missing required physical_card_profile_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("physical_card_profiles/%s/clone", physicalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // This contains artwork and metadata relating to a Physical Card's appearance. For

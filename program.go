@@ -43,11 +43,11 @@ func (r *ProgramService) Get(ctx context.Context, programID string, opts ...opti
 	opts = slices.Concat(r.Options, opts)
 	if programID == "" {
 		err = errors.New("missing required program_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("programs/%s", programID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Programs

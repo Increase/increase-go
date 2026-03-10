@@ -43,7 +43,7 @@ func (r *EventSubscriptionService) New(ctx context.Context, body EventSubscripti
 	opts = slices.Concat(r.Options, opts)
 	path := "event_subscriptions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an Event Subscription
@@ -51,11 +51,11 @@ func (r *EventSubscriptionService) Get(ctx context.Context, eventSubscriptionID 
 	opts = slices.Concat(r.Options, opts)
 	if eventSubscriptionID == "" {
 		err = errors.New("missing required event_subscription_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("event_subscriptions/%s", eventSubscriptionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update an Event Subscription
@@ -63,11 +63,11 @@ func (r *EventSubscriptionService) Update(ctx context.Context, eventSubscription
 	opts = slices.Concat(r.Options, opts)
 	if eventSubscriptionID == "" {
 		err = errors.New("missing required event_subscription_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("event_subscriptions/%s", eventSubscriptionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Event Subscriptions

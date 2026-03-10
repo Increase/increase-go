@@ -39,7 +39,7 @@ func (r *SimulationDigitalWalletTokenRequestService) New(ctx context.Context, bo
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/digital_wallet_token_requests"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // The results of a Digital Wallet Token simulation.

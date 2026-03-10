@@ -38,7 +38,7 @@ func (r *FileLinkService) New(ctx context.Context, body FileLinkNewParams, opts 
 	opts = slices.Concat(r.Options, opts)
 	path := "file_links"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // File Links let you generate a URL that can be used to download a File.

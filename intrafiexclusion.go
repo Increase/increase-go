@@ -43,7 +43,7 @@ func (r *IntrafiExclusionService) New(ctx context.Context, body IntrafiExclusion
 	opts = slices.Concat(r.Options, opts)
 	path := "intrafi_exclusions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Get an IntraFi Exclusion
@@ -51,11 +51,11 @@ func (r *IntrafiExclusionService) Get(ctx context.Context, intrafiExclusionID st
 	opts = slices.Concat(r.Options, opts)
 	if intrafiExclusionID == "" {
 		err = errors.New("missing required intrafi_exclusion_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("intrafi_exclusions/%s", intrafiExclusionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List IntraFi Exclusions
@@ -86,11 +86,11 @@ func (r *IntrafiExclusionService) Archive(ctx context.Context, intrafiExclusionI
 	opts = slices.Concat(r.Options, opts)
 	if intrafiExclusionID == "" {
 		err = errors.New("missing required intrafi_exclusion_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("intrafi_exclusions/%s/archive", intrafiExclusionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Certain institutions may be excluded per Entity when sweeping funds into the

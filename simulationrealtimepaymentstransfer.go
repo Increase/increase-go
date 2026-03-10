@@ -43,11 +43,11 @@ func (r *SimulationRealTimePaymentsTransferService) Complete(ctx context.Context
 	opts = slices.Concat(r.Options, opts)
 	if realTimePaymentsTransferID == "" {
 		err = errors.New("missing required real_time_payments_transfer_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/real_time_payments_transfers/%s/complete", realTimePaymentsTransferID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationRealTimePaymentsTransferCompleteParams struct {

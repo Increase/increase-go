@@ -40,7 +40,7 @@ func (r *SimulationInboundRealTimePaymentsTransferService) New(ctx context.Conte
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_real_time_payments_transfers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationInboundRealTimePaymentsTransferNewParams struct {

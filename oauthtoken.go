@@ -37,7 +37,7 @@ func (r *OAuthTokenService) New(ctx context.Context, body OAuthTokenNewParams, o
 	opts = slices.Concat(r.Options, opts)
 	path := "oauth/tokens"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // A token that is returned to your application when a user completes the OAuth

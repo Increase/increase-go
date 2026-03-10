@@ -43,7 +43,7 @@ func (r *DigitalCardProfileService) New(ctx context.Context, body DigitalCardPro
 	opts = slices.Concat(r.Options, opts)
 	path := "digital_card_profiles"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve a Digital Card Profile
@@ -51,11 +51,11 @@ func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileI
 	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {
 		err = errors.New("missing required digital_card_profile_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("digital_card_profiles/%s", digitalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List Card Profiles
@@ -86,11 +86,11 @@ func (r *DigitalCardProfileService) Archive(ctx context.Context, digitalCardProf
 	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {
 		err = errors.New("missing required digital_card_profile_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("digital_card_profiles/%s/archive", digitalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Clones a Digital Card Profile
@@ -98,11 +98,11 @@ func (r *DigitalCardProfileService) Clone(ctx context.Context, digitalCardProfil
 	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {
 		err = errors.New("missing required digital_card_profile_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("digital_card_profiles/%s/clone", digitalCardProfileID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // This contains artwork and metadata relating to a Card's appearance in digital

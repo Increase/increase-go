@@ -41,11 +41,11 @@ func (r *SimulationPhysicalCardService) New(ctx context.Context, physicalCardID 
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/physical_cards/%s/tracking_updates", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // This endpoint allows you to simulate advancing the shipment status of a Physical
@@ -55,11 +55,11 @@ func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, phy
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
 		err = errors.New("missing required physical_card_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("simulations/physical_cards/%s/advance_shipment", physicalCardID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationPhysicalCardNewParams struct {

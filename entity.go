@@ -43,7 +43,7 @@ func (r *EntityService) New(ctx context.Context, body EntityNewParams, opts ...o
 	opts = slices.Concat(r.Options, opts)
 	path := "entities"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Retrieve an Entity
@@ -51,11 +51,11 @@ func (r *EntityService) Get(ctx context.Context, entityID string, opts ...option
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update an Entity
@@ -63,11 +63,11 @@ func (r *EntityService) Update(ctx context.Context, entityID string, body Entity
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List Entities
@@ -98,11 +98,11 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s/archive", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Archive a beneficial owner for a corporate Entity
@@ -110,11 +110,11 @@ func (r *EntityService) ArchiveBeneficialOwner(ctx context.Context, entityID str
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s/archive_beneficial_owner", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Create a beneficial owner for a corporate Entity
@@ -122,11 +122,11 @@ func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string,
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s/create_beneficial_owner", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Update the address for a beneficial owner belonging to a corporate Entity
@@ -134,11 +134,11 @@ func (r *EntityService) UpdateBeneficialOwnerAddress(ctx context.Context, entity
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s/update_beneficial_owner_address", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Entities are the legal entities that own accounts. They can be people,

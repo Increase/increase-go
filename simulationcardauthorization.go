@@ -43,7 +43,7 @@ func (r *SimulationCardAuthorizationService) New(ctx context.Context, body Simul
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/card_authorizations"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // The results of a Card Authorization simulation.

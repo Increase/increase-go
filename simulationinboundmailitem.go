@@ -38,7 +38,7 @@ func (r *SimulationInboundMailItemService) New(ctx context.Context, body Simulat
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_mail_items"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SimulationInboundMailItemNewParams struct {
