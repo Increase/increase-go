@@ -419,6 +419,8 @@ type CardPaymentElementsCardAuthenticationChallenge struct {
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The one-time code used for the Card Authentication Challenge.
 	OneTimeCode string `json:"one_time_code" api:"required"`
+	// The identifier of the Real-Time Decision used to deliver this challenge.
+	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
 	// The method used to verify the Card Authentication Challenge.
 	VerificationMethod CardPaymentElementsCardAuthenticationChallengeVerificationMethod `json:"verification_method" api:"required"`
 	// E.g., the email address or phone number used for the Card Authentication
@@ -433,6 +435,7 @@ type cardPaymentElementsCardAuthenticationChallengeJSON struct {
 	Attempts           apijson.Field
 	CreatedAt          apijson.Field
 	OneTimeCode        apijson.Field
+	RealTimeDecisionID apijson.Field
 	VerificationMethod apijson.Field
 	VerificationValue  apijson.Field
 	raw                string
