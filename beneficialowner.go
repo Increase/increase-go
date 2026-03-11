@@ -50,6 +50,18 @@ func (r *BeneficialOwnerService) Get(ctx context.Context, entityBeneficialOwnerI
 	return res, err
 }
 
+// Update a Beneficial Owner
+func (r *BeneficialOwnerService) Update(ctx context.Context, entityBeneficialOwnerID string, body BeneficialOwnerUpdateParams, opts ...option.RequestOption) (res *EntityBeneficialOwner, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if entityBeneficialOwnerID == "" {
+		err = errors.New("missing required entity_beneficial_owner_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("entity_beneficial_owners/%s", entityBeneficialOwnerID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
+	return res, err
+}
+
 // List Beneficial Owners
 func (r *BeneficialOwnerService) List(ctx context.Context, query BeneficialOwnerListParams, opts ...option.RequestOption) (res *pagination.Page[EntityBeneficialOwner], err error) {
 	var raw *http.Response
@@ -260,6 +272,38 @@ func (r EntityBeneficialOwnerType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type BeneficialOwnerUpdateParams struct {
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
+	Address param.Field[BeneficialOwnerUpdateParamsAddress] `json:"address"`
+}
+
+func (r BeneficialOwnerUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
+type BeneficialOwnerUpdateParamsAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1" api:"required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
+}
+
+func (r BeneficialOwnerUpdateParamsAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type BeneficialOwnerListParams struct {
