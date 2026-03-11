@@ -7,6 +7,7 @@ import (
 	"errors"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/Increase/increase-go"
 	"github.com/Increase/increase-go/internal/testutil"
@@ -58,6 +59,29 @@ func TestBeneficialOwnerUpdateWithOptionalParams(t *testing.T) {
 				Line2:   increase.F("Unit 2"),
 				State:   increase.F("NY"),
 				Zip:     increase.F("10045"),
+			}),
+			ConfirmedNoUsTaxID: increase.F(true),
+			Identification: increase.F(increase.BeneficialOwnerUpdateParamsIdentification{
+				Method: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationMethodSocialSecurityNumber),
+				Number: increase.F("xxxx"),
+				DriversLicense: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationDriversLicense{
+					ExpirationDate: increase.F(time.Now()),
+					FileID:         increase.F("file_id"),
+					State:          increase.F("x"),
+					BackFileID:     increase.F("back_file_id"),
+				}),
+				Other: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationOther{
+					Country:        increase.F("x"),
+					Description:    increase.F("x"),
+					FileID:         increase.F("file_id"),
+					BackFileID:     increase.F("back_file_id"),
+					ExpirationDate: increase.F(time.Now()),
+				}),
+				Passport: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationPassport{
+					Country:        increase.F("x"),
+					ExpirationDate: increase.F(time.Now()),
+					FileID:         increase.F("file_id"),
+				}),
 			}),
 		},
 	)
