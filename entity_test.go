@@ -440,34 +440,6 @@ func TestEntityArchive(t *testing.T) {
 	}
 }
 
-func TestEntityArchiveBeneficialOwner(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Entities.ArchiveBeneficialOwner(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntityArchiveBeneficialOwnerParams{
-			BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
 func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -523,42 +495,6 @@ func TestEntityNewBeneficialOwnerWithOptionalParams(t *testing.T) {
 				Prongs:       increase.F([]increase.EntityNewBeneficialOwnerParamsBeneficialOwnerProng{increase.EntityNewBeneficialOwnerParamsBeneficialOwnerProngControl}),
 				CompanyTitle: increase.F("CEO"),
 			}),
-		},
-	)
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestEntityUpdateBeneficialOwnerAddressWithOptionalParams(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Entities.UpdateBeneficialOwnerAddress(
-		context.TODO(),
-		"entity_n8y8tnk2p9339ti393yi",
-		increase.EntityUpdateBeneficialOwnerAddressParams{
-			Address: increase.F(increase.EntityUpdateBeneficialOwnerAddressParamsAddress{
-				City:    increase.F("New York"),
-				Country: increase.F("US"),
-				Line1:   increase.F("33 Liberty Street"),
-				Line2:   increase.F("Unit 2"),
-				State:   increase.F("NY"),
-				Zip:     increase.F("10045"),
-			}),
-			BeneficialOwnerID: increase.F("entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7"),
 		},
 	)
 	if err != nil {
