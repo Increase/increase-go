@@ -2,4 +2,4 @@
 
 package internal
 
-const PackageVersion = "0.499.0" // x-release-please-version
+const PackageVersion = "0.500.0" // x-release-please-version
