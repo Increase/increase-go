@@ -14,6 +14,67 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
+func TestBeneficialOwnerNewWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.BeneficialOwners.New(context.TODO(), increase.BeneficialOwnerNewParams{
+		EntityID: increase.F("entity_n8y8tnk2p9339ti393yi"),
+		Individual: increase.F(increase.BeneficialOwnerNewParamsIndividual{
+			Address: increase.F(increase.BeneficialOwnerNewParamsIndividualAddress{
+				City:    increase.F("New York"),
+				Country: increase.F("US"),
+				Line1:   increase.F("33 Liberty Street"),
+				Line2:   increase.F("x"),
+				State:   increase.F("NY"),
+				Zip:     increase.F("10045"),
+			}),
+			DateOfBirth: increase.F(time.Now()),
+			Identification: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentification{
+				Method: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentificationMethodSocialSecurityNumber),
+				Number: increase.F("078051120"),
+				DriversLicense: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentificationDriversLicense{
+					ExpirationDate: increase.F(time.Now()),
+					FileID:         increase.F("file_id"),
+					State:          increase.F("x"),
+					BackFileID:     increase.F("back_file_id"),
+				}),
+				Other: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentificationOther{
+					Country:        increase.F("x"),
+					Description:    increase.F("x"),
+					FileID:         increase.F("file_id"),
+					BackFileID:     increase.F("back_file_id"),
+					ExpirationDate: increase.F(time.Now()),
+				}),
+				Passport: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentificationPassport{
+					Country:        increase.F("x"),
+					ExpirationDate: increase.F(time.Now()),
+					FileID:         increase.F("file_id"),
+				}),
+			}),
+			Name:               increase.F("Ian Crease"),
+			ConfirmedNoUsTaxID: increase.F(true),
+		}),
+		Prongs:       increase.F([]increase.BeneficialOwnerNewParamsProng{increase.BeneficialOwnerNewParamsProngControl}),
+		CompanyTitle: increase.F("CEO"),
+	})
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestBeneficialOwnerGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
