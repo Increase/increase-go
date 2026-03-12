@@ -118,6 +118,8 @@ type EntityBeneficialOwner struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Beneficial Owner was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The identifier of the Entity to which this beneficial owner belongs.
+	EntityID string `json:"entity_id" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -138,6 +140,7 @@ type entityBeneficialOwnerJSON struct {
 	ID             apijson.Field
 	CompanyTitle   apijson.Field
 	CreatedAt      apijson.Field
+	EntityID       apijson.Field
 	IdempotencyKey apijson.Field
 	Individual     apijson.Field
 	Prongs         apijson.Field
