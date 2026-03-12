@@ -85,6 +85,18 @@ func (r *BeneficialOwnerService) ListAutoPaging(ctx context.Context, query Benef
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Archive a Beneficial Owner
+func (r *BeneficialOwnerService) Archive(ctx context.Context, entityBeneficialOwnerID string, opts ...option.RequestOption) (res *EntityBeneficialOwner, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if entityBeneficialOwnerID == "" {
+		err = errors.New("missing required entity_beneficial_owner_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("entity_beneficial_owners/%s/archive", entityBeneficialOwnerID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
 type EntityBeneficialOwner struct {
 	// The identifier of this beneficial owner.
 	ID string `json:"id" api:"required"`
