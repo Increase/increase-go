@@ -87,7 +87,7 @@ func TestBeneficialOwnerGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.BeneficialOwners.Get(context.TODO(), "entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7")
+	_, err := client.BeneficialOwners.Get(context.TODO(), "entity_beneficial_owner_vozma8szzu1sxezp5zq6")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -111,7 +111,7 @@ func TestBeneficialOwnerUpdateWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.BeneficialOwners.Update(
 		context.TODO(),
-		"entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7",
+		"entity_beneficial_owner_vozma8szzu1sxezp5zq6",
 		increase.BeneficialOwnerUpdateParams{
 			Address: increase.F(increase.BeneficialOwnerUpdateParamsAddress{
 				City:    increase.F("New York"),
@@ -195,7 +195,7 @@ func TestBeneficialOwnerArchive(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.BeneficialOwners.Archive(context.TODO(), "entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7")
+	_, err := client.BeneficialOwners.Archive(context.TODO(), "entity_beneficial_owner_vozma8szzu1sxezp5zq6")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
