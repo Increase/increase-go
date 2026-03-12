@@ -505,9 +505,8 @@ type CheckTransferPhysicalCheck struct {
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required,nullable"`
 	// The shipping method for the check.
 	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method" api:"required,nullable"`
-	// The text that will appear as the signature on the check in cursive font. If
-	// blank, the check will be printed with 'No signature required'.
-	SignatureText string `json:"signature_text" api:"required,nullable"`
+	// The signature that will appear on the check.
+	Signature CheckTransferPhysicalCheckSignature `json:"signature" api:"required"`
 	// Tracking updates relating to the physical check's delivery.
 	TrackingUpdates []CheckTransferPhysicalCheckTrackingUpdate `json:"tracking_updates" api:"required"`
 	ExtraFields     map[string]interface{}                     `json:"-" api:"extrafields"`
@@ -526,7 +525,7 @@ type checkTransferPhysicalCheckJSON struct {
 	RecipientName           apijson.Field
 	ReturnAddress           apijson.Field
 	ShippingMethod          apijson.Field
-	SignatureText           apijson.Field
+	Signature               apijson.Field
 	TrackingUpdates         apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
@@ -660,6 +659,32 @@ func (r CheckTransferPhysicalCheckShippingMethod) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The signature that will appear on the check.
+type CheckTransferPhysicalCheckSignature struct {
+	// The ID of a File containing a PNG of the signature.
+	ImageFileID string `json:"image_file_id" api:"required,nullable"`
+	// The text that will appear as the signature on the check in cursive font.
+	Text string                                  `json:"text" api:"required,nullable"`
+	JSON checkTransferPhysicalCheckSignatureJSON `json:"-"`
+}
+
+// checkTransferPhysicalCheckSignatureJSON contains the JSON metadata for the
+// struct [CheckTransferPhysicalCheckSignature]
+type checkTransferPhysicalCheckSignatureJSON struct {
+	ImageFileID apijson.Field
+	Text        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheckSignature) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferPhysicalCheckSignatureJSON) RawJSON() string {
+	return r.raw
 }
 
 type CheckTransferPhysicalCheckTrackingUpdate struct {
@@ -1021,10 +1046,11 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// How to ship the check. For details on pricing, timing, and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
 	ShippingMethod param.Field[CheckTransferNewParamsPhysicalCheckShippingMethod] `json:"shipping_method"`
-	// The text that will appear as the signature on the check in cursive font. If not
-	// provided, the check will be printed with 'No signature required'.
-	SignatureText param.Field[string]    `json:"signature_text"`
-	ExtraFields   map[string]interface{} `json:"-,extras"`
+	// The signature that will appear on the check. If not provided, the check will be
+	// printed with 'No Signature Required'. At most one of `text` and `image_file_id`
+	// may be provided.
+	Signature   param.Field[CheckTransferNewParamsPhysicalCheckSignature] `json:"signature"`
+	ExtraFields map[string]interface{}                                    `json:"-,extras"`
 }
 
 func (r CheckTransferNewParamsPhysicalCheck) MarshalJSON() (data []byte, err error) {
@@ -1106,6 +1132,21 @@ func (r CheckTransferNewParamsPhysicalCheckShippingMethod) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The signature that will appear on the check. If not provided, the check will be
+// printed with 'No Signature Required'. At most one of `text` and `image_file_id`
+// may be provided.
+type CheckTransferNewParamsPhysicalCheckSignature struct {
+	// The ID of a File containing a PNG of the signature. This must have
+	// `purpose: check_signature` and be a 1320x120 pixel PNG.
+	ImageFileID param.Field[string] `json:"image_file_id"`
+	// The text that will appear as the signature on the check in cursive font.
+	Text param.Field[string] `json:"text"`
+}
+
+func (r CheckTransferNewParamsPhysicalCheckSignature) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // Details relating to the custom fulfillment you will perform. This is required if
