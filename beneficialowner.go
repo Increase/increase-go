@@ -285,6 +285,8 @@ type BeneficialOwnerUpdateParams struct {
 	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
 	// A means of verifying the person's identity.
 	Identification param.Field[BeneficialOwnerUpdateParamsIdentification] `json:"identification"`
+	// The individual's legal name.
+	Name param.Field[string] `json:"name"`
 }
 
 func (r BeneficialOwnerUpdateParams) MarshalJSON() (data []byte, err error) {

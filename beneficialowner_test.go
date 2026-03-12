@@ -83,6 +83,7 @@ func TestBeneficialOwnerUpdateWithOptionalParams(t *testing.T) {
 					FileID:         increase.F("file_id"),
 				}),
 			}),
+			Name: increase.F("x"),
 		},
 	)
 	if err != nil {
