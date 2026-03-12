@@ -128,9 +128,8 @@ type EntityBeneficialOwner struct {
 	Prongs []EntityBeneficialOwnerProng `json:"prongs" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity_beneficial_owner`.
-	Type        EntityBeneficialOwnerType `json:"type" api:"required"`
-	ExtraFields map[string]interface{}    `json:"-" api:"extrafields"`
-	JSON        entityBeneficialOwnerJSON `json:"-"`
+	Type EntityBeneficialOwnerType `json:"type" api:"required"`
+	JSON entityBeneficialOwnerJSON `json:"-"`
 }
 
 // entityBeneficialOwnerJSON contains the JSON metadata for the struct
