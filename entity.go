@@ -105,18 +105,6 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 	return res, err
 }
 
-// Archive a beneficial owner for a corporate Entity
-func (r *EntityService) ArchiveBeneficialOwner(ctx context.Context, entityID string, body EntityArchiveBeneficialOwnerParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = slices.Concat(r.Options, opts)
-	if entityID == "" {
-		err = errors.New("missing required entity_id parameter")
-		return nil, err
-	}
-	path := fmt.Sprintf("entities/%s/archive_beneficial_owner", entityID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return res, err
-}
-
 // Create a beneficial owner for a corporate Entity
 func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string, body EntityNewBeneficialOwnerParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -125,18 +113,6 @@ func (r *EntityService) NewBeneficialOwner(ctx context.Context, entityID string,
 		return nil, err
 	}
 	path := fmt.Sprintf("entities/%s/create_beneficial_owner", entityID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return res, err
-}
-
-// Update the address for a beneficial owner belonging to a corporate Entity
-func (r *EntityService) UpdateBeneficialOwnerAddress(ctx context.Context, entityID string, body EntityUpdateBeneficialOwnerAddressParams, opts ...option.RequestOption) (res *Entity, err error) {
-	opts = slices.Concat(r.Options, opts)
-	if entityID == "" {
-		err = errors.New("missing required entity_id parameter")
-		return nil, err
-	}
-	path := fmt.Sprintf("entities/%s/update_beneficial_owner_address", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return res, err
 }
@@ -2668,16 +2644,6 @@ func (r EntityListParamsStatusIn) IsKnown() bool {
 	return false
 }
 
-type EntityArchiveBeneficialOwnerParams struct {
-	// The identifying details of anyone controlling or owning 25% or more of the
-	// corporation.
-	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id" api:"required"`
-}
-
-func (r EntityArchiveBeneficialOwnerParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
 type EntityNewBeneficialOwnerParams struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
@@ -2859,39 +2825,4 @@ func (r EntityNewBeneficialOwnerParamsBeneficialOwnerProng) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type EntityUpdateBeneficialOwnerAddressParams struct {
-	// The individual's physical address. Mail receiving locations like PO Boxes and
-	// PMB's are disallowed.
-	Address param.Field[EntityUpdateBeneficialOwnerAddressParamsAddress] `json:"address" api:"required"`
-	// The identifying details of anyone controlling or owning 25% or more of the
-	// corporation.
-	BeneficialOwnerID param.Field[string] `json:"beneficial_owner_id" api:"required"`
-}
-
-func (r EntityUpdateBeneficialOwnerAddressParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The individual's physical address. Mail receiving locations like PO Boxes and
-// PMB's are disallowed.
-type EntityUpdateBeneficialOwnerAddressParamsAddress struct {
-	// The city, district, town, or village of the address.
-	City param.Field[string] `json:"city" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-	Country param.Field[string] `json:"country" api:"required"`
-	// The first line of the address. This is usually the street number and street.
-	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The second line of the address. This might be the floor or room number.
-	Line2 param.Field[string] `json:"line2"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the US
-	// state, province, or region of the address. Required in certain countries.
-	State param.Field[string] `json:"state"`
-	// The ZIP or postal code of the address. Required in certain countries.
-	Zip param.Field[string] `json:"zip"`
-}
-
-func (r EntityUpdateBeneficialOwnerAddressParamsAddress) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
 }
