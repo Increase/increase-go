@@ -124,6 +124,8 @@ type CardPushTransfer struct {
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation CardPushTransferCancellation `json:"cancellation" api:"required,nullable"`
+	// The ID of the Card Token that was used to validate the card.
+	CardTokenID string `json:"card_token_id" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -193,6 +195,7 @@ type cardPushTransferJSON struct {
 	Approval                      apijson.Field
 	BusinessApplicationIdentifier apijson.Field
 	Cancellation                  apijson.Field
+	CardTokenID                   apijson.Field
 	CreatedAt                     apijson.Field
 	CreatedBy                     apijson.Field
 	Decline                       apijson.Field
