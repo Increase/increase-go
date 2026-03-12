@@ -61,7 +61,10 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				Phone:      increase.F("x"),
 			}),
 			ShippingMethod: increase.F(increase.CheckTransferNewParamsPhysicalCheckShippingMethodUspsFirstClass),
-			SignatureText:  increase.F("Ian Crease"),
+			Signature: increase.F(increase.CheckTransferNewParamsPhysicalCheckSignature{
+				ImageFileID: increase.F("image_file_id"),
+				Text:        increase.F("Ian Crease"),
+			}),
 		}),
 		RequireApproval: increase.F(true),
 		ThirdParty: increase.F(increase.CheckTransferNewParamsThirdParty{
