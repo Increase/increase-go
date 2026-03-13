@@ -106,7 +106,8 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 }
 
 // Entities are the legal entities that own accounts. They can be people,
-// corporations, partnerships, government authorities, or trusts.
+// corporations, partnerships, government authorities, or trusts. To learn more,
+// see [Entities](/documentation/entities).
 type Entity struct {
 	// The entity's identifier.
 	ID string `json:"id" api:"required"`
@@ -155,7 +156,9 @@ type Entity struct {
 	Trust EntityTrust `json:"trust" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `entity`.
-	Type        EntityType             `json:"type" api:"required"`
+	Type EntityType `json:"type" api:"required"`
+	// The validation results for the entity.
+	Validation  EntityValidation       `json:"validation" api:"required,nullable"`
 	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        entityJSON             `json:"-"`
 }
@@ -179,6 +182,7 @@ type entityJSON struct {
 	ThirdPartyVerification apijson.Field
 	Trust                  apijson.Field
 	Type                   apijson.Field
+	Validation             apijson.Field
 	raw                    string
 	ExtraFields            map[string]apijson.Field
 }
@@ -1349,6 +1353,227 @@ const (
 func (r EntityType) IsKnown() bool {
 	switch r {
 	case EntityTypeEntity:
+		return true
+	}
+	return false
+}
+
+// The validation results for the entity.
+type EntityValidation struct {
+	// The list of issues that need to be addressed.
+	Issues []EntityValidationIssue `json:"issues" api:"required"`
+	// The validation status for the entity. If the status is `invalid`, the `issues`
+	// array will be populated.
+	Status EntityValidationStatus `json:"status" api:"required"`
+	JSON   entityValidationJSON   `json:"-"`
+}
+
+// entityValidationJSON contains the JSON metadata for the struct
+// [EntityValidation]
+type entityValidationJSON struct {
+	Issues      apijson.Field
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityValidation) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationJSON) RawJSON() string {
+	return r.raw
+}
+
+type EntityValidationIssue struct {
+	// Details when the issue is with a beneficial owner's address.
+	BeneficialOwnerAddress EntityValidationIssuesBeneficialOwnerAddress `json:"beneficial_owner_address" api:"required,nullable"`
+	// Details when the issue is with a beneficial owner's identity verification.
+	BeneficialOwnerIdentity EntityValidationIssuesBeneficialOwnerIdentity `json:"beneficial_owner_identity" api:"required,nullable"`
+	// The type of issue. We may add additional possible values for this enum over
+	// time; your application should be able to handle such additions gracefully.
+	Category EntityValidationIssuesCategory `json:"category" api:"required"`
+	// Details when the issue is with the entity's address.
+	EntityAddress EntityValidationIssuesEntityAddress `json:"entity_address" api:"required,nullable"`
+	// Details when the issue is with the entity's tax ID.
+	EntityTaxIdentifier EntityValidationIssuesEntityTaxIdentifier `json:"entity_tax_identifier" api:"required,nullable"`
+	JSON                entityValidationIssueJSON                 `json:"-"`
+}
+
+// entityValidationIssueJSON contains the JSON metadata for the struct
+// [EntityValidationIssue]
+type entityValidationIssueJSON struct {
+	BeneficialOwnerAddress  apijson.Field
+	BeneficialOwnerIdentity apijson.Field
+	Category                apijson.Field
+	EntityAddress           apijson.Field
+	EntityTaxIdentifier     apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *EntityValidationIssue) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssueJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details when the issue is with a beneficial owner's address.
+type EntityValidationIssuesBeneficialOwnerAddress struct {
+	// The ID of the beneficial owner.
+	BeneficialOwnerID string `json:"beneficial_owner_id" api:"required"`
+	// The reason the address is invalid.
+	Reason EntityValidationIssuesBeneficialOwnerAddressReason `json:"reason" api:"required"`
+	JSON   entityValidationIssuesBeneficialOwnerAddressJSON   `json:"-"`
+}
+
+// entityValidationIssuesBeneficialOwnerAddressJSON contains the JSON metadata for
+// the struct [EntityValidationIssuesBeneficialOwnerAddress]
+type entityValidationIssuesBeneficialOwnerAddressJSON struct {
+	BeneficialOwnerID apijson.Field
+	Reason            apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *EntityValidationIssuesBeneficialOwnerAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssuesBeneficialOwnerAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason the address is invalid.
+type EntityValidationIssuesBeneficialOwnerAddressReason string
+
+const (
+	EntityValidationIssuesBeneficialOwnerAddressReasonMailboxAddress EntityValidationIssuesBeneficialOwnerAddressReason = "mailbox_address"
+)
+
+func (r EntityValidationIssuesBeneficialOwnerAddressReason) IsKnown() bool {
+	switch r {
+	case EntityValidationIssuesBeneficialOwnerAddressReasonMailboxAddress:
+		return true
+	}
+	return false
+}
+
+// Details when the issue is with a beneficial owner's identity verification.
+type EntityValidationIssuesBeneficialOwnerIdentity struct {
+	// The ID of the beneficial owner.
+	BeneficialOwnerID string                                            `json:"beneficial_owner_id" api:"required"`
+	JSON              entityValidationIssuesBeneficialOwnerIdentityJSON `json:"-"`
+}
+
+// entityValidationIssuesBeneficialOwnerIdentityJSON contains the JSON metadata for
+// the struct [EntityValidationIssuesBeneficialOwnerIdentity]
+type entityValidationIssuesBeneficialOwnerIdentityJSON struct {
+	BeneficialOwnerID apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *EntityValidationIssuesBeneficialOwnerIdentity) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssuesBeneficialOwnerIdentityJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of issue. We may add additional possible values for this enum over
+// time; your application should be able to handle such additions gracefully.
+type EntityValidationIssuesCategory string
+
+const (
+	EntityValidationIssuesCategoryEntityTaxIdentifier     EntityValidationIssuesCategory = "entity_tax_identifier"
+	EntityValidationIssuesCategoryEntityAddress           EntityValidationIssuesCategory = "entity_address"
+	EntityValidationIssuesCategoryBeneficialOwnerIdentity EntityValidationIssuesCategory = "beneficial_owner_identity"
+	EntityValidationIssuesCategoryBeneficialOwnerAddress  EntityValidationIssuesCategory = "beneficial_owner_address"
+)
+
+func (r EntityValidationIssuesCategory) IsKnown() bool {
+	switch r {
+	case EntityValidationIssuesCategoryEntityTaxIdentifier, EntityValidationIssuesCategoryEntityAddress, EntityValidationIssuesCategoryBeneficialOwnerIdentity, EntityValidationIssuesCategoryBeneficialOwnerAddress:
+		return true
+	}
+	return false
+}
+
+// Details when the issue is with the entity's address.
+type EntityValidationIssuesEntityAddress struct {
+	// The reason the address is invalid.
+	Reason EntityValidationIssuesEntityAddressReason `json:"reason" api:"required"`
+	JSON   entityValidationIssuesEntityAddressJSON   `json:"-"`
+}
+
+// entityValidationIssuesEntityAddressJSON contains the JSON metadata for the
+// struct [EntityValidationIssuesEntityAddress]
+type entityValidationIssuesEntityAddressJSON struct {
+	Reason      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityValidationIssuesEntityAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssuesEntityAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason the address is invalid.
+type EntityValidationIssuesEntityAddressReason string
+
+const (
+	EntityValidationIssuesEntityAddressReasonMailboxAddress EntityValidationIssuesEntityAddressReason = "mailbox_address"
+)
+
+func (r EntityValidationIssuesEntityAddressReason) IsKnown() bool {
+	switch r {
+	case EntityValidationIssuesEntityAddressReasonMailboxAddress:
+		return true
+	}
+	return false
+}
+
+// Details when the issue is with the entity's tax ID.
+type EntityValidationIssuesEntityTaxIdentifier struct {
+	JSON entityValidationIssuesEntityTaxIdentifierJSON `json:"-"`
+}
+
+// entityValidationIssuesEntityTaxIdentifierJSON contains the JSON metadata for the
+// struct [EntityValidationIssuesEntityTaxIdentifier]
+type entityValidationIssuesEntityTaxIdentifierJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityValidationIssuesEntityTaxIdentifier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssuesEntityTaxIdentifierJSON) RawJSON() string {
+	return r.raw
+}
+
+// The validation status for the entity. If the status is `invalid`, the `issues`
+// array will be populated.
+type EntityValidationStatus string
+
+const (
+	EntityValidationStatusPending EntityValidationStatus = "pending"
+	EntityValidationStatusValid   EntityValidationStatus = "valid"
+	EntityValidationStatusInvalid EntityValidationStatus = "invalid"
+)
+
+func (r EntityValidationStatus) IsKnown() bool {
+	switch r {
+	case EntityValidationStatusPending, EntityValidationStatusValid, EntityValidationStatusInvalid:
 		return true
 	}
 	return false
