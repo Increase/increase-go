@@ -261,7 +261,7 @@ type CardPaymentElementsCardAuthentication struct {
 	ID string `json:"id" api:"required"`
 	// A unique identifier assigned by the Access Control Server (us) for this
 	// transaction.
-	AccessControlServerTransactionID string `json:"access_control_server_transaction_id" api:"required"`
+	AccessControlServerTransactionIdentifier string `json:"access_control_server_transaction_identifier" api:"required"`
 	// The city of the cardholder billing address associated with the card used for
 	// this purchase.
 	BillingAddressCity string `json:"billing_address_city" api:"required,nullable"`
@@ -302,7 +302,7 @@ type CardPaymentElementsCardAuthentication struct {
 	DeviceChannel CardPaymentElementsCardAuthenticationDeviceChannel `json:"device_channel" api:"required"`
 	// A unique identifier assigned by the Directory Server (the card network) for this
 	// transaction.
-	DirectoryServerTransactionID string `json:"directory_server_transaction_id" api:"required"`
+	DirectoryServerTransactionIdentifier string `json:"directory_server_transaction_identifier" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required,nullable"`
@@ -348,7 +348,7 @@ type CardPaymentElementsCardAuthentication struct {
 	Status CardPaymentElementsCardAuthenticationStatus `json:"status" api:"required"`
 	// A unique identifier assigned by the 3DS Server initiating the authentication
 	// attempt for this transaction.
-	ThreeDSecureServerTransactionID string `json:"three_d_secure_server_transaction_id" api:"required"`
+	ThreeDSecureServerTransactionIdentifier string `json:"three_d_secure_server_transaction_identifier" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_authentication`.
 	Type        CardPaymentElementsCardAuthenticationType `json:"type" api:"required"`
@@ -359,47 +359,47 @@ type CardPaymentElementsCardAuthentication struct {
 // cardPaymentElementsCardAuthenticationJSON contains the JSON metadata for the
 // struct [CardPaymentElementsCardAuthentication]
 type cardPaymentElementsCardAuthenticationJSON struct {
-	ID                               apijson.Field
-	AccessControlServerTransactionID apijson.Field
-	BillingAddressCity               apijson.Field
-	BillingAddressCountry            apijson.Field
-	BillingAddressLine1              apijson.Field
-	BillingAddressLine2              apijson.Field
-	BillingAddressLine3              apijson.Field
-	BillingAddressPostalCode         apijson.Field
-	BillingAddressState              apijson.Field
-	CardID                           apijson.Field
-	CardPaymentID                    apijson.Field
-	CardholderEmail                  apijson.Field
-	CardholderName                   apijson.Field
-	Challenge                        apijson.Field
-	CreatedAt                        apijson.Field
-	DenyReason                       apijson.Field
-	DeviceChannel                    apijson.Field
-	DirectoryServerTransactionID     apijson.Field
-	MerchantAcceptorID               apijson.Field
-	MerchantCategoryCode             apijson.Field
-	MerchantCountry                  apijson.Field
-	MerchantName                     apijson.Field
-	MessageCategory                  apijson.Field
-	PriorAuthenticatedCardPaymentID  apijson.Field
-	RealTimeDecisionID               apijson.Field
-	RequestorAuthenticationIndicator apijson.Field
-	RequestorChallengeIndicator      apijson.Field
-	RequestorName                    apijson.Field
-	RequestorURL                     apijson.Field
-	ShippingAddressCity              apijson.Field
-	ShippingAddressCountry           apijson.Field
-	ShippingAddressLine1             apijson.Field
-	ShippingAddressLine2             apijson.Field
-	ShippingAddressLine3             apijson.Field
-	ShippingAddressPostalCode        apijson.Field
-	ShippingAddressState             apijson.Field
-	Status                           apijson.Field
-	ThreeDSecureServerTransactionID  apijson.Field
-	Type                             apijson.Field
-	raw                              string
-	ExtraFields                      map[string]apijson.Field
+	ID                                       apijson.Field
+	AccessControlServerTransactionIdentifier apijson.Field
+	BillingAddressCity                       apijson.Field
+	BillingAddressCountry                    apijson.Field
+	BillingAddressLine1                      apijson.Field
+	BillingAddressLine2                      apijson.Field
+	BillingAddressLine3                      apijson.Field
+	BillingAddressPostalCode                 apijson.Field
+	BillingAddressState                      apijson.Field
+	CardID                                   apijson.Field
+	CardPaymentID                            apijson.Field
+	CardholderEmail                          apijson.Field
+	CardholderName                           apijson.Field
+	Challenge                                apijson.Field
+	CreatedAt                                apijson.Field
+	DenyReason                               apijson.Field
+	DeviceChannel                            apijson.Field
+	DirectoryServerTransactionIdentifier     apijson.Field
+	MerchantAcceptorID                       apijson.Field
+	MerchantCategoryCode                     apijson.Field
+	MerchantCountry                          apijson.Field
+	MerchantName                             apijson.Field
+	MessageCategory                          apijson.Field
+	PriorAuthenticatedCardPaymentID          apijson.Field
+	RealTimeDecisionID                       apijson.Field
+	RequestorAuthenticationIndicator         apijson.Field
+	RequestorChallengeIndicator              apijson.Field
+	RequestorName                            apijson.Field
+	RequestorURL                             apijson.Field
+	ShippingAddressCity                      apijson.Field
+	ShippingAddressCountry                   apijson.Field
+	ShippingAddressLine1                     apijson.Field
+	ShippingAddressLine2                     apijson.Field
+	ShippingAddressLine3                     apijson.Field
+	ShippingAddressPostalCode                apijson.Field
+	ShippingAddressState                     apijson.Field
+	Status                                   apijson.Field
+	ThreeDSecureServerTransactionIdentifier  apijson.Field
+	Type                                     apijson.Field
+	raw                                      string
+	ExtraFields                              map[string]apijson.Field
 }
 
 func (r *CardPaymentElementsCardAuthentication) UnmarshalJSON(data []byte) (err error) {
