@@ -125,7 +125,7 @@ func (r realTimeDecisionJSON) RawJSON() string {
 type RealTimeDecisionCardAuthentication struct {
 	// A unique identifier assigned by the Access Control Server (us) for this
 	// transaction.
-	AccessControlServerTransactionID string `json:"access_control_server_transaction_id" api:"required"`
+	AccessControlServerTransactionIdentifier string `json:"access_control_server_transaction_identifier" api:"required"`
 	// The identifier of the Account the card belongs to.
 	AccountID string `json:"account_id" api:"required"`
 	// The city of the cardholder billing address associated with the card used for
@@ -161,7 +161,7 @@ type RealTimeDecisionCardAuthentication struct {
 	DeviceChannel RealTimeDecisionCardAuthenticationDeviceChannel `json:"device_channel" api:"required"`
 	// A unique identifier assigned by the Directory Server (the card network) for this
 	// transaction.
-	DirectoryServerTransactionID string `json:"directory_server_transaction_id" api:"required"`
+	DirectoryServerTransactionIdentifier string `json:"directory_server_transaction_identifier" api:"required"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required,nullable"`
@@ -202,7 +202,7 @@ type RealTimeDecisionCardAuthentication struct {
 	ShippingAddressState string `json:"shipping_address_state" api:"required,nullable"`
 	// A unique identifier assigned by the 3DS Server initiating the authentication
 	// attempt for this transaction.
-	ThreeDSecureServerTransactionID string `json:"three_d_secure_server_transaction_id" api:"required"`
+	ThreeDSecureServerTransactionIdentifier string `json:"three_d_secure_server_transaction_identifier" api:"required"`
 	// The identifier of the Card Payment this authentication attempt will belong to.
 	// Available in the API once the card authentication has completed.
 	UpcomingCardPaymentID string                                 `json:"upcoming_card_payment_id" api:"required"`
@@ -212,42 +212,42 @@ type RealTimeDecisionCardAuthentication struct {
 // realTimeDecisionCardAuthenticationJSON contains the JSON metadata for the struct
 // [RealTimeDecisionCardAuthentication]
 type realTimeDecisionCardAuthenticationJSON struct {
-	AccessControlServerTransactionID apijson.Field
-	AccountID                        apijson.Field
-	BillingAddressCity               apijson.Field
-	BillingAddressCountry            apijson.Field
-	BillingAddressLine1              apijson.Field
-	BillingAddressLine2              apijson.Field
-	BillingAddressLine3              apijson.Field
-	BillingAddressPostalCode         apijson.Field
-	BillingAddressState              apijson.Field
-	CardID                           apijson.Field
-	CardholderEmail                  apijson.Field
-	CardholderName                   apijson.Field
-	Decision                         apijson.Field
-	DeviceChannel                    apijson.Field
-	DirectoryServerTransactionID     apijson.Field
-	MerchantAcceptorID               apijson.Field
-	MerchantCategoryCode             apijson.Field
-	MerchantCountry                  apijson.Field
-	MerchantName                     apijson.Field
-	MessageCategory                  apijson.Field
-	PriorAuthenticatedCardPaymentID  apijson.Field
-	RequestorAuthenticationIndicator apijson.Field
-	RequestorChallengeIndicator      apijson.Field
-	RequestorName                    apijson.Field
-	RequestorURL                     apijson.Field
-	ShippingAddressCity              apijson.Field
-	ShippingAddressCountry           apijson.Field
-	ShippingAddressLine1             apijson.Field
-	ShippingAddressLine2             apijson.Field
-	ShippingAddressLine3             apijson.Field
-	ShippingAddressPostalCode        apijson.Field
-	ShippingAddressState             apijson.Field
-	ThreeDSecureServerTransactionID  apijson.Field
-	UpcomingCardPaymentID            apijson.Field
-	raw                              string
-	ExtraFields                      map[string]apijson.Field
+	AccessControlServerTransactionIdentifier apijson.Field
+	AccountID                                apijson.Field
+	BillingAddressCity                       apijson.Field
+	BillingAddressCountry                    apijson.Field
+	BillingAddressLine1                      apijson.Field
+	BillingAddressLine2                      apijson.Field
+	BillingAddressLine3                      apijson.Field
+	BillingAddressPostalCode                 apijson.Field
+	BillingAddressState                      apijson.Field
+	CardID                                   apijson.Field
+	CardholderEmail                          apijson.Field
+	CardholderName                           apijson.Field
+	Decision                                 apijson.Field
+	DeviceChannel                            apijson.Field
+	DirectoryServerTransactionIdentifier     apijson.Field
+	MerchantAcceptorID                       apijson.Field
+	MerchantCategoryCode                     apijson.Field
+	MerchantCountry                          apijson.Field
+	MerchantName                             apijson.Field
+	MessageCategory                          apijson.Field
+	PriorAuthenticatedCardPaymentID          apijson.Field
+	RequestorAuthenticationIndicator         apijson.Field
+	RequestorChallengeIndicator              apijson.Field
+	RequestorName                            apijson.Field
+	RequestorURL                             apijson.Field
+	ShippingAddressCity                      apijson.Field
+	ShippingAddressCountry                   apijson.Field
+	ShippingAddressLine1                     apijson.Field
+	ShippingAddressLine2                     apijson.Field
+	ShippingAddressLine3                     apijson.Field
+	ShippingAddressPostalCode                apijson.Field
+	ShippingAddressState                     apijson.Field
+	ThreeDSecureServerTransactionIdentifier  apijson.Field
+	UpcomingCardPaymentID                    apijson.Field
+	raw                                      string
+	ExtraFields                              map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionCardAuthentication) UnmarshalJSON(data []byte) (err error) {
