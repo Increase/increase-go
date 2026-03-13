@@ -52,8 +52,6 @@ func (r *IntrafiBalanceService) IntrafiBalance(ctx context.Context, accountID st
 // amount is swept to various other institutions. Funds are rebalanced across banks
 // as needed once per business day.
 type IntrafiBalance struct {
-	// The identifier of this balance.
-	ID string `json:"id" api:"required"`
 	// Each entry represents a balance held at a different bank. IntraFi separates the
 	// total balance across many participating banks in the network.
 	Balances []IntrafiBalanceBalance `json:"balances" api:"required"`
@@ -67,13 +65,13 @@ type IntrafiBalance struct {
 	TotalBalance int64 `json:"total_balance" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `intrafi_balance`.
-	Type IntrafiBalanceType `json:"type" api:"required"`
-	JSON intrafiBalanceJSON `json:"-"`
+	Type        IntrafiBalanceType     `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        intrafiBalanceJSON     `json:"-"`
 }
 
 // intrafiBalanceJSON contains the JSON metadata for the struct [IntrafiBalance]
 type intrafiBalanceJSON struct {
-	ID            apijson.Field
 	Balances      apijson.Field
 	Currency      apijson.Field
 	EffectiveDate apijson.Field
@@ -92,8 +90,6 @@ func (r intrafiBalanceJSON) RawJSON() string {
 }
 
 type IntrafiBalanceBalance struct {
-	// The identifier of this balance.
-	ID string `json:"id" api:"required"`
 	// The balance, in minor units of `currency`, held with this bank.
 	Balance int64 `json:"balance" api:"required"`
 	// The name of the bank holding these funds.
@@ -104,13 +100,13 @@ type IntrafiBalanceBalance struct {
 	// Because many banks have the same or similar names, this can be used to uniquely
 	// identify the institution.
 	FdicCertificateNumber string                    `json:"fdic_certificate_number" api:"required"`
+	ExtraFields           map[string]interface{}    `json:"-" api:"extrafields"`
 	JSON                  intrafiBalanceBalanceJSON `json:"-"`
 }
 
 // intrafiBalanceBalanceJSON contains the JSON metadata for the struct
 // [IntrafiBalanceBalance]
 type intrafiBalanceBalanceJSON struct {
-	ID                    apijson.Field
 	Balance               apijson.Field
 	Bank                  apijson.Field
 	BankLocation          apijson.Field
