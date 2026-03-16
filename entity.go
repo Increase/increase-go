@@ -157,7 +157,8 @@ type Entity struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `entity`.
 	Type EntityType `json:"type" api:"required"`
-	// The validation results for the entity.
+	// The validation results for the entity. Learn more about
+	// [validations](/documentation/entity-validation).
 	Validation  EntityValidation       `json:"validation" api:"required,nullable"`
 	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        entityJSON             `json:"-"`
@@ -1358,7 +1359,8 @@ func (r EntityType) IsKnown() bool {
 	return false
 }
 
-// The validation results for the entity.
+// The validation results for the entity. Learn more about
+// [validations](/documentation/entity-validation).
 type EntityValidation struct {
 	// The list of issues that need to be addressed.
 	Issues []EntityValidationIssue `json:"issues" api:"required"`
