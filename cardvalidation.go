@@ -127,6 +127,8 @@ type CardValidation struct {
 	MerchantPostalCode string `json:"merchant_postal_code" api:"required"`
 	// The U.S. state where the merchant (typically your business) is located.
 	MerchantState string `json:"merchant_state" api:"required"`
+	// The card network route used for the validation.
+	Route CardValidationRoute `json:"route" api:"required"`
 	// The lifecycle status of the validation.
 	Status CardValidationStatus `json:"status" api:"required"`
 	// After the validation is submitted to the card network, this will contain
@@ -159,6 +161,7 @@ type cardValidationJSON struct {
 	MerchantName            apijson.Field
 	MerchantPostalCode      apijson.Field
 	MerchantState           apijson.Field
+	Route                   apijson.Field
 	Status                  apijson.Field
 	Submission              apijson.Field
 	Type                    apijson.Field
@@ -518,6 +521,7 @@ const (
 	CardValidationDeclineReasonExpiredCard                                             CardValidationDeclineReason = "expired_card"
 	CardValidationDeclineReasonTransactionNotPermittedToCardholder                     CardValidationDeclineReason = "transaction_not_permitted_to_cardholder"
 	CardValidationDeclineReasonTransactionNotAllowedAtTerminal                         CardValidationDeclineReason = "transaction_not_allowed_at_terminal"
+	CardValidationDeclineReasonTransactionNotSupportedOrBlockedByIssuer                CardValidationDeclineReason = "transaction_not_supported_or_blocked_by_issuer"
 	CardValidationDeclineReasonSuspectedFraud                                          CardValidationDeclineReason = "suspected_fraud"
 	CardValidationDeclineReasonActivityAmountLimitExceeded                             CardValidationDeclineReason = "activity_amount_limit_exceeded"
 	CardValidationDeclineReasonRestrictedCard                                          CardValidationDeclineReason = "restricted_card"
@@ -541,7 +545,23 @@ const (
 
 func (r CardValidationDeclineReason) IsKnown() bool {
 	switch r {
-	case CardValidationDeclineReasonDoNotHonor, CardValidationDeclineReasonActivityCountLimitExceeded, CardValidationDeclineReasonReferToCardIssuer, CardValidationDeclineReasonReferToCardIssuerSpecialCondition, CardValidationDeclineReasonInvalidMerchant, CardValidationDeclineReasonPickUpCard, CardValidationDeclineReasonError, CardValidationDeclineReasonPickUpCardSpecial, CardValidationDeclineReasonInvalidTransaction, CardValidationDeclineReasonInvalidAmount, CardValidationDeclineReasonInvalidAccountNumber, CardValidationDeclineReasonNoSuchIssuer, CardValidationDeclineReasonReEnterTransaction, CardValidationDeclineReasonNoCreditAccount, CardValidationDeclineReasonPickUpCardLost, CardValidationDeclineReasonPickUpCardStolen, CardValidationDeclineReasonClosedAccount, CardValidationDeclineReasonInsufficientFunds, CardValidationDeclineReasonNoCheckingAccount, CardValidationDeclineReasonNoSavingsAccount, CardValidationDeclineReasonExpiredCard, CardValidationDeclineReasonTransactionNotPermittedToCardholder, CardValidationDeclineReasonTransactionNotAllowedAtTerminal, CardValidationDeclineReasonSuspectedFraud, CardValidationDeclineReasonActivityAmountLimitExceeded, CardValidationDeclineReasonRestrictedCard, CardValidationDeclineReasonSecurityViolation, CardValidationDeclineReasonTransactionDoesNotFulfillAntiMoneyLaunderingRequirement, CardValidationDeclineReasonBlockedFirstUse, CardValidationDeclineReasonCreditIssuerUnavailable, CardValidationDeclineReasonNegativeCardVerificationValueResults, CardValidationDeclineReasonIssuerUnavailable, CardValidationDeclineReasonFinancialInstitutionCannotBeFound, CardValidationDeclineReasonTransactionCannotBeCompleted, CardValidationDeclineReasonDuplicateTransaction, CardValidationDeclineReasonSystemMalfunction, CardValidationDeclineReasonAdditionalCustomerAuthenticationRequired, CardValidationDeclineReasonSurchargeAmountNotPermitted, CardValidationDeclineReasonDeclineForCvv2Failure, CardValidationDeclineReasonStopPaymentOrder, CardValidationDeclineReasonRevocationOfAuthorizationOrder, CardValidationDeclineReasonRevocationOfAllAuthorizationsOrder:
+	case CardValidationDeclineReasonDoNotHonor, CardValidationDeclineReasonActivityCountLimitExceeded, CardValidationDeclineReasonReferToCardIssuer, CardValidationDeclineReasonReferToCardIssuerSpecialCondition, CardValidationDeclineReasonInvalidMerchant, CardValidationDeclineReasonPickUpCard, CardValidationDeclineReasonError, CardValidationDeclineReasonPickUpCardSpecial, CardValidationDeclineReasonInvalidTransaction, CardValidationDeclineReasonInvalidAmount, CardValidationDeclineReasonInvalidAccountNumber, CardValidationDeclineReasonNoSuchIssuer, CardValidationDeclineReasonReEnterTransaction, CardValidationDeclineReasonNoCreditAccount, CardValidationDeclineReasonPickUpCardLost, CardValidationDeclineReasonPickUpCardStolen, CardValidationDeclineReasonClosedAccount, CardValidationDeclineReasonInsufficientFunds, CardValidationDeclineReasonNoCheckingAccount, CardValidationDeclineReasonNoSavingsAccount, CardValidationDeclineReasonExpiredCard, CardValidationDeclineReasonTransactionNotPermittedToCardholder, CardValidationDeclineReasonTransactionNotAllowedAtTerminal, CardValidationDeclineReasonTransactionNotSupportedOrBlockedByIssuer, CardValidationDeclineReasonSuspectedFraud, CardValidationDeclineReasonActivityAmountLimitExceeded, CardValidationDeclineReasonRestrictedCard, CardValidationDeclineReasonSecurityViolation, CardValidationDeclineReasonTransactionDoesNotFulfillAntiMoneyLaunderingRequirement, CardValidationDeclineReasonBlockedFirstUse, CardValidationDeclineReasonCreditIssuerUnavailable, CardValidationDeclineReasonNegativeCardVerificationValueResults, CardValidationDeclineReasonIssuerUnavailable, CardValidationDeclineReasonFinancialInstitutionCannotBeFound, CardValidationDeclineReasonTransactionCannotBeCompleted, CardValidationDeclineReasonDuplicateTransaction, CardValidationDeclineReasonSystemMalfunction, CardValidationDeclineReasonAdditionalCustomerAuthenticationRequired, CardValidationDeclineReasonSurchargeAmountNotPermitted, CardValidationDeclineReasonDeclineForCvv2Failure, CardValidationDeclineReasonStopPaymentOrder, CardValidationDeclineReasonRevocationOfAuthorizationOrder, CardValidationDeclineReasonRevocationOfAllAuthorizationsOrder:
+		return true
+	}
+	return false
+}
+
+// The card network route used for the validation.
+type CardValidationRoute string
+
+const (
+	CardValidationRouteVisa       CardValidationRoute = "visa"
+	CardValidationRouteMastercard CardValidationRoute = "mastercard"
+)
+
+func (r CardValidationRoute) IsKnown() bool {
+	switch r {
+	case CardValidationRouteVisa, CardValidationRouteMastercard:
 		return true
 	}
 	return false
