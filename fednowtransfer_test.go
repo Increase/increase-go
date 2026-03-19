@@ -27,7 +27,6 @@ func TestFednowTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.FednowTransfers.New(context.TODO(), increase.FednowTransferNewParams{
-		AccountID:                         increase.F("account_in71c4amph0vgo2qllky"),
 		Amount:                            increase.F(int64(100)),
 		CreditorName:                      increase.F("Ian Crease"),
 		DebtorName:                        increase.F("National Phonograph Company"),
