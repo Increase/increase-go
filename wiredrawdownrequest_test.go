@@ -47,6 +47,7 @@ func TestWireDrawdownRequestNewWithOptionalParams(t *testing.T) {
 		}),
 		DebtorName:                        increase.F("Ian Crease"),
 		UnstructuredRemittanceInformation: increase.F("Invoice 29582"),
+		ChargeBearer:                      increase.F(increase.WireDrawdownRequestNewParamsChargeBearerShared),
 		DebtorAccountNumber:               increase.F("987654321"),
 		DebtorExternalAccountID:           increase.F("debtor_external_account_id"),
 		DebtorRoutingNumber:               increase.F("101050001"),
