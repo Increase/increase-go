@@ -132,6 +132,7 @@ type WireDrawdownRequest struct {
 	Type WireDrawdownRequestType `json:"type" api:"required"`
 	// Remittance information the debtor will see as part of the drawdown request.
 	UnstructuredRemittanceInformation string                  `json:"unstructured_remittance_information" api:"required"`
+	ExtraFields                       map[string]interface{}  `json:"-" api:"extrafields"`
 	JSON                              wireDrawdownRequestJSON `json:"-"`
 }
 
@@ -322,6 +323,9 @@ type WireDrawdownRequestNewParams struct {
 	DebtorName param.Field[string] `json:"debtor_name" api:"required"`
 	// Remittance information the debtor will see as part of the request.
 	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information" api:"required"`
+	// Determines who bears the cost of the drawdown request. Defaults to `shared` if
+	// not specified.
+	ChargeBearer param.Field[WireDrawdownRequestNewParamsChargeBearer] `json:"charge_bearer"`
 	// The debtor's account number.
 	DebtorAccountNumber param.Field[string] `json:"debtor_account_number"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
@@ -380,6 +384,25 @@ type WireDrawdownRequestNewParamsDebtorAddress struct {
 
 func (r WireDrawdownRequestNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Determines who bears the cost of the drawdown request. Defaults to `shared` if
+// not specified.
+type WireDrawdownRequestNewParamsChargeBearer string
+
+const (
+	WireDrawdownRequestNewParamsChargeBearerShared       WireDrawdownRequestNewParamsChargeBearer = "shared"
+	WireDrawdownRequestNewParamsChargeBearerDebtor       WireDrawdownRequestNewParamsChargeBearer = "debtor"
+	WireDrawdownRequestNewParamsChargeBearerCreditor     WireDrawdownRequestNewParamsChargeBearer = "creditor"
+	WireDrawdownRequestNewParamsChargeBearerServiceLevel WireDrawdownRequestNewParamsChargeBearer = "service_level"
+)
+
+func (r WireDrawdownRequestNewParamsChargeBearer) IsKnown() bool {
+	switch r {
+	case WireDrawdownRequestNewParamsChargeBearerShared, WireDrawdownRequestNewParamsChargeBearerDebtor, WireDrawdownRequestNewParamsChargeBearerCreditor, WireDrawdownRequestNewParamsChargeBearerServiceLevel:
+		return true
+	}
+	return false
 }
 
 type WireDrawdownRequestListParams struct {
