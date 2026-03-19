@@ -527,8 +527,6 @@ func (r FednowTransferType) IsKnown() bool {
 }
 
 type FednowTransferNewParams struct {
-	// The identifier for the account that will send the transfer.
-	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The amount, in minor units, to send to the creditor.
 	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The creditor's name.
