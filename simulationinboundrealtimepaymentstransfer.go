@@ -55,10 +55,10 @@ type SimulationInboundRealTimePaymentsTransferNewParams struct {
 	DebtorName param.Field[string] `json:"debtor_name"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber param.Field[string] `json:"debtor_routing_number"`
-	// Additional information included with the transfer.
-	RemittanceInformation param.Field[string] `json:"remittance_information"`
 	// The identifier of a pending Request for Payment that this transfer will fulfill.
 	RequestForPaymentID param.Field[string] `json:"request_for_payment_id"`
+	// Additional information included with the transfer.
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information"`
 }
 
 func (r SimulationInboundRealTimePaymentsTransferNewParams) MarshalJSON() (data []byte, err error) {

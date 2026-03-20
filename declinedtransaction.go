@@ -1610,31 +1610,32 @@ type DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline struct {
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// Why the transfer was declined.
 	Reason DeclinedTransactionSourceInboundRealTimePaymentsTransferDeclineReason `json:"reason" api:"required"`
-	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information" api:"required,nullable"`
 	// The Real-Time Payments network identification of the declined transfer.
 	TransactionIdentification string `json:"transaction_identification" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID string                                                              `json:"transfer_id" api:"required"`
-	JSON       declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
+	TransferID string `json:"transfer_id" api:"required"`
+	// Additional information included with the transfer.
+	UnstructuredRemittanceInformation string                                                              `json:"unstructured_remittance_information" api:"required,nullable"`
+	ExtraFields                       map[string]interface{}                                              `json:"-" api:"extrafields"`
+	JSON                              declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON `json:"-"`
 }
 
 // declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON contains the
 // JSON metadata for the struct
 // [DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline]
 type declinedTransactionSourceInboundRealTimePaymentsTransferDeclineJSON struct {
-	Amount                    apijson.Field
-	CreditorName              apijson.Field
-	Currency                  apijson.Field
-	DebtorAccountNumber       apijson.Field
-	DebtorName                apijson.Field
-	DebtorRoutingNumber       apijson.Field
-	Reason                    apijson.Field
-	RemittanceInformation     apijson.Field
-	TransactionIdentification apijson.Field
-	TransferID                apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
+	Amount                            apijson.Field
+	CreditorName                      apijson.Field
+	Currency                          apijson.Field
+	DebtorAccountNumber               apijson.Field
+	DebtorName                        apijson.Field
+	DebtorRoutingNumber               apijson.Field
+	Reason                            apijson.Field
+	TransactionIdentification         apijson.Field
+	TransferID                        apijson.Field
+	UnstructuredRemittanceInformation apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *DeclinedTransactionSourceInboundRealTimePaymentsTransferDecline) UnmarshalJSON(data []byte) (err error) {

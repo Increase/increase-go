@@ -112,6 +112,8 @@ type RealTimePaymentsTransfer struct {
 	ID string `json:"id" api:"required"`
 	// The Account from which the transfer was sent.
 	AccountID string `json:"account_id" api:"required"`
+	// The destination account number.
+	AccountNumber string `json:"account_number" api:"required"`
 	// If the transfer is acknowledged by the recipient bank, this will contain
 	// supplemental details.
 	Acknowledgement RealTimePaymentsTransferAcknowledgement `json:"acknowledgement" api:"required,nullable"`
@@ -137,11 +139,6 @@ type RealTimePaymentsTransfer struct {
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
 	DebtorName string `json:"debtor_name" api:"required,nullable"`
-	// The destination account number.
-	DestinationAccountNumber string `json:"destination_account_number" api:"required"`
-	// The destination American Bankers' Association (ABA) Routing Transit Number
-	// (RTN).
-	DestinationRoutingNumber string `json:"destination_routing_number" api:"required"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
@@ -156,8 +153,9 @@ type RealTimePaymentsTransfer struct {
 	// If the transfer is rejected by Real-Time Payments or the destination financial
 	// institution, this will contain supplemental details.
 	Rejection RealTimePaymentsTransferRejection `json:"rejection" api:"required,nullable"`
-	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation string `json:"remittance_information" api:"required"`
+	// The destination American Bankers' Association (ABA) Routing Transit Number
+	// (RTN).
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The Account Number the recipient will see as having sent the transfer.
 	SourceAccountNumberID string `json:"source_account_number_id" api:"required"`
 	// The lifecycle status of the transfer.
@@ -175,41 +173,43 @@ type RealTimePaymentsTransfer struct {
 	UltimateCreditorName string `json:"ultimate_creditor_name" api:"required,nullable"`
 	// The name of the ultimate sender of the transfer. Set this if the funds are being
 	// sent on behalf of someone who is not the account holder at Increase.
-	UltimateDebtorName string                       `json:"ultimate_debtor_name" api:"required,nullable"`
-	ExtraFields        map[string]interface{}       `json:"-" api:"extrafields"`
-	JSON               realTimePaymentsTransferJSON `json:"-"`
+	UltimateDebtorName string `json:"ultimate_debtor_name" api:"required,nullable"`
+	// Unstructured information that will show on the recipient's bank statement.
+	UnstructuredRemittanceInformation string                       `json:"unstructured_remittance_information" api:"required"`
+	ExtraFields                       map[string]interface{}       `json:"-" api:"extrafields"`
+	JSON                              realTimePaymentsTransferJSON `json:"-"`
 }
 
 // realTimePaymentsTransferJSON contains the JSON metadata for the struct
 // [RealTimePaymentsTransfer]
 type realTimePaymentsTransferJSON struct {
-	ID                       apijson.Field
-	AccountID                apijson.Field
-	Acknowledgement          apijson.Field
-	Amount                   apijson.Field
-	Approval                 apijson.Field
-	Cancellation             apijson.Field
-	CreatedAt                apijson.Field
-	CreatedBy                apijson.Field
-	CreditorName             apijson.Field
-	Currency                 apijson.Field
-	DebtorName               apijson.Field
-	DestinationAccountNumber apijson.Field
-	DestinationRoutingNumber apijson.Field
-	ExternalAccountID        apijson.Field
-	IdempotencyKey           apijson.Field
-	PendingTransactionID     apijson.Field
-	Rejection                apijson.Field
-	RemittanceInformation    apijson.Field
-	SourceAccountNumberID    apijson.Field
-	Status                   apijson.Field
-	Submission               apijson.Field
-	TransactionID            apijson.Field
-	Type                     apijson.Field
-	UltimateCreditorName     apijson.Field
-	UltimateDebtorName       apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	ID                                apijson.Field
+	AccountID                         apijson.Field
+	AccountNumber                     apijson.Field
+	Acknowledgement                   apijson.Field
+	Amount                            apijson.Field
+	Approval                          apijson.Field
+	Cancellation                      apijson.Field
+	CreatedAt                         apijson.Field
+	CreatedBy                         apijson.Field
+	CreditorName                      apijson.Field
+	Currency                          apijson.Field
+	DebtorName                        apijson.Field
+	ExternalAccountID                 apijson.Field
+	IdempotencyKey                    apijson.Field
+	PendingTransactionID              apijson.Field
+	Rejection                         apijson.Field
+	RoutingNumber                     apijson.Field
+	SourceAccountNumberID             apijson.Field
+	Status                            apijson.Field
+	Submission                        apijson.Field
+	TransactionID                     apijson.Field
+	Type                              apijson.Field
+	UltimateCreditorName              apijson.Field
+	UltimateDebtorName                apijson.Field
+	UnstructuredRemittanceInformation apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -577,24 +577,25 @@ type RealTimePaymentsTransferNewParams struct {
 	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The name of the transfer's recipient.
 	CreditorName param.Field[string] `json:"creditor_name" api:"required"`
-	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation param.Field[string] `json:"remittance_information" api:"required"`
 	// The identifier of the Account Number from which to send the transfer.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
+	// Unstructured information that will show on the recipient's bank statement.
+	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information" api:"required"`
+	// The destination account number.
+	AccountNumber param.Field[string] `json:"account_number"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
-	DebtorName param.Field[string] `json:"debtor_name"`
-	// The destination account number.
+	DebtorName               param.Field[string] `json:"debtor_name"`
 	DestinationAccountNumber param.Field[string] `json:"destination_account_number"`
-	// The destination American Bankers' Association (ABA) Routing Transit Number
-	// (RTN).
 	DestinationRoutingNumber param.Field[string] `json:"destination_routing_number"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
-	// provided, `destination_account_number` and `destination_routing_number` must be
-	// absent.
+	// provided, `account_number` and `routing_number` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
+	// The destination American Bankers' Association (ABA) Routing Transit Number
+	// (RTN).
+	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The name of the ultimate recipient of the transfer. Set this if the creditor is
 	// an intermediary receiving the payment for someone else.
 	UltimateCreditorName param.Field[string] `json:"ultimate_creditor_name"`
