@@ -27,17 +27,19 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsTransfers.New(context.TODO(), increase.RealTimePaymentsTransferNewParams{
-		Amount:                   increase.F(int64(100)),
-		CreditorName:             increase.F("Ian Crease"),
-		RemittanceInformation:    increase.F("Invoice 29582"),
-		SourceAccountNumberID:    increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		DebtorName:               increase.F("x"),
-		DestinationAccountNumber: increase.F("987654321"),
-		DestinationRoutingNumber: increase.F("101050001"),
-		ExternalAccountID:        increase.F("external_account_id"),
-		RequireApproval:          increase.F(true),
-		UltimateCreditorName:     increase.F("x"),
-		UltimateDebtorName:       increase.F("x"),
+		Amount:                            increase.F(int64(100)),
+		CreditorName:                      increase.F("Ian Crease"),
+		SourceAccountNumberID:             increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		UnstructuredRemittanceInformation: increase.F("Invoice 29582"),
+		AccountNumber:                     increase.F("987654321"),
+		DebtorName:                        increase.F("x"),
+		DestinationAccountNumber:          increase.F("x"),
+		DestinationRoutingNumber:          increase.F("xxxxxxxxx"),
+		ExternalAccountID:                 increase.F("external_account_id"),
+		RequireApproval:                   increase.F(true),
+		RoutingNumber:                     increase.F("101050001"),
+		UltimateCreditorName:              increase.F("x"),
+		UltimateDebtorName:                increase.F("x"),
 	})
 	if err != nil {
 		var apierr *increase.Error

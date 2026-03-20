@@ -4456,31 +4456,31 @@ type TransactionSourceInboundRealTimePaymentsTransferConfirmation struct {
 	DebtorName string `json:"debtor_name" api:"required"`
 	// The routing number of the account that sent the transfer.
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
-	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information" api:"required,nullable"`
 	// The Real-Time Payments network identification of the transfer.
 	TransactionIdentification string `json:"transaction_identification" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID  string                                                           `json:"transfer_id" api:"required"`
-	ExtraFields map[string]interface{}                                           `json:"-" api:"extrafields"`
-	JSON        transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
+	TransferID string `json:"transfer_id" api:"required"`
+	// Additional information included with the transfer.
+	UnstructuredRemittanceInformation string                                                           `json:"unstructured_remittance_information" api:"required,nullable"`
+	ExtraFields                       map[string]interface{}                                           `json:"-" api:"extrafields"`
+	JSON                              transactionSourceInboundRealTimePaymentsTransferConfirmationJSON `json:"-"`
 }
 
 // transactionSourceInboundRealTimePaymentsTransferConfirmationJSON contains the
 // JSON metadata for the struct
 // [TransactionSourceInboundRealTimePaymentsTransferConfirmation]
 type transactionSourceInboundRealTimePaymentsTransferConfirmationJSON struct {
-	Amount                    apijson.Field
-	CreditorName              apijson.Field
-	Currency                  apijson.Field
-	DebtorAccountNumber       apijson.Field
-	DebtorName                apijson.Field
-	DebtorRoutingNumber       apijson.Field
-	RemittanceInformation     apijson.Field
-	TransactionIdentification apijson.Field
-	TransferID                apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
+	Amount                            apijson.Field
+	CreditorName                      apijson.Field
+	Currency                          apijson.Field
+	DebtorAccountNumber               apijson.Field
+	DebtorName                        apijson.Field
+	DebtorRoutingNumber               apijson.Field
+	TransactionIdentification         apijson.Field
+	TransferID                        apijson.Field
+	UnstructuredRemittanceInformation apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *TransactionSourceInboundRealTimePaymentsTransferConfirmation) UnmarshalJSON(data []byte) (err error) {
@@ -4854,31 +4854,31 @@ func (r transactionSourceOtherJSON) RawJSON() string {
 // Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
 // is acknowledged by the receiving bank.
 type TransactionSourceRealTimePaymentsTransferAcknowledgement struct {
+	// The destination account number.
+	AccountNumber string `json:"account_number" api:"required"`
 	// The transfer amount in USD cents.
 	Amount int64 `json:"amount" api:"required"`
-	// The destination account number.
-	DestinationAccountNumber string `json:"destination_account_number" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
-	DestinationRoutingNumber string `json:"destination_routing_number" api:"required"`
-	// Unstructured information that will show on the recipient's bank statement.
-	RemittanceInformation string `json:"remittance_information" api:"required"`
+	RoutingNumber string `json:"routing_number" api:"required"`
 	// The identifier of the Real-Time Payments Transfer that led to this Transaction.
-	TransferID  string                                                       `json:"transfer_id" api:"required"`
-	ExtraFields map[string]interface{}                                       `json:"-" api:"extrafields"`
-	JSON        transactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
+	TransferID string `json:"transfer_id" api:"required"`
+	// Unstructured information that will show on the recipient's bank statement.
+	UnstructuredRemittanceInformation string                                                       `json:"unstructured_remittance_information" api:"required"`
+	ExtraFields                       map[string]interface{}                                       `json:"-" api:"extrafields"`
+	JSON                              transactionSourceRealTimePaymentsTransferAcknowledgementJSON `json:"-"`
 }
 
 // transactionSourceRealTimePaymentsTransferAcknowledgementJSON contains the JSON
 // metadata for the struct
 // [TransactionSourceRealTimePaymentsTransferAcknowledgement]
 type transactionSourceRealTimePaymentsTransferAcknowledgementJSON struct {
-	Amount                   apijson.Field
-	DestinationAccountNumber apijson.Field
-	DestinationRoutingNumber apijson.Field
-	RemittanceInformation    apijson.Field
-	TransferID               apijson.Field
-	raw                      string
-	ExtraFields              map[string]apijson.Field
+	AccountNumber                     apijson.Field
+	Amount                            apijson.Field
+	RoutingNumber                     apijson.Field
+	TransferID                        apijson.Field
+	UnstructuredRemittanceInformation apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *TransactionSourceRealTimePaymentsTransferAcknowledgement) UnmarshalJSON(data []byte) (err error) {

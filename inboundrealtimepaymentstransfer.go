@@ -102,8 +102,6 @@ type InboundRealTimePaymentsTransfer struct {
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// If your transfer is declined, this will contain details of the decline.
 	Decline InboundRealTimePaymentsTransferDecline `json:"decline" api:"required,nullable"`
-	// Additional information included with the transfer.
-	RemittanceInformation string `json:"remittance_information" api:"required,nullable"`
 	// The lifecycle status of the transfer.
 	Status InboundRealTimePaymentsTransferStatus `json:"status" api:"required"`
 	// The Real-Time Payments network identification of the transfer.
@@ -111,30 +109,33 @@ type InboundRealTimePaymentsTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_real_time_payments_transfer`.
 	Type InboundRealTimePaymentsTransferType `json:"type" api:"required"`
-	JSON inboundRealTimePaymentsTransferJSON `json:"-"`
+	// Additional information included with the transfer.
+	UnstructuredRemittanceInformation string                              `json:"unstructured_remittance_information" api:"required,nullable"`
+	ExtraFields                       map[string]interface{}              `json:"-" api:"extrafields"`
+	JSON                              inboundRealTimePaymentsTransferJSON `json:"-"`
 }
 
 // inboundRealTimePaymentsTransferJSON contains the JSON metadata for the struct
 // [InboundRealTimePaymentsTransfer]
 type inboundRealTimePaymentsTransferJSON struct {
-	ID                        apijson.Field
-	AccountID                 apijson.Field
-	AccountNumberID           apijson.Field
-	Amount                    apijson.Field
-	Confirmation              apijson.Field
-	CreatedAt                 apijson.Field
-	CreditorName              apijson.Field
-	Currency                  apijson.Field
-	DebtorAccountNumber       apijson.Field
-	DebtorName                apijson.Field
-	DebtorRoutingNumber       apijson.Field
-	Decline                   apijson.Field
-	RemittanceInformation     apijson.Field
-	Status                    apijson.Field
-	TransactionIdentification apijson.Field
-	Type                      apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
+	ID                                apijson.Field
+	AccountID                         apijson.Field
+	AccountNumberID                   apijson.Field
+	Amount                            apijson.Field
+	Confirmation                      apijson.Field
+	CreatedAt                         apijson.Field
+	CreditorName                      apijson.Field
+	Currency                          apijson.Field
+	DebtorAccountNumber               apijson.Field
+	DebtorName                        apijson.Field
+	DebtorRoutingNumber               apijson.Field
+	Decline                           apijson.Field
+	Status                            apijson.Field
+	TransactionIdentification         apijson.Field
+	Type                              apijson.Field
+	UnstructuredRemittanceInformation apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *InboundRealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
