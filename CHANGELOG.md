@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.514.0 (2026-03-20)
+
+Full Changelog: [v0.513.0...v0.514.0](https://github.com/Increase/increase-go/compare/v0.513.0...v0.514.0)
+
+### Features
+
+* **api:** api update ([bc25541](https://github.com/Increase/increase-go/commit/bc2554112c76740cd21cc0dfc04828320dc62d79))
+
+
+### Chores
+
+* **tests:** bump steady to v0.19.4 ([ee499a1](https://github.com/Increase/increase-go/commit/ee499a132358013d9fb1eb8921e76746986dc65d))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([d884d0a](https://github.com/Increase/increase-go/commit/d884d0aacab8126da21374c6c2e0afad6247a4c4))
+
 ## 0.513.0 (2026-03-19)
 
 Full Changelog: [v0.512.0...v0.513.0](https://github.com/Increase/increase-go/compare/v0.512.0...v0.513.0)
