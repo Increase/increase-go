@@ -85,11 +85,11 @@ func TestInboundMailItemAction(t *testing.T) {
 		"inbound_mail_item_q6rrg7mmqpplx80zceev",
 		increase.InboundMailItemActionParams{
 			Checks: increase.F([]increase.InboundMailItemActionParamsCheck{{
-				Action:  increase.F(increase.InboundMailItemActionParamsChecksActionDeposit),
-				Account: increase.F("account_in71c4amph0vgo2qllky"),
+				Action:    increase.F(increase.InboundMailItemActionParamsChecksActionDeposit),
+				AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 			}, {
-				Action:  increase.F(increase.InboundMailItemActionParamsChecksActionIgnore),
-				Account: increase.F("account"),
+				Action:    increase.F(increase.InboundMailItemActionParamsChecksActionIgnore),
+				AccountID: increase.F("account_id"),
 			}}),
 		},
 	)

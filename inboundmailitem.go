@@ -295,7 +295,8 @@ type InboundMailItemActionParamsCheck struct {
 	Action param.Field[InboundMailItemActionParamsChecksAction] `json:"action" api:"required"`
 	// The identifier of the Account to deposit the check into. If not provided, the
 	// check will be deposited into the Account associated with the Lockbox.
-	Account param.Field[string] `json:"account"`
+	AccountID   param.Field[string]    `json:"account_id"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
 func (r InboundMailItemActionParamsCheck) MarshalJSON() (data []byte, err error) {
