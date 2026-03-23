@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.516.0 (2026-03-23)
+
+Full Changelog: [v0.515.0...v0.516.0](https://github.com/Increase/increase-go/compare/v0.515.0...v0.516.0)
+
+### Features
+
+* **api:** api update ([2305779](https://github.com/Increase/increase-go/commit/23057799d207feb51e3ccd91819140f3e595cd83))
+
+
+### Chores
+
+* **internal:** update gitignore ([8a5f526](https://github.com/Increase/increase-go/commit/8a5f52605508d339da922cf48685507c8391aca6))
+* **tests:** bump steady to v0.19.6 ([3f29536](https://github.com/Increase/increase-go/commit/3f29536dfe4d41c5b5ac31fc1d36dfe59d5bb62f))
+
 ## 0.515.0 (2026-03-21)
 
 Full Changelog: [v0.514.0...v0.515.0](https://github.com/Increase/increase-go/compare/v0.514.0...v0.515.0)
