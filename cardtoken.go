@@ -181,6 +181,8 @@ type CardTokenCapabilitiesRoute struct {
 	CrossBorderPushTransfers CardTokenCapabilitiesRoutesCrossBorderPushTransfers `json:"cross_border_push_transfers" api:"required"`
 	// Whether you can push funds to the card using domestic Card Push Transfers.
 	DomesticPushTransfers CardTokenCapabilitiesRoutesDomesticPushTransfers `json:"domestic_push_transfers" api:"required"`
+	// The ISO-3166-1 alpha-2 country code of the card's issuing bank.
+	IssuerCountry string `json:"issuer_country" api:"required"`
 	// The card network route the capabilities apply to.
 	Route CardTokenCapabilitiesRoutesRoute `json:"route" api:"required"`
 	JSON  cardTokenCapabilitiesRouteJSON   `json:"-"`
@@ -191,6 +193,7 @@ type CardTokenCapabilitiesRoute struct {
 type cardTokenCapabilitiesRouteJSON struct {
 	CrossBorderPushTransfers apijson.Field
 	DomesticPushTransfers    apijson.Field
+	IssuerCountry            apijson.Field
 	Route                    apijson.Field
 	raw                      string
 	ExtraFields              map[string]apijson.Field
