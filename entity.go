@@ -2093,7 +2093,7 @@ func (r EntityNewParamsJointIndividualsIdentificationOther) MarshalJSON() (data 
 // equal to `passport`.
 type EntityNewParamsJointIndividualsIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// passport (e.g., `US`).
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
@@ -2234,7 +2234,7 @@ func (r EntityNewParamsNaturalPersonIdentificationOther) MarshalJSON() (data []b
 // equal to `passport`.
 type EntityNewParamsNaturalPersonIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// passport (e.g., `US`).
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
@@ -2554,7 +2554,7 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationOther) MarshalJSON()
 // equal to `passport`.
 type EntityNewParamsTrustTrusteesIndividualIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// passport (e.g., `US`).
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
@@ -2692,7 +2692,7 @@ func (r EntityNewParamsTrustGrantorIdentificationOther) MarshalJSON() (data []by
 // equal to `passport`.
 type EntityNewParamsTrustGrantorIdentificationPassport struct {
 	// The two-character ISO 3166-1 code representing the country that issued the
-	// passport (e.g., `US`).
+	// document (e.g., `US`).
 	Country param.Field[string] `json:"country" api:"required"`
 	// The passport's expiration date in YYYY-MM-DD format.
 	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
