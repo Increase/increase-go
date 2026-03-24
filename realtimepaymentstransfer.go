@@ -585,9 +585,7 @@ type RealTimePaymentsTransferNewParams struct {
 	AccountNumber param.Field[string] `json:"account_number"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
-	DebtorName               param.Field[string] `json:"debtor_name"`
-	DestinationAccountNumber param.Field[string] `json:"destination_account_number"`
-	DestinationRoutingNumber param.Field[string] `json:"destination_routing_number"`
+	DebtorName param.Field[string] `json:"debtor_name"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
