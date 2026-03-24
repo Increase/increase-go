@@ -935,6 +935,22 @@ type CardPushTransferNewParams struct {
 	SenderName param.Field[string] `json:"sender_name" api:"required"`
 	// The identifier of the Account Number from which to send the transfer.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
+	// The legal business name of the merchant (generally your business) sending the
+	// transfer. Required if the card is issued in Canada.
+	MerchantLegalBusinessName param.Field[string] `json:"merchant_legal_business_name"`
+	// The street address of the merchant (generally your business) sending the
+	// transfer. Required if the card is issued in Canada.
+	MerchantStreetAddress param.Field[string] `json:"merchant_street_address"`
+	// The city of the recipient. Required if the card is issued in Canada.
+	RecipientAddressCity param.Field[string] `json:"recipient_address_city"`
+	// The first line of the recipient's address. Required if the card is issued in
+	// Canada.
+	RecipientAddressLine1 param.Field[string] `json:"recipient_address_line1"`
+	// The postal code of the recipient. Required if the card is issued in Canada.
+	RecipientAddressPostalCode param.Field[string] `json:"recipient_address_postal_code"`
+	// The state or province of the recipient. Required if the card is issued in
+	// Canada.
+	RecipientAddressState param.Field[string] `json:"recipient_address_state"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 }
