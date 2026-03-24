@@ -33,8 +33,6 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		UnstructuredRemittanceInformation: increase.F("Invoice 29582"),
 		AccountNumber:                     increase.F("987654321"),
 		DebtorName:                        increase.F("x"),
-		DestinationAccountNumber:          increase.F("x"),
-		DestinationRoutingNumber:          increase.F("xxxxxxxxx"),
 		ExternalAccountID:                 increase.F("external_account_id"),
 		RequireApproval:                   increase.F(true),
 		RoutingNumber:                     increase.F("101050001"),
