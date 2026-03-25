@@ -75,8 +75,11 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				Prongs:       increase.F([]increase.EntityNewParamsCorporationBeneficialOwnersProng{increase.EntityNewParamsCorporationBeneficialOwnersProngControl}),
 				CompanyTitle: increase.F("CEO"),
 			}}),
+			LegalIdentifier: increase.F(increase.EntityNewParamsCorporationLegalIdentifier{
+				Value:    increase.F("602214076"),
+				Category: increase.F(increase.EntityNewParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber),
+			}),
 			Name:                               increase.F("National Phonograph Company"),
-			TaxIdentifier:                      increase.F("602214076"),
 			BeneficialOwnershipExemptionReason: increase.F(increase.EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution),
 			Email:                              increase.F("dev@stainless.com"),
 			IncorporationState:                 increase.F("NY"),
