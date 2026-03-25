@@ -212,13 +212,14 @@ type EntityCorporation struct {
 	// The numeric North American Industry Classification System (NAICS) code submitted
 	// for the corporation.
 	IndustryCode string `json:"industry_code" api:"required,nullable"`
+	// The legal identifier of the corporation.
+	LegalIdentifier EntityCorporationLegalIdentifier `json:"legal_identifier" api:"required,nullable"`
 	// The legal name of the corporation.
 	Name string `json:"name" api:"required"`
-	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier string `json:"tax_identifier" api:"required,nullable"`
 	// The website of the corporation.
-	Website string                `json:"website" api:"required,nullable"`
-	JSON    entityCorporationJSON `json:"-"`
+	Website     string                 `json:"website" api:"required,nullable"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        entityCorporationJSON  `json:"-"`
 }
 
 // entityCorporationJSON contains the JSON metadata for the struct
@@ -229,8 +230,8 @@ type entityCorporationJSON struct {
 	Email              apijson.Field
 	IncorporationState apijson.Field
 	IndustryCode       apijson.Field
+	LegalIdentifier    apijson.Field
 	Name               apijson.Field
-	TaxIdentifier      apijson.Field
 	Website            apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
@@ -441,6 +442,48 @@ const (
 func (r EntityCorporationBeneficialOwnersProng) IsKnown() bool {
 	switch r {
 	case EntityCorporationBeneficialOwnersProngOwnership, EntityCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
+
+// The legal identifier of the corporation.
+type EntityCorporationLegalIdentifier struct {
+	// The category of the legal identifier.
+	Category EntityCorporationLegalIdentifierCategory `json:"category" api:"required"`
+	// The identifier of the legal identifier.
+	Value string                               `json:"value" api:"required"`
+	JSON  entityCorporationLegalIdentifierJSON `json:"-"`
+}
+
+// entityCorporationLegalIdentifierJSON contains the JSON metadata for the struct
+// [EntityCorporationLegalIdentifier]
+type entityCorporationLegalIdentifierJSON struct {
+	Category    apijson.Field
+	Value       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityCorporationLegalIdentifier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityCorporationLegalIdentifierJSON) RawJSON() string {
+	return r.raw
+}
+
+// The category of the legal identifier.
+type EntityCorporationLegalIdentifierCategory string
+
+const (
+	EntityCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber EntityCorporationLegalIdentifierCategory = "us_employer_identification_number"
+	EntityCorporationLegalIdentifierCategoryOther                          EntityCorporationLegalIdentifierCategory = "other"
+)
+
+func (r EntityCorporationLegalIdentifierCategory) IsKnown() bool {
+	switch r {
+	case EntityCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber, EntityCorporationLegalIdentifierCategoryOther:
 		return true
 	}
 	return false
@@ -1650,10 +1693,11 @@ type EntityNewParamsCorporation struct {
 	// one control person, like the CEO, CFO, or other executive. You can submit
 	// between 1 and 5 people to this list.
 	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwner] `json:"beneficial_owners" api:"required"`
+	// The legal identifier of the corporation. This is usually the Employer
+	// Identification Number (EIN).
+	LegalIdentifier param.Field[EntityNewParamsCorporationLegalIdentifier] `json:"legal_identifier" api:"required"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name" api:"required"`
-	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier param.Field[string] `json:"tax_identifier" api:"required"`
 	// If the entity is exempt from the requirement to submit beneficial owners,
 	// provide the justification. If a reason is provided, you do not need to submit a
 	// list of beneficial owners.
@@ -1670,7 +1714,8 @@ type EntityNewParamsCorporation struct {
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// The website of the corporation.
-	Website param.Field[string] `json:"website"`
+	Website     param.Field[string]    `json:"website"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
 func (r EntityNewParamsCorporation) MarshalJSON() (data []byte, err error) {
@@ -1863,6 +1908,37 @@ const (
 func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 	switch r {
 	case EntityNewParamsCorporationBeneficialOwnersProngOwnership, EntityNewParamsCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
+
+// The legal identifier of the corporation. This is usually the Employer
+// Identification Number (EIN).
+type EntityNewParamsCorporationLegalIdentifier struct {
+	// The legal identifier.
+	Value param.Field[string] `json:"value" api:"required"`
+	// The category of the legal identifier. If not provided, the default is
+	// `us_employer_identification_number`.
+	Category param.Field[EntityNewParamsCorporationLegalIdentifierCategory] `json:"category"`
+}
+
+func (r EntityNewParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The category of the legal identifier. If not provided, the default is
+// `us_employer_identification_number`.
+type EntityNewParamsCorporationLegalIdentifierCategory string
+
+const (
+	EntityNewParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber EntityNewParamsCorporationLegalIdentifierCategory = "us_employer_identification_number"
+	EntityNewParamsCorporationLegalIdentifierCategoryOther                          EntityNewParamsCorporationLegalIdentifierCategory = "other"
+)
+
+func (r EntityNewParamsCorporationLegalIdentifierCategory) IsKnown() bool {
+	switch r {
+	case EntityNewParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber, EntityNewParamsCorporationLegalIdentifierCategoryOther:
 		return true
 	}
 	return false
