@@ -30,11 +30,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		Structure: increase.F(increase.EntityNewParamsStructureCorporation),
 		Corporation: increase.F(increase.EntityNewParamsCorporation{
 			Address: increase.F(increase.EntityNewParamsCorporationAddress{
-				City:  increase.F("New York"),
-				Line1: increase.F("33 Liberty Street"),
-				State: increase.F("NY"),
-				Zip:   increase.F("10045"),
-				Line2: increase.F("x"),
+				City:    increase.F("New York"),
+				Country: increase.F("x"),
+				Line1:   increase.F("33 Liberty Street"),
+				Line2:   increase.F("x"),
+				State:   increase.F("NY"),
+				Zip:     increase.F("10045"),
 			}),
 			BeneficialOwners: increase.F([]increase.EntityNewParamsCorporationBeneficialOwner{{
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
@@ -106,11 +107,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		Joint: increase.F(increase.EntityNewParamsJoint{
 			Individuals: increase.F([]increase.EntityNewParamsJointIndividual{{
 				Address: increase.F(increase.EntityNewParamsJointIndividualsAddress{
-					City:  increase.F("x"),
-					Line1: increase.F("x"),
-					State: increase.F("x"),
-					Zip:   increase.F("x"),
-					Line2: increase.F("x"),
+					City:    increase.F("x"),
+					Country: increase.F("x"),
+					Line1:   increase.F("x"),
+					Line2:   increase.F("x"),
+					State:   increase.F("x"),
+					Zip:     increase.F("x"),
 				}),
 				DateOfBirth: increase.F(time.Now()),
 				Identification: increase.F(increase.EntityNewParamsJointIndividualsIdentification{
@@ -141,11 +143,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		}),
 		NaturalPerson: increase.F(increase.EntityNewParamsNaturalPerson{
 			Address: increase.F(increase.EntityNewParamsNaturalPersonAddress{
-				City:  increase.F("x"),
-				Line1: increase.F("x"),
-				State: increase.F("x"),
-				Zip:   increase.F("x"),
-				Line2: increase.F("x"),
+				City:    increase.F("x"),
+				Country: increase.F("x"),
+				Line1:   increase.F("x"),
+				Line2:   increase.F("x"),
+				State:   increase.F("x"),
+				Zip:     increase.F("x"),
 			}),
 			DateOfBirth: increase.F(time.Now()),
 			Identification: increase.F(increase.EntityNewParamsNaturalPersonIdentification{
@@ -203,11 +206,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				Structure: increase.F(increase.EntityNewParamsTrustTrusteesStructureIndividual),
 				Individual: increase.F(increase.EntityNewParamsTrustTrusteesIndividual{
 					Address: increase.F(increase.EntityNewParamsTrustTrusteesIndividualAddress{
-						City:  increase.F("x"),
-						Line1: increase.F("x"),
-						State: increase.F("x"),
-						Zip:   increase.F("x"),
-						Line2: increase.F("x"),
+						City:    increase.F("x"),
+						Country: increase.F("x"),
+						Line1:   increase.F("x"),
+						Line2:   increase.F("x"),
+						State:   increase.F("x"),
+						Zip:     increase.F("x"),
 					}),
 					DateOfBirth: increase.F(time.Now()),
 					Identification: increase.F(increase.EntityNewParamsTrustTrusteesIndividualIdentification{
@@ -240,11 +244,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			FormationState:          increase.F("x"),
 			Grantor: increase.F(increase.EntityNewParamsTrustGrantor{
 				Address: increase.F(increase.EntityNewParamsTrustGrantorAddress{
-					City:  increase.F("x"),
-					Line1: increase.F("x"),
-					State: increase.F("x"),
-					Zip:   increase.F("x"),
-					Line2: increase.F("x"),
+					City:    increase.F("x"),
+					Country: increase.F("x"),
+					Line1:   increase.F("x"),
+					Line2:   increase.F("x"),
+					State:   increase.F("x"),
+					Zip:     increase.F("x"),
 				}),
 				DateOfBirth: increase.F(time.Now()),
 				Identification: increase.F(increase.EntityNewParamsTrustGrantorIdentification{
@@ -324,11 +329,12 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 		increase.EntityUpdateParams{
 			Corporation: increase.F(increase.EntityUpdateParamsCorporation{
 				Address: increase.F(increase.EntityUpdateParamsCorporationAddress{
-					City:  increase.F("New York"),
-					Line1: increase.F("33 Liberty Street"),
-					State: increase.F("NY"),
-					Zip:   increase.F("10045"),
-					Line2: increase.F("Unit 2"),
+					City:    increase.F("New York"),
+					Country: increase.F("US"),
+					Line1:   increase.F("33 Liberty Street"),
+					Line2:   increase.F("Unit 2"),
+					State:   increase.F("NY"),
+					Zip:     increase.F("10045"),
 				}),
 				Email:              increase.F("dev@stainless.com"),
 				IncorporationState: increase.F("x"),
@@ -349,11 +355,12 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 			}),
 			NaturalPerson: increase.F(increase.EntityUpdateParamsNaturalPerson{
 				Address: increase.F(increase.EntityUpdateParamsNaturalPersonAddress{
-					City:  increase.F("x"),
-					Line1: increase.F("x"),
-					State: increase.F("x"),
-					Zip:   increase.F("x"),
-					Line2: increase.F("x"),
+					City:    increase.F("x"),
+					Country: increase.F("x"),
+					Line1:   increase.F("x"),
+					Line2:   increase.F("x"),
+					State:   increase.F("x"),
+					Zip:     increase.F("x"),
 				}),
 				Name: increase.F("x"),
 			}),
