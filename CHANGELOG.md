@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.523.0 (2026-03-26)
+
+Full Changelog: [v0.522.1...v0.523.0](https://github.com/Increase/increase-go/compare/v0.522.1...v0.523.0)
+
+### Features
+
+* **internal:** support comma format in multipart form encoding ([33d065a](https://github.com/Increase/increase-go/commit/33d065a14bd0897a63283dfcc6d62803ef61626f))
+
+
+### Chores
+
+* remove unnecessary error check for url parsing ([60c2ca8](https://github.com/Increase/increase-go/commit/60c2ca881573c90b83896bb24025451e1a338f02))
+
 ## 0.522.1 (2026-03-26)
 
 Full Changelog: [v0.522.0...v0.522.1](https://github.com/Increase/increase-go/compare/v0.522.0...v0.522.1)
