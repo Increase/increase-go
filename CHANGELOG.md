@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.522.1 (2026-03-26)
+
+Full Changelog: [v0.522.0...v0.522.1](https://github.com/Increase/increase-go/compare/v0.522.0...v0.522.1)
+
+### Bug Fixes
+
+* prevent duplicate ? in query params ([c194754](https://github.com/Increase/increase-go/commit/c194754880fa7acc99b6594d5dc4f89d67de8ab6))
+
 ## 0.522.0 (2026-03-25)
 
 Full Changelog: [v0.521.0...v0.522.0](https://github.com/Increase/increase-go/compare/v0.521.0...v0.522.0)
