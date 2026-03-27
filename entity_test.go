@@ -339,8 +339,11 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				Email:              increase.F("dev@stainless.com"),
 				IncorporationState: increase.F("x"),
 				IndustryCode:       increase.F("x"),
-				Name:               increase.F("x"),
-				TaxIdentifier:      increase.F("x"),
+				LegalIdentifier: increase.F(increase.EntityUpdateParamsCorporationLegalIdentifier{
+					Value:    increase.F("x"),
+					Category: increase.F(increase.EntityUpdateParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber),
+				}),
+				Name: increase.F("x"),
 			}),
 			DetailsConfirmedAt: increase.F(time.Now()),
 			GovernmentAuthority: increase.F(increase.EntityUpdateParamsGovernmentAuthority{
