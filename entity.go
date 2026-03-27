@@ -2858,10 +2858,12 @@ type EntityUpdateParamsCorporation struct {
 	// `Software Publishers`. A full list of classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
+	// The legal identifier of the corporation. This is usually the Employer
+	// Identification Number (EIN).
+	LegalIdentifier param.Field[EntityUpdateParamsCorporationLegalIdentifier] `json:"legal_identifier"`
 	// The legal name of the corporation.
-	Name param.Field[string] `json:"name"`
-	// The Employer Identification Number (EIN) for the corporation.
-	TaxIdentifier param.Field[string] `json:"tax_identifier"`
+	Name        param.Field[string]    `json:"name"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
 func (r EntityUpdateParamsCorporation) MarshalJSON() (data []byte, err error) {
@@ -2888,6 +2890,35 @@ type EntityUpdateParamsCorporationAddress struct {
 
 func (r EntityUpdateParamsCorporationAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The legal identifier of the corporation. This is usually the Employer
+// Identification Number (EIN).
+type EntityUpdateParamsCorporationLegalIdentifier struct {
+	// The identifier of the legal identifier.
+	Value param.Field[string] `json:"value" api:"required"`
+	// The category of the legal identifier.
+	Category param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
+}
+
+func (r EntityUpdateParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The category of the legal identifier.
+type EntityUpdateParamsCorporationLegalIdentifierCategory string
+
+const (
+	EntityUpdateParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber EntityUpdateParamsCorporationLegalIdentifierCategory = "us_employer_identification_number"
+	EntityUpdateParamsCorporationLegalIdentifierCategoryOther                          EntityUpdateParamsCorporationLegalIdentifierCategory = "other"
+)
+
+func (r EntityUpdateParamsCorporationLegalIdentifierCategory) IsKnown() bool {
+	switch r {
+	case EntityUpdateParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber, EntityUpdateParamsCorporationLegalIdentifierCategoryOther:
+		return true
+	}
+	return false
 }
 
 // Details of the government authority entity to update. If you specify this
