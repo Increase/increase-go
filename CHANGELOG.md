@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.525.0 (2026-03-30)
+
+Full Changelog: [v0.524.0...v0.525.0](https://github.com/Increase/increase-go/compare/v0.524.0...v0.525.0)
+
+### Features
+
+* **api:** api update ([546c2d3](https://github.com/Increase/increase-go/commit/546c2d376489436c9dbb91b07be3622f2ca5833b))
+
+
+### Chores
+
+* **ci:** support opting out of skipping builds on metadata-only commits ([6ff9935](https://github.com/Increase/increase-go/commit/6ff9935181690088407f9c7dc874da3ac3f60fab))
+
 ## 0.524.0 (2026-03-27)
 
 Full Changelog: [v0.523.0...v0.524.0](https://github.com/Increase/increase-go/compare/v0.523.0...v0.524.0)
