@@ -95,9 +95,8 @@ type CardPayment struct {
 	State CardPaymentState `json:"state" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_payment`.
-	Type        CardPaymentType        `json:"type" api:"required"`
-	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
-	JSON        cardPaymentJSON        `json:"-"`
+	Type CardPaymentType `json:"type" api:"required"`
+	JSON cardPaymentJSON `json:"-"`
 }
 
 // cardPaymentJSON contains the JSON metadata for the struct [CardPayment]
