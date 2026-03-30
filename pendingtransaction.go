@@ -555,6 +555,8 @@ type PendingTransactionSourceCardAuthorization struct {
 	// The identifier of the Real-Time Decision sent to approve or decline this
 	// transaction.
 	RealTimeDecisionID string `json:"real_time_decision_id" api:"required,nullable"`
+	// The scheme fees associated with this card authorization.
+	SchemeFees []PendingTransactionSourceCardAuthorizationSchemeFee `json:"scheme_fees" api:"required"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
 	TerminalID string `json:"terminal_id" api:"required,nullable"`
@@ -595,6 +597,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	PresentmentCurrency  apijson.Field
 	ProcessingCategory   apijson.Field
 	RealTimeDecisionID   apijson.Field
+	SchemeFees           apijson.Field
 	TerminalID           apijson.Field
 	Type                 apijson.Field
 	Verification         apijson.Field
@@ -1278,6 +1281,106 @@ const (
 func (r PendingTransactionSourceCardAuthorizationProcessingCategory) IsKnown() bool {
 	switch r {
 	case PendingTransactionSourceCardAuthorizationProcessingCategoryAccountFunding, PendingTransactionSourceCardAuthorizationProcessingCategoryAutomaticFuelDispenser, PendingTransactionSourceCardAuthorizationProcessingCategoryBillPayment, PendingTransactionSourceCardAuthorizationProcessingCategoryOriginalCredit, PendingTransactionSourceCardAuthorizationProcessingCategoryPurchase, PendingTransactionSourceCardAuthorizationProcessingCategoryQuasiCash, PendingTransactionSourceCardAuthorizationProcessingCategoryRefund, PendingTransactionSourceCardAuthorizationProcessingCategoryCashDisbursement, PendingTransactionSourceCardAuthorizationProcessingCategoryBalanceInquiry, PendingTransactionSourceCardAuthorizationProcessingCategoryUnknown:
+		return true
+	}
+	return false
+}
+
+type PendingTransactionSourceCardAuthorizationSchemeFee struct {
+	// The fee amount given as a string containing a decimal number.
+	Amount string `json:"amount" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+	// created.
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+	// reimbursement.
+	Currency PendingTransactionSourceCardAuthorizationSchemeFeesCurrency `json:"currency" api:"required"`
+	// The type of fee being assessed.
+	FeeType PendingTransactionSourceCardAuthorizationSchemeFeesFeeType `json:"fee_type" api:"required"`
+	// The fixed component of the fee, if applicable, given in major units of the fee
+	// amount.
+	FixedComponent string `json:"fixed_component" api:"required,nullable"`
+	// The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+	// 0.015 for 1.5%).
+	VariableRate string                                                 `json:"variable_rate" api:"required,nullable"`
+	JSON         pendingTransactionSourceCardAuthorizationSchemeFeeJSON `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationSchemeFeeJSON contains the JSON
+// metadata for the struct [PendingTransactionSourceCardAuthorizationSchemeFee]
+type pendingTransactionSourceCardAuthorizationSchemeFeeJSON struct {
+	Amount         apijson.Field
+	CreatedAt      apijson.Field
+	Currency       apijson.Field
+	FeeType        apijson.Field
+	FixedComponent apijson.Field
+	VariableRate   apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationSchemeFee) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationSchemeFeeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+// reimbursement.
+type PendingTransactionSourceCardAuthorizationSchemeFeesCurrency string
+
+const (
+	PendingTransactionSourceCardAuthorizationSchemeFeesCurrencyUsd PendingTransactionSourceCardAuthorizationSchemeFeesCurrency = "USD"
+)
+
+func (r PendingTransactionSourceCardAuthorizationSchemeFeesCurrency) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationSchemeFeesCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The type of fee being assessed.
+type PendingTransactionSourceCardAuthorizationSchemeFeesFeeType string
+
+const (
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency  PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_international_service_assessment_single_currency"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency   PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_international_service_assessment_cross_currency"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale              PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_authorization_domestic_point_of_sale"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale         PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_authorization_international_point_of_sale"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale                PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_authorization_canada_point_of_sale"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale              PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_authorization_reversal_point_of_sale"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_authorization_reversal_international_point_of_sale"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService       PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_authorization_address_verification_service"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAdvancedAuthorization                         PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_advanced_authorization"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaMessageTransmission                           PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_message_transmission"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAccountVerificationDomestic                   PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_account_verification_domestic"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAccountVerificationInternational              PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_account_verification_international"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAccountVerificationCanada                     PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_account_verification_canada"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaCorporateAcceptanceFee                        PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_corporate_acceptance_fee"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee                    PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_consumer_debit_acceptance_fee"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee                    PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_business_debit_acceptance_fee"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaPurchasingAcceptanceFee                       PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_purchasing_acceptance_fee"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaPurchaseDomestic                              PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_purchase_domestic"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaPurchaseInternational                         PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_purchase_international"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaCreditPurchaseToken                           PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_credit_purchase_token"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaDebitPurchaseToken                            PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_debit_purchase_token"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaClearingTransmission                          PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_clearing_transmission"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaDirectAuthorization                           PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_direct_authorization"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaDirectTransactionDomestic                     PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_direct_transaction_domestic"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaServiceCommercialCredit                       PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_service_commercial_credit"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit            PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_advertising_service_commercial_credit"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram            PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_community_growth_acceleration_program"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit           PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "visa_processing_guarantee_commercial_credit"
+	PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypePulseSwitchFee                                    PendingTransactionSourceCardAuthorizationSchemeFeesFeeType = "pulse_switch_fee"
+)
+
+func (r PendingTransactionSourceCardAuthorizationSchemeFeesFeeType) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAdvancedAuthorization, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaMessageTransmission, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAccountVerificationDomestic, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAccountVerificationInternational, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAccountVerificationCanada, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaCorporateAcceptanceFee, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaPurchaseDomestic, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaPurchaseInternational, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaCreditPurchaseToken, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaDebitPurchaseToken, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaClearingTransmission, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaDirectAuthorization, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaDirectTransactionDomestic, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaServiceCommercialCredit, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, PendingTransactionSourceCardAuthorizationSchemeFeesFeeTypePulseSwitchFee:
 		return true
 	}
 	return false

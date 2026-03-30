@@ -437,6 +437,8 @@ type DeclinedTransactionSourceCardDecline struct {
 	RealTimeDecisionReason DeclinedTransactionSourceCardDeclineRealTimeDecisionReason `json:"real_time_decision_reason" api:"required,nullable"`
 	// Why the transaction was declined.
 	Reason DeclinedTransactionSourceCardDeclineReason `json:"reason" api:"required"`
+	// The scheme fees associated with this card decline.
+	SchemeFees []DeclinedTransactionSourceCardDeclineSchemeFee `json:"scheme_fees" api:"required"`
 	// The terminal identifier (commonly abbreviated as TID) of the terminal the card
 	// is transacting with.
 	TerminalID string `json:"terminal_id" api:"required,nullable"`
@@ -476,6 +478,7 @@ type declinedTransactionSourceCardDeclineJSON struct {
 	RealTimeDecisionID             apijson.Field
 	RealTimeDecisionReason         apijson.Field
 	Reason                         apijson.Field
+	SchemeFees                     apijson.Field
 	TerminalID                     apijson.Field
 	Verification                   apijson.Field
 	raw                            string
@@ -1210,6 +1213,106 @@ const (
 func (r DeclinedTransactionSourceCardDeclineReason) IsKnown() bool {
 	switch r {
 	case DeclinedTransactionSourceCardDeclineReasonAccountClosed, DeclinedTransactionSourceCardDeclineReasonCardNotActive, DeclinedTransactionSourceCardDeclineReasonCardCanceled, DeclinedTransactionSourceCardDeclineReasonPhysicalCardNotActive, DeclinedTransactionSourceCardDeclineReasonEntityNotActive, DeclinedTransactionSourceCardDeclineReasonGroupLocked, DeclinedTransactionSourceCardDeclineReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineReasonCvv2Mismatch, DeclinedTransactionSourceCardDeclineReasonPinMismatch, DeclinedTransactionSourceCardDeclineReasonCardExpirationMismatch, DeclinedTransactionSourceCardDeclineReasonTransactionNotAllowed, DeclinedTransactionSourceCardDeclineReasonBreachesLimit, DeclinedTransactionSourceCardDeclineReasonWebhookDeclined, DeclinedTransactionSourceCardDeclineReasonWebhookTimedOut, DeclinedTransactionSourceCardDeclineReasonDeclinedByStandInProcessing, DeclinedTransactionSourceCardDeclineReasonInvalidPhysicalCard, DeclinedTransactionSourceCardDeclineReasonMissingOriginalAuthorization, DeclinedTransactionSourceCardDeclineReasonInvalidCryptogram, DeclinedTransactionSourceCardDeclineReasonFailed3DSAuthentication, DeclinedTransactionSourceCardDeclineReasonSuspectedCardTesting, DeclinedTransactionSourceCardDeclineReasonSuspectedFraud:
+		return true
+	}
+	return false
+}
+
+type DeclinedTransactionSourceCardDeclineSchemeFee struct {
+	// The fee amount given as a string containing a decimal number.
+	Amount string `json:"amount" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+	// created.
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+	// reimbursement.
+	Currency DeclinedTransactionSourceCardDeclineSchemeFeesCurrency `json:"currency" api:"required"`
+	// The type of fee being assessed.
+	FeeType DeclinedTransactionSourceCardDeclineSchemeFeesFeeType `json:"fee_type" api:"required"`
+	// The fixed component of the fee, if applicable, given in major units of the fee
+	// amount.
+	FixedComponent string `json:"fixed_component" api:"required,nullable"`
+	// The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+	// 0.015 for 1.5%).
+	VariableRate string                                            `json:"variable_rate" api:"required,nullable"`
+	JSON         declinedTransactionSourceCardDeclineSchemeFeeJSON `json:"-"`
+}
+
+// declinedTransactionSourceCardDeclineSchemeFeeJSON contains the JSON metadata for
+// the struct [DeclinedTransactionSourceCardDeclineSchemeFee]
+type declinedTransactionSourceCardDeclineSchemeFeeJSON struct {
+	Amount         apijson.Field
+	CreatedAt      apijson.Field
+	Currency       apijson.Field
+	FeeType        apijson.Field
+	FixedComponent apijson.Field
+	VariableRate   apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *DeclinedTransactionSourceCardDeclineSchemeFee) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r declinedTransactionSourceCardDeclineSchemeFeeJSON) RawJSON() string {
+	return r.raw
+}
+
+// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+// reimbursement.
+type DeclinedTransactionSourceCardDeclineSchemeFeesCurrency string
+
+const (
+	DeclinedTransactionSourceCardDeclineSchemeFeesCurrencyUsd DeclinedTransactionSourceCardDeclineSchemeFeesCurrency = "USD"
+)
+
+func (r DeclinedTransactionSourceCardDeclineSchemeFeesCurrency) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineSchemeFeesCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The type of fee being assessed.
+type DeclinedTransactionSourceCardDeclineSchemeFeesFeeType string
+
+const (
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency  DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_international_service_assessment_single_currency"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency   DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_international_service_assessment_cross_currency"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale              DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_authorization_domestic_point_of_sale"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale         DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_authorization_international_point_of_sale"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale                DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_authorization_canada_point_of_sale"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale              DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_authorization_reversal_point_of_sale"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_authorization_reversal_international_point_of_sale"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService       DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_authorization_address_verification_service"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAdvancedAuthorization                         DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_advanced_authorization"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaMessageTransmission                           DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_message_transmission"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAccountVerificationDomestic                   DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_account_verification_domestic"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAccountVerificationInternational              DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_account_verification_international"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAccountVerificationCanada                     DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_account_verification_canada"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaCorporateAcceptanceFee                        DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_corporate_acceptance_fee"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee                    DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_consumer_debit_acceptance_fee"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee                    DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_business_debit_acceptance_fee"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaPurchasingAcceptanceFee                       DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_purchasing_acceptance_fee"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaPurchaseDomestic                              DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_purchase_domestic"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaPurchaseInternational                         DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_purchase_international"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaCreditPurchaseToken                           DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_credit_purchase_token"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaDebitPurchaseToken                            DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_debit_purchase_token"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaClearingTransmission                          DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_clearing_transmission"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaDirectAuthorization                           DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_direct_authorization"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaDirectTransactionDomestic                     DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_direct_transaction_domestic"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaServiceCommercialCredit                       DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_service_commercial_credit"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit            DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_advertising_service_commercial_credit"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram            DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_community_growth_acceleration_program"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit           DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "visa_processing_guarantee_commercial_credit"
+	DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypePulseSwitchFee                                    DeclinedTransactionSourceCardDeclineSchemeFeesFeeType = "pulse_switch_fee"
+)
+
+func (r DeclinedTransactionSourceCardDeclineSchemeFeesFeeType) IsKnown() bool {
+	switch r {
+	case DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAdvancedAuthorization, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaMessageTransmission, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAccountVerificationDomestic, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAccountVerificationInternational, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAccountVerificationCanada, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaCorporateAcceptanceFee, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaPurchaseDomestic, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaPurchaseInternational, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaCreditPurchaseToken, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaDebitPurchaseToken, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaClearingTransmission, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaDirectAuthorization, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaDirectTransactionDomestic, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaServiceCommercialCredit, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, DeclinedTransactionSourceCardDeclineSchemeFeesFeeTypePulseSwitchFee:
 		return true
 	}
 	return false
