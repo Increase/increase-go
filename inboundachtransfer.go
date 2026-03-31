@@ -373,9 +373,9 @@ const (
 	InboundACHTransferDeclineReasonEntityNotActive                                             InboundACHTransferDeclineReason = "entity_not_active"
 	InboundACHTransferDeclineReasonGroupLocked                                                 InboundACHTransferDeclineReason = "group_locked"
 	InboundACHTransferDeclineReasonTransactionNotAllowed                                       InboundACHTransferDeclineReason = "transaction_not_allowed"
+	InboundACHTransferDeclineReasonReturnedPerOdfiRequest                                      InboundACHTransferDeclineReason = "returned_per_odfi_request"
 	InboundACHTransferDeclineReasonUserInitiated                                               InboundACHTransferDeclineReason = "user_initiated"
 	InboundACHTransferDeclineReasonInsufficientFunds                                           InboundACHTransferDeclineReason = "insufficient_funds"
-	InboundACHTransferDeclineReasonReturnedPerOdfiRequest                                      InboundACHTransferDeclineReason = "returned_per_odfi_request"
 	InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer                              InboundACHTransferDeclineReason = "authorization_revoked_by_customer"
 	InboundACHTransferDeclineReasonPaymentStopped                                              InboundACHTransferDeclineReason = "payment_stopped"
 	InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferDeclineReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
@@ -388,7 +388,7 @@ const (
 
 func (r InboundACHTransferDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonUserInitiated, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonReturnedPerOdfiRequest, InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer, InboundACHTransferDeclineReasonPaymentStopped, InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferDeclineReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferDeclineReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateEntry, InboundACHTransferDeclineReasonCorporateCustomerAdvisedNotAuthorized:
+	case InboundACHTransferDeclineReasonACHRouteCanceled, InboundACHTransferDeclineReasonACHRouteDisabled, InboundACHTransferDeclineReasonBreachesLimit, InboundACHTransferDeclineReasonEntityNotActive, InboundACHTransferDeclineReasonGroupLocked, InboundACHTransferDeclineReasonTransactionNotAllowed, InboundACHTransferDeclineReasonReturnedPerOdfiRequest, InboundACHTransferDeclineReasonUserInitiated, InboundACHTransferDeclineReasonInsufficientFunds, InboundACHTransferDeclineReasonAuthorizationRevokedByCustomer, InboundACHTransferDeclineReasonPaymentStopped, InboundACHTransferDeclineReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferDeclineReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferDeclineReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferDeclineReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineReasonDuplicateEntry, InboundACHTransferDeclineReasonCorporateCustomerAdvisedNotAuthorized:
 		return true
 	}
 	return false
@@ -952,7 +952,6 @@ type InboundACHTransferDeclineParamsReason string
 
 const (
 	InboundACHTransferDeclineParamsReasonInsufficientFunds                                           InboundACHTransferDeclineParamsReason = "insufficient_funds"
-	InboundACHTransferDeclineParamsReasonReturnedPerOdfiRequest                                      InboundACHTransferDeclineParamsReason = "returned_per_odfi_request"
 	InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer                              InboundACHTransferDeclineParamsReason = "authorization_revoked_by_customer"
 	InboundACHTransferDeclineParamsReasonPaymentStopped                                              InboundACHTransferDeclineParamsReason = "payment_stopped"
 	InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete   InboundACHTransferDeclineParamsReason = "customer_advised_unauthorized_improper_ineligible_or_incomplete"
@@ -965,7 +964,7 @@ const (
 
 func (r InboundACHTransferDeclineParamsReason) IsKnown() bool {
 	switch r {
-	case InboundACHTransferDeclineParamsReasonInsufficientFunds, InboundACHTransferDeclineParamsReasonReturnedPerOdfiRequest, InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer, InboundACHTransferDeclineParamsReasonPaymentStopped, InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferDeclineParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferDeclineParamsReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferDeclineParamsReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineParamsReasonDuplicateEntry, InboundACHTransferDeclineParamsReasonCorporateCustomerAdvisedNotAuthorized:
+	case InboundACHTransferDeclineParamsReasonInsufficientFunds, InboundACHTransferDeclineParamsReasonAuthorizationRevokedByCustomer, InboundACHTransferDeclineParamsReasonPaymentStopped, InboundACHTransferDeclineParamsReasonCustomerAdvisedUnauthorizedImproperIneligibleOrIncomplete, InboundACHTransferDeclineParamsReasonRepresentativePayeeDeceasedOrUnableToContinueInThatCapacity, InboundACHTransferDeclineParamsReasonBeneficiaryOrAccountHolderDeceased, InboundACHTransferDeclineParamsReasonCreditEntryRefusedByReceiver, InboundACHTransferDeclineParamsReasonDuplicateEntry, InboundACHTransferDeclineParamsReasonCorporateCustomerAdvisedNotAuthorized:
 		return true
 	}
 	return false
