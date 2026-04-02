@@ -47,28 +47,23 @@ func (r *GroupService) Get(ctx context.Context, opts ...option.RequestOption) (r
 type Group struct {
 	// The Group identifier.
 	ID string `json:"id" api:"required"`
-	// If the Group is allowed to create ACH debits.
-	ACHDebitStatus GroupACHDebitStatus `json:"ach_debit_status" api:"required"`
-	// If the Group is activated or not.
-	ActivationStatus GroupActivationStatus `json:"activation_status" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Group
 	// was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
-	Type GroupType `json:"type" api:"required"`
-	JSON groupJSON `json:"-"`
+	Type        GroupType              `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        groupJSON              `json:"-"`
 }
 
 // groupJSON contains the JSON metadata for the struct [Group]
 type groupJSON struct {
-	ID               apijson.Field
-	ACHDebitStatus   apijson.Field
-	ActivationStatus apijson.Field
-	CreatedAt        apijson.Field
-	Type             apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	ID          apijson.Field
+	CreatedAt   apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *Group) UnmarshalJSON(data []byte) (err error) {
@@ -77,38 +72,6 @@ func (r *Group) UnmarshalJSON(data []byte) (err error) {
 
 func (r groupJSON) RawJSON() string {
 	return r.raw
-}
-
-// If the Group is allowed to create ACH debits.
-type GroupACHDebitStatus string
-
-const (
-	GroupACHDebitStatusDisabled GroupACHDebitStatus = "disabled"
-	GroupACHDebitStatusEnabled  GroupACHDebitStatus = "enabled"
-)
-
-func (r GroupACHDebitStatus) IsKnown() bool {
-	switch r {
-	case GroupACHDebitStatusDisabled, GroupACHDebitStatusEnabled:
-		return true
-	}
-	return false
-}
-
-// If the Group is activated or not.
-type GroupActivationStatus string
-
-const (
-	GroupActivationStatusUnactivated GroupActivationStatus = "unactivated"
-	GroupActivationStatusActivated   GroupActivationStatus = "activated"
-)
-
-func (r GroupActivationStatus) IsKnown() bool {
-	switch r {
-	case GroupActivationStatusUnactivated, GroupActivationStatusActivated:
-		return true
-	}
-	return false
 }
 
 // A constant representing the object's type. For this resource it will always be
