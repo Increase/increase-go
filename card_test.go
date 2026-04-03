@@ -28,6 +28,42 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Cards.New(context.TODO(), increase.CardNewParams{
 		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
+		AuthorizationControls: increase.F(increase.CardNewParamsAuthorizationControls{
+			MaximumAuthorizationCount: increase.F(increase.CardNewParamsAuthorizationControlsMaximumAuthorizationCount{
+				AllTime: increase.F(int64(0)),
+			}),
+			MerchantAcceptorIdentifier: increase.F(increase.CardNewParamsAuthorizationControlsMerchantAcceptorIdentifier{
+				Allowed: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed{{
+					Identifier: increase.F("x"),
+				}}),
+				Blocked: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked{{
+					Identifier: increase.F("x"),
+				}}),
+			}),
+			MerchantCategoryCode: increase.F(increase.CardNewParamsAuthorizationControlsMerchantCategoryCode{
+				Allowed: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantCategoryCodeAllowed{{
+					Code: increase.F("xxxx"),
+				}}),
+				Blocked: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantCategoryCodeBlocked{{
+					Code: increase.F("xxxx"),
+				}}),
+			}),
+			MerchantCountry: increase.F(increase.CardNewParamsAuthorizationControlsMerchantCountry{
+				Allowed: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantCountryAllowed{{
+					Country: increase.F("xx"),
+				}}),
+				Blocked: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantCountryBlocked{{
+					Country: increase.F("xx"),
+				}}),
+			}),
+			SpendingLimits: increase.F([]increase.CardNewParamsAuthorizationControlsSpendingLimit{{
+				Interval:         increase.F(increase.CardNewParamsAuthorizationControlsSpendingLimitsIntervalAllTime),
+				SettlementAmount: increase.F(int64(0)),
+				MerchantCategoryCodes: increase.F([]increase.CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode{{
+					Code: increase.F("x"),
+				}}),
+			}}),
+		}),
 		BillingAddress: increase.F(increase.CardNewParamsBillingAddress{
 			City:       increase.F("x"),
 			Line1:      increase.F("x"),
@@ -90,6 +126,42 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"card_oubs0hwk5rn6knuecxg2",
 		increase.CardUpdateParams{
+			AuthorizationControls: increase.F(increase.CardUpdateParamsAuthorizationControls{
+				MaximumAuthorizationCount: increase.F(increase.CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount{
+					AllTime: increase.F(int64(0)),
+				}),
+				MerchantAcceptorIdentifier: increase.F(increase.CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifier{
+					Allowed: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed{{
+						Identifier: increase.F("x"),
+					}}),
+					Blocked: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked{{
+						Identifier: increase.F("x"),
+					}}),
+				}),
+				MerchantCategoryCode: increase.F(increase.CardUpdateParamsAuthorizationControlsMerchantCategoryCode{
+					Allowed: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantCategoryCodeAllowed{{
+						Code: increase.F("xxxx"),
+					}}),
+					Blocked: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantCategoryCodeBlocked{{
+						Code: increase.F("xxxx"),
+					}}),
+				}),
+				MerchantCountry: increase.F(increase.CardUpdateParamsAuthorizationControlsMerchantCountry{
+					Allowed: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantCountryAllowed{{
+						Country: increase.F("xx"),
+					}}),
+					Blocked: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantCountryBlocked{{
+						Country: increase.F("xx"),
+					}}),
+				}),
+				SpendingLimits: increase.F([]increase.CardUpdateParamsAuthorizationControlsSpendingLimit{{
+					Interval:         increase.F(increase.CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalAllTime),
+					SettlementAmount: increase.F(int64(0)),
+					MerchantCategoryCodes: increase.F([]increase.CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode{{
+						Code: increase.F("x"),
+					}}),
+				}}),
+			}),
 			BillingAddress: increase.F(increase.CardUpdateParamsBillingAddress{
 				City:       increase.F("x"),
 				Line1:      increase.F("x"),
