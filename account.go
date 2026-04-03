@@ -150,12 +150,6 @@ type Account struct {
 	// The identifier of an Entity that, while not owning the Account, is associated
 	// with its activity.
 	InformationalEntityID string `json:"informational_entity_id" api:"required,nullable"`
-	// The interest accrued but not yet paid, expressed as a string containing a
-	// floating-point value.
-	InterestAccrued string `json:"interest_accrued" api:"required"`
-	// The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which
-	// interest was accrued.
-	InterestAccruedAt time.Time `json:"interest_accrued_at" api:"required,nullable" format:"date"`
 	// The interest rate currently being earned on the account, as a string containing
 	// a decimal number. For example, a 1% interest rate would be represented as
 	// "0.01".
@@ -188,8 +182,6 @@ type accountJSON struct {
 	Funding               apijson.Field
 	IdempotencyKey        apijson.Field
 	InformationalEntityID apijson.Field
-	InterestAccrued       apijson.Field
-	InterestAccruedAt     apijson.Field
 	InterestRate          apijson.Field
 	Loan                  apijson.Field
 	Name                  apijson.Field
