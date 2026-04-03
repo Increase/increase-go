@@ -141,6 +141,8 @@ type Card struct {
 	ID string `json:"id" api:"required"`
 	// The identifier for the account this card belongs to.
 	AccountID string `json:"account_id" api:"required"`
+	// Controls that restrict how this card can be used.
+	AuthorizationControls CardAuthorizationControls `json:"authorization_controls" api:"required,nullable"`
 	// The Card's billing address.
 	BillingAddress CardBillingAddress `json:"billing_address" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -175,21 +177,22 @@ type Card struct {
 
 // cardJSON contains the JSON metadata for the struct [Card]
 type cardJSON struct {
-	ID              apijson.Field
-	AccountID       apijson.Field
-	BillingAddress  apijson.Field
-	CreatedAt       apijson.Field
-	Description     apijson.Field
-	DigitalWallet   apijson.Field
-	EntityID        apijson.Field
-	ExpirationMonth apijson.Field
-	ExpirationYear  apijson.Field
-	IdempotencyKey  apijson.Field
-	Last4           apijson.Field
-	Status          apijson.Field
-	Type            apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+	ID                    apijson.Field
+	AccountID             apijson.Field
+	AuthorizationControls apijson.Field
+	BillingAddress        apijson.Field
+	CreatedAt             apijson.Field
+	Description           apijson.Field
+	DigitalWallet         apijson.Field
+	EntityID              apijson.Field
+	ExpirationMonth       apijson.Field
+	ExpirationYear        apijson.Field
+	IdempotencyKey        apijson.Field
+	Last4                 apijson.Field
+	Status                apijson.Field
+	Type                  apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *Card) UnmarshalJSON(data []byte) (err error) {
@@ -197,6 +200,355 @@ func (r *Card) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r cardJSON) RawJSON() string {
+	return r.raw
+}
+
+// Controls that restrict how this card can be used.
+type CardAuthorizationControls struct {
+	// Limits the number of authorizations that can be approved on this card.
+	MaximumAuthorizationCount CardAuthorizationControlsMaximumAuthorizationCount `json:"maximum_authorization_count" api:"required,nullable"`
+	// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
+	// on this card.
+	MerchantAcceptorIdentifier CardAuthorizationControlsMerchantAcceptorIdentifier `json:"merchant_acceptor_identifier" api:"required,nullable"`
+	// Restricts which Merchant Category Codes are allowed or blocked for
+	// authorizations on this card.
+	MerchantCategoryCode CardAuthorizationControlsMerchantCategoryCode `json:"merchant_category_code" api:"required,nullable"`
+	// Restricts which merchant countries are allowed or blocked for authorizations on
+	// this card.
+	MerchantCountry CardAuthorizationControlsMerchantCountry `json:"merchant_country" api:"required,nullable"`
+	// Spending limits for this card. The most restrictive limit is applied if multiple
+	// limits match.
+	SpendingLimits []CardAuthorizationControlsSpendingLimit `json:"spending_limits" api:"required,nullable"`
+	JSON           cardAuthorizationControlsJSON            `json:"-"`
+}
+
+// cardAuthorizationControlsJSON contains the JSON metadata for the struct
+// [CardAuthorizationControls]
+type cardAuthorizationControlsJSON struct {
+	MaximumAuthorizationCount  apijson.Field
+	MerchantAcceptorIdentifier apijson.Field
+	MerchantCategoryCode       apijson.Field
+	MerchantCountry            apijson.Field
+	SpendingLimits             apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControls) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsJSON) RawJSON() string {
+	return r.raw
+}
+
+// Limits the number of authorizations that can be approved on this card.
+type CardAuthorizationControlsMaximumAuthorizationCount struct {
+	// The maximum number of authorizations that can be approved on this card over its
+	// lifetime.
+	AllTime int64                                                  `json:"all_time" api:"required,nullable"`
+	JSON    cardAuthorizationControlsMaximumAuthorizationCountJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMaximumAuthorizationCountJSON contains the JSON
+// metadata for the struct [CardAuthorizationControlsMaximumAuthorizationCount]
+type cardAuthorizationControlsMaximumAuthorizationCountJSON struct {
+	AllTime     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMaximumAuthorizationCount) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMaximumAuthorizationCountJSON) RawJSON() string {
+	return r.raw
+}
+
+// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
+// on this card.
+type CardAuthorizationControlsMerchantAcceptorIdentifier struct {
+	// The Merchant Acceptor IDs that are allowed for authorizations on this card.
+	Allowed []CardAuthorizationControlsMerchantAcceptorIdentifierAllowed `json:"allowed" api:"required,nullable"`
+	// The Merchant Acceptor IDs that are blocked for authorizations on this card.
+	Blocked []CardAuthorizationControlsMerchantAcceptorIdentifierBlocked `json:"blocked" api:"required,nullable"`
+	JSON    cardAuthorizationControlsMerchantAcceptorIdentifierJSON      `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantAcceptorIdentifierJSON contains the JSON
+// metadata for the struct [CardAuthorizationControlsMerchantAcceptorIdentifier]
+type cardAuthorizationControlsMerchantAcceptorIdentifierJSON struct {
+	Allowed     apijson.Field
+	Blocked     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantAcceptorIdentifier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantAcceptorIdentifierJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsMerchantAcceptorIdentifierAllowed struct {
+	// The Merchant Acceptor ID.
+	Identifier string                                                         `json:"identifier" api:"required"`
+	JSON       cardAuthorizationControlsMerchantAcceptorIdentifierAllowedJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantAcceptorIdentifierAllowedJSON contains the JSON
+// metadata for the struct
+// [CardAuthorizationControlsMerchantAcceptorIdentifierAllowed]
+type cardAuthorizationControlsMerchantAcceptorIdentifierAllowedJSON struct {
+	Identifier  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantAcceptorIdentifierAllowed) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantAcceptorIdentifierAllowedJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsMerchantAcceptorIdentifierBlocked struct {
+	// The Merchant Acceptor ID.
+	Identifier string                                                         `json:"identifier" api:"required"`
+	JSON       cardAuthorizationControlsMerchantAcceptorIdentifierBlockedJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantAcceptorIdentifierBlockedJSON contains the JSON
+// metadata for the struct
+// [CardAuthorizationControlsMerchantAcceptorIdentifierBlocked]
+type cardAuthorizationControlsMerchantAcceptorIdentifierBlockedJSON struct {
+	Identifier  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantAcceptorIdentifierBlocked) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantAcceptorIdentifierBlockedJSON) RawJSON() string {
+	return r.raw
+}
+
+// Restricts which Merchant Category Codes are allowed or blocked for
+// authorizations on this card.
+type CardAuthorizationControlsMerchantCategoryCode struct {
+	// The Merchant Category Codes that are allowed for authorizations on this card.
+	Allowed []CardAuthorizationControlsMerchantCategoryCodeAllowed `json:"allowed" api:"required,nullable"`
+	// The Merchant Category Codes that are blocked for authorizations on this card.
+	Blocked []CardAuthorizationControlsMerchantCategoryCodeBlocked `json:"blocked" api:"required,nullable"`
+	JSON    cardAuthorizationControlsMerchantCategoryCodeJSON      `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantCategoryCodeJSON contains the JSON metadata for
+// the struct [CardAuthorizationControlsMerchantCategoryCode]
+type cardAuthorizationControlsMerchantCategoryCodeJSON struct {
+	Allowed     apijson.Field
+	Blocked     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantCategoryCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantCategoryCodeJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsMerchantCategoryCodeAllowed struct {
+	// The Merchant Category Code (MCC).
+	Code string                                                   `json:"code" api:"required"`
+	JSON cardAuthorizationControlsMerchantCategoryCodeAllowedJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantCategoryCodeAllowedJSON contains the JSON
+// metadata for the struct [CardAuthorizationControlsMerchantCategoryCodeAllowed]
+type cardAuthorizationControlsMerchantCategoryCodeAllowedJSON struct {
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantCategoryCodeAllowed) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantCategoryCodeAllowedJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsMerchantCategoryCodeBlocked struct {
+	// The Merchant Category Code (MCC).
+	Code string                                                   `json:"code" api:"required"`
+	JSON cardAuthorizationControlsMerchantCategoryCodeBlockedJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantCategoryCodeBlockedJSON contains the JSON
+// metadata for the struct [CardAuthorizationControlsMerchantCategoryCodeBlocked]
+type cardAuthorizationControlsMerchantCategoryCodeBlockedJSON struct {
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantCategoryCodeBlocked) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantCategoryCodeBlockedJSON) RawJSON() string {
+	return r.raw
+}
+
+// Restricts which merchant countries are allowed or blocked for authorizations on
+// this card.
+type CardAuthorizationControlsMerchantCountry struct {
+	// The merchant countries that are allowed for authorizations on this card.
+	Allowed []CardAuthorizationControlsMerchantCountryAllowed `json:"allowed" api:"required,nullable"`
+	// The merchant countries that are blocked for authorizations on this card.
+	Blocked []CardAuthorizationControlsMerchantCountryBlocked `json:"blocked" api:"required,nullable"`
+	JSON    cardAuthorizationControlsMerchantCountryJSON      `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantCountryJSON contains the JSON metadata for the
+// struct [CardAuthorizationControlsMerchantCountry]
+type cardAuthorizationControlsMerchantCountryJSON struct {
+	Allowed     apijson.Field
+	Blocked     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantCountry) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantCountryJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsMerchantCountryAllowed struct {
+	// The ISO 3166-1 alpha-2 country code.
+	Country string                                              `json:"country" api:"required"`
+	JSON    cardAuthorizationControlsMerchantCountryAllowedJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantCountryAllowedJSON contains the JSON metadata
+// for the struct [CardAuthorizationControlsMerchantCountryAllowed]
+type cardAuthorizationControlsMerchantCountryAllowedJSON struct {
+	Country     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantCountryAllowed) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantCountryAllowedJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsMerchantCountryBlocked struct {
+	// The ISO 3166-1 alpha-2 country code.
+	Country string                                              `json:"country" api:"required"`
+	JSON    cardAuthorizationControlsMerchantCountryBlockedJSON `json:"-"`
+}
+
+// cardAuthorizationControlsMerchantCountryBlockedJSON contains the JSON metadata
+// for the struct [CardAuthorizationControlsMerchantCountryBlocked]
+type cardAuthorizationControlsMerchantCountryBlockedJSON struct {
+	Country     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsMerchantCountryBlocked) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsMerchantCountryBlockedJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsSpendingLimit struct {
+	// The interval at which the spending limit is enforced.
+	Interval CardAuthorizationControlsSpendingLimitsInterval `json:"interval" api:"required"`
+	// The Merchant Category Codes (MCCs) this spending limit applies to. If not set,
+	// the limit applies to all transactions.
+	MerchantCategoryCodes []CardAuthorizationControlsSpendingLimitsMerchantCategoryCode `json:"merchant_category_codes" api:"required,nullable"`
+	// The maximum settlement amount permitted in the given interval.
+	SettlementAmount int64                                      `json:"settlement_amount" api:"required"`
+	JSON             cardAuthorizationControlsSpendingLimitJSON `json:"-"`
+}
+
+// cardAuthorizationControlsSpendingLimitJSON contains the JSON metadata for the
+// struct [CardAuthorizationControlsSpendingLimit]
+type cardAuthorizationControlsSpendingLimitJSON struct {
+	Interval              apijson.Field
+	MerchantCategoryCodes apijson.Field
+	SettlementAmount      apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsSpendingLimit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsSpendingLimitJSON) RawJSON() string {
+	return r.raw
+}
+
+// The interval at which the spending limit is enforced.
+type CardAuthorizationControlsSpendingLimitsInterval string
+
+const (
+	CardAuthorizationControlsSpendingLimitsIntervalAllTime        CardAuthorizationControlsSpendingLimitsInterval = "all_time"
+	CardAuthorizationControlsSpendingLimitsIntervalPerTransaction CardAuthorizationControlsSpendingLimitsInterval = "per_transaction"
+	CardAuthorizationControlsSpendingLimitsIntervalPerDay         CardAuthorizationControlsSpendingLimitsInterval = "per_day"
+	CardAuthorizationControlsSpendingLimitsIntervalPerWeek        CardAuthorizationControlsSpendingLimitsInterval = "per_week"
+	CardAuthorizationControlsSpendingLimitsIntervalPerMonth       CardAuthorizationControlsSpendingLimitsInterval = "per_month"
+)
+
+func (r CardAuthorizationControlsSpendingLimitsInterval) IsKnown() bool {
+	switch r {
+	case CardAuthorizationControlsSpendingLimitsIntervalAllTime, CardAuthorizationControlsSpendingLimitsIntervalPerTransaction, CardAuthorizationControlsSpendingLimitsIntervalPerDay, CardAuthorizationControlsSpendingLimitsIntervalPerWeek, CardAuthorizationControlsSpendingLimitsIntervalPerMonth:
+		return true
+	}
+	return false
+}
+
+type CardAuthorizationControlsSpendingLimitsMerchantCategoryCode struct {
+	// The Merchant Category Code (MCC).
+	Code string                                                          `json:"code" api:"required"`
+	JSON cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON `json:"-"`
+}
+
+// cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON contains the
+// JSON metadata for the struct
+// [CardAuthorizationControlsSpendingLimitsMerchantCategoryCode]
+type cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON struct {
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsSpendingLimitsMerchantCategoryCode) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -413,6 +765,8 @@ func (r CardIframeURLType) IsKnown() bool {
 type CardNewParams struct {
 	// The Account the card should belong to.
 	AccountID param.Field[string] `json:"account_id" api:"required"`
+	// Controls that restrict how this card can be used.
+	AuthorizationControls param.Field[CardNewParamsAuthorizationControls] `json:"authorization_controls"`
 	// The card's billing address.
 	BillingAddress param.Field[CardNewParamsBillingAddress] `json:"billing_address"`
 	// The description you choose to give the card.
@@ -429,6 +783,180 @@ type CardNewParams struct {
 }
 
 func (r CardNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Controls that restrict how this card can be used.
+type CardNewParamsAuthorizationControls struct {
+	// Limits the number of authorizations that can be approved on this card.
+	MaximumAuthorizationCount param.Field[CardNewParamsAuthorizationControlsMaximumAuthorizationCount] `json:"maximum_authorization_count"`
+	// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
+	// on this card.
+	MerchantAcceptorIdentifier param.Field[CardNewParamsAuthorizationControlsMerchantAcceptorIdentifier] `json:"merchant_acceptor_identifier"`
+	// Restricts which Merchant Category Codes are allowed or blocked for
+	// authorizations on this card.
+	MerchantCategoryCode param.Field[CardNewParamsAuthorizationControlsMerchantCategoryCode] `json:"merchant_category_code"`
+	// Restricts which merchant countries are allowed or blocked for authorizations on
+	// this card.
+	MerchantCountry param.Field[CardNewParamsAuthorizationControlsMerchantCountry] `json:"merchant_country"`
+	// Spending limits for this card. The most restrictive limit is applied if multiple
+	// limits match.
+	SpendingLimits param.Field[[]CardNewParamsAuthorizationControlsSpendingLimit] `json:"spending_limits"`
+}
+
+func (r CardNewParamsAuthorizationControls) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Limits the number of authorizations that can be approved on this card.
+type CardNewParamsAuthorizationControlsMaximumAuthorizationCount struct {
+	// The maximum number of authorizations that can be approved on this card over its
+	// lifetime.
+	AllTime param.Field[int64] `json:"all_time" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMaximumAuthorizationCount) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
+// on this card.
+type CardNewParamsAuthorizationControlsMerchantAcceptorIdentifier struct {
+	// The Merchant Acceptor IDs that are allowed for authorizations on this card.
+	// Authorizations with Merchant Acceptor IDs not in this list will be declined.
+	Allowed param.Field[[]CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed] `json:"allowed"`
+	// The Merchant Acceptor IDs that are blocked for authorizations on this card.
+	// Authorizations with Merchant Acceptor IDs in this list will be declined.
+	Blocked param.Field[[]CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked] `json:"blocked"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantAcceptorIdentifier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed struct {
+	// The Merchant Acceptor ID.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked struct {
+	// The Merchant Acceptor ID.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Restricts which Merchant Category Codes are allowed or blocked for
+// authorizations on this card.
+type CardNewParamsAuthorizationControlsMerchantCategoryCode struct {
+	// The Merchant Category Codes that are allowed for authorizations on this card.
+	// Authorizations with Merchant Category Codes not in this list will be declined.
+	Allowed param.Field[[]CardNewParamsAuthorizationControlsMerchantCategoryCodeAllowed] `json:"allowed"`
+	// The Merchant Category Codes that are blocked for authorizations on this card.
+	// Authorizations with Merchant Category Codes in this list will be declined.
+	Blocked param.Field[[]CardNewParamsAuthorizationControlsMerchantCategoryCodeBlocked] `json:"blocked"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsMerchantCategoryCodeAllowed struct {
+	// The Merchant Category Code.
+	Code param.Field[string] `json:"code" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantCategoryCodeAllowed) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsMerchantCategoryCodeBlocked struct {
+	// The Merchant Category Code.
+	Code param.Field[string] `json:"code" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantCategoryCodeBlocked) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Restricts which merchant countries are allowed or blocked for authorizations on
+// this card.
+type CardNewParamsAuthorizationControlsMerchantCountry struct {
+	// The merchant countries that are allowed for authorizations on this card.
+	// Authorizations with merchant countries not in this list will be declined.
+	Allowed param.Field[[]CardNewParamsAuthorizationControlsMerchantCountryAllowed] `json:"allowed"`
+	// The merchant countries that are blocked for authorizations on this card.
+	// Authorizations with merchant countries in this list will be declined.
+	Blocked param.Field[[]CardNewParamsAuthorizationControlsMerchantCountryBlocked] `json:"blocked"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantCountry) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsMerchantCountryAllowed struct {
+	// The ISO 3166-1 alpha-2 country code.
+	Country param.Field[string] `json:"country" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantCountryAllowed) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsMerchantCountryBlocked struct {
+	// The ISO 3166-1 alpha-2 country code.
+	Country param.Field[string] `json:"country" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsMerchantCountryBlocked) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsSpendingLimit struct {
+	// The interval at which the spending limit is enforced.
+	Interval param.Field[CardNewParamsAuthorizationControlsSpendingLimitsInterval] `json:"interval" api:"required"`
+	// The maximum settlement amount permitted in the given interval.
+	SettlementAmount param.Field[int64] `json:"settlement_amount" api:"required"`
+	// The Merchant Category Codes this spending limit applies to. If not set, the
+	// limit applies to all transactions.
+	MerchantCategoryCodes param.Field[[]CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode] `json:"merchant_category_codes"`
+}
+
+func (r CardNewParamsAuthorizationControlsSpendingLimit) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The interval at which the spending limit is enforced.
+type CardNewParamsAuthorizationControlsSpendingLimitsInterval string
+
+const (
+	CardNewParamsAuthorizationControlsSpendingLimitsIntervalAllTime        CardNewParamsAuthorizationControlsSpendingLimitsInterval = "all_time"
+	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_transaction"
+	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerDay         CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_day"
+	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerWeek        CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_week"
+	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerMonth       CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_month"
+)
+
+func (r CardNewParamsAuthorizationControlsSpendingLimitsInterval) IsKnown() bool {
+	switch r {
+	case CardNewParamsAuthorizationControlsSpendingLimitsIntervalAllTime, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerDay, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerWeek, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerMonth:
+		return true
+	}
+	return false
+}
+
+type CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode struct {
+	// The Merchant Category Code.
+	Code param.Field[string] `json:"code" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -471,6 +999,8 @@ func (r CardNewParamsDigitalWallet) MarshalJSON() (data []byte, err error) {
 }
 
 type CardUpdateParams struct {
+	// Controls that restrict how this card can be used.
+	AuthorizationControls param.Field[CardUpdateParamsAuthorizationControls] `json:"authorization_controls"`
 	// The card's updated billing address.
 	BillingAddress param.Field[CardUpdateParamsBillingAddress] `json:"billing_address"`
 	// The description you choose to give the card.
@@ -487,6 +1017,180 @@ type CardUpdateParams struct {
 }
 
 func (r CardUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Controls that restrict how this card can be used.
+type CardUpdateParamsAuthorizationControls struct {
+	// Limits the number of authorizations that can be approved on this card.
+	MaximumAuthorizationCount param.Field[CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount] `json:"maximum_authorization_count"`
+	// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
+	// on this card.
+	MerchantAcceptorIdentifier param.Field[CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifier] `json:"merchant_acceptor_identifier"`
+	// Restricts which Merchant Category Codes are allowed or blocked for
+	// authorizations on this card.
+	MerchantCategoryCode param.Field[CardUpdateParamsAuthorizationControlsMerchantCategoryCode] `json:"merchant_category_code"`
+	// Restricts which merchant countries are allowed or blocked for authorizations on
+	// this card.
+	MerchantCountry param.Field[CardUpdateParamsAuthorizationControlsMerchantCountry] `json:"merchant_country"`
+	// Spending limits for this card. The most restrictive limit is applied if multiple
+	// limits match.
+	SpendingLimits param.Field[[]CardUpdateParamsAuthorizationControlsSpendingLimit] `json:"spending_limits"`
+}
+
+func (r CardUpdateParamsAuthorizationControls) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Limits the number of authorizations that can be approved on this card.
+type CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount struct {
+	// The maximum number of authorizations that can be approved on this card over its
+	// lifetime.
+	AllTime param.Field[int64] `json:"all_time" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
+// on this card.
+type CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifier struct {
+	// The Merchant Acceptor IDs that are allowed for authorizations on this card.
+	// Authorizations with Merchant Acceptor IDs not in this list will be declined.
+	Allowed param.Field[[]CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed] `json:"allowed"`
+	// The Merchant Acceptor IDs that are blocked for authorizations on this card.
+	// Authorizations with Merchant Acceptor IDs in this list will be declined.
+	Blocked param.Field[[]CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked] `json:"blocked"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed struct {
+	// The Merchant Acceptor ID.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked struct {
+	// The Merchant Acceptor ID.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierBlocked) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Restricts which Merchant Category Codes are allowed or blocked for
+// authorizations on this card.
+type CardUpdateParamsAuthorizationControlsMerchantCategoryCode struct {
+	// The Merchant Category Codes that are allowed for authorizations on this card.
+	// Authorizations with Merchant Category Codes not in this list will be declined.
+	Allowed param.Field[[]CardUpdateParamsAuthorizationControlsMerchantCategoryCodeAllowed] `json:"allowed"`
+	// The Merchant Category Codes that are blocked for authorizations on this card.
+	// Authorizations with Merchant Category Codes in this list will be declined.
+	Blocked param.Field[[]CardUpdateParamsAuthorizationControlsMerchantCategoryCodeBlocked] `json:"blocked"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsMerchantCategoryCodeAllowed struct {
+	// The Merchant Category Code.
+	Code param.Field[string] `json:"code" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantCategoryCodeAllowed) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsMerchantCategoryCodeBlocked struct {
+	// The Merchant Category Code.
+	Code param.Field[string] `json:"code" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantCategoryCodeBlocked) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Restricts which merchant countries are allowed or blocked for authorizations on
+// this card.
+type CardUpdateParamsAuthorizationControlsMerchantCountry struct {
+	// The merchant countries that are allowed for authorizations on this card.
+	// Authorizations with merchant countries not in this list will be declined.
+	Allowed param.Field[[]CardUpdateParamsAuthorizationControlsMerchantCountryAllowed] `json:"allowed"`
+	// The merchant countries that are blocked for authorizations on this card.
+	// Authorizations with merchant countries in this list will be declined.
+	Blocked param.Field[[]CardUpdateParamsAuthorizationControlsMerchantCountryBlocked] `json:"blocked"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantCountry) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsMerchantCountryAllowed struct {
+	// The ISO 3166-1 alpha-2 country code.
+	Country param.Field[string] `json:"country" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantCountryAllowed) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsMerchantCountryBlocked struct {
+	// The ISO 3166-1 alpha-2 country code.
+	Country param.Field[string] `json:"country" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsMerchantCountryBlocked) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsSpendingLimit struct {
+	// The interval at which the spending limit is enforced.
+	Interval param.Field[CardUpdateParamsAuthorizationControlsSpendingLimitsInterval] `json:"interval" api:"required"`
+	// The maximum settlement amount permitted in the given interval.
+	SettlementAmount param.Field[int64] `json:"settlement_amount" api:"required"`
+	// The Merchant Category Codes this spending limit applies to. If not set, the
+	// limit applies to all transactions.
+	MerchantCategoryCodes param.Field[[]CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode] `json:"merchant_category_codes"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsSpendingLimit) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The interval at which the spending limit is enforced.
+type CardUpdateParamsAuthorizationControlsSpendingLimitsInterval string
+
+const (
+	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalAllTime        CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "all_time"
+	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_transaction"
+	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerDay         CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_day"
+	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerWeek        CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_week"
+	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerMonth       CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_month"
+)
+
+func (r CardUpdateParamsAuthorizationControlsSpendingLimitsInterval) IsKnown() bool {
+	switch r {
+	case CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalAllTime, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerDay, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerWeek, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerMonth:
+		return true
+	}
+	return false
+}
+
+type CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode struct {
+	// The Merchant Category Code.
+	Code param.Field[string] `json:"code" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
