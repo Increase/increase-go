@@ -216,7 +216,7 @@ type CardAuthorizationControls struct {
 	// Restricts which merchant countries are allowed or blocked for authorizations on
 	// this card.
 	MerchantCountry CardAuthorizationControlsMerchantCountry `json:"merchant_country" api:"required,nullable"`
-	// Spending limits for this card. The most restrictive limit is applied if multiple
+	// Spending limits for this card. The most restrictive limit applies if multiple
 	// limits match.
 	SpendingLimits []CardAuthorizationControlsSpendingLimit `json:"spending_limits" api:"required,nullable"`
 	JSON           cardAuthorizationControlsJSON            `json:"-"`
@@ -799,7 +799,7 @@ type CardNewParamsAuthorizationControls struct {
 	// Restricts which merchant countries are allowed or blocked for authorizations on
 	// this card.
 	MerchantCountry param.Field[CardNewParamsAuthorizationControlsMerchantCountry] `json:"merchant_country"`
-	// Spending limits for this card. The most restrictive limit is applied if multiple
+	// Spending limits for this card. The most restrictive limit applies if multiple
 	// limits match.
 	SpendingLimits param.Field[[]CardNewParamsAuthorizationControlsSpendingLimit] `json:"spending_limits"`
 }
@@ -1033,7 +1033,7 @@ type CardUpdateParamsAuthorizationControls struct {
 	// Restricts which merchant countries are allowed or blocked for authorizations on
 	// this card.
 	MerchantCountry param.Field[CardUpdateParamsAuthorizationControlsMerchantCountry] `json:"merchant_country"`
-	// Spending limits for this card. The most restrictive limit is applied if multiple
+	// Spending limits for this card. The most restrictive limit applies if multiple
 	// limits match.
 	SpendingLimits param.Field[[]CardUpdateParamsAuthorizationControlsSpendingLimit] `json:"spending_limits"`
 }
