@@ -205,8 +205,6 @@ func (r cardJSON) RawJSON() string {
 
 // Controls that restrict how this card can be used.
 type CardAuthorizationControls struct {
-	// Limits the number of authorizations that can be approved on this card.
-	MaximumAuthorizationCount CardAuthorizationControlsMaximumAuthorizationCount `json:"maximum_authorization_count" api:"required,nullable"`
 	// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
 	// on this card.
 	MerchantAcceptorIdentifier CardAuthorizationControlsMerchantAcceptorIdentifier `json:"merchant_acceptor_identifier" api:"required,nullable"`
@@ -216,20 +214,18 @@ type CardAuthorizationControls struct {
 	// Restricts which merchant countries are allowed or blocked for authorizations on
 	// this card.
 	MerchantCountry CardAuthorizationControlsMerchantCountry `json:"merchant_country" api:"required,nullable"`
-	// Spending limits for this card. The most restrictive limit applies if multiple
-	// limits match.
-	SpendingLimits []CardAuthorizationControlsSpendingLimit `json:"spending_limits" api:"required,nullable"`
-	JSON           cardAuthorizationControlsJSON            `json:"-"`
+	// Controls how many times this card can be used.
+	Usage CardAuthorizationControlsUsage `json:"usage" api:"required,nullable"`
+	JSON  cardAuthorizationControlsJSON  `json:"-"`
 }
 
 // cardAuthorizationControlsJSON contains the JSON metadata for the struct
 // [CardAuthorizationControls]
 type cardAuthorizationControlsJSON struct {
-	MaximumAuthorizationCount  apijson.Field
 	MerchantAcceptorIdentifier apijson.Field
 	MerchantCategoryCode       apijson.Field
 	MerchantCountry            apijson.Field
-	SpendingLimits             apijson.Field
+	Usage                      apijson.Field
 	raw                        string
 	ExtraFields                map[string]apijson.Field
 }
@@ -239,30 +235,6 @@ func (r *CardAuthorizationControls) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r cardAuthorizationControlsJSON) RawJSON() string {
-	return r.raw
-}
-
-// Limits the number of authorizations that can be approved on this card.
-type CardAuthorizationControlsMaximumAuthorizationCount struct {
-	// The maximum number of authorizations that can be approved on this card over its
-	// lifetime.
-	AllTime int64                                                  `json:"all_time" api:"required,nullable"`
-	JSON    cardAuthorizationControlsMaximumAuthorizationCountJSON `json:"-"`
-}
-
-// cardAuthorizationControlsMaximumAuthorizationCountJSON contains the JSON
-// metadata for the struct [CardAuthorizationControlsMaximumAuthorizationCount]
-type cardAuthorizationControlsMaximumAuthorizationCountJSON struct {
-	AllTime     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CardAuthorizationControlsMaximumAuthorizationCount) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r cardAuthorizationControlsMaximumAuthorizationCountJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -481,20 +453,90 @@ func (r cardAuthorizationControlsMerchantCountryBlockedJSON) RawJSON() string {
 	return r.raw
 }
 
-type CardAuthorizationControlsSpendingLimit struct {
-	// The interval at which the spending limit is enforced.
-	Interval CardAuthorizationControlsSpendingLimitsInterval `json:"interval" api:"required"`
-	// The Merchant Category Codes (MCCs) this spending limit applies to. If not set,
-	// the limit applies to all transactions.
-	MerchantCategoryCodes []CardAuthorizationControlsSpendingLimitsMerchantCategoryCode `json:"merchant_category_codes" api:"required,nullable"`
-	// The maximum settlement amount permitted in the given interval.
-	SettlementAmount int64                                      `json:"settlement_amount" api:"required"`
-	JSON             cardAuthorizationControlsSpendingLimitJSON `json:"-"`
+// Controls how many times this card can be used.
+type CardAuthorizationControlsUsage struct {
+	// Whether the card is for a single use or multiple uses.
+	Category CardAuthorizationControlsUsageCategory `json:"category" api:"required"`
+	// Controls for multi-use cards. Required if and only if `category` is `multi_use`.
+	MultiUse CardAuthorizationControlsUsageMultiUse `json:"multi_use" api:"required,nullable"`
+	// Controls for single-use cards. Required if and only if `category` is
+	// `single_use`.
+	SingleUse CardAuthorizationControlsUsageSingleUse `json:"single_use" api:"required,nullable"`
+	JSON      cardAuthorizationControlsUsageJSON      `json:"-"`
 }
 
-// cardAuthorizationControlsSpendingLimitJSON contains the JSON metadata for the
-// struct [CardAuthorizationControlsSpendingLimit]
-type cardAuthorizationControlsSpendingLimitJSON struct {
+// cardAuthorizationControlsUsageJSON contains the JSON metadata for the struct
+// [CardAuthorizationControlsUsage]
+type cardAuthorizationControlsUsageJSON struct {
+	Category    apijson.Field
+	MultiUse    apijson.Field
+	SingleUse   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsUsage) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsUsageJSON) RawJSON() string {
+	return r.raw
+}
+
+// Whether the card is for a single use or multiple uses.
+type CardAuthorizationControlsUsageCategory string
+
+const (
+	CardAuthorizationControlsUsageCategorySingleUse CardAuthorizationControlsUsageCategory = "single_use"
+	CardAuthorizationControlsUsageCategoryMultiUse  CardAuthorizationControlsUsageCategory = "multi_use"
+)
+
+func (r CardAuthorizationControlsUsageCategory) IsKnown() bool {
+	switch r {
+	case CardAuthorizationControlsUsageCategorySingleUse, CardAuthorizationControlsUsageCategoryMultiUse:
+		return true
+	}
+	return false
+}
+
+// Controls for multi-use cards. Required if and only if `category` is `multi_use`.
+type CardAuthorizationControlsUsageMultiUse struct {
+	// Spending limits for this card. The most restrictive limit applies if multiple
+	// limits match.
+	SpendingLimits []CardAuthorizationControlsUsageMultiUseSpendingLimit `json:"spending_limits" api:"required,nullable"`
+	JSON           cardAuthorizationControlsUsageMultiUseJSON            `json:"-"`
+}
+
+// cardAuthorizationControlsUsageMultiUseJSON contains the JSON metadata for the
+// struct [CardAuthorizationControlsUsageMultiUse]
+type cardAuthorizationControlsUsageMultiUseJSON struct {
+	SpendingLimits apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsUsageMultiUse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsUsageMultiUseJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardAuthorizationControlsUsageMultiUseSpendingLimit struct {
+	// The interval at which the spending limit is enforced.
+	Interval CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval `json:"interval" api:"required"`
+	// The Merchant Category Codes (MCCs) this spending limit applies to. If not set,
+	// the limit applies to all transactions.
+	MerchantCategoryCodes []CardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode `json:"merchant_category_codes" api:"required,nullable"`
+	// The maximum settlement amount permitted in the given interval.
+	SettlementAmount int64                                                   `json:"settlement_amount" api:"required"`
+	JSON             cardAuthorizationControlsUsageMultiUseSpendingLimitJSON `json:"-"`
+}
+
+// cardAuthorizationControlsUsageMultiUseSpendingLimitJSON contains the JSON
+// metadata for the struct [CardAuthorizationControlsUsageMultiUseSpendingLimit]
+type cardAuthorizationControlsUsageMultiUseSpendingLimitJSON struct {
 	Interval              apijson.Field
 	MerchantCategoryCodes apijson.Field
 	SettlementAmount      apijson.Field
@@ -502,54 +544,121 @@ type cardAuthorizationControlsSpendingLimitJSON struct {
 	ExtraFields           map[string]apijson.Field
 }
 
-func (r *CardAuthorizationControlsSpendingLimit) UnmarshalJSON(data []byte) (err error) {
+func (r *CardAuthorizationControlsUsageMultiUseSpendingLimit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r cardAuthorizationControlsSpendingLimitJSON) RawJSON() string {
+func (r cardAuthorizationControlsUsageMultiUseSpendingLimitJSON) RawJSON() string {
 	return r.raw
 }
 
 // The interval at which the spending limit is enforced.
-type CardAuthorizationControlsSpendingLimitsInterval string
+type CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval string
 
 const (
-	CardAuthorizationControlsSpendingLimitsIntervalAllTime        CardAuthorizationControlsSpendingLimitsInterval = "all_time"
-	CardAuthorizationControlsSpendingLimitsIntervalPerTransaction CardAuthorizationControlsSpendingLimitsInterval = "per_transaction"
-	CardAuthorizationControlsSpendingLimitsIntervalPerDay         CardAuthorizationControlsSpendingLimitsInterval = "per_day"
-	CardAuthorizationControlsSpendingLimitsIntervalPerWeek        CardAuthorizationControlsSpendingLimitsInterval = "per_week"
-	CardAuthorizationControlsSpendingLimitsIntervalPerMonth       CardAuthorizationControlsSpendingLimitsInterval = "per_month"
+	CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime        CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "all_time"
+	CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerTransaction CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_transaction"
+	CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerDay         CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_day"
+	CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerWeek        CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_week"
+	CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerMonth       CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_month"
 )
 
-func (r CardAuthorizationControlsSpendingLimitsInterval) IsKnown() bool {
+func (r CardAuthorizationControlsUsageMultiUseSpendingLimitsInterval) IsKnown() bool {
 	switch r {
-	case CardAuthorizationControlsSpendingLimitsIntervalAllTime, CardAuthorizationControlsSpendingLimitsIntervalPerTransaction, CardAuthorizationControlsSpendingLimitsIntervalPerDay, CardAuthorizationControlsSpendingLimitsIntervalPerWeek, CardAuthorizationControlsSpendingLimitsIntervalPerMonth:
+	case CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime, CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerTransaction, CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerDay, CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerWeek, CardAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerMonth:
 		return true
 	}
 	return false
 }
 
-type CardAuthorizationControlsSpendingLimitsMerchantCategoryCode struct {
+type CardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode struct {
 	// The Merchant Category Code (MCC).
-	Code string                                                          `json:"code" api:"required"`
-	JSON cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON `json:"-"`
+	Code string                                                                       `json:"code" api:"required"`
+	JSON cardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCodeJSON `json:"-"`
 }
 
-// cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON contains the
-// JSON metadata for the struct
-// [CardAuthorizationControlsSpendingLimitsMerchantCategoryCode]
-type cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON struct {
+// cardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCodeJSON
+// contains the JSON metadata for the struct
+// [CardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode]
+type cardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCodeJSON struct {
 	Code        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *CardAuthorizationControlsSpendingLimitsMerchantCategoryCode) UnmarshalJSON(data []byte) (err error) {
+func (r *CardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r cardAuthorizationControlsSpendingLimitsMerchantCategoryCodeJSON) RawJSON() string {
+func (r cardAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCodeJSON) RawJSON() string {
 	return r.raw
+}
+
+// Controls for single-use cards. Required if and only if `category` is
+// `single_use`.
+type CardAuthorizationControlsUsageSingleUse struct {
+	// The settlement amount constraint for this single-use card.
+	SettlementAmount CardAuthorizationControlsUsageSingleUseSettlementAmount `json:"settlement_amount" api:"required"`
+	JSON             cardAuthorizationControlsUsageSingleUseJSON             `json:"-"`
+}
+
+// cardAuthorizationControlsUsageSingleUseJSON contains the JSON metadata for the
+// struct [CardAuthorizationControlsUsageSingleUse]
+type cardAuthorizationControlsUsageSingleUseJSON struct {
+	SettlementAmount apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsUsageSingleUse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsUsageSingleUseJSON) RawJSON() string {
+	return r.raw
+}
+
+// The settlement amount constraint for this single-use card.
+type CardAuthorizationControlsUsageSingleUseSettlementAmount struct {
+	// The operator used to compare the settlement amount.
+	Comparison CardAuthorizationControlsUsageSingleUseSettlementAmountComparison `json:"comparison" api:"required"`
+	// The settlement amount value.
+	Value int64                                                       `json:"value" api:"required"`
+	JSON  cardAuthorizationControlsUsageSingleUseSettlementAmountJSON `json:"-"`
+}
+
+// cardAuthorizationControlsUsageSingleUseSettlementAmountJSON contains the JSON
+// metadata for the struct
+// [CardAuthorizationControlsUsageSingleUseSettlementAmount]
+type cardAuthorizationControlsUsageSingleUseSettlementAmountJSON struct {
+	Comparison  apijson.Field
+	Value       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardAuthorizationControlsUsageSingleUseSettlementAmount) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardAuthorizationControlsUsageSingleUseSettlementAmountJSON) RawJSON() string {
+	return r.raw
+}
+
+// The operator used to compare the settlement amount.
+type CardAuthorizationControlsUsageSingleUseSettlementAmountComparison string
+
+const (
+	CardAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals           CardAuthorizationControlsUsageSingleUseSettlementAmountComparison = "equals"
+	CardAuthorizationControlsUsageSingleUseSettlementAmountComparisonLessThanOrEquals CardAuthorizationControlsUsageSingleUseSettlementAmountComparison = "less_than_or_equals"
+)
+
+func (r CardAuthorizationControlsUsageSingleUseSettlementAmountComparison) IsKnown() bool {
+	switch r {
+	case CardAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals, CardAuthorizationControlsUsageSingleUseSettlementAmountComparisonLessThanOrEquals:
+		return true
+	}
+	return false
 }
 
 // The Card's billing address.
@@ -788,8 +897,6 @@ func (r CardNewParams) MarshalJSON() (data []byte, err error) {
 
 // Controls that restrict how this card can be used.
 type CardNewParamsAuthorizationControls struct {
-	// Limits the number of authorizations that can be approved on this card.
-	MaximumAuthorizationCount param.Field[CardNewParamsAuthorizationControlsMaximumAuthorizationCount] `json:"maximum_authorization_count"`
 	// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
 	// on this card.
 	MerchantAcceptorIdentifier param.Field[CardNewParamsAuthorizationControlsMerchantAcceptorIdentifier] `json:"merchant_acceptor_identifier"`
@@ -799,23 +906,11 @@ type CardNewParamsAuthorizationControls struct {
 	// Restricts which merchant countries are allowed or blocked for authorizations on
 	// this card.
 	MerchantCountry param.Field[CardNewParamsAuthorizationControlsMerchantCountry] `json:"merchant_country"`
-	// Spending limits for this card. The most restrictive limit applies if multiple
-	// limits match.
-	SpendingLimits param.Field[[]CardNewParamsAuthorizationControlsSpendingLimit] `json:"spending_limits"`
+	// Controls how many times this card can be used.
+	Usage param.Field[CardNewParamsAuthorizationControlsUsage] `json:"usage"`
 }
 
 func (r CardNewParamsAuthorizationControls) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Limits the number of authorizations that can be approved on this card.
-type CardNewParamsAuthorizationControlsMaximumAuthorizationCount struct {
-	// The maximum number of authorizations that can be approved on this card over its
-	// lifetime.
-	AllTime param.Field[int64] `json:"all_time" api:"required"`
-}
-
-func (r CardNewParamsAuthorizationControlsMaximumAuthorizationCount) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -918,46 +1013,127 @@ func (r CardNewParamsAuthorizationControlsMerchantCountryBlocked) MarshalJSON() 
 	return apijson.MarshalRoot(r)
 }
 
-type CardNewParamsAuthorizationControlsSpendingLimit struct {
-	// The interval at which the spending limit is enforced.
-	Interval param.Field[CardNewParamsAuthorizationControlsSpendingLimitsInterval] `json:"interval" api:"required"`
-	// The maximum settlement amount permitted in the given interval.
-	SettlementAmount param.Field[int64] `json:"settlement_amount" api:"required"`
-	// The Merchant Category Codes this spending limit applies to. If not set, the
-	// limit applies to all transactions.
-	MerchantCategoryCodes param.Field[[]CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode] `json:"merchant_category_codes"`
+// Controls how many times this card can be used.
+type CardNewParamsAuthorizationControlsUsage struct {
+	// Whether the card is for a single use or multiple uses.
+	Category param.Field[CardNewParamsAuthorizationControlsUsageCategory] `json:"category" api:"required"`
+	// Controls for multi-use cards. Required if and only if `category` is `multi_use`.
+	MultiUse param.Field[CardNewParamsAuthorizationControlsUsageMultiUse] `json:"multi_use"`
+	// Controls for single-use cards. Required if and only if `category` is
+	// `single_use`.
+	SingleUse param.Field[CardNewParamsAuthorizationControlsUsageSingleUse] `json:"single_use"`
 }
 
-func (r CardNewParamsAuthorizationControlsSpendingLimit) MarshalJSON() (data []byte, err error) {
+func (r CardNewParamsAuthorizationControlsUsage) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The interval at which the spending limit is enforced.
-type CardNewParamsAuthorizationControlsSpendingLimitsInterval string
+// Whether the card is for a single use or multiple uses.
+type CardNewParamsAuthorizationControlsUsageCategory string
 
 const (
-	CardNewParamsAuthorizationControlsSpendingLimitsIntervalAllTime        CardNewParamsAuthorizationControlsSpendingLimitsInterval = "all_time"
-	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_transaction"
-	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerDay         CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_day"
-	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerWeek        CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_week"
-	CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerMonth       CardNewParamsAuthorizationControlsSpendingLimitsInterval = "per_month"
+	CardNewParamsAuthorizationControlsUsageCategorySingleUse CardNewParamsAuthorizationControlsUsageCategory = "single_use"
+	CardNewParamsAuthorizationControlsUsageCategoryMultiUse  CardNewParamsAuthorizationControlsUsageCategory = "multi_use"
 )
 
-func (r CardNewParamsAuthorizationControlsSpendingLimitsInterval) IsKnown() bool {
+func (r CardNewParamsAuthorizationControlsUsageCategory) IsKnown() bool {
 	switch r {
-	case CardNewParamsAuthorizationControlsSpendingLimitsIntervalAllTime, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerDay, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerWeek, CardNewParamsAuthorizationControlsSpendingLimitsIntervalPerMonth:
+	case CardNewParamsAuthorizationControlsUsageCategorySingleUse, CardNewParamsAuthorizationControlsUsageCategoryMultiUse:
 		return true
 	}
 	return false
 }
 
-type CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode struct {
+// Controls for multi-use cards. Required if and only if `category` is `multi_use`.
+type CardNewParamsAuthorizationControlsUsageMultiUse struct {
+	// Spending limits for this card. The most restrictive limit applies if multiple
+	// limits match.
+	SpendingLimits param.Field[[]CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimit] `json:"spending_limits"`
+}
+
+func (r CardNewParamsAuthorizationControlsUsageMultiUse) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimit struct {
+	// The interval at which the spending limit is enforced.
+	Interval param.Field[CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval] `json:"interval" api:"required"`
+	// The maximum settlement amount permitted in the given interval.
+	SettlementAmount param.Field[int64] `json:"settlement_amount" api:"required"`
+	// The Merchant Category Codes this spending limit applies to. If not set, the
+	// limit applies to all transactions.
+	MerchantCategoryCodes param.Field[[]CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode] `json:"merchant_category_codes"`
+}
+
+func (r CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimit) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The interval at which the spending limit is enforced.
+type CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval string
+
+const (
+	CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime        CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "all_time"
+	CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerTransaction CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_transaction"
+	CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerDay         CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_day"
+	CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerWeek        CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_week"
+	CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerMonth       CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_month"
+)
+
+func (r CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval) IsKnown() bool {
+	switch r {
+	case CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime, CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerTransaction, CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerDay, CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerWeek, CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerMonth:
+		return true
+	}
+	return false
+}
+
+type CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode struct {
 	// The Merchant Category Code.
 	Code param.Field[string] `json:"code" api:"required"`
 }
 
-func (r CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
+func (r CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Controls for single-use cards. Required if and only if `category` is
+// `single_use`.
+type CardNewParamsAuthorizationControlsUsageSingleUse struct {
+	// The settlement amount constraint for this single-use card.
+	SettlementAmount param.Field[CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmount] `json:"settlement_amount" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsUsageSingleUse) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The settlement amount constraint for this single-use card.
+type CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmount struct {
+	// The operator used to compare the settlement amount.
+	Comparison param.Field[CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison] `json:"comparison" api:"required"`
+	// The settlement amount value.
+	Value param.Field[int64] `json:"value" api:"required"`
+}
+
+func (r CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmount) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The operator used to compare the settlement amount.
+type CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison string
+
+const (
+	CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals           CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison = "equals"
+	CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonLessThanOrEquals CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison = "less_than_or_equals"
+)
+
+func (r CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison) IsKnown() bool {
+	switch r {
+	case CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals, CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonLessThanOrEquals:
+		return true
+	}
+	return false
 }
 
 // The card's billing address.
@@ -1022,8 +1198,6 @@ func (r CardUpdateParams) MarshalJSON() (data []byte, err error) {
 
 // Controls that restrict how this card can be used.
 type CardUpdateParamsAuthorizationControls struct {
-	// Limits the number of authorizations that can be approved on this card.
-	MaximumAuthorizationCount param.Field[CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount] `json:"maximum_authorization_count"`
 	// Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations
 	// on this card.
 	MerchantAcceptorIdentifier param.Field[CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifier] `json:"merchant_acceptor_identifier"`
@@ -1033,23 +1207,11 @@ type CardUpdateParamsAuthorizationControls struct {
 	// Restricts which merchant countries are allowed or blocked for authorizations on
 	// this card.
 	MerchantCountry param.Field[CardUpdateParamsAuthorizationControlsMerchantCountry] `json:"merchant_country"`
-	// Spending limits for this card. The most restrictive limit applies if multiple
-	// limits match.
-	SpendingLimits param.Field[[]CardUpdateParamsAuthorizationControlsSpendingLimit] `json:"spending_limits"`
+	// Controls how many times this card can be used.
+	Usage param.Field[CardUpdateParamsAuthorizationControlsUsage] `json:"usage"`
 }
 
 func (r CardUpdateParamsAuthorizationControls) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Limits the number of authorizations that can be approved on this card.
-type CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount struct {
-	// The maximum number of authorizations that can be approved on this card over its
-	// lifetime.
-	AllTime param.Field[int64] `json:"all_time" api:"required"`
-}
-
-func (r CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -1152,46 +1314,127 @@ func (r CardUpdateParamsAuthorizationControlsMerchantCountryBlocked) MarshalJSON
 	return apijson.MarshalRoot(r)
 }
 
-type CardUpdateParamsAuthorizationControlsSpendingLimit struct {
-	// The interval at which the spending limit is enforced.
-	Interval param.Field[CardUpdateParamsAuthorizationControlsSpendingLimitsInterval] `json:"interval" api:"required"`
-	// The maximum settlement amount permitted in the given interval.
-	SettlementAmount param.Field[int64] `json:"settlement_amount" api:"required"`
-	// The Merchant Category Codes this spending limit applies to. If not set, the
-	// limit applies to all transactions.
-	MerchantCategoryCodes param.Field[[]CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode] `json:"merchant_category_codes"`
+// Controls how many times this card can be used.
+type CardUpdateParamsAuthorizationControlsUsage struct {
+	// Whether the card is for a single use or multiple uses.
+	Category param.Field[CardUpdateParamsAuthorizationControlsUsageCategory] `json:"category" api:"required"`
+	// Controls for multi-use cards. Required if and only if `category` is `multi_use`.
+	MultiUse param.Field[CardUpdateParamsAuthorizationControlsUsageMultiUse] `json:"multi_use"`
+	// Controls for single-use cards. Required if and only if `category` is
+	// `single_use`.
+	SingleUse param.Field[CardUpdateParamsAuthorizationControlsUsageSingleUse] `json:"single_use"`
 }
 
-func (r CardUpdateParamsAuthorizationControlsSpendingLimit) MarshalJSON() (data []byte, err error) {
+func (r CardUpdateParamsAuthorizationControlsUsage) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The interval at which the spending limit is enforced.
-type CardUpdateParamsAuthorizationControlsSpendingLimitsInterval string
+// Whether the card is for a single use or multiple uses.
+type CardUpdateParamsAuthorizationControlsUsageCategory string
 
 const (
-	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalAllTime        CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "all_time"
-	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_transaction"
-	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerDay         CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_day"
-	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerWeek        CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_week"
-	CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerMonth       CardUpdateParamsAuthorizationControlsSpendingLimitsInterval = "per_month"
+	CardUpdateParamsAuthorizationControlsUsageCategorySingleUse CardUpdateParamsAuthorizationControlsUsageCategory = "single_use"
+	CardUpdateParamsAuthorizationControlsUsageCategoryMultiUse  CardUpdateParamsAuthorizationControlsUsageCategory = "multi_use"
 )
 
-func (r CardUpdateParamsAuthorizationControlsSpendingLimitsInterval) IsKnown() bool {
+func (r CardUpdateParamsAuthorizationControlsUsageCategory) IsKnown() bool {
 	switch r {
-	case CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalAllTime, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerTransaction, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerDay, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerWeek, CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalPerMonth:
+	case CardUpdateParamsAuthorizationControlsUsageCategorySingleUse, CardUpdateParamsAuthorizationControlsUsageCategoryMultiUse:
 		return true
 	}
 	return false
 }
 
-type CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode struct {
+// Controls for multi-use cards. Required if and only if `category` is `multi_use`.
+type CardUpdateParamsAuthorizationControlsUsageMultiUse struct {
+	// Spending limits for this card. The most restrictive limit applies if multiple
+	// limits match.
+	SpendingLimits param.Field[[]CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimit] `json:"spending_limits"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsUsageMultiUse) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimit struct {
+	// The interval at which the spending limit is enforced.
+	Interval param.Field[CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval] `json:"interval" api:"required"`
+	// The maximum settlement amount permitted in the given interval.
+	SettlementAmount param.Field[int64] `json:"settlement_amount" api:"required"`
+	// The Merchant Category Codes this spending limit applies to. If not set, the
+	// limit applies to all transactions.
+	MerchantCategoryCodes param.Field[[]CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode] `json:"merchant_category_codes"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimit) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The interval at which the spending limit is enforced.
+type CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval string
+
+const (
+	CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime        CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "all_time"
+	CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerTransaction CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_transaction"
+	CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerDay         CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_day"
+	CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerWeek        CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_week"
+	CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerMonth       CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval = "per_month"
+)
+
+func (r CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsInterval) IsKnown() bool {
+	switch r {
+	case CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime, CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerTransaction, CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerDay, CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerWeek, CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalPerMonth:
+		return true
+	}
+	return false
+}
+
+type CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode struct {
 	// The Merchant Category Code.
 	Code param.Field[string] `json:"code" api:"required"`
 }
 
-func (r CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
+func (r CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Controls for single-use cards. Required if and only if `category` is
+// `single_use`.
+type CardUpdateParamsAuthorizationControlsUsageSingleUse struct {
+	// The settlement amount constraint for this single-use card.
+	SettlementAmount param.Field[CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmount] `json:"settlement_amount" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsUsageSingleUse) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The settlement amount constraint for this single-use card.
+type CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmount struct {
+	// The operator used to compare the settlement amount.
+	Comparison param.Field[CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison] `json:"comparison" api:"required"`
+	// The settlement amount value.
+	Value param.Field[int64] `json:"value" api:"required"`
+}
+
+func (r CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmount) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The operator used to compare the settlement amount.
+type CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison string
+
+const (
+	CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals           CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison = "equals"
+	CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonLessThanOrEquals CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison = "less_than_or_equals"
+)
+
+func (r CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparison) IsKnown() bool {
+	switch r {
+	case CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals, CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonLessThanOrEquals:
+		return true
+	}
+	return false
 }
 
 // The card's updated billing address.
