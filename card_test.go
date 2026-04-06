@@ -29,9 +29,6 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 	_, err := client.Cards.New(context.TODO(), increase.CardNewParams{
 		AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 		AuthorizationControls: increase.F(increase.CardNewParamsAuthorizationControls{
-			MaximumAuthorizationCount: increase.F(increase.CardNewParamsAuthorizationControlsMaximumAuthorizationCount{
-				AllTime: increase.F(int64(0)),
-			}),
 			MerchantAcceptorIdentifier: increase.F(increase.CardNewParamsAuthorizationControlsMerchantAcceptorIdentifier{
 				Allowed: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed{{
 					Identifier: increase.F("x"),
@@ -56,13 +53,24 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 					Country: increase.F("xx"),
 				}}),
 			}),
-			SpendingLimits: increase.F([]increase.CardNewParamsAuthorizationControlsSpendingLimit{{
-				Interval:         increase.F(increase.CardNewParamsAuthorizationControlsSpendingLimitsIntervalAllTime),
-				SettlementAmount: increase.F(int64(0)),
-				MerchantCategoryCodes: increase.F([]increase.CardNewParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode{{
-					Code: increase.F("x"),
-				}}),
-			}}),
+			Usage: increase.F(increase.CardNewParamsAuthorizationControlsUsage{
+				Category: increase.F(increase.CardNewParamsAuthorizationControlsUsageCategorySingleUse),
+				MultiUse: increase.F(increase.CardNewParamsAuthorizationControlsUsageMultiUse{
+					SpendingLimits: increase.F([]increase.CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimit{{
+						Interval:         increase.F(increase.CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime),
+						SettlementAmount: increase.F(int64(0)),
+						MerchantCategoryCodes: increase.F([]increase.CardNewParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode{{
+							Code: increase.F("x"),
+						}}),
+					}}),
+				}),
+				SingleUse: increase.F(increase.CardNewParamsAuthorizationControlsUsageSingleUse{
+					SettlementAmount: increase.F(increase.CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmount{
+						Comparison: increase.F(increase.CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals),
+						Value:      increase.F(int64(0)),
+					}),
+				}),
+			}),
 		}),
 		BillingAddress: increase.F(increase.CardNewParamsBillingAddress{
 			City:       increase.F("x"),
@@ -127,9 +135,6 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 		"card_oubs0hwk5rn6knuecxg2",
 		increase.CardUpdateParams{
 			AuthorizationControls: increase.F(increase.CardUpdateParamsAuthorizationControls{
-				MaximumAuthorizationCount: increase.F(increase.CardUpdateParamsAuthorizationControlsMaximumAuthorizationCount{
-					AllTime: increase.F(int64(0)),
-				}),
 				MerchantAcceptorIdentifier: increase.F(increase.CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifier{
 					Allowed: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantAcceptorIdentifierAllowed{{
 						Identifier: increase.F("x"),
@@ -154,13 +159,24 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 						Country: increase.F("xx"),
 					}}),
 				}),
-				SpendingLimits: increase.F([]increase.CardUpdateParamsAuthorizationControlsSpendingLimit{{
-					Interval:         increase.F(increase.CardUpdateParamsAuthorizationControlsSpendingLimitsIntervalAllTime),
-					SettlementAmount: increase.F(int64(0)),
-					MerchantCategoryCodes: increase.F([]increase.CardUpdateParamsAuthorizationControlsSpendingLimitsMerchantCategoryCode{{
-						Code: increase.F("x"),
-					}}),
-				}}),
+				Usage: increase.F(increase.CardUpdateParamsAuthorizationControlsUsage{
+					Category: increase.F(increase.CardUpdateParamsAuthorizationControlsUsageCategorySingleUse),
+					MultiUse: increase.F(increase.CardUpdateParamsAuthorizationControlsUsageMultiUse{
+						SpendingLimits: increase.F([]increase.CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimit{{
+							Interval:         increase.F(increase.CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsIntervalAllTime),
+							SettlementAmount: increase.F(int64(0)),
+							MerchantCategoryCodes: increase.F([]increase.CardUpdateParamsAuthorizationControlsUsageMultiUseSpendingLimitsMerchantCategoryCode{{
+								Code: increase.F("x"),
+							}}),
+						}}),
+					}),
+					SingleUse: increase.F(increase.CardUpdateParamsAuthorizationControlsUsageSingleUse{
+						SettlementAmount: increase.F(increase.CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmount{
+							Comparison: increase.F(increase.CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountComparisonEquals),
+							Value:      increase.F(int64(0)),
+						}),
+					}),
+				}),
 			}),
 			BillingAddress: increase.F(increase.CardUpdateParamsBillingAddress{
 				City:       increase.F("x"),
