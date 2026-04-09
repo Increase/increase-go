@@ -53,6 +53,7 @@ type Client struct {
 	Entities                         *EntityService
 	BeneficialOwners                 *BeneficialOwnerService
 	SupplementalDocuments            *SupplementalDocumentService
+	EntityOnboardingSessions         *EntityOnboardingSessionService
 	Programs                         *ProgramService
 	AccountStatements                *AccountStatementService
 	Files                            *FileService
@@ -139,6 +140,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Entities = NewEntityService(opts...)
 	r.BeneficialOwners = NewBeneficialOwnerService(opts...)
 	r.SupplementalDocuments = NewSupplementalDocumentService(opts...)
+	r.EntityOnboardingSessions = NewEntityOnboardingSessionService(opts...)
 	r.Programs = NewProgramService(opts...)
 	r.AccountStatements = NewAccountStatementService(opts...)
 	r.Files = NewFileService(opts...)
