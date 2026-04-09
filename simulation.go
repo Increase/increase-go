@@ -42,6 +42,7 @@ type SimulationService struct {
 	InboundFednowTransfers           *SimulationInboundFednowTransferService
 	CheckDeposits                    *SimulationCheckDepositService
 	InboundMailItems                 *SimulationInboundMailItemService
+	EntityOnboardingSessions         *SimulationEntityOnboardingSessionService
 	Programs                         *SimulationProgramService
 	AccountStatements                *SimulationAccountStatementService
 	Exports                          *SimulationExportService
@@ -82,6 +83,7 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r.InboundFednowTransfers = NewSimulationInboundFednowTransferService(opts...)
 	r.CheckDeposits = NewSimulationCheckDepositService(opts...)
 	r.InboundMailItems = NewSimulationInboundMailItemService(opts...)
+	r.EntityOnboardingSessions = NewSimulationEntityOnboardingSessionService(opts...)
 	r.Programs = NewSimulationProgramService(opts...)
 	r.AccountStatements = NewSimulationAccountStatementService(opts...)
 	r.Exports = NewSimulationExportService(opts...)
