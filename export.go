@@ -109,6 +109,9 @@ type Export struct {
 	Category ExportCategory `json:"category" api:"required"`
 	// The time the Export was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// Details of the daily account balance CSV export. This field will be present when
+	// the `category` is equal to `daily_account_balance_csv`.
+	DailyAccountBalanceCsv ExportDailyAccountBalanceCsv `json:"daily_account_balance_csv" api:"required,nullable"`
 	// Details of the dashboard table CSV export. This field will be present when the
 	// `category` is equal to `dashboard_table_csv`.
 	DashboardTableCsv ExportDashboardTableCsv `json:"dashboard_table_csv" api:"required,nullable"`
@@ -162,6 +165,7 @@ type exportJSON struct {
 	BookkeepingAccountBalanceCsv apijson.Field
 	Category                     apijson.Field
 	CreatedAt                    apijson.Field
+	DailyAccountBalanceCsv       apijson.Field
 	DashboardTableCsv            apijson.Field
 	EntityCsv                    apijson.Field
 	FeeCsv                       apijson.Field
@@ -422,14 +426,45 @@ const (
 	ExportCategoryForm1099Misc                 ExportCategory = "form_1099_misc"
 	ExportCategoryFeeCsv                       ExportCategory = "fee_csv"
 	ExportCategoryVoidedCheck                  ExportCategory = "voided_check"
+	ExportCategoryDailyAccountBalanceCsv       ExportCategory = "daily_account_balance_csv"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryFeeCsv, ExportCategoryVoidedCheck:
+	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryFeeCsv, ExportCategoryVoidedCheck, ExportCategoryDailyAccountBalanceCsv:
 		return true
 	}
 	return false
+}
+
+// Details of the daily account balance CSV export. This field will be present when
+// the `category` is equal to `daily_account_balance_csv`.
+type ExportDailyAccountBalanceCsv struct {
+	// Filter results by Account.
+	AccountID string `json:"account_id" api:"required,nullable"`
+	// Filter balances on or after this date.
+	OnOrAfterDate time.Time `json:"on_or_after_date" api:"required,nullable" format:"date"`
+	// Filter balances on or before this date.
+	OnOrBeforeDate time.Time                        `json:"on_or_before_date" api:"required,nullable" format:"date"`
+	JSON           exportDailyAccountBalanceCsvJSON `json:"-"`
+}
+
+// exportDailyAccountBalanceCsvJSON contains the JSON metadata for the struct
+// [ExportDailyAccountBalanceCsv]
+type exportDailyAccountBalanceCsvJSON struct {
+	AccountID      apijson.Field
+	OnOrAfterDate  apijson.Field
+	OnOrBeforeDate apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *ExportDailyAccountBalanceCsv) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r exportDailyAccountBalanceCsvJSON) RawJSON() string {
+	return r.raw
 }
 
 // Details of the dashboard table CSV export. This field will be present when the
@@ -807,6 +842,9 @@ type ExportNewParams struct {
 	// Options for the created export. Required if `category` is equal to
 	// `bookkeeping_account_balance_csv`.
 	BookkeepingAccountBalanceCsv param.Field[ExportNewParamsBookkeepingAccountBalanceCsv] `json:"bookkeeping_account_balance_csv"`
+	// Options for the created export. Required if `category` is equal to
+	// `daily_account_balance_csv`.
+	DailyAccountBalanceCsv param.Field[ExportNewParamsDailyAccountBalanceCsv] `json:"daily_account_balance_csv"`
 	// Options for the created export. Required if `category` is equal to `entity_csv`.
 	EntityCsv param.Field[ExportNewParamsEntityCsv] `json:"entity_csv"`
 	// Options for the created export. Required if `category` is equal to
@@ -840,11 +878,12 @@ const (
 	ExportNewParamsCategoryAccountVerificationLetter    ExportNewParamsCategory = "account_verification_letter"
 	ExportNewParamsCategoryFundingInstructions          ExportNewParamsCategory = "funding_instructions"
 	ExportNewParamsCategoryVoidedCheck                  ExportNewParamsCategory = "voided_check"
+	ExportNewParamsCategoryDailyAccountBalanceCsv       ExportNewParamsCategory = "daily_account_balance_csv"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryVoidedCheck:
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryVoidedCheck, ExportNewParamsCategoryDailyAccountBalanceCsv:
 		return true
 	}
 	return false
@@ -983,6 +1022,21 @@ func (r ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt) MarshalJSON() (dat
 	return apijson.MarshalRoot(r)
 }
 
+// Options for the created export. Required if `category` is equal to
+// `daily_account_balance_csv`.
+type ExportNewParamsDailyAccountBalanceCsv struct {
+	// Filter exported Balances to the specified Account.
+	AccountID param.Field[string] `json:"account_id"`
+	// Filter exported Balances to those on or after this date.
+	OnOrAfterDate param.Field[time.Time] `json:"on_or_after_date" format:"date"`
+	// Filter exported Balances to those on or before this date.
+	OnOrBeforeDate param.Field[time.Time] `json:"on_or_before_date" format:"date"`
+}
+
+func (r ExportNewParamsDailyAccountBalanceCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 // Options for the created export. Required if `category` is equal to `entity_csv`.
 type ExportNewParamsEntityCsv struct {
 }
@@ -1110,11 +1164,12 @@ const (
 	ExportListParamsCategoryForm1099Misc                 ExportListParamsCategory = "form_1099_misc"
 	ExportListParamsCategoryFeeCsv                       ExportListParamsCategory = "fee_csv"
 	ExportListParamsCategoryVoidedCheck                  ExportListParamsCategory = "voided_check"
+	ExportListParamsCategoryDailyAccountBalanceCsv       ExportListParamsCategory = "daily_account_balance_csv"
 )
 
 func (r ExportListParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryFeeCsv, ExportListParamsCategoryVoidedCheck:
+	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryFeeCsv, ExportListParamsCategoryVoidedCheck, ExportListParamsCategoryDailyAccountBalanceCsv:
 		return true
 	}
 	return false
