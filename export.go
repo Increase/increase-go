@@ -359,16 +359,19 @@ func (r exportBalanceCsvCreatedAtJSON) RawJSON() string {
 type ExportBookkeepingAccountBalanceCsv struct {
 	// Filter results by Bookkeeping Account.
 	BookkeepingAccountID string `json:"bookkeeping_account_id" api:"required,nullable"`
-	// Filter balances by their created date.
-	CreatedAt ExportBookkeepingAccountBalanceCsvCreatedAt `json:"created_at" api:"required,nullable"`
-	JSON      exportBookkeepingAccountBalanceCsvJSON      `json:"-"`
+	// Filter balances to those on or after this date.
+	OnOrAfterDate time.Time `json:"on_or_after_date" api:"required,nullable" format:"date"`
+	// Filter balances to those on or before this date.
+	OnOrBeforeDate time.Time                              `json:"on_or_before_date" api:"required,nullable" format:"date"`
+	JSON           exportBookkeepingAccountBalanceCsvJSON `json:"-"`
 }
 
 // exportBookkeepingAccountBalanceCsvJSON contains the JSON metadata for the struct
 // [ExportBookkeepingAccountBalanceCsv]
 type exportBookkeepingAccountBalanceCsvJSON struct {
 	BookkeepingAccountID apijson.Field
-	CreatedAt            apijson.Field
+	OnOrAfterDate        apijson.Field
+	OnOrBeforeDate       apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -378,32 +381,6 @@ func (r *ExportBookkeepingAccountBalanceCsv) UnmarshalJSON(data []byte) (err err
 }
 
 func (r exportBookkeepingAccountBalanceCsvJSON) RawJSON() string {
-	return r.raw
-}
-
-// Filter balances by their created date.
-type ExportBookkeepingAccountBalanceCsvCreatedAt struct {
-	// Filter balances created after this time.
-	After time.Time `json:"after" api:"required,nullable" format:"date-time"`
-	// Filter balances created before this time.
-	Before time.Time                                       `json:"before" api:"required,nullable" format:"date-time"`
-	JSON   exportBookkeepingAccountBalanceCsvCreatedAtJSON `json:"-"`
-}
-
-// exportBookkeepingAccountBalanceCsvCreatedAtJSON contains the JSON metadata for
-// the struct [ExportBookkeepingAccountBalanceCsvCreatedAt]
-type exportBookkeepingAccountBalanceCsvCreatedAtJSON struct {
-	After       apijson.Field
-	Before      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExportBookkeepingAccountBalanceCsvCreatedAt) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r exportBookkeepingAccountBalanceCsvCreatedAtJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -987,31 +964,13 @@ type ExportNewParamsBookkeepingAccountBalanceCsv struct {
 	// Filter exported Bookkeeping Account Balances to the specified Bookkeeping
 	// Account.
 	BookkeepingAccountID param.Field[string] `json:"bookkeeping_account_id"`
-	// Filter results by time range on the `created_at` attribute.
-	CreatedAt param.Field[ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt] `json:"created_at"`
+	// Filter exported Balances to those on or after this date.
+	OnOrAfterDate param.Field[time.Time] `json:"on_or_after_date" format:"date"`
+	// Filter exported Balances to those on or before this date.
+	OnOrBeforeDate param.Field[time.Time] `json:"on_or_before_date" format:"date"`
 }
 
 func (r ExportNewParamsBookkeepingAccountBalanceCsv) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Filter results by time range on the `created_at` attribute.
-type ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt struct {
-	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	After param.Field[time.Time] `json:"after" format:"date-time"`
-	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	Before param.Field[time.Time] `json:"before" format:"date-time"`
-	// Return results on or after this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
-	// Return results on or before this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
-}
-
-func (r ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
