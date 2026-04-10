@@ -250,18 +250,18 @@ func (r exportAccountStatementOfxJSON) RawJSON() string {
 
 // Filter transactions by their created date.
 type ExportAccountStatementOfxCreatedAt struct {
-	// Filter results to transactions created after this time.
-	After time.Time `json:"after" api:"required,nullable" format:"date-time"`
 	// Filter results to transactions created before this time.
-	Before time.Time                              `json:"before" api:"required,nullable" format:"date-time"`
-	JSON   exportAccountStatementOfxCreatedAtJSON `json:"-"`
+	Before time.Time `json:"before" api:"required,nullable" format:"date-time"`
+	// Filter results to transactions created on or after this time.
+	OnOrAfter time.Time                              `json:"on_or_after" api:"required,nullable" format:"date-time"`
+	JSON      exportAccountStatementOfxCreatedAtJSON `json:"-"`
 }
 
 // exportAccountStatementOfxCreatedAtJSON contains the JSON metadata for the struct
 // [ExportAccountStatementOfxCreatedAt]
 type exportAccountStatementOfxCreatedAtJSON struct {
-	After       apijson.Field
 	Before      apijson.Field
+	OnOrAfter   apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -914,7 +914,7 @@ func (r ExportNewParamsAccountStatementBai2) MarshalJSON() (data []byte, err err
 type ExportNewParamsAccountStatementOfx struct {
 	// The Account to create a statement for.
 	AccountID param.Field[string] `json:"account_id" api:"required"`
-	// Filter results by time range on the `created_at` attribute.
+	// Filter transactions by their created date.
 	CreatedAt param.Field[ExportNewParamsAccountStatementOfxCreatedAt] `json:"created_at"`
 }
 
@@ -922,20 +922,13 @@ func (r ExportNewParamsAccountStatementOfx) MarshalJSON() (data []byte, err erro
 	return apijson.MarshalRoot(r)
 }
 
-// Filter results by time range on the `created_at` attribute.
+// Filter transactions by their created date.
 type ExportNewParamsAccountStatementOfxCreatedAt struct {
-	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
-	After param.Field[time.Time] `json:"after" format:"date-time"`
-	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	// timestamp.
+	// Filter results to transactions created before this time.
 	Before param.Field[time.Time] `json:"before" format:"date-time"`
-	// Return results on or after this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
-	// Return results on or before this
-	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
-	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
+	// Filter results to transactions created on or after this time.
+	OnOrAfter   param.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
 func (r ExportNewParamsAccountStatementOfxCreatedAt) MarshalJSON() (data []byte, err error) {
