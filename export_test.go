@@ -36,10 +36,8 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 		AccountStatementOfx: increase.F(increase.ExportNewParamsAccountStatementOfx{
 			AccountID: increase.F("account_id"),
 			CreatedAt: increase.F(increase.ExportNewParamsAccountStatementOfxCreatedAt{
-				After:      increase.F(time.Now()),
-				Before:     increase.F(time.Now()),
-				OnOrAfter:  increase.F(time.Now()),
-				OnOrBefore: increase.F(time.Now()),
+				Before:    increase.F(time.Now()),
+				OnOrAfter: increase.F(time.Now()),
 			}),
 		}),
 		AccountVerificationLetter: increase.F(increase.ExportNewParamsAccountVerificationLetter{
