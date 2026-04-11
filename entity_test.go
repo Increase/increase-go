@@ -365,6 +365,29 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 					State:   increase.F("x"),
 					Zip:     increase.F("x"),
 				}),
+				ConfirmedNoUsTaxID: increase.F(true),
+				Identification: increase.F(increase.EntityUpdateParamsNaturalPersonIdentification{
+					Method: increase.F(increase.EntityUpdateParamsNaturalPersonIdentificationMethodSocialSecurityNumber),
+					Number: increase.F("xxxx"),
+					DriversLicense: increase.F(increase.EntityUpdateParamsNaturalPersonIdentificationDriversLicense{
+						ExpirationDate: increase.F(time.Now()),
+						FileID:         increase.F("file_id"),
+						State:          increase.F("x"),
+						BackFileID:     increase.F("back_file_id"),
+					}),
+					Other: increase.F(increase.EntityUpdateParamsNaturalPersonIdentificationOther{
+						Country:        increase.F("x"),
+						Description:    increase.F("x"),
+						FileID:         increase.F("file_id"),
+						BackFileID:     increase.F("back_file_id"),
+						ExpirationDate: increase.F(time.Now()),
+					}),
+					Passport: increase.F(increase.EntityUpdateParamsNaturalPersonIdentificationPassport{
+						Country:        increase.F("x"),
+						ExpirationDate: increase.F(time.Now()),
+						FileID:         increase.F("file_id"),
+					}),
+				}),
 				Name: increase.F("x"),
 			}),
 			RiskRating: increase.F(increase.EntityUpdateParamsRiskRating{
