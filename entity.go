@@ -2961,6 +2961,13 @@ type EntityUpdateParamsNaturalPerson struct {
 	// The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 	// are disallowed.
 	Address param.Field[EntityUpdateParamsNaturalPersonAddress] `json:"address"`
+	// The identification method for an individual can only be a passport, driver's
+	// license, or other document if you've confirmed the individual does not have a US
+	// tax id (either a Social Security Number or Individual Taxpayer Identification
+	// Number).
+	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
+	// A means of verifying the person's identity.
+	Identification param.Field[EntityUpdateParamsNaturalPersonIdentification] `json:"identification"`
 	// The legal name of the natural person.
 	Name param.Field[string] `json:"name"`
 }
@@ -2988,6 +2995,102 @@ type EntityUpdateParamsNaturalPersonAddress struct {
 }
 
 func (r EntityUpdateParamsNaturalPersonAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A means of verifying the person's identity.
+type EntityUpdateParamsNaturalPersonIdentification struct {
+	// A method that can be used to verify the individual's identity.
+	Method param.Field[EntityUpdateParamsNaturalPersonIdentificationMethod] `json:"method" api:"required"`
+	// An identification number that can be used to verify the individual's identity,
+	// such as a social security number.
+	Number param.Field[string] `json:"number" api:"required"`
+	// Information about the United States driver's license used for identification.
+	// Required if `method` is equal to `drivers_license`.
+	DriversLicense param.Field[EntityUpdateParamsNaturalPersonIdentificationDriversLicense] `json:"drivers_license"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other param.Field[EntityUpdateParamsNaturalPersonIdentificationOther] `json:"other"`
+	// Information about the passport used for identification. Required if `method` is
+	// equal to `passport`.
+	Passport    param.Field[EntityUpdateParamsNaturalPersonIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                             `json:"-,extras"`
+}
+
+func (r EntityUpdateParamsNaturalPersonIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A method that can be used to verify the individual's identity.
+type EntityUpdateParamsNaturalPersonIdentificationMethod string
+
+const (
+	EntityUpdateParamsNaturalPersonIdentificationMethodSocialSecurityNumber                   EntityUpdateParamsNaturalPersonIdentificationMethod = "social_security_number"
+	EntityUpdateParamsNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityUpdateParamsNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
+	EntityUpdateParamsNaturalPersonIdentificationMethodPassport                               EntityUpdateParamsNaturalPersonIdentificationMethod = "passport"
+	EntityUpdateParamsNaturalPersonIdentificationMethodDriversLicense                         EntityUpdateParamsNaturalPersonIdentificationMethod = "drivers_license"
+	EntityUpdateParamsNaturalPersonIdentificationMethodOther                                  EntityUpdateParamsNaturalPersonIdentificationMethod = "other"
+)
+
+func (r EntityUpdateParamsNaturalPersonIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityUpdateParamsNaturalPersonIdentificationMethodSocialSecurityNumber, EntityUpdateParamsNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityUpdateParamsNaturalPersonIdentificationMethodPassport, EntityUpdateParamsNaturalPersonIdentificationMethodDriversLicense, EntityUpdateParamsNaturalPersonIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
+type EntityUpdateParamsNaturalPersonIdentificationDriversLicense struct {
+	// The driver's license's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
+	// The identifier of the File containing the front of the driver's license.
+	FileID param.Field[string] `json:"file_id" api:"required"`
+	// The state that issued the provided driver's license.
+	State param.Field[string] `json:"state" api:"required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
+}
+
+func (r EntityUpdateParamsNaturalPersonIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+type EntityUpdateParamsNaturalPersonIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document (e.g., `US`).
+	Country param.Field[string] `json:"country" api:"required"`
+	// A description of the document submitted.
+	Description param.Field[string] `json:"description" api:"required"`
+	// The identifier of the File containing the front of the document.
+	FileID param.Field[string] `json:"file_id" api:"required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
+}
+
+func (r EntityUpdateParamsNaturalPersonIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+type EntityUpdateParamsNaturalPersonIdentificationPassport struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document (e.g., `US`).
+	Country param.Field[string] `json:"country" api:"required"`
+	// The passport's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
+	// The identifier of the File containing the passport.
+	FileID param.Field[string] `json:"file_id" api:"required"`
+}
+
+func (r EntityUpdateParamsNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
