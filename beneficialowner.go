@@ -164,7 +164,7 @@ type EntityBeneficialOwnerIndividual struct {
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityBeneficialOwnerIndividualIdentification `json:"identification" api:"required"`
+	Identification EntityBeneficialOwnerIndividualIdentification `json:"identification" api:"required,nullable"`
 	// The person's legal name.
 	Name string                              `json:"name" api:"required"`
 	JSON entityBeneficialOwnerIndividualJSON `json:"-"`
