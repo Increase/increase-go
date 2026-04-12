@@ -323,7 +323,7 @@ type EntityCorporationBeneficialOwnersIndividual struct {
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification" api:"required"`
+	Identification EntityCorporationBeneficialOwnersIndividualIdentification `json:"identification" api:"required,nullable"`
 	// The person's legal name.
 	Name string                                          `json:"name" api:"required"`
 	JSON entityCorporationBeneficialOwnersIndividualJSON `json:"-"`
@@ -644,7 +644,7 @@ type EntityJointIndividual struct {
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityJointIndividualsIdentification `json:"identification" api:"required"`
+	Identification EntityJointIndividualsIdentification `json:"identification" api:"required,nullable"`
 	// The person's legal name.
 	Name string                    `json:"name" api:"required"`
 	JSON entityJointIndividualJSON `json:"-"`
@@ -763,7 +763,7 @@ type EntityNaturalPerson struct {
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityNaturalPersonIdentification `json:"identification" api:"required"`
+	Identification EntityNaturalPersonIdentification `json:"identification" api:"required,nullable"`
 	// The person's legal name.
 	Name string                  `json:"name" api:"required"`
 	JSON entityNaturalPersonJSON `json:"-"`
@@ -1136,7 +1136,7 @@ type EntityTrustGrantor struct {
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityTrustGrantorIdentification `json:"identification" api:"required"`
+	Identification EntityTrustGrantorIdentification `json:"identification" api:"required,nullable"`
 	// The person's legal name.
 	Name string                 `json:"name" api:"required"`
 	JSON entityTrustGrantorJSON `json:"-"`
@@ -1281,7 +1281,7 @@ type EntityTrustTrusteesIndividual struct {
 	// The person's date of birth in YYYY-MM-DD format.
 	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
-	Identification EntityTrustTrusteesIndividualIdentification `json:"identification" api:"required"`
+	Identification EntityTrustTrusteesIndividualIdentification `json:"identification" api:"required,nullable"`
 	// The person's legal name.
 	Name string                            `json:"name" api:"required"`
 	JSON entityTrustTrusteesIndividualJSON `json:"-"`
