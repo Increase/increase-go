@@ -789,6 +789,12 @@ Methods:
 - <code title="post /simulations/card_authentications/{card_payment_id}/challenge_attempts">client.Simulations.CardAuthentications.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardAuthenticationService.ChallengeAttempts">ChallengeAttempts</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, cardPaymentID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardAuthenticationChallengeAttemptsParams">SimulationCardAuthenticationChallengeAttemptsParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CardPayment">CardPayment</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /simulations/card_authentications/{card_payment_id}/challenges">client.Simulations.CardAuthentications.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardAuthenticationService.Challenges">Challenges</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, cardPaymentID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CardPayment">CardPayment</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## CardPurchaseSupplements
+
+Methods:
+
+- <code title="post /simulations/card_purchase_supplements">client.Simulations.CardPurchaseSupplements.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardPurchaseSupplementService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCardPurchaseSupplementNewParams">SimulationCardPurchaseSupplementNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CardPurchaseSupplement">CardPurchaseSupplement</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## CardDisputes
 
 Methods:
