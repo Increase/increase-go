@@ -15,7 +15,6 @@ import (
 type SimulationService struct {
 	Options                          []option.RequestOption
 	InterestPayments                 *SimulationInterestPaymentService
-	AccountTransfers                 *SimulationAccountTransferService
 	CardAuthorizations               *SimulationCardAuthorizationService
 	CardBalanceInquiries             *SimulationCardBalanceInquiryService
 	CardAuthorizationExpirations     *SimulationCardAuthorizationExpirationService
@@ -56,7 +55,6 @@ func NewSimulationService(opts ...option.RequestOption) (r *SimulationService) {
 	r = &SimulationService{}
 	r.Options = opts
 	r.InterestPayments = NewSimulationInterestPaymentService(opts...)
-	r.AccountTransfers = NewSimulationAccountTransferService(opts...)
 	r.CardAuthorizations = NewSimulationCardAuthorizationService(opts...)
 	r.CardBalanceInquiries = NewSimulationCardBalanceInquiryService(opts...)
 	r.CardAuthorizationExpirations = NewSimulationCardAuthorizationExpirationService(opts...)
