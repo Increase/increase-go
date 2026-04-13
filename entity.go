@@ -117,6 +117,9 @@ type Entity struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Entity
 	// was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The identifier of the Entity Onboarding Session that was used to create this
+	// Entity, if any.
+	CreatingEntityOnboardingSessionID string `json:"creating_entity_onboarding_session_id" api:"required,nullable"`
 	// The entity's description for display purposes.
 	Description string `json:"description" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
@@ -166,26 +169,27 @@ type Entity struct {
 
 // entityJSON contains the JSON metadata for the struct [Entity]
 type entityJSON struct {
-	ID                     apijson.Field
-	Corporation            apijson.Field
-	CreatedAt              apijson.Field
-	Description            apijson.Field
-	DetailsConfirmedAt     apijson.Field
-	GovernmentAuthority    apijson.Field
-	IdempotencyKey         apijson.Field
-	Joint                  apijson.Field
-	NaturalPerson          apijson.Field
-	RiskRating             apijson.Field
-	Status                 apijson.Field
-	Structure              apijson.Field
-	SupplementalDocuments  apijson.Field
-	TermsAgreements        apijson.Field
-	ThirdPartyVerification apijson.Field
-	Trust                  apijson.Field
-	Type                   apijson.Field
-	Validation             apijson.Field
-	raw                    string
-	ExtraFields            map[string]apijson.Field
+	ID                                apijson.Field
+	Corporation                       apijson.Field
+	CreatedAt                         apijson.Field
+	CreatingEntityOnboardingSessionID apijson.Field
+	Description                       apijson.Field
+	DetailsConfirmedAt                apijson.Field
+	GovernmentAuthority               apijson.Field
+	IdempotencyKey                    apijson.Field
+	Joint                             apijson.Field
+	NaturalPerson                     apijson.Field
+	RiskRating                        apijson.Field
+	Status                            apijson.Field
+	Structure                         apijson.Field
+	SupplementalDocuments             apijson.Field
+	TermsAgreements                   apijson.Field
+	ThirdPartyVerification            apijson.Field
+	Trust                             apijson.Field
+	Type                              apijson.Field
+	Validation                        apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *Entity) UnmarshalJSON(data []byte) (err error) {
