@@ -43,8 +43,8 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 			Category: increase.F(increase.WireTransferNewParamsRemittanceCategoryUnstructured),
 			Tax: increase.F(increase.WireTransferNewParamsRemittanceTax{
 				Date:                 increase.F(time.Now()),
-				IdentificationNumber: increase.F("xxxxxxxxx"),
-				TypeCode:             increase.F("xxxxx"),
+				IdentificationNumber: increase.F("483310694"),
+				TypeCode:             increase.F("1I5r3"),
 			}),
 			Unstructured: increase.F(increase.WireTransferNewParamsRemittanceUnstructured{
 				Message: increase.F("New account transfer"),
@@ -52,12 +52,12 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		}),
 		AccountNumber: increase.F("987654321"),
 		Debtor: increase.F(increase.WireTransferNewParamsDebtor{
-			Name: increase.F("x"),
+			Name: increase.F("name"),
 			Address: increase.F(increase.WireTransferNewParamsDebtorAddress{
 				Unstructured: increase.F(increase.WireTransferNewParamsDebtorAddressUnstructured{
-					Line1: increase.F("x"),
-					Line2: increase.F("x"),
-					Line3: increase.F("x"),
+					Line1: increase.F("line1"),
+					Line2: increase.F("line2"),
+					Line3: increase.F("line3"),
 				}),
 			}),
 		}),

@@ -26,7 +26,7 @@ func TestRoutingNumberListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RoutingNumbers.List(context.TODO(), increase.RoutingNumberListParams{
-		RoutingNumber: increase.F("xxxxxxxxx"),
+		RoutingNumber: increase.F("483310694"),
 		Cursor:        increase.F("cursor"),
 		Limit:         increase.F(int64(1)),
 	})

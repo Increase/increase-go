@@ -39,10 +39,10 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 			}),
 			MerchantCategoryCode: increase.F(increase.CardNewParamsAuthorizationControlsMerchantCategoryCode{
 				Allowed: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantCategoryCodeAllowed{{
-					Code: increase.F("xxxx"),
+					Code: increase.F("0253"),
 				}}),
 				Blocked: increase.F([]increase.CardNewParamsAuthorizationControlsMerchantCategoryCodeBlocked{{
-					Code: increase.F("xxxx"),
+					Code: increase.F("0253"),
 				}}),
 			}),
 			MerchantCountry: increase.F(increase.CardNewParamsAuthorizationControlsMerchantCountry{
@@ -145,10 +145,10 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 				}),
 				MerchantCategoryCode: increase.F(increase.CardUpdateParamsAuthorizationControlsMerchantCategoryCode{
 					Allowed: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantCategoryCodeAllowed{{
-						Code: increase.F("xxxx"),
+						Code: increase.F("0253"),
 					}}),
 					Blocked: increase.F([]increase.CardUpdateParamsAuthorizationControlsMerchantCategoryCodeBlocked{{
-						Code: increase.F("xxxx"),
+						Code: increase.F("0253"),
 					}}),
 				}),
 				MerchantCountry: increase.F(increase.CardUpdateParamsAuthorizationControlsMerchantCountry{

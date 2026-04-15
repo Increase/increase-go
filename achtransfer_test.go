@@ -35,25 +35,25 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 			Category: increase.F(increase.ACHTransferNewParamsAddendaCategoryFreeform),
 			Freeform: increase.F(increase.ACHTransferNewParamsAddendaFreeform{
 				Entries: increase.F([]increase.ACHTransferNewParamsAddendaFreeformEntry{{
-					PaymentRelatedInformation: increase.F("x"),
+					PaymentRelatedInformation: increase.F("payment_related_information"),
 				}}),
 			}),
 			PaymentOrderRemittanceAdvice: increase.F(increase.ACHTransferNewParamsAddendaPaymentOrderRemittanceAdvice{
 				Invoices: increase.F([]increase.ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice{{
-					InvoiceNumber: increase.F("x"),
+					InvoiceNumber: increase.F("sq"),
 					PaidAmount:    increase.F(int64(0)),
 				}}),
 			}),
 		}),
-		CompanyDescriptiveDate:   increase.F("x"),
-		CompanyDiscretionaryData: increase.F("x"),
-		CompanyEntryDescription:  increase.F("x"),
-		CompanyName:              increase.F("x"),
+		CompanyDescriptiveDate:   increase.F("J!"),
+		CompanyDiscretionaryData: increase.F("J!"),
+		CompanyEntryDescription:  increase.F("J!"),
+		CompanyName:              increase.F("company_name"),
 		DestinationAccountHolder: increase.F(increase.ACHTransferNewParamsDestinationAccountHolderBusiness),
 		ExternalAccountID:        increase.F("external_account_id"),
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
-		IndividualID:             increase.F("x"),
-		IndividualName:           increase.F("x"),
+		IndividualID:             increase.F("individual_id"),
+		IndividualName:           increase.F("individual_name"),
 		PreferredEffectiveDate: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDate{
 			Date:               increase.F(time.Now()),
 			SettlementSchedule: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleSameDay),
