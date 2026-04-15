@@ -36,7 +36,7 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 			Line1:      increase.F("Sonnemannstrasse 20"),
 			Line2:      increase.F("line2"),
 			PostalCode: increase.F("60314"),
-			State:      increase.F("x"),
+			State:      increase.F("state"),
 		}),
 		CreditorName: increase.F("Ian Crease"),
 		DebtorAddress: increase.F(increase.SwiftTransferNewParamsDebtorAddress{
