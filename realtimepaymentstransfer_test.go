@@ -32,12 +32,12 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		SourceAccountNumberID:             increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 		UnstructuredRemittanceInformation: increase.F("Invoice 29582"),
 		AccountNumber:                     increase.F("987654321"),
-		DebtorName:                        increase.F("x"),
+		DebtorName:                        increase.F("debtor_name"),
 		ExternalAccountID:                 increase.F("external_account_id"),
 		RequireApproval:                   increase.F(true),
 		RoutingNumber:                     increase.F("101050001"),
-		UltimateCreditorName:              increase.F("x"),
-		UltimateDebtorName:                increase.F("x"),
+		UltimateCreditorName:              increase.F("ultimate_creditor_name"),
+		UltimateDebtorName:                increase.F("ultimate_debtor_name"),
 	})
 	if err != nil {
 		var apierr *increase.Error
