@@ -46,12 +46,12 @@ func TestCardPushTransferNewWithOptionalParams(t *testing.T) {
 		SenderAddressState:         increase.F("NY"),
 		SenderName:                 increase.F("Ian Crease"),
 		SourceAccountNumberID:      increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		MerchantLegalBusinessName:  increase.F("x"),
-		MerchantStreetAddress:      increase.F("x"),
-		RecipientAddressCity:       increase.F("x"),
-		RecipientAddressLine1:      increase.F("x"),
-		RecipientAddressPostalCode: increase.F("x"),
-		RecipientAddressState:      increase.F("x"),
+		MerchantLegalBusinessName:  increase.F("x6"),
+		MerchantStreetAddress:      increase.F("merchant_street_address"),
+		RecipientAddressCity:       increase.F("recipient_address_city"),
+		RecipientAddressLine1:      increase.F("recipient_address_line1"),
+		RecipientAddressPostalCode: increase.F("x6"),
+		RecipientAddressState:      increase.F("x6"),
 		RequireApproval:            increase.F(true),
 	})
 	if err != nil {

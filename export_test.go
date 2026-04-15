@@ -71,7 +71,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 		VoidedCheck: increase.F(increase.ExportNewParamsVoidedCheck{
 			AccountNumberID: increase.F("account_number_id"),
 			Payer: increase.F([]increase.ExportNewParamsVoidedCheckPayer{{
-				Line: increase.F("x"),
+				Line: increase.F("line"),
 			}}),
 		}),
 	})

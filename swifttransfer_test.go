@@ -34,7 +34,7 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 			City:       increase.F("Frankfurt"),
 			Country:    increase.F("DE"),
 			Line1:      increase.F("Sonnemannstrasse 20"),
-			Line2:      increase.F("x"),
+			Line2:      increase.F("line2"),
 			PostalCode: increase.F("60314"),
 			State:      increase.F("x"),
 		}),
@@ -43,7 +43,7 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 			City:       increase.F("New York"),
 			Country:    increase.F("US"),
 			Line1:      increase.F("33 Liberty Street"),
-			Line2:      increase.F("x"),
+			Line2:      increase.F("line2"),
 			PostalCode: increase.F("10045"),
 			State:      increase.F("NY"),
 		}),
@@ -53,7 +53,7 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 		SourceAccountNumberID:             increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 		UnstructuredRemittanceInformation: increase.F("New Swift transfer"),
 		RequireApproval:                   increase.F(true),
-		RoutingNumber:                     increase.F("x"),
+		RoutingNumber:                     increase.F("sq"),
 	})
 	if err != nil {
 		var apierr *increase.Error
