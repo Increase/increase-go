@@ -167,39 +167,44 @@ type WireTransfer struct {
 	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_transfer`.
-	Type        WireTransferType       `json:"type" api:"required"`
-	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
-	JSON        wireTransferJSON       `json:"-"`
+	Type WireTransferType `json:"type" api:"required"`
+	// The unique end-to-end transaction reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the transfer.
+	UniqueEndToEndTransactionReference string                 `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
+	ExtraFields                        map[string]interface{} `json:"-" api:"extrafields"`
+	JSON                               wireTransferJSON       `json:"-"`
 }
 
 // wireTransferJSON contains the JSON metadata for the struct [WireTransfer]
 type wireTransferJSON struct {
-	ID                           apijson.Field
-	AccountID                    apijson.Field
-	AccountNumber                apijson.Field
-	Amount                       apijson.Field
-	Approval                     apijson.Field
-	Cancellation                 apijson.Field
-	CreatedAt                    apijson.Field
-	CreatedBy                    apijson.Field
-	Creditor                     apijson.Field
-	Currency                     apijson.Field
-	Debtor                       apijson.Field
-	ExternalAccountID            apijson.Field
-	IdempotencyKey               apijson.Field
-	InboundWireDrawdownRequestID apijson.Field
-	Network                      apijson.Field
-	PendingTransactionID         apijson.Field
-	Remittance                   apijson.Field
-	Reversal                     apijson.Field
-	RoutingNumber                apijson.Field
-	SourceAccountNumberID        apijson.Field
-	Status                       apijson.Field
-	Submission                   apijson.Field
-	TransactionID                apijson.Field
-	Type                         apijson.Field
-	raw                          string
-	ExtraFields                  map[string]apijson.Field
+	ID                                 apijson.Field
+	AccountID                          apijson.Field
+	AccountNumber                      apijson.Field
+	Amount                             apijson.Field
+	Approval                           apijson.Field
+	Cancellation                       apijson.Field
+	CreatedAt                          apijson.Field
+	CreatedBy                          apijson.Field
+	Creditor                           apijson.Field
+	Currency                           apijson.Field
+	Debtor                             apijson.Field
+	ExternalAccountID                  apijson.Field
+	IdempotencyKey                     apijson.Field
+	InboundWireDrawdownRequestID       apijson.Field
+	Network                            apijson.Field
+	PendingTransactionID               apijson.Field
+	Remittance                         apijson.Field
+	Reversal                           apijson.Field
+	RoutingNumber                      apijson.Field
+	SourceAccountNumberID              apijson.Field
+	Status                             apijson.Field
+	Submission                         apijson.Field
+	TransactionID                      apijson.Field
+	Type                               apijson.Field
+	UniqueEndToEndTransactionReference apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *WireTransfer) UnmarshalJSON(data []byte) (err error) {
