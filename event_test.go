@@ -64,6 +64,10 @@ func TestEventListWithOptionalParams(t *testing.T) {
 		}),
 		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
+		OrderBy: increase.F(increase.EventListParamsOrderBy{
+			Direction: increase.F(increase.EventListParamsOrderByDirectionAscending),
+			Field:     increase.F(increase.EventListParamsOrderByFieldCreatedAt),
+		}),
 	})
 	if err != nil {
 		var apierr *increase.Error

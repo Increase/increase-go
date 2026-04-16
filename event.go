@@ -478,7 +478,8 @@ type EventListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit param.Field[int64] `query:"limit"`
+	Limit   param.Field[int64]                  `query:"limit"`
+	OrderBy param.Field[EventListParamsOrderBy] `query:"order_by"`
 }
 
 // URLQuery serializes [EventListParams]'s query parameters as `url.Values`.
@@ -650,4 +651,50 @@ func (r EventListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type EventListParamsOrderBy struct {
+	// The direction to order in.
+	Direction param.Field[EventListParamsOrderByDirection] `query:"direction"`
+	// The field to order by.
+	Field param.Field[EventListParamsOrderByField] `query:"field"`
+}
+
+// URLQuery serializes [EventListParamsOrderBy]'s query parameters as `url.Values`.
+func (r EventListParamsOrderBy) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// The direction to order in.
+type EventListParamsOrderByDirection string
+
+const (
+	EventListParamsOrderByDirectionAscending  EventListParamsOrderByDirection = "ascending"
+	EventListParamsOrderByDirectionDescending EventListParamsOrderByDirection = "descending"
+)
+
+func (r EventListParamsOrderByDirection) IsKnown() bool {
+	switch r {
+	case EventListParamsOrderByDirectionAscending, EventListParamsOrderByDirectionDescending:
+		return true
+	}
+	return false
+}
+
+// The field to order by.
+type EventListParamsOrderByField string
+
+const (
+	EventListParamsOrderByFieldCreatedAt EventListParamsOrderByField = "created_at"
+)
+
+func (r EventListParamsOrderByField) IsKnown() bool {
+	switch r {
+	case EventListParamsOrderByFieldCreatedAt:
+		return true
+	}
+	return false
 }
