@@ -132,10 +132,10 @@ func (r *CardService) UpdatePin(ctx context.Context, cardID string, body CardUpd
 	return res, err
 }
 
-// Cards may operate on credit, debit or prepaid BINs. They’ll immediately work for
-// online purchases after you create them. All cards work on a good funds model,
-// and maintain a maximum limit of 100% of the Account’s available balance at the
-// time of transaction. Funds are deducted from the Account upon transaction
+// Cards may operate on credit, debit, or prepaid BINs. They’ll immediately work
+// for online purchases after you create them. All cards work on a good funds
+// model, and maintain a maximum limit of 100% of the Account’s available balance
+// at the time of transaction. Funds are deducted from the Account upon transaction
 // settlement.
 type Card struct {
 	// The card identifier.
