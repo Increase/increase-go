@@ -690,6 +690,8 @@ func (r checkTransferPhysicalCheckSignatureJSON) RawJSON() string {
 type CheckTransferPhysicalCheckTrackingUpdate struct {
 	// The type of tracking event.
 	Category CheckTransferPhysicalCheckTrackingUpdatesCategory `json:"category" api:"required"`
+	// The ISO 3166-1 alpha-2 country code for the country where the event took place.
+	Country string `json:"country" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the tracking event took place.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -702,6 +704,7 @@ type CheckTransferPhysicalCheckTrackingUpdate struct {
 // struct [CheckTransferPhysicalCheckTrackingUpdate]
 type checkTransferPhysicalCheckTrackingUpdateJSON struct {
 	Category    apijson.Field
+	Country     apijson.Field
 	CreatedAt   apijson.Field
 	PostalCode  apijson.Field
 	raw         string
