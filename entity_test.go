@@ -394,6 +394,11 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				RatedAt: increase.F(time.Now()),
 				Rating:  increase.F(increase.EntityUpdateParamsRiskRatingRatingLow),
 			}),
+			TermsAgreements: increase.F([]increase.EntityUpdateParamsTermsAgreement{{
+				AgreedAt:  increase.F(time.Now()),
+				IPAddress: increase.F("x"),
+				TermsURL:  increase.F("x"),
+			}}),
 			ThirdPartyVerification: increase.F(increase.EntityUpdateParamsThirdPartyVerification{
 				Reference: increase.F("x"),
 				Vendor:    increase.F(increase.EntityUpdateParamsThirdPartyVerificationVendorAlloy),
