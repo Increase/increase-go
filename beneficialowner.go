@@ -38,7 +38,7 @@ func NewBeneficialOwnerService(opts ...option.RequestOption) (r *BeneficialOwner
 	return
 }
 
-// Create a beneficial owner
+// Create a Beneficial Owner
 func (r *BeneficialOwnerService) New(ctx context.Context, body BeneficialOwnerNewParams, opts ...option.RequestOption) (res *EntityBeneficialOwner, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "entity_beneficial_owners"
