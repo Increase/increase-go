@@ -2832,6 +2832,9 @@ type EntityUpdateParams struct {
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating param.Field[EntityUpdateParamsRiskRating] `json:"risk_rating"`
+	// New terms that the Entity agreed to. Not all programs are required to submit
+	// this data. This will not archive previously submitted terms.
+	TermsAgreements param.Field[[]EntityUpdateParamsTermsAgreement] `json:"terms_agreements"`
 	// If you are using a third-party service for identity verification, you can use
 	// this field to associate this Entity with the identifier that represents them in
 	// that service.
@@ -3127,6 +3130,19 @@ func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type EntityUpdateParamsTermsAgreement struct {
+	// The timestamp of when the Entity agreed to the terms.
+	AgreedAt param.Field[time.Time] `json:"agreed_at" api:"required" format:"date-time"`
+	// The IP address the Entity accessed reviewed the terms from.
+	IPAddress param.Field[string] `json:"ip_address" api:"required"`
+	// The URL of the terms agreement. This link will be provided by your bank partner.
+	TermsURL param.Field[string] `json:"terms_url" api:"required"`
+}
+
+func (r EntityUpdateParamsTermsAgreement) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // If you are using a third-party service for identity verification, you can use
