@@ -89,7 +89,7 @@ func TestInboundMailItemAction(t *testing.T) {
 				AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 			}, {
 				Action:    increase.F(increase.InboundMailItemActionParamsChecksActionIgnore),
-				AccountID: increase.F("account_id"),
+				AccountID: increase.F("account_in71c4amph0vgo2qllky"),
 			}}),
 		},
 	)
