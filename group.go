@@ -52,9 +52,8 @@ type Group struct {
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `group`.
-	Type        GroupType              `json:"type" api:"required"`
-	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
-	JSON        groupJSON              `json:"-"`
+	Type GroupType `json:"type" api:"required"`
+	JSON groupJSON `json:"-"`
 }
 
 // groupJSON contains the JSON metadata for the struct [Group]
