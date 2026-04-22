@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.557.0 (2026-04-22)
+
+Full Changelog: [v0.556.0...v0.557.0](https://github.com/Increase/increase-go/compare/v0.556.0...v0.557.0)
+
+### Features
+
+* **api:** api update ([84f9ccd](https://github.com/Increase/increase-go/commit/84f9ccdaee3a6245b953aacbdeb0f7c601b4809b))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([8ec9376](https://github.com/Increase/increase-go/commit/8ec9376ef321e9e3dce45092550b15f9bf1a3ef8))
+
 ## 0.556.0 (2026-04-20)
 
 Full Changelog: [v0.555.0...v0.556.0](https://github.com/Increase/increase-go/compare/v0.555.0...v0.556.0)
