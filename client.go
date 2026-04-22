@@ -62,9 +62,6 @@ type Client struct {
 	Events                           *EventService
 	EventSubscriptions               *EventSubscriptionService
 	RealTimeDecisions                *RealTimeDecisionService
-	BookkeepingAccounts              *BookkeepingAccountService
-	BookkeepingEntrySets             *BookkeepingEntrySetService
-	BookkeepingEntries               *BookkeepingEntryService
 	Groups                           *GroupService
 	OAuthApplications                *OAuthApplicationService
 	OAuthConnections                 *OAuthConnectionService
@@ -149,9 +146,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Events = NewEventService(opts...)
 	r.EventSubscriptions = NewEventSubscriptionService(opts...)
 	r.RealTimeDecisions = NewRealTimeDecisionService(opts...)
-	r.BookkeepingAccounts = NewBookkeepingAccountService(opts...)
-	r.BookkeepingEntrySets = NewBookkeepingEntrySetService(opts...)
-	r.BookkeepingEntries = NewBookkeepingEntryService(opts...)
 	r.Groups = NewGroupService(opts...)
 	r.OAuthApplications = NewOAuthApplicationService(opts...)
 	r.OAuthConnections = NewOAuthConnectionService(opts...)
