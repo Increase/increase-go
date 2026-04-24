@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.559.0 (2026-04-24)
+
+Full Changelog: [v0.558.0...v0.559.0](https://github.com/Increase/increase-go/compare/v0.558.0...v0.559.0)
+
+### Features
+
+* **go:** add default http client with timeout ([3697452](https://github.com/Increase/increase-go/commit/3697452392f266381a01b944f25af70a07e46051))
+
 ## 0.558.0 (2026-04-24)
 
 Full Changelog: [v0.557.0...v0.558.0](https://github.com/Increase/increase-go/compare/v0.557.0...v0.558.0)
