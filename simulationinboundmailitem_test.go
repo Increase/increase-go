@@ -26,9 +26,10 @@ func TestSimulationInboundMailItemNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Simulations.InboundMailItems.New(context.TODO(), increase.SimulationInboundMailItemNewParams{
-		Amount:         increase.F(int64(1000)),
-		LockboxID:      increase.F("lockbox_3xt21ok13q19advds4t5"),
-		ContentsFileID: increase.F("contents_file_id"),
+		Amount:             increase.F(int64(1000)),
+		ContentsFileID:     increase.F("contents_file_id"),
+		LockboxAddressID:   increase.F("lockbox_address_id"),
+		LockboxRecipientID: increase.F("lockbox_3xt21ok13q19advds4t5"),
 	})
 	if err != nil {
 		var apierr *increase.Error

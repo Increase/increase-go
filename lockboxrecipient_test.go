@@ -14,7 +14,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestLockboxNewWithOptionalParams(t *testing.T) {
+func TestLockboxRecipientNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,10 +26,11 @@ func TestLockboxNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Lockboxes.New(context.TODO(), increase.LockboxNewParams{
-		AccountID:     increase.F("account_in71c4amph0vgo2qllky"),
-		Description:   increase.F("Rent payments"),
-		RecipientName: increase.F("x"),
+	_, err := client.LockboxRecipients.New(context.TODO(), increase.LockboxRecipientNewParams{
+		AccountID:        increase.F("account_in71c4amph0vgo2qllky"),
+		LockboxAddressID: increase.F("lockbox_address_lw6sbzl9ol5dfd8hdml6"),
+		Description:      increase.F("x"),
+		RecipientName:    increase.F("Ian Crease"),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -40,7 +41,7 @@ func TestLockboxNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestLockboxGet(t *testing.T) {
+func TestLockboxRecipientGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -52,7 +53,7 @@ func TestLockboxGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Lockboxes.Get(context.TODO(), "lockbox_3xt21ok13q19advds4t5")
+	_, err := client.LockboxRecipients.Get(context.TODO(), "lockbox_3xt21ok13q19advds4t5")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -62,7 +63,7 @@ func TestLockboxGet(t *testing.T) {
 	}
 }
 
-func TestLockboxUpdateWithOptionalParams(t *testing.T) {
+func TestLockboxRecipientUpdateWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -74,13 +75,13 @@ func TestLockboxUpdateWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Lockboxes.Update(
+	_, err := client.LockboxRecipients.Update(
 		context.TODO(),
 		"lockbox_3xt21ok13q19advds4t5",
-		increase.LockboxUpdateParams{
-			CheckDepositBehavior: increase.F(increase.LockboxUpdateParamsCheckDepositBehaviorDisabled),
-			Description:          increase.F("x"),
-			RecipientName:        increase.F("x"),
+		increase.LockboxRecipientUpdateParams{
+			Description:   increase.F("x"),
+			RecipientName: increase.F("x"),
+			Status:        increase.F(increase.LockboxRecipientUpdateParamsStatusActive),
 		},
 	)
 	if err != nil {
@@ -92,7 +93,7 @@ func TestLockboxUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestLockboxListWithOptionalParams(t *testing.T) {
+func TestLockboxRecipientListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -104,17 +105,18 @@ func TestLockboxListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Lockboxes.List(context.TODO(), increase.LockboxListParams{
+	_, err := client.LockboxRecipients.List(context.TODO(), increase.LockboxRecipientListParams{
 		AccountID: increase.F("account_id"),
-		CreatedAt: increase.F(increase.LockboxListParamsCreatedAt{
+		CreatedAt: increase.F(increase.LockboxRecipientListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
 			OnOrBefore: increase.F(time.Now()),
 		}),
-		Cursor:         increase.F("cursor"),
-		IdempotencyKey: increase.F("x"),
-		Limit:          increase.F(int64(1)),
+		Cursor:           increase.F("cursor"),
+		IdempotencyKey:   increase.F("x"),
+		Limit:            increase.F(int64(1)),
+		LockboxAddressID: increase.F("lockbox_address_id"),
 	})
 	if err != nil {
 		var apierr *increase.Error
