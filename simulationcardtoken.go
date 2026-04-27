@@ -111,11 +111,12 @@ type SimulationCardTokenNewParamsCapabilitiesRoute string
 const (
 	SimulationCardTokenNewParamsCapabilitiesRouteVisa       SimulationCardTokenNewParamsCapabilitiesRoute = "visa"
 	SimulationCardTokenNewParamsCapabilitiesRouteMastercard SimulationCardTokenNewParamsCapabilitiesRoute = "mastercard"
+	SimulationCardTokenNewParamsCapabilitiesRoutePulse      SimulationCardTokenNewParamsCapabilitiesRoute = "pulse"
 )
 
 func (r SimulationCardTokenNewParamsCapabilitiesRoute) IsKnown() bool {
 	switch r {
-	case SimulationCardTokenNewParamsCapabilitiesRouteVisa, SimulationCardTokenNewParamsCapabilitiesRouteMastercard:
+	case SimulationCardTokenNewParamsCapabilitiesRouteVisa, SimulationCardTokenNewParamsCapabilitiesRouteMastercard, SimulationCardTokenNewParamsCapabilitiesRoutePulse:
 		return true
 	}
 	return false
