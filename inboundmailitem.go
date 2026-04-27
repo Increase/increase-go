@@ -85,7 +85,8 @@ func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID s
 	return res, err
 }
 
-// Inbound Mail Items represent pieces of physical mail delivered to a Lockbox.
+// Inbound Mail Items represent pieces of physical mail delivered to a Lockbox
+// Address.
 type InboundMailItem struct {
 	// The Inbound Mail Item identifier.
 	ID string `json:"id" api:"required"`
@@ -96,9 +97,11 @@ type InboundMailItem struct {
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The identifier for the File containing the scanned contents of the mail item.
 	FileID string `json:"file_id" api:"required"`
-	// The identifier for the Lockbox that received this mail item. For mail items that
-	// could not be processed due to an invalid address, this will be null.
-	LockboxID string `json:"lockbox_id" api:"required,nullable"`
+	// The identifier for the Lockbox Address that received this mail item.
+	LockboxAddressID string `json:"lockbox_address_id" api:"required,nullable"`
+	// The identifier for the Lockbox Recipient that received this mail item. For mail
+	// items that could not be routed to a Lockbox Recipient, this will be null.
+	LockboxRecipientID string `json:"lockbox_recipient_id" api:"required,nullable"`
 	// The recipient name as written on the mail item.
 	RecipientName string `json:"recipient_name" api:"required,nullable"`
 	// If the mail item has been rejected, why it was rejected.
@@ -114,17 +117,18 @@ type InboundMailItem struct {
 
 // inboundMailItemJSON contains the JSON metadata for the struct [InboundMailItem]
 type inboundMailItemJSON struct {
-	ID              apijson.Field
-	Checks          apijson.Field
-	CreatedAt       apijson.Field
-	FileID          apijson.Field
-	LockboxID       apijson.Field
-	RecipientName   apijson.Field
-	RejectionReason apijson.Field
-	Status          apijson.Field
-	Type            apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+	ID                 apijson.Field
+	Checks             apijson.Field
+	CreatedAt          apijson.Field
+	FileID             apijson.Field
+	LockboxAddressID   apijson.Field
+	LockboxRecipientID apijson.Field
+	RecipientName      apijson.Field
+	RejectionReason    apijson.Field
+	Status             apijson.Field
+	Type               apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *InboundMailItem) UnmarshalJSON(data []byte) (err error) {
@@ -191,14 +195,16 @@ func (r InboundMailItemChecksStatus) IsKnown() bool {
 type InboundMailItemRejectionReason string
 
 const (
-	InboundMailItemRejectionReasonNoMatchingLockbox InboundMailItemRejectionReason = "no_matching_lockbox"
-	InboundMailItemRejectionReasonNoCheck           InboundMailItemRejectionReason = "no_check"
-	InboundMailItemRejectionReasonLockboxNotActive  InboundMailItemRejectionReason = "lockbox_not_active"
+	InboundMailItemRejectionReasonNoMatchingLockbox         InboundMailItemRejectionReason = "no_matching_lockbox"
+	InboundMailItemRejectionReasonNoCheck                   InboundMailItemRejectionReason = "no_check"
+	InboundMailItemRejectionReasonLockboxNotActive          InboundMailItemRejectionReason = "lockbox_not_active"
+	InboundMailItemRejectionReasonLockboxAddressNotActive   InboundMailItemRejectionReason = "lockbox_address_not_active"
+	InboundMailItemRejectionReasonLockboxRecipientNotActive InboundMailItemRejectionReason = "lockbox_recipient_not_active"
 )
 
 func (r InboundMailItemRejectionReason) IsKnown() bool {
 	switch r {
-	case InboundMailItemRejectionReasonNoMatchingLockbox, InboundMailItemRejectionReasonNoCheck, InboundMailItemRejectionReasonLockboxNotActive:
+	case InboundMailItemRejectionReasonNoMatchingLockbox, InboundMailItemRejectionReasonNoCheck, InboundMailItemRejectionReasonLockboxNotActive, InboundMailItemRejectionReasonLockboxAddressNotActive, InboundMailItemRejectionReasonLockboxRecipientNotActive:
 		return true
 	}
 	return false
@@ -244,8 +250,10 @@ type InboundMailItemListParams struct {
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	Limit param.Field[int64] `query:"limit"`
-	// Filter Inbound Mail Items to ones sent to the provided Lockbox.
-	LockboxID param.Field[string] `query:"lockbox_id"`
+	// Filter Inbound Mail Items to ones sent to the provided Lockbox Address.
+	LockboxAddressID param.Field[string] `query:"lockbox_address_id"`
+	// Filter Inbound Mail Items to ones sent to the provided Lockbox Recipient.
+	LockboxRecipientID param.Field[string] `query:"lockbox_recipient_id"`
 }
 
 // URLQuery serializes [InboundMailItemListParams]'s query parameters as

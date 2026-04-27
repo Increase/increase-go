@@ -123,9 +123,10 @@ type CheckDeposit struct {
 	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
 	// the identifier of the Inbound Mail Item.
 	InboundMailItemID string `json:"inbound_mail_item_id" api:"required,nullable"`
-	// If the Check Deposit was the result of an Inbound Mail Item, this will contain
-	// the identifier of the Lockbox that received it.
-	LockboxID string `json:"lockbox_id" api:"required,nullable"`
+	// If the Check Deposit was the result of an Inbound Mail Item routed to a Lockbox
+	// Recipient, this will contain the identifier of the Lockbox Recipient that
+	// received it.
+	LockboxRecipientID string `json:"lockbox_recipient_id" api:"required,nullable"`
 	// The status of the Check Deposit.
 	Status CheckDepositStatus `json:"status" api:"required"`
 	// The ID for the Transaction created by the deposit.
@@ -154,7 +155,7 @@ type checkDepositJSON struct {
 	IdempotencyKey     apijson.Field
 	InboundFundsHold   apijson.Field
 	InboundMailItemID  apijson.Field
-	LockboxID          apijson.Field
+	LockboxRecipientID apijson.Field
 	Status             apijson.Field
 	TransactionID      apijson.Field
 	Type               apijson.Field
