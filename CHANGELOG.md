@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.562.0 (2026-04-27)
+
+Full Changelog: [v0.561.0...v0.562.0](https://github.com/Increase/increase-go/compare/v0.561.0...v0.562.0)
+
+### Features
+
+* support setting headers via env ([5a49e29](https://github.com/Increase/increase-go/commit/5a49e29ea65ad819591dbd2c7033c762fe4023bd))
+
 ## 0.561.0 (2026-04-27)
 
 Full Changelog: [v0.560.0...v0.561.0](https://github.com/Increase/increase-go/compare/v0.560.0...v0.561.0)
