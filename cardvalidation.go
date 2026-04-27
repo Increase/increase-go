@@ -576,11 +576,12 @@ type CardValidationRoute string
 const (
 	CardValidationRouteVisa       CardValidationRoute = "visa"
 	CardValidationRouteMastercard CardValidationRoute = "mastercard"
+	CardValidationRoutePulse      CardValidationRoute = "pulse"
 )
 
 func (r CardValidationRoute) IsKnown() bool {
 	switch r {
-	case CardValidationRouteVisa, CardValidationRouteMastercard:
+	case CardValidationRouteVisa, CardValidationRouteMastercard, CardValidationRoutePulse:
 		return true
 	}
 	return false

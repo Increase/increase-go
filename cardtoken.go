@@ -245,11 +245,12 @@ type CardTokenCapabilitiesRoutesRoute string
 const (
 	CardTokenCapabilitiesRoutesRouteVisa       CardTokenCapabilitiesRoutesRoute = "visa"
 	CardTokenCapabilitiesRoutesRouteMastercard CardTokenCapabilitiesRoutesRoute = "mastercard"
+	CardTokenCapabilitiesRoutesRoutePulse      CardTokenCapabilitiesRoutesRoute = "pulse"
 )
 
 func (r CardTokenCapabilitiesRoutesRoute) IsKnown() bool {
 	switch r {
-	case CardTokenCapabilitiesRoutesRouteVisa, CardTokenCapabilitiesRoutesRouteMastercard:
+	case CardTokenCapabilitiesRoutesRouteVisa, CardTokenCapabilitiesRoutesRouteMastercard, CardTokenCapabilitiesRoutesRoutePulse:
 		return true
 	}
 	return false

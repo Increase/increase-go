@@ -807,11 +807,12 @@ type CardPushTransferRoute string
 const (
 	CardPushTransferRouteVisa       CardPushTransferRoute = "visa"
 	CardPushTransferRouteMastercard CardPushTransferRoute = "mastercard"
+	CardPushTransferRoutePulse      CardPushTransferRoute = "pulse"
 )
 
 func (r CardPushTransferRoute) IsKnown() bool {
 	switch r {
-	case CardPushTransferRouteVisa, CardPushTransferRouteMastercard:
+	case CardPushTransferRouteVisa, CardPushTransferRouteMastercard, CardPushTransferRoutePulse:
 		return true
 	}
 	return false
