@@ -98,7 +98,7 @@ type InboundMailItem struct {
 	// The identifier for the File containing the scanned contents of the mail item.
 	FileID string `json:"file_id" api:"required"`
 	// The identifier for the Lockbox Address that received this mail item.
-	LockboxAddressID string `json:"lockbox_address_id" api:"required,nullable"`
+	LockboxAddressID string `json:"lockbox_address_id" api:"required"`
 	// The identifier for the Lockbox Recipient that received this mail item. For mail
 	// items that could not be routed to a Lockbox Recipient, this will be null.
 	LockboxRecipientID string `json:"lockbox_recipient_id" api:"required,nullable"`
