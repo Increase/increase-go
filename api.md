@@ -705,6 +705,12 @@ Methods:
 
 - <code title="post /simulations/interest_payments">client.Simulations.InterestPayments.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInterestPaymentService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInterestPaymentNewParams">SimulationInterestPaymentNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Transaction">Transaction</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## AccountRevenuePayments
+
+Methods:
+
+- <code title="post /simulations/account_revenue_payments">client.Simulations.AccountRevenuePayments.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationAccountRevenuePaymentService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationAccountRevenuePaymentNewParams">SimulationAccountRevenuePaymentNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Transaction">Transaction</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## CardAuthorizations
 
 Response Types:
