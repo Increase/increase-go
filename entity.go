@@ -1834,7 +1834,9 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -1943,7 +1945,8 @@ func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 // The legal identifier of the corporation. This is usually the Employer
 // Identification Number (EIN).
 type EntityNewParamsCorporationLegalIdentifier struct {
-	// The legal identifier.
+	// The legal identifier. For US Employer Identification Numbers, submit nine digits
+	// with no dashes or other separators.
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier. If not provided, the default is
 	// `us_employer_identification_number`.
@@ -2003,7 +2006,8 @@ type EntityNewParamsGovernmentAuthority struct {
 	Category param.Field[EntityNewParamsGovernmentAuthorityCategory] `json:"category" api:"required"`
 	// The legal name of the government authority.
 	Name param.Field[string] `json:"name" api:"required"`
-	// The Employer Identification Number (EIN) for the government authority.
+	// The Employer Identification Number (EIN) for the government authority. Submit
+	// nine digits with no dashes or other separators.
 	TaxIdentifier param.Field[string] `json:"tax_identifier" api:"required"`
 	// The website of the government authority.
 	Website param.Field[string] `json:"website"`
@@ -2119,7 +2123,9 @@ type EntityNewParamsJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method param.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2262,7 +2268,9 @@ type EntityNewParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2460,8 +2468,8 @@ type EntityNewParamsTrust struct {
 	FormationState param.Field[string] `json:"formation_state"`
 	// The grantor of the trust. Required if `category` is equal to `revocable`.
 	Grantor param.Field[EntityNewParamsTrustGrantor] `json:"grantor"`
-	// The Employer Identification Number (EIN) for the trust. Required if `category`
-	// is equal to `irrevocable`.
+	// The Employer Identification Number (EIN) for the trust. Submit nine digits with
+	// no dashes or other separators. Required if `category` is equal to `irrevocable`.
 	TaxIdentifier param.Field[string] `json:"tax_identifier"`
 }
 
@@ -2584,7 +2592,9 @@ type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2724,7 +2734,9 @@ type EntityNewParamsTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method param.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2902,7 +2914,8 @@ func (r EntityUpdateParamsCorporationAddress) MarshalJSON() (data []byte, err er
 // The legal identifier of the corporation. This is usually the Employer
 // Identification Number (EIN).
 type EntityUpdateParamsCorporationLegalIdentifier struct {
-	// The identifier of the legal identifier.
+	// The identifier of the legal identifier. For US Employer Identification Numbers,
+	// submit nine digits with no dashes or other separators.
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier.
 	Category param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
@@ -3010,7 +3023,9 @@ type EntityUpdateParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
 	Method param.Field[EntityUpdateParamsNaturalPersonIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
-	// such as a social security number.
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
