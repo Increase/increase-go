@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.568.0 (2026-04-30)
+
+Full Changelog: [v0.567.0...v0.568.0](https://github.com/Increase/increase-go/compare/v0.567.0...v0.568.0)
+
+### Features
+
+* **api:** api update ([37e257f](https://github.com/Increase/increase-go/commit/37e257feae82466e3e1b9d49c6997183ae632167))
+
+
+### Chores
+
+* avoid embedding reflect.Type for dead code elimination ([dfe2698](https://github.com/Increase/increase-go/commit/dfe2698a4cdbd27a49aa09f0a36c3dcd9f2804ac))
+
 ## 0.567.0 (2026-04-30)
 
 Full Changelog: [v0.566.0...v0.567.0](https://github.com/Increase/increase-go/compare/v0.566.0...v0.567.0)
