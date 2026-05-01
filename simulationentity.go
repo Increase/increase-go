@@ -34,72 +34,55 @@ func NewSimulationEntityService(opts ...option.RequestOption) (r *SimulationEnti
 	return
 }
 
-// Set the status for an
+// Simulate updates to an
 // [Entity's validation](/documentation/api/entities#entity-object.validation). In
 // production, Know Your Customer validations
-// [run automatically](/documentation/entity-validation#entity-validation). While
-// developing, it can be helpful to override the behavior in Sandbox.
-func (r *SimulationEntityService) Validation(ctx context.Context, entityID string, body SimulationEntityValidationParams, opts ...option.RequestOption) (res *Entity, err error) {
+// [run automatically](/documentation/entity-validation#entity-validation) for
+// eligible programs. While developing, use this API to simulate issues with
+// information submissions.
+func (r *SimulationEntityService) UpdateValidation(ctx context.Context, entityID string, body SimulationEntityUpdateValidationParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
 		err = errors.New("missing required entity_id parameter")
 		return nil, err
 	}
-	path := fmt.Sprintf("simulations/entities/%s/validation", entityID)
+	path := fmt.Sprintf("simulations/entities/%s/update_validation", entityID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return res, err
 }
 
-type SimulationEntityValidationParams struct {
-	// The validation issues to attach. Only allowed when `status` is `invalid`.
-	Issues param.Field[[]SimulationEntityValidationParamsIssue] `json:"issues" api:"required"`
-	// The validation status to set on the Entity.
-	Status param.Field[SimulationEntityValidationParamsStatus] `json:"status" api:"required"`
+type SimulationEntityUpdateValidationParams struct {
+	// The validation issues to attach. If no issues are provided, the validation
+	// status will be set to `valid`.
+	Issues param.Field[[]SimulationEntityUpdateValidationParamsIssue] `json:"issues" api:"required"`
 }
 
-func (r SimulationEntityValidationParams) MarshalJSON() (data []byte, err error) {
+func (r SimulationEntityUpdateValidationParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type SimulationEntityValidationParamsIssue struct {
+type SimulationEntityUpdateValidationParamsIssue struct {
 	// The type of issue.
-	Category param.Field[SimulationEntityValidationParamsIssuesCategory] `json:"category" api:"required"`
+	Category param.Field[SimulationEntityUpdateValidationParamsIssuesCategory] `json:"category" api:"required"`
 }
 
-func (r SimulationEntityValidationParamsIssue) MarshalJSON() (data []byte, err error) {
+func (r SimulationEntityUpdateValidationParamsIssue) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // The type of issue.
-type SimulationEntityValidationParamsIssuesCategory string
+type SimulationEntityUpdateValidationParamsIssuesCategory string
 
 const (
-	SimulationEntityValidationParamsIssuesCategoryEntityTaxIdentifier     SimulationEntityValidationParamsIssuesCategory = "entity_tax_identifier"
-	SimulationEntityValidationParamsIssuesCategoryEntityAddress           SimulationEntityValidationParamsIssuesCategory = "entity_address"
-	SimulationEntityValidationParamsIssuesCategoryBeneficialOwnerIdentity SimulationEntityValidationParamsIssuesCategory = "beneficial_owner_identity"
-	SimulationEntityValidationParamsIssuesCategoryBeneficialOwnerAddress  SimulationEntityValidationParamsIssuesCategory = "beneficial_owner_address"
+	SimulationEntityUpdateValidationParamsIssuesCategoryEntityTaxIdentifier     SimulationEntityUpdateValidationParamsIssuesCategory = "entity_tax_identifier"
+	SimulationEntityUpdateValidationParamsIssuesCategoryEntityAddress           SimulationEntityUpdateValidationParamsIssuesCategory = "entity_address"
+	SimulationEntityUpdateValidationParamsIssuesCategoryBeneficialOwnerIdentity SimulationEntityUpdateValidationParamsIssuesCategory = "beneficial_owner_identity"
+	SimulationEntityUpdateValidationParamsIssuesCategoryBeneficialOwnerAddress  SimulationEntityUpdateValidationParamsIssuesCategory = "beneficial_owner_address"
 )
 
-func (r SimulationEntityValidationParamsIssuesCategory) IsKnown() bool {
+func (r SimulationEntityUpdateValidationParamsIssuesCategory) IsKnown() bool {
 	switch r {
-	case SimulationEntityValidationParamsIssuesCategoryEntityTaxIdentifier, SimulationEntityValidationParamsIssuesCategoryEntityAddress, SimulationEntityValidationParamsIssuesCategoryBeneficialOwnerIdentity, SimulationEntityValidationParamsIssuesCategoryBeneficialOwnerAddress:
-		return true
-	}
-	return false
-}
-
-// The validation status to set on the Entity.
-type SimulationEntityValidationParamsStatus string
-
-const (
-	SimulationEntityValidationParamsStatusValid   SimulationEntityValidationParamsStatus = "valid"
-	SimulationEntityValidationParamsStatusInvalid SimulationEntityValidationParamsStatus = "invalid"
-	SimulationEntityValidationParamsStatusPending SimulationEntityValidationParamsStatus = "pending"
-)
-
-func (r SimulationEntityValidationParamsStatus) IsKnown() bool {
-	switch r {
-	case SimulationEntityValidationParamsStatusValid, SimulationEntityValidationParamsStatusInvalid, SimulationEntityValidationParamsStatusPending:
+	case SimulationEntityUpdateValidationParamsIssuesCategoryEntityTaxIdentifier, SimulationEntityUpdateValidationParamsIssuesCategoryEntityAddress, SimulationEntityUpdateValidationParamsIssuesCategoryBeneficialOwnerIdentity, SimulationEntityUpdateValidationParamsIssuesCategoryBeneficialOwnerAddress:
 		return true
 	}
 	return false
