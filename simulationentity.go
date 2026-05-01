@@ -34,9 +34,11 @@ func NewSimulationEntityService(opts ...option.RequestOption) (r *SimulationEnti
 	return
 }
 
-// Simulates setting an [Entity](#entities)'s validation under the managed
-// compliance regime. Any existing managed compliance validation on the Entity will
-// be marked as no longer current.
+// Set the status for an
+// [Entity's validation](/documentation/api/entities#entity-object.validation). In
+// production, Know Your Customer validations
+// [run automatically](/documentation/entity-validation#entity-validation). While
+// developing, it can be helpful to override the behavior in Sandbox.
 func (r *SimulationEntityService) Validation(ctx context.Context, entityID string, body SimulationEntityValidationParams, opts ...option.RequestOption) (res *Entity, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if entityID == "" {
