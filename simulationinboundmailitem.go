@@ -32,8 +32,8 @@ func NewSimulationInboundMailItemService(opts ...option.RequestOption) (r *Simul
 	return
 }
 
-// Simulates an inbound mail item to your account, as if someone had mailed a
-// physical check to one of your account's Lockboxes.
+// Simulates an Inbound Mail Item to one of your Lockbox Addresses or Lockbox
+// Recipients, as if someone had mailed a physical check.
 func (r *SimulationInboundMailItemService) New(ctx context.Context, body SimulationInboundMailItemNewParams, opts ...option.RequestOption) (res *InboundMailItem, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_mail_items"
