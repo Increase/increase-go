@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationEntityValidation(t *testing.T) {
+func TestSimulationEntityUpdateValidation(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,14 +25,13 @@ func TestSimulationEntityValidation(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.Entities.Validation(
+	_, err := client.Simulations.Entities.UpdateValidation(
 		context.TODO(),
 		"entity_n8y8tnk2p9339ti393yi",
-		increase.SimulationEntityValidationParams{
-			Issues: increase.F([]increase.SimulationEntityValidationParamsIssue{{
-				Category: increase.F(increase.SimulationEntityValidationParamsIssuesCategoryEntityTaxIdentifier),
+		increase.SimulationEntityUpdateValidationParams{
+			Issues: increase.F([]increase.SimulationEntityUpdateValidationParamsIssue{{
+				Category: increase.F(increase.SimulationEntityUpdateValidationParamsIssuesCategoryEntityTaxIdentifier),
 			}}),
-			Status: increase.F(increase.SimulationEntityValidationParamsStatusInvalid),
 		},
 	)
 	if err != nil {
