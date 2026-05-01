@@ -894,6 +894,12 @@ Methods:
 
 - <code title="post /simulations/inbound_mail_items">client.Simulations.InboundMailItems.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInboundMailItemService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationInboundMailItemNewParams">SimulationInboundMailItemNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#InboundMailItem">InboundMailItem</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## Entities
+
+Methods:
+
+- <code title="post /simulations/entities/{entity_id}/validation">client.Simulations.Entities.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationEntityService.Validation">Validation</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, entityID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationEntityValidationParams">SimulationEntityValidationParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Entity">Entity</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## EntityOnboardingSessions
 
 Methods:
