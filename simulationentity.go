@@ -51,9 +51,9 @@ func (r *SimulationEntityService) Validation(ctx context.Context, entityID strin
 }
 
 type SimulationEntityValidationParams struct {
-	// The issues to attach to the new managed compliance validation.
+	// The validation issues to attach. Only allowed when `status` is `invalid`.
 	Issues param.Field[[]SimulationEntityValidationParamsIssue] `json:"issues" api:"required"`
-	// The status to set on the new managed compliance validation.
+	// The validation status to set on the Entity.
 	Status param.Field[SimulationEntityValidationParamsStatus] `json:"status" api:"required"`
 }
 
@@ -62,7 +62,7 @@ func (r SimulationEntityValidationParams) MarshalJSON() (data []byte, err error)
 }
 
 type SimulationEntityValidationParamsIssue struct {
-	// The category of the issue.
+	// The type of issue.
 	Category param.Field[SimulationEntityValidationParamsIssuesCategory] `json:"category" api:"required"`
 }
 
@@ -70,7 +70,7 @@ func (r SimulationEntityValidationParamsIssue) MarshalJSON() (data []byte, err e
 	return apijson.MarshalRoot(r)
 }
 
-// The category of the issue.
+// The type of issue.
 type SimulationEntityValidationParamsIssuesCategory string
 
 const (
@@ -88,7 +88,7 @@ func (r SimulationEntityValidationParamsIssuesCategory) IsKnown() bool {
 	return false
 }
 
-// The status to set on the new managed compliance validation.
+// The validation status to set on the Entity.
 type SimulationEntityValidationParamsStatus string
 
 const (
