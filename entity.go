@@ -1738,7 +1738,8 @@ type EntityNewParamsCorporation struct {
 	// `Software Publishers`. A full list of classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
-	// The website of the corporation.
+	// A website for the business. Not every program requires a website for submitted
+	// Entities.
 	Website     param.Field[string]    `json:"website"`
 	ExtraFields map[string]interface{} `json:"-,extras"`
 }
@@ -2009,7 +2010,8 @@ type EntityNewParamsGovernmentAuthority struct {
 	// The Employer Identification Number (EIN) for the government authority. Submit
 	// nine digits with no dashes or other separators.
 	TaxIdentifier param.Field[string] `json:"tax_identifier" api:"required"`
-	// The website of the government authority.
+	// A website for the government authority. Not every program requires a website for
+	// submitted Entities.
 	Website param.Field[string] `json:"website"`
 }
 
@@ -2881,7 +2883,10 @@ type EntityUpdateParamsCorporation struct {
 	// Identification Number (EIN).
 	LegalIdentifier param.Field[EntityUpdateParamsCorporationLegalIdentifier] `json:"legal_identifier"`
 	// The legal name of the corporation.
-	Name        param.Field[string]    `json:"name"`
+	Name param.Field[string] `json:"name"`
+	// A website for the business. Not every program requires a website for submitted
+	// Entities.
+	Website     param.Field[string]    `json:"website"`
 	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
