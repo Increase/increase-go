@@ -42,7 +42,7 @@ func TestFednowTransferNewWithOptionalParams(t *testing.T) {
 		DebtorAddress: increase.F(increase.FednowTransferNewParamsDebtorAddress{
 			City:       increase.F("x"),
 			PostalCode: increase.F("21029-9469"),
-			State:      increase.F("x"),
+			State:      increase.F("xx"),
 			Line1:      increase.F("x"),
 		}),
 		ExternalAccountID: increase.F("external_account_id"),

@@ -54,7 +54,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						DriversLicense: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationDriversLicense{
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("file_id"),
-							State:          increase.F("x"),
+							State:          increase.F("xx"),
 							BackFileID:     increase.F("back_file_id"),
 						}),
 						Other: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationOther{
@@ -92,7 +92,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Address: increase.F(increase.EntityNewParamsGovernmentAuthorityAddress{
 				City:  increase.F("x"),
 				Line1: increase.F("x"),
-				State: increase.F("x"),
+				State: increase.F("xx"),
 				Zip:   increase.F("x"),
 				Line2: increase.F("x"),
 			}),
@@ -121,7 +121,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					DriversLicense: increase.F(increase.EntityNewParamsJointIndividualsIdentificationDriversLicense{
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("file_id"),
-						State:          increase.F("x"),
+						State:          increase.F("xx"),
 						BackFileID:     increase.F("back_file_id"),
 					}),
 					Other: increase.F(increase.EntityNewParamsJointIndividualsIdentificationOther{
@@ -157,7 +157,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				DriversLicense: increase.F(increase.EntityNewParamsNaturalPersonIdentificationDriversLicense{
 					ExpirationDate: increase.F(time.Now()),
 					FileID:         increase.F("file_id"),
-					State:          increase.F("x"),
+					State:          increase.F("xx"),
 					BackFileID:     increase.F("back_file_id"),
 				}),
 				Other: increase.F(increase.EntityNewParamsNaturalPersonIdentificationOther{
@@ -196,7 +196,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Address: increase.F(increase.EntityNewParamsTrustAddress{
 				City:  increase.F("x"),
 				Line1: increase.F("x"),
-				State: increase.F("x"),
+				State: increase.F("xx"),
 				Zip:   increase.F("x"),
 				Line2: increase.F("x"),
 			}),
@@ -220,7 +220,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 						DriversLicense: increase.F(increase.EntityNewParamsTrustTrusteesIndividualIdentificationDriversLicense{
 							ExpirationDate: increase.F(time.Now()),
 							FileID:         increase.F("file_id"),
-							State:          increase.F("x"),
+							State:          increase.F("xx"),
 							BackFileID:     increase.F("back_file_id"),
 						}),
 						Other: increase.F(increase.EntityNewParamsTrustTrusteesIndividualIdentificationOther{
@@ -258,7 +258,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 					DriversLicense: increase.F(increase.EntityNewParamsTrustGrantorIdentificationDriversLicense{
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("file_id"),
-						State:          increase.F("x"),
+						State:          increase.F("xx"),
 						BackFileID:     increase.F("back_file_id"),
 					}),
 					Other: increase.F(increase.EntityNewParamsTrustGrantorIdentificationOther{
@@ -351,7 +351,7 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				Address: increase.F(increase.EntityUpdateParamsGovernmentAuthorityAddress{
 					City:  increase.F("x"),
 					Line1: increase.F("x"),
-					State: increase.F("x"),
+					State: increase.F("xx"),
 					Zip:   increase.F("x"),
 					Line2: increase.F("x"),
 				}),
@@ -373,7 +373,7 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 					DriversLicense: increase.F(increase.EntityUpdateParamsNaturalPersonIdentificationDriversLicense{
 						ExpirationDate: increase.F(time.Now()),
 						FileID:         increase.F("file_id"),
-						State:          increase.F("x"),
+						State:          increase.F("xx"),
 						BackFileID:     increase.F("back_file_id"),
 					}),
 					Other: increase.F(increase.EntityUpdateParamsNaturalPersonIdentificationOther{
@@ -408,7 +408,7 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				Address: increase.F(increase.EntityUpdateParamsTrustAddress{
 					City:  increase.F("x"),
 					Line1: increase.F("x"),
-					State: increase.F("x"),
+					State: increase.F("xx"),
 					Zip:   increase.F("x"),
 					Line2: increase.F("x"),
 				}),
