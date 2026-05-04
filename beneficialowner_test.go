@@ -44,7 +44,7 @@ func TestBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 				DriversLicense: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentificationDriversLicense{
 					ExpirationDate: increase.F(time.Now()),
 					FileID:         increase.F("file_id"),
-					State:          increase.F("x"),
+					State:          increase.F("xx"),
 					BackFileID:     increase.F("back_file_id"),
 				}),
 				Other: increase.F(increase.BeneficialOwnerNewParamsIndividualIdentificationOther{
@@ -128,7 +128,7 @@ func TestBeneficialOwnerUpdateWithOptionalParams(t *testing.T) {
 				DriversLicense: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationDriversLicense{
 					ExpirationDate: increase.F(time.Now()),
 					FileID:         increase.F("file_id"),
-					State:          increase.F("x"),
+					State:          increase.F("xx"),
 					BackFileID:     increase.F("back_file_id"),
 				}),
 				Other: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationOther{
