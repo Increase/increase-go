@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/google/uuid v1.3.0
-	github.com/standard-webhooks/standard-webhooks/libraries v0.0.0-20260427160145-3afa6683f8b2
+	github.com/standard-webhooks/standard-webhooks/libraries v0.0.0-20260506201837-c65c3eb7723a
 	github.com/tidwall/gjson v1.14.4
 	github.com/tidwall/sjson v1.2.5
 )
