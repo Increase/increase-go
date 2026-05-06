@@ -29,7 +29,7 @@ func TestCardPushTransferNewWithOptionalParams(t *testing.T) {
 	_, err := client.CardPushTransfers.New(context.TODO(), increase.CardPushTransferNewParams{
 		BusinessApplicationIdentifier: increase.F(increase.CardPushTransferNewParamsBusinessApplicationIdentifierFundsDisbursement),
 		CardTokenID:                   increase.F("outbound_card_token_zlt0ml6youq3q7vcdlg0"),
-		MerchantCategoryCode:          increase.F("1234"),
+		MerchantCategoryCode:          increase.F("5734"),
 		MerchantCityName:              increase.F("New York"),
 		MerchantName:                  increase.F("Acme Corp"),
 		MerchantNamePrefix:            increase.F("Acme"),
