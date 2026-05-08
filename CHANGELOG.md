@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.579.0 (2026-05-08)
+
+Full Changelog: [v0.578.0...v0.579.0](https://github.com/Increase/increase-go/compare/v0.578.0...v0.579.0)
+
+### Features
+
+* **api:** api update ([d159b7c](https://github.com/Increase/increase-go/commit/d159b7c775d964cbbef80583a24252bd06b68fbb))
+* **api:** api update ([6a71db4](https://github.com/Increase/increase-go/commit/6a71db4192fee499e7ccd47dc3f88feeb60c7b22))
+* **api:** api update ([93dbdf0](https://github.com/Increase/increase-go/commit/93dbdf0ed3844ec4bf33d91f77310562b49aa070))
+* **api:** api update ([eecf121](https://github.com/Increase/increase-go/commit/eecf121dae47987b1f43492c55201441e6f2fb7b))
+* **api:** api update ([dfa1b35](https://github.com/Increase/increase-go/commit/dfa1b351caaaec602736ab674b8fb8edc78d2ee5))
+
+
+### Bug Fixes
+
+* **go:** avoid panic when http.DefaultTransport is wrapped ([c2ea008](https://github.com/Increase/increase-go/commit/c2ea008244cc76f7117bb5fc5c6e1cfb31533ae7))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([cc37869](https://github.com/Increase/increase-go/commit/cc37869815bad10c74ff14e1867c3af08708cebd))
+
 ## 0.578.0 (2026-05-04)
 
 Full Changelog: [v0.577.0...v0.578.0](https://github.com/Increase/increase-go/compare/v0.577.0...v0.578.0)
