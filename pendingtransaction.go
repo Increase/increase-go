@@ -224,10 +224,11 @@ type PendingTransactionSource struct {
 	// An ACH Transfer Instruction object. This field will be present in the JSON
 	// response if and only if `category` is equal to `ach_transfer_instruction`.
 	ACHTransferInstruction PendingTransactionSourceACHTransferInstruction `json:"ach_transfer_instruction" api:"nullable"`
-	// A Blockchain Off-Ramp Transfer Instruction object. This field will be present in
-	// the JSON response if and only if `category` is equal to
-	// `blockchain_offramp_transfer_instruction`.
-	BlockchainOfframpTransferInstruction PendingTransactionSourceBlockchainOfframpTransferInstruction `json:"blockchain_offramp_transfer_instruction" api:"nullable"`
+	// A Blockchain Off-Ramp Transfer object. This field will be present in the JSON
+	// response if and only if `category` is equal to `blockchain_offramp_transfer`.
+	// Blockchain Off-Ramp Transfers move funds from a Blockchain Address to an
+	// Account. They're automatically created when funds land in a Blockchain Address.
+	BlockchainOfframpTransfer PendingTransactionSourceBlockchainOfframpTransfer `json:"blockchain_offramp_transfer" api:"nullable"`
 	// A Blockchain On-Ramp Transfer Instruction object. This field will be present in
 	// the JSON response if and only if `category` is equal to
 	// `blockchain_onramp_transfer_instruction`.
@@ -283,25 +284,25 @@ type PendingTransactionSource struct {
 // pendingTransactionSourceJSON contains the JSON metadata for the struct
 // [PendingTransactionSource]
 type pendingTransactionSourceJSON struct {
-	Category                             apijson.Field
-	AccountTransferInstruction           apijson.Field
-	ACHTransferInstruction               apijson.Field
-	BlockchainOfframpTransferInstruction apijson.Field
-	BlockchainOnrampTransferInstruction  apijson.Field
-	CardAuthorization                    apijson.Field
-	CardPushTransferInstruction          apijson.Field
-	CheckDepositInstruction              apijson.Field
-	CheckTransferInstruction             apijson.Field
-	FednowTransferInstruction            apijson.Field
-	InboundFundsHold                     apijson.Field
-	InboundWireTransferReversal          apijson.Field
-	Other                                apijson.Field
-	RealTimePaymentsTransferInstruction  apijson.Field
-	SwiftTransferInstruction             apijson.Field
-	UserInitiatedHold                    apijson.Field
-	WireTransferInstruction              apijson.Field
-	raw                                  string
-	ExtraFields                          map[string]apijson.Field
+	Category                            apijson.Field
+	AccountTransferInstruction          apijson.Field
+	ACHTransferInstruction              apijson.Field
+	BlockchainOfframpTransfer           apijson.Field
+	BlockchainOnrampTransferInstruction apijson.Field
+	CardAuthorization                   apijson.Field
+	CardPushTransferInstruction         apijson.Field
+	CheckDepositInstruction             apijson.Field
+	CheckTransferInstruction            apijson.Field
+	FednowTransferInstruction           apijson.Field
+	InboundFundsHold                    apijson.Field
+	InboundWireTransferReversal         apijson.Field
+	Other                               apijson.Field
+	RealTimePaymentsTransferInstruction apijson.Field
+	SwiftTransferInstruction            apijson.Field
+	UserInitiatedHold                   apijson.Field
+	WireTransferInstruction             apijson.Field
+	raw                                 string
+	ExtraFields                         map[string]apijson.Field
 }
 
 func (r *PendingTransactionSource) UnmarshalJSON(data []byte) (err error) {
@@ -317,27 +318,27 @@ func (r pendingTransactionSourceJSON) RawJSON() string {
 type PendingTransactionSourceCategory string
 
 const (
-	PendingTransactionSourceCategoryAccountTransferInstruction           PendingTransactionSourceCategory = "account_transfer_instruction"
-	PendingTransactionSourceCategoryACHTransferInstruction               PendingTransactionSourceCategory = "ach_transfer_instruction"
-	PendingTransactionSourceCategoryCardAuthorization                    PendingTransactionSourceCategory = "card_authorization"
-	PendingTransactionSourceCategoryCheckDepositInstruction              PendingTransactionSourceCategory = "check_deposit_instruction"
-	PendingTransactionSourceCategoryCheckTransferInstruction             PendingTransactionSourceCategory = "check_transfer_instruction"
-	PendingTransactionSourceCategoryFednowTransferInstruction            PendingTransactionSourceCategory = "fednow_transfer_instruction"
-	PendingTransactionSourceCategoryInboundFundsHold                     PendingTransactionSourceCategory = "inbound_funds_hold"
-	PendingTransactionSourceCategoryUserInitiatedHold                    PendingTransactionSourceCategory = "user_initiated_hold"
-	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction  PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
-	PendingTransactionSourceCategoryWireTransferInstruction              PendingTransactionSourceCategory = "wire_transfer_instruction"
-	PendingTransactionSourceCategoryInboundWireTransferReversal          PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
-	PendingTransactionSourceCategorySwiftTransferInstruction             PendingTransactionSourceCategory = "swift_transfer_instruction"
-	PendingTransactionSourceCategoryCardPushTransferInstruction          PendingTransactionSourceCategory = "card_push_transfer_instruction"
-	PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction  PendingTransactionSourceCategory = "blockchain_onramp_transfer_instruction"
-	PendingTransactionSourceCategoryBlockchainOfframpTransferInstruction PendingTransactionSourceCategory = "blockchain_offramp_transfer_instruction"
-	PendingTransactionSourceCategoryOther                                PendingTransactionSourceCategory = "other"
+	PendingTransactionSourceCategoryAccountTransferInstruction          PendingTransactionSourceCategory = "account_transfer_instruction"
+	PendingTransactionSourceCategoryACHTransferInstruction              PendingTransactionSourceCategory = "ach_transfer_instruction"
+	PendingTransactionSourceCategoryCardAuthorization                   PendingTransactionSourceCategory = "card_authorization"
+	PendingTransactionSourceCategoryCheckDepositInstruction             PendingTransactionSourceCategory = "check_deposit_instruction"
+	PendingTransactionSourceCategoryCheckTransferInstruction            PendingTransactionSourceCategory = "check_transfer_instruction"
+	PendingTransactionSourceCategoryFednowTransferInstruction           PendingTransactionSourceCategory = "fednow_transfer_instruction"
+	PendingTransactionSourceCategoryInboundFundsHold                    PendingTransactionSourceCategory = "inbound_funds_hold"
+	PendingTransactionSourceCategoryUserInitiatedHold                   PendingTransactionSourceCategory = "user_initiated_hold"
+	PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction PendingTransactionSourceCategory = "real_time_payments_transfer_instruction"
+	PendingTransactionSourceCategoryWireTransferInstruction             PendingTransactionSourceCategory = "wire_transfer_instruction"
+	PendingTransactionSourceCategoryInboundWireTransferReversal         PendingTransactionSourceCategory = "inbound_wire_transfer_reversal"
+	PendingTransactionSourceCategorySwiftTransferInstruction            PendingTransactionSourceCategory = "swift_transfer_instruction"
+	PendingTransactionSourceCategoryCardPushTransferInstruction         PendingTransactionSourceCategory = "card_push_transfer_instruction"
+	PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction PendingTransactionSourceCategory = "blockchain_onramp_transfer_instruction"
+	PendingTransactionSourceCategoryBlockchainOfframpTransfer           PendingTransactionSourceCategory = "blockchain_offramp_transfer"
+	PendingTransactionSourceCategoryOther                               PendingTransactionSourceCategory = "other"
 )
 
 func (r PendingTransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryFednowTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction, PendingTransactionSourceCategoryBlockchainOfframpTransferInstruction, PendingTransactionSourceCategoryOther:
+	case PendingTransactionSourceCategoryAccountTransferInstruction, PendingTransactionSourceCategoryACHTransferInstruction, PendingTransactionSourceCategoryCardAuthorization, PendingTransactionSourceCategoryCheckDepositInstruction, PendingTransactionSourceCategoryCheckTransferInstruction, PendingTransactionSourceCategoryFednowTransferInstruction, PendingTransactionSourceCategoryInboundFundsHold, PendingTransactionSourceCategoryUserInitiatedHold, PendingTransactionSourceCategoryRealTimePaymentsTransferInstruction, PendingTransactionSourceCategoryWireTransferInstruction, PendingTransactionSourceCategoryInboundWireTransferReversal, PendingTransactionSourceCategorySwiftTransferInstruction, PendingTransactionSourceCategoryCardPushTransferInstruction, PendingTransactionSourceCategoryBlockchainOnrampTransferInstruction, PendingTransactionSourceCategoryBlockchainOfframpTransfer, PendingTransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -420,34 +421,106 @@ func (r pendingTransactionSourceACHTransferInstructionJSON) RawJSON() string {
 	return r.raw
 }
 
-// A Blockchain Off-Ramp Transfer Instruction object. This field will be present in
-// the JSON response if and only if `category` is equal to
-// `blockchain_offramp_transfer_instruction`.
-type PendingTransactionSourceBlockchainOfframpTransferInstruction struct {
-	// The identifier of the Blockchain Address the funds were received at.
+// A Blockchain Off-Ramp Transfer object. This field will be present in the JSON
+// response if and only if `category` is equal to `blockchain_offramp_transfer`.
+// Blockchain Off-Ramp Transfers move funds from a Blockchain Address to an
+// Account. They're automatically created when funds land in a Blockchain Address.
+type PendingTransactionSourceBlockchainOfframpTransfer struct {
+	// The Blockchain Off-Ramp Transfer's identifier.
+	ID string `json:"id" api:"required"`
+	// The token that was received.
+	Token PendingTransactionSourceBlockchainOfframpTransferToken `json:"token" api:"required"`
+	// The transfer amount in USD cents.
+	Amount int64 `json:"amount" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the transfer was created.
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The Account the funds were transferred into.
+	DestinationAccountID string `json:"destination_account_id" api:"required"`
+	// The transaction hash of the blockchain transaction that initiated this transfer.
+	InitiatingTransactionHash string `json:"initiating_transaction_hash" api:"required"`
+	// The Blockchain Address from which the transfer originated.
 	SourceBlockchainAddressID string `json:"source_blockchain_address_id" api:"required"`
-	// The identifier of the Blockchain Off-Ramp Transfer that led to this Transaction.
-	TransferID  string                                                           `json:"transfer_id" api:"required"`
-	ExtraFields map[string]interface{}                                           `json:"-" api:"extrafields"`
-	JSON        pendingTransactionSourceBlockchainOfframpTransferInstructionJSON `json:"-"`
+	// The lifecycle status of the transfer.
+	Status PendingTransactionSourceBlockchainOfframpTransferStatus `json:"status" api:"required"`
+	// The Transaction crediting the Account once the transfer is settled.
+	TransactionID string `json:"transaction_id" api:"required,nullable"`
+	// A constant representing the object's type. For this resource it will always be
+	// `blockchain_offramp_transfer`.
+	Type PendingTransactionSourceBlockchainOfframpTransferType `json:"type" api:"required"`
+	JSON pendingTransactionSourceBlockchainOfframpTransferJSON `json:"-"`
 }
 
-// pendingTransactionSourceBlockchainOfframpTransferInstructionJSON contains the
-// JSON metadata for the struct
-// [PendingTransactionSourceBlockchainOfframpTransferInstruction]
-type pendingTransactionSourceBlockchainOfframpTransferInstructionJSON struct {
+// pendingTransactionSourceBlockchainOfframpTransferJSON contains the JSON metadata
+// for the struct [PendingTransactionSourceBlockchainOfframpTransfer]
+type pendingTransactionSourceBlockchainOfframpTransferJSON struct {
+	ID                        apijson.Field
+	Token                     apijson.Field
+	Amount                    apijson.Field
+	CreatedAt                 apijson.Field
+	DestinationAccountID      apijson.Field
+	InitiatingTransactionHash apijson.Field
 	SourceBlockchainAddressID apijson.Field
-	TransferID                apijson.Field
+	Status                    apijson.Field
+	TransactionID             apijson.Field
+	Type                      apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
 
-func (r *PendingTransactionSourceBlockchainOfframpTransferInstruction) UnmarshalJSON(data []byte) (err error) {
+func (r *PendingTransactionSourceBlockchainOfframpTransfer) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r pendingTransactionSourceBlockchainOfframpTransferInstructionJSON) RawJSON() string {
+func (r pendingTransactionSourceBlockchainOfframpTransferJSON) RawJSON() string {
 	return r.raw
+}
+
+// The token that was received.
+type PendingTransactionSourceBlockchainOfframpTransferToken string
+
+const (
+	PendingTransactionSourceBlockchainOfframpTransferTokenUsdc PendingTransactionSourceBlockchainOfframpTransferToken = "usdc"
+)
+
+func (r PendingTransactionSourceBlockchainOfframpTransferToken) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceBlockchainOfframpTransferTokenUsdc:
+		return true
+	}
+	return false
+}
+
+// The lifecycle status of the transfer.
+type PendingTransactionSourceBlockchainOfframpTransferStatus string
+
+const (
+	PendingTransactionSourceBlockchainOfframpTransferStatusPendingSettlement PendingTransactionSourceBlockchainOfframpTransferStatus = "pending_settlement"
+	PendingTransactionSourceBlockchainOfframpTransferStatusSettled           PendingTransactionSourceBlockchainOfframpTransferStatus = "settled"
+)
+
+func (r PendingTransactionSourceBlockchainOfframpTransferStatus) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceBlockchainOfframpTransferStatusPendingSettlement, PendingTransactionSourceBlockchainOfframpTransferStatusSettled:
+		return true
+	}
+	return false
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `blockchain_offramp_transfer`.
+type PendingTransactionSourceBlockchainOfframpTransferType string
+
+const (
+	PendingTransactionSourceBlockchainOfframpTransferTypeBlockchainOfframpTransfer PendingTransactionSourceBlockchainOfframpTransferType = "blockchain_offramp_transfer"
+)
+
+func (r PendingTransactionSourceBlockchainOfframpTransferType) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceBlockchainOfframpTransferTypeBlockchainOfframpTransfer:
+		return true
+	}
+	return false
 }
 
 // A Blockchain On-Ramp Transfer Instruction object. This field will be present in
@@ -2054,27 +2127,27 @@ func (r PendingTransactionListParamsCategory) URLQuery() (v url.Values) {
 type PendingTransactionListParamsCategoryIn string
 
 const (
-	PendingTransactionListParamsCategoryInAccountTransferInstruction           PendingTransactionListParamsCategoryIn = "account_transfer_instruction"
-	PendingTransactionListParamsCategoryInACHTransferInstruction               PendingTransactionListParamsCategoryIn = "ach_transfer_instruction"
-	PendingTransactionListParamsCategoryInCardAuthorization                    PendingTransactionListParamsCategoryIn = "card_authorization"
-	PendingTransactionListParamsCategoryInCheckDepositInstruction              PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
-	PendingTransactionListParamsCategoryInCheckTransferInstruction             PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
-	PendingTransactionListParamsCategoryInFednowTransferInstruction            PendingTransactionListParamsCategoryIn = "fednow_transfer_instruction"
-	PendingTransactionListParamsCategoryInInboundFundsHold                     PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
-	PendingTransactionListParamsCategoryInUserInitiatedHold                    PendingTransactionListParamsCategoryIn = "user_initiated_hold"
-	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction  PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
-	PendingTransactionListParamsCategoryInWireTransferInstruction              PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
-	PendingTransactionListParamsCategoryInInboundWireTransferReversal          PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
-	PendingTransactionListParamsCategoryInSwiftTransferInstruction             PendingTransactionListParamsCategoryIn = "swift_transfer_instruction"
-	PendingTransactionListParamsCategoryInCardPushTransferInstruction          PendingTransactionListParamsCategoryIn = "card_push_transfer_instruction"
-	PendingTransactionListParamsCategoryInBlockchainOnrampTransferInstruction  PendingTransactionListParamsCategoryIn = "blockchain_onramp_transfer_instruction"
-	PendingTransactionListParamsCategoryInBlockchainOfframpTransferInstruction PendingTransactionListParamsCategoryIn = "blockchain_offramp_transfer_instruction"
-	PendingTransactionListParamsCategoryInOther                                PendingTransactionListParamsCategoryIn = "other"
+	PendingTransactionListParamsCategoryInAccountTransferInstruction          PendingTransactionListParamsCategoryIn = "account_transfer_instruction"
+	PendingTransactionListParamsCategoryInACHTransferInstruction              PendingTransactionListParamsCategoryIn = "ach_transfer_instruction"
+	PendingTransactionListParamsCategoryInCardAuthorization                   PendingTransactionListParamsCategoryIn = "card_authorization"
+	PendingTransactionListParamsCategoryInCheckDepositInstruction             PendingTransactionListParamsCategoryIn = "check_deposit_instruction"
+	PendingTransactionListParamsCategoryInCheckTransferInstruction            PendingTransactionListParamsCategoryIn = "check_transfer_instruction"
+	PendingTransactionListParamsCategoryInFednowTransferInstruction           PendingTransactionListParamsCategoryIn = "fednow_transfer_instruction"
+	PendingTransactionListParamsCategoryInInboundFundsHold                    PendingTransactionListParamsCategoryIn = "inbound_funds_hold"
+	PendingTransactionListParamsCategoryInUserInitiatedHold                   PendingTransactionListParamsCategoryIn = "user_initiated_hold"
+	PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction PendingTransactionListParamsCategoryIn = "real_time_payments_transfer_instruction"
+	PendingTransactionListParamsCategoryInWireTransferInstruction             PendingTransactionListParamsCategoryIn = "wire_transfer_instruction"
+	PendingTransactionListParamsCategoryInInboundWireTransferReversal         PendingTransactionListParamsCategoryIn = "inbound_wire_transfer_reversal"
+	PendingTransactionListParamsCategoryInSwiftTransferInstruction            PendingTransactionListParamsCategoryIn = "swift_transfer_instruction"
+	PendingTransactionListParamsCategoryInCardPushTransferInstruction         PendingTransactionListParamsCategoryIn = "card_push_transfer_instruction"
+	PendingTransactionListParamsCategoryInBlockchainOnrampTransferInstruction PendingTransactionListParamsCategoryIn = "blockchain_onramp_transfer_instruction"
+	PendingTransactionListParamsCategoryInBlockchainOfframpTransfer           PendingTransactionListParamsCategoryIn = "blockchain_offramp_transfer"
+	PendingTransactionListParamsCategoryInOther                               PendingTransactionListParamsCategoryIn = "other"
 )
 
 func (r PendingTransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInFednowTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInUserInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInCardPushTransferInstruction, PendingTransactionListParamsCategoryInBlockchainOnrampTransferInstruction, PendingTransactionListParamsCategoryInBlockchainOfframpTransferInstruction, PendingTransactionListParamsCategoryInOther:
+	case PendingTransactionListParamsCategoryInAccountTransferInstruction, PendingTransactionListParamsCategoryInACHTransferInstruction, PendingTransactionListParamsCategoryInCardAuthorization, PendingTransactionListParamsCategoryInCheckDepositInstruction, PendingTransactionListParamsCategoryInCheckTransferInstruction, PendingTransactionListParamsCategoryInFednowTransferInstruction, PendingTransactionListParamsCategoryInInboundFundsHold, PendingTransactionListParamsCategoryInUserInitiatedHold, PendingTransactionListParamsCategoryInRealTimePaymentsTransferInstruction, PendingTransactionListParamsCategoryInWireTransferInstruction, PendingTransactionListParamsCategoryInInboundWireTransferReversal, PendingTransactionListParamsCategoryInSwiftTransferInstruction, PendingTransactionListParamsCategoryInCardPushTransferInstruction, PendingTransactionListParamsCategoryInBlockchainOnrampTransferInstruction, PendingTransactionListParamsCategoryInBlockchainOfframpTransfer, PendingTransactionListParamsCategoryInOther:
 		return true
 	}
 	return false
