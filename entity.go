@@ -208,6 +208,9 @@ type EntityCorporation struct {
 	// The identifying details of anyone controlling or owning 25% or more of the
 	// corporation.
 	BeneficialOwners []EntityCorporationBeneficialOwner `json:"beneficial_owners" api:"required"`
+	// If the entity is exempt from the requirement to submit beneficial owners, the
+	// justification for the exemption.
+	BeneficialOwnershipExemptionReason EntityCorporationBeneficialOwnershipExemptionReason `json:"beneficial_ownership_exemption_reason" api:"required,nullable"`
 	// An email address for the business.
 	Email string `json:"email" api:"required,nullable"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the
@@ -229,16 +232,17 @@ type EntityCorporation struct {
 // entityCorporationJSON contains the JSON metadata for the struct
 // [EntityCorporation]
 type entityCorporationJSON struct {
-	Address            apijson.Field
-	BeneficialOwners   apijson.Field
-	Email              apijson.Field
-	IncorporationState apijson.Field
-	IndustryCode       apijson.Field
-	LegalIdentifier    apijson.Field
-	Name               apijson.Field
-	Website            apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
+	Address                            apijson.Field
+	BeneficialOwners                   apijson.Field
+	BeneficialOwnershipExemptionReason apijson.Field
+	Email                              apijson.Field
+	IncorporationState                 apijson.Field
+	IndustryCode                       apijson.Field
+	LegalIdentifier                    apijson.Field
+	Name                               apijson.Field
+	Website                            apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *EntityCorporation) UnmarshalJSON(data []byte) (err error) {
@@ -449,6 +453,25 @@ const (
 func (r EntityCorporationBeneficialOwnersProng) IsKnown() bool {
 	switch r {
 	case EntityCorporationBeneficialOwnersProngOwnership, EntityCorporationBeneficialOwnersProngControl:
+		return true
+	}
+	return false
+}
+
+// If the entity is exempt from the requirement to submit beneficial owners, the
+// justification for the exemption.
+type EntityCorporationBeneficialOwnershipExemptionReason string
+
+const (
+	EntityCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution EntityCorporationBeneficialOwnershipExemptionReason = "regulated_financial_institution"
+	EntityCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany         EntityCorporationBeneficialOwnershipExemptionReason = "publicly_traded_company"
+	EntityCorporationBeneficialOwnershipExemptionReasonPublicEntity                  EntityCorporationBeneficialOwnershipExemptionReason = "public_entity"
+	EntityCorporationBeneficialOwnershipExemptionReasonOther                         EntityCorporationBeneficialOwnershipExemptionReason = "other"
+)
+
+func (r EntityCorporationBeneficialOwnershipExemptionReason) IsKnown() bool {
+	switch r {
+	case EntityCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution, EntityCorporationBeneficialOwnershipExemptionReasonPubliclyTradedCompany, EntityCorporationBeneficialOwnershipExemptionReasonPublicEntity, EntityCorporationBeneficialOwnershipExemptionReasonOther:
 		return true
 	}
 	return false
