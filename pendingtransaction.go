@@ -495,14 +495,13 @@ func (r PendingTransactionSourceBlockchainOfframpTransferToken) IsKnown() bool {
 type PendingTransactionSourceBlockchainOfframpTransferStatus string
 
 const (
-	PendingTransactionSourceBlockchainOfframpTransferStatusCanceled          PendingTransactionSourceBlockchainOfframpTransferStatus = "canceled"
 	PendingTransactionSourceBlockchainOfframpTransferStatusPendingSettlement PendingTransactionSourceBlockchainOfframpTransferStatus = "pending_settlement"
 	PendingTransactionSourceBlockchainOfframpTransferStatusSettled           PendingTransactionSourceBlockchainOfframpTransferStatus = "settled"
 )
 
 func (r PendingTransactionSourceBlockchainOfframpTransferStatus) IsKnown() bool {
 	switch r {
-	case PendingTransactionSourceBlockchainOfframpTransferStatusCanceled, PendingTransactionSourceBlockchainOfframpTransferStatusPendingSettlement, PendingTransactionSourceBlockchainOfframpTransferStatusSettled:
+	case PendingTransactionSourceBlockchainOfframpTransferStatusPendingSettlement, PendingTransactionSourceBlockchainOfframpTransferStatusSettled:
 		return true
 	}
 	return false
