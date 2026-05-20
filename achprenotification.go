@@ -190,26 +190,33 @@ type ACHPrenotificationNotificationsOfChange struct {
 	// The required type of change that is being signaled by the receiving financial
 	// institution.
 	ChangeCode ACHPrenotificationNotificationsOfChangeChangeCode `json:"change_code" api:"required"`
-	// The corrected data that should be used in future ACHs to this account. This may
-	// contain the suggested new account number or routing number. When the
-	// `change_code` is `incorrect_transaction_code`, this field contains an integer.
-	// Numbers starting with a 2 encourage changing the `funding` parameter to
-	// checking; numbers starting with a 3 encourage changing to savings.
-	CorrectedData string `json:"corrected_data" api:"required"`
+	// The corrected account funding type that should be used in future ACHs to this
+	// account. This is derived from the corrected transaction code.
+	CorrectedAccountFunding ACHPrenotificationNotificationsOfChangeCorrectedAccountFunding `json:"corrected_account_funding" api:"required,nullable"`
+	// The corrected account number that should be used in future ACHs to this account.
+	CorrectedAccountNumber string `json:"corrected_account_number" api:"required,nullable"`
+	// The corrected individual identifier that should be used in future ACHs.
+	CorrectedIndividualID string `json:"corrected_individual_id" api:"required,nullable"`
+	// The corrected routing number that should be used in future ACHs to this account.
+	CorrectedRoutingNumber string `json:"corrected_routing_number" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the notification occurred.
-	CreatedAt time.Time                                   `json:"created_at" api:"required" format:"date-time"`
-	JSON      achPrenotificationNotificationsOfChangeJSON `json:"-"`
+	CreatedAt   time.Time                                   `json:"created_at" api:"required" format:"date-time"`
+	ExtraFields map[string]interface{}                      `json:"-" api:"extrafields"`
+	JSON        achPrenotificationNotificationsOfChangeJSON `json:"-"`
 }
 
 // achPrenotificationNotificationsOfChangeJSON contains the JSON metadata for the
 // struct [ACHPrenotificationNotificationsOfChange]
 type achPrenotificationNotificationsOfChangeJSON struct {
-	ChangeCode    apijson.Field
-	CorrectedData apijson.Field
-	CreatedAt     apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ChangeCode              apijson.Field
+	CorrectedAccountFunding apijson.Field
+	CorrectedAccountNumber  apijson.Field
+	CorrectedIndividualID   apijson.Field
+	CorrectedRoutingNumber  apijson.Field
+	CreatedAt               apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *ACHPrenotificationNotificationsOfChange) UnmarshalJSON(data []byte) (err error) {
@@ -249,6 +256,24 @@ const (
 func (r ACHPrenotificationNotificationsOfChangeChangeCode) IsKnown() bool {
 	switch r {
 	case ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectAccountNumber, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectRoutingNumber, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectRoutingNumberAndAccountNumber, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectTransactionCode, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectAccountNumberAndTransactionCode, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectRoutingNumberAccountNumberAndTransactionCode, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectReceivingDepositoryFinancialInstitutionIdentification, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectIndividualIdentificationNumber, ACHPrenotificationNotificationsOfChangeChangeCodeAddendaFormatError, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment, ACHPrenotificationNotificationsOfChangeChangeCodeMisroutedNotificationOfChange, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectTraceNumber, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectCompanyIdentificationNumber, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectIdentificationNumber, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectlyFormattedCorrectedData, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectDiscretionaryData, ACHPrenotificationNotificationsOfChangeChangeCodeRoutingNumberNotFromOriginalEntryDetailRecord, ACHPrenotificationNotificationsOfChangeChangeCodeDepositoryFinancialInstitutionAccountNumberNotFromOriginalEntryDetailRecord, ACHPrenotificationNotificationsOfChangeChangeCodeIncorrectTransactionCodeByOriginatingDepositoryFinancialInstitution:
+		return true
+	}
+	return false
+}
+
+// The corrected account funding type that should be used in future ACHs to this
+// account. This is derived from the corrected transaction code.
+type ACHPrenotificationNotificationsOfChangeCorrectedAccountFunding string
+
+const (
+	ACHPrenotificationNotificationsOfChangeCorrectedAccountFundingChecking      ACHPrenotificationNotificationsOfChangeCorrectedAccountFunding = "checking"
+	ACHPrenotificationNotificationsOfChangeCorrectedAccountFundingSavings       ACHPrenotificationNotificationsOfChangeCorrectedAccountFunding = "savings"
+	ACHPrenotificationNotificationsOfChangeCorrectedAccountFundingGeneralLedger ACHPrenotificationNotificationsOfChangeCorrectedAccountFunding = "general_ledger"
+)
+
+func (r ACHPrenotificationNotificationsOfChangeCorrectedAccountFunding) IsKnown() bool {
+	switch r {
+	case ACHPrenotificationNotificationsOfChangeCorrectedAccountFundingChecking, ACHPrenotificationNotificationsOfChangeCorrectedAccountFundingSavings, ACHPrenotificationNotificationsOfChangeCorrectedAccountFundingGeneralLedger:
 		return true
 	}
 	return false
