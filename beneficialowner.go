@@ -493,11 +493,6 @@ type BeneficialOwnerUpdateParams struct {
 	Identification param.Field[BeneficialOwnerUpdateParamsIdentification] `json:"identification"`
 	// The individual's legal name.
 	Name param.Field[string] `json:"name"`
-	// Why this person is considered a beneficial owner of the entity. At least one
-	// option is required, if a person is both a control person and owner, submit an
-	// array containing both. Providing this replaces the beneficial owner's current
-	// prongs.
-	Prongs param.Field[[]BeneficialOwnerUpdateParamsProng] `json:"prongs"`
 }
 
 func (r BeneficialOwnerUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -622,21 +617,6 @@ type BeneficialOwnerUpdateParamsIdentificationPassport struct {
 
 func (r BeneficialOwnerUpdateParamsIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-type BeneficialOwnerUpdateParamsProng string
-
-const (
-	BeneficialOwnerUpdateParamsProngOwnership BeneficialOwnerUpdateParamsProng = "ownership"
-	BeneficialOwnerUpdateParamsProngControl   BeneficialOwnerUpdateParamsProng = "control"
-)
-
-func (r BeneficialOwnerUpdateParamsProng) IsKnown() bool {
-	switch r {
-	case BeneficialOwnerUpdateParamsProngOwnership, BeneficialOwnerUpdateParamsProngControl:
-		return true
-	}
-	return false
 }
 
 type BeneficialOwnerListParams struct {
