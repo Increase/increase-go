@@ -35,7 +35,7 @@ func TestSimulationACHTransferAcknowledge(t *testing.T) {
 	}
 }
 
-func TestSimulationACHTransferNewNotificationOfChangeWithOptionalParams(t *testing.T) {
+func TestSimulationACHTransferNewNotificationOfChange(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -51,10 +51,8 @@ func TestSimulationACHTransferNewNotificationOfChangeWithOptionalParams(t *testi
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
 		increase.SimulationACHTransferNewNotificationOfChangeParams{
-			CorrectedAccountFunding: increase.F(increase.SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingChecking),
-			CorrectedAccountNumber:  increase.F("x"),
-			CorrectedIndividualID:   increase.F("x"),
-			CorrectedRoutingNumber:  increase.F("123456789"),
+			ChangeCode:    increase.F(increase.SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumber),
+			CorrectedData: increase.F("123456789"),
 		},
 	)
 	if err != nil {
