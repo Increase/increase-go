@@ -116,32 +116,44 @@ func (r *SimulationACHTransferService) Submit(ctx context.Context, achTransferID
 }
 
 type SimulationACHTransferNewNotificationOfChangeParams struct {
-	// The corrected account funding type.
-	CorrectedAccountFunding param.Field[SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFunding] `json:"corrected_account_funding"`
-	// The corrected account number.
-	CorrectedAccountNumber param.Field[string] `json:"corrected_account_number"`
-	// The corrected individual identifier.
-	CorrectedIndividualID param.Field[string] `json:"corrected_individual_id"`
-	// The corrected routing number.
-	CorrectedRoutingNumber param.Field[string] `json:"corrected_routing_number"`
+	// The reason for the notification of change.
+	ChangeCode param.Field[SimulationACHTransferNewNotificationOfChangeParamsChangeCode] `json:"change_code" api:"required"`
+	// The corrected data for the notification of change (e.g., a new routing number).
+	CorrectedData param.Field[string] `json:"corrected_data" api:"required"`
 }
 
 func (r SimulationACHTransferNewNotificationOfChangeParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The corrected account funding type.
-type SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFunding string
+// The reason for the notification of change.
+type SimulationACHTransferNewNotificationOfChangeParamsChangeCode string
 
 const (
-	SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingChecking      SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFunding = "checking"
-	SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingSavings       SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFunding = "savings"
-	SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingGeneralLedger SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFunding = "general_ledger"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectAccountNumber                                                      SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_account_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumber                                                      SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_routing_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumberAndAccountNumber                                      SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_routing_number_and_account_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectTransactionCode                                                    SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_transaction_code"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectAccountNumberAndTransactionCode                                    SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_account_number_and_transaction_code"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumberAccountNumberAndTransactionCode                       SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_routing_number_account_number_and_transaction_code"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectReceivingDepositoryFinancialInstitutionIdentification              SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_receiving_depository_financial_institution_identification"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectIndividualIdentificationNumber                                     SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_individual_identification_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeAddendaFormatError                                                          SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "addenda_format_error"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment              SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_standard_entry_class_code_for_outbound_international_payment"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeMisroutedNotificationOfChange                                               SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "misrouted_notification_of_change"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectTraceNumber                                                        SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_trace_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectCompanyIdentificationNumber                                        SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_company_identification_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectIdentificationNumber                                               SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_identification_number"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectlyFormattedCorrectedData                                           SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrectly_formatted_corrected_data"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectDiscretionaryData                                                  SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_discretionary_data"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeRoutingNumberNotFromOriginalEntryDetailRecord                               SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "routing_number_not_from_original_entry_detail_record"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeDepositoryFinancialInstitutionAccountNumberNotFromOriginalEntryDetailRecord SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "depository_financial_institution_account_number_not_from_original_entry_detail_record"
+	SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectTransactionCodeByOriginatingDepositoryFinancialInstitution         SimulationACHTransferNewNotificationOfChangeParamsChangeCode = "incorrect_transaction_code_by_originating_depository_financial_institution"
 )
 
-func (r SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFunding) IsKnown() bool {
+func (r SimulationACHTransferNewNotificationOfChangeParamsChangeCode) IsKnown() bool {
 	switch r {
-	case SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingChecking, SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingSavings, SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundingGeneralLedger:
+	case SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectAccountNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumberAndAccountNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectTransactionCode, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectAccountNumberAndTransactionCode, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectRoutingNumberAccountNumberAndTransactionCode, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectReceivingDepositoryFinancialInstitutionIdentification, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectIndividualIdentificationNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeAddendaFormatError, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectStandardEntryClassCodeForOutboundInternationalPayment, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeMisroutedNotificationOfChange, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectTraceNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectCompanyIdentificationNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectIdentificationNumber, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectlyFormattedCorrectedData, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectDiscretionaryData, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeRoutingNumberNotFromOriginalEntryDetailRecord, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeDepositoryFinancialInstitutionAccountNumberNotFromOriginalEntryDetailRecord, SimulationACHTransferNewNotificationOfChangeParamsChangeCodeIncorrectTransactionCodeByOriginatingDepositoryFinancialInstitution:
 		return true
 	}
 	return false
