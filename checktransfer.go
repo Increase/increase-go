@@ -133,9 +133,7 @@ type CheckTransfer struct {
 	// this will contain details of the approval.
 	Approval CheckTransferApproval `json:"approval" api:"required,nullable"`
 	// If the Check Transfer was successfully deposited, this will contain the
-	// identifier of the Inbound Check Deposit object with details of the deposit. The
-	// Inbound Check Deposit object will have information about any associated
-	// Transactions for this Check Transfer.
+	// identifier of the Inbound Check Deposit object with details of the deposit.
 	ApprovedInboundCheckDepositID string `json:"approved_inbound_check_deposit_id" api:"required,nullable"`
 	// How the account's available balance should be checked.
 	BalanceCheck CheckTransferBalanceCheck `json:"balance_check" api:"required,nullable"`
