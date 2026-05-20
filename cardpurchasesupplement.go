@@ -84,8 +84,6 @@ type CardPurchaseSupplement struct {
 	Invoice CardPurchaseSupplementInvoice `json:"invoice" api:"required,nullable"`
 	// Line item information, such as individual products purchased.
 	LineItems []CardPurchaseSupplementLineItem `json:"line_items" api:"required,nullable"`
-	// Shipping information for the purchase.
-	Shipping CardPurchaseSupplementShipping `json:"shipping" api:"required,nullable"`
 	// The ID of the transaction.
 	TransactionID string `json:"transaction_id" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -102,7 +100,6 @@ type cardPurchaseSupplementJSON struct {
 	CardPaymentID apijson.Field
 	Invoice       apijson.Field
 	LineItems     apijson.Field
-	Shipping      apijson.Field
 	TransactionID apijson.Field
 	Type          apijson.Field
 	raw           string
@@ -327,86 +324,6 @@ func (r CardPurchaseSupplementLineItemsDiscountTreatmentCode) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-// Shipping information for the purchase.
-type CardPurchaseSupplementShipping struct {
-	// The customer reference number.
-	CustomerReferenceNumber string `json:"customer_reference_number" api:"required,nullable"`
-	// Address of the destination.
-	DestinationAddress string `json:"destination_address" api:"required,nullable"`
-	// Country code of the destination.
-	DestinationCountryCode string `json:"destination_country_code" api:"required,nullable"`
-	// Postal code of the destination.
-	DestinationPostalCode string `json:"destination_postal_code" api:"required,nullable"`
-	// Name of the receiver at the destination.
-	DestinationReceiverName string `json:"destination_receiver_name" api:"required,nullable"`
-	// Discount amount for the shipment.
-	DiscountAmount int64 `json:"discount_amount" api:"required,nullable"`
-	// Net shipping amount.
-	NetAmount int64 `json:"net_amount" api:"required,nullable"`
-	// Number of packages shipped.
-	NumberOfPackages int64 `json:"number_of_packages" api:"required,nullable"`
-	// Address of the origin.
-	OriginAddress string `json:"origin_address" api:"required,nullable"`
-	// Country code of the origin.
-	OriginCountryCode string `json:"origin_country_code" api:"required,nullable"`
-	// Postal code of the origin.
-	OriginPostalCode string `json:"origin_postal_code" api:"required,nullable"`
-	// Name of the sender at the origin.
-	OriginSenderName string `json:"origin_sender_name" api:"required,nullable"`
-	// Date the shipment should be picked up.
-	PickUpDate time.Time `json:"pick_up_date" api:"required,nullable" format:"date"`
-	// Description of the shipping service.
-	ServiceDescription string `json:"service_description" api:"required,nullable"`
-	// Service level code for the shipment.
-	ServiceLevelCode string `json:"service_level_code" api:"required,nullable"`
-	// Name of the shipping courier.
-	ShippingCourierName string `json:"shipping_courier_name" api:"required,nullable"`
-	// Tax amount for the shipment.
-	TaxAmount int64 `json:"tax_amount" api:"required,nullable"`
-	// Tracking number for the shipment.
-	TrackingNumber string `json:"tracking_number" api:"required,nullable"`
-	// Unit of measure for the shipment weight.
-	UnitOfMeasure string `json:"unit_of_measure" api:"required,nullable"`
-	// Weight of the shipment.
-	Weight string                             `json:"weight" api:"required,nullable"`
-	JSON   cardPurchaseSupplementShippingJSON `json:"-"`
-}
-
-// cardPurchaseSupplementShippingJSON contains the JSON metadata for the struct
-// [CardPurchaseSupplementShipping]
-type cardPurchaseSupplementShippingJSON struct {
-	CustomerReferenceNumber apijson.Field
-	DestinationAddress      apijson.Field
-	DestinationCountryCode  apijson.Field
-	DestinationPostalCode   apijson.Field
-	DestinationReceiverName apijson.Field
-	DiscountAmount          apijson.Field
-	NetAmount               apijson.Field
-	NumberOfPackages        apijson.Field
-	OriginAddress           apijson.Field
-	OriginCountryCode       apijson.Field
-	OriginPostalCode        apijson.Field
-	OriginSenderName        apijson.Field
-	PickUpDate              apijson.Field
-	ServiceDescription      apijson.Field
-	ServiceLevelCode        apijson.Field
-	ShippingCourierName     apijson.Field
-	TaxAmount               apijson.Field
-	TrackingNumber          apijson.Field
-	UnitOfMeasure           apijson.Field
-	Weight                  apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
-}
-
-func (r *CardPurchaseSupplementShipping) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r cardPurchaseSupplementShippingJSON) RawJSON() string {
-	return r.raw
 }
 
 // A constant representing the object's type. For this resource it will always be
