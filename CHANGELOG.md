@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.592.1](https://github.com/Increase/increase-go/compare/v0.592.0...v0.592.1) (2026-05-20)
+
+
+### Chores
+
+* collapse CI into a single job and prune Stainless cruft ([#1281](https://github.com/Increase/increase-go/issues/1281)) ([cfa4752](https://github.com/Increase/increase-go/commit/cfa4752d0d5617cc2b21b5e69541a00616a6822e))
+
 ## [0.592.0](https://github.com/Increase/increase-go/compare/v0.591.0...v0.592.0) (2026-05-20)
 
 
