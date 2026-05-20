@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.591.0](https://github.com/Increase/increase-go/compare/v0.590.0...v0.591.0) (2026-05-20)
+
+
+### Features
+
+* **api:** api update ([#1277](https://github.com/Increase/increase-go/issues/1277)) ([2ea29a0](https://github.com/Increase/increase-go/commit/2ea29a063d73d0656cf3323faae4dcee549ba04d))
+
+
+### Chores
+
+* add release workflow and migrate config to Increase/release-please fork ([#1271](https://github.com/Increase/increase-go/issues/1271)) ([42f9583](https://github.com/Increase/increase-go/commit/42f9583acdd7cea44c1181af055a12ca4202346a))
+
 ## 0.590.0 (2026-05-20)
 
 Full Changelog: [v0.589.0...v0.590.0](https://github.com/Increase/increase-go/compare/v0.589.0...v0.590.0)
