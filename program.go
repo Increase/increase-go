@@ -150,8 +150,9 @@ func (r ProgramBank) IsKnown() bool {
 // The lending details for the program.
 type ProgramLending struct {
 	// The maximum extendable credit of the program.
-	MaximumExtendableCredit int64              `json:"maximum_extendable_credit" api:"required"`
-	JSON                    programLendingJSON `json:"-"`
+	MaximumExtendableCredit int64                  `json:"maximum_extendable_credit" api:"required"`
+	ExtraFields             map[string]interface{} `json:"-" api:"extrafields"`
+	JSON                    programLendingJSON     `json:"-"`
 }
 
 // programLendingJSON contains the JSON metadata for the struct [ProgramLending]
