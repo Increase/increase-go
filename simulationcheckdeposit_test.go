@@ -106,6 +106,7 @@ func TestSimulationCheckDepositSubmitWithOptionalParams(t *testing.T) {
 				AccountNumber: increase.F("x"),
 				RoutingNumber: increase.F("x"),
 				AuxiliaryOnUs: increase.F("x"),
+				SerialNumber:  increase.F("x"),
 			}),
 		},
 	)

@@ -78,6 +78,9 @@ type SimulationInboundWireTransferNewParams struct {
 	// The sending bank will set instruction_identification in production. You can
 	// simulate any value here.
 	InstructionIdentification param.Field[string] `json:"instruction_identification"`
+	// The sending bank will set purpose in production. You can simulate any value
+	// here.
+	Purpose param.Field[string] `json:"purpose"`
 	// The sending bank will set unique_end_to_end_transaction_reference in production.
 	// You can simulate any value here.
 	UniqueEndToEndTransactionReference param.Field[string] `json:"unique_end_to_end_transaction_reference"`

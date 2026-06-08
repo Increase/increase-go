@@ -145,6 +145,9 @@ type CardPushTransfer struct {
 	MerchantCategoryCode string `json:"merchant_category_code" api:"required"`
 	// The city name of the merchant (generally your business) sending the transfer.
 	MerchantCityName string `json:"merchant_city_name" api:"required"`
+	// The legal business name of the merchant (generally your business) sending the
+	// transfer.
+	MerchantLegalBusinessName string `json:"merchant_legal_business_name" api:"required,nullable"`
 	// The merchant name shows up as the statement descriptor for the transfer. This is
 	// typically the name of your business or organization.
 	MerchantName string `json:"merchant_name" api:"required"`
@@ -156,10 +159,23 @@ type CardPushTransfer struct {
 	MerchantPostalCode string `json:"merchant_postal_code" api:"required"`
 	// The state of the merchant (generally your business) sending the transfer.
 	MerchantState string `json:"merchant_state" api:"required"`
+	// The street address of the merchant (generally your business) sending the
+	// transfer.
+	MerchantStreetAddress string `json:"merchant_street_address" api:"required,nullable"`
 	// The amount that was transferred. The receiving bank will have converted this to
 	// the cardholder's currency. The amount that is applied to your Increase account
 	// matches the currency of your account.
 	PresentmentAmount CardPushTransferPresentmentAmount `json:"presentment_amount" api:"required"`
+	// The city of the recipient. Required if the card is issued in Canada.
+	RecipientAddressCity string `json:"recipient_address_city" api:"required,nullable"`
+	// The first line of the recipient's address. Required if the card is issued in
+	// Canada.
+	RecipientAddressLine1 string `json:"recipient_address_line1" api:"required,nullable"`
+	// The postal code of the recipient. Required if the card is issued in Canada.
+	RecipientAddressPostalCode string `json:"recipient_address_postal_code" api:"required,nullable"`
+	// The state or province of the recipient. Required if the card is issued in
+	// Canada.
+	RecipientAddressState string `json:"recipient_address_state" api:"required,nullable"`
 	// The name of the funds recipient.
 	RecipientName string `json:"recipient_name" api:"required"`
 	// The card network route used for the transfer.
@@ -204,11 +220,17 @@ type cardPushTransferJSON struct {
 	IdempotencyKey                apijson.Field
 	MerchantCategoryCode          apijson.Field
 	MerchantCityName              apijson.Field
+	MerchantLegalBusinessName     apijson.Field
 	MerchantName                  apijson.Field
 	MerchantNamePrefix            apijson.Field
 	MerchantPostalCode            apijson.Field
 	MerchantState                 apijson.Field
+	MerchantStreetAddress         apijson.Field
 	PresentmentAmount             apijson.Field
+	RecipientAddressCity          apijson.Field
+	RecipientAddressLine1         apijson.Field
+	RecipientAddressPostalCode    apijson.Field
+	RecipientAddressState         apijson.Field
 	RecipientName                 apijson.Field
 	Route                         apijson.Field
 	SenderAddressCity             apijson.Field

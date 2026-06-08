@@ -41,3 +41,8 @@ const ErrorTypeInsufficientPermissionsError = apierror.ErrorTypeInsufficientPerm
 const ErrorTypeIdempotencyKeyAlreadyUsedError = apierror.ErrorTypeIdempotencyKeyAlreadyUsedError
 const ErrorTypeEnvironmentMismatchError = apierror.ErrorTypeEnvironmentMismatchError
 const ErrorTypeAPIMethodNotFoundError = apierror.ErrorTypeAPIMethodNotFoundError
+
+type ErrorLikelyEnvironment = apierror.ErrorLikelyEnvironment
+
+const ErrorLikelyEnvironmentProduction = apierror.ErrorLikelyEnvironmentProduction
+const ErrorLikelyEnvironmentSandbox = apierror.ErrorLikelyEnvironmentSandbox

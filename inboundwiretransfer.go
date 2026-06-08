@@ -130,6 +130,8 @@ type InboundWireTransfer struct {
 	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.
 	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
+	// The reason for the wire transfer, as set by the sender.
+	Purpose string `json:"purpose" api:"required,nullable"`
 	// If the transfer is reversed, this will contain details of the reversal.
 	Reversal InboundWireTransferReversal `json:"reversal" api:"required,nullable"`
 	// The status of the transfer.
@@ -171,6 +173,7 @@ type inboundWireTransferJSON struct {
 	InputMessageAccountabilityData     apijson.Field
 	InstructingAgentRoutingNumber      apijson.Field
 	InstructionIdentification          apijson.Field
+	Purpose                            apijson.Field
 	Reversal                           apijson.Field
 	Status                             apijson.Field
 	Type                               apijson.Field
