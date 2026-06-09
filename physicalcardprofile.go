@@ -129,6 +129,9 @@ type PhysicalCardProfile struct {
 	// The identifier of the File containing the physical card's front image. This will
 	// be missing until the image has been post-processed.
 	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
+	// Text printed on the front of the card. Reach out to
+	// [support@increase.com](mailto:support@increase.com) for more information.
+	FrontText PhysicalCardProfileFrontText `json:"front_text" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -142,9 +145,8 @@ type PhysicalCardProfile struct {
 	Status PhysicalCardProfileStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card_profile`.
-	Type        PhysicalCardProfileType `json:"type" api:"required"`
-	ExtraFields map[string]interface{}  `json:"-" api:"extrafields"`
-	JSON        physicalCardProfileJSON `json:"-"`
+	Type PhysicalCardProfileType `json:"type" api:"required"`
+	JSON physicalCardProfileJSON `json:"-"`
 }
 
 // physicalCardProfileJSON contains the JSON metadata for the struct
@@ -158,6 +160,7 @@ type physicalCardProfileJSON struct {
 	Creator            apijson.Field
 	Description        apijson.Field
 	FrontImageFileID   apijson.Field
+	FrontText          apijson.Field
 	IdempotencyKey     apijson.Field
 	IsDefault          apijson.Field
 	ProgramID          apijson.Field
@@ -189,6 +192,35 @@ func (r PhysicalCardProfileCreator) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Text printed on the front of the card. Reach out to
+// [support@increase.com](mailto:support@increase.com) for more information.
+type PhysicalCardProfileFrontText struct {
+	// The first line of text on the front of the card.
+	Line1 string `json:"line1" api:"required"`
+	// The second line of text on the front of the card. Providing a second line moves
+	// the first line slightly higher and prints the second line in the spot where the
+	// first line would have otherwise been printed.
+	Line2 string                           `json:"line2" api:"required,nullable"`
+	JSON  physicalCardProfileFrontTextJSON `json:"-"`
+}
+
+// physicalCardProfileFrontTextJSON contains the JSON metadata for the struct
+// [PhysicalCardProfileFrontText]
+type physicalCardProfileFrontTextJSON struct {
+	Line1       apijson.Field
+	Line2       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PhysicalCardProfileFrontText) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r physicalCardProfileFrontTextJSON) RawJSON() string {
+	return r.raw
 }
 
 // The status of the Physical Card Profile.

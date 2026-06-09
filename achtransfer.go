@@ -169,8 +169,8 @@ type ACHTransfer struct {
 	IndividualName string `json:"individual_name" api:"required,nullable"`
 	// The transfer's network.
 	Network ACHTransferNetwork `json:"network" api:"required"`
-	// If the receiving bank accepts the transfer but notifies that future transfers
-	// should use different details, this will contain those details.
+	// If the receiving bank notifies that future transfers should use different
+	// details, this will contain those details.
 	NotificationsOfChange []ACHTransferNotificationsOfChange `json:"notifications_of_change" api:"required"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
@@ -858,12 +858,13 @@ type ACHTransferNotificationsOfChangeCorrectedAccountFunding string
 const (
 	ACHTransferNotificationsOfChangeCorrectedAccountFundingChecking      ACHTransferNotificationsOfChangeCorrectedAccountFunding = "checking"
 	ACHTransferNotificationsOfChangeCorrectedAccountFundingSavings       ACHTransferNotificationsOfChangeCorrectedAccountFunding = "savings"
+	ACHTransferNotificationsOfChangeCorrectedAccountFundingLoan          ACHTransferNotificationsOfChangeCorrectedAccountFunding = "loan"
 	ACHTransferNotificationsOfChangeCorrectedAccountFundingGeneralLedger ACHTransferNotificationsOfChangeCorrectedAccountFunding = "general_ledger"
 )
 
 func (r ACHTransferNotificationsOfChangeCorrectedAccountFunding) IsKnown() bool {
 	switch r {
-	case ACHTransferNotificationsOfChangeCorrectedAccountFundingChecking, ACHTransferNotificationsOfChangeCorrectedAccountFundingSavings, ACHTransferNotificationsOfChangeCorrectedAccountFundingGeneralLedger:
+	case ACHTransferNotificationsOfChangeCorrectedAccountFundingChecking, ACHTransferNotificationsOfChangeCorrectedAccountFundingSavings, ACHTransferNotificationsOfChangeCorrectedAccountFundingLoan, ACHTransferNotificationsOfChangeCorrectedAccountFundingGeneralLedger:
 		return true
 	}
 	return false

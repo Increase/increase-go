@@ -670,6 +670,9 @@ type RealTimeDecisionCardAuthorization struct {
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
 	Direction RealTimeDecisionCardAuthorizationDirection `json:"direction" api:"required"`
+	// The healthcare-related fields for this authorization. Only present for specific
+	// programs.
+	Healthcare RealTimeDecisionCardAuthorizationHealthcare `json:"healthcare" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
@@ -741,6 +744,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	Decline                   apijson.Field
 	DigitalWalletTokenID      apijson.Field
 	Direction                 apijson.Field
+	Healthcare                apijson.Field
 	MerchantAcceptorID        apijson.Field
 	MerchantCategoryCode      apijson.Field
 	MerchantCity              apijson.Field
@@ -1223,6 +1227,52 @@ const (
 func (r RealTimeDecisionCardAuthorizationDirection) IsKnown() bool {
 	switch r {
 	case RealTimeDecisionCardAuthorizationDirectionSettlement, RealTimeDecisionCardAuthorizationDirectionRefund:
+		return true
+	}
+	return false
+}
+
+// The healthcare-related fields for this authorization. Only present for specific
+// programs.
+type RealTimeDecisionCardAuthorizationHealthcare struct {
+	// The merchant's eligibility under the Internal Revenue Service's 90% Rule for
+	// Flexible Spending Account (FSA) and Health Savings Account (HSA) eligible
+	// products. The eligibility is determined based on the list of merchants
+	// maintained by the Special Interest Group for IIAS Standards (SIGIS).
+	MerchantNinetyPercentEligibility RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibility `json:"merchant_ninety_percent_eligibility" api:"required"`
+	JSON                             realTimeDecisionCardAuthorizationHealthcareJSON                             `json:"-"`
+}
+
+// realTimeDecisionCardAuthorizationHealthcareJSON contains the JSON metadata for
+// the struct [RealTimeDecisionCardAuthorizationHealthcare]
+type realTimeDecisionCardAuthorizationHealthcareJSON struct {
+	MerchantNinetyPercentEligibility apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionCardAuthorizationHealthcare) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionCardAuthorizationHealthcareJSON) RawJSON() string {
+	return r.raw
+}
+
+// The merchant's eligibility under the Internal Revenue Service's 90% Rule for
+// Flexible Spending Account (FSA) and Health Savings Account (HSA) eligible
+// products. The eligibility is determined based on the list of merchants
+// maintained by the Special Interest Group for IIAS Standards (SIGIS).
+type RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibility string
+
+const (
+	RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibilityEligible    RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibility = "eligible"
+	RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibilityNotEligible RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibility = "not_eligible"
+)
+
+func (r RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibility) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibilityEligible, RealTimeDecisionCardAuthorizationHealthcareMerchantNinetyPercentEligibilityNotEligible:
 		return true
 	}
 	return false

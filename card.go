@@ -146,6 +146,8 @@ type Card struct {
 	AuthorizationControls CardAuthorizationControls `json:"authorization_controls" api:"required,nullable"`
 	// The Card's billing address.
 	BillingAddress CardBillingAddress `json:"billing_address" api:"required"`
+	// The Bank Identification Number (BIN) of the Card.
+	Bin string `json:"bin" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -182,6 +184,7 @@ type cardJSON struct {
 	AccountID             apijson.Field
 	AuthorizationControls apijson.Field
 	BillingAddress        apijson.Field
+	Bin                   apijson.Field
 	CreatedAt             apijson.Field
 	Description           apijson.Field
 	DigitalWallet         apijson.Field

@@ -275,7 +275,7 @@ increase.FileNewParams{
 }
 ```
 
-## Retries
+### Retries
 
 Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
 We retry by default all connection errors, 408 Request Timeout, 409 Conflict, 429 Rate Limit,

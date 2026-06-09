@@ -181,7 +181,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Rating:  increase.F(increase.EntityNewParamsRiskRatingRatingLow),
 		}),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
-			FileID: increase.F("file_makxrc67oh9l6sg7w9yc"),
+			FileID: increase.F("file_id"),
 		}}),
 		TermsAgreements: increase.F([]increase.EntityNewParamsTermsAgreement{{
 			AgreedAt:  increase.F(time.Now()),
