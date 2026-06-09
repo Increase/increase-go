@@ -115,6 +115,9 @@ type WireDrawdownRequest struct {
 	DebtorName string `json:"debtor_name" api:"required"`
 	// The debtor's routing number.
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
+	// A free-form reference string set by the sender, to be mirrored back in the
+	// subsequent wire transfer.
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// If the recipient fulfills the drawdown request by sending funds, then this will
 	// be the identifier of the corresponding Transaction.
 	FulfillmentInboundWireTransferID string `json:"fulfillment_inbound_wire_transfer_id" api:"required,nullable"`
@@ -130,6 +133,10 @@ type WireDrawdownRequest struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `wire_drawdown_request`.
 	Type WireDrawdownRequestType `json:"type" api:"required"`
+	// The unique end-to-end transaction reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the drawdown request.
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
 	// Remittance information the debtor will see as part of the drawdown request.
 	UnstructuredRemittanceInformation string                  `json:"unstructured_remittance_information" api:"required"`
 	ExtraFields                       map[string]interface{}  `json:"-" api:"extrafields"`
@@ -139,26 +146,28 @@ type WireDrawdownRequest struct {
 // wireDrawdownRequestJSON contains the JSON metadata for the struct
 // [WireDrawdownRequest]
 type wireDrawdownRequestJSON struct {
-	ID                                apijson.Field
-	AccountNumberID                   apijson.Field
-	Amount                            apijson.Field
-	CreatedAt                         apijson.Field
-	CreditorAddress                   apijson.Field
-	CreditorName                      apijson.Field
-	Currency                          apijson.Field
-	DebtorAccountNumber               apijson.Field
-	DebtorAddress                     apijson.Field
-	DebtorExternalAccountID           apijson.Field
-	DebtorName                        apijson.Field
-	DebtorRoutingNumber               apijson.Field
-	FulfillmentInboundWireTransferID  apijson.Field
-	IdempotencyKey                    apijson.Field
-	Status                            apijson.Field
-	Submission                        apijson.Field
-	Type                              apijson.Field
-	UnstructuredRemittanceInformation apijson.Field
-	raw                               string
-	ExtraFields                       map[string]apijson.Field
+	ID                                 apijson.Field
+	AccountNumberID                    apijson.Field
+	Amount                             apijson.Field
+	CreatedAt                          apijson.Field
+	CreditorAddress                    apijson.Field
+	CreditorName                       apijson.Field
+	Currency                           apijson.Field
+	DebtorAccountNumber                apijson.Field
+	DebtorAddress                      apijson.Field
+	DebtorExternalAccountID            apijson.Field
+	DebtorName                         apijson.Field
+	DebtorRoutingNumber                apijson.Field
+	EndToEndIdentification             apijson.Field
+	FulfillmentInboundWireTransferID   apijson.Field
+	IdempotencyKey                     apijson.Field
+	Status                             apijson.Field
+	Submission                         apijson.Field
+	Type                               apijson.Field
+	UniqueEndToEndTransactionReference apijson.Field
+	UnstructuredRemittanceInformation  apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *WireDrawdownRequest) UnmarshalJSON(data []byte) (err error) {

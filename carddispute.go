@@ -128,6 +128,9 @@ type CardDispute struct {
 	Loss CardDisputeLoss `json:"loss" api:"required,nullable"`
 	// The network that the Card Dispute is associated with.
 	Network CardDisputeNetwork `json:"network" api:"required"`
+	// If the Card Dispute has been rejected, this will contain details of the
+	// rejection.
+	Rejection CardDisputeRejection `json:"rejection" api:"required,nullable"`
 	// The status of the Card Dispute.
 	Status CardDisputeStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -161,6 +164,7 @@ type cardDisputeJSON struct {
 	IdempotencyKey           apijson.Field
 	Loss                     apijson.Field
 	Network                  apijson.Field
+	Rejection                apijson.Field
 	Status                   apijson.Field
 	Type                     apijson.Field
 	UserSubmissionRequiredBy apijson.Field
@@ -238,6 +242,34 @@ func (r CardDisputeNetwork) IsKnown() bool {
 	return false
 }
 
+// If the Card Dispute has been rejected, this will contain details of the
+// rejection.
+type CardDisputeRejection struct {
+	// Why the Card Dispute was rejected.
+	Explanation string `json:"explanation" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card Dispute was rejected.
+	RejectedAt time.Time                `json:"rejected_at" api:"required" format:"date-time"`
+	JSON       cardDisputeRejectionJSON `json:"-"`
+}
+
+// cardDisputeRejectionJSON contains the JSON metadata for the struct
+// [CardDisputeRejection]
+type cardDisputeRejectionJSON struct {
+	Explanation apijson.Field
+	RejectedAt  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDisputeRejection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeRejectionJSON) RawJSON() string {
+	return r.raw
+}
+
 // The status of the Card Dispute.
 type CardDisputeStatus string
 
@@ -249,11 +281,12 @@ const (
 	CardDisputeStatusPendingResponse                 CardDisputeStatus = "pending_response"
 	CardDisputeStatusLost                            CardDisputeStatus = "lost"
 	CardDisputeStatusWon                             CardDisputeStatus = "won"
+	CardDisputeStatusRejected                        CardDisputeStatus = "rejected"
 )
 
 func (r CardDisputeStatus) IsKnown() bool {
 	switch r {
-	case CardDisputeStatusUserSubmissionRequired, CardDisputeStatusPendingUserSubmissionReviewing, CardDisputeStatusPendingUserSubmissionSubmitting, CardDisputeStatusPendingUserWithdrawalSubmitting, CardDisputeStatusPendingResponse, CardDisputeStatusLost, CardDisputeStatusWon:
+	case CardDisputeStatusUserSubmissionRequired, CardDisputeStatusPendingUserSubmissionReviewing, CardDisputeStatusPendingUserSubmissionSubmitting, CardDisputeStatusPendingUserWithdrawalSubmitting, CardDisputeStatusPendingResponse, CardDisputeStatusLost, CardDisputeStatusWon, CardDisputeStatusRejected:
 		return true
 	}
 	return false
@@ -6444,11 +6477,12 @@ const (
 	CardDisputeListParamsStatusInPendingResponse                 CardDisputeListParamsStatusIn = "pending_response"
 	CardDisputeListParamsStatusInLost                            CardDisputeListParamsStatusIn = "lost"
 	CardDisputeListParamsStatusInWon                             CardDisputeListParamsStatusIn = "won"
+	CardDisputeListParamsStatusInRejected                        CardDisputeListParamsStatusIn = "rejected"
 )
 
 func (r CardDisputeListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case CardDisputeListParamsStatusInUserSubmissionRequired, CardDisputeListParamsStatusInPendingUserSubmissionReviewing, CardDisputeListParamsStatusInPendingUserSubmissionSubmitting, CardDisputeListParamsStatusInPendingUserWithdrawalSubmitting, CardDisputeListParamsStatusInPendingResponse, CardDisputeListParamsStatusInLost, CardDisputeListParamsStatusInWon:
+	case CardDisputeListParamsStatusInUserSubmissionRequired, CardDisputeListParamsStatusInPendingUserSubmissionReviewing, CardDisputeListParamsStatusInPendingUserSubmissionSubmitting, CardDisputeListParamsStatusInPendingUserWithdrawalSubmitting, CardDisputeListParamsStatusInPendingResponse, CardDisputeListParamsStatusInLost, CardDisputeListParamsStatusInWon, CardDisputeListParamsStatusInRejected:
 		return true
 	}
 	return false

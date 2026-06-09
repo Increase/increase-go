@@ -132,6 +132,8 @@ type FednowTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For FedNow transfers this is always equal to `USD`.
 	Currency FednowTransferCurrency `json:"currency" api:"required"`
+	// The debtor's address.
+	DebtorAddress FednowTransferDebtorAddress `json:"debtor_address" api:"required,nullable"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
 	DebtorName string `json:"debtor_name" api:"required"`
@@ -182,6 +184,7 @@ type fednowTransferJSON struct {
 	CreditorAddress                    apijson.Field
 	CreditorName                       apijson.Field
 	Currency                           apijson.Field
+	DebtorAddress                      apijson.Field
 	DebtorName                         apijson.Field
 	ExternalAccountID                  apijson.Field
 	IdempotencyKey                     apijson.Field
@@ -395,6 +398,38 @@ func (r FednowTransferCurrency) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The debtor's address.
+type FednowTransferDebtorAddress struct {
+	// The city, district, town, or village of the address.
+	City string `json:"city" api:"required,nullable"`
+	// The first line of the address.
+	Line1 string `json:"line1" api:"required,nullable"`
+	// The ZIP code of the address.
+	PostalCode string `json:"postal_code" api:"required,nullable"`
+	// The address state.
+	State string                          `json:"state" api:"required,nullable"`
+	JSON  fednowTransferDebtorAddressJSON `json:"-"`
+}
+
+// fednowTransferDebtorAddressJSON contains the JSON metadata for the struct
+// [FednowTransferDebtorAddress]
+type fednowTransferDebtorAddressJSON struct {
+	City        apijson.Field
+	Line1       apijson.Field
+	PostalCode  apijson.Field
+	State       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *FednowTransferDebtorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r fednowTransferDebtorAddressJSON) RawJSON() string {
+	return r.raw
 }
 
 // If the transfer is rejected by FedNow or the destination financial institution,

@@ -29,7 +29,7 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 	_, err := client.SwiftTransfers.New(context.TODO(), increase.SwiftTransferNewParams{
 		AccountID:              increase.F("account_in71c4amph0vgo2qllky"),
 		AccountNumber:          increase.F("987654321"),
-		BankIdentificationCode: increase.F("ECBFDEFFTPP"),
+		BankIdentificationCode: increase.F("FRNYUS33XXX"),
 		CreditorAddress: increase.F(increase.SwiftTransferNewParamsCreditorAddress{
 			City:       increase.F("Frankfurt"),
 			Country:    increase.F("DE"),

@@ -126,6 +126,7 @@ func (r SimulationCheckDepositAdjustmentParamsReason) IsKnown() bool {
 
 type SimulationCheckDepositSubmitParams struct {
 	// If set, the simulation will use these values for the check's scanned MICR data.
+	// If not set, the simulation will use random values.
 	Scan param.Field[SimulationCheckDepositSubmitParamsScan] `json:"scan"`
 }
 
@@ -134,13 +135,18 @@ func (r SimulationCheckDepositSubmitParams) MarshalJSON() (data []byte, err erro
 }
 
 // If set, the simulation will use these values for the check's scanned MICR data.
+// If not set, the simulation will use random values.
 type SimulationCheckDepositSubmitParamsScan struct {
 	// The account number to be returned in the check deposit's scan data.
 	AccountNumber param.Field[string] `json:"account_number" api:"required"`
 	// The routing number to be returned in the check deposit's scan data.
 	RoutingNumber param.Field[string] `json:"routing_number" api:"required"`
 	// The auxiliary on-us data to be returned in the check deposit's scan data.
+	// Auxiliary on-us is typically the check number for business checks.
 	AuxiliaryOnUs param.Field[string] `json:"auxiliary_on_us"`
+	// The serial number to be returned in the check deposit's scan data. Serial number
+	// is typically the check number for consumer checks.
+	SerialNumber param.Field[string] `json:"serial_number"`
 }
 
 func (r SimulationCheckDepositSubmitParamsScan) MarshalJSON() (data []byte, err error) {

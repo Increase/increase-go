@@ -153,8 +153,10 @@ type CardPaymentElement struct {
 	// only if `category` is equal to `card_decline`.
 	CardDecline CardPaymentElementsCardDecline `json:"card_decline" api:"nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_financial`. Card Financials are temporary
-	// holds placed on a customer's funds with the intent to later clear a transaction.
+	// only if `category` is equal to `card_financial`. Card Financials are card
+	// transactions that have cleared and settled. Unlike a Card Settlement, which
+	// clears a previous authorization, a Card Financial is authorized and cleared in a
+	// single message.
 	CardFinancial CardPaymentElementsCardFinancial `json:"card_financial" api:"nullable"`
 	// A Card Fuel Confirmation object. This field will be present in the JSON response
 	// if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
@@ -916,6 +918,9 @@ type CardPaymentElementsCardAuthorization struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
 	// will expire and the pending transaction will be released.
 	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
+	// The healthcare-related fields for this authorization. Only present for specific
+	// programs.
+	Healthcare CardPaymentElementsCardAuthorizationHealthcare `json:"healthcare" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
@@ -983,6 +988,7 @@ type cardPaymentElementsCardAuthorizationJSON struct {
 	DigitalWalletTokenID apijson.Field
 	Direction            apijson.Field
 	ExpiresAt            apijson.Field
+	Healthcare           apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
@@ -1413,6 +1419,52 @@ const (
 func (r CardPaymentElementsCardAuthorizationDirection) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardAuthorizationDirectionSettlement, CardPaymentElementsCardAuthorizationDirectionRefund:
+		return true
+	}
+	return false
+}
+
+// The healthcare-related fields for this authorization. Only present for specific
+// programs.
+type CardPaymentElementsCardAuthorizationHealthcare struct {
+	// The merchant's eligibility under the Internal Revenue Service's 90% Rule for
+	// Flexible Spending Account (FSA) and Health Savings Account (HSA) eligible
+	// products. The eligibility is determined based on the list of merchants
+	// maintained by the Special Interest Group for IIAS Standards (SIGIS).
+	MerchantNinetyPercentEligibility CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibility `json:"merchant_ninety_percent_eligibility" api:"required"`
+	JSON                             cardPaymentElementsCardAuthorizationHealthcareJSON                             `json:"-"`
+}
+
+// cardPaymentElementsCardAuthorizationHealthcareJSON contains the JSON metadata
+// for the struct [CardPaymentElementsCardAuthorizationHealthcare]
+type cardPaymentElementsCardAuthorizationHealthcareJSON struct {
+	MerchantNinetyPercentEligibility apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardAuthorizationHealthcare) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardAuthorizationHealthcareJSON) RawJSON() string {
+	return r.raw
+}
+
+// The merchant's eligibility under the Internal Revenue Service's 90% Rule for
+// Flexible Spending Account (FSA) and Health Savings Account (HSA) eligible
+// products. The eligibility is determined based on the list of merchants
+// maintained by the Special Interest Group for IIAS Standards (SIGIS).
+type CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibility string
+
+const (
+	CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibilityEligible    CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibility = "eligible"
+	CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibilityNotEligible CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibility = "not_eligible"
+)
+
+func (r CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibility) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibilityEligible, CardPaymentElementsCardAuthorizationHealthcareMerchantNinetyPercentEligibilityNotEligible:
 		return true
 	}
 	return false
@@ -4159,8 +4211,10 @@ func (r cardPaymentElementsCardDeclineVerificationCardholderNameJSON) RawJSON() 
 }
 
 // A Card Financial object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_financial`. Card Financials are temporary
-// holds placed on a customer's funds with the intent to later clear a transaction.
+// only if `category` is equal to `card_financial`. Card Financials are card
+// transactions that have cleared and settled. Unlike a Card Settlement, which
+// clears a previous authorization, a Card Financial is authorized and cleared in a
+// single message.
 type CardPaymentElementsCardFinancial struct {
 	// The Card Financial identifier.
 	ID string `json:"id" api:"required"`

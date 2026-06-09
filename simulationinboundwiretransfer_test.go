@@ -39,6 +39,7 @@ func TestSimulationInboundWireTransferNewWithOptionalParams(t *testing.T) {
 		EndToEndIdentification:             increase.F("x"),
 		InstructingAgentRoutingNumber:      increase.F("x"),
 		InstructionIdentification:          increase.F("x"),
+		Purpose:                            increase.F("x"),
 		UniqueEndToEndTransactionReference: increase.F("x"),
 		UnstructuredRemittanceInformation:  increase.F("x"),
 		WireDrawdownRequestID:              increase.F("wire_drawdown_request_id"),
