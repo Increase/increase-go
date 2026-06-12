@@ -65,9 +65,8 @@ type IntrafiBalance struct {
 	TotalBalance int64 `json:"total_balance" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `intrafi_balance`.
-	Type        IntrafiBalanceType     `json:"type" api:"required"`
-	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
-	JSON        intrafiBalanceJSON     `json:"-"`
+	Type IntrafiBalanceType `json:"type" api:"required"`
+	JSON intrafiBalanceJSON `json:"-"`
 }
 
 // intrafiBalanceJSON contains the JSON metadata for the struct [IntrafiBalance]
@@ -100,7 +99,6 @@ type IntrafiBalanceBalance struct {
 	// Because many banks have the same or similar names, this can be used to uniquely
 	// identify the institution.
 	FdicCertificateNumber string                    `json:"fdic_certificate_number" api:"required"`
-	ExtraFields           map[string]interface{}    `json:"-" api:"extrafields"`
 	JSON                  intrafiBalanceBalanceJSON `json:"-"`
 }
 

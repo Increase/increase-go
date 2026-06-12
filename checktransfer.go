@@ -506,7 +506,7 @@ type CheckTransferPhysicalCheck struct {
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required,nullable"`
 	// The shipping method for the check.
-	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method" api:"required,nullable"`
+	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method" api:"required"`
 	// The signature that will appear on the check.
 	Signature CheckTransferPhysicalCheckSignature `json:"signature" api:"required"`
 	// Tracking updates relating to the physical check's delivery.

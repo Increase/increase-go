@@ -515,8 +515,12 @@ type ExportFeeCsvCreatedAt struct {
 	// Filter fees created after this time.
 	After time.Time `json:"after" api:"required,nullable" format:"date-time"`
 	// Filter fees created before this time.
-	Before time.Time                 `json:"before" api:"required,nullable" format:"date-time"`
-	JSON   exportFeeCsvCreatedAtJSON `json:"-"`
+	Before time.Time `json:"before" api:"required,nullable" format:"date-time"`
+	// Filter fees created on or after this time.
+	OnOrAfter time.Time `json:"on_or_after" api:"required,nullable" format:"date-time"`
+	// Filter fees created on or before this time.
+	OnOrBefore time.Time                 `json:"on_or_before" api:"required,nullable" format:"date-time"`
+	JSON       exportFeeCsvCreatedAtJSON `json:"-"`
 }
 
 // exportFeeCsvCreatedAtJSON contains the JSON metadata for the struct
@@ -524,6 +528,8 @@ type ExportFeeCsvCreatedAt struct {
 type exportFeeCsvCreatedAtJSON struct {
 	After       apijson.Field
 	Before      apijson.Field
+	OnOrAfter   apijson.Field
+	OnOrBefore  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -821,6 +827,8 @@ type ExportNewParams struct {
 	DailyAccountBalanceCsv param.Field[ExportNewParamsDailyAccountBalanceCsv] `json:"daily_account_balance_csv"`
 	// Options for the created export. Required if `category` is equal to `entity_csv`.
 	EntityCsv param.Field[ExportNewParamsEntityCsv] `json:"entity_csv"`
+	// Options for the created export. Required if `category` is equal to `fee_csv`.
+	FeeCsv param.Field[ExportNewParamsFeeCsv] `json:"fee_csv"`
 	// Options for the created export. Required if `category` is equal to
 	// `funding_instructions`.
 	FundingInstructions param.Field[ExportNewParamsFundingInstructions] `json:"funding_instructions"`
@@ -851,13 +859,14 @@ const (
 	ExportNewParamsCategoryVendorCsv                    ExportNewParamsCategory = "vendor_csv"
 	ExportNewParamsCategoryAccountVerificationLetter    ExportNewParamsCategory = "account_verification_letter"
 	ExportNewParamsCategoryFundingInstructions          ExportNewParamsCategory = "funding_instructions"
+	ExportNewParamsCategoryFeeCsv                       ExportNewParamsCategory = "fee_csv"
 	ExportNewParamsCategoryVoidedCheck                  ExportNewParamsCategory = "voided_check"
 	ExportNewParamsCategoryDailyAccountBalanceCsv       ExportNewParamsCategory = "daily_account_balance_csv"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryVoidedCheck, ExportNewParamsCategoryDailyAccountBalanceCsv:
+	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryFeeCsv, ExportNewParamsCategoryVoidedCheck, ExportNewParamsCategoryDailyAccountBalanceCsv:
 		return true
 	}
 	return false
@@ -958,6 +967,38 @@ type ExportNewParamsEntityCsv struct {
 }
 
 func (r ExportNewParamsEntityCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Options for the created export. Required if `category` is equal to `fee_csv`.
+type ExportNewParamsFeeCsv struct {
+	// Filter results by time range on the `created_at` attribute.
+	CreatedAt param.Field[ExportNewParamsFeeCsvCreatedAt] `json:"created_at"`
+	// Filter exported Fees to the specified Program.
+	ProgramID param.Field[string] `json:"program_id"`
+}
+
+func (r ExportNewParamsFeeCsv) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Filter results by time range on the `created_at` attribute.
+type ExportNewParamsFeeCsvCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `json:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `json:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `json:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `json:"on_or_before" format:"date-time"`
+}
+
+func (r ExportNewParamsFeeCsvCreatedAt) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
