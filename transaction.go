@@ -226,8 +226,10 @@ type TransactionSource struct {
 	// details of a lost Card Dispute.
 	CardDisputeLoss TransactionSourceCardDisputeLoss `json:"card_dispute_loss" api:"nullable"`
 	// A Card Financial object. This field will be present in the JSON response if and
-	// only if `category` is equal to `card_financial`. Card Financials are temporary
-	// holds placed on a customer's funds with the intent to later clear a transaction.
+	// only if `category` is equal to `card_financial`. Card Financials are card
+	// transactions that have cleared and settled. Unlike a Card Settlement, which
+	// clears a previous authorization, a Card Financial is authorized and cleared in a
+	// single message.
 	CardFinancial TransactionSourceCardFinancial `json:"card_financial" api:"nullable"`
 	// A Card Push Transfer Acceptance object. This field will be present in the JSON
 	// response if and only if `category` is equal to `card_push_transfer_acceptance`.
@@ -997,8 +999,10 @@ func (r transactionSourceCardDisputeLossJSON) RawJSON() string {
 }
 
 // A Card Financial object. This field will be present in the JSON response if and
-// only if `category` is equal to `card_financial`. Card Financials are temporary
-// holds placed on a customer's funds with the intent to later clear a transaction.
+// only if `category` is equal to `card_financial`. Card Financials are card
+// transactions that have cleared and settled. Unlike a Card Settlement, which
+// clears a previous authorization, a Card Financial is authorized and cleared in a
+// single message.
 type TransactionSourceCardFinancial struct {
 	// The Card Financial identifier.
 	ID string `json:"id" api:"required"`
@@ -4923,6 +4927,8 @@ type TransactionSourceInboundWireTransfer struct {
 	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.
 	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
+	// The reason for the wire transfer, as set by the sender.
+	Purpose string `json:"purpose" api:"required,nullable"`
 	// The ID of the Inbound Wire Transfer object that resulted in this Transaction.
 	TransferID string `json:"transfer_id" api:"required"`
 	// The Unique End-to-end Transaction Reference
@@ -4952,6 +4958,7 @@ type transactionSourceInboundWireTransferJSON struct {
 	InputMessageAccountabilityData     apijson.Field
 	InstructingAgentRoutingNumber      apijson.Field
 	InstructionIdentification          apijson.Field
+	Purpose                            apijson.Field
 	TransferID                         apijson.Field
 	UniqueEndToEndTransactionReference apijson.Field
 	UnstructuredRemittanceInformation  apijson.Field

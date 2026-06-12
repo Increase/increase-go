@@ -587,6 +587,9 @@ type PendingTransactionSourceCardAuthorization struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
 	// will expire and the pending transaction will be released.
 	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
+	// The healthcare-related fields for this authorization. Only present for specific
+	// programs.
+	Healthcare PendingTransactionSourceCardAuthorizationHealthcare `json:"healthcare" api:"required,nullable"`
 	// The merchant identifier (commonly abbreviated as MID) of the merchant the card
 	// is transacting with.
 	MerchantAcceptorID string `json:"merchant_acceptor_id" api:"required"`
@@ -654,6 +657,7 @@ type pendingTransactionSourceCardAuthorizationJSON struct {
 	DigitalWalletTokenID apijson.Field
 	Direction            apijson.Field
 	ExpiresAt            apijson.Field
+	Healthcare           apijson.Field
 	MerchantAcceptorID   apijson.Field
 	MerchantCategoryCode apijson.Field
 	MerchantCity         apijson.Field
@@ -1085,6 +1089,52 @@ const (
 func (r PendingTransactionSourceCardAuthorizationDirection) IsKnown() bool {
 	switch r {
 	case PendingTransactionSourceCardAuthorizationDirectionSettlement, PendingTransactionSourceCardAuthorizationDirectionRefund:
+		return true
+	}
+	return false
+}
+
+// The healthcare-related fields for this authorization. Only present for specific
+// programs.
+type PendingTransactionSourceCardAuthorizationHealthcare struct {
+	// The merchant's eligibility under the Internal Revenue Service's 90% Rule for
+	// Flexible Spending Account (FSA) and Health Savings Account (HSA) eligible
+	// products. The eligibility is determined based on the list of merchants
+	// maintained by the Special Interest Group for IIAS Standards (SIGIS).
+	MerchantNinetyPercentEligibility PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibility `json:"merchant_ninety_percent_eligibility" api:"required"`
+	JSON                             pendingTransactionSourceCardAuthorizationHealthcareJSON                             `json:"-"`
+}
+
+// pendingTransactionSourceCardAuthorizationHealthcareJSON contains the JSON
+// metadata for the struct [PendingTransactionSourceCardAuthorizationHealthcare]
+type pendingTransactionSourceCardAuthorizationHealthcareJSON struct {
+	MerchantNinetyPercentEligibility apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
+}
+
+func (r *PendingTransactionSourceCardAuthorizationHealthcare) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pendingTransactionSourceCardAuthorizationHealthcareJSON) RawJSON() string {
+	return r.raw
+}
+
+// The merchant's eligibility under the Internal Revenue Service's 90% Rule for
+// Flexible Spending Account (FSA) and Health Savings Account (HSA) eligible
+// products. The eligibility is determined based on the list of merchants
+// maintained by the Special Interest Group for IIAS Standards (SIGIS).
+type PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibility string
+
+const (
+	PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibilityEligible    PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibility = "eligible"
+	PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibilityNotEligible PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibility = "not_eligible"
+)
+
+func (r PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibility) IsKnown() bool {
+	switch r {
+	case PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibilityEligible, PendingTransactionSourceCardAuthorizationHealthcareMerchantNinetyPercentEligibilityNotEligible:
 		return true
 	}
 	return false

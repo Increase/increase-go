@@ -16,31 +16,33 @@ import (
 type Error struct {
 	Detail string `json:"detail" api:"required,nullable"`
 	// All errors related to parsing the request parameters.
-	Errors     []map[string]interface{} `json:"errors" api:"required"`
-	Reason     ErrorReason              `json:"reason" api:"required"`
-	ResourceID string                   `json:"resource_id" api:"required"`
-	Status     ErrorStatus              `json:"status" api:"required"`
-	Title      string                   `json:"title" api:"required"`
-	Type       ErrorType                `json:"type" api:"required"`
-	RetryAfter int64                    `json:"retry_after" api:"nullable"`
-	JSON       errorJSON                `json:"-"`
-	StatusCode int
-	Request    *http.Request
-	Response   *http.Response
+	Errors            []map[string]interface{} `json:"errors" api:"required"`
+	Reason            ErrorReason              `json:"reason" api:"required"`
+	ResourceID        string                   `json:"resource_id" api:"required"`
+	Status            ErrorStatus              `json:"status" api:"required"`
+	Title             string                   `json:"title" api:"required"`
+	Type              ErrorType                `json:"type" api:"required"`
+	LikelyEnvironment ErrorLikelyEnvironment   `json:"likely_environment" api:"nullable"`
+	RetryAfter        int64                    `json:"retry_after" api:"nullable"`
+	JSON              errorJSON                `json:"-"`
+	StatusCode        int
+	Request           *http.Request
+	Response          *http.Response
 }
 
 // errorJSON contains the JSON metadata for the struct [Error]
 type errorJSON struct {
-	Detail      apijson.Field
-	Errors      apijson.Field
-	Reason      apijson.Field
-	ResourceID  apijson.Field
-	Status      apijson.Field
-	Title       apijson.Field
-	Type        apijson.Field
-	RetryAfter  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Detail            apijson.Field
+	Errors            apijson.Field
+	Reason            apijson.Field
+	ResourceID        apijson.Field
+	Status            apijson.Field
+	Title             apijson.Field
+	Type              apijson.Field
+	LikelyEnvironment apijson.Field
+	RetryAfter        apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
 }
 
 func (r *Error) UnmarshalJSON(data []byte) (err error) {
@@ -129,6 +131,21 @@ const (
 func (r ErrorType) IsKnown() bool {
 	switch r {
 	case ErrorTypeRateLimitedError, ErrorTypePrivateFeatureError, ErrorTypeObjectNotFoundError, ErrorTypeMalformedRequestError, ErrorTypeInvalidParametersError, ErrorTypeInvalidOperationError, ErrorTypeInvalidAPIKeyError, ErrorTypeInternalServerError, ErrorTypeInsufficientPermissionsError, ErrorTypeIdempotencyKeyAlreadyUsedError, ErrorTypeEnvironmentMismatchError, ErrorTypeAPIMethodNotFoundError:
+		return true
+	}
+	return false
+}
+
+type ErrorLikelyEnvironment string
+
+const (
+	ErrorLikelyEnvironmentProduction ErrorLikelyEnvironment = "production"
+	ErrorLikelyEnvironmentSandbox    ErrorLikelyEnvironment = "sandbox"
+)
+
+func (r ErrorLikelyEnvironment) IsKnown() bool {
+	switch r {
+	case ErrorLikelyEnvironmentProduction, ErrorLikelyEnvironmentSandbox:
 		return true
 	}
 	return false
