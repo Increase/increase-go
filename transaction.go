@@ -84,8 +84,8 @@ type Transaction struct {
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount" api:"required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occurred.
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Transaction occurred.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transaction's
