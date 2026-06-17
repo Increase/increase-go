@@ -84,8 +84,8 @@ type Transaction struct {
 	// The Transaction amount in the minor unit of its currency. For dollars, for
 	// example, this is cents.
 	Amount int64 `json:"amount" api:"required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
-	// Transaction occurred.
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Transaction occurred.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
 	// Transaction's currency. This will match the currency on the Transaction's
@@ -1776,13 +1776,14 @@ const (
 	TransactionSourceCardFinancialProcessingCategoryQuasiCash              TransactionSourceCardFinancialProcessingCategory = "quasi_cash"
 	TransactionSourceCardFinancialProcessingCategoryRefund                 TransactionSourceCardFinancialProcessingCategory = "refund"
 	TransactionSourceCardFinancialProcessingCategoryCashDisbursement       TransactionSourceCardFinancialProcessingCategory = "cash_disbursement"
+	TransactionSourceCardFinancialProcessingCategoryCashDeposit            TransactionSourceCardFinancialProcessingCategory = "cash_deposit"
 	TransactionSourceCardFinancialProcessingCategoryBalanceInquiry         TransactionSourceCardFinancialProcessingCategory = "balance_inquiry"
 	TransactionSourceCardFinancialProcessingCategoryUnknown                TransactionSourceCardFinancialProcessingCategory = "unknown"
 )
 
 func (r TransactionSourceCardFinancialProcessingCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardFinancialProcessingCategoryAccountFunding, TransactionSourceCardFinancialProcessingCategoryAutomaticFuelDispenser, TransactionSourceCardFinancialProcessingCategoryBillPayment, TransactionSourceCardFinancialProcessingCategoryOriginalCredit, TransactionSourceCardFinancialProcessingCategoryPurchase, TransactionSourceCardFinancialProcessingCategoryQuasiCash, TransactionSourceCardFinancialProcessingCategoryRefund, TransactionSourceCardFinancialProcessingCategoryCashDisbursement, TransactionSourceCardFinancialProcessingCategoryBalanceInquiry, TransactionSourceCardFinancialProcessingCategoryUnknown:
+	case TransactionSourceCardFinancialProcessingCategoryAccountFunding, TransactionSourceCardFinancialProcessingCategoryAutomaticFuelDispenser, TransactionSourceCardFinancialProcessingCategoryBillPayment, TransactionSourceCardFinancialProcessingCategoryOriginalCredit, TransactionSourceCardFinancialProcessingCategoryPurchase, TransactionSourceCardFinancialProcessingCategoryQuasiCash, TransactionSourceCardFinancialProcessingCategoryRefund, TransactionSourceCardFinancialProcessingCategoryCashDisbursement, TransactionSourceCardFinancialProcessingCategoryCashDeposit, TransactionSourceCardFinancialProcessingCategoryBalanceInquiry, TransactionSourceCardFinancialProcessingCategoryUnknown:
 		return true
 	}
 	return false

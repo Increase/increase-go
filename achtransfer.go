@@ -648,12 +648,13 @@ type ACHTransferFunding string
 const (
 	ACHTransferFundingChecking      ACHTransferFunding = "checking"
 	ACHTransferFundingSavings       ACHTransferFunding = "savings"
+	ACHTransferFundingLoan          ACHTransferFunding = "loan"
 	ACHTransferFundingGeneralLedger ACHTransferFunding = "general_ledger"
 )
 
 func (r ACHTransferFunding) IsKnown() bool {
 	switch r {
-	case ACHTransferFundingChecking, ACHTransferFundingSavings, ACHTransferFundingGeneralLedger:
+	case ACHTransferFundingChecking, ACHTransferFundingSavings, ACHTransferFundingLoan, ACHTransferFundingGeneralLedger:
 		return true
 	}
 	return false
@@ -1377,12 +1378,13 @@ type ACHTransferNewParamsFunding string
 const (
 	ACHTransferNewParamsFundingChecking      ACHTransferNewParamsFunding = "checking"
 	ACHTransferNewParamsFundingSavings       ACHTransferNewParamsFunding = "savings"
+	ACHTransferNewParamsFundingLoan          ACHTransferNewParamsFunding = "loan"
 	ACHTransferNewParamsFundingGeneralLedger ACHTransferNewParamsFunding = "general_ledger"
 )
 
 func (r ACHTransferNewParamsFunding) IsKnown() bool {
 	switch r {
-	case ACHTransferNewParamsFundingChecking, ACHTransferNewParamsFundingSavings, ACHTransferNewParamsFundingGeneralLedger:
+	case ACHTransferNewParamsFundingChecking, ACHTransferNewParamsFundingSavings, ACHTransferNewParamsFundingLoan, ACHTransferNewParamsFundingGeneralLedger:
 		return true
 	}
 	return false
