@@ -416,14 +416,14 @@ type ACHPrenotificationStatus string
 
 const (
 	ACHPrenotificationStatusPendingSubmitting ACHPrenotificationStatus = "pending_submitting"
-	ACHPrenotificationStatusRequiresAttention ACHPrenotificationStatus = "requires_attention"
 	ACHPrenotificationStatusReturned          ACHPrenotificationStatus = "returned"
 	ACHPrenotificationStatusSubmitted         ACHPrenotificationStatus = "submitted"
+	ACHPrenotificationStatusRequiresAttention ACHPrenotificationStatus = "requires_attention"
 )
 
 func (r ACHPrenotificationStatus) IsKnown() bool {
 	switch r {
-	case ACHPrenotificationStatusPendingSubmitting, ACHPrenotificationStatusRequiresAttention, ACHPrenotificationStatusReturned, ACHPrenotificationStatusSubmitted:
+	case ACHPrenotificationStatusPendingSubmitting, ACHPrenotificationStatusReturned, ACHPrenotificationStatusSubmitted, ACHPrenotificationStatusRequiresAttention:
 		return true
 	}
 	return false
