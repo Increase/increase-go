@@ -378,8 +378,10 @@ type BalanceLookupLoan struct {
 	// The total amount due on the loan.
 	DueBalance int64 `json:"due_balance" api:"required"`
 	// The amount past due on the loan.
-	PastDueBalance int64                 `json:"past_due_balance" api:"required"`
-	JSON           balanceLookupLoanJSON `json:"-"`
+	PastDueBalance int64 `json:"past_due_balance" api:"required"`
+	// The receivables balances for the loan.
+	Receivables BalanceLookupLoanReceivables `json:"receivables" api:"required,nullable"`
+	JSON        balanceLookupLoanJSON        `json:"-"`
 }
 
 // balanceLookupLoanJSON contains the JSON metadata for the struct
@@ -388,6 +390,7 @@ type balanceLookupLoanJSON struct {
 	DueAt          apijson.Field
 	DueBalance     apijson.Field
 	PastDueBalance apijson.Field
+	Receivables    apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -397,6 +400,32 @@ func (r *BalanceLookupLoan) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r balanceLookupLoanJSON) RawJSON() string {
+	return r.raw
+}
+
+// The receivables balances for the loan.
+type BalanceLookupLoanReceivables struct {
+	// The balance of seasoned receivables available to be purchased.
+	PurchasableBalance int64 `json:"purchasable_balance" api:"required"`
+	// The balance of receivables that have been purchased.
+	PurchasedBalance int64                            `json:"purchased_balance" api:"required"`
+	JSON             balanceLookupLoanReceivablesJSON `json:"-"`
+}
+
+// balanceLookupLoanReceivablesJSON contains the JSON metadata for the struct
+// [BalanceLookupLoanReceivables]
+type balanceLookupLoanReceivablesJSON struct {
+	PurchasableBalance apijson.Field
+	PurchasedBalance   apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *BalanceLookupLoanReceivables) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r balanceLookupLoanReceivablesJSON) RawJSON() string {
 	return r.raw
 }
 
