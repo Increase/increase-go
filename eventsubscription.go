@@ -299,15 +299,14 @@ func (r EventSubscriptionSelectedEventCategoriesEventCategory) IsKnown() bool {
 type EventSubscriptionStatus string
 
 const (
-	EventSubscriptionStatusActive            EventSubscriptionStatus = "active"
-	EventSubscriptionStatusDisabled          EventSubscriptionStatus = "disabled"
-	EventSubscriptionStatusDeleted           EventSubscriptionStatus = "deleted"
-	EventSubscriptionStatusRequiresAttention EventSubscriptionStatus = "requires_attention"
+	EventSubscriptionStatusActive   EventSubscriptionStatus = "active"
+	EventSubscriptionStatusDisabled EventSubscriptionStatus = "disabled"
+	EventSubscriptionStatusDeleted  EventSubscriptionStatus = "deleted"
 )
 
 func (r EventSubscriptionStatus) IsKnown() bool {
 	switch r {
-	case EventSubscriptionStatusActive, EventSubscriptionStatusDisabled, EventSubscriptionStatusDeleted, EventSubscriptionStatusRequiresAttention:
+	case EventSubscriptionStatusActive, EventSubscriptionStatusDisabled, EventSubscriptionStatusDeleted:
 		return true
 	}
 	return false
