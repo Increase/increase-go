@@ -195,12 +195,74 @@ func (r SimulationCardAuthorizationNewParamsNetworkDetails) MarshalJSON() (data 
 
 // Fields specific to the Visa network.
 type SimulationCardAuthorizationNewParamsNetworkDetailsVisa struct {
+	// For electronic commerce transactions, this identifies the level of security used
+	// in obtaining the customer's payment credential. For mail or telephone order
+	// transactions, identifies the type of mail or telephone order.
+	ElectronicCommerceIndicator param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator] `json:"electronic_commerce_indicator"`
+	// The method used to enter the cardholder's primary account number and card
+	// expiration date.
+	PointOfServiceEntryMode param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode] `json:"point_of_service_entry_mode"`
 	// The reason code for the stand-in processing.
 	StandInProcessingReason param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason] `json:"stand_in_processing_reason"`
+	// The capability of the terminal being used to read the card. Shows whether a
+	// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+	// reads. This reflects the highest capability of the terminal — for example, a
+	// terminal that supports both chip and magnetic stripe will be identified as
+	// chip-capable.
+	TerminalEntryCapability param.Field[SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability] `json:"terminal_entry_capability"`
 }
 
 func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisa) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// For electronic commerce transactions, this identifies the level of security used
+// in obtaining the customer's payment credential. For mail or telephone order
+// transactions, identifies the type of mail or telephone order.
+type SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator string
+
+const (
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder                                          SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "mail_phone_order"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorRecurring                                               SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "recurring"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorInstallment                                             SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "installment"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder                                   SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "unknown_mail_phone_order"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce                                SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "secure_electronic_commerce"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction_at_3ds_capable_merchant"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction                     SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "non_authenticated_security_transaction"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction                                    SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator = "non_secure_transaction"
+)
+
+func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicator) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorRecurring, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorInstallment, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorUnknownMailPhoneOrder, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorSecureElectronicCommerce, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransactionAt3DSCapableMerchant, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorNonAuthenticatedSecurityTransaction, SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorNonSecureTransaction:
+		return true
+	}
+	return false
+}
+
+// The method used to enter the cardholder's primary account number and card
+// expiration date.
+type SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode string
+
+const (
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeUnknown                    SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "unknown"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeManual                     SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "manual"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv        SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe_no_cvv"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeOpticalCode                SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "optical_code"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard      SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeContactless                SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "contactless"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile           SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "credential_on_file"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe             SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "magnetic_stripe"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe  SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "contactless_magnetic_stripe"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode = "integrated_circuit_card_no_cvv"
+)
+
+func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryMode) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeUnknown, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeManual, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeMagneticStripeNoCvv, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeOpticalCode, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCard, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeContactless, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeCredentialOnFile, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeMagneticStripe, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeContactlessMagneticStripe, SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeIntegratedCircuitCardNoCvv:
+		return true
+	}
+	return false
 }
 
 // The reason code for the stand-in processing.
@@ -220,6 +282,32 @@ const (
 func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReason) IsKnown() bool {
 	switch r {
 	case SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidPhysicalCard, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidCryptogram, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInvalidCardholderAuthenticationVerificationValue, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonInternalVisaError, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonMerchantTransactionAdvisoryServiceAuthenticationRequired, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonPaymentFraudDisruptionAcquirerBlock, SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonOther:
+		return true
+	}
+	return false
+}
+
+// The capability of the terminal being used to read the card. Shows whether a
+// terminal can e.g., accept chip cards or if it only supports magnetic stripe
+// reads. This reflects the highest capability of the terminal — for example, a
+// terminal that supports both chip and magnetic stripe will be identified as
+// chip-capable.
+type SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability string
+
+const (
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityUnknown                     SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "unknown"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed             SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "terminal_not_used"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe              SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "magnetic_stripe"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityBarcode                     SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "barcode"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "optical_character_recognition"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless           SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "chip_or_contactless"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly             SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "contactless_only"
+	SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityNoCapability                SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability = "no_capability"
+)
+
+func (r SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapability) IsKnown() bool {
+	switch r {
+	case SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityUnknown, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityTerminalNotUsed, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityMagneticStripe, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityBarcode, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityOpticalCharacterRecognition, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityChipOrContactless, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityContactlessOnly, SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityNoCapability:
 		return true
 	}
 	return false
