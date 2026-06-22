@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.596.0](https://github.com/Increase/increase-go/compare/v0.595.0...v0.596.0) (2026-06-22)
+
+
+### Features
+
+* **api:** add Visa network fields to card authorization simulations ([f4a73ce](https://github.com/Increase/increase-go/commit/f4a73cedf0faad4c3b05d354593fadfe4b6a102c))
+
 ## [0.595.0](https://github.com/Increase/increase-go/compare/v0.594.0...v0.595.0) (2026-06-18)
 
 
