@@ -40,7 +40,10 @@ func TestSimulationCardAuthorizationNewWithOptionalParams(t *testing.T) {
 		MerchantState:              increase.F("NY"),
 		NetworkDetails: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetails{
 			Visa: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisa{
-				StandInProcessingReason: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError),
+				ElectronicCommerceIndicator: increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaElectronicCommerceIndicatorMailPhoneOrder),
+				PointOfServiceEntryMode:     increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaPointOfServiceEntryModeUnknown),
+				StandInProcessingReason:     increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaStandInProcessingReasonIssuerError),
+				TerminalEntryCapability:     increase.F(increase.SimulationCardAuthorizationNewParamsNetworkDetailsVisaTerminalEntryCapabilityUnknown),
 			}),
 		}),
 		NetworkRiskScore: increase.F(int64(0)),
