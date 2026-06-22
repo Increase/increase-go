@@ -524,17 +524,22 @@ type FednowTransferSubmission struct {
 	MessageIdentification string `json:"message_identification" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was submitted to FedNow.
-	SubmittedAt time.Time                    `json:"submitted_at" api:"required,nullable" format:"date-time"`
-	JSON        fednowTransferSubmissionJSON `json:"-"`
+	SubmittedAt time.Time `json:"submitted_at" api:"required,nullable" format:"date-time"`
+	// The Unique End-to-end Transaction Reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the transfer.
+	UniqueEndToEndTransactionReference string                       `json:"unique_end_to_end_transaction_reference" api:"required"`
+	JSON                               fednowTransferSubmissionJSON `json:"-"`
 }
 
 // fednowTransferSubmissionJSON contains the JSON metadata for the struct
 // [FednowTransferSubmission]
 type fednowTransferSubmissionJSON struct {
-	MessageIdentification apijson.Field
-	SubmittedAt           apijson.Field
-	raw                   string
-	ExtraFields           map[string]apijson.Field
+	MessageIdentification              apijson.Field
+	SubmittedAt                        apijson.Field
+	UniqueEndToEndTransactionReference apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *FednowTransferSubmission) UnmarshalJSON(data []byte) (err error) {
