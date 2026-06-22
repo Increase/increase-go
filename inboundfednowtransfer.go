@@ -110,6 +110,10 @@ type InboundFednowTransfer struct {
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_fednow_transfer`.
 	Type InboundFednowTransferType `json:"type" api:"required"`
+	// The Unique End-to-end Transaction Reference
+	// ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+	// of the transfer.
+	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
 	// Additional information included with the transfer.
 	UnstructuredRemittanceInformation string                    `json:"unstructured_remittance_information" api:"required,nullable"`
 	JSON                              inboundFednowTransferJSON `json:"-"`
@@ -118,24 +122,25 @@ type InboundFednowTransfer struct {
 // inboundFednowTransferJSON contains the JSON metadata for the struct
 // [InboundFednowTransfer]
 type inboundFednowTransferJSON struct {
-	ID                                apijson.Field
-	AccountID                         apijson.Field
-	AccountNumberID                   apijson.Field
-	Amount                            apijson.Field
-	Confirmation                      apijson.Field
-	CreatedAt                         apijson.Field
-	CreditorName                      apijson.Field
-	Currency                          apijson.Field
-	DebtorAccountNumber               apijson.Field
-	DebtorName                        apijson.Field
-	DebtorRoutingNumber               apijson.Field
-	Decline                           apijson.Field
-	Status                            apijson.Field
-	TransactionID                     apijson.Field
-	Type                              apijson.Field
-	UnstructuredRemittanceInformation apijson.Field
-	raw                               string
-	ExtraFields                       map[string]apijson.Field
+	ID                                 apijson.Field
+	AccountID                          apijson.Field
+	AccountNumberID                    apijson.Field
+	Amount                             apijson.Field
+	Confirmation                       apijson.Field
+	CreatedAt                          apijson.Field
+	CreditorName                       apijson.Field
+	Currency                           apijson.Field
+	DebtorAccountNumber                apijson.Field
+	DebtorName                         apijson.Field
+	DebtorRoutingNumber                apijson.Field
+	Decline                            apijson.Field
+	Status                             apijson.Field
+	TransactionID                      apijson.Field
+	Type                               apijson.Field
+	UniqueEndToEndTransactionReference apijson.Field
+	UnstructuredRemittanceInformation  apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
 }
 
 func (r *InboundFednowTransfer) UnmarshalJSON(data []byte) (err error) {
