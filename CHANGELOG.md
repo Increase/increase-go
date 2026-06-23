@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.597.0](https://github.com/Increase/increase-go/compare/v0.596.0...v0.597.0) (2026-06-23)
+
+
+### Features
+
+* **api:** add UETR field to inbound FedNow transfers ([90fb6be](https://github.com/Increase/increase-go/commit/90fb6be015e68c2e886b147c52b8c4799d1a4f53))
+
 ## [0.596.0](https://github.com/Increase/increase-go/compare/v0.595.0...v0.596.0) (2026-06-22)
 
 
