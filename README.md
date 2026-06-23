@@ -41,6 +41,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/Increase/increase-go"
 	"github.com/Increase/increase-go/option"
@@ -48,8 +49,8 @@ import (
 
 func main() {
 	client := increase.NewClient(
-		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
-		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
+		option.WithAPIKey(os.Getenv("INCREASE_API_KEY")), // This is the default and can be omitted
+		option.WithEnvironmentSandbox(),                  // defaults to option.WithEnvironmentProduction()
 	)
 	account, err := client.Accounts.New(context.TODO(), increase.AccountNewParams{
 		Name:      increase.F("New Account!"),
