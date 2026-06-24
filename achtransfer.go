@@ -934,7 +934,8 @@ type ACHTransferReturn struct {
 	TraceNumber string `json:"trace_number" api:"required"`
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id" api:"required"`
-	// The identifier of the ACH Transfer associated with this return.
+	// The identifier of the ACH Transfer associated with this return. This matches the
+	// original Transaction's `source.ach_transfer_intention.transfer_id`.
 	TransferID  string                 `json:"transfer_id" api:"required"`
 	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        achTransferReturnJSON  `json:"-"`
@@ -1264,7 +1265,8 @@ type ACHTransferNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The
 	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
-	// to use for the transfer.
+	// to use for the transfer. If not provided, the default is
+	// `corporate_credit_or_debit`.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 	// The timing of the transaction.
 	TransactionTiming param.Field[ACHTransferNewParamsTransactionTiming] `json:"transaction_timing"`
@@ -1424,7 +1426,8 @@ func (r ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule) IsKnown() 
 
 // The
 // [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
-// to use for the transfer.
+// to use for the transfer. If not provided, the default is
+// `corporate_credit_or_debit`.
 type ACHTransferNewParamsStandardEntryClassCode string
 
 const (

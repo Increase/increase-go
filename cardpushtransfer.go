@@ -846,9 +846,9 @@ type CardPushTransferStatus string
 const (
 	CardPushTransferStatusPendingApproval   CardPushTransferStatus = "pending_approval"
 	CardPushTransferStatusCanceled          CardPushTransferStatus = "canceled"
+	CardPushTransferStatusPendingSubmission CardPushTransferStatus = "pending_submission"
 	CardPushTransferStatusPendingReviewing  CardPushTransferStatus = "pending_reviewing"
 	CardPushTransferStatusRequiresAttention CardPushTransferStatus = "requires_attention"
-	CardPushTransferStatusPendingSubmission CardPushTransferStatus = "pending_submission"
 	CardPushTransferStatusSubmitted         CardPushTransferStatus = "submitted"
 	CardPushTransferStatusComplete          CardPushTransferStatus = "complete"
 	CardPushTransferStatusDeclined          CardPushTransferStatus = "declined"
@@ -856,7 +856,7 @@ const (
 
 func (r CardPushTransferStatus) IsKnown() bool {
 	switch r {
-	case CardPushTransferStatusPendingApproval, CardPushTransferStatusCanceled, CardPushTransferStatusPendingReviewing, CardPushTransferStatusRequiresAttention, CardPushTransferStatusPendingSubmission, CardPushTransferStatusSubmitted, CardPushTransferStatusComplete, CardPushTransferStatusDeclined:
+	case CardPushTransferStatusPendingApproval, CardPushTransferStatusCanceled, CardPushTransferStatusPendingSubmission, CardPushTransferStatusPendingReviewing, CardPushTransferStatusRequiresAttention, CardPushTransferStatusSubmitted, CardPushTransferStatusComplete, CardPushTransferStatusDeclined:
 		return true
 	}
 	return false
@@ -1274,9 +1274,9 @@ type CardPushTransferListParamsStatusIn string
 const (
 	CardPushTransferListParamsStatusInPendingApproval   CardPushTransferListParamsStatusIn = "pending_approval"
 	CardPushTransferListParamsStatusInCanceled          CardPushTransferListParamsStatusIn = "canceled"
+	CardPushTransferListParamsStatusInPendingSubmission CardPushTransferListParamsStatusIn = "pending_submission"
 	CardPushTransferListParamsStatusInPendingReviewing  CardPushTransferListParamsStatusIn = "pending_reviewing"
 	CardPushTransferListParamsStatusInRequiresAttention CardPushTransferListParamsStatusIn = "requires_attention"
-	CardPushTransferListParamsStatusInPendingSubmission CardPushTransferListParamsStatusIn = "pending_submission"
 	CardPushTransferListParamsStatusInSubmitted         CardPushTransferListParamsStatusIn = "submitted"
 	CardPushTransferListParamsStatusInComplete          CardPushTransferListParamsStatusIn = "complete"
 	CardPushTransferListParamsStatusInDeclined          CardPushTransferListParamsStatusIn = "declined"
@@ -1284,7 +1284,7 @@ const (
 
 func (r CardPushTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case CardPushTransferListParamsStatusInPendingApproval, CardPushTransferListParamsStatusInCanceled, CardPushTransferListParamsStatusInPendingReviewing, CardPushTransferListParamsStatusInRequiresAttention, CardPushTransferListParamsStatusInPendingSubmission, CardPushTransferListParamsStatusInSubmitted, CardPushTransferListParamsStatusInComplete, CardPushTransferListParamsStatusInDeclined:
+	case CardPushTransferListParamsStatusInPendingApproval, CardPushTransferListParamsStatusInCanceled, CardPushTransferListParamsStatusInPendingSubmission, CardPushTransferListParamsStatusInPendingReviewing, CardPushTransferListParamsStatusInRequiresAttention, CardPushTransferListParamsStatusInSubmitted, CardPushTransferListParamsStatusInComplete, CardPushTransferListParamsStatusInDeclined:
 		return true
 	}
 	return false
