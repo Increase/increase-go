@@ -203,7 +203,8 @@ type TransactionSource struct {
 	// Return is created when an ACH Transfer is returned by the receiving bank. It
 	// offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
 	// the first two business days after the transfer is initiated, but can occur much
-	// later.
+	// later. The return appears as a new posted Transaction; no Pending Transaction is
+	// created.
 	ACHTransferReturn TransactionSourceACHTransferReturn `json:"ach_transfer_return" api:"nullable"`
 	// A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
 	// the JSON response if and only if `category` is equal to
@@ -646,7 +647,8 @@ func (r transactionSourceACHTransferRejectionJSON) RawJSON() string {
 // Return is created when an ACH Transfer is returned by the receiving bank. It
 // offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
 // the first two business days after the transfer is initiated, but can occur much
-// later.
+// later. The return appears as a new posted Transaction; no Pending Transaction is
+// created.
 type TransactionSourceACHTransferReturn struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
@@ -663,7 +665,8 @@ type TransactionSourceACHTransferReturn struct {
 	TraceNumber string `json:"trace_number" api:"required"`
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id" api:"required"`
-	// The identifier of the ACH Transfer associated with this return.
+	// The identifier of the ACH Transfer associated with this return. This matches the
+	// original Transaction's `source.ach_transfer_intention.transfer_id`.
 	TransferID  string                                 `json:"transfer_id" api:"required"`
 	ExtraFields map[string]interface{}                 `json:"-" api:"extrafields"`
 	JSON        transactionSourceACHTransferReturnJSON `json:"-"`

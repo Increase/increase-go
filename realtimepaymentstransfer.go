@@ -511,17 +511,17 @@ type RealTimePaymentsTransferStatus string
 const (
 	RealTimePaymentsTransferStatusPendingApproval   RealTimePaymentsTransferStatus = "pending_approval"
 	RealTimePaymentsTransferStatusCanceled          RealTimePaymentsTransferStatus = "canceled"
+	RealTimePaymentsTransferStatusPendingSubmission RealTimePaymentsTransferStatus = "pending_submission"
 	RealTimePaymentsTransferStatusPendingReviewing  RealTimePaymentsTransferStatus = "pending_reviewing"
 	RealTimePaymentsTransferStatusRequiresAttention RealTimePaymentsTransferStatus = "requires_attention"
 	RealTimePaymentsTransferStatusRejected          RealTimePaymentsTransferStatus = "rejected"
-	RealTimePaymentsTransferStatusPendingSubmission RealTimePaymentsTransferStatus = "pending_submission"
 	RealTimePaymentsTransferStatusSubmitted         RealTimePaymentsTransferStatus = "submitted"
 	RealTimePaymentsTransferStatusComplete          RealTimePaymentsTransferStatus = "complete"
 )
 
 func (r RealTimePaymentsTransferStatus) IsKnown() bool {
 	switch r {
-	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingReviewing, RealTimePaymentsTransferStatusRequiresAttention, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete:
+	case RealTimePaymentsTransferStatusPendingApproval, RealTimePaymentsTransferStatusCanceled, RealTimePaymentsTransferStatusPendingSubmission, RealTimePaymentsTransferStatusPendingReviewing, RealTimePaymentsTransferStatusRequiresAttention, RealTimePaymentsTransferStatusRejected, RealTimePaymentsTransferStatusSubmitted, RealTimePaymentsTransferStatusComplete:
 		return true
 	}
 	return false
@@ -679,17 +679,17 @@ type RealTimePaymentsTransferListParamsStatusIn string
 const (
 	RealTimePaymentsTransferListParamsStatusInPendingApproval   RealTimePaymentsTransferListParamsStatusIn = "pending_approval"
 	RealTimePaymentsTransferListParamsStatusInCanceled          RealTimePaymentsTransferListParamsStatusIn = "canceled"
+	RealTimePaymentsTransferListParamsStatusInPendingSubmission RealTimePaymentsTransferListParamsStatusIn = "pending_submission"
 	RealTimePaymentsTransferListParamsStatusInPendingReviewing  RealTimePaymentsTransferListParamsStatusIn = "pending_reviewing"
 	RealTimePaymentsTransferListParamsStatusInRequiresAttention RealTimePaymentsTransferListParamsStatusIn = "requires_attention"
 	RealTimePaymentsTransferListParamsStatusInRejected          RealTimePaymentsTransferListParamsStatusIn = "rejected"
-	RealTimePaymentsTransferListParamsStatusInPendingSubmission RealTimePaymentsTransferListParamsStatusIn = "pending_submission"
 	RealTimePaymentsTransferListParamsStatusInSubmitted         RealTimePaymentsTransferListParamsStatusIn = "submitted"
 	RealTimePaymentsTransferListParamsStatusInComplete          RealTimePaymentsTransferListParamsStatusIn = "complete"
 )
 
 func (r RealTimePaymentsTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case RealTimePaymentsTransferListParamsStatusInPendingApproval, RealTimePaymentsTransferListParamsStatusInCanceled, RealTimePaymentsTransferListParamsStatusInPendingReviewing, RealTimePaymentsTransferListParamsStatusInRequiresAttention, RealTimePaymentsTransferListParamsStatusInRejected, RealTimePaymentsTransferListParamsStatusInPendingSubmission, RealTimePaymentsTransferListParamsStatusInSubmitted, RealTimePaymentsTransferListParamsStatusInComplete:
+	case RealTimePaymentsTransferListParamsStatusInPendingApproval, RealTimePaymentsTransferListParamsStatusInCanceled, RealTimePaymentsTransferListParamsStatusInPendingSubmission, RealTimePaymentsTransferListParamsStatusInPendingReviewing, RealTimePaymentsTransferListParamsStatusInRequiresAttention, RealTimePaymentsTransferListParamsStatusInRejected, RealTimePaymentsTransferListParamsStatusInSubmitted, RealTimePaymentsTransferListParamsStatusInComplete:
 		return true
 	}
 	return false

@@ -67,7 +67,8 @@ type SimulationInboundACHTransferNewParams struct {
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
 	// The sender's company ID.
 	CompanyID param.Field[string] `json:"company_id"`
-	// The name of the sender.
+	// The name of the sender. This corresponds to the `originator_company_name` field
+	// on the resulting Inbound ACH Transfer.
 	CompanyName param.Field[string] `json:"company_name"`
 	// The ID of the receiver of the transfer.
 	ReceiverIDNumber param.Field[string] `json:"receiver_id_number"`

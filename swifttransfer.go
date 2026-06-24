@@ -420,9 +420,9 @@ type SwiftTransferStatus string
 const (
 	SwiftTransferStatusPendingApproval   SwiftTransferStatus = "pending_approval"
 	SwiftTransferStatusCanceled          SwiftTransferStatus = "canceled"
+	SwiftTransferStatusPendingInitiating SwiftTransferStatus = "pending_initiating"
 	SwiftTransferStatusPendingReviewing  SwiftTransferStatus = "pending_reviewing"
 	SwiftTransferStatusRequiresAttention SwiftTransferStatus = "requires_attention"
-	SwiftTransferStatusPendingInitiating SwiftTransferStatus = "pending_initiating"
 	SwiftTransferStatusInitiated         SwiftTransferStatus = "initiated"
 	SwiftTransferStatusRejected          SwiftTransferStatus = "rejected"
 	SwiftTransferStatusReturned          SwiftTransferStatus = "returned"
@@ -430,7 +430,7 @@ const (
 
 func (r SwiftTransferStatus) IsKnown() bool {
 	switch r {
-	case SwiftTransferStatusPendingApproval, SwiftTransferStatusCanceled, SwiftTransferStatusPendingReviewing, SwiftTransferStatusRequiresAttention, SwiftTransferStatusPendingInitiating, SwiftTransferStatusInitiated, SwiftTransferStatusRejected, SwiftTransferStatusReturned:
+	case SwiftTransferStatusPendingApproval, SwiftTransferStatusCanceled, SwiftTransferStatusPendingInitiating, SwiftTransferStatusPendingReviewing, SwiftTransferStatusRequiresAttention, SwiftTransferStatusInitiated, SwiftTransferStatusRejected, SwiftTransferStatusReturned:
 		return true
 	}
 	return false
@@ -619,9 +619,9 @@ type SwiftTransferListParamsStatusIn string
 const (
 	SwiftTransferListParamsStatusInPendingApproval   SwiftTransferListParamsStatusIn = "pending_approval"
 	SwiftTransferListParamsStatusInCanceled          SwiftTransferListParamsStatusIn = "canceled"
+	SwiftTransferListParamsStatusInPendingInitiating SwiftTransferListParamsStatusIn = "pending_initiating"
 	SwiftTransferListParamsStatusInPendingReviewing  SwiftTransferListParamsStatusIn = "pending_reviewing"
 	SwiftTransferListParamsStatusInRequiresAttention SwiftTransferListParamsStatusIn = "requires_attention"
-	SwiftTransferListParamsStatusInPendingInitiating SwiftTransferListParamsStatusIn = "pending_initiating"
 	SwiftTransferListParamsStatusInInitiated         SwiftTransferListParamsStatusIn = "initiated"
 	SwiftTransferListParamsStatusInRejected          SwiftTransferListParamsStatusIn = "rejected"
 	SwiftTransferListParamsStatusInReturned          SwiftTransferListParamsStatusIn = "returned"
@@ -629,7 +629,7 @@ const (
 
 func (r SwiftTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case SwiftTransferListParamsStatusInPendingApproval, SwiftTransferListParamsStatusInCanceled, SwiftTransferListParamsStatusInPendingReviewing, SwiftTransferListParamsStatusInRequiresAttention, SwiftTransferListParamsStatusInPendingInitiating, SwiftTransferListParamsStatusInInitiated, SwiftTransferListParamsStatusInRejected, SwiftTransferListParamsStatusInReturned:
+	case SwiftTransferListParamsStatusInPendingApproval, SwiftTransferListParamsStatusInCanceled, SwiftTransferListParamsStatusInPendingInitiating, SwiftTransferListParamsStatusInPendingReviewing, SwiftTransferListParamsStatusInRequiresAttention, SwiftTransferListParamsStatusInInitiated, SwiftTransferListParamsStatusInRejected, SwiftTransferListParamsStatusInReturned:
 		return true
 	}
 	return false

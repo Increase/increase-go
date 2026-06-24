@@ -73,7 +73,9 @@ func (r *InboundMailItemService) ListAutoPaging(ctx context.Context, query Inbou
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// Action an Inbound Mail Item
+// Deposits or ignores each check contained in a pending Inbound Mail Item.
+// Depositing a check creates a [Check Deposit](#check-deposits) into the Account
+// you specify.
 func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID string, body InboundMailItemActionParams, opts ...option.RequestOption) (res *InboundMailItem, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if inboundMailItemID == "" {
@@ -86,7 +88,9 @@ func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID s
 }
 
 // Inbound Mail Items represent pieces of physical mail delivered to a Lockbox
-// Address.
+// Address. Increase automatically deposits checks mailed to a Lockbox Recipient
+// into the recipient's Account. Checks that are not matched to a Lockbox Recipient
+// must be deposited or ignored using the Action an Inbound Mail Item endpoint.
 type InboundMailItem struct {
 	// The Inbound Mail Item identifier.
 	ID string `json:"id" api:"required"`

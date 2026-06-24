@@ -188,7 +188,8 @@ func (r LockboxRecipientType) IsKnown() bool {
 type LockboxRecipientNewParams struct {
 	// The Account that checks sent to this Lockbox Recipient should be deposited into.
 	AccountID param.Field[string] `json:"account_id" api:"required"`
-	// The Lockbox Address where this Lockbox Recipient may receive mail.
+	// The Lockbox Address where this Lockbox Recipient may receive mail. The Lockbox
+	// Address must have a `status` of `active`.
 	LockboxAddressID param.Field[string] `json:"lockbox_address_id" api:"required"`
 	// The description you choose for the Lockbox Recipient.
 	Description param.Field[string] `json:"description"`
