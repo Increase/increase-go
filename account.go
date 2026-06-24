@@ -457,8 +457,9 @@ type AccountNewParams struct {
 	InformationalEntityID param.Field[string] `json:"informational_entity_id"`
 	// The loan details for the account.
 	Loan param.Field[AccountNewParamsLoan] `json:"loan"`
-	// The identifier for the Program that this Account falls under. Required if you
-	// operate more than one Program.
+	// The identifier for the Program that this Account falls under. Required if your
+	// Group operates more than one Program. List your [Programs](#programs) to find
+	// their identifiers.
 	ProgramID param.Field[string] `json:"program_id"`
 }
 

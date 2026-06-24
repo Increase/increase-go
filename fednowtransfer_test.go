@@ -105,7 +105,7 @@ func TestFednowTransferListWithOptionalParams(t *testing.T) {
 		IdempotencyKey:    increase.F("x"),
 		Limit:             increase.F(int64(1)),
 		Status: increase.F(increase.FednowTransferListParamsStatus{
-			In: increase.F([]increase.FednowTransferListParamsStatusIn{increase.FednowTransferListParamsStatusInPendingReviewing}),
+			In: increase.F([]increase.FednowTransferListParamsStatusIn{increase.FednowTransferListParamsStatusInPendingSubmitting}),
 		}),
 	})
 	if err != nil {
