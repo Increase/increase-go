@@ -1745,7 +1745,8 @@ type EntityNewParamsCorporation struct {
 	// `control` person.
 	BeneficialOwners param.Field[[]EntityNewParamsCorporationBeneficialOwner] `json:"beneficial_owners" api:"required"`
 	// The legal identifier of the corporation. This is usually the Employer
-	// Identification Number (EIN).
+	// Identification Number (EIN). This replaces the deprecated `tax_identifier`
+	// field.
 	LegalIdentifier param.Field[EntityNewParamsCorporationLegalIdentifier] `json:"legal_identifier" api:"required"`
 	// The legal name of the corporation.
 	Name param.Field[string] `json:"name" api:"required"`
@@ -1863,7 +1864,8 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators.
+	// separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -1970,10 +1972,12 @@ func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 }
 
 // The legal identifier of the corporation. This is usually the Employer
-// Identification Number (EIN).
+// Identification Number (EIN). This replaces the deprecated `tax_identifier`
+// field.
 type EntityNewParamsCorporationLegalIdentifier struct {
 	// The legal identifier. For US Employer Identification Numbers, submit nine digits
-	// with no dashes or other separators.
+	// with no dashes or other separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier. If not provided, the default is
 	// `us_employer_identification_number`.
@@ -2153,7 +2157,8 @@ type EntityNewParamsJointIndividualsIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators.
+	// separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2298,7 +2303,8 @@ type EntityNewParamsNaturalPersonIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators.
+	// separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2622,7 +2628,8 @@ type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators.
+	// separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2764,7 +2771,8 @@ type EntityNewParamsTrustGrantorIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators.
+	// separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -3056,7 +3064,8 @@ type EntityUpdateParamsNaturalPersonIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators.
+	// separators. When testing in sandbox, use one of our
+	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.

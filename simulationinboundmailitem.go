@@ -33,7 +33,10 @@ func NewSimulationInboundMailItemService(opts ...option.RequestOption) (r *Simul
 }
 
 // Simulates an Inbound Mail Item to one of your Lockbox Addresses or Lockbox
-// Recipients, as if someone had mailed a physical check.
+// Recipients, as if someone had mailed a physical check. Increase automatically
+// deposits a check mailed to a Lockbox Recipient into the recipient's Account. A
+// check mailed to a Lockbox Address must be deposited or ignored with the
+// [Action an Inbound Mail Item](#inbound-mail-items) endpoint.
 func (r *SimulationInboundMailItemService) New(ctx context.Context, body SimulationInboundMailItemNewParams, opts ...option.RequestOption) (res *InboundMailItem, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/inbound_mail_items"
@@ -47,9 +50,11 @@ type SimulationInboundMailItemNewParams struct {
 	// The file containing the PDF contents. If not present, a default check image file
 	// will be used.
 	ContentsFileID param.Field[string] `json:"contents_file_id"`
-	// The identifier of the Lockbox Address to simulate inbound mail to.
+	// The identifier of the Lockbox Address to simulate inbound mail to. Exactly one
+	// lockbox identifier parameter must be provided.
 	LockboxAddressID param.Field[string] `json:"lockbox_address_id"`
-	// The identifier of the Lockbox Recipient to simulate inbound mail to.
+	// The identifier of the Lockbox Recipient to simulate inbound mail to. Exactly one
+	// lockbox identifier parameter must be provided.
 	LockboxRecipientID param.Field[string] `json:"lockbox_recipient_id"`
 }
 

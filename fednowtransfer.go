@@ -498,12 +498,12 @@ func (r FednowTransferRejectionRejectReasonCode) IsKnown() bool {
 type FednowTransferStatus string
 
 const (
+	FednowTransferStatusPendingSubmitting FednowTransferStatus = "pending_submitting"
 	FednowTransferStatusPendingReviewing  FednowTransferStatus = "pending_reviewing"
 	FednowTransferStatusCanceled          FednowTransferStatus = "canceled"
 	FednowTransferStatusReviewingRejected FednowTransferStatus = "reviewing_rejected"
 	FednowTransferStatusRequiresAttention FednowTransferStatus = "requires_attention"
 	FednowTransferStatusPendingApproval   FednowTransferStatus = "pending_approval"
-	FednowTransferStatusPendingSubmitting FednowTransferStatus = "pending_submitting"
 	FednowTransferStatusPendingResponse   FednowTransferStatus = "pending_response"
 	FednowTransferStatusComplete          FednowTransferStatus = "complete"
 	FednowTransferStatusRejected          FednowTransferStatus = "rejected"
@@ -511,7 +511,7 @@ const (
 
 func (r FednowTransferStatus) IsKnown() bool {
 	switch r {
-	case FednowTransferStatusPendingReviewing, FednowTransferStatusCanceled, FednowTransferStatusReviewingRejected, FednowTransferStatusRequiresAttention, FednowTransferStatusPendingApproval, FednowTransferStatusPendingSubmitting, FednowTransferStatusPendingResponse, FednowTransferStatusComplete, FednowTransferStatusRejected:
+	case FednowTransferStatusPendingSubmitting, FednowTransferStatusPendingReviewing, FednowTransferStatusCanceled, FednowTransferStatusReviewingRejected, FednowTransferStatusRequiresAttention, FednowTransferStatusPendingApproval, FednowTransferStatusPendingResponse, FednowTransferStatusComplete, FednowTransferStatusRejected:
 		return true
 	}
 	return false
@@ -693,12 +693,12 @@ func (r FednowTransferListParamsStatus) URLQuery() (v url.Values) {
 type FednowTransferListParamsStatusIn string
 
 const (
+	FednowTransferListParamsStatusInPendingSubmitting FednowTransferListParamsStatusIn = "pending_submitting"
 	FednowTransferListParamsStatusInPendingReviewing  FednowTransferListParamsStatusIn = "pending_reviewing"
 	FednowTransferListParamsStatusInCanceled          FednowTransferListParamsStatusIn = "canceled"
 	FednowTransferListParamsStatusInReviewingRejected FednowTransferListParamsStatusIn = "reviewing_rejected"
 	FednowTransferListParamsStatusInRequiresAttention FednowTransferListParamsStatusIn = "requires_attention"
 	FednowTransferListParamsStatusInPendingApproval   FednowTransferListParamsStatusIn = "pending_approval"
-	FednowTransferListParamsStatusInPendingSubmitting FednowTransferListParamsStatusIn = "pending_submitting"
 	FednowTransferListParamsStatusInPendingResponse   FednowTransferListParamsStatusIn = "pending_response"
 	FednowTransferListParamsStatusInComplete          FednowTransferListParamsStatusIn = "complete"
 	FednowTransferListParamsStatusInRejected          FednowTransferListParamsStatusIn = "rejected"
@@ -706,7 +706,7 @@ const (
 
 func (r FednowTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case FednowTransferListParamsStatusInPendingReviewing, FednowTransferListParamsStatusInCanceled, FednowTransferListParamsStatusInReviewingRejected, FednowTransferListParamsStatusInRequiresAttention, FednowTransferListParamsStatusInPendingApproval, FednowTransferListParamsStatusInPendingSubmitting, FednowTransferListParamsStatusInPendingResponse, FednowTransferListParamsStatusInComplete, FednowTransferListParamsStatusInRejected:
+	case FednowTransferListParamsStatusInPendingSubmitting, FednowTransferListParamsStatusInPendingReviewing, FednowTransferListParamsStatusInCanceled, FednowTransferListParamsStatusInReviewingRejected, FednowTransferListParamsStatusInRequiresAttention, FednowTransferListParamsStatusInPendingApproval, FednowTransferListParamsStatusInPendingResponse, FednowTransferListParamsStatusInComplete, FednowTransferListParamsStatusInRejected:
 		return true
 	}
 	return false

@@ -754,10 +754,10 @@ type WireTransferStatus string
 const (
 	WireTransferStatusPendingApproval   WireTransferStatus = "pending_approval"
 	WireTransferStatusCanceled          WireTransferStatus = "canceled"
+	WireTransferStatusPendingCreating   WireTransferStatus = "pending_creating"
 	WireTransferStatusPendingReviewing  WireTransferStatus = "pending_reviewing"
 	WireTransferStatusRejected          WireTransferStatus = "rejected"
 	WireTransferStatusRequiresAttention WireTransferStatus = "requires_attention"
-	WireTransferStatusPendingCreating   WireTransferStatus = "pending_creating"
 	WireTransferStatusReversed          WireTransferStatus = "reversed"
 	WireTransferStatusSubmitted         WireTransferStatus = "submitted"
 	WireTransferStatusComplete          WireTransferStatus = "complete"
@@ -765,7 +765,7 @@ const (
 
 func (r WireTransferStatus) IsKnown() bool {
 	switch r {
-	case WireTransferStatusPendingApproval, WireTransferStatusCanceled, WireTransferStatusPendingReviewing, WireTransferStatusRejected, WireTransferStatusRequiresAttention, WireTransferStatusPendingCreating, WireTransferStatusReversed, WireTransferStatusSubmitted, WireTransferStatusComplete:
+	case WireTransferStatusPendingApproval, WireTransferStatusCanceled, WireTransferStatusPendingCreating, WireTransferStatusPendingReviewing, WireTransferStatusRejected, WireTransferStatusRequiresAttention, WireTransferStatusReversed, WireTransferStatusSubmitted, WireTransferStatusComplete:
 		return true
 	}
 	return false
@@ -1053,10 +1053,10 @@ type WireTransferListParamsStatusIn string
 const (
 	WireTransferListParamsStatusInPendingApproval   WireTransferListParamsStatusIn = "pending_approval"
 	WireTransferListParamsStatusInCanceled          WireTransferListParamsStatusIn = "canceled"
+	WireTransferListParamsStatusInPendingCreating   WireTransferListParamsStatusIn = "pending_creating"
 	WireTransferListParamsStatusInPendingReviewing  WireTransferListParamsStatusIn = "pending_reviewing"
 	WireTransferListParamsStatusInRejected          WireTransferListParamsStatusIn = "rejected"
 	WireTransferListParamsStatusInRequiresAttention WireTransferListParamsStatusIn = "requires_attention"
-	WireTransferListParamsStatusInPendingCreating   WireTransferListParamsStatusIn = "pending_creating"
 	WireTransferListParamsStatusInReversed          WireTransferListParamsStatusIn = "reversed"
 	WireTransferListParamsStatusInSubmitted         WireTransferListParamsStatusIn = "submitted"
 	WireTransferListParamsStatusInComplete          WireTransferListParamsStatusIn = "complete"
@@ -1064,7 +1064,7 @@ const (
 
 func (r WireTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case WireTransferListParamsStatusInPendingApproval, WireTransferListParamsStatusInCanceled, WireTransferListParamsStatusInPendingReviewing, WireTransferListParamsStatusInRejected, WireTransferListParamsStatusInRequiresAttention, WireTransferListParamsStatusInPendingCreating, WireTransferListParamsStatusInReversed, WireTransferListParamsStatusInSubmitted, WireTransferListParamsStatusInComplete:
+	case WireTransferListParamsStatusInPendingApproval, WireTransferListParamsStatusInCanceled, WireTransferListParamsStatusInPendingCreating, WireTransferListParamsStatusInPendingReviewing, WireTransferListParamsStatusInRejected, WireTransferListParamsStatusInRequiresAttention, WireTransferListParamsStatusInReversed, WireTransferListParamsStatusInSubmitted, WireTransferListParamsStatusInComplete:
 		return true
 	}
 	return false
