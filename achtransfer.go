@@ -112,7 +112,7 @@ type ACHTransfer struct {
 	ID string `json:"id" api:"required"`
 	// The Account to which the transfer belongs.
 	AccountID string `json:"account_id" api:"required"`
-	// The destination account number.
+	// The receiver's account number.
 	AccountNumber string `json:"account_number" api:"required"`
 	// After the transfer is acknowledged by FedACH, this will contain supplemental
 	// details. The Federal Reserve sends an acknowledgement message for each file that
@@ -148,12 +148,11 @@ type ACHTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For ACH transfers this is always equal to `usd`.
 	Currency ACHTransferCurrency `json:"currency" api:"required"`
-	// The type of entity that owns the account to which the ACH Transfer is being
-	// sent.
+	// The type of entity that owns the receiver's account.
 	DestinationAccountHolder ACHTransferDestinationAccountHolder `json:"destination_account_holder" api:"required"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
-	// The type of the account to which the transfer will be sent.
+	// The type of the receiver's bank account.
 	Funding ACHTransferFunding `json:"funding" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
@@ -162,7 +161,8 @@ type ACHTransfer struct {
 	// Increase will sometimes hold the funds for ACH debit transfers. If funds are
 	// held, this sub-object will contain details of the hold.
 	InboundFundsHold ACHTransferInboundFundsHold `json:"inbound_funds_hold" api:"required,nullable"`
-	// Your identifier for the transfer recipient.
+	// Your internal identifier for the transfer recipient. This value is informational
+	// and not verified by the recipient's bank.
 	IndividualID string `json:"individual_id" api:"required,nullable"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
@@ -184,7 +184,8 @@ type ACHTransfer struct {
 	PreferredEffectiveDate ACHTransferPreferredEffectiveDate `json:"preferred_effective_date" api:"required"`
 	// If your transfer is returned, this will contain details of the return.
 	Return ACHTransferReturn `json:"return" api:"required,nullable"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) of the
+	// receiver's bank.
 	RoutingNumber string `json:"routing_number" api:"required"`
 	// A subhash containing information about when and how the transfer settled at the
 	// Federal Reserve.
@@ -624,8 +625,7 @@ func (r ACHTransferCurrency) IsKnown() bool {
 	return false
 }
 
-// The type of entity that owns the account to which the ACH Transfer is being
-// sent.
+// The type of entity that owns the receiver's account.
 type ACHTransferDestinationAccountHolder string
 
 const (
@@ -642,7 +642,7 @@ func (r ACHTransferDestinationAccountHolder) IsKnown() bool {
 	return false
 }
 
-// The type of the account to which the transfer will be sent.
+// The type of the receiver's bank account.
 type ACHTransferFunding string
 
 const (
@@ -934,7 +934,8 @@ type ACHTransferReturn struct {
 	TraceNumber string `json:"trace_number" api:"required"`
 	// The identifier of the Transaction associated with this return.
 	TransactionID string `json:"transaction_id" api:"required"`
-	// The identifier of the ACH Transfer associated with this return.
+	// The identifier of the ACH Transfer associated with this return. This matches the
+	// original Transaction's `source.ach_transfer_intention.transfer_id`.
 	TransferID  string                 `json:"transfer_id" api:"required"`
 	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
 	JSON        achTransferReturnJSON  `json:"-"`
@@ -1221,33 +1222,42 @@ type ACHTransferNewParams struct {
 	// help the customer recognize the transfer. You are highly encouraged to pass
 	// `individual_name` and `company_name` instead of relying on this fallback.
 	StatementDescriptor param.Field[string] `json:"statement_descriptor" api:"required"`
-	// The account number for the destination account.
+	// The receiver's account number. For credit transfers (positive `amount`) this is
+	// the account that funds will be sent to. For debit transfers (negative `amount`)
+	// this is the account that funds will be pulled from.
 	AccountNumber param.Field[string] `json:"account_number"`
-	// Additional information that will be sent to the recipient. This is included in
-	// the transfer data sent to the receiving bank.
+	// Additional information passed through to the receiving bank with the transfer.
+	// Most ACH transfers do not need this. Only set this if your recipient has asked
+	// for addendum data, typically unstructured remittance information. Corporate
+	// Trade Exchange (CTX) flows can carry structured X12 remittance advice instead.
 	Addenda param.Field[ACHTransferNewParamsAddenda] `json:"addenda"`
-	// The description of the date of the transfer, usually in the format `YYMMDD`.
-	// This is included in the transfer data sent to the receiving bank.
+	// A description of the transfer date (typically `YYMMDD`), sent in the company
+	// batch header. This value is informational and does not affect funds movement,
+	// settlement timing, or returns. Only set this if your recipient has asked for it.
 	CompanyDescriptiveDate param.Field[string] `json:"company_descriptive_date"`
-	// The data you choose to associate with the transfer. This is included in the
-	// transfer data sent to the receiving bank.
+	// Custom data sent in the company batch header. This value is informational and
+	// does not affect funds movement, settlement timing, or returns. Most ACH
+	// transfers do not need this. Only set this if your recipient has asked for it.
 	CompanyDiscretionaryData param.Field[string] `json:"company_discretionary_data"`
-	// A description of the transfer, included in the transfer data sent to the
-	// receiving bank. Standardized formatting may be required, for example `PAYROLL`
-	// for payroll-related Prearranged Payments and Deposits (PPD) credit transfers.
+	// A short description sent in the company batch header. Most receivers do not
+	// surface this. Only set this if your recipient has asked for a specific value or
+	// if Nacha mandates one for your Standard Entry Class (SEC) code and use case. For
+	// example, Prearranged Payment and Deposit (PPD) payroll credits must use
+	// `PAYROLL`, and reversals must use `REVERSAL`.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
-	// The name by which the recipient knows you. This is included in the transfer data
-	// sent to the receiving bank.
+	// The name by which the recipient knows you, sent in the company batch header. We
+	// recommend setting this on every transfer; if you do not, we fall back to the ACH
+	// company name configured on your account.
 	CompanyName param.Field[string] `json:"company_name"`
-	// The type of entity that owns the account to which the ACH Transfer is being
-	// sent.
+	// The type of entity that owns the receiver's account.
 	DestinationAccountHolder param.Field[ACHTransferNewParamsDestinationAccountHolder] `json:"destination_account_holder"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
-	// The type of the account to which the transfer will be sent.
+	// The type of the receiver's bank account.
 	Funding param.Field[ACHTransferNewParamsFunding] `json:"funding"`
-	// Your identifier for the transfer recipient.
+	// Your internal identifier for the transfer recipient. This value is informational
+	// and not verified by the recipient's bank. Most callers can leave this unset.
 	IndividualID param.Field[string] `json:"individual_id"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
@@ -1259,12 +1269,13 @@ type ACHTransferNewParams struct {
 	PreferredEffectiveDate param.Field[ACHTransferNewParamsPreferredEffectiveDate] `json:"preferred_effective_date"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
-	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
-	// destination account.
+	// The American Bankers' Association (ABA) Routing Transit Number (RTN) of the
+	// receiver's bank.
 	RoutingNumber param.Field[string] `json:"routing_number"`
 	// The
 	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
-	// to use for the transfer.
+	// to use for the transfer. If not provided, the default is
+	// `corporate_credit_or_debit`.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 	// The timing of the transaction.
 	TransactionTiming param.Field[ACHTransferNewParamsTransactionTiming] `json:"transaction_timing"`
@@ -1274,8 +1285,10 @@ func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Additional information that will be sent to the recipient. This is included in
-// the transfer data sent to the receiving bank.
+// Additional information passed through to the receiving bank with the transfer.
+// Most ACH transfers do not need this. Only set this if your recipient has asked
+// for addendum data, typically unstructured remittance information. Corporate
+// Trade Exchange (CTX) flows can carry structured X12 remittance advice instead.
 type ACHTransferNewParamsAddenda struct {
 	// The type of addenda to pass with the transfer.
 	Category param.Field[ACHTransferNewParamsAddendaCategory] `json:"category" api:"required"`
@@ -1354,8 +1367,7 @@ func (r ACHTransferNewParamsAddendaPaymentOrderRemittanceAdviceInvoice) MarshalJ
 	return apijson.MarshalRoot(r)
 }
 
-// The type of entity that owns the account to which the ACH Transfer is being
-// sent.
+// The type of entity that owns the receiver's account.
 type ACHTransferNewParamsDestinationAccountHolder string
 
 const (
@@ -1372,7 +1384,7 @@ func (r ACHTransferNewParamsDestinationAccountHolder) IsKnown() bool {
 	return false
 }
 
-// The type of the account to which the transfer will be sent.
+// The type of the receiver's bank account.
 type ACHTransferNewParamsFunding string
 
 const (
@@ -1424,7 +1436,8 @@ func (r ACHTransferNewParamsPreferredEffectiveDateSettlementSchedule) IsKnown() 
 
 // The
 // [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
-// to use for the transfer.
+// to use for the transfer. If not provided, the default is
+// `corporate_credit_or_debit`.
 type ACHTransferNewParamsStandardEntryClassCode string
 
 const (
