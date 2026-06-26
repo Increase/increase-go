@@ -68,7 +68,7 @@ func (r *SupplementalDocumentService) ListAutoPaging(ctx context.Context, query 
 }
 
 // Supplemental Documents are uploaded files connected to an Entity during
-// onboarding.
+// onboarding. Not all programs require supplemental documents.
 type EntitySupplementalDocument struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Supplemental Document was created.

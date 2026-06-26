@@ -307,7 +307,8 @@ func (r EntityBeneficialOwnerType) IsKnown() bool {
 }
 
 type BeneficialOwnerNewParams struct {
-	// The identifier of the Entity to associate with the new Beneficial Owner.
+	// The identifier of the Entity to associate with the new Beneficial Owner. Only
+	// `corporation` entities have beneficial owners.
 	EntityID param.Field[string] `json:"entity_id" api:"required"`
 	// Personal details for the beneficial owner.
 	Individual param.Field[BeneficialOwnerNewParamsIndividual] `json:"individual" api:"required"`
