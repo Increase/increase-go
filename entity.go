@@ -106,7 +106,7 @@ func (r *EntityService) Archive(ctx context.Context, entityID string, opts ...op
 }
 
 // Entities are the legal entities that own accounts. They can be people,
-// corporations, partnerships, government authorities, or trusts. To learn more,
+// corporations, joint accounts, trusts, or government authorities. To learn more,
 // see [Entities](/documentation/entities).
 type Entity struct {
 	// The entity's identifier.
@@ -219,7 +219,8 @@ type EntityCorporation struct {
 	// The numeric North American Industry Classification System (NAICS) code submitted
 	// for the corporation.
 	IndustryCode string `json:"industry_code" api:"required,nullable"`
-	// The legal identifier of the corporation.
+	// The legal identifier of the corporation, like an Employer Identification Number
+	// (EIN).
 	LegalIdentifier EntityCorporationLegalIdentifier `json:"legal_identifier" api:"required,nullable"`
 	// The legal name of the corporation.
 	Name string `json:"name" api:"required"`
@@ -477,11 +478,12 @@ func (r EntityCorporationBeneficialOwnershipExemptionReason) IsKnown() bool {
 	return false
 }
 
-// The legal identifier of the corporation.
+// The legal identifier of the corporation, like an Employer Identification Number
+// (EIN).
 type EntityCorporationLegalIdentifier struct {
 	// The category of the legal identifier.
 	Category EntityCorporationLegalIdentifierCategory `json:"category" api:"required"`
-	// The identifier of the legal identifier.
+	// The legal identifier itself.
 	Value string                               `json:"value" api:"required"`
 	JSON  entityCorporationLegalIdentifierJSON `json:"-"`
 }
@@ -1975,8 +1977,9 @@ func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 // Identification Number (EIN). This replaces the deprecated `tax_identifier`
 // field.
 type EntityNewParamsCorporationLegalIdentifier struct {
-	// The legal identifier. For US Employer Identification Numbers, submit nine digits
-	// with no dashes or other separators. When testing in sandbox, use one of our
+	// The legal identifier itself. For US Employer Identification Numbers, submit nine
+	// digits with no dashes or other separators. When testing in sandbox, use one of
+	// our
 	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier. If not provided, the default is
@@ -2953,8 +2956,8 @@ func (r EntityUpdateParamsCorporationAddress) MarshalJSON() (data []byte, err er
 // The legal identifier of the corporation. This is usually the Employer
 // Identification Number (EIN).
 type EntityUpdateParamsCorporationLegalIdentifier struct {
-	// The identifier of the legal identifier. For US Employer Identification Numbers,
-	// submit nine digits with no dashes or other separators.
+	// The legal identifier itself. For US Employer Identification Numbers, submit nine
+	// digits with no dashes or other separators.
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier.
 	Category param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
