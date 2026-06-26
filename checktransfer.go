@@ -748,6 +748,7 @@ const (
 	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
 	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
 	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
+	CheckTransferStatusPendingReviewing  CheckTransferStatus = "pending_reviewing"
 	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
 	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
 	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
@@ -759,7 +760,7 @@ const (
 
 func (r CheckTransferStatus) IsKnown() bool {
 	switch r {
-	case CheckTransferStatusPendingApproval, CheckTransferStatusCanceled, CheckTransferStatusPendingSubmission, CheckTransferStatusRequiresAttention, CheckTransferStatusRejected, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusReturned:
+	case CheckTransferStatusPendingApproval, CheckTransferStatusCanceled, CheckTransferStatusPendingSubmission, CheckTransferStatusPendingReviewing, CheckTransferStatusRequiresAttention, CheckTransferStatusRejected, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusReturned:
 		return true
 	}
 	return false
@@ -1242,6 +1243,7 @@ const (
 	CheckTransferListParamsStatusInPendingApproval   CheckTransferListParamsStatusIn = "pending_approval"
 	CheckTransferListParamsStatusInCanceled          CheckTransferListParamsStatusIn = "canceled"
 	CheckTransferListParamsStatusInPendingSubmission CheckTransferListParamsStatusIn = "pending_submission"
+	CheckTransferListParamsStatusInPendingReviewing  CheckTransferListParamsStatusIn = "pending_reviewing"
 	CheckTransferListParamsStatusInRequiresAttention CheckTransferListParamsStatusIn = "requires_attention"
 	CheckTransferListParamsStatusInRejected          CheckTransferListParamsStatusIn = "rejected"
 	CheckTransferListParamsStatusInPendingMailing    CheckTransferListParamsStatusIn = "pending_mailing"
@@ -1253,7 +1255,7 @@ const (
 
 func (r CheckTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case CheckTransferListParamsStatusInPendingApproval, CheckTransferListParamsStatusInCanceled, CheckTransferListParamsStatusInPendingSubmission, CheckTransferListParamsStatusInRequiresAttention, CheckTransferListParamsStatusInRejected, CheckTransferListParamsStatusInPendingMailing, CheckTransferListParamsStatusInMailed, CheckTransferListParamsStatusInDeposited, CheckTransferListParamsStatusInStopped, CheckTransferListParamsStatusInReturned:
+	case CheckTransferListParamsStatusInPendingApproval, CheckTransferListParamsStatusInCanceled, CheckTransferListParamsStatusInPendingSubmission, CheckTransferListParamsStatusInPendingReviewing, CheckTransferListParamsStatusInRequiresAttention, CheckTransferListParamsStatusInRejected, CheckTransferListParamsStatusInPendingMailing, CheckTransferListParamsStatusInMailed, CheckTransferListParamsStatusInDeposited, CheckTransferListParamsStatusInStopped, CheckTransferListParamsStatusInReturned:
 		return true
 	}
 	return false
