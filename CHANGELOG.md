@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.599.0](https://github.com/Increase/increase-go/compare/v0.598.0...v0.599.0) (2026-06-29)
+
+
+### Features
+
+* **api:** add pending_reviewing check transfer status ([c4b8bba](https://github.com/Increase/increase-go/commit/c4b8bbaacced416c786b3cf9fb9b47b322db6ffa))
+
 ## [0.598.0](https://github.com/Increase/increase-go/compare/v0.597.0...v0.598.0) (2026-06-25)
 
 
