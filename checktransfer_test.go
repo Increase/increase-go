@@ -43,14 +43,18 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				Name:       increase.F("Ian Crease"),
 				Phone:      increase.F("+16505046304"),
 			}),
-			Memo:                    increase.F("Check payment"),
+			Memo: increase.F("Check payment"),
+			Payer: increase.F([]increase.CheckTransferNewParamsPhysicalCheckPayer{{
+				Contents: increase.F("National Phonograph Company"),
+			}, {
+				Contents: increase.F("33 Liberty Street"),
+			}, {
+				Contents: increase.F("New York, NY 10045"),
+			}}),
 			RecipientName:           increase.F("Ian Crease"),
 			AttachmentFileID:        increase.F("attachment_file_id"),
 			CheckVoucherImageFileID: increase.F("check_voucher_image_file_id"),
 			Note:                    increase.F("note"),
-			Payer: increase.F([]increase.CheckTransferNewParamsPhysicalCheckPayer{{
-				Contents: increase.F("contents"),
-			}}),
 			ReturnAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckReturnAddress{
 				City:       increase.F("city"),
 				Line1:      increase.F("line1"),
@@ -60,7 +64,8 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 				Line2:      increase.F("line2"),
 				Phone:      increase.F("x"),
 			}),
-			ShippingMethod: increase.F(increase.CheckTransferNewParamsPhysicalCheckShippingMethodUspsFirstClass),
+			ReturnAddressName: increase.F("return_address_name"),
+			ShippingMethod:    increase.F(increase.CheckTransferNewParamsPhysicalCheckShippingMethodUspsFirstClass),
 			Signature: increase.F(increase.CheckTransferNewParamsPhysicalCheckSignature{
 				ImageFileID: increase.F("image_file_id"),
 				Text:        increase.F("Ian Crease"),

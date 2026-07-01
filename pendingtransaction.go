@@ -2128,8 +2128,8 @@ type PendingTransactionNewParams struct {
 	// The Account to place the hold on.
 	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The amount to hold in the minor unit of the account's currency. For dollars, for
-	// example, this is cents. This should be a negative amount - to hold $1.00 from
-	// the account, you would pass -100.
+	// example, this is cents. This should be a negative amount: To hold $1.00 from the
+	// account, pass -100 as `amount`.
 	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The description you choose to give the hold.
 	Description param.Field[string] `json:"description"`
