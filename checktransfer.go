@@ -1030,6 +1030,10 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address" api:"required"`
 	// The descriptor that will be printed on the memo field on the check.
 	Memo param.Field[string] `json:"memo" api:"required"`
+	// The payer of the check. This will be printed on the top-left portion of the
+	// check. This should be an array of up to 4 elements, each of which represents a
+	// line of the payer.
+	Payer param.Field[[]CheckTransferNewParamsPhysicalCheckPayer] `json:"payer" api:"required"`
 	// The name that will be printed on the check in the 'To:' field.
 	RecipientName param.Field[string] `json:"recipient_name" api:"required"`
 	// The ID of a File to be attached to the check. This must have
@@ -1042,10 +1046,6 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	CheckVoucherImageFileID param.Field[string] `json:"check_voucher_image_file_id"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
-	// The payer of the check. This will be printed on the top-left portion of the
-	// check and defaults to the return address if unspecified. This should be an array
-	// of up to 4 elements, each of which represents a line of the payer.
-	Payer param.Field[[]CheckTransferNewParamsPhysicalCheckPayer] `json:"payer"`
 	// The return address to be printed on the check. If omitted this will default to
 	// an Increase-owned address that will mark checks as delivery failed and shred
 	// them.
