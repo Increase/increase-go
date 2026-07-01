@@ -496,6 +496,7 @@ type AccountNewParamsLoan struct {
 	StatementPaymentType param.Field[AccountNewParamsLoanStatementPaymentType] `json:"statement_payment_type" api:"required"`
 	// The date on which the loan matures.
 	MaturityDate param.Field[time.Time] `json:"maturity_date" format:"date"`
+	ExtraFields  map[string]interface{} `json:"-,extras"`
 }
 
 func (r AccountNewParamsLoan) MarshalJSON() (data []byte, err error) {
