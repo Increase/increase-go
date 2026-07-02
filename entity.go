@@ -3281,8 +3281,9 @@ type EntityListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
-	Limit  param.Field[int64]                  `query:"limit"`
-	Status param.Field[EntityListParamsStatus] `query:"status"`
+	Limit            param.Field[int64]                            `query:"limit"`
+	Status           param.Field[EntityListParamsStatus]           `query:"status"`
+	ValidationStatus param.Field[EntityListParamsValidationStatus] `query:"validation_status"`
 }
 
 // URLQuery serializes [EntityListParams]'s query parameters as `url.Values`.
@@ -3343,6 +3344,38 @@ const (
 func (r EntityListParamsStatusIn) IsKnown() bool {
 	switch r {
 	case EntityListParamsStatusInActive, EntityListParamsStatusInArchived, EntityListParamsStatusInDisabled:
+		return true
+	}
+	return false
+}
+
+type EntityListParamsValidationStatus struct {
+	// Filter Entities for those with the specified validation status. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]EntityListParamsValidationStatusIn] `query:"in"`
+}
+
+// URLQuery serializes [EntityListParamsValidationStatus]'s query parameters as
+// `url.Values`.
+func (r EntityListParamsValidationStatus) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type EntityListParamsValidationStatusIn string
+
+const (
+	EntityListParamsValidationStatusInPending EntityListParamsValidationStatusIn = "pending"
+	EntityListParamsValidationStatusInValid   EntityListParamsValidationStatusIn = "valid"
+	EntityListParamsValidationStatusInInvalid EntityListParamsValidationStatusIn = "invalid"
+)
+
+func (r EntityListParamsValidationStatusIn) IsKnown() bool {
+	switch r {
+	case EntityListParamsValidationStatusInPending, EntityListParamsValidationStatusInValid, EntityListParamsValidationStatusInInvalid:
 		return true
 	}
 	return false
