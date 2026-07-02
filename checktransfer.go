@@ -505,6 +505,8 @@ type CheckTransferPhysicalCheck struct {
 	RecipientName string `json:"recipient_name" api:"required"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required,nullable"`
+	// A custom name printed above the Increase-managed return address.
+	ReturnAddressName string `json:"return_address_name" api:"required,nullable"`
 	// The shipping method for the check.
 	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method" api:"required"`
 	// The signature that will appear on the check.
@@ -526,6 +528,7 @@ type checkTransferPhysicalCheckJSON struct {
 	Payer                   apijson.Field
 	RecipientName           apijson.Field
 	ReturnAddress           apijson.Field
+	ReturnAddressName       apijson.Field
 	ShippingMethod          apijson.Field
 	Signature               apijson.Field
 	TrackingUpdates         apijson.Field
@@ -1030,6 +1033,10 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address" api:"required"`
 	// The descriptor that will be printed on the memo field on the check.
 	Memo param.Field[string] `json:"memo" api:"required"`
+	// The payer of the check. This will be printed on the top-left portion of the
+	// check. This should be an array of up to 4 elements, each of which represents a
+	// line of the payer.
+	Payer param.Field[[]CheckTransferNewParamsPhysicalCheckPayer] `json:"payer" api:"required"`
 	// The name that will be printed on the check in the 'To:' field.
 	RecipientName param.Field[string] `json:"recipient_name" api:"required"`
 	// The ID of a File to be attached to the check. This must have
@@ -1042,14 +1049,13 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	CheckVoucherImageFileID param.Field[string] `json:"check_voucher_image_file_id"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
-	// The payer of the check. This will be printed on the top-left portion of the
-	// check and defaults to the return address if unspecified. This should be an array
-	// of up to 4 elements, each of which represents a line of the payer.
-	Payer param.Field[[]CheckTransferNewParamsPhysicalCheckPayer] `json:"payer"`
 	// The return address to be printed on the check. If omitted this will default to
 	// an Increase-owned address that will mark checks as delivery failed and shred
 	// them.
 	ReturnAddress param.Field[CheckTransferNewParamsPhysicalCheckReturnAddress] `json:"return_address"`
+	// A custom name to print above the default return address. Cannot be provided
+	// together with `return_address`.
+	ReturnAddressName param.Field[string] `json:"return_address_name"`
 	// How to ship the check. For details on pricing, timing, and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
 	ShippingMethod param.Field[CheckTransferNewParamsPhysicalCheckShippingMethod] `json:"shipping_method"`
