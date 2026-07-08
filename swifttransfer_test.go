@@ -47,13 +47,14 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 			PostalCode: increase.F("10045"),
 			State:      increase.F("NY"),
 		}),
-		DebtorName:                        increase.F("National Phonograph Company"),
-		InstructedAmount:                  increase.F(int64(100)),
-		InstructedCurrency:                increase.F(increase.SwiftTransferNewParamsInstructedCurrencyUsd),
-		SourceAccountNumberID:             increase.F("account_number_v18nkfqm6afpsrvy82b2"),
-		UnstructuredRemittanceInformation: increase.F("New Swift transfer"),
-		RequireApproval:                   increase.F(true),
-		RoutingNumber:                     increase.F("sq"),
+		DebtorName:                         increase.F("National Phonograph Company"),
+		InstructedAmount:                   increase.F(int64(100)),
+		InstructedCurrency:                 increase.F(increase.SwiftTransferNewParamsInstructedCurrencyUsd),
+		SourceAccountNumberID:              increase.F("account_number_v18nkfqm6afpsrvy82b2"),
+		UnstructuredRemittanceInformation:  increase.F("New Swift transfer"),
+		IntermediaryBankIdentificationCode: increase.F("210BF73A"),
+		RequireApproval:                    increase.F(true),
+		RoutingNumber:                      increase.F("sq"),
 	})
 	if err != nil {
 		var apierr *increase.Error
