@@ -140,6 +140,9 @@ type SwiftTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code of the
 	// instructed amount.
 	InstructedCurrency SwiftTransferInstructedCurrency `json:"instructed_currency" api:"required"`
+	// The bank identification code (BIC) of the intermediary bank, if the transfer is
+	// routed through one.
+	IntermediaryBankIdentificationCode string `json:"intermediary_bank_identification_code" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer.
 	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// The creditor's bank account routing or transit number. Required in certain
@@ -180,6 +183,7 @@ type swiftTransferJSON struct {
 	IdempotencyKey                     apijson.Field
 	InstructedAmount                   apijson.Field
 	InstructedCurrency                 apijson.Field
+	IntermediaryBankIdentificationCode apijson.Field
 	PendingTransactionID               apijson.Field
 	RoutingNumber                      apijson.Field
 	SourceAccountNumberID              apijson.Field
@@ -478,6 +482,9 @@ type SwiftTransferNewParams struct {
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id" api:"required"`
 	// Unstructured remittance information to include in the transfer.
 	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information" api:"required"`
+	// The bank identification code (BIC) of the intermediary bank, if the transfer
+	// should be routed through one.
+	IntermediaryBankIdentificationCode param.Field[string] `json:"intermediary_bank_identification_code"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The creditor's bank account routing or transit number. Required in certain

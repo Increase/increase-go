@@ -109,6 +109,8 @@ type InboundWireTransfer struct {
 	CreditorAddressLine3 string `json:"creditor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
 	CreditorName string `json:"creditor_name" api:"required,nullable"`
+	// The account number of the sender.
+	DebtorAccountNumber string `json:"debtor_account_number" api:"required,nullable"`
 	// A free-form address field set by the sender.
 	DebtorAddressLine1 string `json:"debtor_address_line1" api:"required,nullable"`
 	// A free-form address field set by the sender.
@@ -117,6 +119,8 @@ type InboundWireTransfer struct {
 	DebtorAddressLine3 string `json:"debtor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
 	DebtorName string `json:"debtor_name" api:"required,nullable"`
+	// The American Banking Association (ABA) routing number of the sender.
+	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required,nullable"`
 	// An Increase-constructed description of the transfer.
 	Description string `json:"description" api:"required"`
 	// A free-form reference string set by the sender, to help identify the transfer.
@@ -164,10 +168,12 @@ type inboundWireTransferJSON struct {
 	CreditorAddressLine2               apijson.Field
 	CreditorAddressLine3               apijson.Field
 	CreditorName                       apijson.Field
+	DebtorAccountNumber                apijson.Field
 	DebtorAddressLine1                 apijson.Field
 	DebtorAddressLine2                 apijson.Field
 	DebtorAddressLine3                 apijson.Field
 	DebtorName                         apijson.Field
+	DebtorRoutingNumber                apijson.Field
 	Description                        apijson.Field
 	EndToEndIdentification             apijson.Field
 	InputMessageAccountabilityData     apijson.Field
