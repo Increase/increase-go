@@ -47,12 +47,13 @@ func (r *SimulationCardSettlementService) New(ctx context.Context, body Simulati
 type SimulationCardSettlementNewParams struct {
 	// The identifier of the Card to create a settlement on.
 	CardID param.Field[string] `json:"card_id" api:"required"`
-	// The identifier of the Pending Transaction for the Card Authorization you wish to
-	// settle.
-	PendingTransactionID param.Field[string] `json:"pending_transaction_id" api:"required"`
 	// The amount to be settled. This defaults to the amount of the Pending Transaction
-	// being settled.
+	// being settled, or a random amount if `pending_transaction_id` is not provided.
 	Amount param.Field[int64] `json:"amount"`
+	// The identifier of the Pending Transaction for the Card Authorization you wish to
+	// settle. If not provided, the settlement will be force posted without a Card
+	// Authorization.
+	PendingTransactionID param.Field[string] `json:"pending_transaction_id"`
 }
 
 func (r SimulationCardSettlementNewParams) MarshalJSON() (data []byte, err error) {

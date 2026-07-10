@@ -650,6 +650,13 @@ func (r transactionSourceACHTransferRejectionJSON) RawJSON() string {
 // later. The return appears as a new posted Transaction; no Pending Transaction is
 // created.
 type TransactionSourceACHTransferReturn struct {
+	// Additional free-form information included by the receiving bank in the return's
+	// addenda record. This is raw, uninterpreted text whose presence and format are
+	// not guaranteed. For a `file_record_edit_criteria` (R17) return the receiving
+	// bank may set this to `QUESTIONABLE` (optionally followed by more text) to
+	// indicate it believes the transfer was initiated under questionable
+	// circumstances.
+	AddendaInformation string `json:"addenda_information" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -675,6 +682,7 @@ type TransactionSourceACHTransferReturn struct {
 // transactionSourceACHTransferReturnJSON contains the JSON metadata for the struct
 // [TransactionSourceACHTransferReturn]
 type transactionSourceACHTransferReturnJSON struct {
+	AddendaInformation  apijson.Field
 	CreatedAt           apijson.Field
 	RawReturnReasonCode apijson.Field
 	ReturnReasonCode    apijson.Field

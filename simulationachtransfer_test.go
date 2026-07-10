@@ -82,7 +82,8 @@ func TestSimulationACHTransferReturnWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"ach_transfer_uoxatyh3lt5evrsdvo7q",
 		increase.SimulationACHTransferReturnParams{
-			Reason: increase.F(increase.SimulationACHTransferReturnParamsReasonInsufficientFund),
+			AddendaInformation: increase.F("x"),
+			Reason:             increase.F(increase.SimulationACHTransferReturnParamsReasonInsufficientFund),
 		},
 	)
 	if err != nil {
