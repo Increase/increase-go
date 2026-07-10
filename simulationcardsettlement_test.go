@@ -27,8 +27,8 @@ func TestSimulationCardSettlementNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Simulations.CardSettlements.New(context.TODO(), increase.SimulationCardSettlementNewParams{
 		CardID:               increase.F("card_oubs0hwk5rn6knuecxg2"),
-		PendingTransactionID: increase.F("pending_transaction_k1sfetcau2qbvjbzgju4"),
 		Amount:               increase.F(int64(1)),
+		PendingTransactionID: increase.F("pending_transaction_k1sfetcau2qbvjbzgju4"),
 	})
 	if err != nil {
 		var apierr *increase.Error

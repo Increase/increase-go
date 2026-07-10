@@ -149,6 +149,10 @@ func (r SimulationACHTransferNewNotificationOfChangeParamsCorrectedAccountFundin
 }
 
 type SimulationACHTransferReturnParams struct {
+	// Free-form information the returning bank includes in the return addenda. For a
+	// `file_record_edit_criteria` (R17) return, set this to `QUESTIONABLE` to simulate
+	// a return the bank believes was initiated under questionable circumstances.
+	AddendaInformation param.Field[string] `json:"addenda_information"`
 	// The reason why the Federal Reserve or destination bank returned this transfer.
 	// Defaults to `no_account`.
 	Reason param.Field[SimulationACHTransferReturnParamsReason] `json:"reason"`

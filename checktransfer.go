@@ -511,7 +511,8 @@ type CheckTransferPhysicalCheck struct {
 	ShippingMethod CheckTransferPhysicalCheckShippingMethod `json:"shipping_method" api:"required"`
 	// The signature that will appear on the check.
 	Signature CheckTransferPhysicalCheckSignature `json:"signature" api:"required"`
-	// Tracking updates relating to the physical check's delivery.
+	// Tracking updates relating to the physical check's delivery. Sorted by
+	// `created_at` in ascending order.
 	TrackingUpdates []CheckTransferPhysicalCheckTrackingUpdate `json:"tracking_updates" api:"required"`
 	ExtraFields     map[string]interface{}                     `json:"-" api:"extrafields"`
 	JSON            checkTransferPhysicalCheckJSON             `json:"-"`
