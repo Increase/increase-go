@@ -31,8 +31,8 @@ func TestBeneficialOwnerNewWithOptionalParams(t *testing.T) {
 		Individual: increase.F(increase.BeneficialOwnerNewParamsIndividual{
 			Address: increase.F(increase.BeneficialOwnerNewParamsIndividualAddress{
 				City:    increase.F("New York"),
-				Country: increase.F("US"),
 				Line1:   increase.F("33 Liberty Street"),
+				Country: increase.F("US"),
 				Line2:   increase.F("x"),
 				State:   increase.F("NY"),
 				Zip:     increase.F("10045"),
@@ -115,8 +115,8 @@ func TestBeneficialOwnerUpdateWithOptionalParams(t *testing.T) {
 		increase.BeneficialOwnerUpdateParams{
 			Address: increase.F(increase.BeneficialOwnerUpdateParamsAddress{
 				City:    increase.F("New York"),
-				Country: increase.F("US"),
 				Line1:   increase.F("33 Liberty Street"),
+				Country: increase.F("US"),
 				Line2:   increase.F("Unit 2"),
 				State:   increase.F("NY"),
 				Zip:     increase.F("10045"),
