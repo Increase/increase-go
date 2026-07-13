@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.601.0](https://github.com/Increase/increase-go/compare/v0.600.0...v0.601.0) (2026-07-13)
+
+
+### Features
+
+* **api:** api update ([#1337](https://github.com/Increase/increase-go/issues/1337)) ([51e29d3](https://github.com/Increase/increase-go/commit/51e29d3d594a7eebd0be68a627a1b8416e6a3f8a))
+
+
+### Bug Fixes
+
+* **api:** make address country optional, defaulting to US ([e80f73f](https://github.com/Increase/increase-go/commit/e80f73f4114f0ff4614e84d8a6c87fe147e11245))
+
 ## [0.600.0](https://github.com/Increase/increase-go/compare/v0.599.0...v0.600.0) (2026-07-02)
 
 
