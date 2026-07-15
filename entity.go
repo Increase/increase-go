@@ -1782,11 +1782,10 @@ func (r EntityNewParamsCorporation) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsCorporationAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -1843,11 +1842,10 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividual) MarshalJSON() (dat
 type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2138,11 +2136,10 @@ func (r EntityNewParamsJointIndividual) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsJointIndividualsAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2285,11 +2282,10 @@ func (r EntityNewParamsNaturalPerson) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsNaturalPersonAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2611,11 +2607,10 @@ func (r EntityNewParamsTrustTrusteesIndividual) MarshalJSON() (data []byte, err 
 type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2755,11 +2750,10 @@ func (r EntityNewParamsTrustGrantor) MarshalJSON() (data []byte, err error) {
 type EntityNewParamsTrustGrantorAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -2942,11 +2936,10 @@ func (r EntityUpdateParamsCorporation) MarshalJSON() (data []byte, err error) {
 type EntityUpdateParamsCorporationAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US
@@ -3050,11 +3043,10 @@ func (r EntityUpdateParamsNaturalPerson) MarshalJSON() (data []byte, err error) 
 type EntityUpdateParamsNaturalPersonAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults
-	// to `US`.
-	Country param.Field[string] `json:"country"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
 	// The two-letter United States Postal Service (USPS) abbreviation for the US

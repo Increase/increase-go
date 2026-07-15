@@ -31,8 +31,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		Corporation: increase.F(increase.EntityNewParamsCorporation{
 			Address: increase.F(increase.EntityNewParamsCorporationAddress{
 				City:    increase.F("New York"),
-				Line1:   increase.F("33 Liberty Street"),
 				Country: increase.F("x"),
+				Line1:   increase.F("33 Liberty Street"),
 				Line2:   increase.F("x"),
 				State:   increase.F("NY"),
 				Zip:     increase.F("10045"),
@@ -41,8 +41,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				Individual: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividual{
 					Address: increase.F(increase.EntityNewParamsCorporationBeneficialOwnersIndividualAddress{
 						City:    increase.F("New York"),
-						Line1:   increase.F("33 Liberty Street"),
 						Country: increase.F("x"),
+						Line1:   increase.F("33 Liberty Street"),
 						Line2:   increase.F("x"),
 						State:   increase.F("NY"),
 						Zip:     increase.F("10045"),
@@ -108,8 +108,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Individuals: increase.F([]increase.EntityNewParamsJointIndividual{{
 				Address: increase.F(increase.EntityNewParamsJointIndividualsAddress{
 					City:    increase.F("x"),
-					Line1:   increase.F("x"),
 					Country: increase.F("x"),
+					Line1:   increase.F("x"),
 					Line2:   increase.F("x"),
 					State:   increase.F("x"),
 					Zip:     increase.F("x"),
@@ -144,8 +144,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		NaturalPerson: increase.F(increase.EntityNewParamsNaturalPerson{
 			Address: increase.F(increase.EntityNewParamsNaturalPersonAddress{
 				City:    increase.F("x"),
-				Line1:   increase.F("x"),
 				Country: increase.F("x"),
+				Line1:   increase.F("x"),
 				Line2:   increase.F("x"),
 				State:   increase.F("x"),
 				Zip:     increase.F("x"),
@@ -207,8 +207,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 				Individual: increase.F(increase.EntityNewParamsTrustTrusteesIndividual{
 					Address: increase.F(increase.EntityNewParamsTrustTrusteesIndividualAddress{
 						City:    increase.F("x"),
-						Line1:   increase.F("x"),
 						Country: increase.F("x"),
+						Line1:   increase.F("x"),
 						Line2:   increase.F("x"),
 						State:   increase.F("x"),
 						Zip:     increase.F("x"),
@@ -245,8 +245,8 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			Grantor: increase.F(increase.EntityNewParamsTrustGrantor{
 				Address: increase.F(increase.EntityNewParamsTrustGrantorAddress{
 					City:    increase.F("x"),
-					Line1:   increase.F("x"),
 					Country: increase.F("x"),
+					Line1:   increase.F("x"),
 					Line2:   increase.F("x"),
 					State:   increase.F("x"),
 					Zip:     increase.F("x"),
@@ -330,8 +330,8 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 			Corporation: increase.F(increase.EntityUpdateParamsCorporation{
 				Address: increase.F(increase.EntityUpdateParamsCorporationAddress{
 					City:    increase.F("New York"),
-					Line1:   increase.F("33 Liberty Street"),
 					Country: increase.F("US"),
+					Line1:   increase.F("33 Liberty Street"),
 					Line2:   increase.F("Unit 2"),
 					State:   increase.F("NY"),
 					Zip:     increase.F("10045"),
@@ -360,8 +360,8 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 			NaturalPerson: increase.F(increase.EntityUpdateParamsNaturalPerson{
 				Address: increase.F(increase.EntityUpdateParamsNaturalPersonAddress{
 					City:    increase.F("x"),
-					Line1:   increase.F("x"),
 					Country: increase.F("x"),
+					Line1:   increase.F("x"),
 					Line2:   increase.F("x"),
 					State:   increase.F("x"),
 					Zip:     increase.F("x"),
