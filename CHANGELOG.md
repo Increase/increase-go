@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.603.0](https://github.com/Increase/increase-go/compare/v0.602.0...v0.603.0) (2026-07-16)
+
+
+### Features
+
+* **api:** add physical_check_book event category ([4070420](https://github.com/Increase/increase-go/commit/4070420fa2d082db16beaafba1c526f3c55eab5c))
+
 ## [0.602.0](https://github.com/Increase/increase-go/compare/v0.601.0...v0.602.0) (2026-07-15)
 
 
