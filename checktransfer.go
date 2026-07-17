@@ -694,6 +694,9 @@ func (r checkTransferPhysicalCheckSignatureJSON) RawJSON() string {
 }
 
 type CheckTransferPhysicalCheckTrackingUpdate struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
+	// carrier expects the check to be delivered.
+	CarrierEstimatedDeliveryAt time.Time `json:"carrier_estimated_delivery_at" api:"required,nullable" format:"date-time"`
 	// The type of tracking event.
 	Category CheckTransferPhysicalCheckTrackingUpdatesCategory `json:"category" api:"required"`
 	// The ISO 3166-1 alpha-2 country code for the country where the event took place.
@@ -709,12 +712,13 @@ type CheckTransferPhysicalCheckTrackingUpdate struct {
 // checkTransferPhysicalCheckTrackingUpdateJSON contains the JSON metadata for the
 // struct [CheckTransferPhysicalCheckTrackingUpdate]
 type checkTransferPhysicalCheckTrackingUpdateJSON struct {
-	Category    apijson.Field
-	Country     apijson.Field
-	CreatedAt   apijson.Field
-	PostalCode  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	CarrierEstimatedDeliveryAt apijson.Field
+	Category                   apijson.Field
+	Country                    apijson.Field
+	CreatedAt                  apijson.Field
+	PostalCode                 apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
 }
 
 func (r *CheckTransferPhysicalCheckTrackingUpdate) UnmarshalJSON(data []byte) (err error) {
