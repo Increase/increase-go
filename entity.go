@@ -1160,13 +1160,13 @@ func (r EntityTrustCategory) IsKnown() bool {
 
 // The grantor of the trust. Will be present if the `category` is `revocable`.
 type EntityTrustGrantor struct {
-	// The person's address.
-	Address EntityTrustGrantorAddress `json:"address" api:"required"`
-	// The person's date of birth in YYYY-MM-DD format.
-	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
-	// A means of verifying the person's identity.
+	// The grantor's address.
+	Address EntityTrustGrantorAddress `json:"address" api:"required,nullable"`
+	// The grantor's date of birth in YYYY-MM-DD format.
+	DateOfBirth time.Time `json:"date_of_birth" api:"required,nullable" format:"date"`
+	// A means of verifying the grantor's identity.
 	Identification EntityTrustGrantorIdentification `json:"identification" api:"required,nullable"`
-	// The person's legal name.
+	// The grantor's legal name.
 	Name string                 `json:"name" api:"required"`
 	JSON entityTrustGrantorJSON `json:"-"`
 }
@@ -1190,7 +1190,7 @@ func (r entityTrustGrantorJSON) RawJSON() string {
 	return r.raw
 }
 
-// The person's address.
+// The grantor's address.
 type EntityTrustGrantorAddress struct {
 	// The city, district, town, or village of the address.
 	City string `json:"city" api:"required,nullable"`
@@ -1229,12 +1229,12 @@ func (r entityTrustGrantorAddressJSON) RawJSON() string {
 	return r.raw
 }
 
-// A means of verifying the person's identity.
+// A means of verifying the grantor's identity.
 type EntityTrustGrantorIdentification struct {
-	// A method that can be used to verify the individual's identity.
+	// A method that can be used to verify the grantor's identity.
 	Method EntityTrustGrantorIdentificationMethod `json:"method" api:"required"`
 	// The last 4 digits of the identification number that can be used to verify the
-	// individual's identity.
+	// grantor's identity.
 	NumberLast4 string                               `json:"number_last4" api:"required"`
 	ExtraFields map[string]interface{}               `json:"-" api:"extrafields"`
 	JSON        entityTrustGrantorIdentificationJSON `json:"-"`
@@ -1257,7 +1257,7 @@ func (r entityTrustGrantorIdentificationJSON) RawJSON() string {
 	return r.raw
 }
 
-// A method that can be used to verify the individual's identity.
+// A method that can be used to verify the grantor's identity.
 type EntityTrustGrantorIdentificationMethod string
 
 const (
@@ -2725,14 +2725,14 @@ func (r EntityNewParamsTrustTrusteesIndividualIdentificationPassport) MarshalJSO
 
 // The grantor of the trust. Required if `category` is equal to `revocable`.
 type EntityNewParamsTrustGrantor struct {
-	// The individual's physical address. Mail receiving locations like PO Boxes and
-	// PMB's are disallowed.
+	// The grantor's physical address. Mail receiving locations like PO Boxes and PMB's
+	// are disallowed.
 	Address param.Field[EntityNewParamsTrustGrantorAddress] `json:"address" api:"required"`
-	// The person's date of birth in YYYY-MM-DD format.
+	// The grantor's date of birth in YYYY-MM-DD format.
 	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
 	// A means of verifying the person's identity.
 	Identification param.Field[EntityNewParamsTrustGrantorIdentification] `json:"identification" api:"required"`
-	// The person's legal name.
+	// The grantor's legal name.
 	Name param.Field[string] `json:"name" api:"required"`
 	// The identification method for an individual can only be a passport, driver's
 	// license, or other document if you've confirmed the individual does not have a US
@@ -2745,8 +2745,8 @@ func (r EntityNewParamsTrustGrantor) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The individual's physical address. Mail receiving locations like PO Boxes and
-// PMB's are disallowed.
+// The grantor's physical address. Mail receiving locations like PO Boxes and PMB's
+// are disallowed.
 type EntityNewParamsTrustGrantorAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
