@@ -74,6 +74,8 @@ type RoutingNumberListResponse struct {
 	FednowTransfers RoutingNumberListResponseFednowTransfers `json:"fednow_transfers" api:"required"`
 	// The name of the financial institution belonging to a routing number.
 	Name string `json:"name" api:"required"`
+	// This routing number's support for Real-Time Payments Requests for Payment.
+	RealTimePaymentsRequestForPayment RoutingNumberListResponseRealTimePaymentsRequestForPayment `json:"real_time_payments_request_for_payment" api:"required"`
 	// This routing number's support for Real-Time Payments Transfers.
 	RealTimePaymentsTransfers RoutingNumberListResponseRealTimePaymentsTransfers `json:"real_time_payments_transfers" api:"required"`
 	// The nine digit routing number identifier.
@@ -89,15 +91,16 @@ type RoutingNumberListResponse struct {
 // routingNumberListResponseJSON contains the JSON metadata for the struct
 // [RoutingNumberListResponse]
 type routingNumberListResponseJSON struct {
-	ACHTransfers              apijson.Field
-	FednowTransfers           apijson.Field
-	Name                      apijson.Field
-	RealTimePaymentsTransfers apijson.Field
-	RoutingNumber             apijson.Field
-	Type                      apijson.Field
-	WireTransfers             apijson.Field
-	raw                       string
-	ExtraFields               map[string]apijson.Field
+	ACHTransfers                      apijson.Field
+	FednowTransfers                   apijson.Field
+	Name                              apijson.Field
+	RealTimePaymentsRequestForPayment apijson.Field
+	RealTimePaymentsTransfers         apijson.Field
+	RoutingNumber                     apijson.Field
+	Type                              apijson.Field
+	WireTransfers                     apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
 }
 
 func (r *RoutingNumberListResponse) UnmarshalJSON(data []byte) (err error) {
@@ -135,6 +138,22 @@ const (
 func (r RoutingNumberListResponseFednowTransfers) IsKnown() bool {
 	switch r {
 	case RoutingNumberListResponseFednowTransfersSupported, RoutingNumberListResponseFednowTransfersNotSupported:
+		return true
+	}
+	return false
+}
+
+// This routing number's support for Real-Time Payments Requests for Payment.
+type RoutingNumberListResponseRealTimePaymentsRequestForPayment string
+
+const (
+	RoutingNumberListResponseRealTimePaymentsRequestForPaymentSupported    RoutingNumberListResponseRealTimePaymentsRequestForPayment = "supported"
+	RoutingNumberListResponseRealTimePaymentsRequestForPaymentNotSupported RoutingNumberListResponseRealTimePaymentsRequestForPayment = "not_supported"
+)
+
+func (r RoutingNumberListResponseRealTimePaymentsRequestForPayment) IsKnown() bool {
+	switch r {
+	case RoutingNumberListResponseRealTimePaymentsRequestForPaymentSupported, RoutingNumberListResponseRealTimePaymentsRequestForPaymentNotSupported:
 		return true
 	}
 	return false
