@@ -1982,8 +1982,7 @@ type EntityNewParamsCorporationLegalIdentifier struct {
 	// our
 	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Value param.Field[string] `json:"value" api:"required"`
-	// The category of the legal identifier. If not provided, the default is
-	// `us_employer_identification_number`.
+	// The category of the legal identifier.
 	Category param.Field[EntityNewParamsCorporationLegalIdentifierCategory] `json:"category"`
 }
 
@@ -1991,8 +1990,7 @@ func (r EntityNewParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, e
 	return apijson.MarshalRoot(r)
 }
 
-// The category of the legal identifier. If not provided, the default is
-// `us_employer_identification_number`.
+// The category of the legal identifier.
 type EntityNewParamsCorporationLegalIdentifierCategory string
 
 const (

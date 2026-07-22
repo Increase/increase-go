@@ -225,7 +225,7 @@ type ExternalAccountNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number" api:"required"`
 	// The type of entity that owns the External Account.
 	AccountHolder param.Field[ExternalAccountNewParamsAccountHolder] `json:"account_holder"`
-	// The type of the destination account. Defaults to `checking`.
+	// The type of the destination account.
 	Funding param.Field[ExternalAccountNewParamsFunding] `json:"funding"`
 }
 
@@ -250,7 +250,7 @@ func (r ExternalAccountNewParamsAccountHolder) IsKnown() bool {
 	return false
 }
 
-// The type of the destination account. Defaults to `checking`.
+// The type of the destination account.
 type ExternalAccountNewParamsFunding string
 
 const (
