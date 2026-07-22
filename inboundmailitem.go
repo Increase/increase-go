@@ -253,6 +253,8 @@ type InboundMailItemListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 	// Filter Inbound Mail Items to ones sent to the provided Lockbox Address.
 	LockboxAddressID param.Field[string] `query:"lockbox_address_id"`

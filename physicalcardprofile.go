@@ -260,13 +260,17 @@ func (r PhysicalCardProfileType) IsKnown() bool {
 }
 
 type PhysicalCardProfileNewParams struct {
-	// The identifier of the File containing the physical card's carrier image.
+	// The identifier of the File containing the physical card's carrier image. This
+	// must have `purpose: physical_card_carrier` and be a 2550x3300 pixel PNG with a
+	// density of 300 dots per inch (DPI).
 	CarrierImageFileID param.Field[string] `json:"carrier_image_file_id" api:"required"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone" api:"required"`
 	// A description you can use to identify the Card Profile.
 	Description param.Field[string] `json:"description" api:"required"`
-	// The identifier of the File containing the physical card's front image.
+	// The identifier of the File containing the physical card's front image. This must
+	// have `purpose: physical_card_front` and be a 2100x1344 pixel PNG with a density
+	// of 600 dots per inch (DPI).
 	FrontImageFileID param.Field[string] `json:"front_image_file_id" api:"required"`
 	// The identifier for the Program that this Physical Card Profile falls under.
 	ProgramID param.Field[string] `json:"program_id" api:"required"`
@@ -304,6 +308,8 @@ type PhysicalCardProfileListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit  param.Field[int64]                               `query:"limit"`
 	Status param.Field[PhysicalCardProfileListParamsStatus] `query:"status"`
 }

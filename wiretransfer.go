@@ -421,6 +421,7 @@ func (r wireTransferCreditorJSON) RawJSON() string {
 type WireTransferCreditorAddress struct {
 	// Unstructured address lines.
 	Unstructured WireTransferCreditorAddressUnstructured `json:"unstructured" api:"required,nullable"`
+	ExtraFields  map[string]interface{}                  `json:"-" api:"extrafields"`
 	JSON         wireTransferCreditorAddressJSON         `json:"-"`
 }
 
@@ -515,6 +516,7 @@ func (r wireTransferDebtorJSON) RawJSON() string {
 type WireTransferDebtorAddress struct {
 	// Unstructured address lines.
 	Unstructured WireTransferDebtorAddressUnstructured `json:"unstructured" api:"required,nullable"`
+	ExtraFields  map[string]interface{}                `json:"-" api:"extrafields"`
 	JSON         wireTransferDebtorAddressJSON         `json:"-"`
 }
 
@@ -863,7 +865,8 @@ func (r WireTransferNewParamsCreditor) MarshalJSON() (data []byte, err error) {
 // The person or business's address.
 type WireTransferNewParamsCreditorAddress struct {
 	// Unstructured address lines.
-	Unstructured param.Field[WireTransferNewParamsCreditorAddressUnstructured] `json:"unstructured" api:"required"`
+	Unstructured param.Field[WireTransferNewParamsCreditorAddressUnstructured] `json:"unstructured"`
+	ExtraFields  map[string]interface{}                                        `json:"-,extras"`
 }
 
 func (r WireTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err error) {
@@ -961,7 +964,8 @@ func (r WireTransferNewParamsDebtor) MarshalJSON() (data []byte, err error) {
 // The person or business's address.
 type WireTransferNewParamsDebtorAddress struct {
 	// Unstructured address lines.
-	Unstructured param.Field[WireTransferNewParamsDebtorAddressUnstructured] `json:"unstructured" api:"required"`
+	Unstructured param.Field[WireTransferNewParamsDebtorAddressUnstructured] `json:"unstructured"`
+	ExtraFields  map[string]interface{}                                      `json:"-,extras"`
 }
 
 func (r WireTransferNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
@@ -997,6 +1001,8 @@ type WireTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit  param.Field[int64]                        `query:"limit"`
 	Status param.Field[WireTransferListParamsStatus] `query:"status"`
 }

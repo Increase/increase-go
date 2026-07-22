@@ -464,6 +464,8 @@ type ACHPrenotificationNewParams struct {
 	// The name by which the recipient knows you.
 	CompanyName param.Field[string] `json:"company_name"`
 	// Whether the Prenotification is for a future debit or credit.
+	//
+	// Defaults to `debit`.
 	CreditDebitIndicator param.Field[ACHPrenotificationNewParamsCreditDebitIndicator] `json:"credit_debit_indicator"`
 	// The ACH Prenotification effective date in
 	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
@@ -476,6 +478,8 @@ type ACHPrenotificationNewParams struct {
 	// The
 	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
 	// to use for the ACH Prenotification.
+	//
+	// Defaults to `corporate_credit_or_debit`.
 	StandardEntryClassCode param.Field[ACHPrenotificationNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
 }
 
@@ -530,6 +534,8 @@ type ACHPrenotificationListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 }
 

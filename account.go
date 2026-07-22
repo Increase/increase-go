@@ -207,11 +207,12 @@ const (
 	AccountBankCoreBank          AccountBank = "core_bank"
 	AccountBankFirstInternetBank AccountBank = "first_internet_bank"
 	AccountBankGrasshopperBank   AccountBank = "grasshopper_bank"
+	AccountBankIncreaseBank      AccountBank = "increase_bank"
 )
 
 func (r AccountBank) IsKnown() bool {
 	switch r {
-	case AccountBankCoreBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank:
+	case AccountBankCoreBank, AccountBankFirstInternetBank, AccountBankGrasshopperBank, AccountBankIncreaseBank:
 		return true
 	}
 	return false
@@ -555,6 +556,8 @@ type AccountListParams struct {
 	InformationalEntityID param.Field[string] `query:"informational_entity_id"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 	// Filter Accounts for those in a specific Program.
 	ProgramID param.Field[string]                  `query:"program_id"`

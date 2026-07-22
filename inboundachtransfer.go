@@ -853,6 +853,8 @@ type InboundACHTransferListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit  param.Field[int64]                              `query:"limit"`
 	Status param.Field[InboundACHTransferListParamsStatus] `query:"status"`
 }
