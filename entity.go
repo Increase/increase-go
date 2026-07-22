@@ -1783,6 +1783,8 @@ type EntityNewParamsCorporationAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -1843,6 +1845,8 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -1862,6 +1866,8 @@ func (r EntityNewParamsCorporationBeneficialOwnersIndividualAddress) MarshalJSON
 // A means of verifying the person's identity.
 type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -1982,8 +1988,9 @@ type EntityNewParamsCorporationLegalIdentifier struct {
 	// our
 	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
 	Value param.Field[string] `json:"value" api:"required"`
-	// The category of the legal identifier. If not provided, the default is
-	// `us_employer_identification_number`.
+	// The category of the legal identifier.
+	//
+	// Defaults to `us_employer_identification_number`.
 	Category param.Field[EntityNewParamsCorporationLegalIdentifierCategory] `json:"category"`
 }
 
@@ -1991,8 +1998,7 @@ func (r EntityNewParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, e
 	return apijson.MarshalRoot(r)
 }
 
-// The category of the legal identifier. If not provided, the default is
-// `us_employer_identification_number`.
+// The category of the legal identifier.
 type EntityNewParamsCorporationLegalIdentifierCategory string
 
 const (
@@ -2137,6 +2143,8 @@ type EntityNewParamsJointIndividualsAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -2156,6 +2164,8 @@ func (r EntityNewParamsJointIndividualsAddress) MarshalJSON() (data []byte, err 
 // A means of verifying the person's identity.
 type EntityNewParamsJointIndividualsIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[EntityNewParamsJointIndividualsIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -2283,6 +2293,8 @@ type EntityNewParamsNaturalPersonAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -2302,6 +2314,8 @@ func (r EntityNewParamsNaturalPersonAddress) MarshalJSON() (data []byte, err err
 // A means of verifying the person's identity.
 type EntityNewParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[EntityNewParamsNaturalPersonIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -2608,6 +2622,8 @@ type EntityNewParamsTrustTrusteesIndividualAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -2627,6 +2643,8 @@ func (r EntityNewParamsTrustTrusteesIndividualAddress) MarshalJSON() (data []byt
 // A means of verifying the person's identity.
 type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[EntityNewParamsTrustTrusteesIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -2751,6 +2769,8 @@ type EntityNewParamsTrustGrantorAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -2770,6 +2790,8 @@ func (r EntityNewParamsTrustGrantorAddress) MarshalJSON() (data []byte, err erro
 // A means of verifying the person's identity.
 type EntityNewParamsTrustGrantorIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[EntityNewParamsTrustGrantorIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -2937,6 +2959,8 @@ type EntityUpdateParamsCorporationAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -2960,6 +2984,8 @@ type EntityUpdateParamsCorporationLegalIdentifier struct {
 	// digits with no dashes or other separators.
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier.
+	//
+	// Defaults to `us_employer_identification_number`.
 	Category param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
 }
 
@@ -3044,6 +3070,8 @@ type EntityUpdateParamsNaturalPersonAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -3063,6 +3091,8 @@ func (r EntityUpdateParamsNaturalPersonAddress) MarshalJSON() (data []byte, err 
 // A means of verifying the person's identity.
 type EntityUpdateParamsNaturalPersonIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[EntityUpdateParamsNaturalPersonIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -3281,6 +3311,8 @@ type EntityListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit            param.Field[int64]                            `query:"limit"`
 	Status           param.Field[EntityListParamsStatus]           `query:"status"`
 	ValidationStatus param.Field[EntityListParamsValidationStatus] `query:"validation_status"`

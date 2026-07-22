@@ -1263,6 +1263,8 @@ type ACHTransferNewParams struct {
 	// provided, `account_number`, `routing_number`, and `funding` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
 	// The type of the receiver's bank account.
+	//
+	// Defaults to `checking`.
 	Funding param.Field[ACHTransferNewParamsFunding] `json:"funding"`
 	// Your internal identifier for the transfer recipient. This value is informational
 	// and not verified by the recipient's bank. Most callers can leave this unset.
@@ -1494,6 +1496,8 @@ type ACHTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit  param.Field[int64]                       `query:"limit"`
 	Status param.Field[ACHTransferListParamsStatus] `query:"status"`
 }

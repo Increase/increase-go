@@ -702,6 +702,8 @@ type CardValidationListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit  param.Field[int64]                          `query:"limit"`
 	Status param.Field[CardValidationListParamsStatus] `query:"status"`
 }

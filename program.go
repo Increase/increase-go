@@ -137,11 +137,12 @@ const (
 	ProgramBankCoreBank          ProgramBank = "core_bank"
 	ProgramBankFirstInternetBank ProgramBank = "first_internet_bank"
 	ProgramBankGrasshopperBank   ProgramBank = "grasshopper_bank"
+	ProgramBankIncreaseBank      ProgramBank = "increase_bank"
 )
 
 func (r ProgramBank) IsKnown() bool {
 	switch r {
-	case ProgramBankCoreBank, ProgramBankFirstInternetBank, ProgramBankGrasshopperBank:
+	case ProgramBankCoreBank, ProgramBankFirstInternetBank, ProgramBankGrasshopperBank, ProgramBankIncreaseBank:
 		return true
 	}
 	return false
@@ -191,6 +192,8 @@ type ProgramListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 }
 

@@ -115,6 +115,10 @@ type InboundCheckDeposit struct {
 	Adjustments []InboundCheckDepositAdjustment `json:"adjustments" api:"required"`
 	// The deposited amount in USD cents.
 	Amount int64 `json:"amount" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Inbound Check Deposit will be automatically resolved if it has not been
+	// actioned by then.
+	AutomaticallyResolvesAt time.Time `json:"automatically_resolves_at" api:"required" format:"date-time"`
 	// The ID for the File containing the image of the back of the check.
 	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
@@ -166,6 +170,7 @@ type inboundCheckDepositJSON struct {
 	AccountNumberID                 apijson.Field
 	Adjustments                     apijson.Field
 	Amount                          apijson.Field
+	AutomaticallyResolvesAt         apijson.Field
 	BackImageFileID                 apijson.Field
 	BankOfFirstDepositRoutingNumber apijson.Field
 	CheckNumber                     apijson.Field
@@ -368,6 +373,8 @@ type InboundCheckDepositListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 }
 

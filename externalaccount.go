@@ -225,7 +225,9 @@ type ExternalAccountNewParams struct {
 	RoutingNumber param.Field[string] `json:"routing_number" api:"required"`
 	// The type of entity that owns the External Account.
 	AccountHolder param.Field[ExternalAccountNewParamsAccountHolder] `json:"account_holder"`
-	// The type of the destination account. Defaults to `checking`.
+	// The type of the destination account.
+	//
+	// Defaults to `checking`.
 	Funding param.Field[ExternalAccountNewParamsFunding] `json:"funding"`
 }
 
@@ -250,7 +252,7 @@ func (r ExternalAccountNewParamsAccountHolder) IsKnown() bool {
 	return false
 }
 
-// The type of the destination account. Defaults to `checking`.
+// The type of the destination account.
 type ExternalAccountNewParamsFunding string
 
 const (
@@ -343,6 +345,8 @@ type ExternalAccountListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 	// Filter External Accounts to those with the specified Routing Number.
 	RoutingNumber param.Field[string]                          `query:"routing_number"`

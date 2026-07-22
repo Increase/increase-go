@@ -95,8 +95,9 @@ type SimulationCheckDepositAdjustmentParams struct {
 	// other bank and is a debit to your account. Defaults to the negative of the Check
 	// Deposit amount.
 	Amount param.Field[int64] `json:"amount"`
-	// The reason for the adjustment. Defaults to `non_conforming_item`, which is often
-	// used for a low quality image that the recipient wasn't able to handle.
+	// The reason for the adjustment.
+	//
+	// Defaults to `non_conforming_item`.
 	Reason param.Field[SimulationCheckDepositAdjustmentParamsReason] `json:"reason"`
 }
 
@@ -104,8 +105,7 @@ func (r SimulationCheckDepositAdjustmentParams) MarshalJSON() (data []byte, err 
 	return apijson.MarshalRoot(r)
 }
 
-// The reason for the adjustment. Defaults to `non_conforming_item`, which is often
-// used for a low quality image that the recipient wasn't able to handle.
+// The reason for the adjustment.
 type SimulationCheckDepositAdjustmentParamsReason string
 
 const (

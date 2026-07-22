@@ -251,6 +251,8 @@ type FileNewParams struct {
 	// transfers for the multipart/form-data protocol.
 	File param.Field[io.Reader] `json:"file" api:"required" format:"binary"`
 	// What the File will be used for in Increase's systems.
+	//
+	// Defaults to `other`.
 	Purpose param.Field[FileNewParamsPurpose] `json:"purpose" api:"required"`
 	// The description you choose to give the File.
 	Description param.Field[string] `json:"description"`
@@ -316,6 +318,8 @@ type FileListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit   param.Field[int64]                 `query:"limit"`
 	Purpose param.Field[FileListParamsPurpose] `query:"purpose"`
 }
