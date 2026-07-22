@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.606.0](https://github.com/Increase/increase-go/compare/v0.605.0...v0.606.0) (2026-07-22)
+
+
+### Features
+
+* **api:** add interest rate plan events and new fields ([f1b4b03](https://github.com/Increase/increase-go/commit/f1b4b034b834bd0c6dda32f2eca0e5b057827219))
+
+
+### Chores
+
+* **api:** sync generated spec metadata ([1eb961a](https://github.com/Increase/increase-go/commit/1eb961acd6e2938264114cefa424d31ef13321b5))
+
 ## [0.605.0](https://github.com/Increase/increase-go/compare/v0.604.0...v0.605.0) (2026-07-17)
 
 
