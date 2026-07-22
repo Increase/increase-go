@@ -190,7 +190,7 @@ type WireDrawdownRequestCreditorAddress struct {
 	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
 	Line2 string `json:"line2" api:"required,nullable"`
-	// The ZIP code of the address.
+	// The postal code of the address.
 	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The address state.
 	State string                                 `json:"state" api:"required,nullable"`
@@ -230,7 +230,7 @@ type WireDrawdownRequestDebtorAddress struct {
 	Line1 string `json:"line1" api:"required"`
 	// The second line of the address.
 	Line2 string `json:"line2" api:"required,nullable"`
-	// The ZIP code of the address.
+	// The postal code of the address.
 	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The address state.
 	State string                               `json:"state" api:"required,nullable"`
@@ -363,7 +363,7 @@ type WireDrawdownRequestNewParamsCreditorAddress struct {
 	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
-	// The ZIP code of the address.
+	// The postal code of the address.
 	PostalCode param.Field[string] `json:"postal_code"`
 	// The address state.
 	State param.Field[string] `json:"state"`
@@ -385,7 +385,7 @@ type WireDrawdownRequestNewParamsDebtorAddress struct {
 	Line1 param.Field[string] `json:"line1" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
-	// The ZIP code of the address.
+	// The postal code of the address.
 	PostalCode param.Field[string] `json:"postal_code"`
 	// The address state.
 	State param.Field[string] `json:"state"`
