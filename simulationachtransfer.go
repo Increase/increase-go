@@ -154,6 +154,7 @@ type SimulationACHTransferReturnParams struct {
 	// a return the bank believes was initiated under questionable circumstances.
 	AddendaInformation param.Field[string] `json:"addenda_information"`
 	// The reason why the Federal Reserve or destination bank returned this transfer.
+	//
 	// Defaults to `no_account`.
 	Reason param.Field[SimulationACHTransferReturnParamsReason] `json:"reason"`
 }
@@ -163,7 +164,6 @@ func (r SimulationACHTransferReturnParams) MarshalJSON() (data []byte, err error
 }
 
 // The reason why the Federal Reserve or destination bank returned this transfer.
-// Defaults to `no_account`.
 type SimulationACHTransferReturnParamsReason string
 
 const (

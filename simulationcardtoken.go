@@ -153,6 +153,8 @@ func (r SimulationCardTokenNewParamsOutcomeResult) IsKnown() bool {
 // If the result is declined, the details of the decline.
 type SimulationCardTokenNewParamsOutcomeDecline struct {
 	// The reason for the decline.
+	//
+	// Defaults to `do_not_honor`.
 	Reason param.Field[SimulationCardTokenNewParamsOutcomeDeclineReason] `json:"reason"`
 }
 

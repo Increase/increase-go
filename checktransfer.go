@@ -106,7 +106,10 @@ func (r *CheckTransferService) Cancel(ctx context.Context, checkTransferID strin
 	return res, err
 }
 
-// Stop payment on a Check Transfer
+// Request a stop payment on a Check Transfer. This can be done any time before the
+// check is deposited. A stopped check cannot be deposited and the funds held by
+// the transfer's Pending Transaction are released back to the account's available
+// balance.
 func (r *CheckTransferService) StopPayment(ctx context.Context, checkTransferID string, body CheckTransferStopPaymentParams, opts ...option.RequestOption) (res *CheckTransfer, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if checkTransferID == "" {
@@ -1195,6 +1198,8 @@ type CheckTransferListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit  param.Field[int64]                         `query:"limit"`
 	Status param.Field[CheckTransferListParamsStatus] `query:"status"`
 }

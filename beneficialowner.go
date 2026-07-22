@@ -352,6 +352,8 @@ type BeneficialOwnerNewParamsIndividualAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -371,6 +373,8 @@ func (r BeneficialOwnerNewParamsIndividualAddress) MarshalJSON() (data []byte, e
 // A means of verifying the person's identity.
 type BeneficialOwnerNewParamsIndividualIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[BeneficialOwnerNewParamsIndividualIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -512,6 +516,8 @@ type BeneficialOwnerUpdateParamsAddress struct {
 	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
 	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
 	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
@@ -531,6 +537,8 @@ func (r BeneficialOwnerUpdateParamsAddress) MarshalJSON() (data []byte, err erro
 // A means of verifying the person's identity.
 type BeneficialOwnerUpdateParamsIdentification struct {
 	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
 	Method param.Field[BeneficialOwnerUpdateParamsIdentificationMethod] `json:"method" api:"required"`
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
@@ -655,6 +663,8 @@ type BeneficialOwnerListParams struct {
 	IdempotencyKey param.Field[string] `query:"idempotency_key"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 }
 

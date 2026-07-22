@@ -5358,6 +5358,8 @@ type TransactionListParams struct {
 	Cursor param.Field[string] `query:"cursor"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
+	//
+	// Defaults to `100`.
 	Limit param.Field[int64] `query:"limit"`
 	// Filter Transactions for those belonging to the specified route. This could be a
 	// Card ID or an Account Number ID.
