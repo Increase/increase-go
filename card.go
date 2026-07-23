@@ -148,6 +148,9 @@ type Card struct {
 	BillingAddress CardBillingAddress `json:"billing_address" api:"required"`
 	// The Bank Identification Number (BIN) of the Card.
 	Bin string `json:"bin" api:"required"`
+	// The name of the cardholder. Used to respond to Account Name Inquiry requests
+	// from acquirers in Card Validations.
+	CardholderName CardCardholderName `json:"cardholder_name" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Card was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -185,6 +188,7 @@ type cardJSON struct {
 	AuthorizationControls apijson.Field
 	BillingAddress        apijson.Field
 	Bin                   apijson.Field
+	CardholderName        apijson.Field
 	CreatedAt             apijson.Field
 	Description           apijson.Field
 	DigitalWallet         apijson.Field
@@ -700,6 +704,36 @@ func (r cardBillingAddressJSON) RawJSON() string {
 	return r.raw
 }
 
+// The name of the cardholder. Used to respond to Account Name Inquiry requests
+// from acquirers in Card Validations.
+type CardCardholderName struct {
+	// The cardholder's first name.
+	First string `json:"first" api:"required"`
+	// The cardholder's last name.
+	Last string `json:"last" api:"required"`
+	// The cardholder's middle name.
+	Middle string                 `json:"middle" api:"required,nullable"`
+	JSON   cardCardholderNameJSON `json:"-"`
+}
+
+// cardCardholderNameJSON contains the JSON metadata for the struct
+// [CardCardholderName]
+type cardCardholderNameJSON struct {
+	First       apijson.Field
+	Last        apijson.Field
+	Middle      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardCardholderName) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardCardholderNameJSON) RawJSON() string {
+	return r.raw
+}
+
 // The contact information used in the two-factor steps for digital wallet card
 // creation. At least one field must be present to complete the digital wallet
 // steps.
@@ -882,6 +916,9 @@ type CardNewParams struct {
 	AuthorizationControls param.Field[CardNewParamsAuthorizationControls] `json:"authorization_controls"`
 	// The card's billing address.
 	BillingAddress param.Field[CardNewParamsBillingAddress] `json:"billing_address"`
+	// The name of the cardholder. Used to respond to Account Name Inquiry requests
+	// from acquirers in Card Validations.
+	CardholderName param.Field[CardNewParamsCardholderName] `json:"cardholder_name"`
 	// The description you choose to give the card.
 	Description param.Field[string] `json:"description"`
 	// The contact information used in the two-factor steps for digital wallet card
@@ -1155,6 +1192,21 @@ type CardNewParamsBillingAddress struct {
 }
 
 func (r CardNewParamsBillingAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The name of the cardholder. Used to respond to Account Name Inquiry requests
+// from acquirers in Card Validations.
+type CardNewParamsCardholderName struct {
+	// The cardholder's first name.
+	First param.Field[string] `json:"first" api:"required"`
+	// The cardholder's last name.
+	Last param.Field[string] `json:"last" api:"required"`
+	// The cardholder's middle name.
+	Middle param.Field[string] `json:"middle"`
+}
+
+func (r CardNewParamsCardholderName) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
