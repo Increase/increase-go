@@ -988,7 +988,7 @@ type EntityTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
 	AgreedAt time.Time `json:"agreed_at" api:"required" format:"date-time"`
 	// The IP address the Entity accessed reviewed the terms from.
-	IPAddress string `json:"ip_address" api:"required"`
+	IPAddress string `json:"ip_address" api:"required,nullable"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
 	TermsURL string                   `json:"terms_url" api:"required"`
 	JSON     entityTermsAgreementJSON `json:"-"`
