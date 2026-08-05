@@ -441,7 +441,7 @@ type InboundACHTransferInternationalAddenda struct {
 	// country code of the originating branch country.
 	OriginatingDepositoryFinancialInstitutionBranchCountry string `json:"originating_depository_financial_institution_branch_country" api:"required"`
 	// An identifier for the originating bank. One of an International Bank Account
-	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
+	// Number (IBAN) bank identifier, Swift Bank Identification Code (BIC), or a
 	// domestic identifier like a US Routing Number.
 	OriginatingDepositoryFinancialInstitutionID string `json:"originating_depository_financial_institution_id" api:"required"`
 	// An instruction of how to interpret the
@@ -491,7 +491,7 @@ type InboundACHTransferInternationalAddenda struct {
 	// country code of the receiving bank country.
 	ReceivingDepositoryFinancialInstitutionCountry string `json:"receiving_depository_financial_institution_country" api:"required"`
 	// An identifier for the receiving bank. One of an International Bank Account
-	// Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a
+	// Number (IBAN) bank identifier, Swift Bank Identification Code (BIC), or a
 	// domestic identifier like a US Routing Number.
 	ReceivingDepositoryFinancialInstitutionID string `json:"receiving_depository_financial_institution_id" api:"required"`
 	// An instruction of how to interpret the

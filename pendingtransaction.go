@@ -618,6 +618,12 @@ type PendingTransactionSourceCardAuthorization struct {
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
 	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
+	// The ID of the Card Payment containing the original authorization or card
+	// validation this transaction references. For a merchant-initiated transaction,
+	// this is the Card Payment from when the card was first stored, which is typically
+	// where the CVV2 was verified. The reference this is derived from is supplied by
+	// the merchant or their acquirer, so it is not guaranteed to be present.
+	OriginalCardPaymentID string `json:"original_card_payment_id" api:"required,nullable"`
 	// The identifier of the Pending Transaction associated with this Transaction.
 	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -651,38 +657,39 @@ type PendingTransactionSourceCardAuthorization struct {
 // pendingTransactionSourceCardAuthorizationJSON contains the JSON metadata for the
 // struct [PendingTransactionSourceCardAuthorization]
 type pendingTransactionSourceCardAuthorizationJSON struct {
-	ID                   apijson.Field
-	Actioner             apijson.Field
-	AdditionalAmounts    apijson.Field
-	Amount               apijson.Field
-	CardPaymentID        apijson.Field
-	Currency             apijson.Field
-	DigitalWalletTokenID apijson.Field
-	Direction            apijson.Field
-	ExpiresAt            apijson.Field
-	Healthcare           apijson.Field
-	MerchantAcceptorID   apijson.Field
-	MerchantCategoryCode apijson.Field
-	MerchantCity         apijson.Field
-	MerchantCountry      apijson.Field
-	MerchantDescriptor   apijson.Field
-	MerchantPostalCode   apijson.Field
-	MerchantState        apijson.Field
-	NetworkDetails       apijson.Field
-	NetworkIdentifiers   apijson.Field
-	NetworkRiskScore     apijson.Field
-	PendingTransactionID apijson.Field
-	PhysicalCardID       apijson.Field
-	PresentmentAmount    apijson.Field
-	PresentmentCurrency  apijson.Field
-	ProcessingCategory   apijson.Field
-	RealTimeDecisionID   apijson.Field
-	SchemeFees           apijson.Field
-	TerminalID           apijson.Field
-	Type                 apijson.Field
-	Verification         apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
+	ID                    apijson.Field
+	Actioner              apijson.Field
+	AdditionalAmounts     apijson.Field
+	Amount                apijson.Field
+	CardPaymentID         apijson.Field
+	Currency              apijson.Field
+	DigitalWalletTokenID  apijson.Field
+	Direction             apijson.Field
+	ExpiresAt             apijson.Field
+	Healthcare            apijson.Field
+	MerchantAcceptorID    apijson.Field
+	MerchantCategoryCode  apijson.Field
+	MerchantCity          apijson.Field
+	MerchantCountry       apijson.Field
+	MerchantDescriptor    apijson.Field
+	MerchantPostalCode    apijson.Field
+	MerchantState         apijson.Field
+	NetworkDetails        apijson.Field
+	NetworkIdentifiers    apijson.Field
+	NetworkRiskScore      apijson.Field
+	OriginalCardPaymentID apijson.Field
+	PendingTransactionID  apijson.Field
+	PhysicalCardID        apijson.Field
+	PresentmentAmount     apijson.Field
+	PresentmentCurrency   apijson.Field
+	ProcessingCategory    apijson.Field
+	RealTimeDecisionID    apijson.Field
+	SchemeFees            apijson.Field
+	TerminalID            apijson.Field
+	Type                  apijson.Field
+	Verification          apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *PendingTransactionSourceCardAuthorization) UnmarshalJSON(data []byte) (err error) {
