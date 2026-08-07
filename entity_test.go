@@ -413,6 +413,44 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 					Line2: increase.F("x"),
 				}),
 				Name: increase.F("x"),
+				Trustees: increase.F([]increase.EntityUpdateParamsTrustTrustee{{
+					Structure: increase.F(increase.EntityUpdateParamsTrustTrusteesStructureIndividual),
+					Individual: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividual{
+						Address: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividualAddress{
+							City:    increase.F("x"),
+							Country: increase.F("x"),
+							Line1:   increase.F("x"),
+							Line2:   increase.F("x"),
+							State:   increase.F("x"),
+							Zip:     increase.F("x"),
+						}),
+						DateOfBirth: increase.F(time.Now()),
+						Identification: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividualIdentification{
+							Method: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber),
+							Number: increase.F("xxxx"),
+							DriversLicense: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividualIdentificationDriversLicense{
+								ExpirationDate: increase.F(time.Now()),
+								FileID:         increase.F("file_id"),
+								State:          increase.F("xx"),
+								BackFileID:     increase.F("back_file_id"),
+							}),
+							Other: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividualIdentificationOther{
+								Country:        increase.F("x"),
+								Description:    increase.F("x"),
+								FileID:         increase.F("file_id"),
+								BackFileID:     increase.F("back_file_id"),
+								ExpirationDate: increase.F(time.Now()),
+							}),
+							Passport: increase.F(increase.EntityUpdateParamsTrustTrusteesIndividualIdentificationPassport{
+								Country:        increase.F("x"),
+								ExpirationDate: increase.F(time.Now()),
+								FileID:         increase.F("file_id"),
+							}),
+						}),
+						Name:               increase.F("x"),
+						ConfirmedNoUsTaxID: increase.F(true),
+					}),
+				}}),
 			}),
 		},
 	)

@@ -698,6 +698,12 @@ type RealTimeDecisionCardAuthorization struct {
 	// Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
 	// score is from 0 to 999, where 999 is the riskiest.
 	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
+	// The identifier of the Card Payment containing the original authorization or card
+	// validation this transaction references. For a merchant-initiated transaction,
+	// this is the Card Payment from when the card was first stored, which is typically
+	// where the CVV2 was verified. The reference this is derived from is supplied by
+	// the merchant or their acquirer, so it is not guaranteed to be present.
+	OriginalCardPaymentID string `json:"original_card_payment_id" api:"required,nullable"`
 	// Whether or not the authorization supports partial approvals.
 	PartialApprovalCapability RealTimeDecisionCardAuthorizationPartialApprovalCapability `json:"partial_approval_capability" api:"required"`
 	// If the authorization was made in-person with a physical card, the Physical Card
@@ -755,6 +761,7 @@ type realTimeDecisionCardAuthorizationJSON struct {
 	NetworkDetails            apijson.Field
 	NetworkIdentifiers        apijson.Field
 	NetworkRiskScore          apijson.Field
+	OriginalCardPaymentID     apijson.Field
 	PartialApprovalCapability apijson.Field
 	PhysicalCardID            apijson.Field
 	PresentmentAmount         apijson.Field

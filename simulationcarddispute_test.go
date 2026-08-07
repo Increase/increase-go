@@ -36,7 +36,10 @@ func TestSimulationCardDisputeActionWithOptionalParams(t *testing.T) {
 				AcceptUserSubmission:          increase.F(increase.SimulationCardDisputeActionParamsVisaAcceptUserSubmission{}),
 				DeclineUserPrearbitration:     increase.F(increase.SimulationCardDisputeActionParamsVisaDeclineUserPrearbitration{}),
 				ReceiveMerchantPrearbitration: increase.F(increase.SimulationCardDisputeActionParamsVisaReceiveMerchantPrearbitration{}),
-				Represent:                     increase.F(increase.SimulationCardDisputeActionParamsVisaRepresent{}),
+				Reject: increase.F(increase.SimulationCardDisputeActionParamsVisaReject{
+					Explanation: increase.F("x"),
+				}),
+				Represent: increase.F(increase.SimulationCardDisputeActionParamsVisaRepresent{}),
 				RequestFurtherInformation: increase.F(increase.SimulationCardDisputeActionParamsVisaRequestFurtherInformation{
 					Reason: increase.F("x"),
 				}),

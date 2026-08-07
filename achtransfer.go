@@ -1130,7 +1130,7 @@ func (r ACHTransferStatus) IsKnown() bool {
 // [posted schedule](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
 type ACHTransferSubmission struct {
 	// The timestamp by which any administrative returns are expected to be received
-	// by. This follows the NACHA guidelines for return windows, which are: "In
+	// by. This follows the Nacha guidelines for return windows, which are: "In
 	// general, return entries must be received by the RDFI’s ACH Operator by its
 	// deposit deadline for the return entry to be made available to the ODFI no later
 	// than the opening of business on the second banking day following the Settlement
@@ -1287,8 +1287,6 @@ type ACHTransferNewParams struct {
 	// to use for the transfer. If not provided, the default is
 	// `corporate_credit_or_debit`.
 	StandardEntryClassCode param.Field[ACHTransferNewParamsStandardEntryClassCode] `json:"standard_entry_class_code"`
-	// The timing of the transaction.
-	TransactionTiming param.Field[ACHTransferNewParamsTransactionTiming] `json:"transaction_timing"`
 }
 
 func (r ACHTransferNewParams) MarshalJSON() (data []byte, err error) {
@@ -1460,22 +1458,6 @@ const (
 func (r ACHTransferNewParamsStandardEntryClassCode) IsKnown() bool {
 	switch r {
 	case ACHTransferNewParamsStandardEntryClassCodeCorporateCreditOrDebit, ACHTransferNewParamsStandardEntryClassCodeCorporateTradeExchange, ACHTransferNewParamsStandardEntryClassCodePrearrangedPaymentsAndDeposit, ACHTransferNewParamsStandardEntryClassCodeInternetInitiated:
-		return true
-	}
-	return false
-}
-
-// The timing of the transaction.
-type ACHTransferNewParamsTransactionTiming string
-
-const (
-	ACHTransferNewParamsTransactionTimingSynchronous  ACHTransferNewParamsTransactionTiming = "synchronous"
-	ACHTransferNewParamsTransactionTimingAsynchronous ACHTransferNewParamsTransactionTiming = "asynchronous"
-)
-
-func (r ACHTransferNewParamsTransactionTiming) IsKnown() bool {
-	switch r {
-	case ACHTransferNewParamsTransactionTimingSynchronous, ACHTransferNewParamsTransactionTimingAsynchronous:
 		return true
 	}
 	return false
