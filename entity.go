@@ -988,7 +988,7 @@ type EntityTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
 	AgreedAt time.Time `json:"agreed_at" api:"required" format:"date-time"`
 	// The IP address the Entity accessed reviewed the terms from.
-	IPAddress string `json:"ip_address" api:"required"`
+	IPAddress string `json:"ip_address" api:"required,nullable"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
 	TermsURL string                   `json:"terms_url" api:"required"`
 	JSON     entityTermsAgreementJSON `json:"-"`
@@ -1490,6 +1490,8 @@ type EntityValidationIssue struct {
 	Category EntityValidationIssuesCategory `json:"category" api:"required"`
 	// Details when the issue is with the entity's address.
 	EntityAddress EntityValidationIssuesEntityAddress `json:"entity_address" api:"required,nullable"`
+	// Details when the issue is with the entity's identity verification.
+	EntityIdentity EntityValidationIssuesEntityIdentity `json:"entity_identity" api:"required,nullable"`
 	// Details when the issue is with the entity's tax ID.
 	EntityTaxIdentifier EntityValidationIssuesEntityTaxIdentifier `json:"entity_tax_identifier" api:"required,nullable"`
 	JSON                entityValidationIssueJSON                 `json:"-"`
@@ -1502,6 +1504,7 @@ type entityValidationIssueJSON struct {
 	BeneficialOwnerIdentity apijson.Field
 	Category                apijson.Field
 	EntityAddress           apijson.Field
+	EntityIdentity          apijson.Field
 	EntityTaxIdentifier     apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
@@ -1586,13 +1589,14 @@ type EntityValidationIssuesCategory string
 const (
 	EntityValidationIssuesCategoryEntityTaxIdentifier     EntityValidationIssuesCategory = "entity_tax_identifier"
 	EntityValidationIssuesCategoryEntityAddress           EntityValidationIssuesCategory = "entity_address"
+	EntityValidationIssuesCategoryEntityIdentity          EntityValidationIssuesCategory = "entity_identity"
 	EntityValidationIssuesCategoryBeneficialOwnerIdentity EntityValidationIssuesCategory = "beneficial_owner_identity"
 	EntityValidationIssuesCategoryBeneficialOwnerAddress  EntityValidationIssuesCategory = "beneficial_owner_address"
 )
 
 func (r EntityValidationIssuesCategory) IsKnown() bool {
 	switch r {
-	case EntityValidationIssuesCategoryEntityTaxIdentifier, EntityValidationIssuesCategoryEntityAddress, EntityValidationIssuesCategoryBeneficialOwnerIdentity, EntityValidationIssuesCategoryBeneficialOwnerAddress:
+	case EntityValidationIssuesCategoryEntityTaxIdentifier, EntityValidationIssuesCategoryEntityAddress, EntityValidationIssuesCategoryEntityIdentity, EntityValidationIssuesCategoryBeneficialOwnerIdentity, EntityValidationIssuesCategoryBeneficialOwnerAddress:
 		return true
 	}
 	return false
@@ -1634,6 +1638,26 @@ func (r EntityValidationIssuesEntityAddressReason) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Details when the issue is with the entity's identity verification.
+type EntityValidationIssuesEntityIdentity struct {
+	JSON entityValidationIssuesEntityIdentityJSON `json:"-"`
+}
+
+// entityValidationIssuesEntityIdentityJSON contains the JSON metadata for the
+// struct [EntityValidationIssuesEntityIdentity]
+type entityValidationIssuesEntityIdentityJSON struct {
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntityValidationIssuesEntityIdentity) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssuesEntityIdentityJSON) RawJSON() string {
+	return r.raw
 }
 
 // Details when the issue is with the entity's tax ID.
