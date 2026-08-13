@@ -55,6 +55,7 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			AttachmentFileID:        increase.F("attachment_file_id"),
 			CheckVoucherImageFileID: increase.F("check_voucher_image_file_id"),
 			Note:                    increase.F("note"),
+			PhysicalCheckBatchID:    increase.F("physical_check_batch_id"),
 			ReturnAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckReturnAddress{
 				City:       increase.F("city"),
 				Line1:      increase.F("line1"),
