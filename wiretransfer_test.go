@@ -32,10 +32,13 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		Creditor: increase.F(increase.WireTransferNewParamsCreditor{
 			Name: increase.F("Ian Crease"),
 			Address: increase.F(increase.WireTransferNewParamsCreditorAddress{
-				Unstructured: increase.F(increase.WireTransferNewParamsCreditorAddressUnstructured{
-					Line1: increase.F("33 Liberty Street"),
-					Line2: increase.F("New York"),
-					Line3: increase.F("NY 10045"),
+				Structured: increase.F(increase.WireTransferNewParamsCreditorAddressStructured{
+					City:       increase.F("New York"),
+					Country:    increase.F("US"),
+					Line1:      increase.F("33 Liberty Street"),
+					Line2:      increase.F("line2"),
+					PostalCode: increase.F("10045"),
+					State:      increase.F("NY"),
 				}),
 			}),
 		}),
@@ -54,10 +57,13 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		Debtor: increase.F(increase.WireTransferNewParamsDebtor{
 			Name: increase.F("name"),
 			Address: increase.F(increase.WireTransferNewParamsDebtorAddress{
-				Unstructured: increase.F(increase.WireTransferNewParamsDebtorAddressUnstructured{
-					Line1: increase.F("line1"),
-					Line2: increase.F("line2"),
-					Line3: increase.F("line3"),
+				Structured: increase.F(increase.WireTransferNewParamsDebtorAddressStructured{
+					City:       increase.F("city"),
+					Country:    increase.F("xx"),
+					Line1:      increase.F("line1"),
+					Line2:      increase.F("line2"),
+					PostalCode: increase.F("postal_code"),
+					State:      increase.F("state"),
 				}),
 			}),
 		}),

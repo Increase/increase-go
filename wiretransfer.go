@@ -864,26 +864,34 @@ func (r WireTransferNewParamsCreditor) MarshalJSON() (data []byte, err error) {
 
 // The person or business's address.
 type WireTransferNewParamsCreditorAddress struct {
-	// Unstructured address lines.
-	Unstructured param.Field[WireTransferNewParamsCreditorAddressUnstructured] `json:"unstructured"`
-	ExtraFields  map[string]interface{}                                        `json:"-,extras"`
+	// Structured address components. City and country are required.
+	Structured  param.Field[WireTransferNewParamsCreditorAddressStructured] `json:"structured"`
+	ExtraFields map[string]interface{}                                      `json:"-,extras"`
 }
 
 func (r WireTransferNewParamsCreditorAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Unstructured address lines.
-type WireTransferNewParamsCreditorAddressUnstructured struct {
-	// The address line 1.
-	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The address line 2.
+// Structured address components. City and country are required.
+type WireTransferNewParamsCreditorAddressStructured struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter
+	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
+	// the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
+	// The first line of the address.
+	Line1 param.Field[string] `json:"line1"`
+	// The second line of the address.
 	Line2 param.Field[string] `json:"line2"`
-	// The address line 3.
-	Line3 param.Field[string] `json:"line3"`
+	// The postal code of the address.
+	PostalCode param.Field[string] `json:"postal_code"`
+	// The address state.
+	State param.Field[string] `json:"state"`
 }
 
-func (r WireTransferNewParamsCreditorAddressUnstructured) MarshalJSON() (data []byte, err error) {
+func (r WireTransferNewParamsCreditorAddressStructured) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -963,26 +971,34 @@ func (r WireTransferNewParamsDebtor) MarshalJSON() (data []byte, err error) {
 
 // The person or business's address.
 type WireTransferNewParamsDebtorAddress struct {
-	// Unstructured address lines.
-	Unstructured param.Field[WireTransferNewParamsDebtorAddressUnstructured] `json:"unstructured"`
-	ExtraFields  map[string]interface{}                                      `json:"-,extras"`
+	// Structured address components. City and country are required.
+	Structured  param.Field[WireTransferNewParamsDebtorAddressStructured] `json:"structured"`
+	ExtraFields map[string]interface{}                                    `json:"-,extras"`
 }
 
 func (r WireTransferNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Unstructured address lines.
-type WireTransferNewParamsDebtorAddressUnstructured struct {
-	// The address line 1.
-	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The address line 2.
+// Structured address components. City and country are required.
+type WireTransferNewParamsDebtorAddressStructured struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter
+	// [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code for
+	// the country of the address.
+	Country param.Field[string] `json:"country" api:"required"`
+	// The first line of the address.
+	Line1 param.Field[string] `json:"line1"`
+	// The second line of the address.
 	Line2 param.Field[string] `json:"line2"`
-	// The address line 3.
-	Line3 param.Field[string] `json:"line3"`
+	// The postal code of the address.
+	PostalCode param.Field[string] `json:"postal_code"`
+	// The address state.
+	State param.Field[string] `json:"state"`
 }
 
-func (r WireTransferNewParamsDebtorAddressUnstructured) MarshalJSON() (data []byte, err error) {
+func (r WireTransferNewParamsDebtorAddressStructured) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
