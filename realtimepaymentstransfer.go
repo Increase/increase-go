@@ -145,6 +145,9 @@ type RealTimePaymentsTransfer struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
+	// The identifier of the Inbound Real-Time Payments Request for Payment this
+	// transfer was sent in response to, if any.
+	InboundRealTimePaymentsRequestForPaymentID string `json:"inbound_real_time_payments_request_for_payment_id" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
@@ -183,33 +186,34 @@ type RealTimePaymentsTransfer struct {
 // realTimePaymentsTransferJSON contains the JSON metadata for the struct
 // [RealTimePaymentsTransfer]
 type realTimePaymentsTransferJSON struct {
-	ID                                apijson.Field
-	AccountID                         apijson.Field
-	AccountNumber                     apijson.Field
-	Acknowledgement                   apijson.Field
-	Amount                            apijson.Field
-	Approval                          apijson.Field
-	Cancellation                      apijson.Field
-	CreatedAt                         apijson.Field
-	CreatedBy                         apijson.Field
-	CreditorName                      apijson.Field
-	Currency                          apijson.Field
-	DebtorName                        apijson.Field
-	ExternalAccountID                 apijson.Field
-	IdempotencyKey                    apijson.Field
-	PendingTransactionID              apijson.Field
-	Rejection                         apijson.Field
-	RoutingNumber                     apijson.Field
-	SourceAccountNumberID             apijson.Field
-	Status                            apijson.Field
-	Submission                        apijson.Field
-	TransactionID                     apijson.Field
-	Type                              apijson.Field
-	UltimateCreditorName              apijson.Field
-	UltimateDebtorName                apijson.Field
-	UnstructuredRemittanceInformation apijson.Field
-	raw                               string
-	ExtraFields                       map[string]apijson.Field
+	ID                                         apijson.Field
+	AccountID                                  apijson.Field
+	AccountNumber                              apijson.Field
+	Acknowledgement                            apijson.Field
+	Amount                                     apijson.Field
+	Approval                                   apijson.Field
+	Cancellation                               apijson.Field
+	CreatedAt                                  apijson.Field
+	CreatedBy                                  apijson.Field
+	CreditorName                               apijson.Field
+	Currency                                   apijson.Field
+	DebtorName                                 apijson.Field
+	ExternalAccountID                          apijson.Field
+	IdempotencyKey                             apijson.Field
+	InboundRealTimePaymentsRequestForPaymentID apijson.Field
+	PendingTransactionID                       apijson.Field
+	Rejection                                  apijson.Field
+	RoutingNumber                              apijson.Field
+	SourceAccountNumberID                      apijson.Field
+	Status                                     apijson.Field
+	Submission                                 apijson.Field
+	TransactionID                              apijson.Field
+	Type                                       apijson.Field
+	UltimateCreditorName                       apijson.Field
+	UltimateDebtorName                         apijson.Field
+	UnstructuredRemittanceInformation          apijson.Field
+	raw                                        string
+	ExtraFields                                map[string]apijson.Field
 }
 
 func (r *RealTimePaymentsTransfer) UnmarshalJSON(data []byte) (err error) {
@@ -589,6 +593,9 @@ type RealTimePaymentsTransferNewParams struct {
 	// The ID of an External Account to initiate a transfer to. If this parameter is
 	// provided, `account_number` and `routing_number` must be absent.
 	ExternalAccountID param.Field[string] `json:"external_account_id"`
+	// The ID of an Inbound Real-Time Payments Request for Payment in response to which
+	// this transfer is being sent.
+	InboundRealTimePaymentsRequestForPaymentID param.Field[string] `json:"inbound_real_time_payments_request_for_payment_id"`
 	// Whether the transfer requires explicit approval via the dashboard or API.
 	RequireApproval param.Field[bool] `json:"require_approval"`
 	// The destination American Bankers' Association (ABA) Routing Transit Number
