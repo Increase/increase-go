@@ -504,6 +504,8 @@ type CheckTransferPhysicalCheck struct {
 	// The payer of the check. This will be printed on the top-left portion of the
 	// check and defaults to the return address if unspecified.
 	Payer []CheckTransferPhysicalCheckPayer `json:"payer" api:"required"`
+	// The identifier of the Physical Check Batch that this check is a part of.
+	PhysicalCheckBatchID string `json:"physical_check_batch_id" api:"required,nullable"`
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name" api:"required"`
 	// The return address to be printed on the check.
@@ -530,6 +532,7 @@ type checkTransferPhysicalCheckJSON struct {
 	Memo                    apijson.Field
 	Note                    apijson.Field
 	Payer                   apijson.Field
+	PhysicalCheckBatchID    apijson.Field
 	RecipientName           apijson.Field
 	ReturnAddress           apijson.Field
 	ReturnAddressName       apijson.Field
@@ -756,22 +759,23 @@ func (r CheckTransferPhysicalCheckTrackingUpdatesCategory) IsKnown() bool {
 type CheckTransferStatus string
 
 const (
-	CheckTransferStatusPendingApproval   CheckTransferStatus = "pending_approval"
-	CheckTransferStatusCanceled          CheckTransferStatus = "canceled"
-	CheckTransferStatusPendingSubmission CheckTransferStatus = "pending_submission"
-	CheckTransferStatusPendingReviewing  CheckTransferStatus = "pending_reviewing"
-	CheckTransferStatusRequiresAttention CheckTransferStatus = "requires_attention"
-	CheckTransferStatusRejected          CheckTransferStatus = "rejected"
-	CheckTransferStatusPendingMailing    CheckTransferStatus = "pending_mailing"
-	CheckTransferStatusMailed            CheckTransferStatus = "mailed"
-	CheckTransferStatusDeposited         CheckTransferStatus = "deposited"
-	CheckTransferStatusStopped           CheckTransferStatus = "stopped"
-	CheckTransferStatusReturned          CheckTransferStatus = "returned"
+	CheckTransferStatusPendingApproval        CheckTransferStatus = "pending_approval"
+	CheckTransferStatusCanceled               CheckTransferStatus = "canceled"
+	CheckTransferStatusPendingBatchCompleting CheckTransferStatus = "pending_batch_completing"
+	CheckTransferStatusPendingSubmission      CheckTransferStatus = "pending_submission"
+	CheckTransferStatusPendingReviewing       CheckTransferStatus = "pending_reviewing"
+	CheckTransferStatusRequiresAttention      CheckTransferStatus = "requires_attention"
+	CheckTransferStatusRejected               CheckTransferStatus = "rejected"
+	CheckTransferStatusPendingMailing         CheckTransferStatus = "pending_mailing"
+	CheckTransferStatusMailed                 CheckTransferStatus = "mailed"
+	CheckTransferStatusDeposited              CheckTransferStatus = "deposited"
+	CheckTransferStatusStopped                CheckTransferStatus = "stopped"
+	CheckTransferStatusReturned               CheckTransferStatus = "returned"
 )
 
 func (r CheckTransferStatus) IsKnown() bool {
 	switch r {
-	case CheckTransferStatusPendingApproval, CheckTransferStatusCanceled, CheckTransferStatusPendingSubmission, CheckTransferStatusPendingReviewing, CheckTransferStatusRequiresAttention, CheckTransferStatusRejected, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusReturned:
+	case CheckTransferStatusPendingApproval, CheckTransferStatusCanceled, CheckTransferStatusPendingBatchCompleting, CheckTransferStatusPendingSubmission, CheckTransferStatusPendingReviewing, CheckTransferStatusRequiresAttention, CheckTransferStatusRejected, CheckTransferStatusPendingMailing, CheckTransferStatusMailed, CheckTransferStatusDeposited, CheckTransferStatusStopped, CheckTransferStatusReturned:
 		return true
 	}
 	return false
@@ -1037,7 +1041,8 @@ func (r CheckTransferNewParamsBalanceCheck) IsKnown() bool {
 // is required if `fulfillment_method` is equal to `physical_check`. It must not be
 // included if any other `fulfillment_method` is provided.
 type CheckTransferNewParamsPhysicalCheck struct {
-	// Details for where Increase will mail the check.
+	// Details for where Increase will mail the check. When `physical_check_batch_id`
+	// is set, the address must match the Physical Check Batch.
 	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address" api:"required"`
 	// The descriptor that will be printed on the memo field on the check.
 	Memo param.Field[string] `json:"memo" api:"required"`
@@ -1057,9 +1062,11 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	CheckVoucherImageFileID param.Field[string] `json:"check_voucher_image_file_id"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note param.Field[string] `json:"note"`
-	// The return address to be printed on the check. If omitted this will default to
-	// an Increase-owned address that will mark checks as delivery failed and shred
-	// them.
+	// The identifier of the Physical Check Batch to mail this check as a part of.
+	PhysicalCheckBatchID param.Field[string] `json:"physical_check_batch_id"`
+	// Details for where the courier will return the check to if it is unable to be
+	// delivered. Defaults to an Increase-owned address that will mark checks as
+	// delivery failed and shred them.
 	ReturnAddress param.Field[CheckTransferNewParamsPhysicalCheckReturnAddress] `json:"return_address"`
 	// A custom name to print above the default return address. Cannot be provided
 	// together with `return_address`.
@@ -1078,7 +1085,8 @@ func (r CheckTransferNewParamsPhysicalCheck) MarshalJSON() (data []byte, err err
 	return apijson.MarshalRoot(r)
 }
 
-// Details for where Increase will mail the check.
+// Details for where Increase will mail the check. When `physical_check_batch_id`
+// is set, the address must match the Physical Check Batch.
 type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	// The city component of the check's destination address.
 	City param.Field[string] `json:"city" api:"required"`
@@ -1112,9 +1120,9 @@ func (r CheckTransferNewParamsPhysicalCheckPayer) MarshalJSON() (data []byte, er
 	return apijson.MarshalRoot(r)
 }
 
-// The return address to be printed on the check. If omitted this will default to
-// an Increase-owned address that will mark checks as delivery failed and shred
-// them.
+// Details for where the courier will return the check to if it is unable to be
+// delivered. Defaults to an Increase-owned address that will mark checks as
+// delivery failed and shred them.
 type CheckTransferNewParamsPhysicalCheckReturnAddress struct {
 	// The city of the return address.
 	City param.Field[string] `json:"city" api:"required"`

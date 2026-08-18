@@ -472,7 +472,7 @@ type ACHPrenotificationNewParams struct {
 	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
 	// Your identifier for the recipient.
 	IndividualID param.Field[string] `json:"individual_id"`
-	// The name of therecipient. This value is informational and not verified by the
+	// The name of the recipient. This value is informational and not verified by the
 	// recipient's bank.
 	IndividualName param.Field[string] `json:"individual_name"`
 	// The
