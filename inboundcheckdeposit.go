@@ -157,8 +157,9 @@ type InboundCheckDeposit struct {
 	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_check_deposit`.
-	Type InboundCheckDepositType `json:"type" api:"required"`
-	JSON inboundCheckDepositJSON `json:"-"`
+	Type        InboundCheckDepositType `json:"type" api:"required"`
+	ExtraFields map[string]interface{}  `json:"-" api:"extrafields"`
+	JSON        inboundCheckDepositJSON `json:"-"`
 }
 
 // inboundCheckDepositJSON contains the JSON metadata for the struct
