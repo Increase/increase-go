@@ -495,6 +495,8 @@ type BeneficialOwnerUpdateParams struct {
 	// tax id (either a Social Security Number or Individual Taxpayer Identification
 	// Number).
 	ConfirmedNoUsTaxID param.Field[bool] `json:"confirmed_no_us_tax_id"`
+	// The person's date of birth in YYYY-MM-DD format.
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" format:"date"`
 	// A means of verifying the person's identity.
 	Identification param.Field[BeneficialOwnerUpdateParamsIdentification] `json:"identification"`
 	// The individual's legal name.
