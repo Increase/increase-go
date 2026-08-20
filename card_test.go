@@ -79,6 +79,11 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 			State:      increase.F("x"),
 			Line2:      increase.F("x"),
 		}),
+		CardholderName: increase.F(increase.CardNewParamsCardholderName{
+			First:  increase.F("x"),
+			Last:   increase.F("x"),
+			Middle: increase.F("x"),
+		}),
 		Description: increase.F("Card for Ian Crease"),
 		DigitalWallet: increase.F(increase.CardNewParamsDigitalWallet{
 			DigitalCardProfileID: increase.F("digital_card_profile_id"),

@@ -122,6 +122,7 @@ func TestBeneficialOwnerUpdateWithOptionalParams(t *testing.T) {
 				Zip:     increase.F("10045"),
 			}),
 			ConfirmedNoUsTaxID: increase.F(true),
+			DateOfBirth:        increase.F(time.Now()),
 			Identification: increase.F(increase.BeneficialOwnerUpdateParamsIdentification{
 				Method: increase.F(increase.BeneficialOwnerUpdateParamsIdentificationMethodSocialSecurityNumber),
 				Number: increase.F("xxxx"),

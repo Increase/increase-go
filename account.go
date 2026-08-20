@@ -378,6 +378,18 @@ type BalanceLookupLoan struct {
 	DueAt time.Time `json:"due_at" api:"required,nullable" format:"date-time"`
 	// The total amount due on the loan.
 	DueBalance int64 `json:"due_balance" api:"required"`
+	// The fees on the loan that are due and unpaid.
+	DueFees int64 `json:"due_fees" api:"required,nullable"`
+	// The interest on the loan that is due and unpaid.
+	DueInterest int64 `json:"due_interest" api:"required,nullable"`
+	// The principal on the loan that is due and unpaid.
+	DuePrincipal int64 `json:"due_principal" api:"required,nullable"`
+	// The fees on the loan that are not yet due.
+	NotDueFees int64 `json:"not_due_fees" api:"required,nullable"`
+	// The interest on the loan that is not yet due.
+	NotDueInterest int64 `json:"not_due_interest" api:"required,nullable"`
+	// The principal on the loan that is not yet due.
+	NotDuePrincipal int64 `json:"not_due_principal" api:"required,nullable"`
 	// The amount past due on the loan.
 	PastDueBalance int64 `json:"past_due_balance" api:"required"`
 	// The receivables balances for the loan.
@@ -388,12 +400,18 @@ type BalanceLookupLoan struct {
 // balanceLookupLoanJSON contains the JSON metadata for the struct
 // [BalanceLookupLoan]
 type balanceLookupLoanJSON struct {
-	DueAt          apijson.Field
-	DueBalance     apijson.Field
-	PastDueBalance apijson.Field
-	Receivables    apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	DueAt           apijson.Field
+	DueBalance      apijson.Field
+	DueFees         apijson.Field
+	DueInterest     apijson.Field
+	DuePrincipal    apijson.Field
+	NotDueFees      apijson.Field
+	NotDueInterest  apijson.Field
+	NotDuePrincipal apijson.Field
+	PastDueBalance  apijson.Field
+	Receivables     apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
 }
 
 func (r *BalanceLookupLoan) UnmarshalJSON(data []byte) (err error) {

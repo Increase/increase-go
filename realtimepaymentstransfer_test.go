@@ -34,10 +34,11 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		AccountNumber:                     increase.F("987654321"),
 		DebtorName:                        increase.F("debtor_name"),
 		ExternalAccountID:                 increase.F("external_account_id"),
-		RequireApproval:                   increase.F(true),
-		RoutingNumber:                     increase.F("101050001"),
-		UltimateCreditorName:              increase.F("ultimate_creditor_name"),
-		UltimateDebtorName:                increase.F("ultimate_debtor_name"),
+		InboundRealTimePaymentsRequestForPaymentID: increase.F("inbound_real_time_payments_request_for_payment_id"),
+		RequireApproval:      increase.F(true),
+		RoutingNumber:        increase.F("101050001"),
+		UltimateCreditorName: increase.F("ultimate_creditor_name"),
+		UltimateDebtorName:   increase.F("ultimate_debtor_name"),
 	})
 	if err != nil {
 		var apierr *increase.Error
