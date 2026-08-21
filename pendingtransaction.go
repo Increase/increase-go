@@ -110,9 +110,9 @@ type PendingTransaction struct {
 	// The identifier for the account this Pending Transaction belongs to.
 	AccountID string `json:"account_id" api:"required"`
 	// The Pending Transaction amount in the minor unit of its currency. For dollars,
-	// for example, this is cents. This amount does not change after the Pending
-	// Transaction is created. If a card authorization settles for a different amount,
-	// the settled amount is available on the resulting Transaction and on the Card
+	// for example, this is cents. For a card authorization this is the amount still
+	// held: it decreases when the merchant reverses part of the authorization. The
+	// amount that settled is available on the resulting Transaction and on the Card
 	// Payment's `state.settled_amount`.
 	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Pending
