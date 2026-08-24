@@ -508,14 +508,14 @@ type AccountNewParamsLoan struct {
 	CreditLimit param.Field[int64] `json:"credit_limit" api:"required"`
 	// The number of days after the statement date that the Account can be past due
 	// before being considered delinquent.
-	GracePeriodDays param.Field[int64] `json:"grace_period_days" api:"required"`
-	// The day of the month on which the loan statement is generated.
-	StatementDayOfMonth param.Field[int64] `json:"statement_day_of_month" api:"required"`
-	// The type of statement payment for the account.
-	StatementPaymentType param.Field[AccountNewParamsLoanStatementPaymentType] `json:"statement_payment_type" api:"required"`
+	GracePeriodDays param.Field[int64] `json:"grace_period_days"`
 	// The date on which the loan matures.
 	MaturityDate param.Field[time.Time] `json:"maturity_date" format:"date"`
-	ExtraFields  map[string]interface{} `json:"-,extras"`
+	// The day of the month on which the loan statement is generated.
+	StatementDayOfMonth param.Field[int64] `json:"statement_day_of_month"`
+	// The type of statement payment for the account.
+	StatementPaymentType param.Field[AccountNewParamsLoanStatementPaymentType] `json:"statement_payment_type"`
+	ExtraFields          map[string]interface{}                                `json:"-,extras"`
 }
 
 func (r AccountNewParamsLoan) MarshalJSON() (data []byte, err error) {
