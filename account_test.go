@@ -34,9 +34,9 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 		Loan: increase.F(increase.AccountNewParamsLoan{
 			CreditLimit:          increase.F(int64(0)),
 			GracePeriodDays:      increase.F(int64(0)),
+			MaturityDate:         increase.F(time.Now()),
 			StatementDayOfMonth:  increase.F(int64(1)),
 			StatementPaymentType: increase.F(increase.AccountNewParamsLoanStatementPaymentTypeBalance),
-			MaturityDate:         increase.F(time.Now()),
 		}),
 		ProgramID: increase.F("program_i2v2os4mwza1oetokh9i"),
 	})
