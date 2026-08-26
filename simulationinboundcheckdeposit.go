@@ -98,7 +98,10 @@ func (r SimulationInboundCheckDepositNewParamsPayeeNameAnalysis) IsKnown() bool 
 }
 
 type SimulationInboundCheckDepositAdjustmentParams struct {
-	// The adjustment amount in cents. Defaults to the amount of the Inbound Check
+	// The adjustment amount in cents. A positive amount means that the funds are being
+	// returned to you by the other bank and is a credit to your account, as happens
+	// for a `wrong_payee_credit`. A negative amount is a debit to your account, as
+	// happens for a `late_return`. Defaults to the amount of the Inbound Check
 	// Deposit.
 	Amount param.Field[int64] `json:"amount"`
 	// The reason for the adjustment. Defaults to `wrong_payee_credit`.
