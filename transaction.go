@@ -4657,7 +4657,8 @@ func (r transactionSourceInboundACHTransferReturnIntentionJSON) RawJSON() string
 type TransactionSourceInboundCheckAdjustment struct {
 	// The ID of the transaction that was adjusted.
 	AdjustedTransactionID string `json:"adjusted_transaction_id" api:"required"`
-	// The amount of the check adjustment.
+	// The amount of the check adjustment in USD cents. A positive amount is a credit
+	// to your account and a negative amount is a debit.
 	Amount int64 `json:"amount" api:"required"`
 	// The reason for the adjustment.
 	Reason      TransactionSourceInboundCheckAdjustmentReason `json:"reason" api:"required"`
