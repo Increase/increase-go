@@ -448,7 +448,8 @@ func (r PhysicalCardType) IsKnown() bool {
 type PhysicalCardNewParams struct {
 	// The underlying card representing this physical card.
 	CardID param.Field[string] `json:"card_id" api:"required"`
-	// Details about the cardholder, as it will appear on the physical card.
+	// Details about the cardholder, as it will appear on the physical card. The
+	// combined first name and last name cannot exceed 25 characters.
 	Cardholder param.Field[PhysicalCardNewParamsCardholder] `json:"cardholder" api:"required"`
 	// The details used to ship this physical card.
 	Shipment param.Field[PhysicalCardNewParamsShipment] `json:"shipment" api:"required"`
@@ -461,7 +462,8 @@ func (r PhysicalCardNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Details about the cardholder, as it will appear on the physical card.
+// Details about the cardholder, as it will appear on the physical card. The
+// combined first name and last name cannot exceed 25 characters.
 type PhysicalCardNewParamsCardholder struct {
 	// The cardholder's first name.
 	FirstName param.Field[string] `json:"first_name" api:"required"`

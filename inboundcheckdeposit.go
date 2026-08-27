@@ -201,7 +201,8 @@ func (r inboundCheckDepositJSON) RawJSON() string {
 type InboundCheckDepositAdjustment struct {
 	// The time at which the return adjustment was received.
 	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
-	// The amount of the adjustment.
+	// The amount of the adjustment in USD cents. A positive amount is a credit to your
+	// account and a negative amount is a debit.
 	Amount int64 `json:"amount" api:"required"`
 	// The reason for the adjustment.
 	Reason InboundCheckDepositAdjustmentsReason `json:"reason" api:"required"`
