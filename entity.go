@@ -140,6 +140,9 @@ type Entity struct {
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating EntityRiskRating `json:"risk_rating" api:"required,nullable"`
+	// Details of the sole proprietorship entity. Will be present if `structure` is
+	// equal to `sole_proprietorship`.
+	SoleProprietorship EntitySoleProprietorship `json:"sole_proprietorship" api:"required,nullable"`
 	// The status of the entity.
 	Status EntityStatus `json:"status" api:"required"`
 	// The entity's legal structure.
@@ -180,6 +183,7 @@ type entityJSON struct {
 	Joint                             apijson.Field
 	NaturalPerson                     apijson.Field
 	RiskRating                        apijson.Field
+	SoleProprietorship                apijson.Field
 	Status                            apijson.Field
 	Structure                         apijson.Field
 	SupplementalDocuments             apijson.Field
@@ -948,6 +952,206 @@ func (r EntityRiskRatingRating) IsKnown() bool {
 	return false
 }
 
+// Details of the sole proprietorship entity. Will be present if `structure` is
+// equal to `sole_proprietorship`.
+type EntitySoleProprietorship struct {
+	// The sole proprietorship's address.
+	Address EntitySoleProprietorshipAddress `json:"address" api:"required"`
+	// The name under which the sole proprietorship does business.
+	DoingBusinessAsName string `json:"doing_business_as_name" api:"required,nullable"`
+	// An email address for the sole proprietorship.
+	Email string `json:"email" api:"required,nullable"`
+	// The numeric North American Industry Classification System (NAICS) code submitted
+	// for the sole proprietorship.
+	IndustryCode string `json:"industry_code" api:"required,nullable"`
+	// The individual who operates the sole proprietorship.
+	SoleProprietor EntitySoleProprietorshipSoleProprietor `json:"sole_proprietor" api:"required"`
+	// The Employer Identification Number (EIN) for the sole proprietorship.
+	TaxIdentifier string `json:"tax_identifier" api:"required,nullable"`
+	// The sole proprietorship's website.
+	Website string                       `json:"website" api:"required,nullable"`
+	JSON    entitySoleProprietorshipJSON `json:"-"`
+}
+
+// entitySoleProprietorshipJSON contains the JSON metadata for the struct
+// [EntitySoleProprietorship]
+type entitySoleProprietorshipJSON struct {
+	Address             apijson.Field
+	DoingBusinessAsName apijson.Field
+	Email               apijson.Field
+	IndustryCode        apijson.Field
+	SoleProprietor      apijson.Field
+	TaxIdentifier       apijson.Field
+	Website             apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
+}
+
+func (r *EntitySoleProprietorship) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entitySoleProprietorshipJSON) RawJSON() string {
+	return r.raw
+}
+
+// The sole proprietorship's address.
+type EntitySoleProprietorshipAddress struct {
+	// The city, district, town, or village of the address.
+	City string `json:"city" api:"required,nullable"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country string `json:"country" api:"required"`
+	// The first line of the address.
+	Line1 string `json:"line1" api:"required"`
+	// The second line of the address.
+	Line2 string `json:"line2" api:"required,nullable"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address.
+	State string `json:"state" api:"required,nullable"`
+	// The ZIP or postal code of the address.
+	Zip  string                              `json:"zip" api:"required,nullable"`
+	JSON entitySoleProprietorshipAddressJSON `json:"-"`
+}
+
+// entitySoleProprietorshipAddressJSON contains the JSON metadata for the struct
+// [EntitySoleProprietorshipAddress]
+type entitySoleProprietorshipAddressJSON struct {
+	City        apijson.Field
+	Country     apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntitySoleProprietorshipAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entitySoleProprietorshipAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// The individual who operates the sole proprietorship.
+type EntitySoleProprietorshipSoleProprietor struct {
+	// The person's address.
+	Address EntitySoleProprietorshipSoleProprietorAddress `json:"address" api:"required"`
+	// The person's date of birth in YYYY-MM-DD format.
+	DateOfBirth time.Time `json:"date_of_birth" api:"required" format:"date"`
+	// A means of verifying the person's identity.
+	Identification EntitySoleProprietorshipSoleProprietorIdentification `json:"identification" api:"required,nullable"`
+	// The person's legal name.
+	Name string                                     `json:"name" api:"required"`
+	JSON entitySoleProprietorshipSoleProprietorJSON `json:"-"`
+}
+
+// entitySoleProprietorshipSoleProprietorJSON contains the JSON metadata for the
+// struct [EntitySoleProprietorshipSoleProprietor]
+type entitySoleProprietorshipSoleProprietorJSON struct {
+	Address        apijson.Field
+	DateOfBirth    apijson.Field
+	Identification apijson.Field
+	Name           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *EntitySoleProprietorshipSoleProprietor) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entitySoleProprietorshipSoleProprietorJSON) RawJSON() string {
+	return r.raw
+}
+
+// The person's address.
+type EntitySoleProprietorshipSoleProprietorAddress struct {
+	// The city, district, town, or village of the address.
+	City string `json:"city" api:"required,nullable"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	Country string `json:"country" api:"required"`
+	// The first line of the address.
+	Line1 string `json:"line1" api:"required"`
+	// The second line of the address.
+	Line2 string `json:"line2" api:"required,nullable"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address.
+	State string `json:"state" api:"required,nullable"`
+	// The ZIP or postal code of the address.
+	Zip  string                                            `json:"zip" api:"required,nullable"`
+	JSON entitySoleProprietorshipSoleProprietorAddressJSON `json:"-"`
+}
+
+// entitySoleProprietorshipSoleProprietorAddressJSON contains the JSON metadata for
+// the struct [EntitySoleProprietorshipSoleProprietorAddress]
+type entitySoleProprietorshipSoleProprietorAddressJSON struct {
+	City        apijson.Field
+	Country     apijson.Field
+	Line1       apijson.Field
+	Line2       apijson.Field
+	State       apijson.Field
+	Zip         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntitySoleProprietorshipSoleProprietorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entitySoleProprietorshipSoleProprietorAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// A means of verifying the person's identity.
+type EntitySoleProprietorshipSoleProprietorIdentification struct {
+	// A method that can be used to verify the individual's identity.
+	Method EntitySoleProprietorshipSoleProprietorIdentificationMethod `json:"method" api:"required"`
+	// The last 4 digits of the identification number that can be used to verify the
+	// individual's identity.
+	NumberLast4 string                                                   `json:"number_last4" api:"required"`
+	ExtraFields map[string]interface{}                                   `json:"-" api:"extrafields"`
+	JSON        entitySoleProprietorshipSoleProprietorIdentificationJSON `json:"-"`
+}
+
+// entitySoleProprietorshipSoleProprietorIdentificationJSON contains the JSON
+// metadata for the struct [EntitySoleProprietorshipSoleProprietorIdentification]
+type entitySoleProprietorshipSoleProprietorIdentificationJSON struct {
+	Method      apijson.Field
+	NumberLast4 apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EntitySoleProprietorshipSoleProprietorIdentification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entitySoleProprietorshipSoleProprietorIdentificationJSON) RawJSON() string {
+	return r.raw
+}
+
+// A method that can be used to verify the individual's identity.
+type EntitySoleProprietorshipSoleProprietorIdentificationMethod string
+
+const (
+	EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber                   EntitySoleProprietorshipSoleProprietorIdentificationMethod = "social_security_number"
+	EntitySoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber EntitySoleProprietorshipSoleProprietorIdentificationMethod = "individual_taxpayer_identification_number"
+	EntitySoleProprietorshipSoleProprietorIdentificationMethodPassport                               EntitySoleProprietorshipSoleProprietorIdentificationMethod = "passport"
+	EntitySoleProprietorshipSoleProprietorIdentificationMethodDriversLicense                         EntitySoleProprietorshipSoleProprietorIdentificationMethod = "drivers_license"
+	EntitySoleProprietorshipSoleProprietorIdentificationMethodOther                                  EntitySoleProprietorshipSoleProprietorIdentificationMethod = "other"
+)
+
+func (r EntitySoleProprietorshipSoleProprietorIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber, EntitySoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntitySoleProprietorshipSoleProprietorIdentificationMethodPassport, EntitySoleProprietorshipSoleProprietorIdentificationMethodDriversLicense, EntitySoleProprietorshipSoleProprietorIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
 // The status of the entity.
 type EntityStatus string
 
@@ -974,11 +1178,12 @@ const (
 	EntityStructureJoint               EntityStructure = "joint"
 	EntityStructureTrust               EntityStructure = "trust"
 	EntityStructureGovernmentAuthority EntityStructure = "government_authority"
+	EntityStructureSoleProprietorship  EntityStructure = "sole_proprietorship"
 )
 
 func (r EntityStructure) IsKnown() bool {
 	switch r {
-	case EntityStructureCorporation, EntityStructureNaturalPerson, EntityStructureJoint, EntityStructureTrust, EntityStructureGovernmentAuthority:
+	case EntityStructureCorporation, EntityStructureNaturalPerson, EntityStructureJoint, EntityStructureTrust, EntityStructureGovernmentAuthority, EntityStructureSoleProprietorship:
 		return true
 	}
 	return false

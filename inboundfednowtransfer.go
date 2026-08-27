@@ -102,11 +102,15 @@ type InboundFednowTransfer struct {
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// If your transfer is declined, this will contain details of the decline.
 	Decline InboundFednowTransferDecline `json:"decline" api:"required,nullable"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// The lifecycle status of the transfer.
 	Status InboundFednowTransferStatus `json:"status" api:"required"`
 	// The identifier of the Transaction object created when the transfer was
 	// confirmed.
 	TransactionID string `json:"transaction_id" api:"required,nullable"`
+	// The FedNow network identification of the transfer.
+	TransactionIdentification string `json:"transaction_identification" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_fednow_transfer`.
 	Type InboundFednowTransferType `json:"type" api:"required"`
@@ -134,8 +138,10 @@ type inboundFednowTransferJSON struct {
 	DebtorName                         apijson.Field
 	DebtorRoutingNumber                apijson.Field
 	Decline                            apijson.Field
+	EndToEndIdentification             apijson.Field
 	Status                             apijson.Field
 	TransactionID                      apijson.Field
+	TransactionIdentification          apijson.Field
 	Type                               apijson.Field
 	UniqueEndToEndTransactionReference apijson.Field
 	UnstructuredRemittanceInformation  apijson.Field
