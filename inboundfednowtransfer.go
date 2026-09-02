@@ -234,11 +234,12 @@ const (
 	InboundFednowTransferDeclineReasonGroupLocked           InboundFednowTransferDeclineReason = "group_locked"
 	InboundFednowTransferDeclineReasonEntityNotActive       InboundFednowTransferDeclineReason = "entity_not_active"
 	InboundFednowTransferDeclineReasonFednowNotEnabled      InboundFednowTransferDeclineReason = "fednow_not_enabled"
+	InboundFednowTransferDeclineReasonTransactionNotAllowed InboundFednowTransferDeclineReason = "transaction_not_allowed"
 )
 
 func (r InboundFednowTransferDeclineReason) IsKnown() bool {
 	switch r {
-	case InboundFednowTransferDeclineReasonAccountNumberCanceled, InboundFednowTransferDeclineReasonAccountNumberDisabled, InboundFednowTransferDeclineReasonAccountRestricted, InboundFednowTransferDeclineReasonGroupLocked, InboundFednowTransferDeclineReasonEntityNotActive, InboundFednowTransferDeclineReasonFednowNotEnabled:
+	case InboundFednowTransferDeclineReasonAccountNumberCanceled, InboundFednowTransferDeclineReasonAccountNumberDisabled, InboundFednowTransferDeclineReasonAccountRestricted, InboundFednowTransferDeclineReasonGroupLocked, InboundFednowTransferDeclineReasonEntityNotActive, InboundFednowTransferDeclineReasonFednowNotEnabled, InboundFednowTransferDeclineReasonTransactionNotAllowed:
 		return true
 	}
 	return false

@@ -101,6 +101,8 @@ func (r *PhysicalCardService) ListAutoPaging(ctx context.Context, query Physical
 type PhysicalCard struct {
 	// The physical card identifier.
 	ID string `json:"id" api:"required"`
+	// The identifier for the Account this Physical Card belongs to.
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier for the Card this Physical Card represents.
 	CardID string `json:"card_id" api:"required"`
 	// Details about the cardholder, as it appears on the printed card.
@@ -127,6 +129,7 @@ type PhysicalCard struct {
 // physicalCardJSON contains the JSON metadata for the struct [PhysicalCard]
 type physicalCardJSON struct {
 	ID                    apijson.Field
+	AccountID             apijson.Field
 	CardID                apijson.Field
 	Cardholder            apijson.Field
 	CreatedAt             apijson.Field
