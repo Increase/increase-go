@@ -110,6 +110,8 @@ func (r *CardDisputeService) Withdraw(ctx context.Context, cardDisputeID string,
 type CardDispute struct {
 	// The Card Dispute identifier.
 	ID string `json:"id" api:"required"`
+	// The Account that the Card Dispute is associated with.
+	AccountID string `json:"account_id" api:"required"`
 	// The amount of the dispute.
 	Amount int64 `json:"amount" api:"required"`
 	// The Card that the Card Dispute is associated with.
@@ -157,6 +159,7 @@ type CardDispute struct {
 // cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
 type cardDisputeJSON struct {
 	ID                       apijson.Field
+	AccountID                apijson.Field
 	Amount                   apijson.Field
 	CardID                   apijson.Field
 	CreatedAt                apijson.Field
