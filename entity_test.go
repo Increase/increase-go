@@ -180,6 +180,36 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			RatedAt: increase.F(time.Now()),
 			Rating:  increase.F(increase.EntityNewParamsRiskRatingRatingLow),
 		}),
+		SoleProprietorship: increase.F(increase.EntityNewParamsSoleProprietorship{
+			Address: increase.F(increase.EntityNewParamsSoleProprietorshipAddress{
+				City:  increase.F("x"),
+				Line1: increase.F("x"),
+				State: increase.F("xx"),
+				Zip:   increase.F("x"),
+				Line2: increase.F("x"),
+			}),
+			SoleProprietor: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietor{
+				Address: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietorAddress{
+					City:    increase.F("x"),
+					Country: increase.F("x"),
+					Line1:   increase.F("x"),
+					Line2:   increase.F("x"),
+					State:   increase.F("x"),
+					Zip:     increase.F("x"),
+				}),
+				DateOfBirth: increase.F(time.Now()),
+				Identification: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietorIdentification{
+					Method: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber),
+					Number: increase.F("xxxx"),
+				}),
+				Name: increase.F("x"),
+			}),
+			DoingBusinessAsName: increase.F("x"),
+			Email:               increase.F("dev@stainless.com"),
+			IndustryCode:        increase.F("x"),
+			TaxIdentifier:       increase.F("x"),
+			Website:             increase.F("website"),
+		}),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("file_id"),
 		}}),
