@@ -91,7 +91,7 @@ type SimulationCardAuthenticationNewParams struct {
 	MerchantCategoryCode param.Field[string] `json:"merchant_category_code"`
 	// The country the merchant resides in.
 	MerchantCountry param.Field[string] `json:"merchant_country"`
-	// The name of the merchant
+	// The name of the merchant.
 	MerchantName param.Field[string] `json:"merchant_name"`
 	// The purchase amount in cents.
 	PurchaseAmount param.Field[int64] `json:"purchase_amount"`

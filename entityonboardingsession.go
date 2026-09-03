@@ -58,7 +58,7 @@ func (r *EntityOnboardingSessionService) Get(ctx context.Context, entityOnboardi
 	return res, err
 }
 
-// List Entity Onboarding Session
+// List Entity Onboarding Sessions
 func (r *EntityOnboardingSessionService) List(ctx context.Context, query EntityOnboardingSessionListParams, opts ...option.RequestOption) (res *pagination.Page[EntityOnboardingSession], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
@@ -76,7 +76,7 @@ func (r *EntityOnboardingSessionService) List(ctx context.Context, query EntityO
 	return res, nil
 }
 
-// List Entity Onboarding Session
+// List Entity Onboarding Sessions
 func (r *EntityOnboardingSessionService) ListAutoPaging(ctx context.Context, query EntityOnboardingSessionListParams, opts ...option.RequestOption) *pagination.PageAutoPager[EntityOnboardingSession] {
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
@@ -230,7 +230,7 @@ func (r EntityOnboardingSessionListParams) URLQuery() (v url.Values) {
 }
 
 type EntityOnboardingSessionListParamsStatus struct {
-	// Filter Entity Onboarding Session for those with the specified status or
+	// Filter Entity Onboarding Sessions for those with the specified status or
 	// statuses. For GET requests, this should be encoded as a comma-delimited string,
 	// such as `?in=one,two,three`.
 	In param.Field[[]EntityOnboardingSessionListParamsStatusIn] `query:"in"`
