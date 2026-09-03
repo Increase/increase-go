@@ -123,7 +123,7 @@ type InboundCheckDeposit struct {
 	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// bank depositing this check. In some rare cases, this is not transmitted via
-	// Check21 and the value will be null.
+	// Check 21 and the value will be null.
 	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number" api:"required,nullable"`
 	// The check number printed on the check being deposited.
 	CheckNumber string `json:"check_number" api:"required,nullable"`

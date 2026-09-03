@@ -106,7 +106,7 @@ type CheckDeposit struct {
 	// If your deposit is returned, this will contain details as to why it was
 	// returned.
 	DepositReturn CheckDepositDepositReturn `json:"deposit_return" api:"required,nullable"`
-	// After the check is parsed, it is submitted to the Check21 network for
+	// After the check is parsed, it is submitted to the Check 21 network for
 	// processing. This will contain details of the submission.
 	DepositSubmission CheckDepositDepositSubmission `json:"deposit_submission" api:"required,nullable"`
 	// The description of the Check Deposit, for display purposes only.
@@ -470,16 +470,16 @@ func (r CheckDepositDepositReturnReturnReason) IsKnown() bool {
 	return false
 }
 
-// After the check is parsed, it is submitted to the Check21 network for
+// After the check is parsed, it is submitted to the Check 21 network for
 // processing. This will contain details of the submission.
 type CheckDepositDepositSubmission struct {
 	// The ID for the File containing the check back image that was submitted to the
-	// Check21 network.
+	// Check 21 network.
 	BackFileID string `json:"back_file_id" api:"required"`
 	// The ID for the File containing the check front image that was submitted to the
-	// Check21 network.
+	// Check 21 network.
 	FrontFileID string `json:"front_file_id" api:"required"`
-	// When the check deposit was submitted to the Check21 network for processing.
+	// When the check deposit was submitted to the Check 21 network for processing.
 	// During business days, this happens within a few hours of the check being
 	// accepted by Increase.
 	SubmittedAt time.Time                         `json:"submitted_at" api:"required" format:"date-time"`
