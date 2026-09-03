@@ -151,7 +151,7 @@ func (r CardTokenType) IsKnown() bool {
 // specific operations, such as Card Push Transfers. The capabilities can change
 // over time based on the issuing bank's configuration of the card range.
 type CardTokenCapabilities struct {
-	// Each route represent a path e.g., a push transfer can take.
+	// Each route represents a path e.g., a push transfer can take.
 	Routes []CardTokenCapabilitiesRoute `json:"routes" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `card_token_capabilities`.
