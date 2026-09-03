@@ -94,6 +94,10 @@ func (r *InboundMailItemService) Action(ctx context.Context, inboundMailItemID s
 type InboundMailItem struct {
 	// The Inbound Mail Item identifier.
 	ID string `json:"id" api:"required"`
+	// The identifier for the Account that checks in this mail item are deposited into.
+	// For mail items that could not be routed to a Lockbox Recipient, this will be
+	// null.
+	AccountID string `json:"account_id" api:"required,nullable"`
 	// The checks in the mail item.
 	Checks []InboundMailItemCheck `json:"checks" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Inbound
@@ -122,6 +126,7 @@ type InboundMailItem struct {
 // inboundMailItemJSON contains the JSON metadata for the struct [InboundMailItem]
 type inboundMailItemJSON struct {
 	ID                 apijson.Field
+	AccountID          apijson.Field
 	Checks             apijson.Field
 	CreatedAt          apijson.Field
 	FileID             apijson.Field

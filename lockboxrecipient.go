@@ -193,7 +193,7 @@ type LockboxRecipientNewParams struct {
 	LockboxAddressID param.Field[string] `json:"lockbox_address_id" api:"required"`
 	// The description you choose for the Lockbox Recipient.
 	Description param.Field[string] `json:"description"`
-	// The name of the Lockbox Recipient
+	// The name of the Lockbox Recipient.
 	RecipientName param.Field[string] `json:"recipient_name"`
 }
 
