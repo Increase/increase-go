@@ -119,7 +119,7 @@ type InboundWireTransfer struct {
 	DebtorAddressLine3 string `json:"debtor_address_line3" api:"required,nullable"`
 	// A name set by the sender.
 	DebtorName string `json:"debtor_name" api:"required,nullable"`
-	// The American Banking Association (ABA) routing number of the sender.
+	// The American Bankers' Association (ABA) routing number of the sender.
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required,nullable"`
 	// An Increase-constructed description of the transfer.
 	Description string `json:"description" api:"required"`
@@ -129,7 +129,7 @@ type InboundWireTransfer struct {
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required,nullable"`
-	// The American Banking Association (ABA) routing number of the bank that sent the
+	// The American Bankers' Association (ABA) routing number of the bank that sent the
 	// wire.
 	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.

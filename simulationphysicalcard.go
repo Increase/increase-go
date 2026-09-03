@@ -49,8 +49,8 @@ func (r *SimulationPhysicalCardService) New(ctx context.Context, physicalCardID 
 }
 
 // This endpoint allows you to simulate advancing the shipment status of a Physical
-// Card, to simulate e.g., that a physical card was attempted shipped but then
-// failed delivery.
+// Card, to simulate e.g., that a physical card was attempted to be shipped but
+// then failed delivery.
 func (r *SimulationPhysicalCardService) AdvanceShipment(ctx context.Context, physicalCardID string, body SimulationPhysicalCardAdvanceShipmentParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardID == "" {
