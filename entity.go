@@ -1192,7 +1192,7 @@ func (r EntityStructure) IsKnown() bool {
 type EntityTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
 	AgreedAt time.Time `json:"agreed_at" api:"required" format:"date-time"`
-	// The IP address the Entity accessed reviewed the terms from.
+	// The IP address the Entity reviewed the terms from.
 	IPAddress string `json:"ip_address" api:"required,nullable"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
 	TermsURL string                   `json:"terms_url" api:"required"`
@@ -1925,6 +1925,9 @@ type EntityNewParams struct {
 	// An assessment of the entity's potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating param.Field[EntityNewParamsRiskRating] `json:"risk_rating"`
+	// Details of the sole proprietorship entity to create. Required if `structure` is
+	// equal to `sole_proprietorship`.
+	SoleProprietorship param.Field[EntityNewParamsSoleProprietorship] `json:"sole_proprietorship"`
 	// Additional documentation associated with the entity.
 	SupplementalDocuments param.Field[[]EntityNewParamsSupplementalDocument] `json:"supplemental_documents"`
 	// The terms that the Entity agreed to. Not all programs are required to submit
@@ -1952,11 +1955,12 @@ const (
 	EntityNewParamsStructureJoint               EntityNewParamsStructure = "joint"
 	EntityNewParamsStructureTrust               EntityNewParamsStructure = "trust"
 	EntityNewParamsStructureGovernmentAuthority EntityNewParamsStructure = "government_authority"
+	EntityNewParamsStructureSoleProprietorship  EntityNewParamsStructure = "sole_proprietorship"
 )
 
 func (r EntityNewParamsStructure) IsKnown() bool {
 	switch r {
-	case EntityNewParamsStructureCorporation, EntityNewParamsStructureNaturalPerson, EntityNewParamsStructureJoint, EntityNewParamsStructureTrust, EntityNewParamsStructureGovernmentAuthority:
+	case EntityNewParamsStructureCorporation, EntityNewParamsStructureNaturalPerson, EntityNewParamsStructureJoint, EntityNewParamsStructureTrust, EntityNewParamsStructureGovernmentAuthority, EntityNewParamsStructureSoleProprietorship:
 		return true
 	}
 	return false
@@ -2101,8 +2105,7 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2213,9 +2216,7 @@ func (r EntityNewParamsCorporationBeneficialOwnersProng) IsKnown() bool {
 // field.
 type EntityNewParamsCorporationLegalIdentifier struct {
 	// The legal identifier itself. For US Employer Identification Numbers, submit nine
-	// digits with no dashes or other separators. When testing in sandbox, use one of
-	// our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// digits with no dashes or other separators.
 	Value param.Field[string] `json:"value" api:"required"`
 	// The category of the legal identifier.
 	//
@@ -2399,8 +2400,7 @@ type EntityNewParamsJointIndividualsIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2549,8 +2549,7 @@ type EntityNewParamsNaturalPersonIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -2672,6 +2671,135 @@ func (r EntityNewParamsRiskRatingRating) IsKnown() bool {
 	return false
 }
 
+// Details of the sole proprietorship entity to create. Required if `structure` is
+// equal to `sole_proprietorship`.
+type EntityNewParamsSoleProprietorship struct {
+	// The sole proprietorship's business address. Mail receiving locations like PO
+	// Boxes and PMB's are disallowed.
+	Address param.Field[EntityNewParamsSoleProprietorshipAddress] `json:"address" api:"required"`
+	// The individual who operates the sole proprietorship.
+	SoleProprietor param.Field[EntityNewParamsSoleProprietorshipSoleProprietor] `json:"sole_proprietor" api:"required"`
+	// The name under which the sole proprietorship does business, if it is different
+	// from the name of the sole proprietor.
+	DoingBusinessAsName param.Field[string] `json:"doing_business_as_name"`
+	// An email address for the sole proprietorship. Not every program requires an
+	// email for submitted Entities.
+	Email param.Field[string] `json:"email" format:"email"`
+	// The North American Industry Classification System (NAICS) code for the sole
+	// proprietorship's primary line of business. This is a number, like `5132` for
+	// `Software Publishers`. A full list of classification codes is available
+	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
+	IndustryCode param.Field[string] `json:"industry_code"`
+	// The United States Employer Identification Number (EIN) for the sole
+	// proprietorship, if the sole proprietor has one. Submit nine digits with no
+	// dashes or other separators.
+	TaxIdentifier param.Field[string] `json:"tax_identifier"`
+	// A website for the sole proprietorship. Not every program requires a website for
+	// submitted Entities.
+	Website param.Field[string] `json:"website"`
+}
+
+func (r EntityNewParamsSoleProprietorship) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The sole proprietorship's business address. Mail receiving locations like PO
+// Boxes and PMB's are disallowed.
+type EntityNewParamsSoleProprietorshipAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1" api:"required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state" api:"required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip" api:"required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityNewParamsSoleProprietorshipAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The individual who operates the sole proprietorship.
+type EntityNewParamsSoleProprietorshipSoleProprietor struct {
+	// The individual's physical address. Mail receiving locations like PO Boxes and
+	// PMB's are disallowed.
+	Address param.Field[EntityNewParamsSoleProprietorshipSoleProprietorAddress] `json:"address" api:"required"`
+	// The person's date of birth in YYYY-MM-DD format.
+	DateOfBirth param.Field[time.Time] `json:"date_of_birth" api:"required" format:"date"`
+	// A means of verifying the person's identity. Sole proprietors must be identified
+	// with a `social_security_number` or an
+	// `individual_taxpayer_identification_number`.
+	Identification param.Field[EntityNewParamsSoleProprietorshipSoleProprietorIdentification] `json:"identification" api:"required"`
+	// The person's legal name.
+	Name param.Field[string] `json:"name" api:"required"`
+}
+
+func (r EntityNewParamsSoleProprietorshipSoleProprietor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The individual's physical address. Mail receiving locations like PO Boxes and
+// PMB's are disallowed.
+type EntityNewParamsSoleProprietorshipSoleProprietorAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
+	Country param.Field[string] `json:"country" api:"required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1" api:"required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
+}
+
+func (r EntityNewParamsSoleProprietorshipSoleProprietorAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A means of verifying the person's identity. Sole proprietors must be identified
+// with a `social_security_number` or an
+// `individual_taxpayer_identification_number`.
+type EntityNewParamsSoleProprietorshipSoleProprietorIdentification struct {
+	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
+	Method param.Field[EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethod] `json:"method" api:"required"`
+	// An identification number that can be used to verify the individual's identity,
+	// such as a social security number. Submit nine digits with no dashes or other
+	// separators.
+	Number param.Field[string] `json:"number" api:"required"`
+}
+
+func (r EntityNewParamsSoleProprietorshipSoleProprietorIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A method that can be used to verify the individual's identity.
+type EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethod string
+
+const (
+	EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber                   EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethod = "social_security_number"
+	EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethod = "individual_taxpayer_identification_number"
+)
+
+func (r EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber, EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber:
+		return true
+	}
+	return false
+}
+
 type EntityNewParamsSupplementalDocument struct {
 	// The identifier of the File containing the document.
 	FileID param.Field[string] `json:"file_id" api:"required"`
@@ -2684,7 +2812,7 @@ func (r EntityNewParamsSupplementalDocument) MarshalJSON() (data []byte, err err
 type EntityNewParamsTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
 	AgreedAt param.Field[time.Time] `json:"agreed_at" api:"required" format:"date-time"`
-	// The IP address the Entity accessed reviewed the terms from.
+	// The IP address the Entity reviewed the terms from.
 	IPAddress param.Field[string] `json:"ip_address" api:"required"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
 	TermsURL param.Field[string] `json:"terms_url" api:"required"`
@@ -2878,8 +3006,7 @@ type EntityNewParamsTrustTrusteesIndividualIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -3025,8 +3152,7 @@ type EntityNewParamsTrustGrantorIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -3134,6 +3260,9 @@ type EntityUpdateParams struct {
 	// An assessment of the entity’s potential risk of involvement in financial crimes,
 	// such as money laundering.
 	RiskRating param.Field[EntityUpdateParamsRiskRating] `json:"risk_rating"`
+	// Details of the sole proprietorship entity to update. If you specify this
+	// parameter and the entity is not a sole proprietorship, the request will fail.
+	SoleProprietorship param.Field[EntityUpdateParamsSoleProprietorship] `json:"sole_proprietorship"`
 	// New terms that the Entity agreed to. Not all programs are required to submit
 	// this data. This will not archive previously submitted terms.
 	TermsAgreements param.Field[[]EntityUpdateParamsTermsAgreement] `json:"terms_agreements"`
@@ -3326,8 +3455,7 @@ type EntityUpdateParamsNaturalPersonIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -3449,10 +3577,199 @@ func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
 	return false
 }
 
+// Details of the sole proprietorship entity to update. If you specify this
+// parameter and the entity is not a sole proprietorship, the request will fail.
+type EntityUpdateParamsSoleProprietorship struct {
+	// The sole proprietorship's business address. Mail receiving locations like PO
+	// Boxes and PMB's are disallowed.
+	Address param.Field[EntityUpdateParamsSoleProprietorshipAddress] `json:"address"`
+	// An email address for the sole proprietorship. Not every program requires an
+	// email for submitted Entities.
+	Email param.Field[string] `json:"email" format:"email"`
+	// The North American Industry Classification System (NAICS) code for the sole
+	// proprietorship's primary line of business. This is a number, like `5132` for
+	// `Software Publishers`. A full list of classification codes is available
+	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
+	IndustryCode param.Field[string] `json:"industry_code"`
+	// Details of the individual who operates the sole proprietorship.
+	SoleProprietor param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietor] `json:"sole_proprietor"`
+	// The United States Employer Identification Number (EIN) for the sole
+	// proprietorship. Submit nine digits with no dashes or other separators.
+	TaxIdentifier param.Field[string] `json:"tax_identifier"`
+	// A website for the sole proprietorship. Not every program requires a website for
+	// submitted Entities.
+	Website param.Field[string] `json:"website"`
+}
+
+func (r EntityUpdateParamsSoleProprietorship) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The sole proprietorship's business address. Mail receiving locations like PO
+// Boxes and PMB's are disallowed.
+type EntityUpdateParamsSoleProprietorshipAddress struct {
+	// The city of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1" api:"required"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the state of
+	// the address.
+	State param.Field[string] `json:"state" api:"required"`
+	// The ZIP code of the address.
+	Zip param.Field[string] `json:"zip" api:"required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Details of the individual who operates the sole proprietorship.
+type EntityUpdateParamsSoleProprietorshipSoleProprietor struct {
+	// The sole proprietor's physical address. Mail receiving locations like PO Boxes
+	// and PMB's are disallowed.
+	Address param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietorAddress] `json:"address"`
+	// A means of verifying the sole proprietor's identity. Unlike at creation, an
+	// identity document is accepted here.
+	Identification param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietorIdentification] `json:"identification"`
+	// The sole proprietor's legal name.
+	Name param.Field[string] `json:"name"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The sole proprietor's physical address. Mail receiving locations like PO Boxes
+// and PMB's are disallowed.
+type EntityUpdateParamsSoleProprietorshipSoleProprietorAddress struct {
+	// The city, district, town, or village of the address.
+	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
+	Country param.Field[string] `json:"country" api:"required"`
+	// The first line of the address. This is usually the street number and street.
+	Line1 param.Field[string] `json:"line1" api:"required"`
+	// The second line of the address. This might be the floor or room number.
+	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietorAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A means of verifying the sole proprietor's identity. Unlike at creation, an
+// identity document is accepted here.
+type EntityUpdateParamsSoleProprietorshipSoleProprietorIdentification struct {
+	// A method that can be used to verify the individual's identity.
+	//
+	// Defaults to `social_security_number`.
+	Method param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod] `json:"method" api:"required"`
+	// An identification number that can be used to verify the individual's identity,
+	// such as a social security number. For Social Security Numbers and Individual
+	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
+	// separators.
+	Number param.Field[string] `json:"number" api:"required"`
+	// Information about the United States driver's license used for identification.
+	// Required if `method` is equal to `drivers_license`.
+	DriversLicense param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationDriversLicense] `json:"drivers_license"`
+	// Information about the identification document provided. Required if `method` is
+	// equal to `other`.
+	Other param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationOther] `json:"other"`
+	// Information about the passport used for identification. Required if `method` is
+	// equal to `passport`.
+	Passport    param.Field[EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationPassport] `json:"passport"`
+	ExtraFields map[string]interface{}                                                                `json:"-,extras"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietorIdentification) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// A method that can be used to verify the individual's identity.
+type EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod string
+
+const (
+	EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber                   EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod = "social_security_number"
+	EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod = "individual_taxpayer_identification_number"
+	EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodPassport                               EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod = "passport"
+	EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodDriversLicense                         EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod = "drivers_license"
+	EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodOther                                  EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod = "other"
+)
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethod) IsKnown() bool {
+	switch r {
+	case EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber, EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodPassport, EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodDriversLicense, EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodOther:
+		return true
+	}
+	return false
+}
+
+// Information about the United States driver's license used for identification.
+// Required if `method` is equal to `drivers_license`.
+type EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationDriversLicense struct {
+	// The driver's license's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
+	// The identifier of the File containing the front of the driver's license.
+	FileID param.Field[string] `json:"file_id" api:"required"`
+	// The state that issued the provided driver's license.
+	State param.Field[string] `json:"state" api:"required"`
+	// The identifier of the File containing the back of the driver's license.
+	BackFileID param.Field[string] `json:"back_file_id"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationDriversLicense) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the identification document provided. Required if `method` is
+// equal to `other`.
+type EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationOther struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document (e.g., `US`).
+	Country param.Field[string] `json:"country" api:"required"`
+	// A description of the document submitted.
+	Description param.Field[string] `json:"description" api:"required"`
+	// The identifier of the File containing the front of the document.
+	FileID param.Field[string] `json:"file_id" api:"required"`
+	// The identifier of the File containing the back of the document. Not every
+	// document has a reverse side.
+	BackFileID param.Field[string] `json:"back_file_id"`
+	// The document's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" format:"date"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationOther) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Information about the passport used for identification. Required if `method` is
+// equal to `passport`.
+type EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationPassport struct {
+	// The two-character ISO 3166-1 code representing the country that issued the
+	// document (e.g., `US`).
+	Country param.Field[string] `json:"country" api:"required"`
+	// The passport's expiration date in YYYY-MM-DD format.
+	ExpirationDate param.Field[time.Time] `json:"expiration_date" api:"required" format:"date"`
+	// The identifier of the File containing the passport.
+	FileID param.Field[string] `json:"file_id" api:"required"`
+}
+
+func (r EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationPassport) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type EntityUpdateParamsTermsAgreement struct {
 	// The timestamp of when the Entity agreed to the terms.
 	AgreedAt param.Field[time.Time] `json:"agreed_at" api:"required" format:"date-time"`
-	// The IP address the Entity accessed reviewed the terms from.
+	// The IP address the Entity reviewed the terms from.
 	IPAddress param.Field[string] `json:"ip_address" api:"required"`
 	// The URL of the terms agreement. This link will be provided by your bank partner.
 	TermsURL param.Field[string] `json:"terms_url" api:"required"`
@@ -3591,8 +3908,7 @@ type EntityUpdateParamsTrustGrantorIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -3766,8 +4082,7 @@ type EntityUpdateParamsTrustTrusteesIndividualIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
