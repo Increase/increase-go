@@ -281,6 +281,11 @@ type TransactionSource struct {
 	// `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
 	// when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
 	FednowTransferAcknowledgement TransactionSourceFednowTransferAcknowledgement `json:"fednow_transfer_acknowledgement" api:"nullable"`
+	// A FedNow Transfer Return object. This field will be present in the JSON response
+	// if and only if `category` is equal to `fednow_transfer_return`. A FedNow
+	// Transfer Return is created when a FedNow Transfer sent from Increase is returned
+	// by the recipient's bank.
+	FednowTransferReturn TransactionSourceFednowTransferReturn `json:"fednow_transfer_return" api:"nullable"`
 	// A Fee Payment object. This field will be present in the JSON response if and
 	// only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
 	// made to Increase.
@@ -299,7 +304,7 @@ type TransactionSource struct {
 	// An Inbound Check Adjustment object. This field will be present in the JSON
 	// response if and only if `category` is equal to `inbound_check_adjustment`. An
 	// Inbound Check Adjustment is created when Increase receives an adjustment for a
-	// check or return deposited through Check21.
+	// check or return deposited through Check 21.
 	InboundCheckAdjustment TransactionSourceInboundCheckAdjustment `json:"inbound_check_adjustment" api:"nullable"`
 	// An Inbound Check Deposit Return Intention object. This field will be present in
 	// the JSON response if and only if `category` is equal to
@@ -398,6 +403,7 @@ type transactionSourceJSON struct {
 	CheckDepositReturn                          apijson.Field
 	CheckTransferDeposit                        apijson.Field
 	FednowTransferAcknowledgement               apijson.Field
+	FednowTransferReturn                        apijson.Field
 	FeePayment                                  apijson.Field
 	InboundACHTransfer                          apijson.Field
 	InboundACHTransferReturnIntention           apijson.Field
@@ -448,6 +454,7 @@ const (
 	TransactionSourceCategoryCheckDepositAcceptance                      TransactionSourceCategory = "check_deposit_acceptance"
 	TransactionSourceCategoryCheckDepositReturn                          TransactionSourceCategory = "check_deposit_return"
 	TransactionSourceCategoryFednowTransferAcknowledgement               TransactionSourceCategory = "fednow_transfer_acknowledgement"
+	TransactionSourceCategoryFednowTransferReturn                        TransactionSourceCategory = "fednow_transfer_return"
 	TransactionSourceCategoryCheckTransferDeposit                        TransactionSourceCategory = "check_transfer_deposit"
 	TransactionSourceCategoryFeePayment                                  TransactionSourceCategory = "fee_payment"
 	TransactionSourceCategoryInboundACHTransfer                          TransactionSourceCategory = "inbound_ach_transfer"
@@ -475,7 +482,7 @@ const (
 
 func (r TransactionSourceCategory) IsKnown() bool {
 	switch r {
-	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardFinancial, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundFednowTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryBlockchainOnrampTransferIntention, TransactionSourceCategoryBlockchainOfframpTransferSettlement, TransactionSourceCategoryOther:
+	case TransactionSourceCategoryAccountTransferIntention, TransactionSourceCategoryACHTransferIntention, TransactionSourceCategoryACHTransferRejection, TransactionSourceCategoryACHTransferReturn, TransactionSourceCategoryCashbackPayment, TransactionSourceCategoryCardDisputeAcceptance, TransactionSourceCategoryCardDisputeFinancial, TransactionSourceCategoryCardDisputeLoss, TransactionSourceCategoryCardRefund, TransactionSourceCategoryCardSettlement, TransactionSourceCategoryCardFinancial, TransactionSourceCategoryCardRevenuePayment, TransactionSourceCategoryCheckDepositAcceptance, TransactionSourceCategoryCheckDepositReturn, TransactionSourceCategoryFednowTransferAcknowledgement, TransactionSourceCategoryFednowTransferReturn, TransactionSourceCategoryCheckTransferDeposit, TransactionSourceCategoryFeePayment, TransactionSourceCategoryInboundACHTransfer, TransactionSourceCategoryInboundACHTransferReturnIntention, TransactionSourceCategoryInboundCheckDepositReturnIntention, TransactionSourceCategoryInboundCheckAdjustment, TransactionSourceCategoryInboundFednowTransferConfirmation, TransactionSourceCategoryInboundRealTimePaymentsTransferConfirmation, TransactionSourceCategoryInboundWireReversal, TransactionSourceCategoryInboundWireTransfer, TransactionSourceCategoryInboundWireTransferReversal, TransactionSourceCategoryInterestPayment, TransactionSourceCategoryInternalSource, TransactionSourceCategoryRealTimePaymentsTransferAcknowledgement, TransactionSourceCategorySampleFunds, TransactionSourceCategoryWireTransferIntention, TransactionSourceCategorySwiftTransferIntention, TransactionSourceCategorySwiftTransferReturn, TransactionSourceCategoryCardPushTransferAcceptance, TransactionSourceCategoryAccountRevenuePayment, TransactionSourceCategoryBlockchainOnrampTransferIntention, TransactionSourceCategoryBlockchainOfframpTransferSettlement, TransactionSourceCategoryOther:
 		return true
 	}
 	return false
@@ -1020,9 +1027,9 @@ type TransactionSourceCardFinancial struct {
 	// Whether this financial was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner TransactionSourceCardFinancialActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts TransactionSourceCardFinancialAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -1154,9 +1161,9 @@ func (r TransactionSourceCardFinancialActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type TransactionSourceCardFinancialAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic TransactionSourceCardFinancialAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -4332,7 +4339,7 @@ type TransactionSourceCheckTransferDeposit struct {
 	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// bank depositing this check. In some rare cases, this is not transmitted via
-	// Check21 and the value will be null.
+	// Check 21 and the value will be null.
 	BankOfFirstDepositRoutingNumber string `json:"bank_of_first_deposit_routing_number" api:"required,nullable"`
 	// When the check was deposited.
 	DepositedAt time.Time `json:"deposited_at" api:"required" format:"date-time"`
@@ -4417,6 +4424,72 @@ func (r *TransactionSourceFednowTransferAcknowledgement) UnmarshalJSON(data []by
 
 func (r transactionSourceFednowTransferAcknowledgementJSON) RawJSON() string {
 	return r.raw
+}
+
+// A FedNow Transfer Return object. This field will be present in the JSON response
+// if and only if `category` is equal to `fednow_transfer_return`. A FedNow
+// Transfer Return is created when a FedNow Transfer sent from Increase is returned
+// by the recipient's bank.
+type TransactionSourceFednowTransferReturn struct {
+	// The returned amount in USD cents. This is always a positive number.
+	Amount int64 `json:"amount" api:"required"`
+	// Additional information about the return provided by the recipient's bank.
+	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information" api:"required,nullable"`
+	// The reason the transfer was returned as provided by the recipient's bank.
+	ReturnReasonCode TransactionSourceFednowTransferReturnReturnReasonCode `json:"return_reason_code" api:"required"`
+	// The identifier of the FedNow Transfer that led to this Transaction.
+	TransferID  string                                    `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
+	JSON        transactionSourceFednowTransferReturnJSON `json:"-"`
+}
+
+// transactionSourceFednowTransferReturnJSON contains the JSON metadata for the
+// struct [TransactionSourceFednowTransferReturn]
+type transactionSourceFednowTransferReturnJSON struct {
+	Amount                            apijson.Field
+	ReturnReasonAdditionalInformation apijson.Field
+	ReturnReasonCode                  apijson.Field
+	TransferID                        apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
+}
+
+func (r *TransactionSourceFednowTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceFednowTransferReturnJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason the transfer was returned as provided by the recipient's bank.
+type TransactionSourceFednowTransferReturnReturnReasonCode string
+
+const (
+	TransactionSourceFednowTransferReturnReturnReasonCodeAccountClosed                TransactionSourceFednowTransferReturnReturnReasonCode = "account_closed"
+	TransactionSourceFednowTransferReturnReturnReasonCodeAccountBlocked               TransactionSourceFednowTransferReturnReturnReasonCode = "account_blocked"
+	TransactionSourceFednowTransferReturnReturnReasonCodeInvalidAgent                 TransactionSourceFednowTransferReturnReturnReasonCode = "invalid_agent"
+	TransactionSourceFednowTransferReturnReturnReasonCodeInvalidCreditorAccountNumber TransactionSourceFednowTransferReturnReturnReasonCode = "invalid_creditor_account_number"
+	TransactionSourceFednowTransferReturnReturnReasonCodeIncorrectAccountNumber       TransactionSourceFednowTransferReturnReturnReasonCode = "incorrect_account_number"
+	TransactionSourceFednowTransferReturnReturnReasonCodeEndCustomerDeceased          TransactionSourceFednowTransferReturnReturnReasonCode = "end_customer_deceased"
+	TransactionSourceFednowTransferReturnReturnReasonCodeTransactionForbidden         TransactionSourceFednowTransferReturnReturnReasonCode = "transaction_forbidden"
+	TransactionSourceFednowTransferReturnReturnReasonCodeRegulatoryReason             TransactionSourceFednowTransferReturnReturnReasonCode = "regulatory_reason"
+	TransactionSourceFednowTransferReturnReturnReasonCodeFraud                        TransactionSourceFednowTransferReturnReturnReasonCode = "fraud"
+	TransactionSourceFednowTransferReturnReturnReasonCodeDuplication                  TransactionSourceFednowTransferReturnReturnReasonCode = "duplication"
+	TransactionSourceFednowTransferReturnReturnReasonCodeWrongAmount                  TransactionSourceFednowTransferReturnReturnReasonCode = "wrong_amount"
+	TransactionSourceFednowTransferReturnReturnReasonCodeRequestedByCustomer          TransactionSourceFednowTransferReturnReturnReasonCode = "requested_by_customer"
+	TransactionSourceFednowTransferReturnReturnReasonCodeUnableToApply                TransactionSourceFednowTransferReturnReturnReasonCode = "unable_to_apply"
+	TransactionSourceFednowTransferReturnReturnReasonCodeNotSpecified                 TransactionSourceFednowTransferReturnReturnReasonCode = "not_specified"
+	TransactionSourceFednowTransferReturnReturnReasonCodeNarrative                    TransactionSourceFednowTransferReturnReturnReasonCode = "narrative"
+	TransactionSourceFednowTransferReturnReturnReasonCodeOther                        TransactionSourceFednowTransferReturnReturnReasonCode = "other"
+)
+
+func (r TransactionSourceFednowTransferReturnReturnReasonCode) IsKnown() bool {
+	switch r {
+	case TransactionSourceFednowTransferReturnReturnReasonCodeAccountClosed, TransactionSourceFednowTransferReturnReturnReasonCodeAccountBlocked, TransactionSourceFednowTransferReturnReturnReasonCodeInvalidAgent, TransactionSourceFednowTransferReturnReturnReasonCodeInvalidCreditorAccountNumber, TransactionSourceFednowTransferReturnReturnReasonCodeIncorrectAccountNumber, TransactionSourceFednowTransferReturnReturnReasonCodeEndCustomerDeceased, TransactionSourceFednowTransferReturnReturnReasonCodeTransactionForbidden, TransactionSourceFednowTransferReturnReturnReasonCodeRegulatoryReason, TransactionSourceFednowTransferReturnReturnReasonCodeFraud, TransactionSourceFednowTransferReturnReturnReasonCodeDuplication, TransactionSourceFednowTransferReturnReturnReasonCodeWrongAmount, TransactionSourceFednowTransferReturnReturnReasonCodeRequestedByCustomer, TransactionSourceFednowTransferReturnReturnReasonCodeUnableToApply, TransactionSourceFednowTransferReturnReturnReasonCodeNotSpecified, TransactionSourceFednowTransferReturnReturnReasonCodeNarrative, TransactionSourceFednowTransferReturnReturnReasonCodeOther:
+		return true
+	}
+	return false
 }
 
 // A Fee Payment object. This field will be present in the JSON response if and
@@ -4653,7 +4726,7 @@ func (r transactionSourceInboundACHTransferReturnIntentionJSON) RawJSON() string
 // An Inbound Check Adjustment object. This field will be present in the JSON
 // response if and only if `category` is equal to `inbound_check_adjustment`. An
 // Inbound Check Adjustment is created when Increase receives an adjustment for a
-// check or return deposited through Check21.
+// check or return deposited through Check 21.
 type TransactionSourceInboundCheckAdjustment struct {
 	// The ID of the transaction that was adjusted.
 	AdjustedTransactionID string `json:"adjusted_transaction_id" api:"required"`
@@ -4935,7 +5008,7 @@ type TransactionSourceInboundWireTransfer struct {
 	// abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
 	// service and is helpful when debugging wires with the originating bank.
 	InputMessageAccountabilityData string `json:"input_message_accountability_data" api:"required,nullable"`
-	// The American Banking Association (ABA) routing number of the bank that sent the
+	// The American Bankers' Association (ABA) routing number of the bank that sent the
 	// wire.
 	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.
@@ -5408,6 +5481,7 @@ const (
 	TransactionListParamsCategoryInCheckDepositAcceptance                      TransactionListParamsCategoryIn = "check_deposit_acceptance"
 	TransactionListParamsCategoryInCheckDepositReturn                          TransactionListParamsCategoryIn = "check_deposit_return"
 	TransactionListParamsCategoryInFednowTransferAcknowledgement               TransactionListParamsCategoryIn = "fednow_transfer_acknowledgement"
+	TransactionListParamsCategoryInFednowTransferReturn                        TransactionListParamsCategoryIn = "fednow_transfer_return"
 	TransactionListParamsCategoryInCheckTransferDeposit                        TransactionListParamsCategoryIn = "check_transfer_deposit"
 	TransactionListParamsCategoryInFeePayment                                  TransactionListParamsCategoryIn = "fee_payment"
 	TransactionListParamsCategoryInInboundACHTransfer                          TransactionListParamsCategoryIn = "inbound_ach_transfer"
@@ -5435,7 +5509,7 @@ const (
 
 func (r TransactionListParamsCategoryIn) IsKnown() bool {
 	switch r {
-	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardFinancial, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInFednowTransferAcknowledgement, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundFednowTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInSwiftTransferReturn, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInAccountRevenuePayment, TransactionListParamsCategoryInBlockchainOnrampTransferIntention, TransactionListParamsCategoryInBlockchainOfframpTransferSettlement, TransactionListParamsCategoryInOther:
+	case TransactionListParamsCategoryInAccountTransferIntention, TransactionListParamsCategoryInACHTransferIntention, TransactionListParamsCategoryInACHTransferRejection, TransactionListParamsCategoryInACHTransferReturn, TransactionListParamsCategoryInCashbackPayment, TransactionListParamsCategoryInCardDisputeAcceptance, TransactionListParamsCategoryInCardDisputeFinancial, TransactionListParamsCategoryInCardDisputeLoss, TransactionListParamsCategoryInCardRefund, TransactionListParamsCategoryInCardSettlement, TransactionListParamsCategoryInCardFinancial, TransactionListParamsCategoryInCardRevenuePayment, TransactionListParamsCategoryInCheckDepositAcceptance, TransactionListParamsCategoryInCheckDepositReturn, TransactionListParamsCategoryInFednowTransferAcknowledgement, TransactionListParamsCategoryInFednowTransferReturn, TransactionListParamsCategoryInCheckTransferDeposit, TransactionListParamsCategoryInFeePayment, TransactionListParamsCategoryInInboundACHTransfer, TransactionListParamsCategoryInInboundACHTransferReturnIntention, TransactionListParamsCategoryInInboundCheckDepositReturnIntention, TransactionListParamsCategoryInInboundCheckAdjustment, TransactionListParamsCategoryInInboundFednowTransferConfirmation, TransactionListParamsCategoryInInboundRealTimePaymentsTransferConfirmation, TransactionListParamsCategoryInInboundWireReversal, TransactionListParamsCategoryInInboundWireTransfer, TransactionListParamsCategoryInInboundWireTransferReversal, TransactionListParamsCategoryInInterestPayment, TransactionListParamsCategoryInInternalSource, TransactionListParamsCategoryInRealTimePaymentsTransferAcknowledgement, TransactionListParamsCategoryInSampleFunds, TransactionListParamsCategoryInWireTransferIntention, TransactionListParamsCategoryInSwiftTransferIntention, TransactionListParamsCategoryInSwiftTransferReturn, TransactionListParamsCategoryInCardPushTransferAcceptance, TransactionListParamsCategoryInAccountRevenuePayment, TransactionListParamsCategoryInBlockchainOnrampTransferIntention, TransactionListParamsCategoryInBlockchainOfframpTransferSettlement, TransactionListParamsCategoryInOther:
 		return true
 	}
 	return false

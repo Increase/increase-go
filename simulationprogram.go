@@ -50,7 +50,10 @@ type SimulationProgramNewParams struct {
 	Bank param.Field[SimulationProgramNewParamsBank] `json:"bank"`
 	// The maximum extendable credit of the program being added.
 	LendingMaximumExtendableCredit param.Field[int64] `json:"lending_maximum_extendable_credit"`
-	// The identifier of the Account the Program should be added to is for.
+	// Whether opening a loan Account under this Program requires an accepted Loan
+	// Offer. Requires `lending_maximum_extendable_credit`. Defaults to `false`.
+	LoanAccountsRequireLoanOffers param.Field[bool] `json:"loan_accounts_require_loan_offers"`
+	// The identifier of the Account the Program should be added to.
 	ReserveAccountID param.Field[string] `json:"reserve_account_id"`
 }
 

@@ -53,8 +53,8 @@ type SimulationCardDisputeActionParams struct {
 	// The network of the Card Dispute. Details specific to the network are required
 	// under the sub-object with the same identifier as the network.
 	Network param.Field[SimulationCardDisputeActionParamsNetwork] `json:"network" api:"required"`
-	// The Visa-specific parameters for the taking action on the dispute. Required if
-	// and only if `network` is `visa`.
+	// The Visa-specific parameters for taking action on the dispute. Required if and
+	// only if `network` is `visa`.
 	Visa param.Field[SimulationCardDisputeActionParamsVisa] `json:"visa"`
 }
 
@@ -78,8 +78,8 @@ func (r SimulationCardDisputeActionParamsNetwork) IsKnown() bool {
 	return false
 }
 
-// The Visa-specific parameters for the taking action on the dispute. Required if
-// and only if `network` is `visa`.
+// The Visa-specific parameters for taking action on the dispute. Required if and
+// only if `network` is `visa`.
 type SimulationCardDisputeActionParamsVisa struct {
 	// The action to take. Details specific to the action are required under the
 	// sub-object with the same identifier as the action.
