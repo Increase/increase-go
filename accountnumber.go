@@ -158,7 +158,7 @@ func (r accountNumberJSON) RawJSON() string {
 // Properties related to how this Account Number handles inbound ACH transfers.
 type AccountNumberInboundACH struct {
 	// Whether ACH debits are allowed against this Account Number. Note that they will
-	// still be declined if this is `allowed` if the Account Number is not active.
+	// still be declined if this is `allowed` but the Account Number is not active.
 	DebitStatus AccountNumberInboundACHDebitStatus `json:"debit_status" api:"required"`
 	JSON        accountNumberInboundACHJSON        `json:"-"`
 }
@@ -180,7 +180,7 @@ func (r accountNumberInboundACHJSON) RawJSON() string {
 }
 
 // Whether ACH debits are allowed against this Account Number. Note that they will
-// still be declined if this is `allowed` if the Account Number is not active.
+// still be declined if this is `allowed` but the Account Number is not active.
 type AccountNumberInboundACHDebitStatus string
 
 const (
