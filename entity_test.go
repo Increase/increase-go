@@ -180,6 +180,36 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			RatedAt: increase.F(time.Now()),
 			Rating:  increase.F(increase.EntityNewParamsRiskRatingRatingLow),
 		}),
+		SoleProprietorship: increase.F(increase.EntityNewParamsSoleProprietorship{
+			Address: increase.F(increase.EntityNewParamsSoleProprietorshipAddress{
+				City:  increase.F("x"),
+				Line1: increase.F("x"),
+				State: increase.F("xx"),
+				Zip:   increase.F("x"),
+				Line2: increase.F("x"),
+			}),
+			SoleProprietor: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietor{
+				Address: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietorAddress{
+					City:    increase.F("x"),
+					Country: increase.F("x"),
+					Line1:   increase.F("x"),
+					Line2:   increase.F("x"),
+					State:   increase.F("x"),
+					Zip:     increase.F("x"),
+				}),
+				DateOfBirth: increase.F(time.Now()),
+				Identification: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietorIdentification{
+					Method: increase.F(increase.EntityNewParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber),
+					Number: increase.F("xxxx"),
+				}),
+				Name: increase.F("x"),
+			}),
+			DoingBusinessAsName: increase.F("x"),
+			Email:               increase.F("dev@stainless.com"),
+			IndustryCode:        increase.F("x"),
+			TaxIdentifier:       increase.F("x"),
+			Website:             increase.F("website"),
+		}),
 		SupplementalDocuments: increase.F([]increase.EntityNewParamsSupplementalDocument{{
 			FileID: increase.F("file_id"),
 		}}),
@@ -394,6 +424,52 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 			RiskRating: increase.F(increase.EntityUpdateParamsRiskRating{
 				RatedAt: increase.F(time.Now()),
 				Rating:  increase.F(increase.EntityUpdateParamsRiskRatingRatingLow),
+			}),
+			SoleProprietorship: increase.F(increase.EntityUpdateParamsSoleProprietorship{
+				Address: increase.F(increase.EntityUpdateParamsSoleProprietorshipAddress{
+					City:  increase.F("x"),
+					Line1: increase.F("x"),
+					State: increase.F("xx"),
+					Zip:   increase.F("x"),
+					Line2: increase.F("x"),
+				}),
+				Email:        increase.F("dev@stainless.com"),
+				IndustryCode: increase.F("x"),
+				SoleProprietor: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietor{
+					Address: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietorAddress{
+						City:    increase.F("x"),
+						Country: increase.F("x"),
+						Line1:   increase.F("x"),
+						Line2:   increase.F("x"),
+						State:   increase.F("x"),
+						Zip:     increase.F("x"),
+					}),
+					Identification: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietorIdentification{
+						Method: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber),
+						Number: increase.F("xxxx"),
+						DriversLicense: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationDriversLicense{
+							ExpirationDate: increase.F(time.Now()),
+							FileID:         increase.F("file_id"),
+							State:          increase.F("xx"),
+							BackFileID:     increase.F("back_file_id"),
+						}),
+						Other: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationOther{
+							Country:        increase.F("x"),
+							Description:    increase.F("x"),
+							FileID:         increase.F("file_id"),
+							BackFileID:     increase.F("back_file_id"),
+							ExpirationDate: increase.F(time.Now()),
+						}),
+						Passport: increase.F(increase.EntityUpdateParamsSoleProprietorshipSoleProprietorIdentificationPassport{
+							Country:        increase.F("x"),
+							ExpirationDate: increase.F(time.Now()),
+							FileID:         increase.F("file_id"),
+						}),
+					}),
+					Name: increase.F("x"),
+				}),
+				TaxIdentifier: increase.F("x"),
+				Website:       increase.F("website"),
 			}),
 			TermsAgreements: increase.F([]increase.EntityUpdateParamsTermsAgreement{{
 				AgreedAt:  increase.F(time.Now()),

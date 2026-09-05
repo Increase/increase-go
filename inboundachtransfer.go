@@ -152,7 +152,7 @@ type InboundACHTransfer struct {
 	OriginatorCompanyID string `json:"originator_company_id" api:"required"`
 	// The name of the company that initiated the transfer.
 	OriginatorCompanyName string `json:"originator_company_name" api:"required"`
-	// The American Banking Association (ABA) routing number of the bank originating
+	// The American Bankers' Association (ABA) routing number of the bank originating
 	// the transfer.
 	OriginatorRoutingNumber string `json:"originator_routing_number" api:"required"`
 	// The id of the receiver of the transfer.

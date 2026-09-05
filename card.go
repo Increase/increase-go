@@ -107,8 +107,8 @@ func (r *CardService) NewDetailsIframe(ctx context.Context, cardID string, body 
 	return res, err
 }
 
-// Sensitive details for a Card include the primary account number, expiry, card
-// verification code, and PIN.
+// Sensitive details for a Card include the primary account number, expiration,
+// card verification code, and PIN.
 func (r *CardService) Details(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if cardID == "" {
