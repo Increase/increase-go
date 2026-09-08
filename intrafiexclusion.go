@@ -107,7 +107,7 @@ type IntrafiExclusion struct {
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The entity for which this institution is excluded.
 	EntityID string `json:"entity_id" api:"required"`
-	// When this was exclusion was confirmed by IntraFi.
+	// When this exclusion was confirmed by IntraFi.
 	ExcludedAt time.Time `json:"excluded_at" api:"required,nullable" format:"date-time"`
 	// The Federal Deposit Insurance Corporation's certificate number for the
 	// institution.
@@ -118,7 +118,7 @@ type IntrafiExclusion struct {
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The status of the exclusion request.
 	Status IntrafiExclusionStatus `json:"status" api:"required"`
-	// When this was exclusion was submitted to IntraFi by Increase.
+	// When this exclusion was submitted to IntraFi by Increase.
 	SubmittedAt time.Time `json:"submitted_at" api:"required,nullable" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `intrafi_exclusion`.

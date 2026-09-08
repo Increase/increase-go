@@ -650,9 +650,9 @@ func (r RealTimeDecisionCardAuthenticationChallengeResult) IsKnown() bool {
 type RealTimeDecisionCardAuthorization struct {
 	// The identifier of the Account the authorization will debit.
 	AccountID string `json:"account_id" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts RealTimeDecisionCardAuthorizationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// Present if and only if `decision` is `approve`. Contains information related to
 	// the approval of the authorization.
@@ -785,9 +785,9 @@ func (r realTimeDecisionCardAuthorizationJSON) RawJSON() string {
 	return r.raw
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type RealTimeDecisionCardAuthorizationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic RealTimeDecisionCardAuthorizationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -1828,9 +1828,9 @@ func (r realTimeDecisionCardAuthorizationVerificationCardholderNameJSON) RawJSON
 type RealTimeDecisionCardBalanceInquiry struct {
 	// The identifier of the Account the authorization will debit.
 	AccountID string `json:"account_id" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts RealTimeDecisionCardBalanceInquiryAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// Present if and only if `decision` is `approve`. Contains information related to
 	// the approval of the balance inquiry.
@@ -1917,9 +1917,9 @@ func (r realTimeDecisionCardBalanceInquiryJSON) RawJSON() string {
 	return r.raw
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type RealTimeDecisionCardBalanceInquiryAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic RealTimeDecisionCardBalanceInquiryAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`

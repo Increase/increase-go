@@ -569,9 +569,9 @@ type PendingTransactionSourceCardAuthorization struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner PendingTransactionSourceCardAuthorizationActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts PendingTransactionSourceCardAuthorizationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -587,8 +587,8 @@ type PendingTransactionSourceCardAuthorization struct {
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
 	Direction PendingTransactionSourceCardAuthorizationDirection `json:"direction" api:"required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
-	// will expire and the pending transaction will be released.
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which this
+	// authorization will expire and the pending transaction will be released.
 	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
 	// The healthcare-related fields for this authorization. Only present for specific
 	// programs.
@@ -718,9 +718,9 @@ func (r PendingTransactionSourceCardAuthorizationActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type PendingTransactionSourceCardAuthorizationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic PendingTransactionSourceCardAuthorizationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -2242,9 +2242,8 @@ func (r PendingTransactionListParamsCreatedAt) URLQuery() (v url.Values) {
 
 type PendingTransactionListParamsStatus struct {
 	// Filter Pending Transactions for those with the specified status. By default only
-	// Pending Transactions in with status `pending` will be returned. For GET
-	// requests, this should be encoded as a comma-delimited string, such as
-	// `?in=one,two,three`.
+	// Pending Transactions with status `pending` will be returned. For GET requests,
+	// this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
 	In param.Field[[]PendingTransactionListParamsStatusIn] `query:"in"`
 }
 

@@ -43,7 +43,7 @@ func (r *SimulationInterestPaymentService) New(ctx context.Context, body Simulat
 }
 
 type SimulationInterestPaymentNewParams struct {
-	// The identifier of the Account the Interest Payment should be paid to is for.
+	// The identifier of the Account the Interest Payment should be paid to.
 	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The interest amount in cents. Must be positive.
 	Amount param.Field[int64] `json:"amount" api:"required"`

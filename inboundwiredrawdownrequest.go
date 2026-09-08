@@ -79,6 +79,9 @@ func (r *InboundWireDrawdownRequestService) ListAutoPaging(ctx context.Context, 
 type InboundWireDrawdownRequest struct {
 	// The Wire drawdown request identifier.
 	ID string `json:"id" api:"required"`
+	// The Account from which the recipient of this request is being requested to send
+	// funds.
+	AccountID string `json:"account_id" api:"required"`
 	// The amount being requested in cents.
 	Amount int64 `json:"amount" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -136,6 +139,7 @@ type InboundWireDrawdownRequest struct {
 // [InboundWireDrawdownRequest]
 type inboundWireDrawdownRequestJSON struct {
 	ID                                 apijson.Field
+	AccountID                          apijson.Field
 	Amount                             apijson.Field
 	CreatedAt                          apijson.Field
 	CreditorAccountNumber              apijson.Field

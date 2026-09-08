@@ -842,7 +842,7 @@ type WireTransferNewParams struct {
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// destination account.
 	RoutingNumber param.Field[string] `json:"routing_number"`
-	// The ID of an Account Number that will be passed to the wire's recipient
+	// The ID of an Account Number that will be passed to the wire's recipient.
 	SourceAccountNumberID param.Field[string] `json:"source_account_number_id"`
 }
 

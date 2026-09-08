@@ -193,7 +193,7 @@ type CheckTransfer struct {
 	// If set, the check will be valid on or before this date. After this date, the
 	// check transfer will be automatically stopped and deposits will not be accepted.
 	// For checks printed by Increase, this date is included on the check as its
-	// expiry.
+	// expiration.
 	ValidUntilDate time.Time              `json:"valid_until_date" api:"required,nullable" format:"date"`
 	ExtraFields    map[string]interface{} `json:"-" api:"extrafields"`
 	JSON           checkTransferJSON      `json:"-"`
@@ -996,7 +996,7 @@ type CheckTransferNewParams struct {
 	// If provided, the check will be valid on or before this date. After this date,
 	// the check transfer will be automatically stopped and deposits will not be
 	// accepted. For checks printed by Increase, this date is included on the check as
-	// its expiry.
+	// its expiration.
 	ValidUntilDate param.Field[time.Time] `json:"valid_until_date" format:"date"`
 }
 
@@ -1060,7 +1060,9 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	// `purpose: check_voucher_image`. For details on pricing and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
 	CheckVoucherImageFileID param.Field[string] `json:"check_voucher_image_file_id"`
-	// The descriptor that will be printed on the letter included with the check.
+	// A few paragraphs of text printed on the letter included with the check. It can
+	// contain at most 22 lines. Paragraphs will wrap at about 120 characters, but
+	// depending on your exact message, it might be slightly more or slightly less.
 	Note param.Field[string] `json:"note"`
 	// The identifier of the Physical Check Batch to mail this check as a part of.
 	PhysicalCheckBatchID param.Field[string] `json:"physical_check_batch_id"`

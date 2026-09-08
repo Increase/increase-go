@@ -29,6 +29,7 @@ func TestSimulationProgramNewWithOptionalParams(t *testing.T) {
 		Name:                           increase.F("For Benefit Of"),
 		Bank:                           increase.F(increase.SimulationProgramNewParamsBankCoreBank),
 		LendingMaximumExtendableCredit: increase.F(int64(0)),
+		LoanAccountsRequireLoanOffers:  increase.F(true),
 		ReserveAccountID:               increase.F("reserve_account_id"),
 	})
 	if err != nil {

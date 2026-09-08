@@ -90,6 +90,9 @@ func (r *WireDrawdownRequestService) ListAutoPaging(ctx context.Context, query W
 type WireDrawdownRequest struct {
 	// The Wire drawdown request identifier.
 	ID string `json:"id" api:"required"`
+	// The Account to which the debtor—the recipient of this request—is being requested
+	// to send funds.
+	AccountID string `json:"account_id" api:"required"`
 	// The Account Number to which the debtor—the recipient of this request—is being
 	// requested to send funds.
 	AccountNumberID string `json:"account_number_id" api:"required"`
@@ -147,6 +150,7 @@ type WireDrawdownRequest struct {
 // [WireDrawdownRequest]
 type wireDrawdownRequestJSON struct {
 	ID                                 apijson.Field
+	AccountID                          apijson.Field
 	AccountNumberID                    apijson.Field
 	Amount                             apijson.Field
 	CreatedAt                          apijson.Field

@@ -897,9 +897,9 @@ type CardPaymentElementsCardAuthorization struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner CardPaymentElementsCardAuthorizationActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts CardPaymentElementsCardAuthorizationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -915,8 +915,8 @@ type CardPaymentElementsCardAuthorization struct {
 	// The direction describes the direction the funds will move, either from the
 	// cardholder to the merchant or from the merchant to the cardholder.
 	Direction CardPaymentElementsCardAuthorizationDirection `json:"direction" api:"required"`
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization
-	// will expire and the pending transaction will be released.
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which this
+	// authorization will expire and the pending transaction will be released.
 	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
 	// The healthcare-related fields for this authorization. Only present for specific
 	// programs.
@@ -1046,9 +1046,9 @@ func (r CardPaymentElementsCardAuthorizationActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type CardPaymentElementsCardAuthorizationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic CardPaymentElementsCardAuthorizationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -2122,9 +2122,9 @@ func (r CardPaymentElementsCardAuthorizationExpirationType) IsKnown() bool {
 type CardPaymentElementsCardBalanceInquiry struct {
 	// The Card Balance Inquiry identifier.
 	ID string `json:"id" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts CardPaymentElementsCardBalanceInquiryAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The balance amount in the minor unit of the account's currency. For dollars, for
 	// example, this is cents.
@@ -2219,9 +2219,9 @@ func (r cardPaymentElementsCardBalanceInquiryJSON) RawJSON() string {
 	return r.raw
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type CardPaymentElementsCardBalanceInquiryAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic CardPaymentElementsCardBalanceInquiryAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -3115,9 +3115,9 @@ type CardPaymentElementsCardDecline struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner CardPaymentElementsCardDeclineActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts CardPaymentElementsCardDeclineAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -3256,9 +3256,9 @@ func (r CardPaymentElementsCardDeclineActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type CardPaymentElementsCardDeclineAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic CardPaymentElementsCardDeclineAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -4230,9 +4230,9 @@ type CardPaymentElementsCardFinancial struct {
 	// Whether this financial was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner CardPaymentElementsCardFinancialActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts CardPaymentElementsCardFinancialAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The pending amount in the minor unit of the transaction's currency. For dollars,
 	// for example, this is cents.
@@ -4364,9 +4364,9 @@ func (r CardPaymentElementsCardFinancialActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type CardPaymentElementsCardFinancialAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic CardPaymentElementsCardFinancialAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -5542,9 +5542,9 @@ type CardPaymentElementsCardIncrement struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner CardPaymentElementsCardIncrementActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts CardPaymentElementsCardIncrementAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The amount of this increment in the minor unit of the transaction's currency.
 	// For dollars, for example, this is cents.
@@ -5633,9 +5633,9 @@ func (r CardPaymentElementsCardIncrementActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type CardPaymentElementsCardIncrementAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic CardPaymentElementsCardIncrementAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -8413,9 +8413,9 @@ type CardPaymentElementsCardValidation struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner CardPaymentElementsCardValidationActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts CardPaymentElementsCardValidationAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id" api:"required"`
@@ -8525,9 +8525,9 @@ func (r CardPaymentElementsCardValidationActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type CardPaymentElementsCardValidationAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic CardPaymentElementsCardValidationAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`

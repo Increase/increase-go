@@ -370,9 +370,9 @@ type DeclinedTransactionSourceCardDecline struct {
 	// Whether this authorization was approved by Increase, the card network through
 	// stand-in processing, or the user through a real-time decision.
 	Actioner DeclinedTransactionSourceCardDeclineActioner `json:"actioner" api:"required"`
-	// Additional amounts associated with the card authorization, such as ATM
-	// surcharges fees. These are usually a subset of the `amount` field and are used
-	// to provide more detailed information about the transaction.
+	// Additional amounts associated with the card authorization, such as ATM surcharge
+	// fees. These are usually a subset of the `amount` field and are used to provide
+	// more detailed information about the transaction.
 	AdditionalAmounts DeclinedTransactionSourceCardDeclineAdditionalAmounts `json:"additional_amounts" api:"required"`
 	// The declined amount in the minor unit of the destination account currency. For
 	// dollars, for example, this is cents.
@@ -511,9 +511,9 @@ func (r DeclinedTransactionSourceCardDeclineActioner) IsKnown() bool {
 	return false
 }
 
-// Additional amounts associated with the card authorization, such as ATM
-// surcharges fees. These are usually a subset of the `amount` field and are used
-// to provide more detailed information about the transaction.
+// Additional amounts associated with the card authorization, such as ATM surcharge
+// fees. These are usually a subset of the `amount` field and are used to provide
+// more detailed information about the transaction.
 type DeclinedTransactionSourceCardDeclineAdditionalAmounts struct {
 	// The part of this transaction amount that was for clinic-related services.
 	Clinic DeclinedTransactionSourceCardDeclineAdditionalAmountsClinic `json:"clinic" api:"required,nullable"`
@@ -1683,11 +1683,12 @@ const (
 	DeclinedTransactionSourceInboundFednowTransferDeclineReasonGroupLocked           DeclinedTransactionSourceInboundFednowTransferDeclineReason = "group_locked"
 	DeclinedTransactionSourceInboundFednowTransferDeclineReasonEntityNotActive       DeclinedTransactionSourceInboundFednowTransferDeclineReason = "entity_not_active"
 	DeclinedTransactionSourceInboundFednowTransferDeclineReasonFednowNotEnabled      DeclinedTransactionSourceInboundFednowTransferDeclineReason = "fednow_not_enabled"
+	DeclinedTransactionSourceInboundFednowTransferDeclineReasonTransactionNotAllowed DeclinedTransactionSourceInboundFednowTransferDeclineReason = "transaction_not_allowed"
 )
 
 func (r DeclinedTransactionSourceInboundFednowTransferDeclineReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberCanceled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberDisabled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountRestricted, DeclinedTransactionSourceInboundFednowTransferDeclineReasonGroupLocked, DeclinedTransactionSourceInboundFednowTransferDeclineReasonEntityNotActive, DeclinedTransactionSourceInboundFednowTransferDeclineReasonFednowNotEnabled:
+	case DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberCanceled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountNumberDisabled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonAccountRestricted, DeclinedTransactionSourceInboundFednowTransferDeclineReasonGroupLocked, DeclinedTransactionSourceInboundFednowTransferDeclineReasonEntityNotActive, DeclinedTransactionSourceInboundFednowTransferDeclineReasonFednowNotEnabled, DeclinedTransactionSourceInboundFednowTransferDeclineReasonTransactionNotAllowed:
 		return true
 	}
 	return false

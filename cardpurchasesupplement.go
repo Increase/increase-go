@@ -78,6 +78,8 @@ func (r *CardPurchaseSupplementService) ListAutoPaging(ctx context.Context, quer
 type CardPurchaseSupplement struct {
 	// The Card Purchase Supplement identifier.
 	ID string `json:"id" api:"required"`
+	// The identifier for the Account the Card Purchase Supplement belongs to.
+	AccountID string `json:"account_id" api:"required"`
 	// The ID of the Card Payment this transaction belongs to.
 	CardPaymentID string `json:"card_payment_id" api:"required,nullable"`
 	// Invoice-level information about the payment.
@@ -99,6 +101,7 @@ type CardPurchaseSupplement struct {
 // [CardPurchaseSupplement]
 type cardPurchaseSupplementJSON struct {
 	ID            apijson.Field
+	AccountID     apijson.Field
 	CardPaymentID apijson.Field
 	Invoice       apijson.Field
 	LineItems     apijson.Field

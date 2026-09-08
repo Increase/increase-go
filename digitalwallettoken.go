@@ -79,6 +79,8 @@ func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query Di
 type DigitalWalletToken struct {
 	// The Digital Wallet Token identifier.
 	ID string `json:"id" api:"required"`
+	// The identifier for the Account this Digital Wallet Token belongs to.
+	AccountID string `json:"account_id" api:"required"`
 	// The identifier for the Card this Digital Wallet Token belongs to.
 	CardID string `json:"card_id" api:"required"`
 	// The cardholder information given when the Digital Wallet Token was created.
@@ -109,6 +111,7 @@ type DigitalWalletToken struct {
 // [DigitalWalletToken]
 type digitalWalletTokenJSON struct {
 	ID                          apijson.Field
+	AccountID                   apijson.Field
 	CardID                      apijson.Field
 	Cardholder                  apijson.Field
 	CreatedAt                   apijson.Field

@@ -379,8 +379,7 @@ type BeneficialOwnerNewParamsIndividualIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.
@@ -545,8 +544,7 @@ type BeneficialOwnerUpdateParamsIdentification struct {
 	// An identification number that can be used to verify the individual's identity,
 	// such as a social security number. For Social Security Numbers and Individual
 	// Taxpayer Identification Numbers, submit nine digits with no dashes or other
-	// separators. When testing in sandbox, use one of our
-	// [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+	// separators.
 	Number param.Field[string] `json:"number" api:"required"`
 	// Information about the United States driver's license used for identification.
 	// Required if `method` is equal to `drivers_license`.

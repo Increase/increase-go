@@ -148,6 +148,10 @@ type FednowTransfer struct {
 	// If the transfer is rejected by FedNow or the destination financial institution,
 	// this will contain supplemental details.
 	Rejection FednowTransferRejection `json:"rejection" api:"required,nullable"`
+	// If the transfer is returned by the recipient's bank, this will contain details
+	// of each return. FedNow allows returning part of a transfer, so a transfer can be
+	// returned more than once.
+	Returns []FednowTransferReturn `json:"returns" api:"required"`
 	// The destination American Bankers' Association (ABA) Routing Transit Number
 	// (RTN).
 	RoutingNumber string `json:"routing_number" api:"required"`
@@ -190,6 +194,7 @@ type fednowTransferJSON struct {
 	IdempotencyKey                     apijson.Field
 	PendingTransactionID               apijson.Field
 	Rejection                          apijson.Field
+	Returns                            apijson.Field
 	RoutingNumber                      apijson.Field
 	SourceAccountNumberID              apijson.Field
 	Status                             apijson.Field
@@ -494,6 +499,70 @@ func (r FednowTransferRejectionRejectReasonCode) IsKnown() bool {
 	return false
 }
 
+// A FedNow Transfer Return is created when a FedNow Transfer sent from Increase is
+// returned by the recipient's bank.
+type FednowTransferReturn struct {
+	// The returned amount in USD cents. This is always a positive number.
+	Amount int64 `json:"amount" api:"required"`
+	// Additional information about the return provided by the recipient's bank.
+	ReturnReasonAdditionalInformation string `json:"return_reason_additional_information" api:"required,nullable"`
+	// The reason the transfer was returned as provided by the recipient's bank.
+	ReturnReasonCode FednowTransferReturnsReturnReasonCode `json:"return_reason_code" api:"required"`
+	// The identifier of the FedNow Transfer that led to this Transaction.
+	TransferID  string                   `json:"transfer_id" api:"required"`
+	ExtraFields map[string]interface{}   `json:"-" api:"extrafields"`
+	JSON        fednowTransferReturnJSON `json:"-"`
+}
+
+// fednowTransferReturnJSON contains the JSON metadata for the struct
+// [FednowTransferReturn]
+type fednowTransferReturnJSON struct {
+	Amount                            apijson.Field
+	ReturnReasonAdditionalInformation apijson.Field
+	ReturnReasonCode                  apijson.Field
+	TransferID                        apijson.Field
+	raw                               string
+	ExtraFields                       map[string]apijson.Field
+}
+
+func (r *FednowTransferReturn) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r fednowTransferReturnJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason the transfer was returned as provided by the recipient's bank.
+type FednowTransferReturnsReturnReasonCode string
+
+const (
+	FednowTransferReturnsReturnReasonCodeAccountClosed                FednowTransferReturnsReturnReasonCode = "account_closed"
+	FednowTransferReturnsReturnReasonCodeAccountBlocked               FednowTransferReturnsReturnReasonCode = "account_blocked"
+	FednowTransferReturnsReturnReasonCodeInvalidAgent                 FednowTransferReturnsReturnReasonCode = "invalid_agent"
+	FednowTransferReturnsReturnReasonCodeInvalidCreditorAccountNumber FednowTransferReturnsReturnReasonCode = "invalid_creditor_account_number"
+	FednowTransferReturnsReturnReasonCodeIncorrectAccountNumber       FednowTransferReturnsReturnReasonCode = "incorrect_account_number"
+	FednowTransferReturnsReturnReasonCodeEndCustomerDeceased          FednowTransferReturnsReturnReasonCode = "end_customer_deceased"
+	FednowTransferReturnsReturnReasonCodeTransactionForbidden         FednowTransferReturnsReturnReasonCode = "transaction_forbidden"
+	FednowTransferReturnsReturnReasonCodeRegulatoryReason             FednowTransferReturnsReturnReasonCode = "regulatory_reason"
+	FednowTransferReturnsReturnReasonCodeFraud                        FednowTransferReturnsReturnReasonCode = "fraud"
+	FednowTransferReturnsReturnReasonCodeDuplication                  FednowTransferReturnsReturnReasonCode = "duplication"
+	FednowTransferReturnsReturnReasonCodeWrongAmount                  FednowTransferReturnsReturnReasonCode = "wrong_amount"
+	FednowTransferReturnsReturnReasonCodeRequestedByCustomer          FednowTransferReturnsReturnReasonCode = "requested_by_customer"
+	FednowTransferReturnsReturnReasonCodeUnableToApply                FednowTransferReturnsReturnReasonCode = "unable_to_apply"
+	FednowTransferReturnsReturnReasonCodeNotSpecified                 FednowTransferReturnsReturnReasonCode = "not_specified"
+	FednowTransferReturnsReturnReasonCodeNarrative                    FednowTransferReturnsReturnReasonCode = "narrative"
+	FednowTransferReturnsReturnReasonCodeOther                        FednowTransferReturnsReturnReasonCode = "other"
+)
+
+func (r FednowTransferReturnsReturnReasonCode) IsKnown() bool {
+	switch r {
+	case FednowTransferReturnsReturnReasonCodeAccountClosed, FednowTransferReturnsReturnReasonCodeAccountBlocked, FednowTransferReturnsReturnReasonCodeInvalidAgent, FednowTransferReturnsReturnReasonCodeInvalidCreditorAccountNumber, FednowTransferReturnsReturnReasonCodeIncorrectAccountNumber, FednowTransferReturnsReturnReasonCodeEndCustomerDeceased, FednowTransferReturnsReturnReasonCodeTransactionForbidden, FednowTransferReturnsReturnReasonCodeRegulatoryReason, FednowTransferReturnsReturnReasonCodeFraud, FednowTransferReturnsReturnReasonCodeDuplication, FednowTransferReturnsReturnReasonCodeWrongAmount, FednowTransferReturnsReturnReasonCodeRequestedByCustomer, FednowTransferReturnsReturnReasonCodeUnableToApply, FednowTransferReturnsReturnReasonCodeNotSpecified, FednowTransferReturnsReturnReasonCodeNarrative, FednowTransferReturnsReturnReasonCodeOther:
+		return true
+	}
+	return false
+}
+
 // The lifecycle status of the transfer.
 type FednowTransferStatus string
 
@@ -501,17 +570,17 @@ const (
 	FednowTransferStatusPendingSubmitting FednowTransferStatus = "pending_submitting"
 	FednowTransferStatusPendingReviewing  FednowTransferStatus = "pending_reviewing"
 	FednowTransferStatusCanceled          FednowTransferStatus = "canceled"
-	FednowTransferStatusReviewingRejected FednowTransferStatus = "reviewing_rejected"
 	FednowTransferStatusRequiresAttention FednowTransferStatus = "requires_attention"
 	FednowTransferStatusPendingApproval   FednowTransferStatus = "pending_approval"
 	FednowTransferStatusPendingResponse   FednowTransferStatus = "pending_response"
 	FednowTransferStatusComplete          FednowTransferStatus = "complete"
 	FednowTransferStatusRejected          FednowTransferStatus = "rejected"
+	FednowTransferStatusReturned          FednowTransferStatus = "returned"
 )
 
 func (r FednowTransferStatus) IsKnown() bool {
 	switch r {
-	case FednowTransferStatusPendingSubmitting, FednowTransferStatusPendingReviewing, FednowTransferStatusCanceled, FednowTransferStatusReviewingRejected, FednowTransferStatusRequiresAttention, FednowTransferStatusPendingApproval, FednowTransferStatusPendingResponse, FednowTransferStatusComplete, FednowTransferStatusRejected:
+	case FednowTransferStatusPendingSubmitting, FednowTransferStatusPendingReviewing, FednowTransferStatusCanceled, FednowTransferStatusRequiresAttention, FednowTransferStatusPendingApproval, FednowTransferStatusPendingResponse, FednowTransferStatusComplete, FednowTransferStatusRejected, FednowTransferStatusReturned:
 		return true
 	}
 	return false
@@ -698,17 +767,17 @@ const (
 	FednowTransferListParamsStatusInPendingSubmitting FednowTransferListParamsStatusIn = "pending_submitting"
 	FednowTransferListParamsStatusInPendingReviewing  FednowTransferListParamsStatusIn = "pending_reviewing"
 	FednowTransferListParamsStatusInCanceled          FednowTransferListParamsStatusIn = "canceled"
-	FednowTransferListParamsStatusInReviewingRejected FednowTransferListParamsStatusIn = "reviewing_rejected"
 	FednowTransferListParamsStatusInRequiresAttention FednowTransferListParamsStatusIn = "requires_attention"
 	FednowTransferListParamsStatusInPendingApproval   FednowTransferListParamsStatusIn = "pending_approval"
 	FednowTransferListParamsStatusInPendingResponse   FednowTransferListParamsStatusIn = "pending_response"
 	FednowTransferListParamsStatusInComplete          FednowTransferListParamsStatusIn = "complete"
 	FednowTransferListParamsStatusInRejected          FednowTransferListParamsStatusIn = "rejected"
+	FednowTransferListParamsStatusInReturned          FednowTransferListParamsStatusIn = "returned"
 )
 
 func (r FednowTransferListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case FednowTransferListParamsStatusInPendingSubmitting, FednowTransferListParamsStatusInPendingReviewing, FednowTransferListParamsStatusInCanceled, FednowTransferListParamsStatusInReviewingRejected, FednowTransferListParamsStatusInRequiresAttention, FednowTransferListParamsStatusInPendingApproval, FednowTransferListParamsStatusInPendingResponse, FednowTransferListParamsStatusInComplete, FednowTransferListParamsStatusInRejected:
+	case FednowTransferListParamsStatusInPendingSubmitting, FednowTransferListParamsStatusInPendingReviewing, FednowTransferListParamsStatusInCanceled, FednowTransferListParamsStatusInRequiresAttention, FednowTransferListParamsStatusInPendingApproval, FednowTransferListParamsStatusInPendingResponse, FednowTransferListParamsStatusInComplete, FednowTransferListParamsStatusInRejected, FednowTransferListParamsStatusInReturned:
 		return true
 	}
 	return false
