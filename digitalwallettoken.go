@@ -95,8 +95,12 @@ type DigitalWalletToken struct {
 	Device DigitalWalletTokenDevice `json:"device" api:"required"`
 	// The redacted Dynamic Primary Account Number.
 	DynamicPrimaryAccountNumber DigitalWalletTokenDynamicPrimaryAccountNumber `json:"dynamic_primary_account_number" api:"required,nullable"`
+	// The reference identifier assigned by the card network to the underlying Card.
+	PrimaryAccountNumberReferenceIdentifier string `json:"primary_account_number_reference_identifier" api:"required"`
 	// This indicates if payments can be made with the Digital Wallet Token.
 	Status DigitalWalletTokenStatus `json:"status" api:"required"`
+	// The reference identifier assigned by the card network to the token.
+	TokenReferenceIdentifier string `json:"token_reference_identifier" api:"required"`
 	// The digital wallet app being used.
 	TokenRequestor DigitalWalletTokenTokenRequestor `json:"token_requestor" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -110,20 +114,22 @@ type DigitalWalletToken struct {
 // digitalWalletTokenJSON contains the JSON metadata for the struct
 // [DigitalWalletToken]
 type digitalWalletTokenJSON struct {
-	ID                          apijson.Field
-	AccountID                   apijson.Field
-	CardID                      apijson.Field
-	Cardholder                  apijson.Field
-	CreatedAt                   apijson.Field
-	Decline                     apijson.Field
-	Device                      apijson.Field
-	DynamicPrimaryAccountNumber apijson.Field
-	Status                      apijson.Field
-	TokenRequestor              apijson.Field
-	Type                        apijson.Field
-	Updates                     apijson.Field
-	raw                         string
-	ExtraFields                 map[string]apijson.Field
+	ID                                      apijson.Field
+	AccountID                               apijson.Field
+	CardID                                  apijson.Field
+	Cardholder                              apijson.Field
+	CreatedAt                               apijson.Field
+	Decline                                 apijson.Field
+	Device                                  apijson.Field
+	DynamicPrimaryAccountNumber             apijson.Field
+	PrimaryAccountNumberReferenceIdentifier apijson.Field
+	Status                                  apijson.Field
+	TokenReferenceIdentifier                apijson.Field
+	TokenRequestor                          apijson.Field
+	Type                                    apijson.Field
+	Updates                                 apijson.Field
+	raw                                     string
+	ExtraFields                             map[string]apijson.Field
 }
 
 func (r *DigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
