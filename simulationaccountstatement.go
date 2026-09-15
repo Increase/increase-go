@@ -33,7 +33,8 @@ func NewSimulationAccountStatementService(opts ...option.RequestOption) (r *Simu
 }
 
 // Simulates an [Account Statement](#account-statements) being created for an
-// account. In production, Account Statements are generated once per month.
+// account. In production, Account Statements are generated once per month. As in
+// production, the simulated statement covers the previous calendar month.
 func (r *SimulationAccountStatementService) New(ctx context.Context, body SimulationAccountStatementNewParams, opts ...option.RequestOption) (res *AccountStatement, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "simulations/account_statements"
