@@ -68,11 +68,12 @@ type SimulationPhysicalCardNewParams struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the
 	// carrier expects the card to be delivered.
 	CarrierEstimatedDeliveryAt param.Field[time.Time] `json:"carrier_estimated_delivery_at" format:"date-time"`
-	// The city where the event took place.
+	// The city where the event took place. Required if postal_code is not provided.
 	City param.Field[string] `json:"city"`
-	// The postal code where the event took place.
+	// The postal code where the event took place. Required unless both city and state
+	// are provided.
 	PostalCode param.Field[string] `json:"postal_code"`
-	// The state where the event took place.
+	// The state where the event took place. Required if postal_code is not provided.
 	State param.Field[string] `json:"state"`
 }
 
