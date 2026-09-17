@@ -2888,17 +2888,21 @@ func (r EntityNewParamsTrust) MarshalJSON() (data []byte, err error) {
 // The trust's physical address. Mail receiving locations like PO Boxes and PMB's
 // are disallowed.
 type EntityNewParamsTrustAddress struct {
-	// The city of the address.
+	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state" api:"required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
 }
 
 func (r EntityNewParamsTrustAddress) MarshalJSON() (data []byte, err error) {
@@ -3835,17 +3839,21 @@ func (r EntityUpdateParamsTrust) MarshalJSON() (data []byte, err error) {
 // The entity's physical address. Mail receiving locations like PO Boxes and PMB's
 // are disallowed.
 type EntityUpdateParamsTrustAddress struct {
-	// The city of the address.
+	// The city, district, town, or village of the address.
 	City param.Field[string] `json:"city" api:"required"`
+	// The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+	//
+	// Defaults to `US`.
+	Country param.Field[string] `json:"country" api:"required"`
 	// The first line of the address. This is usually the street number and street.
 	Line1 param.Field[string] `json:"line1" api:"required"`
-	// The two-letter United States Postal Service (USPS) abbreviation for the state of
-	// the address.
-	State param.Field[string] `json:"state" api:"required"`
-	// The ZIP code of the address.
-	Zip param.Field[string] `json:"zip" api:"required"`
 	// The second line of the address. This might be the floor or room number.
 	Line2 param.Field[string] `json:"line2"`
+	// The two-letter United States Postal Service (USPS) abbreviation for the US
+	// state, province, or region of the address. Required in certain countries.
+	State param.Field[string] `json:"state"`
+	// The ZIP or postal code of the address. Required in certain countries.
+	Zip param.Field[string] `json:"zip"`
 }
 
 func (r EntityUpdateParamsTrustAddress) MarshalJSON() (data []byte, err error) {

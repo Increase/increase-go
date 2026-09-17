@@ -224,11 +224,12 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 		}),
 		Trust: increase.F(increase.EntityNewParamsTrust{
 			Address: increase.F(increase.EntityNewParamsTrustAddress{
-				City:  increase.F("x"),
-				Line1: increase.F("x"),
-				State: increase.F("xx"),
-				Zip:   increase.F("x"),
-				Line2: increase.F("x"),
+				City:    increase.F("x"),
+				Country: increase.F("x"),
+				Line1:   increase.F("x"),
+				Line2:   increase.F("x"),
+				State:   increase.F("x"),
+				Zip:     increase.F("x"),
 			}),
 			Category: increase.F(increase.EntityNewParamsTrustCategoryRevocable),
 			Name:     increase.F("x"),
@@ -482,11 +483,12 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 			}),
 			Trust: increase.F(increase.EntityUpdateParamsTrust{
 				Address: increase.F(increase.EntityUpdateParamsTrustAddress{
-					City:  increase.F("x"),
-					Line1: increase.F("x"),
-					State: increase.F("xx"),
-					Zip:   increase.F("x"),
-					Line2: increase.F("x"),
+					City:    increase.F("x"),
+					Country: increase.F("x"),
+					Line1:   increase.F("x"),
+					Line2:   increase.F("x"),
+					State:   increase.F("x"),
+					Zip:     increase.F("x"),
 				}),
 				Grantor: increase.F(increase.EntityUpdateParamsTrustGrantor{
 					Address: increase.F(increase.EntityUpdateParamsTrustGrantorAddress{
