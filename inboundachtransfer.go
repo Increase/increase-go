@@ -776,6 +776,8 @@ func (r InboundACHTransferStatus) IsKnown() bool {
 
 // If your transfer is returned, this will contain details of the return.
 type InboundACHTransferTransferReturn struct {
+	// The three character ACH return code, in the range R01 to R85.
+	RawReasonCode string `json:"raw_reason_code" api:"required"`
 	// The reason for the transfer return.
 	Reason InboundACHTransferTransferReturnReason `json:"reason" api:"required"`
 	// The time at which the transfer was returned.
@@ -788,6 +790,7 @@ type InboundACHTransferTransferReturn struct {
 // inboundACHTransferTransferReturnJSON contains the JSON metadata for the struct
 // [InboundACHTransferTransferReturn]
 type inboundACHTransferTransferReturnJSON struct {
+	RawReasonCode apijson.Field
 	Reason        apijson.Field
 	ReturnedAt    apijson.Field
 	TransactionID apijson.Field
