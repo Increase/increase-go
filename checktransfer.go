@@ -161,8 +161,8 @@ type CheckTransfer struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
-	// If the check has been mailed by Increase, this will contain details of the
-	// shipment.
+	// Once the check has been mailed, this will contain details about the shipment.
+	// Only available when `fulfillment_method` is equal to `physical_check`.
 	Mailing CheckTransferMailing `json:"mailing" api:"required,nullable"`
 	// The ID for the pending transaction representing the transfer. A pending
 	// transaction is created when the transfer
@@ -182,7 +182,9 @@ type CheckTransfer struct {
 	// After a stop-payment is requested on the check, this will contain supplemental
 	// details.
 	StopPaymentRequest CheckTransferStopPaymentRequest `json:"stop_payment_request" api:"required,nullable"`
-	// After the transfer is submitted, this will contain supplemental details.
+	// Once the check has been submitted to our printer, this will contain details
+	// about the submission. Only available when `fulfillment_method` is equal to
+	// `physical_check`.
 	Submission CheckTransferSubmission `json:"submission" api:"required,nullable"`
 	// Details relating to the custom fulfillment you will perform. Will be present if
 	// and only if `fulfillment_method` is equal to `third_party`.
@@ -462,8 +464,8 @@ func (r CheckTransferFulfillmentMethod) IsKnown() bool {
 	return false
 }
 
-// If the check has been mailed by Increase, this will contain details of the
-// shipment.
+// Once the check has been mailed, this will contain details about the shipment.
+// Only available when `fulfillment_method` is equal to `physical_check`.
 type CheckTransferMailing struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the check was mailed.
@@ -851,7 +853,9 @@ func (r CheckTransferStopPaymentRequestType) IsKnown() bool {
 	return false
 }
 
-// After the transfer is submitted, this will contain supplemental details.
+// Once the check has been submitted to our printer, this will contain details
+// about the submission. Only available when `fulfillment_method` is equal to
+// `physical_check`.
 type CheckTransferSubmission struct {
 	// The ID of the file corresponding to an image of the check that was mailed, if
 	// available.
