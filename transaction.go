@@ -2373,6 +2373,8 @@ type TransactionSourceCardRefundPurchaseDetails struct {
 	CarRental TransactionSourceCardRefundPurchaseDetailsCarRental `json:"car_rental" api:"required,nullable"`
 	// An identifier from the merchant for the customer or consumer.
 	CustomerReferenceIdentifier string `json:"customer_reference_identifier" api:"required,nullable"`
+	// Fields specific to fleet purchases.
+	Fleet TransactionSourceCardRefundPurchaseDetailsFleet `json:"fleet" api:"required,nullable"`
 	// The state or provincial tax amount in minor units.
 	LocalTaxAmount int64 `json:"local_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
@@ -2399,6 +2401,7 @@ type TransactionSourceCardRefundPurchaseDetails struct {
 type transactionSourceCardRefundPurchaseDetailsJSON struct {
 	CarRental                   apijson.Field
 	CustomerReferenceIdentifier apijson.Field
+	Fleet                       apijson.Field
 	LocalTaxAmount              apijson.Field
 	LocalTaxCurrency            apijson.Field
 	Lodging                     apijson.Field
@@ -2527,6 +2530,252 @@ const (
 func (r TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicator) IsKnown() bool {
 	switch r {
 	case TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNotApplicable, TransactionSourceCardRefundPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle:
+		return true
+	}
+	return false
+}
+
+// Fields specific to fleet purchases.
+type TransactionSourceCardRefundPurchaseDetailsFleet struct {
+	// The fleet employee number.
+	EmployeeNumber string `json:"employee_number" api:"required,nullable"`
+	// The quantity of fuel purchased, given as a string containing a decimal number in
+	// the indicated unit of measure.
+	FuelQuantity string `json:"fuel_quantity" api:"required,nullable"`
+	// The type of fuel purchased.
+	FuelType TransactionSourceCardRefundPurchaseDetailsFleetFuelType `json:"fuel_type" api:"required,nullable"`
+	// The cost per unit of fuel in minor units.
+	FuelUnitCostAmount int64 `json:"fuel_unit_cost_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel unit
+	// cost.
+	FuelUnitCostCurrency string `json:"fuel_unit_cost_currency" api:"required,nullable"`
+	// The unit of measure for the fuel quantity.
+	FuelUnitOfMeasure TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure `json:"fuel_unit_of_measure" api:"required,nullable"`
+	// The gross fuel price in minor units.
+	GrossFuelPriceAmount int64 `json:"gross_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the gross fuel
+	// price.
+	GrossFuelPriceCurrency string `json:"gross_fuel_price_currency" api:"required,nullable"`
+	// The gross non-fuel price in minor units.
+	GrossNonFuelPriceAmount int64 `json:"gross_non_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the gross
+	// non-fuel price.
+	GrossNonFuelPriceCurrency string `json:"gross_non_fuel_price_currency" api:"required,nullable"`
+	// The net fuel price in minor units.
+	NetFuelPriceAmount int64 `json:"net_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the net fuel
+	// price.
+	NetFuelPriceCurrency string `json:"net_fuel_price_currency" api:"required,nullable"`
+	// The net non-fuel price in minor units.
+	NetNonFuelPriceAmount int64 `json:"net_non_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the net non-fuel
+	// price.
+	NetNonFuelPriceCurrency string `json:"net_non_fuel_price_currency" api:"required,nullable"`
+	// The odometer reading reported by the merchant.
+	OdometerReading int64 `json:"odometer_reading" api:"required,nullable"`
+	// The type of fleet purchase.
+	PurchaseType TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType `json:"purchase_type" api:"required,nullable"`
+	// The type of service provided.
+	ServiceType TransactionSourceCardRefundPurchaseDetailsFleetServiceType `json:"service_type" api:"required,nullable"`
+	// The fleet trailer number.
+	TrailerNumber string                                              `json:"trailer_number" api:"required,nullable"`
+	JSON          transactionSourceCardRefundPurchaseDetailsFleetJSON `json:"-"`
+}
+
+// transactionSourceCardRefundPurchaseDetailsFleetJSON contains the JSON metadata
+// for the struct [TransactionSourceCardRefundPurchaseDetailsFleet]
+type transactionSourceCardRefundPurchaseDetailsFleetJSON struct {
+	EmployeeNumber            apijson.Field
+	FuelQuantity              apijson.Field
+	FuelType                  apijson.Field
+	FuelUnitCostAmount        apijson.Field
+	FuelUnitCostCurrency      apijson.Field
+	FuelUnitOfMeasure         apijson.Field
+	GrossFuelPriceAmount      apijson.Field
+	GrossFuelPriceCurrency    apijson.Field
+	GrossNonFuelPriceAmount   apijson.Field
+	GrossNonFuelPriceCurrency apijson.Field
+	NetFuelPriceAmount        apijson.Field
+	NetFuelPriceCurrency      apijson.Field
+	NetNonFuelPriceAmount     apijson.Field
+	NetNonFuelPriceCurrency   apijson.Field
+	OdometerReading           apijson.Field
+	PurchaseType              apijson.Field
+	ServiceType               apijson.Field
+	TrailerNumber             apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardRefundPurchaseDetailsFleet) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardRefundPurchaseDetailsFleetJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of fuel purchased.
+type TransactionSourceCardRefundPurchaseDetailsFleetFuelType string
+
+const (
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegular                                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus                                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper                                 TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2                                     TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_2"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2                                TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_2"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularEthanol5BlendNonUs                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular_ethanol_5_blend_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol5BlendNonUs                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_5_blend_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol5BlendNonUs               TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_5_blend_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol5BlendNonUs                   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_2_ethanol_5_blend_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeGreenGasolineRegular                           TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "green_gasoline_regular"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeGreenGasolineMidOrPlus                         TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "green_gasoline_mid_or_plus"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeGreenGasolinePremiumOrSuper                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "green_gasoline_premium_or_super"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularDiesel2                                 TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular_diesel_2"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDiesel2                                 TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_diesel_2"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularDiesel1                                 TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular_diesel_1"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeCompressedNaturalGas                           TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "compressed_natural_gas"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeLiquidPropaneGas                               TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "liquid_propane_gas"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeLiquidNaturalGas                               TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "liquid_natural_gas"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeE85                                            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "e85"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularReformulated                            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular_reformulated"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusReformulated                          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_reformulated"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperReformulated                     TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_reformulated"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2Reformulated                         TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_2_reformulated"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2Reformulated                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_2_reformulated"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeDieselOffRoad1_2NonTaxable                     TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "diesel_off_road_1_2_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeDieselOffRoadNonTaxable                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "diesel_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlendOffRoadNonTaxable                TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "biodiesel_blend_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRacingFuel                                     TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "racing_fuel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol10Blend                       TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_2_ethanol_10_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol10Blend                  TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_2_ethanol_10_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol2_15Blend                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_2_15_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol2_15Blend                 TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_2_15_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol5BlendNonUs              TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_2_ethanol_5_blend_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularEthanol10Blend                          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular_ethanol_10_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol10Blend                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_10_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol10Blend                   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_10_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB2DieselBlend2Biodiesel                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b2_diesel_blend_2_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB5DieselBlend5Biodiesel                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b5_diesel_blend_5_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB10DieselBlend10Biodiesel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b10_diesel_blend_10_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB11DieselBlend11Biodiesel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b11_diesel_blend_11_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB15DieselBlend15Biodiesel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b15_diesel_blend_15_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB20DieselBlend20Biodiesel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b20_diesel_blend_20_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB100DieselBlend100Biodiesel                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b100_diesel_blend_100_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB1DieselBlend1Biodiesel                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b1_diesel_blend_1_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAdditizedDiesel2                               TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "additized_diesel_2"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAdditizedDiesel3                               TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "additized_diesel_3"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB7DieselBlend7BiodieselNonUs                   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b7_diesel_blend_7_biodiesel_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB7PremiumDieselBlend7BiodieselNonUs            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b7_premium_diesel_blend_7_biodiesel_non_us"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreater                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "renewable_diesel_r95_or_greater"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20                  TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "renewable_diesel_biodiesel_6_to_20"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeDieselExhaustFluidPump                         TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "diesel_exhaust_fluid_pump"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDiesel1                                 TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_diesel_1"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularEthanol15Blend                          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "regular_ethanol_15_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol15Blend                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_15_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol15Blend                   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_15_blend"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDieselBlendLessThan20Biodiesel          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_diesel_blend_less_than_20_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDieselBlend20OrMoreBiodiesel            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "premium_diesel_blend_20_or_more_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB75DieselBlend75Biodiesel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b75_diesel_blend_75_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB99DieselBlend99Biodiesel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "b99_diesel_blend_99_biodiesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeReservedForPreauthorizationUseOnly             TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "reserved_for_preauthorization_use_only"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeUndefinedFuelReservedForProprietaryUse         TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "undefined_fuel_reserved_for_proprietary_use"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousFuel                              TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "miscellaneous_fuel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeJetFuel                                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "jet_fuel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuelRegular                            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "aviation_fuel_regular"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuelPremium                            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "aviation_fuel_premium"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuelJp8                                TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "aviation_fuel_jp8"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuel4                                  TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "aviation_fuel_4"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuel5                                  TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "aviation_fuel_5"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiojetDiesel                                   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "biojet_diesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationBiofuelGasoline                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "aviation_biofuel_gasoline"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeUndefinedAviationFuelReservedForProprietaryUse TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "undefined_aviation_fuel_reserved_for_proprietary_use"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousAviationFuel                      TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "miscellaneous_aviation_fuel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel1                                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_fuel_1"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel2                                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_fuel_2"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel3                                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_fuel_3"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel4                                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_fuel_4"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel5                                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_fuel_5"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineOther                                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_other"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineDiesel                                   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "marine_diesel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousMarineFuel                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "miscellaneous_marine_fuel"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeKeroseneLowSulfur                              TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "kerosene_low_sulfur"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeWhiteGas                                       TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "white_gas"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeHeatingOil                                     TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "heating_oil"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeOtherFuelNonTaxable                            TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "other_fuel_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeKeroseneUltraLowSulfur                         TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "kerosene_ultra_low_sulfur"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel1_110Volt          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_1_110_volt"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel2_240Volt          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_2_240_volt"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel3_480Volt          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_3_480_volt"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreaterOffRoadNonTaxable   TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "renewable_diesel_r95_or_greater_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend1OffRoadNonTaxable               TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "biodiesel_blend_1_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend75OffRoadNonTaxable              TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "biodiesel_blend_75_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend99OffRoadNonTaxable              TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "biodiesel_blend_99_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend100OffRoadNonTaxable             TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "biodiesel_blend_100_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20OffRoadNonTaxable TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "renewable_diesel_biodiesel_6_to_20_off_road_non_taxable"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel4_800Volt          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_4_800_volt"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel5Megawatt          TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_5_megawatt"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeHydrotreatedVegetableOil100                    TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "hydrotreated_vegetable_oil_100"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBioCompressedNaturalGas                        TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "bio_compressed_natural_gas"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousOtherFuel                         TransactionSourceCardRefundPurchaseDetailsFleetFuelType = "miscellaneous_other_fuel"
+)
+
+func (r TransactionSourceCardRefundPurchaseDetailsFleetFuelType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegular, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularEthanol5BlendNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol5BlendNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol5BlendNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol5BlendNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeGreenGasolineRegular, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeGreenGasolineMidOrPlus, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeGreenGasolinePremiumOrSuper, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularDiesel2, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDiesel2, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularDiesel1, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeCompressedNaturalGas, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeLiquidPropaneGas, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeLiquidNaturalGas, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeE85, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularReformulated, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusReformulated, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperReformulated, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2Reformulated, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2Reformulated, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeDieselOffRoad1_2NonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeDieselOffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlendOffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRacingFuel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol10Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol10Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol2_15Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol2_15Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol5BlendNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularEthanol10Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol10Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol10Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB2DieselBlend2Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB5DieselBlend5Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB10DieselBlend10Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB11DieselBlend11Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB15DieselBlend15Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB20DieselBlend20Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB100DieselBlend100Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB1DieselBlend1Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAdditizedDiesel2, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAdditizedDiesel3, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB7DieselBlend7BiodieselNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB7PremiumDieselBlend7BiodieselNonUs, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreater, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeDieselExhaustFluidPump, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDiesel1, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRegularEthanol15Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMidOrPlusEthanol15Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol15Blend, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDieselBlendLessThan20Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypePremiumDieselBlend20OrMoreBiodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB75DieselBlend75Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeB99DieselBlend99Biodiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeReservedForPreauthorizationUseOnly, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeUndefinedFuelReservedForProprietaryUse, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousFuel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeJetFuel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuelRegular, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuelPremium, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuelJp8, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuel4, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationFuel5, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiojetDiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeAviationBiofuelGasoline, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeUndefinedAviationFuelReservedForProprietaryUse, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousAviationFuel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel1, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel2, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel3, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel4, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineFuel5, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineOther, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMarineDiesel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousMarineFuel, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeKeroseneLowSulfur, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeWhiteGas, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeHeatingOil, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeOtherFuelNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeKeroseneUltraLowSulfur, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel1_110Volt, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel2_240Volt, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel3_480Volt, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreaterOffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend1OffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend75OffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend99OffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBiodieselBlend100OffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20OffRoadNonTaxable, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel4_800Volt, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel5Megawatt, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeHydrotreatedVegetableOil100, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeBioCompressedNaturalGas, TransactionSourceCardRefundPurchaseDetailsFleetFuelTypeMiscellaneousOtherFuel:
+		return true
+	}
+	return false
+}
+
+// The unit of measure for the fuel quantity.
+type TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure string
+
+const (
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureLiter          TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure = "liter"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureUsGallon       TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure = "us_gallon"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureImperialGallon TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure = "imperial_gallon"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureKilogram       TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure = "kilogram"
+	TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasurePound          TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure = "pound"
+)
+
+func (r TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasure) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureLiter, TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureUsGallon, TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureImperialGallon, TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasureKilogram, TransactionSourceCardRefundPurchaseDetailsFleetFuelUnitOfMeasurePound:
+		return true
+	}
+	return false
+}
+
+// The type of fleet purchase.
+type TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType string
+
+const (
+	TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeFuelPurchase                      TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType = "fuel_purchase"
+	TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeNonFuelPurchase                   TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType = "non_fuel_purchase"
+	TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeFuelAndNonFuelPurchase            TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType = "fuel_and_non_fuel_purchase"
+	TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeFuelPurchaseWithMultipleFuelTypes TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType = "fuel_purchase_with_multiple_fuel_types"
+)
+
+func (r TransactionSourceCardRefundPurchaseDetailsFleetPurchaseType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeFuelPurchase, TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeNonFuelPurchase, TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeFuelAndNonFuelPurchase, TransactionSourceCardRefundPurchaseDetailsFleetPurchaseTypeFuelPurchaseWithMultipleFuelTypes:
+		return true
+	}
+	return false
+}
+
+// The type of service provided.
+type TransactionSourceCardRefundPurchaseDetailsFleetServiceType string
+
+const (
+	TransactionSourceCardRefundPurchaseDetailsFleetServiceTypeFullService TransactionSourceCardRefundPurchaseDetailsFleetServiceType = "full_service"
+	TransactionSourceCardRefundPurchaseDetailsFleetServiceTypeSelfService TransactionSourceCardRefundPurchaseDetailsFleetServiceType = "self_service"
+)
+
+func (r TransactionSourceCardRefundPurchaseDetailsFleetServiceType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardRefundPurchaseDetailsFleetServiceTypeFullService, TransactionSourceCardRefundPurchaseDetailsFleetServiceTypeSelfService:
 		return true
 	}
 	return false
@@ -3394,6 +3643,8 @@ type TransactionSourceCardSettlementPurchaseDetails struct {
 	CarRental TransactionSourceCardSettlementPurchaseDetailsCarRental `json:"car_rental" api:"required,nullable"`
 	// An identifier from the merchant for the customer or consumer.
 	CustomerReferenceIdentifier string `json:"customer_reference_identifier" api:"required,nullable"`
+	// Fields specific to fleet purchases.
+	Fleet TransactionSourceCardSettlementPurchaseDetailsFleet `json:"fleet" api:"required,nullable"`
 	// The state or provincial tax amount in minor units.
 	LocalTaxAmount int64 `json:"local_tax_amount" api:"required,nullable"`
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
@@ -3420,6 +3671,7 @@ type TransactionSourceCardSettlementPurchaseDetails struct {
 type transactionSourceCardSettlementPurchaseDetailsJSON struct {
 	CarRental                   apijson.Field
 	CustomerReferenceIdentifier apijson.Field
+	Fleet                       apijson.Field
 	LocalTaxAmount              apijson.Field
 	LocalTaxCurrency            apijson.Field
 	Lodging                     apijson.Field
@@ -3549,6 +3801,252 @@ const (
 func (r TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicator) IsKnown() bool {
 	switch r {
 	case TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNotApplicable, TransactionSourceCardSettlementPurchaseDetailsCarRentalNoShowIndicatorNoShowForSpecializedVehicle:
+		return true
+	}
+	return false
+}
+
+// Fields specific to fleet purchases.
+type TransactionSourceCardSettlementPurchaseDetailsFleet struct {
+	// The fleet employee number.
+	EmployeeNumber string `json:"employee_number" api:"required,nullable"`
+	// The quantity of fuel purchased, given as a string containing a decimal number in
+	// the indicated unit of measure.
+	FuelQuantity string `json:"fuel_quantity" api:"required,nullable"`
+	// The type of fuel purchased.
+	FuelType TransactionSourceCardSettlementPurchaseDetailsFleetFuelType `json:"fuel_type" api:"required,nullable"`
+	// The cost per unit of fuel in minor units.
+	FuelUnitCostAmount int64 `json:"fuel_unit_cost_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel unit
+	// cost.
+	FuelUnitCostCurrency string `json:"fuel_unit_cost_currency" api:"required,nullable"`
+	// The unit of measure for the fuel quantity.
+	FuelUnitOfMeasure TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure `json:"fuel_unit_of_measure" api:"required,nullable"`
+	// The gross fuel price in minor units.
+	GrossFuelPriceAmount int64 `json:"gross_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the gross fuel
+	// price.
+	GrossFuelPriceCurrency string `json:"gross_fuel_price_currency" api:"required,nullable"`
+	// The gross non-fuel price in minor units.
+	GrossNonFuelPriceAmount int64 `json:"gross_non_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the gross
+	// non-fuel price.
+	GrossNonFuelPriceCurrency string `json:"gross_non_fuel_price_currency" api:"required,nullable"`
+	// The net fuel price in minor units.
+	NetFuelPriceAmount int64 `json:"net_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the net fuel
+	// price.
+	NetFuelPriceCurrency string `json:"net_fuel_price_currency" api:"required,nullable"`
+	// The net non-fuel price in minor units.
+	NetNonFuelPriceAmount int64 `json:"net_non_fuel_price_amount" api:"required,nullable"`
+	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the net non-fuel
+	// price.
+	NetNonFuelPriceCurrency string `json:"net_non_fuel_price_currency" api:"required,nullable"`
+	// The odometer reading reported by the merchant.
+	OdometerReading int64 `json:"odometer_reading" api:"required,nullable"`
+	// The type of fleet purchase.
+	PurchaseType TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType `json:"purchase_type" api:"required,nullable"`
+	// The type of service provided.
+	ServiceType TransactionSourceCardSettlementPurchaseDetailsFleetServiceType `json:"service_type" api:"required,nullable"`
+	// The fleet trailer number.
+	TrailerNumber string                                                  `json:"trailer_number" api:"required,nullable"`
+	JSON          transactionSourceCardSettlementPurchaseDetailsFleetJSON `json:"-"`
+}
+
+// transactionSourceCardSettlementPurchaseDetailsFleetJSON contains the JSON
+// metadata for the struct [TransactionSourceCardSettlementPurchaseDetailsFleet]
+type transactionSourceCardSettlementPurchaseDetailsFleetJSON struct {
+	EmployeeNumber            apijson.Field
+	FuelQuantity              apijson.Field
+	FuelType                  apijson.Field
+	FuelUnitCostAmount        apijson.Field
+	FuelUnitCostCurrency      apijson.Field
+	FuelUnitOfMeasure         apijson.Field
+	GrossFuelPriceAmount      apijson.Field
+	GrossFuelPriceCurrency    apijson.Field
+	GrossNonFuelPriceAmount   apijson.Field
+	GrossNonFuelPriceCurrency apijson.Field
+	NetFuelPriceAmount        apijson.Field
+	NetFuelPriceCurrency      apijson.Field
+	NetNonFuelPriceAmount     apijson.Field
+	NetNonFuelPriceCurrency   apijson.Field
+	OdometerReading           apijson.Field
+	PurchaseType              apijson.Field
+	ServiceType               apijson.Field
+	TrailerNumber             apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardSettlementPurchaseDetailsFleet) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardSettlementPurchaseDetailsFleetJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of fuel purchased.
+type TransactionSourceCardSettlementPurchaseDetailsFleetFuelType string
+
+const (
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegular                                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus                                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper                                 TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2                                     TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_2"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2                                TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_2"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularEthanol5BlendNonUs                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular_ethanol_5_blend_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol5BlendNonUs                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_5_blend_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol5BlendNonUs               TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_5_blend_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol5BlendNonUs                   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_2_ethanol_5_blend_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeGreenGasolineRegular                           TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "green_gasoline_regular"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeGreenGasolineMidOrPlus                         TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "green_gasoline_mid_or_plus"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeGreenGasolinePremiumOrSuper                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "green_gasoline_premium_or_super"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularDiesel2                                 TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular_diesel_2"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDiesel2                                 TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_diesel_2"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularDiesel1                                 TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular_diesel_1"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeCompressedNaturalGas                           TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "compressed_natural_gas"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeLiquidPropaneGas                               TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "liquid_propane_gas"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeLiquidNaturalGas                               TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "liquid_natural_gas"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeE85                                            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "e85"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularReformulated                            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular_reformulated"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusReformulated                          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_reformulated"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperReformulated                     TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_reformulated"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2Reformulated                         TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_2_reformulated"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2Reformulated                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_2_reformulated"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeDieselOffRoad1_2NonTaxable                     TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "diesel_off_road_1_2_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeDieselOffRoadNonTaxable                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "diesel_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlendOffRoadNonTaxable                TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "biodiesel_blend_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRacingFuel                                     TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "racing_fuel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol10Blend                       TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_2_ethanol_10_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol10Blend                  TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_2_ethanol_10_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol2_15Blend                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_2_15_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol2_15Blend                 TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_2_15_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol5BlendNonUs              TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_2_ethanol_5_blend_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularEthanol10Blend                          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular_ethanol_10_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol10Blend                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_10_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol10Blend                   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_10_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB2DieselBlend2Biodiesel                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b2_diesel_blend_2_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB5DieselBlend5Biodiesel                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b5_diesel_blend_5_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB10DieselBlend10Biodiesel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b10_diesel_blend_10_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB11DieselBlend11Biodiesel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b11_diesel_blend_11_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB15DieselBlend15Biodiesel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b15_diesel_blend_15_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB20DieselBlend20Biodiesel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b20_diesel_blend_20_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB100DieselBlend100Biodiesel                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b100_diesel_blend_100_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB1DieselBlend1Biodiesel                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b1_diesel_blend_1_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAdditizedDiesel2                               TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "additized_diesel_2"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAdditizedDiesel3                               TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "additized_diesel_3"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB7DieselBlend7BiodieselNonUs                   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b7_diesel_blend_7_biodiesel_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB7PremiumDieselBlend7BiodieselNonUs            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b7_premium_diesel_blend_7_biodiesel_non_us"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreater                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "renewable_diesel_r95_or_greater"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20                  TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "renewable_diesel_biodiesel_6_to_20"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeDieselExhaustFluidPump                         TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "diesel_exhaust_fluid_pump"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDiesel1                                 TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_diesel_1"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularEthanol15Blend                          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "regular_ethanol_15_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol15Blend                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "mid_or_plus_ethanol_15_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol15Blend                   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_or_super_ethanol_15_blend"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDieselBlendLessThan20Biodiesel          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_diesel_blend_less_than_20_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDieselBlend20OrMoreBiodiesel            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "premium_diesel_blend_20_or_more_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB75DieselBlend75Biodiesel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b75_diesel_blend_75_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB99DieselBlend99Biodiesel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "b99_diesel_blend_99_biodiesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeReservedForPreauthorizationUseOnly             TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "reserved_for_preauthorization_use_only"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeUndefinedFuelReservedForProprietaryUse         TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "undefined_fuel_reserved_for_proprietary_use"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousFuel                              TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "miscellaneous_fuel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeJetFuel                                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "jet_fuel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuelRegular                            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "aviation_fuel_regular"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuelPremium                            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "aviation_fuel_premium"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuelJp8                                TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "aviation_fuel_jp8"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuel4                                  TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "aviation_fuel_4"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuel5                                  TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "aviation_fuel_5"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiojetDiesel                                   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "biojet_diesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationBiofuelGasoline                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "aviation_biofuel_gasoline"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeUndefinedAviationFuelReservedForProprietaryUse TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "undefined_aviation_fuel_reserved_for_proprietary_use"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousAviationFuel                      TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "miscellaneous_aviation_fuel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel1                                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_fuel_1"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel2                                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_fuel_2"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel3                                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_fuel_3"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel4                                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_fuel_4"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel5                                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_fuel_5"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineOther                                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_other"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineDiesel                                   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "marine_diesel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousMarineFuel                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "miscellaneous_marine_fuel"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeKeroseneLowSulfur                              TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "kerosene_low_sulfur"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeWhiteGas                                       TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "white_gas"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeHeatingOil                                     TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "heating_oil"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeOtherFuelNonTaxable                            TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "other_fuel_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeKeroseneUltraLowSulfur                         TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "kerosene_ultra_low_sulfur"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel1_110Volt          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_1_110_volt"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel2_240Volt          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_2_240_volt"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel3_480Volt          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_3_480_volt"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreaterOffRoadNonTaxable   TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "renewable_diesel_r95_or_greater_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend1OffRoadNonTaxable               TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "biodiesel_blend_1_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend75OffRoadNonTaxable              TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "biodiesel_blend_75_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend99OffRoadNonTaxable              TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "biodiesel_blend_99_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend100OffRoadNonTaxable             TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "biodiesel_blend_100_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20OffRoadNonTaxable TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "renewable_diesel_biodiesel_6_to_20_off_road_non_taxable"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel4_800Volt          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_4_800_volt"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel5Megawatt          TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "electric_vehicle_charging_level_5_megawatt"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeHydrotreatedVegetableOil100                    TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "hydrotreated_vegetable_oil_100"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBioCompressedNaturalGas                        TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "bio_compressed_natural_gas"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousOtherFuel                         TransactionSourceCardSettlementPurchaseDetailsFleetFuelType = "miscellaneous_other_fuel"
+)
+
+func (r TransactionSourceCardSettlementPurchaseDetailsFleetFuelType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegular, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularEthanol5BlendNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol5BlendNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol5BlendNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol5BlendNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeGreenGasolineRegular, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeGreenGasolineMidOrPlus, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeGreenGasolinePremiumOrSuper, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularDiesel2, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDiesel2, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularDiesel1, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeCompressedNaturalGas, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeLiquidPropaneGas, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeLiquidNaturalGas, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeE85, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularReformulated, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusReformulated, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperReformulated, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2Reformulated, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2Reformulated, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeDieselOffRoad1_2NonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeDieselOffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlendOffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRacingFuel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlus2Ethanol10Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol10Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol2_15Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol2_15Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuper2Ethanol5BlendNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularEthanol10Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol10Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol10Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB2DieselBlend2Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB5DieselBlend5Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB10DieselBlend10Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB11DieselBlend11Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB15DieselBlend15Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB20DieselBlend20Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB100DieselBlend100Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB1DieselBlend1Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAdditizedDiesel2, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAdditizedDiesel3, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB7DieselBlend7BiodieselNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB7PremiumDieselBlend7BiodieselNonUs, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreater, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeDieselExhaustFluidPump, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDiesel1, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRegularEthanol15Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMidOrPlusEthanol15Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumOrSuperEthanol15Blend, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDieselBlendLessThan20Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypePremiumDieselBlend20OrMoreBiodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB75DieselBlend75Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeB99DieselBlend99Biodiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeReservedForPreauthorizationUseOnly, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeUndefinedFuelReservedForProprietaryUse, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousFuel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeJetFuel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuelRegular, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuelPremium, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuelJp8, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuel4, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationFuel5, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiojetDiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeAviationBiofuelGasoline, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeUndefinedAviationFuelReservedForProprietaryUse, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousAviationFuel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel1, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel2, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel3, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel4, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineFuel5, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineOther, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMarineDiesel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousMarineFuel, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeKeroseneLowSulfur, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeWhiteGas, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeHeatingOil, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeOtherFuelNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeKeroseneUltraLowSulfur, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel1_110Volt, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel2_240Volt, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel3_480Volt, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselR95OrGreaterOffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend1OffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend75OffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend99OffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBiodieselBlend100OffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeRenewableDieselBiodiesel6To20OffRoadNonTaxable, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel4_800Volt, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeElectricVehicleChargingLevel5Megawatt, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeHydrotreatedVegetableOil100, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeBioCompressedNaturalGas, TransactionSourceCardSettlementPurchaseDetailsFleetFuelTypeMiscellaneousOtherFuel:
+		return true
+	}
+	return false
+}
+
+// The unit of measure for the fuel quantity.
+type TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure string
+
+const (
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureLiter          TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure = "liter"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureUsGallon       TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure = "us_gallon"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureImperialGallon TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure = "imperial_gallon"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureKilogram       TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure = "kilogram"
+	TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasurePound          TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure = "pound"
+)
+
+func (r TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasure) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureLiter, TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureUsGallon, TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureImperialGallon, TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasureKilogram, TransactionSourceCardSettlementPurchaseDetailsFleetFuelUnitOfMeasurePound:
+		return true
+	}
+	return false
+}
+
+// The type of fleet purchase.
+type TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType string
+
+const (
+	TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeFuelPurchase                      TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType = "fuel_purchase"
+	TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeNonFuelPurchase                   TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType = "non_fuel_purchase"
+	TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeFuelAndNonFuelPurchase            TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType = "fuel_and_non_fuel_purchase"
+	TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeFuelPurchaseWithMultipleFuelTypes TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType = "fuel_purchase_with_multiple_fuel_types"
+)
+
+func (r TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeFuelPurchase, TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeNonFuelPurchase, TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeFuelAndNonFuelPurchase, TransactionSourceCardSettlementPurchaseDetailsFleetPurchaseTypeFuelPurchaseWithMultipleFuelTypes:
+		return true
+	}
+	return false
+}
+
+// The type of service provided.
+type TransactionSourceCardSettlementPurchaseDetailsFleetServiceType string
+
+const (
+	TransactionSourceCardSettlementPurchaseDetailsFleetServiceTypeFullService TransactionSourceCardSettlementPurchaseDetailsFleetServiceType = "full_service"
+	TransactionSourceCardSettlementPurchaseDetailsFleetServiceTypeSelfService TransactionSourceCardSettlementPurchaseDetailsFleetServiceType = "self_service"
+)
+
+func (r TransactionSourceCardSettlementPurchaseDetailsFleetServiceType) IsKnown() bool {
+	switch r {
+	case TransactionSourceCardSettlementPurchaseDetailsFleetServiceTypeFullService, TransactionSourceCardSettlementPurchaseDetailsFleetServiceTypeSelfService:
 		return true
 	}
 	return false
