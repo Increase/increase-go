@@ -267,14 +267,14 @@ type WireDrawdownRequestStatus string
 
 const (
 	WireDrawdownRequestStatusPendingSubmission WireDrawdownRequestStatus = "pending_submission"
-	WireDrawdownRequestStatusFulfilled         WireDrawdownRequestStatus = "fulfilled"
 	WireDrawdownRequestStatusPendingResponse   WireDrawdownRequestStatus = "pending_response"
+	WireDrawdownRequestStatusFulfilled         WireDrawdownRequestStatus = "fulfilled"
 	WireDrawdownRequestStatusRefused           WireDrawdownRequestStatus = "refused"
 )
 
 func (r WireDrawdownRequestStatus) IsKnown() bool {
 	switch r {
-	case WireDrawdownRequestStatusPendingSubmission, WireDrawdownRequestStatusFulfilled, WireDrawdownRequestStatusPendingResponse, WireDrawdownRequestStatusRefused:
+	case WireDrawdownRequestStatusPendingSubmission, WireDrawdownRequestStatusPendingResponse, WireDrawdownRequestStatusFulfilled, WireDrawdownRequestStatusRefused:
 		return true
 	}
 	return false
@@ -463,14 +463,14 @@ type WireDrawdownRequestListParamsStatusIn string
 
 const (
 	WireDrawdownRequestListParamsStatusInPendingSubmission WireDrawdownRequestListParamsStatusIn = "pending_submission"
-	WireDrawdownRequestListParamsStatusInFulfilled         WireDrawdownRequestListParamsStatusIn = "fulfilled"
 	WireDrawdownRequestListParamsStatusInPendingResponse   WireDrawdownRequestListParamsStatusIn = "pending_response"
+	WireDrawdownRequestListParamsStatusInFulfilled         WireDrawdownRequestListParamsStatusIn = "fulfilled"
 	WireDrawdownRequestListParamsStatusInRefused           WireDrawdownRequestListParamsStatusIn = "refused"
 )
 
 func (r WireDrawdownRequestListParamsStatusIn) IsKnown() bool {
 	switch r {
-	case WireDrawdownRequestListParamsStatusInPendingSubmission, WireDrawdownRequestListParamsStatusInFulfilled, WireDrawdownRequestListParamsStatusInPendingResponse, WireDrawdownRequestListParamsStatusInRefused:
+	case WireDrawdownRequestListParamsStatusInPendingSubmission, WireDrawdownRequestListParamsStatusInPendingResponse, WireDrawdownRequestListParamsStatusInFulfilled, WireDrawdownRequestListParamsStatusInRefused:
 		return true
 	}
 	return false
