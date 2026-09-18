@@ -434,6 +434,7 @@ type EntityCorporationBeneficialOwnersIndividualIdentificationMethod string
 
 const (
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber                   EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number"
+	EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumberLast4              EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number_last4"
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport                               EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
 	EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         EntityCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
@@ -442,7 +443,7 @@ const (
 
 func (r EntityCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber, EntityCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport, EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense, EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther:
+	case EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber, EntityCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumberLast4, EntityCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityCorporationBeneficialOwnersIndividualIdentificationMethodPassport, EntityCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense, EntityCorporationBeneficialOwnersIndividualIdentificationMethodOther:
 		return true
 	}
 	return false
@@ -774,6 +775,7 @@ type EntityJointIndividualsIdentificationMethod string
 
 const (
 	EntityJointIndividualsIdentificationMethodSocialSecurityNumber                   EntityJointIndividualsIdentificationMethod = "social_security_number"
+	EntityJointIndividualsIdentificationMethodSocialSecurityNumberLast4              EntityJointIndividualsIdentificationMethod = "social_security_number_last4"
 	EntityJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber EntityJointIndividualsIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityJointIndividualsIdentificationMethodPassport                               EntityJointIndividualsIdentificationMethod = "passport"
 	EntityJointIndividualsIdentificationMethodDriversLicense                         EntityJointIndividualsIdentificationMethod = "drivers_license"
@@ -782,7 +784,7 @@ const (
 
 func (r EntityJointIndividualsIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntityJointIndividualsIdentificationMethodSocialSecurityNumber, EntityJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityJointIndividualsIdentificationMethodPassport, EntityJointIndividualsIdentificationMethodDriversLicense, EntityJointIndividualsIdentificationMethodOther:
+	case EntityJointIndividualsIdentificationMethodSocialSecurityNumber, EntityJointIndividualsIdentificationMethodSocialSecurityNumberLast4, EntityJointIndividualsIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityJointIndividualsIdentificationMethodPassport, EntityJointIndividualsIdentificationMethodDriversLicense, EntityJointIndividualsIdentificationMethodOther:
 		return true
 	}
 	return false
@@ -893,6 +895,7 @@ type EntityNaturalPersonIdentificationMethod string
 
 const (
 	EntityNaturalPersonIdentificationMethodSocialSecurityNumber                   EntityNaturalPersonIdentificationMethod = "social_security_number"
+	EntityNaturalPersonIdentificationMethodSocialSecurityNumberLast4              EntityNaturalPersonIdentificationMethod = "social_security_number_last4"
 	EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNaturalPersonIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityNaturalPersonIdentificationMethodPassport                               EntityNaturalPersonIdentificationMethod = "passport"
 	EntityNaturalPersonIdentificationMethodDriversLicense                         EntityNaturalPersonIdentificationMethod = "drivers_license"
@@ -901,7 +904,7 @@ const (
 
 func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntityNaturalPersonIdentificationMethodSocialSecurityNumber, EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNaturalPersonIdentificationMethodPassport, EntityNaturalPersonIdentificationMethodDriversLicense, EntityNaturalPersonIdentificationMethodOther:
+	case EntityNaturalPersonIdentificationMethodSocialSecurityNumber, EntityNaturalPersonIdentificationMethodSocialSecurityNumberLast4, EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNaturalPersonIdentificationMethodPassport, EntityNaturalPersonIdentificationMethodDriversLicense, EntityNaturalPersonIdentificationMethodOther:
 		return true
 	}
 	return false
@@ -1138,6 +1141,7 @@ type EntitySoleProprietorshipSoleProprietorIdentificationMethod string
 
 const (
 	EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber                   EntitySoleProprietorshipSoleProprietorIdentificationMethod = "social_security_number"
+	EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumberLast4              EntitySoleProprietorshipSoleProprietorIdentificationMethod = "social_security_number_last4"
 	EntitySoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber EntitySoleProprietorshipSoleProprietorIdentificationMethod = "individual_taxpayer_identification_number"
 	EntitySoleProprietorshipSoleProprietorIdentificationMethodPassport                               EntitySoleProprietorshipSoleProprietorIdentificationMethod = "passport"
 	EntitySoleProprietorshipSoleProprietorIdentificationMethodDriversLicense                         EntitySoleProprietorshipSoleProprietorIdentificationMethod = "drivers_license"
@@ -1146,7 +1150,7 @@ const (
 
 func (r EntitySoleProprietorshipSoleProprietorIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber, EntitySoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntitySoleProprietorshipSoleProprietorIdentificationMethodPassport, EntitySoleProprietorshipSoleProprietorIdentificationMethodDriversLicense, EntitySoleProprietorshipSoleProprietorIdentificationMethodOther:
+	case EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumber, EntitySoleProprietorshipSoleProprietorIdentificationMethodSocialSecurityNumberLast4, EntitySoleProprietorshipSoleProprietorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntitySoleProprietorshipSoleProprietorIdentificationMethodPassport, EntitySoleProprietorshipSoleProprietorIdentificationMethodDriversLicense, EntitySoleProprietorshipSoleProprietorIdentificationMethodOther:
 		return true
 	}
 	return false
@@ -1467,6 +1471,7 @@ type EntityTrustGrantorIdentificationMethod string
 
 const (
 	EntityTrustGrantorIdentificationMethodSocialSecurityNumber                   EntityTrustGrantorIdentificationMethod = "social_security_number"
+	EntityTrustGrantorIdentificationMethodSocialSecurityNumberLast4              EntityTrustGrantorIdentificationMethod = "social_security_number_last4"
 	EntityTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber EntityTrustGrantorIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityTrustGrantorIdentificationMethodPassport                               EntityTrustGrantorIdentificationMethod = "passport"
 	EntityTrustGrantorIdentificationMethodDriversLicense                         EntityTrustGrantorIdentificationMethod = "drivers_license"
@@ -1475,7 +1480,7 @@ const (
 
 func (r EntityTrustGrantorIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntityTrustGrantorIdentificationMethodSocialSecurityNumber, EntityTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityTrustGrantorIdentificationMethodPassport, EntityTrustGrantorIdentificationMethodDriversLicense, EntityTrustGrantorIdentificationMethodOther:
+	case EntityTrustGrantorIdentificationMethodSocialSecurityNumber, EntityTrustGrantorIdentificationMethodSocialSecurityNumberLast4, EntityTrustGrantorIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityTrustGrantorIdentificationMethodPassport, EntityTrustGrantorIdentificationMethodDriversLicense, EntityTrustGrantorIdentificationMethodOther:
 		return true
 	}
 	return false
@@ -1612,6 +1617,7 @@ type EntityTrustTrusteesIndividualIdentificationMethod string
 
 const (
 	EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber                   EntityTrustTrusteesIndividualIdentificationMethod = "social_security_number"
+	EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumberLast4              EntityTrustTrusteesIndividualIdentificationMethod = "social_security_number_last4"
 	EntityTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityTrustTrusteesIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityTrustTrusteesIndividualIdentificationMethodPassport                               EntityTrustTrusteesIndividualIdentificationMethod = "passport"
 	EntityTrustTrusteesIndividualIdentificationMethodDriversLicense                         EntityTrustTrusteesIndividualIdentificationMethod = "drivers_license"
@@ -1620,7 +1626,7 @@ const (
 
 func (r EntityTrustTrusteesIndividualIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber, EntityTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityTrustTrusteesIndividualIdentificationMethodPassport, EntityTrustTrusteesIndividualIdentificationMethodDriversLicense, EntityTrustTrusteesIndividualIdentificationMethodOther:
+	case EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumber, EntityTrustTrusteesIndividualIdentificationMethodSocialSecurityNumberLast4, EntityTrustTrusteesIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityTrustTrusteesIndividualIdentificationMethodPassport, EntityTrustTrusteesIndividualIdentificationMethodDriversLicense, EntityTrustTrusteesIndividualIdentificationMethodOther:
 		return true
 	}
 	return false
@@ -2128,6 +2134,7 @@ type EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod st
 
 const (
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber                   EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number"
+	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumberLast4              EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "social_security_number_last4"
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "individual_taxpayer_identification_number"
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodPassport                               EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "passport"
 	EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense                         EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod = "drivers_license"
@@ -2136,7 +2143,7 @@ const (
 
 func (r EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethod) IsKnown() bool {
 	switch r {
-	case EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodPassport, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther:
+	case EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumber, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodSocialSecurityNumberLast4, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodPassport, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodDriversLicense, EntityNewParamsCorporationBeneficialOwnersIndividualIdentificationMethodOther:
 		return true
 	}
 	return false
