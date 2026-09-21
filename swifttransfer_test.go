@@ -52,7 +52,7 @@ func TestSwiftTransferNewWithOptionalParams(t *testing.T) {
 		InstructedCurrency:                 increase.F(increase.SwiftTransferNewParamsInstructedCurrencyUsd),
 		SourceAccountNumberID:              increase.F("account_number_v18nkfqm6afpsrvy82b2"),
 		UnstructuredRemittanceInformation:  increase.F("New Swift transfer"),
-		IntermediaryBankIdentificationCode: increase.F("210BF73A"),
+		IntermediaryBankIdentificationCode: increase.F("SEWBFL97"),
 		RequireApproval:                    increase.F(true),
 		RoutingNumber:                      increase.F("sq"),
 	})
