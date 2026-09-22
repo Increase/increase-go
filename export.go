@@ -389,26 +389,26 @@ func (r exportBookkeepingAccountBalanceCsvJSON) RawJSON() string {
 type ExportCategory string
 
 const (
-	ExportCategoryAccountStatementOfx          ExportCategory = "account_statement_ofx"
 	ExportCategoryAccountStatementBai2         ExportCategory = "account_statement_bai2"
-	ExportCategoryTransactionCsv               ExportCategory = "transaction_csv"
+	ExportCategoryAccountStatementOfx          ExportCategory = "account_statement_ofx"
+	ExportCategoryAccountVerificationLetter    ExportCategory = "account_verification_letter"
 	ExportCategoryBalanceCsv                   ExportCategory = "balance_csv"
 	ExportCategoryBookkeepingAccountBalanceCsv ExportCategory = "bookkeeping_account_balance_csv"
-	ExportCategoryEntityCsv                    ExportCategory = "entity_csv"
-	ExportCategoryVendorCsv                    ExportCategory = "vendor_csv"
+	ExportCategoryDailyAccountBalanceCsv       ExportCategory = "daily_account_balance_csv"
 	ExportCategoryDashboardTableCsv            ExportCategory = "dashboard_table_csv"
-	ExportCategoryAccountVerificationLetter    ExportCategory = "account_verification_letter"
-	ExportCategoryFundingInstructions          ExportCategory = "funding_instructions"
+	ExportCategoryEntityCsv                    ExportCategory = "entity_csv"
+	ExportCategoryFeeCsv                       ExportCategory = "fee_csv"
 	ExportCategoryForm1099Int                  ExportCategory = "form_1099_int"
 	ExportCategoryForm1099Misc                 ExportCategory = "form_1099_misc"
-	ExportCategoryFeeCsv                       ExportCategory = "fee_csv"
+	ExportCategoryFundingInstructions          ExportCategory = "funding_instructions"
+	ExportCategoryTransactionCsv               ExportCategory = "transaction_csv"
+	ExportCategoryVendorCsv                    ExportCategory = "vendor_csv"
 	ExportCategoryVoidedCheck                  ExportCategory = "voided_check"
-	ExportCategoryDailyAccountBalanceCsv       ExportCategory = "daily_account_balance_csv"
 )
 
 func (r ExportCategory) IsKnown() bool {
 	switch r {
-	case ExportCategoryAccountStatementOfx, ExportCategoryAccountStatementBai2, ExportCategoryTransactionCsv, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryEntityCsv, ExportCategoryVendorCsv, ExportCategoryDashboardTableCsv, ExportCategoryAccountVerificationLetter, ExportCategoryFundingInstructions, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryFeeCsv, ExportCategoryVoidedCheck, ExportCategoryDailyAccountBalanceCsv:
+	case ExportCategoryAccountStatementBai2, ExportCategoryAccountStatementOfx, ExportCategoryAccountVerificationLetter, ExportCategoryBalanceCsv, ExportCategoryBookkeepingAccountBalanceCsv, ExportCategoryDailyAccountBalanceCsv, ExportCategoryDashboardTableCsv, ExportCategoryEntityCsv, ExportCategoryFeeCsv, ExportCategoryForm1099Int, ExportCategoryForm1099Misc, ExportCategoryFundingInstructions, ExportCategoryTransactionCsv, ExportCategoryVendorCsv, ExportCategoryVoidedCheck:
 		return true
 	}
 	return false
@@ -850,23 +850,23 @@ func (r ExportNewParams) MarshalJSON() (data []byte, err error) {
 type ExportNewParamsCategory string
 
 const (
-	ExportNewParamsCategoryAccountStatementOfx          ExportNewParamsCategory = "account_statement_ofx"
 	ExportNewParamsCategoryAccountStatementBai2         ExportNewParamsCategory = "account_statement_bai2"
-	ExportNewParamsCategoryTransactionCsv               ExportNewParamsCategory = "transaction_csv"
+	ExportNewParamsCategoryAccountStatementOfx          ExportNewParamsCategory = "account_statement_ofx"
+	ExportNewParamsCategoryAccountVerificationLetter    ExportNewParamsCategory = "account_verification_letter"
 	ExportNewParamsCategoryBalanceCsv                   ExportNewParamsCategory = "balance_csv"
 	ExportNewParamsCategoryBookkeepingAccountBalanceCsv ExportNewParamsCategory = "bookkeeping_account_balance_csv"
-	ExportNewParamsCategoryEntityCsv                    ExportNewParamsCategory = "entity_csv"
-	ExportNewParamsCategoryVendorCsv                    ExportNewParamsCategory = "vendor_csv"
-	ExportNewParamsCategoryAccountVerificationLetter    ExportNewParamsCategory = "account_verification_letter"
-	ExportNewParamsCategoryFundingInstructions          ExportNewParamsCategory = "funding_instructions"
-	ExportNewParamsCategoryFeeCsv                       ExportNewParamsCategory = "fee_csv"
-	ExportNewParamsCategoryVoidedCheck                  ExportNewParamsCategory = "voided_check"
 	ExportNewParamsCategoryDailyAccountBalanceCsv       ExportNewParamsCategory = "daily_account_balance_csv"
+	ExportNewParamsCategoryEntityCsv                    ExportNewParamsCategory = "entity_csv"
+	ExportNewParamsCategoryFeeCsv                       ExportNewParamsCategory = "fee_csv"
+	ExportNewParamsCategoryFundingInstructions          ExportNewParamsCategory = "funding_instructions"
+	ExportNewParamsCategoryTransactionCsv               ExportNewParamsCategory = "transaction_csv"
+	ExportNewParamsCategoryVendorCsv                    ExportNewParamsCategory = "vendor_csv"
+	ExportNewParamsCategoryVoidedCheck                  ExportNewParamsCategory = "voided_check"
 )
 
 func (r ExportNewParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryFeeCsv, ExportNewParamsCategoryVoidedCheck, ExportNewParamsCategoryDailyAccountBalanceCsv:
+	case ExportNewParamsCategoryAccountStatementBai2, ExportNewParamsCategoryAccountStatementOfx, ExportNewParamsCategoryAccountVerificationLetter, ExportNewParamsCategoryBalanceCsv, ExportNewParamsCategoryBookkeepingAccountBalanceCsv, ExportNewParamsCategoryDailyAccountBalanceCsv, ExportNewParamsCategoryEntityCsv, ExportNewParamsCategoryFeeCsv, ExportNewParamsCategoryFundingInstructions, ExportNewParamsCategoryTransactionCsv, ExportNewParamsCategoryVendorCsv, ExportNewParamsCategoryVoidedCheck:
 		return true
 	}
 	return false
@@ -1109,26 +1109,26 @@ func (r ExportListParams) URLQuery() (v url.Values) {
 type ExportListParamsCategory string
 
 const (
-	ExportListParamsCategoryAccountStatementOfx          ExportListParamsCategory = "account_statement_ofx"
 	ExportListParamsCategoryAccountStatementBai2         ExportListParamsCategory = "account_statement_bai2"
-	ExportListParamsCategoryTransactionCsv               ExportListParamsCategory = "transaction_csv"
+	ExportListParamsCategoryAccountStatementOfx          ExportListParamsCategory = "account_statement_ofx"
+	ExportListParamsCategoryAccountVerificationLetter    ExportListParamsCategory = "account_verification_letter"
 	ExportListParamsCategoryBalanceCsv                   ExportListParamsCategory = "balance_csv"
 	ExportListParamsCategoryBookkeepingAccountBalanceCsv ExportListParamsCategory = "bookkeeping_account_balance_csv"
-	ExportListParamsCategoryEntityCsv                    ExportListParamsCategory = "entity_csv"
-	ExportListParamsCategoryVendorCsv                    ExportListParamsCategory = "vendor_csv"
+	ExportListParamsCategoryDailyAccountBalanceCsv       ExportListParamsCategory = "daily_account_balance_csv"
 	ExportListParamsCategoryDashboardTableCsv            ExportListParamsCategory = "dashboard_table_csv"
-	ExportListParamsCategoryAccountVerificationLetter    ExportListParamsCategory = "account_verification_letter"
-	ExportListParamsCategoryFundingInstructions          ExportListParamsCategory = "funding_instructions"
+	ExportListParamsCategoryEntityCsv                    ExportListParamsCategory = "entity_csv"
+	ExportListParamsCategoryFeeCsv                       ExportListParamsCategory = "fee_csv"
 	ExportListParamsCategoryForm1099Int                  ExportListParamsCategory = "form_1099_int"
 	ExportListParamsCategoryForm1099Misc                 ExportListParamsCategory = "form_1099_misc"
-	ExportListParamsCategoryFeeCsv                       ExportListParamsCategory = "fee_csv"
+	ExportListParamsCategoryFundingInstructions          ExportListParamsCategory = "funding_instructions"
+	ExportListParamsCategoryTransactionCsv               ExportListParamsCategory = "transaction_csv"
+	ExportListParamsCategoryVendorCsv                    ExportListParamsCategory = "vendor_csv"
 	ExportListParamsCategoryVoidedCheck                  ExportListParamsCategory = "voided_check"
-	ExportListParamsCategoryDailyAccountBalanceCsv       ExportListParamsCategory = "daily_account_balance_csv"
 )
 
 func (r ExportListParamsCategory) IsKnown() bool {
 	switch r {
-	case ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryFeeCsv, ExportListParamsCategoryVoidedCheck, ExportListParamsCategoryDailyAccountBalanceCsv:
+	case ExportListParamsCategoryAccountStatementBai2, ExportListParamsCategoryAccountStatementOfx, ExportListParamsCategoryAccountVerificationLetter, ExportListParamsCategoryBalanceCsv, ExportListParamsCategoryBookkeepingAccountBalanceCsv, ExportListParamsCategoryDailyAccountBalanceCsv, ExportListParamsCategoryDashboardTableCsv, ExportListParamsCategoryEntityCsv, ExportListParamsCategoryFeeCsv, ExportListParamsCategoryForm1099Int, ExportListParamsCategoryForm1099Misc, ExportListParamsCategoryFundingInstructions, ExportListParamsCategoryTransactionCsv, ExportListParamsCategoryVendorCsv, ExportListParamsCategoryVoidedCheck:
 		return true
 	}
 	return false
