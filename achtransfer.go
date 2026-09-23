@@ -269,7 +269,7 @@ func (r achTransferJSON) RawJSON() string {
 type ACHTransferAcknowledgement struct {
 	// When the Federal Reserve acknowledged the submitted file containing this
 	// transfer.
-	AcknowledgedAt string                         `json:"acknowledged_at" api:"required"`
+	AcknowledgedAt time.Time                      `json:"acknowledged_at" api:"required" format:"date-time"`
 	JSON           achTransferAcknowledgementJSON `json:"-"`
 }
 

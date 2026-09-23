@@ -3907,17 +3907,18 @@ func (r CardPaymentElementsCardDeclineProcessingCategory) IsKnown() bool {
 type CardPaymentElementsCardDeclineRealTimeDecisionReason string
 
 const (
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonInsufficientFunds       CardPaymentElementsCardDeclineRealTimeDecisionReason = "insufficient_funds"
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonTransactionNeverAllowed CardPaymentElementsCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonExceedsApprovalLimit    CardPaymentElementsCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled CardPaymentElementsCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonSuspectedFraud          CardPaymentElementsCardDeclineRealTimeDecisionReason = "suspected_fraud"
-	CardPaymentElementsCardDeclineRealTimeDecisionReasonOther                   CardPaymentElementsCardDeclineRealTimeDecisionReason = "other"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonInsufficientFunds                        CardPaymentElementsCardDeclineRealTimeDecisionReason = "insufficient_funds"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonTransactionNeverAllowed                  CardPaymentElementsCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonExceedsApprovalLimit                     CardPaymentElementsCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled                  CardPaymentElementsCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonSuspectedFraud                           CardPaymentElementsCardDeclineRealTimeDecisionReason = "suspected_fraud"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonAdditionalCustomerAuthenticationRequired CardPaymentElementsCardDeclineRealTimeDecisionReason = "additional_customer_authentication_required"
+	CardPaymentElementsCardDeclineRealTimeDecisionReasonOther                                    CardPaymentElementsCardDeclineRealTimeDecisionReason = "other"
 )
 
 func (r CardPaymentElementsCardDeclineRealTimeDecisionReason) IsKnown() bool {
 	switch r {
-	case CardPaymentElementsCardDeclineRealTimeDecisionReasonInsufficientFunds, CardPaymentElementsCardDeclineRealTimeDecisionReasonTransactionNeverAllowed, CardPaymentElementsCardDeclineRealTimeDecisionReasonExceedsApprovalLimit, CardPaymentElementsCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled, CardPaymentElementsCardDeclineRealTimeDecisionReasonSuspectedFraud, CardPaymentElementsCardDeclineRealTimeDecisionReasonOther:
+	case CardPaymentElementsCardDeclineRealTimeDecisionReasonInsufficientFunds, CardPaymentElementsCardDeclineRealTimeDecisionReasonTransactionNeverAllowed, CardPaymentElementsCardDeclineRealTimeDecisionReasonExceedsApprovalLimit, CardPaymentElementsCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled, CardPaymentElementsCardDeclineRealTimeDecisionReasonSuspectedFraud, CardPaymentElementsCardDeclineRealTimeDecisionReasonAdditionalCustomerAuthenticationRequired, CardPaymentElementsCardDeclineRealTimeDecisionReasonOther:
 		return true
 	}
 	return false
