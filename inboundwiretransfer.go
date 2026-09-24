@@ -132,6 +132,8 @@ type InboundWireTransfer struct {
 	// The American Bankers' Association (ABA) routing number of the bank that sent the
 	// wire.
 	InstructingAgentRoutingNumber string `json:"instructing_agent_routing_number" api:"required,nullable"`
+	// A free-form instruction for the receiving bank set by the sender.
+	InstructionForCreditorAgent string `json:"instruction_for_creditor_agent" api:"required,nullable"`
 	// The sending bank's identifier for the wire transfer.
 	InstructionIdentification string `json:"instruction_identification" api:"required,nullable"`
 	// The reason for the wire transfer, as set by the sender.
@@ -178,6 +180,7 @@ type inboundWireTransferJSON struct {
 	EndToEndIdentification             apijson.Field
 	InputMessageAccountabilityData     apijson.Field
 	InstructingAgentRoutingNumber      apijson.Field
+	InstructionForCreditorAgent        apijson.Field
 	InstructionIdentification          apijson.Field
 	Purpose                            apijson.Field
 	Reversal                           apijson.Field

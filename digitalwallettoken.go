@@ -197,11 +197,14 @@ const (
 	DigitalWalletTokenDeclineReasonWebhookDeclined               DigitalWalletTokenDeclineReason = "webhook_declined"
 	DigitalWalletTokenDeclineReasonIncorrectCardVerificationCode DigitalWalletTokenDeclineReason = "incorrect_card_verification_code"
 	DigitalWalletTokenDeclineReasonDeclinedByTokenRequestor      DigitalWalletTokenDeclineReason = "declined_by_token_requestor"
+	DigitalWalletTokenDeclineReasonGroupLocked                   DigitalWalletTokenDeclineReason = "group_locked"
+	DigitalWalletTokenDeclineReasonAccountClosed                 DigitalWalletTokenDeclineReason = "account_closed"
+	DigitalWalletTokenDeclineReasonEntityNotActive               DigitalWalletTokenDeclineReason = "entity_not_active"
 )
 
 func (r DigitalWalletTokenDeclineReason) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenDeclineReasonCardNotActive, DigitalWalletTokenDeclineReasonNoVerificationMethod, DigitalWalletTokenDeclineReasonWebhookTimedOut, DigitalWalletTokenDeclineReasonWebhookDeclined, DigitalWalletTokenDeclineReasonIncorrectCardVerificationCode, DigitalWalletTokenDeclineReasonDeclinedByTokenRequestor:
+	case DigitalWalletTokenDeclineReasonCardNotActive, DigitalWalletTokenDeclineReasonNoVerificationMethod, DigitalWalletTokenDeclineReasonWebhookTimedOut, DigitalWalletTokenDeclineReasonWebhookDeclined, DigitalWalletTokenDeclineReasonIncorrectCardVerificationCode, DigitalWalletTokenDeclineReasonDeclinedByTokenRequestor, DigitalWalletTokenDeclineReasonGroupLocked, DigitalWalletTokenDeclineReasonAccountClosed, DigitalWalletTokenDeclineReasonEntityNotActive:
 		return true
 	}
 	return false
@@ -292,16 +295,17 @@ func (r digitalWalletTokenDynamicPrimaryAccountNumberJSON) RawJSON() string {
 type DigitalWalletTokenStatus string
 
 const (
-	DigitalWalletTokenStatusActive      DigitalWalletTokenStatus = "active"
-	DigitalWalletTokenStatusInactive    DigitalWalletTokenStatus = "inactive"
-	DigitalWalletTokenStatusSuspended   DigitalWalletTokenStatus = "suspended"
-	DigitalWalletTokenStatusDeactivated DigitalWalletTokenStatus = "deactivated"
-	DigitalWalletTokenStatusDeclined    DigitalWalletTokenStatus = "declined"
+	DigitalWalletTokenStatusActive               DigitalWalletTokenStatus = "active"
+	DigitalWalletTokenStatusInactive             DigitalWalletTokenStatus = "inactive"
+	DigitalWalletTokenStatusSuspended            DigitalWalletTokenStatus = "suspended"
+	DigitalWalletTokenStatusDeactivated          DigitalWalletTokenStatus = "deactivated"
+	DigitalWalletTokenStatusDeclined             DigitalWalletTokenStatus = "declined"
+	DigitalWalletTokenStatusPendingTransitioning DigitalWalletTokenStatus = "pending_transitioning"
 )
 
 func (r DigitalWalletTokenStatus) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenStatusActive, DigitalWalletTokenStatusInactive, DigitalWalletTokenStatusSuspended, DigitalWalletTokenStatusDeactivated, DigitalWalletTokenStatusDeclined:
+	case DigitalWalletTokenStatusActive, DigitalWalletTokenStatusInactive, DigitalWalletTokenStatusSuspended, DigitalWalletTokenStatusDeactivated, DigitalWalletTokenStatusDeclined, DigitalWalletTokenStatusPendingTransitioning:
 		return true
 	}
 	return false
@@ -371,16 +375,17 @@ func (r digitalWalletTokenUpdateJSON) RawJSON() string {
 type DigitalWalletTokenUpdatesStatus string
 
 const (
-	DigitalWalletTokenUpdatesStatusActive      DigitalWalletTokenUpdatesStatus = "active"
-	DigitalWalletTokenUpdatesStatusInactive    DigitalWalletTokenUpdatesStatus = "inactive"
-	DigitalWalletTokenUpdatesStatusSuspended   DigitalWalletTokenUpdatesStatus = "suspended"
-	DigitalWalletTokenUpdatesStatusDeactivated DigitalWalletTokenUpdatesStatus = "deactivated"
-	DigitalWalletTokenUpdatesStatusDeclined    DigitalWalletTokenUpdatesStatus = "declined"
+	DigitalWalletTokenUpdatesStatusActive               DigitalWalletTokenUpdatesStatus = "active"
+	DigitalWalletTokenUpdatesStatusInactive             DigitalWalletTokenUpdatesStatus = "inactive"
+	DigitalWalletTokenUpdatesStatusSuspended            DigitalWalletTokenUpdatesStatus = "suspended"
+	DigitalWalletTokenUpdatesStatusDeactivated          DigitalWalletTokenUpdatesStatus = "deactivated"
+	DigitalWalletTokenUpdatesStatusDeclined             DigitalWalletTokenUpdatesStatus = "declined"
+	DigitalWalletTokenUpdatesStatusPendingTransitioning DigitalWalletTokenUpdatesStatus = "pending_transitioning"
 )
 
 func (r DigitalWalletTokenUpdatesStatus) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenUpdatesStatusActive, DigitalWalletTokenUpdatesStatusInactive, DigitalWalletTokenUpdatesStatusSuspended, DigitalWalletTokenUpdatesStatusDeactivated, DigitalWalletTokenUpdatesStatusDeclined:
+	case DigitalWalletTokenUpdatesStatusActive, DigitalWalletTokenUpdatesStatusInactive, DigitalWalletTokenUpdatesStatusSuspended, DigitalWalletTokenUpdatesStatusDeactivated, DigitalWalletTokenUpdatesStatusDeclined, DigitalWalletTokenUpdatesStatusPendingTransitioning:
 		return true
 	}
 	return false
