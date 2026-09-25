@@ -1206,17 +1206,18 @@ func (r realTimeDecisionCardAuthorizationDeclineJSON) RawJSON() string {
 type RealTimeDecisionCardAuthorizationDeclineReason string
 
 const (
-	RealTimeDecisionCardAuthorizationDeclineReasonInsufficientFunds       RealTimeDecisionCardAuthorizationDeclineReason = "insufficient_funds"
-	RealTimeDecisionCardAuthorizationDeclineReasonTransactionNeverAllowed RealTimeDecisionCardAuthorizationDeclineReason = "transaction_never_allowed"
-	RealTimeDecisionCardAuthorizationDeclineReasonExceedsApprovalLimit    RealTimeDecisionCardAuthorizationDeclineReason = "exceeds_approval_limit"
-	RealTimeDecisionCardAuthorizationDeclineReasonCardTemporarilyDisabled RealTimeDecisionCardAuthorizationDeclineReason = "card_temporarily_disabled"
-	RealTimeDecisionCardAuthorizationDeclineReasonSuspectedFraud          RealTimeDecisionCardAuthorizationDeclineReason = "suspected_fraud"
-	RealTimeDecisionCardAuthorizationDeclineReasonOther                   RealTimeDecisionCardAuthorizationDeclineReason = "other"
+	RealTimeDecisionCardAuthorizationDeclineReasonInsufficientFunds                        RealTimeDecisionCardAuthorizationDeclineReason = "insufficient_funds"
+	RealTimeDecisionCardAuthorizationDeclineReasonTransactionNeverAllowed                  RealTimeDecisionCardAuthorizationDeclineReason = "transaction_never_allowed"
+	RealTimeDecisionCardAuthorizationDeclineReasonExceedsApprovalLimit                     RealTimeDecisionCardAuthorizationDeclineReason = "exceeds_approval_limit"
+	RealTimeDecisionCardAuthorizationDeclineReasonCardTemporarilyDisabled                  RealTimeDecisionCardAuthorizationDeclineReason = "card_temporarily_disabled"
+	RealTimeDecisionCardAuthorizationDeclineReasonSuspectedFraud                           RealTimeDecisionCardAuthorizationDeclineReason = "suspected_fraud"
+	RealTimeDecisionCardAuthorizationDeclineReasonAdditionalCustomerAuthenticationRequired RealTimeDecisionCardAuthorizationDeclineReason = "additional_customer_authentication_required"
+	RealTimeDecisionCardAuthorizationDeclineReasonOther                                    RealTimeDecisionCardAuthorizationDeclineReason = "other"
 )
 
 func (r RealTimeDecisionCardAuthorizationDeclineReason) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionCardAuthorizationDeclineReasonInsufficientFunds, RealTimeDecisionCardAuthorizationDeclineReasonTransactionNeverAllowed, RealTimeDecisionCardAuthorizationDeclineReasonExceedsApprovalLimit, RealTimeDecisionCardAuthorizationDeclineReasonCardTemporarilyDisabled, RealTimeDecisionCardAuthorizationDeclineReasonSuspectedFraud, RealTimeDecisionCardAuthorizationDeclineReasonOther:
+	case RealTimeDecisionCardAuthorizationDeclineReasonInsufficientFunds, RealTimeDecisionCardAuthorizationDeclineReasonTransactionNeverAllowed, RealTimeDecisionCardAuthorizationDeclineReasonExceedsApprovalLimit, RealTimeDecisionCardAuthorizationDeclineReasonCardTemporarilyDisabled, RealTimeDecisionCardAuthorizationDeclineReasonSuspectedFraud, RealTimeDecisionCardAuthorizationDeclineReasonAdditionalCustomerAuthenticationRequired, RealTimeDecisionCardAuthorizationDeclineReasonOther:
 		return true
 	}
 	return false
@@ -3171,17 +3172,18 @@ func (r RealTimeDecisionActionParamsCardAuthorizationDecline) MarshalJSON() (dat
 type RealTimeDecisionActionParamsCardAuthorizationDeclineReason string
 
 const (
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds       RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "insufficient_funds"
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "transaction_never_allowed"
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit    RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "exceeds_approval_limit"
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "card_temporarily_disabled"
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud          RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "suspected_fraud"
-	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther                   RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "other"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds                        RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "insufficient_funds"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed                  RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "transaction_never_allowed"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit                     RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "exceeds_approval_limit"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled                  RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "card_temporarily_disabled"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud                           RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "suspected_fraud"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonAdditionalCustomerAuthenticationRequired RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "additional_customer_authentication_required"
+	RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther                                    RealTimeDecisionActionParamsCardAuthorizationDeclineReason = "other"
 )
 
 func (r RealTimeDecisionActionParamsCardAuthorizationDeclineReason) IsKnown() bool {
 	switch r {
-	case RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther:
+	case RealTimeDecisionActionParamsCardAuthorizationDeclineReasonInsufficientFunds, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonTransactionNeverAllowed, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonExceedsApprovalLimit, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonCardTemporarilyDisabled, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonSuspectedFraud, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonAdditionalCustomerAuthenticationRequired, RealTimeDecisionActionParamsCardAuthorizationDeclineReasonOther:
 		return true
 	}
 	return false

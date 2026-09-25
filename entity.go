@@ -1696,6 +1696,8 @@ type EntityValidationIssue struct {
 	BeneficialOwnerAddress EntityValidationIssuesBeneficialOwnerAddress `json:"beneficial_owner_address" api:"required,nullable"`
 	// Details when the issue is with a beneficial owner's identity verification.
 	BeneficialOwnerIdentity EntityValidationIssuesBeneficialOwnerIdentity `json:"beneficial_owner_identity" api:"required,nullable"`
+	// Details when the issue is with a beneficial owner's tax identifier.
+	BeneficialOwnerTaxIdentifier EntityValidationIssuesBeneficialOwnerTaxIdentifier `json:"beneficial_owner_tax_identifier" api:"required,nullable"`
 	// The type of issue. We may add additional possible values for this enum over
 	// time; your application should be able to handle such additions gracefully.
 	Category EntityValidationIssuesCategory `json:"category" api:"required"`
@@ -1711,14 +1713,15 @@ type EntityValidationIssue struct {
 // entityValidationIssueJSON contains the JSON metadata for the struct
 // [EntityValidationIssue]
 type entityValidationIssueJSON struct {
-	BeneficialOwnerAddress  apijson.Field
-	BeneficialOwnerIdentity apijson.Field
-	Category                apijson.Field
-	EntityAddress           apijson.Field
-	EntityIdentity          apijson.Field
-	EntityTaxIdentifier     apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
+	BeneficialOwnerAddress       apijson.Field
+	BeneficialOwnerIdentity      apijson.Field
+	BeneficialOwnerTaxIdentifier apijson.Field
+	Category                     apijson.Field
+	EntityAddress                apijson.Field
+	EntityIdentity               apijson.Field
+	EntityTaxIdentifier          apijson.Field
+	raw                          string
+	ExtraFields                  map[string]apijson.Field
 }
 
 func (r *EntityValidationIssue) UnmarshalJSON(data []byte) (err error) {
@@ -1793,21 +1796,45 @@ func (r entityValidationIssuesBeneficialOwnerIdentityJSON) RawJSON() string {
 	return r.raw
 }
 
+// Details when the issue is with a beneficial owner's tax identifier.
+type EntityValidationIssuesBeneficialOwnerTaxIdentifier struct {
+	// The ID of the beneficial owner.
+	BeneficialOwnerID string                                                 `json:"beneficial_owner_id" api:"required"`
+	JSON              entityValidationIssuesBeneficialOwnerTaxIdentifierJSON `json:"-"`
+}
+
+// entityValidationIssuesBeneficialOwnerTaxIdentifierJSON contains the JSON
+// metadata for the struct [EntityValidationIssuesBeneficialOwnerTaxIdentifier]
+type entityValidationIssuesBeneficialOwnerTaxIdentifierJSON struct {
+	BeneficialOwnerID apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *EntityValidationIssuesBeneficialOwnerTaxIdentifier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r entityValidationIssuesBeneficialOwnerTaxIdentifierJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of issue. We may add additional possible values for this enum over
 // time; your application should be able to handle such additions gracefully.
 type EntityValidationIssuesCategory string
 
 const (
-	EntityValidationIssuesCategoryEntityTaxIdentifier     EntityValidationIssuesCategory = "entity_tax_identifier"
-	EntityValidationIssuesCategoryEntityAddress           EntityValidationIssuesCategory = "entity_address"
-	EntityValidationIssuesCategoryEntityIdentity          EntityValidationIssuesCategory = "entity_identity"
-	EntityValidationIssuesCategoryBeneficialOwnerIdentity EntityValidationIssuesCategory = "beneficial_owner_identity"
-	EntityValidationIssuesCategoryBeneficialOwnerAddress  EntityValidationIssuesCategory = "beneficial_owner_address"
+	EntityValidationIssuesCategoryEntityTaxIdentifier          EntityValidationIssuesCategory = "entity_tax_identifier"
+	EntityValidationIssuesCategoryEntityAddress                EntityValidationIssuesCategory = "entity_address"
+	EntityValidationIssuesCategoryEntityIdentity               EntityValidationIssuesCategory = "entity_identity"
+	EntityValidationIssuesCategoryBeneficialOwnerIdentity      EntityValidationIssuesCategory = "beneficial_owner_identity"
+	EntityValidationIssuesCategoryBeneficialOwnerAddress       EntityValidationIssuesCategory = "beneficial_owner_address"
+	EntityValidationIssuesCategoryBeneficialOwnerTaxIdentifier EntityValidationIssuesCategory = "beneficial_owner_tax_identifier"
 )
 
 func (r EntityValidationIssuesCategory) IsKnown() bool {
 	switch r {
-	case EntityValidationIssuesCategoryEntityTaxIdentifier, EntityValidationIssuesCategoryEntityAddress, EntityValidationIssuesCategoryEntityIdentity, EntityValidationIssuesCategoryBeneficialOwnerIdentity, EntityValidationIssuesCategoryBeneficialOwnerAddress:
+	case EntityValidationIssuesCategoryEntityTaxIdentifier, EntityValidationIssuesCategoryEntityAddress, EntityValidationIssuesCategoryEntityIdentity, EntityValidationIssuesCategoryBeneficialOwnerIdentity, EntityValidationIssuesCategoryBeneficialOwnerAddress, EntityValidationIssuesCategoryBeneficialOwnerTaxIdentifier:
 		return true
 	}
 	return false

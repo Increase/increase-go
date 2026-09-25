@@ -1168,17 +1168,18 @@ func (r DeclinedTransactionSourceCardDeclineProcessingCategory) IsKnown() bool {
 type DeclinedTransactionSourceCardDeclineRealTimeDecisionReason string
 
 const (
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds       DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "insufficient_funds"
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit    DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud          DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "suspected_fraud"
-	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther                   DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "other"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds                        DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "insufficient_funds"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed                  DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "transaction_never_allowed"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit                     DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "exceeds_approval_limit"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled                  DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "card_temporarily_disabled"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud                           DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "suspected_fraud"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonAdditionalCustomerAuthenticationRequired DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "additional_customer_authentication_required"
+	DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther                                    DeclinedTransactionSourceCardDeclineRealTimeDecisionReason = "other"
 )
 
 func (r DeclinedTransactionSourceCardDeclineRealTimeDecisionReason) IsKnown() bool {
 	switch r {
-	case DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther:
+	case DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonInsufficientFunds, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonTransactionNeverAllowed, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonExceedsApprovalLimit, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonCardTemporarilyDisabled, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonSuspectedFraud, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonAdditionalCustomerAuthenticationRequired, DeclinedTransactionSourceCardDeclineRealTimeDecisionReasonOther:
 		return true
 	}
 	return false
