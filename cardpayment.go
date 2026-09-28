@@ -6207,6 +6207,8 @@ type CardPaymentElementsCardRefund struct {
 	MerchantPostalCode string `json:"merchant_postal_code" api:"required,nullable"`
 	// The state the merchant resides in.
 	MerchantState string `json:"merchant_state" api:"required,nullable"`
+	// The card network on which this transaction was processed.
+	Network CardPaymentElementsCardRefundNetwork `json:"network" api:"required"`
 	// Network-specific identifiers for this refund.
 	NetworkIdentifiers CardPaymentElementsCardRefundNetworkIdentifiers `json:"network_identifiers" api:"required"`
 	// The amount in the minor unit of the transaction's presentment currency.
@@ -6244,6 +6246,7 @@ type cardPaymentElementsCardRefundJSON struct {
 	MerchantName         apijson.Field
 	MerchantPostalCode   apijson.Field
 	MerchantState        apijson.Field
+	Network              apijson.Field
 	NetworkIdentifiers   apijson.Field
 	PresentmentAmount    apijson.Field
 	PresentmentCurrency  apijson.Field
@@ -6367,6 +6370,22 @@ const (
 func (r CardPaymentElementsCardRefundInterchangeCurrency) IsKnown() bool {
 	switch r {
 	case CardPaymentElementsCardRefundInterchangeCurrencyUsd:
+		return true
+	}
+	return false
+}
+
+// The card network on which this transaction was processed.
+type CardPaymentElementsCardRefundNetwork string
+
+const (
+	CardPaymentElementsCardRefundNetworkVisa  CardPaymentElementsCardRefundNetwork = "visa"
+	CardPaymentElementsCardRefundNetworkPulse CardPaymentElementsCardRefundNetwork = "pulse"
+)
+
+func (r CardPaymentElementsCardRefundNetwork) IsKnown() bool {
+	switch r {
+	case CardPaymentElementsCardRefundNetworkVisa, CardPaymentElementsCardRefundNetworkPulse:
 		return true
 	}
 	return false
