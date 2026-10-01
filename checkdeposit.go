@@ -271,6 +271,7 @@ func (r checkDepositDepositAdjustmentJSON) RawJSON() string {
 type CheckDepositDepositAdjustmentsReason string
 
 const (
+	CheckDepositDepositAdjustmentsReasonWrongPayeeCredit  CheckDepositDepositAdjustmentsReason = "wrong_payee_credit"
 	CheckDepositDepositAdjustmentsReasonAdjustedAmount    CheckDepositDepositAdjustmentsReason = "adjusted_amount"
 	CheckDepositDepositAdjustmentsReasonNonConformingItem CheckDepositDepositAdjustmentsReason = "non_conforming_item"
 	CheckDepositDepositAdjustmentsReasonPaid              CheckDepositDepositAdjustmentsReason = "paid"
@@ -278,7 +279,7 @@ const (
 
 func (r CheckDepositDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositAdjustmentsReasonAdjustedAmount, CheckDepositDepositAdjustmentsReasonNonConformingItem, CheckDepositDepositAdjustmentsReasonPaid:
+	case CheckDepositDepositAdjustmentsReasonWrongPayeeCredit, CheckDepositDepositAdjustmentsReasonAdjustedAmount, CheckDepositDepositAdjustmentsReasonNonConformingItem, CheckDepositDepositAdjustmentsReasonPaid:
 		return true
 	}
 	return false
