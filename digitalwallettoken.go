@@ -73,6 +73,21 @@ func (r *DigitalWalletTokenService) ListAutoPaging(ctx context.Context, query Di
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Submit a Digital Wallet Token status transition to the card network. The Digital
+// Wallet Token will move to `pending_transitioning` until the card network
+// confirms the transition, and a `digital_wallet_token.updated` webhook will be
+// sent once the transition has been confirmed.
+func (r *DigitalWalletTokenService) Transition(ctx context.Context, digitalWalletTokenID string, body DigitalWalletTokenTransitionParams, opts ...option.RequestOption) (res *DigitalWalletToken, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if digitalWalletTokenID == "" {
+		err = errors.New("missing required digital_wallet_token_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("digital_wallet_tokens/%s/transition", digitalWalletTokenID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return res, err
+}
+
 // A Digital Wallet Token is created when a user adds a Card to their Apple Pay or
 // Google Pay app. The Digital Wallet Token can be used for purchases just like a
 // Card.
@@ -318,12 +333,13 @@ const (
 	DigitalWalletTokenTokenRequestorApplePay   DigitalWalletTokenTokenRequestor = "apple_pay"
 	DigitalWalletTokenTokenRequestorGooglePay  DigitalWalletTokenTokenRequestor = "google_pay"
 	DigitalWalletTokenTokenRequestorSamsungPay DigitalWalletTokenTokenRequestor = "samsung_pay"
+	DigitalWalletTokenTokenRequestorGarminPay  DigitalWalletTokenTokenRequestor = "garmin_pay"
 	DigitalWalletTokenTokenRequestorUnknown    DigitalWalletTokenTokenRequestor = "unknown"
 )
 
 func (r DigitalWalletTokenTokenRequestor) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenTokenRequestorApplePay, DigitalWalletTokenTokenRequestorGooglePay, DigitalWalletTokenTokenRequestorSamsungPay, DigitalWalletTokenTokenRequestorUnknown:
+	case DigitalWalletTokenTokenRequestorApplePay, DigitalWalletTokenTokenRequestorGooglePay, DigitalWalletTokenTokenRequestorSamsungPay, DigitalWalletTokenTokenRequestorGarminPay, DigitalWalletTokenTokenRequestorUnknown:
 		return true
 	}
 	return false
@@ -435,4 +451,30 @@ func (r DigitalWalletTokenListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type DigitalWalletTokenTransitionParams struct {
+	// The status to transition the Digital Wallet Token to.
+	Status param.Field[DigitalWalletTokenTransitionParamsStatus] `json:"status" api:"required"`
+}
+
+func (r DigitalWalletTokenTransitionParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The status to transition the Digital Wallet Token to.
+type DigitalWalletTokenTransitionParamsStatus string
+
+const (
+	DigitalWalletTokenTransitionParamsStatusActive      DigitalWalletTokenTransitionParamsStatus = "active"
+	DigitalWalletTokenTransitionParamsStatusSuspended   DigitalWalletTokenTransitionParamsStatus = "suspended"
+	DigitalWalletTokenTransitionParamsStatusDeactivated DigitalWalletTokenTransitionParamsStatus = "deactivated"
+)
+
+func (r DigitalWalletTokenTransitionParamsStatus) IsKnown() bool {
+	switch r {
+	case DigitalWalletTokenTransitionParamsStatusActive, DigitalWalletTokenTransitionParamsStatusSuspended, DigitalWalletTokenTransitionParamsStatusDeactivated:
+		return true
+	}
+	return false
 }

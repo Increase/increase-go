@@ -48,6 +48,20 @@ func (r *SimulationInboundCheckDepositService) New(ctx context.Context, body Sim
 	return res, err
 }
 
+// Simulates the acceptance of an [Inbound Check Deposit](#inbound-check-deposits),
+// creating a Transaction as a result. The Inbound Check Deposit must first have a
+// `status` of `pending`.
+func (r *SimulationInboundCheckDepositService) Accept(ctx context.Context, inboundCheckDepositID string, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if inboundCheckDepositID == "" {
+		err = errors.New("missing required inbound_check_deposit_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("simulations/inbound_check_deposits/%s/accept", inboundCheckDepositID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
 // Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit
 // must have a `status` of `accepted`.
 func (r *SimulationInboundCheckDepositService) Adjustment(ctx context.Context, inboundCheckDepositID string, body SimulationInboundCheckDepositAdjustmentParams, opts ...option.RequestOption) (res *InboundCheckDeposit, err error) {

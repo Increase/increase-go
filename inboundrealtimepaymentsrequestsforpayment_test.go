@@ -14,7 +14,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestDigitalWalletTokenGet(t *testing.T) {
+func TestInboundRealTimePaymentsRequestsForPaymentGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,7 +26,7 @@ func TestDigitalWalletTokenGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DigitalWalletTokens.Get(context.TODO(), "digital_wallet_token_izi62go3h51p369jrie0")
+	_, err := client.InboundRealTimePaymentsRequestsForPayment.Get(context.TODO(), "inbound_real_time_payments_request_for_payment_j9c5rm4hr6qf34en8tky")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
@@ -36,7 +36,7 @@ func TestDigitalWalletTokenGet(t *testing.T) {
 	}
 }
 
-func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
+func TestInboundRealTimePaymentsRequestsForPaymentListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -48,9 +48,10 @@ func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DigitalWalletTokens.List(context.TODO(), increase.DigitalWalletTokenListParams{
-		CardID: increase.F("card_id"),
-		CreatedAt: increase.F(increase.DigitalWalletTokenListParamsCreatedAt{
+	_, err := client.InboundRealTimePaymentsRequestsForPayment.List(context.TODO(), increase.InboundRealTimePaymentsRequestsForPaymentListParams{
+		AccountID:       increase.F("account_id"),
+		AccountNumberID: increase.F("account_number_id"),
+		CreatedAt: increase.F(increase.InboundRealTimePaymentsRequestsForPaymentListParamsCreatedAt{
 			After:      increase.F(time.Now()),
 			Before:     increase.F(time.Now()),
 			OnOrAfter:  increase.F(time.Now()),
@@ -59,34 +60,6 @@ func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
 		Cursor: increase.F("cursor"),
 		Limit:  increase.F(int64(1)),
 	})
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestDigitalWalletTokenTransition(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.DigitalWalletTokens.Transition(
-		context.TODO(),
-		"digital_wallet_token_izi62go3h51p369jrie0",
-		increase.DigitalWalletTokenTransitionParams{
-			Status: increase.F(increase.DigitalWalletTokenTransitionParamsStatusSuspended),
-		},
-	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

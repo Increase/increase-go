@@ -17,64 +17,68 @@ import (
 // interacting with the increase API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options                          []option.RequestOption
-	Accounts                         *AccountService
-	AccountNumbers                   *AccountNumberService
-	AccountTransfers                 *AccountTransferService
-	Cards                            *CardService
-	CardPayments                     *CardPaymentService
-	CardPurchaseSupplements          *CardPurchaseSupplementService
-	CardDisputes                     *CardDisputeService
-	PhysicalCards                    *PhysicalCardService
-	DigitalCardProfiles              *DigitalCardProfileService
-	PhysicalCardProfiles             *PhysicalCardProfileService
-	DigitalWalletTokens              *DigitalWalletTokenService
-	Transactions                     *TransactionService
-	PendingTransactions              *PendingTransactionService
-	DeclinedTransactions             *DeclinedTransactionService
-	ACHTransfers                     *ACHTransferService
-	InboundACHTransfers              *InboundACHTransferService
-	ACHPrenotifications              *ACHPrenotificationService
-	WireTransfers                    *WireTransferService
-	InboundWireTransfers             *InboundWireTransferService
-	WireDrawdownRequests             *WireDrawdownRequestService
-	InboundWireDrawdownRequests      *InboundWireDrawdownRequestService
-	CheckTransfers                   *CheckTransferService
-	InboundCheckDeposits             *InboundCheckDepositService
-	RealTimePaymentsTransfers        *RealTimePaymentsTransferService
-	InboundRealTimePaymentsTransfers *InboundRealTimePaymentsTransferService
-	FednowTransfers                  *FednowTransferService
-	InboundFednowTransfers           *InboundFednowTransferService
-	SwiftTransfers                   *SwiftTransferService
-	CheckDeposits                    *CheckDepositService
-	LockboxAddresses                 *LockboxAddressService
-	LockboxRecipients                *LockboxRecipientService
-	InboundMailItems                 *InboundMailItemService
-	RoutingNumbers                   *RoutingNumberService
-	ExternalAccounts                 *ExternalAccountService
-	Entities                         *EntityService
-	BeneficialOwners                 *BeneficialOwnerService
-	SupplementalDocuments            *SupplementalDocumentService
-	EntityOnboardingSessions         *EntityOnboardingSessionService
-	Programs                         *ProgramService
-	AccountStatements                *AccountStatementService
-	Files                            *FileService
-	FileLinks                        *FileLinkService
-	Exports                          *ExportService
-	Events                           *EventService
-	EventSubscriptions               *EventSubscriptionService
-	RealTimeDecisions                *RealTimeDecisionService
-	Groups                           *GroupService
-	OAuthApplications                *OAuthApplicationService
-	OAuthConnections                 *OAuthConnectionService
-	OAuthTokens                      *OAuthTokenService
-	IntrafiAccountEnrollments        *IntrafiAccountEnrollmentService
-	IntrafiBalances                  *IntrafiBalanceService
-	IntrafiExclusions                *IntrafiExclusionService
-	CardTokens                       *CardTokenService
-	CardPushTransfers                *CardPushTransferService
-	CardValidations                  *CardValidationService
-	Simulations                      *SimulationService
+	Options                                   []option.RequestOption
+	Accounts                                  *AccountService
+	AccountNumbers                            *AccountNumberService
+	AccountTransfers                          *AccountTransferService
+	Cards                                     *CardService
+	CardPayments                              *CardPaymentService
+	CardPurchaseSupplements                   *CardPurchaseSupplementService
+	CardDisputes                              *CardDisputeService
+	PhysicalCards                             *PhysicalCardService
+	DigitalCardProfiles                       *DigitalCardProfileService
+	PhysicalCardProfiles                      *PhysicalCardProfileService
+	DigitalWalletTokens                       *DigitalWalletTokenService
+	DigitalWalletTokenRequests                *DigitalWalletTokenRequestService
+	Transactions                              *TransactionService
+	PendingTransactions                       *PendingTransactionService
+	DeclinedTransactions                      *DeclinedTransactionService
+	ACHTransfers                              *ACHTransferService
+	InboundACHTransfers                       *InboundACHTransferService
+	ACHPrenotifications                       *ACHPrenotificationService
+	WireTransfers                             *WireTransferService
+	InboundWireTransfers                      *InboundWireTransferService
+	WireDrawdownRequests                      *WireDrawdownRequestService
+	InboundWireDrawdownRequests               *InboundWireDrawdownRequestService
+	CheckTransfers                            *CheckTransferService
+	InboundCheckDeposits                      *InboundCheckDepositService
+	RealTimePaymentsTransfers                 *RealTimePaymentsTransferService
+	InboundRealTimePaymentsTransfers          *InboundRealTimePaymentsTransferService
+	RealTimePaymentsRequestsForPayment        *RealTimePaymentsRequestsForPaymentService
+	InboundRealTimePaymentsRequestsForPayment *InboundRealTimePaymentsRequestsForPaymentService
+	FednowTransfers                           *FednowTransferService
+	InboundFednowTransfers                    *InboundFednowTransferService
+	SwiftTransfers                            *SwiftTransferService
+	CheckDeposits                             *CheckDepositService
+	LockboxAddresses                          *LockboxAddressService
+	LockboxRecipients                         *LockboxRecipientService
+	InboundMailItems                          *InboundMailItemService
+	RoutingNumbers                            *RoutingNumberService
+	ExternalAccounts                          *ExternalAccountService
+	Entities                                  *EntityService
+	BeneficialOwners                          *BeneficialOwnerService
+	SupplementalDocuments                     *SupplementalDocumentService
+	EntityOnboardingSessions                  *EntityOnboardingSessionService
+	Programs                                  *ProgramService
+	AccountStatements                         *AccountStatementService
+	Files                                     *FileService
+	FileLinks                                 *FileLinkService
+	Exports                                   *ExportService
+	Events                                    *EventService
+	EventSubscriptions                        *EventSubscriptionService
+	RealTimeDecisions                         *RealTimeDecisionService
+	Groups                                    *GroupService
+	OAuthApplications                         *OAuthApplicationService
+	OAuthConnections                          *OAuthConnectionService
+	OAuthTokens                               *OAuthTokenService
+	IntrafiAccountEnrollments                 *IntrafiAccountEnrollmentService
+	IntrafiBalances                           *IntrafiBalanceService
+	IntrafiExclusions                         *IntrafiExclusionService
+	CardTokens                                *CardTokenService
+	CardPushTransfers                         *CardPushTransferService
+	CardValidations                           *CardValidationService
+	PhysicalCheckBatches                      *PhysicalCheckBatchService
+	Simulations                               *SimulationService
 }
 
 // DefaultClientOptions read from the environment (INCREASE_API_KEY,
@@ -122,6 +126,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.DigitalCardProfiles = NewDigitalCardProfileService(opts...)
 	r.PhysicalCardProfiles = NewPhysicalCardProfileService(opts...)
 	r.DigitalWalletTokens = NewDigitalWalletTokenService(opts...)
+	r.DigitalWalletTokenRequests = NewDigitalWalletTokenRequestService(opts...)
 	r.Transactions = NewTransactionService(opts...)
 	r.PendingTransactions = NewPendingTransactionService(opts...)
 	r.DeclinedTransactions = NewDeclinedTransactionService(opts...)
@@ -136,6 +141,8 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.InboundCheckDeposits = NewInboundCheckDepositService(opts...)
 	r.RealTimePaymentsTransfers = NewRealTimePaymentsTransferService(opts...)
 	r.InboundRealTimePaymentsTransfers = NewInboundRealTimePaymentsTransferService(opts...)
+	r.RealTimePaymentsRequestsForPayment = NewRealTimePaymentsRequestsForPaymentService(opts...)
+	r.InboundRealTimePaymentsRequestsForPayment = NewInboundRealTimePaymentsRequestsForPaymentService(opts...)
 	r.FednowTransfers = NewFednowTransferService(opts...)
 	r.InboundFednowTransfers = NewInboundFednowTransferService(opts...)
 	r.SwiftTransfers = NewSwiftTransferService(opts...)
@@ -167,6 +174,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.CardTokens = NewCardTokenService(opts...)
 	r.CardPushTransfers = NewCardPushTransferService(opts...)
 	r.CardValidations = NewCardValidationService(opts...)
+	r.PhysicalCheckBatches = NewPhysicalCheckBatchService(opts...)
 	r.Simulations = NewSimulationService(opts...)
 
 	return

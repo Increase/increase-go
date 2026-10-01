@@ -107,6 +107,21 @@ func (r *CardService) NewDetailsIframe(ctx context.Context, cardID string, body 
 	return res, err
 }
 
+// Create a short-lived token that authorizes
+// [Card Elements](/documentation/card-elements) to render the details of a Card in
+// your frontend. Mint the token on your server and pass it to the browser; the
+// token is valid for one hour and is scoped to a single Card.
+func (r *CardService) NewDetailsToken(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetailsToken, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cards/%s/create_details_token", cardID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
 // Sensitive details for a Card include the primary account number, expiration,
 // card verification code, and PIN.
 func (r *CardService) Details(ctx context.Context, cardID string, opts ...option.RequestOption) (res *CardDetails, err error) {
@@ -860,6 +875,55 @@ const (
 func (r CardDetailsType) IsKnown() bool {
 	switch r {
 	case CardDetailsTypeCardDetails:
+		return true
+	}
+	return false
+}
+
+// A short-lived token that authorizes Increase Card Elements to render the details
+// of a single Card.
+type CardDetailsToken struct {
+	// The token. Pass this to the `@increasebank/card-elements` library in your
+	// frontend. Treat it as a credential: it authorizes anyone holding it to read the
+	// Card's details until it expires.
+	Token string `json:"token" api:"required"`
+	// The time the token will expire. Tokens are valid for one hour.
+	ExpiresAt time.Time `json:"expires_at" api:"required" format:"date-time"`
+	// A constant representing the object's type. For this resource it will always be
+	// `card_details_token`.
+	Type CardDetailsTokenType `json:"type" api:"required"`
+	JSON cardDetailsTokenJSON `json:"-"`
+}
+
+// cardDetailsTokenJSON contains the JSON metadata for the struct
+// [CardDetailsToken]
+type cardDetailsTokenJSON struct {
+	Token       apijson.Field
+	ExpiresAt   apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardDetailsToken) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDetailsTokenJSON) RawJSON() string {
+	return r.raw
+}
+
+// A constant representing the object's type. For this resource it will always be
+// `card_details_token`.
+type CardDetailsTokenType string
+
+const (
+	CardDetailsTokenTypeCardDetailsToken CardDetailsTokenType = "card_details_token"
+)
+
+func (r CardDetailsTokenType) IsKnown() bool {
+	switch r {
+	case CardDetailsTokenTypeCardDetailsToken:
 		return true
 	}
 	return false
