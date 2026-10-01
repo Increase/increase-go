@@ -40,6 +40,28 @@ func TestSimulationInboundCheckDepositNewWithOptionalParams(t *testing.T) {
 	}
 }
 
+func TestSimulationInboundCheckDepositAccept(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Simulations.InboundCheckDeposits.Accept(context.TODO(), "inbound_check_deposit_zoshvqybq0cjjm31mra")
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestSimulationInboundCheckDepositAdjustmentWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {

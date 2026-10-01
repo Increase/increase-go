@@ -7,14 +7,13 @@ import (
 	"errors"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/Increase/increase-go"
 	"github.com/Increase/increase-go/internal/testutil"
 	"github.com/Increase/increase-go/option"
 )
 
-func TestDigitalWalletTokenGet(t *testing.T) {
+func TestPhysicalCheckBatchNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,38 +25,26 @@ func TestDigitalWalletTokenGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DigitalWalletTokens.Get(context.TODO(), "digital_wallet_token_izi62go3h51p369jrie0")
-	if err != nil {
-		var apierr *increase.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := increase.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.DigitalWalletTokens.List(context.TODO(), increase.DigitalWalletTokenListParams{
-		CardID: increase.F("card_id"),
-		CreatedAt: increase.F(increase.DigitalWalletTokenListParamsCreatedAt{
-			After:      increase.F(time.Now()),
-			Before:     increase.F(time.Now()),
-			OnOrAfter:  increase.F(time.Now()),
-			OnOrBefore: increase.F(time.Now()),
+	_, err := client.PhysicalCheckBatches.New(context.TODO(), increase.PhysicalCheckBatchNewParams{
+		MailingAddress: increase.F(increase.PhysicalCheckBatchNewParamsMailingAddress{
+			City:       increase.F("New York"),
+			Line1:      increase.F("33 Liberty Street"),
+			Name:       increase.F("Ian Crease"),
+			PostalCode: increase.F("10045"),
+			State:      increase.F("NY"),
+			Line2:      increase.F("line2"),
+			Phone:      increase.F("x"),
 		}),
-		Cursor: increase.F("cursor"),
-		Limit:  increase.F(int64(1)),
+		ReturnAddress: increase.F(increase.PhysicalCheckBatchNewParamsReturnAddress{
+			City:       increase.F("New York"),
+			Line1:      increase.F("33 Liberty Street"),
+			Name:       increase.F("National Phonograph Company"),
+			PostalCode: increase.F("10045"),
+			State:      increase.F("NY"),
+			Line2:      increase.F("line2"),
+			Phone:      increase.F("x"),
+		}),
+		ShippingMethod: increase.F(increase.PhysicalCheckBatchNewParamsShippingMethodUspsFirstClass),
 	})
 	if err != nil {
 		var apierr *increase.Error
@@ -68,7 +55,7 @@ func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestDigitalWalletTokenTransition(t *testing.T) {
+func TestPhysicalCheckBatchCancel(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -80,13 +67,29 @@ func TestDigitalWalletTokenTransition(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DigitalWalletTokens.Transition(
-		context.TODO(),
-		"digital_wallet_token_izi62go3h51p369jrie0",
-		increase.DigitalWalletTokenTransitionParams{
-			Status: increase.F(increase.DigitalWalletTokenTransitionParamsStatusSuspended),
-		},
+	_, err := client.PhysicalCheckBatches.Cancel(context.TODO(), "physical_check_batch_yzdwjhdbw0in6191whce")
+	if err != nil {
+		var apierr *increase.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestPhysicalCheckBatchComplete(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := increase.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
+	_, err := client.PhysicalCheckBatches.Complete(context.TODO(), "physical_check_batch_yzdwjhdbw0in6191whce")
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {
