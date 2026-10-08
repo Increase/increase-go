@@ -236,11 +236,12 @@ type InboundCheckDepositAdjustmentsReason string
 const (
 	InboundCheckDepositAdjustmentsReasonLateReturn       InboundCheckDepositAdjustmentsReason = "late_return"
 	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
+	InboundCheckDepositAdjustmentsReasonDuplicateEntry   InboundCheckDepositAdjustmentsReason = "duplicate_entry"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit:
+	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonDuplicateEntry:
 		return true
 	}
 	return false
