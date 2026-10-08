@@ -114,11 +114,12 @@ const (
 	SimulationCheckDepositAdjustmentParamsReasonAdjustedAmount    SimulationCheckDepositAdjustmentParamsReason = "adjusted_amount"
 	SimulationCheckDepositAdjustmentParamsReasonNonConformingItem SimulationCheckDepositAdjustmentParamsReason = "non_conforming_item"
 	SimulationCheckDepositAdjustmentParamsReasonPaid              SimulationCheckDepositAdjustmentParamsReason = "paid"
+	SimulationCheckDepositAdjustmentParamsReasonDuplicateEntry    SimulationCheckDepositAdjustmentParamsReason = "duplicate_entry"
 )
 
 func (r SimulationCheckDepositAdjustmentParamsReason) IsKnown() bool {
 	switch r {
-	case SimulationCheckDepositAdjustmentParamsReasonLateReturn, SimulationCheckDepositAdjustmentParamsReasonWrongPayeeCredit, SimulationCheckDepositAdjustmentParamsReasonAdjustedAmount, SimulationCheckDepositAdjustmentParamsReasonNonConformingItem, SimulationCheckDepositAdjustmentParamsReasonPaid:
+	case SimulationCheckDepositAdjustmentParamsReasonLateReturn, SimulationCheckDepositAdjustmentParamsReasonWrongPayeeCredit, SimulationCheckDepositAdjustmentParamsReasonAdjustedAmount, SimulationCheckDepositAdjustmentParamsReasonNonConformingItem, SimulationCheckDepositAdjustmentParamsReasonPaid, SimulationCheckDepositAdjustmentParamsReasonDuplicateEntry:
 		return true
 	}
 	return false
