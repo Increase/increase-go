@@ -132,11 +132,12 @@ type SimulationInboundCheckDepositAdjustmentParamsReason string
 const (
 	SimulationInboundCheckDepositAdjustmentParamsReasonLateReturn       SimulationInboundCheckDepositAdjustmentParamsReason = "late_return"
 	SimulationInboundCheckDepositAdjustmentParamsReasonWrongPayeeCredit SimulationInboundCheckDepositAdjustmentParamsReason = "wrong_payee_credit"
+	SimulationInboundCheckDepositAdjustmentParamsReasonDuplicateEntry   SimulationInboundCheckDepositAdjustmentParamsReason = "duplicate_entry"
 )
 
 func (r SimulationInboundCheckDepositAdjustmentParamsReason) IsKnown() bool {
 	switch r {
-	case SimulationInboundCheckDepositAdjustmentParamsReasonLateReturn, SimulationInboundCheckDepositAdjustmentParamsReasonWrongPayeeCredit:
+	case SimulationInboundCheckDepositAdjustmentParamsReasonLateReturn, SimulationInboundCheckDepositAdjustmentParamsReasonWrongPayeeCredit, SimulationInboundCheckDepositAdjustmentParamsReasonDuplicateEntry:
 		return true
 	}
 	return false
