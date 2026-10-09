@@ -275,11 +275,12 @@ const (
 	CheckDepositDepositAdjustmentsReasonAdjustedAmount    CheckDepositDepositAdjustmentsReason = "adjusted_amount"
 	CheckDepositDepositAdjustmentsReasonNonConformingItem CheckDepositDepositAdjustmentsReason = "non_conforming_item"
 	CheckDepositDepositAdjustmentsReasonPaid              CheckDepositDepositAdjustmentsReason = "paid"
+	CheckDepositDepositAdjustmentsReasonDuplicateEntry    CheckDepositDepositAdjustmentsReason = "duplicate_entry"
 )
 
 func (r CheckDepositDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case CheckDepositDepositAdjustmentsReasonWrongPayeeCredit, CheckDepositDepositAdjustmentsReasonAdjustedAmount, CheckDepositDepositAdjustmentsReasonNonConformingItem, CheckDepositDepositAdjustmentsReasonPaid:
+	case CheckDepositDepositAdjustmentsReasonWrongPayeeCredit, CheckDepositDepositAdjustmentsReasonAdjustedAmount, CheckDepositDepositAdjustmentsReasonNonConformingItem, CheckDepositDepositAdjustmentsReasonPaid, CheckDepositDepositAdjustmentsReasonDuplicateEntry:
 		return true
 	}
 	return false
