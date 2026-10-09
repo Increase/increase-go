@@ -28,10 +28,10 @@ func TestDigitalCardProfileNewWithOptionalParams(t *testing.T) {
 	_, err := client.DigitalCardProfiles.New(context.TODO(), increase.DigitalCardProfileNewParams{
 		AppIconFileID:         increase.F("file_8zxqkwlh43wo144u8yec"),
 		BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
-		CardDescription:       increase.F("MyBank Signature Card"),
+		CardDescription:       increase.F("National Phonograph Card"),
 		Description:           increase.F("My Card Profile"),
-		IssuerName:            increase.F("MyBank"),
 		ContactEmail:          increase.F("user@example.com"),
+		ContactName:           increase.F("National Phonograph Company"),
 		ContactPhone:          increase.F("+18885551212"),
 		ContactWebsite:        increase.F("https://example.com"),
 		TextColor: increase.F(increase.DigitalCardProfileNewParamsTextColor{
@@ -142,10 +142,10 @@ func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
 			BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
 			CardDescription:       increase.F("x"),
 			ContactEmail:          increase.F("dev@stainless.com"),
+			ContactName:           increase.F("x"),
 			ContactPhone:          increase.F("x"),
 			ContactWebsite:        increase.F("contact_website"),
 			Description:           increase.F("x"),
-			IssuerName:            increase.F("x"),
 			TextColor: increase.F(increase.DigitalCardProfileCloneParamsTextColor{
 				Blue:  increase.F(int64(0)),
 				Green: increase.F(int64(0)),

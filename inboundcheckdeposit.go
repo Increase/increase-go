@@ -120,7 +120,7 @@ type InboundCheckDeposit struct {
 	// actioned by then.
 	AutomaticallyResolvesAt time.Time `json:"automatically_resolves_at" api:"required" format:"date-time"`
 	// The ID for the File containing the image of the back of the check.
-	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
+	BackImageFileID string `json:"back_image_file_id" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
 	// bank depositing this check. In some rare cases, this is not transmitted via
 	// Check 21 and the value will be null.
@@ -146,7 +146,7 @@ type InboundCheckDeposit struct {
 	// return.
 	DepositReturn InboundCheckDepositDepositReturn `json:"deposit_return" api:"required,nullable"`
 	// The ID for the File containing the image of the front of the check.
-	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
+	FrontImageFileID string `json:"front_image_file_id" api:"required"`
 	// Whether the details on the check match the recipient name of the check transfer.
 	// This is an optional feature, contact sales to enable.
 	PayeeNameAnalysis InboundCheckDepositPayeeNameAnalysis `json:"payee_name_analysis" api:"required"`
@@ -236,11 +236,12 @@ type InboundCheckDepositAdjustmentsReason string
 const (
 	InboundCheckDepositAdjustmentsReasonLateReturn       InboundCheckDepositAdjustmentsReason = "late_return"
 	InboundCheckDepositAdjustmentsReasonWrongPayeeCredit InboundCheckDepositAdjustmentsReason = "wrong_payee_credit"
+	InboundCheckDepositAdjustmentsReasonDuplicateEntry   InboundCheckDepositAdjustmentsReason = "duplicate_entry"
 )
 
 func (r InboundCheckDepositAdjustmentsReason) IsKnown() bool {
 	switch r {
-	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit:
+	case InboundCheckDepositAdjustmentsReasonLateReturn, InboundCheckDepositAdjustmentsReasonWrongPayeeCredit, InboundCheckDepositAdjustmentsReasonDuplicateEntry:
 		return true
 	}
 	return false
