@@ -246,10 +246,11 @@ type DigitalCardProfileNewParams struct {
 	CardDescription param.Field[string] `json:"card_description" api:"required"`
 	// A description you can use to identify the Card Profile.
 	Description param.Field[string] `json:"description" api:"required"`
-	// A user-facing description for whoever is issuing the card.
-	IssuerName param.Field[string] `json:"issuer_name" api:"required"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
+	// The name of your company or card program, shown to the user as who to contact
+	// for support with their card.
+	ContactName param.Field[string] `json:"contact_name"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone"`
 	// A website the user can visit to view and receive support for their card.
