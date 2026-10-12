@@ -211,7 +211,6 @@ func shouldRetry(req *http.Request, res *http.Response) bool {
 	}
 
 	return res.StatusCode == http.StatusRequestTimeout ||
-		res.StatusCode == http.StatusConflict ||
 		res.StatusCode == http.StatusTooManyRequests ||
 		res.StatusCode >= http.StatusInternalServerError
 }
