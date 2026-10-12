@@ -90,8 +90,9 @@ type RealTimeDecision struct {
 	TimeoutAt time.Time `json:"timeout_at" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `real_time_decision`.
-	Type RealTimeDecisionType `json:"type" api:"required"`
-	JSON realTimeDecisionJSON `json:"-"`
+	Type        RealTimeDecisionType   `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        realTimeDecisionJSON   `json:"-"`
 }
 
 // realTimeDecisionJSON contains the JSON metadata for the struct
