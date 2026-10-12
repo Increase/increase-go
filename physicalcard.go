@@ -229,6 +229,8 @@ type PhysicalCardShipmentAddress struct {
 	Line3 string `json:"line3" api:"required,nullable"`
 	// The name of the recipient.
 	Name string `json:"name" api:"required"`
+	// The phone number of the recipient.
+	PhoneNumber string `json:"phone_number" api:"required,nullable"`
 	// The postal code of the shipping address.
 	PostalCode string `json:"postal_code" api:"required"`
 	// The state of the shipping address.
@@ -245,6 +247,7 @@ type physicalCardShipmentAddressJSON struct {
 	Line2       apijson.Field
 	Line3       apijson.Field
 	Name        apijson.Field
+	PhoneNumber apijson.Field
 	PostalCode  apijson.Field
 	State       apijson.Field
 	raw         string

@@ -119,6 +119,9 @@ type DigitalCardProfile struct {
 	CardDescription string `json:"card_description" api:"required"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail string `json:"contact_email" api:"required,nullable"`
+	// The name of your company or card program, shown to the user as who to contact
+	// for support with their card.
+	ContactName string `json:"contact_name" api:"required"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone string `json:"contact_phone" api:"required,nullable"`
 	// A website the user can visit to view and receive support for their card.
@@ -132,8 +135,6 @@ type DigitalCardProfile struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
-	// A user-facing description for whoever is issuing the card.
-	IssuerName string `json:"issuer_name" api:"required"`
 	// The status of the Card Profile.
 	Status DigitalCardProfileStatus `json:"status" api:"required"`
 	// The Card's text color, specified as an RGB triple.
@@ -153,12 +154,12 @@ type digitalCardProfileJSON struct {
 	BackgroundImageFileID apijson.Field
 	CardDescription       apijson.Field
 	ContactEmail          apijson.Field
+	ContactName           apijson.Field
 	ContactPhone          apijson.Field
 	ContactWebsite        apijson.Field
 	CreatedAt             apijson.Field
 	Description           apijson.Field
 	IdempotencyKey        apijson.Field
-	IssuerName            apijson.Field
 	Status                apijson.Field
 	TextColor             apijson.Field
 	Type                  apijson.Field
@@ -246,10 +247,11 @@ type DigitalCardProfileNewParams struct {
 	CardDescription param.Field[string] `json:"card_description" api:"required"`
 	// A description you can use to identify the Card Profile.
 	Description param.Field[string] `json:"description" api:"required"`
-	// A user-facing description for whoever is issuing the card.
-	IssuerName param.Field[string] `json:"issuer_name" api:"required"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
+	// The name of your company or card program, shown to the user as who to contact
+	// for support with their card.
+	ContactName param.Field[string] `json:"contact_name"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone"`
 	// A website the user can visit to view and receive support for their card.
@@ -343,14 +345,15 @@ type DigitalCardProfileCloneParams struct {
 	CardDescription param.Field[string] `json:"card_description"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
+	// The name of your company or card program, shown to the user as who to contact
+	// for support with their card.
+	ContactName param.Field[string] `json:"contact_name"`
 	// A phone number the user can contact to receive support for their card.
 	ContactPhone param.Field[string] `json:"contact_phone"`
 	// A website the user can visit to view and receive support for their card.
 	ContactWebsite param.Field[string] `json:"contact_website"`
 	// A description you can use to identify the Card Profile.
 	Description param.Field[string] `json:"description"`
-	// A user-facing description for whoever is issuing the card.
-	IssuerName param.Field[string] `json:"issuer_name"`
 	// The Card's text color, specified as an RGB triple. The default is white.
 	TextColor param.Field[DigitalCardProfileCloneParamsTextColor] `json:"text_color"`
 }
