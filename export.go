@@ -196,7 +196,7 @@ func (r exportJSON) RawJSON() string {
 type ExportAccountStatementBai2 struct {
 	// Filter results by Account.
 	AccountID string `json:"account_id" api:"required,nullable"`
-	// The date for which to retrieve the balance.
+	// The UTC date for which to retrieve the balance.
 	EffectiveDate time.Time `json:"effective_date" api:"required,nullable" format:"date"`
 	// Filter results by Program.
 	ProgramID string                         `json:"program_id" api:"required,nullable"`
@@ -279,7 +279,7 @@ func (r exportAccountStatementOfxCreatedAtJSON) RawJSON() string {
 type ExportAccountVerificationLetter struct {
 	// The Account Number to create a letter for.
 	AccountNumberID string `json:"account_number_id" api:"required"`
-	// The date of the balance to include in the letter.
+	// The UTC date of the balance to include in the letter.
 	BalanceDate time.Time                           `json:"balance_date" api:"required,nullable" format:"date"`
 	JSON        exportAccountVerificationLetterJSON `json:"-"`
 }
@@ -359,9 +359,9 @@ func (r exportBalanceCsvCreatedAtJSON) RawJSON() string {
 type ExportBookkeepingAccountBalanceCsv struct {
 	// Filter results by Bookkeeping Account.
 	BookkeepingAccountID string `json:"bookkeeping_account_id" api:"required,nullable"`
-	// Filter balances to those on or after this date.
+	// Filter balances to those on or after this UTC date.
 	OnOrAfterDate time.Time `json:"on_or_after_date" api:"required,nullable" format:"date"`
-	// Filter balances to those on or before this date.
+	// Filter balances to those on or before this UTC date.
 	OnOrBeforeDate time.Time                              `json:"on_or_before_date" api:"required,nullable" format:"date"`
 	JSON           exportBookkeepingAccountBalanceCsvJSON `json:"-"`
 }
@@ -419,9 +419,9 @@ func (r ExportCategory) IsKnown() bool {
 type ExportDailyAccountBalanceCsv struct {
 	// Filter results by Account.
 	AccountID string `json:"account_id" api:"required,nullable"`
-	// Filter balances on or after this date.
+	// Filter balances on or after this UTC date.
 	OnOrAfterDate time.Time `json:"on_or_after_date" api:"required,nullable" format:"date"`
-	// Filter balances on or before this date.
+	// Filter balances on or before this UTC date.
 	OnOrBeforeDate time.Time                        `json:"on_or_before_date" api:"required,nullable" format:"date"`
 	JSON           exportDailyAccountBalanceCsvJSON `json:"-"`
 }
@@ -878,10 +878,9 @@ type ExportNewParamsAccountStatementBai2 struct {
 	// The Account to create a BAI2 report for. If not provided, all open accounts will
 	// be included.
 	AccountID param.Field[string] `json:"account_id"`
-	// The date to create a BAI2 report for. If not provided, the current date will be
-	// used. The timezone is UTC. If the current date is used, the report will include
-	// intraday balances, otherwise it will include end-of-day balances for the
-	// provided date.
+	// The UTC date to create a BAI2 report for. If not provided, the current date will
+	// be used. If the current date is used, the report will include intraday balances,
+	// otherwise it will include end-of-day balances for the provided date.
 	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
 	// The Program to create a BAI2 report for. If not provided, all open accounts will
 	// be included.
@@ -923,7 +922,8 @@ func (r ExportNewParamsAccountStatementOfxCreatedAt) MarshalJSON() (data []byte,
 type ExportNewParamsAccountVerificationLetter struct {
 	// The Account Number to create a letter for.
 	AccountNumberID param.Field[string] `json:"account_number_id" api:"required"`
-	// The date of the balance to include in the letter. Defaults to the current date.
+	// The UTC date of the balance to include in the letter. Defaults to the current
+	// date.
 	BalanceDate param.Field[time.Time] `json:"balance_date" format:"date"`
 }
 
@@ -937,9 +937,9 @@ type ExportNewParamsBookkeepingAccountBalanceCsv struct {
 	// Filter exported Bookkeeping Account Balances to the specified Bookkeeping
 	// Account.
 	BookkeepingAccountID param.Field[string] `json:"bookkeeping_account_id"`
-	// Filter exported Balances to those on or after this date.
+	// Filter exported Balances to those on or after this UTC date.
 	OnOrAfterDate param.Field[time.Time] `json:"on_or_after_date" format:"date"`
-	// Filter exported Balances to those on or before this date.
+	// Filter exported Balances to those on or before this UTC date.
 	OnOrBeforeDate param.Field[time.Time] `json:"on_or_before_date" format:"date"`
 }
 
@@ -952,9 +952,9 @@ func (r ExportNewParamsBookkeepingAccountBalanceCsv) MarshalJSON() (data []byte,
 type ExportNewParamsDailyAccountBalanceCsv struct {
 	// Filter exported Balances to the specified Account.
 	AccountID param.Field[string] `json:"account_id"`
-	// Filter exported Balances to those on or after this date.
+	// Filter exported Balances to those on or after this UTC date.
 	OnOrAfterDate param.Field[time.Time] `json:"on_or_after_date" format:"date"`
-	// Filter exported Balances to those on or before this date.
+	// Filter exported Balances to those on or before this UTC date.
 	OnOrBeforeDate param.Field[time.Time] `json:"on_or_before_date" format:"date"`
 }
 
