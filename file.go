@@ -52,7 +52,9 @@ func (r *FileService) New(ctx context.Context, body FileNewParams, opts ...optio
 	return res, err
 }
 
-// Retrieve a File
+// Fetch metadata about a File, like its `purpose` and MIME type. To access the
+// content, use the [Get File contents](/documentation/api/files#get-file-contents)
+// API.
 func (r *FileService) Get(ctx context.Context, fileID string, opts ...option.RequestOption) (res *File, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if fileID == "" {
