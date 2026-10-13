@@ -46,7 +46,7 @@ func (r *PhysicalCardProfileService) New(ctx context.Context, body PhysicalCardP
 	return res, err
 }
 
-// Retrieve a Card Profile
+// Retrieve a Physical Card Profile
 func (r *PhysicalCardProfileService) Get(ctx context.Context, physicalCardProfileID string, opts ...option.RequestOption) (res *PhysicalCardProfile, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if physicalCardProfileID == "" {
