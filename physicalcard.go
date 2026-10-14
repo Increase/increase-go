@@ -110,6 +110,12 @@ type PhysicalCard struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Physical Card was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The month printed on the Physical Card as its expiration, in M format (e.g.,
+	// August is 8). This stays the same when the Card is renewed.
+	ExpirationMonth int64 `json:"expiration_month" api:"required"`
+	// The year printed on the Physical Card as its expiration, in YYYY format (e.g.,
+	// 2025). This stays the same when the Card is renewed.
+	ExpirationYear int64 `json:"expiration_year" api:"required"`
 	// The idempotency key you chose for this object. This value is unique across
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -133,6 +139,8 @@ type physicalCardJSON struct {
 	CardID                apijson.Field
 	Cardholder            apijson.Field
 	CreatedAt             apijson.Field
+	ExpirationMonth       apijson.Field
+	ExpirationYear        apijson.Field
 	IdempotencyKey        apijson.Field
 	PhysicalCardProfileID apijson.Field
 	Shipment              apijson.Field
