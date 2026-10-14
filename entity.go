@@ -2030,7 +2030,8 @@ type EntityNewParamsCorporation struct {
 	IncorporationState param.Field[string] `json:"incorporation_state"`
 	// The North American Industry Classification System (NAICS) code for the
 	// corporation's primary line of business. This is a number, like `5132` for
-	// `Software Publishers`. A full list of classification codes is available
+	// `Software Publishers`. Increase uses the 2022 version of NAICS. A full list of
+	// classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// A website for the business. Not every program requires a website for submitted
@@ -2721,7 +2722,8 @@ type EntityNewParamsSoleProprietorship struct {
 	Email param.Field[string] `json:"email" format:"email"`
 	// The North American Industry Classification System (NAICS) code for the sole
 	// proprietorship's primary line of business. This is a number, like `5132` for
-	// `Software Publishers`. A full list of classification codes is available
+	// `Software Publishers`. Increase uses the 2022 version of NAICS. A full list of
+	// classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// The United States Employer Identification Number (EIN) for the sole
@@ -3331,7 +3333,8 @@ type EntityUpdateParamsCorporation struct {
 	IncorporationState param.Field[string] `json:"incorporation_state"`
 	// The North American Industry Classification System (NAICS) code for the
 	// corporation's primary line of business. This is a number, like `5132` for
-	// `Software Publishers`. A full list of classification codes is available
+	// `Software Publishers`. Increase uses the 2022 version of NAICS. A full list of
+	// classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// The legal identifier of the corporation. This is usually the Employer
@@ -3626,7 +3629,8 @@ type EntityUpdateParamsSoleProprietorship struct {
 	Email param.Field[string] `json:"email" format:"email"`
 	// The North American Industry Classification System (NAICS) code for the sole
 	// proprietorship's primary line of business. This is a number, like `5132` for
-	// `Software Publishers`. A full list of classification codes is available
+	// `Software Publishers`. Increase uses the 2022 version of NAICS. A full list of
+	// classification codes is available
 	// [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
 	IndustryCode param.Field[string] `json:"industry_code"`
 	// Details of the individual who operates the sole proprietorship.

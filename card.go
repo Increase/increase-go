@@ -135,6 +135,22 @@ func (r *CardService) Details(ctx context.Context, cardID string, opts ...option
 	return res, err
 }
 
+// Renew a Card in place. The Card keeps its identifier, card number, PIN, and
+// Physical Cards, and receives a new expiration date in the current month four
+// years from now along with a new verification code, which the Card's details will
+// return afterwards. Physical Cards that have already shipped keep working until
+// they are canceled.
+func (r *CardService) Renew(ctx context.Context, cardID string, opts ...option.RequestOption) (res *Card, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cards/%s/renew", cardID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
 // Update a Card's PIN
 func (r *CardService) UpdatePin(ctx context.Context, cardID string, body CardUpdatePinParams, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -187,6 +203,11 @@ type Card struct {
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The last 4 digits of the Card's Primary Account Number.
 	Last4 string `json:"last4" api:"required"`
+	// Completed renewals of this Card, sorted by `renewed_at` in ascending order. Each
+	// renewal records the expiration date the Card had before it was renewed.
+	Renewals []CardRenewal `json:"renewals" api:"required"`
+	// Details about the Card this Card replaces, if it was created as a replacement.
+	ReplacementFor CardReplacementFor `json:"replacement_for" api:"required,nullable"`
 	// This indicates if payments can be made with the card.
 	Status CardStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -212,6 +233,8 @@ type cardJSON struct {
 	ExpirationYear        apijson.Field
 	IdempotencyKey        apijson.Field
 	Last4                 apijson.Field
+	Renewals              apijson.Field
+	ReplacementFor        apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
 	raw                   string
@@ -784,6 +807,81 @@ func (r cardDigitalWalletJSON) RawJSON() string {
 	return r.raw
 }
 
+type CardRenewal struct {
+	// The month the Card expired in before this renewal, in M format (e.g., August is
+	// 8).
+	PreviousExpirationMonth int64 `json:"previous_expiration_month" api:"required"`
+	// The year the Card expired in before this renewal, in YYYY format (e.g., 2025).
+	PreviousExpirationYear int64 `json:"previous_expiration_year" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card was renewed.
+	RenewedAt time.Time       `json:"renewed_at" api:"required" format:"date-time"`
+	JSON      cardRenewalJSON `json:"-"`
+}
+
+// cardRenewalJSON contains the JSON metadata for the struct [CardRenewal]
+type cardRenewalJSON struct {
+	PreviousExpirationMonth apijson.Field
+	PreviousExpirationYear  apijson.Field
+	RenewedAt               apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *CardRenewal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardRenewalJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details about the Card this Card replaces, if it was created as a replacement.
+type CardReplacementFor struct {
+	// The identifier of the replaced Card.
+	CardID string `json:"card_id" api:"required"`
+	// Why the Card was replaced. Only `expiring` notifies merchants that have the
+	// replaced Card on file of the new Card.
+	Reason CardReplacementForReason `json:"reason" api:"required"`
+	JSON   cardReplacementForJSON   `json:"-"`
+}
+
+// cardReplacementForJSON contains the JSON metadata for the struct
+// [CardReplacementFor]
+type cardReplacementForJSON struct {
+	CardID      apijson.Field
+	Reason      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardReplacementFor) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardReplacementForJSON) RawJSON() string {
+	return r.raw
+}
+
+// Why the Card was replaced. Only `expiring` notifies merchants that have the
+// replaced Card on file of the new Card.
+type CardReplacementForReason string
+
+const (
+	CardReplacementForReasonExpiring CardReplacementForReason = "expiring"
+	CardReplacementForReasonLost     CardReplacementForReason = "lost"
+	CardReplacementForReasonStolen   CardReplacementForReason = "stolen"
+	CardReplacementForReasonFraud    CardReplacementForReason = "fraud"
+)
+
+func (r CardReplacementForReason) IsKnown() bool {
+	switch r {
+	case CardReplacementForReasonExpiring, CardReplacementForReasonLost, CardReplacementForReasonStolen, CardReplacementForReasonFraud:
+		return true
+	}
+	return false
+}
+
 // This indicates if payments can be made with the card.
 type CardStatus string
 
@@ -995,6 +1093,9 @@ type CardNewParams struct {
 	// The Entity the card belongs to. You only need to supply this in rare situations
 	// when the card is not for the Account holder.
 	EntityID param.Field[string] `json:"entity_id"`
+	// Details about the Card this Card replaces. Supply this when issuing a new Card
+	// to take over from an existing one. The replaced Card is not affected.
+	ReplacementFor param.Field[CardNewParamsReplacementFor] `json:"replacement_for"`
 }
 
 func (r CardNewParams) MarshalJSON() (data []byte, err error) {
@@ -1294,6 +1395,39 @@ type CardNewParamsDigitalWallet struct {
 
 func (r CardNewParamsDigitalWallet) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Details about the Card this Card replaces. Supply this when issuing a new Card
+// to take over from an existing one. The replaced Card is not affected.
+type CardNewParamsReplacementFor struct {
+	// The identifier of the Card being replaced.
+	CardID param.Field[string] `json:"card_id" api:"required"`
+	// Why the Card is being replaced. Only `expiring` notifies merchants that have the
+	// replaced Card on file of the new Card.
+	Reason param.Field[CardNewParamsReplacementForReason] `json:"reason" api:"required"`
+}
+
+func (r CardNewParamsReplacementFor) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Why the Card is being replaced. Only `expiring` notifies merchants that have the
+// replaced Card on file of the new Card.
+type CardNewParamsReplacementForReason string
+
+const (
+	CardNewParamsReplacementForReasonExpiring CardNewParamsReplacementForReason = "expiring"
+	CardNewParamsReplacementForReasonLost     CardNewParamsReplacementForReason = "lost"
+	CardNewParamsReplacementForReasonStolen   CardNewParamsReplacementForReason = "stolen"
+	CardNewParamsReplacementForReasonFraud    CardNewParamsReplacementForReason = "fraud"
+)
+
+func (r CardNewParamsReplacementForReason) IsKnown() bool {
+	switch r {
+	case CardNewParamsReplacementForReasonExpiring, CardNewParamsReplacementForReasonLost, CardNewParamsReplacementForReasonStolen, CardNewParamsReplacementForReasonFraud:
+		return true
+	}
+	return false
 }
 
 type CardUpdateParams struct {
