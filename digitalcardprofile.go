@@ -58,7 +58,7 @@ func (r *DigitalCardProfileService) Get(ctx context.Context, digitalCardProfileI
 	return res, err
 }
 
-// List Card Profiles
+// List Digital Card Profiles
 func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) (res *pagination.Page[DigitalCardProfile], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
@@ -76,7 +76,7 @@ func (r *DigitalCardProfileService) List(ctx context.Context, query DigitalCardP
 	return res, nil
 }
 
-// List Card Profiles
+// List Digital Card Profiles
 func (r *DigitalCardProfileService) ListAutoPaging(ctx context.Context, query DigitalCardProfileListParams, opts ...option.RequestOption) *pagination.PageAutoPager[DigitalCardProfile] {
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
@@ -93,7 +93,7 @@ func (r *DigitalCardProfileService) Archive(ctx context.Context, digitalCardProf
 	return res, err
 }
 
-// Clones a Digital Card Profile
+// Clone a Digital Card Profile
 func (r *DigitalCardProfileService) Clone(ctx context.Context, digitalCardProfileID string, body DigitalCardProfileCloneParams, opts ...option.RequestOption) (res *DigitalCardProfile, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if digitalCardProfileID == "" {

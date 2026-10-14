@@ -135,6 +135,22 @@ func (r *CardService) Details(ctx context.Context, cardID string, opts ...option
 	return res, err
 }
 
+// Renew a Card in place. The Card keeps its identifier, card number, PIN, and
+// Physical Cards, and receives a new expiration date in the current month four
+// years from now along with a new verification code, which the Card's details will
+// return afterwards. Physical Cards that have already shipped keep working until
+// they are canceled.
+func (r *CardService) Renew(ctx context.Context, cardID string, opts ...option.RequestOption) (res *Card, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if cardID == "" {
+		err = errors.New("missing required card_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cards/%s/renew", cardID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
 // Update a Card's PIN
 func (r *CardService) UpdatePin(ctx context.Context, cardID string, body CardUpdatePinParams, opts ...option.RequestOption) (res *CardDetails, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -187,6 +203,9 @@ type Card struct {
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
 	// The last 4 digits of the Card's Primary Account Number.
 	Last4 string `json:"last4" api:"required"`
+	// Completed renewals of this Card, sorted by `renewed_at` in ascending order. Each
+	// renewal records the expiration date the Card had before it was renewed.
+	Renewals []CardRenewal `json:"renewals" api:"required"`
 	// This indicates if payments can be made with the card.
 	Status CardStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
@@ -212,6 +231,7 @@ type cardJSON struct {
 	ExpirationYear        apijson.Field
 	IdempotencyKey        apijson.Field
 	Last4                 apijson.Field
+	Renewals              apijson.Field
 	Status                apijson.Field
 	Type                  apijson.Field
 	raw                   string
@@ -781,6 +801,35 @@ func (r *CardDigitalWallet) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r cardDigitalWalletJSON) RawJSON() string {
+	return r.raw
+}
+
+type CardRenewal struct {
+	// The month the Card expired in before this renewal, in M format (e.g., August is
+	// 8).
+	PreviousExpirationMonth int64 `json:"previous_expiration_month" api:"required"`
+	// The year the Card expired in before this renewal, in YYYY format (e.g., 2025).
+	PreviousExpirationYear int64 `json:"previous_expiration_year" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the Card was renewed.
+	RenewedAt time.Time       `json:"renewed_at" api:"required" format:"date-time"`
+	JSON      cardRenewalJSON `json:"-"`
+}
+
+// cardRenewalJSON contains the JSON metadata for the struct [CardRenewal]
+type cardRenewalJSON struct {
+	PreviousExpirationMonth apijson.Field
+	PreviousExpirationYear  apijson.Field
+	RenewedAt               apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
+}
+
+func (r *CardRenewal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardRenewalJSON) RawJSON() string {
 	return r.raw
 }
 

@@ -94,13 +94,15 @@ type AccountStatement struct {
 	StartingBalance int64 `json:"starting_balance" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end
 	// of the period the Account Statement covers. The statement covers all
-	// transactions up to, but not including this timestamp. Usually, this is the
-	// beginning of the following month.
+	// transactions up to, but not including this timestamp. Statement periods are
+	// measured in UTC days, so this is usually midnight UTC on the first day of the
+	// following month.
 	StatementPeriodEnd time.Time `json:"statement_period_end" api:"required" format:"date-time"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the
 	// start of the period the Account Statement covers. This is the first moment of
-	// the statement period and is inclusive. Usually, this is the beginning of the
-	// month this statement covers.
+	// the statement period and is inclusive. Statement periods are measured in UTC
+	// days, so this is usually midnight UTC on the first day of the month this
+	// statement covers.
 	StatementPeriodStart time.Time `json:"statement_period_start" api:"required" format:"date-time"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_statement`.
