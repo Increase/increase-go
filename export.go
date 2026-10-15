@@ -488,10 +488,11 @@ func (r exportEntityCsvJSON) RawJSON() string {
 // Details of the fee CSV export. This field will be present when the `category` is
 // equal to `fee_csv`.
 type ExportFeeCsv struct {
-	// Filter fees by their created date. The time range must not include any fees that
-	// are part of an open fee statement.
-	CreatedAt ExportFeeCsvCreatedAt `json:"created_at" api:"required,nullable"`
-	JSON      exportFeeCsvJSON      `json:"-"`
+	// Filter fees by their created date. The time range must not include any fees on
+	// an open fee statement.
+	CreatedAt   ExportFeeCsvCreatedAt  `json:"created_at" api:"required,nullable"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        exportFeeCsvJSON       `json:"-"`
 }
 
 // exportFeeCsvJSON contains the JSON metadata for the struct [ExportFeeCsv]
@@ -509,8 +510,8 @@ func (r exportFeeCsvJSON) RawJSON() string {
 	return r.raw
 }
 
-// Filter fees by their created date. The time range must not include any fees that
-// are part of an open fee statement.
+// Filter fees by their created date. The time range must not include any fees on
+// an open fee statement.
 type ExportFeeCsvCreatedAt struct {
 	// Filter fees created after this time.
 	After time.Time `json:"after" api:"required,nullable" format:"date-time"`
@@ -975,7 +976,8 @@ type ExportNewParamsFeeCsv struct {
 	// Filter results by time range on the `created_at` attribute.
 	CreatedAt param.Field[ExportNewParamsFeeCsvCreatedAt] `json:"created_at"`
 	// Filter exported Fees to the specified Program.
-	ProgramID param.Field[string] `json:"program_id"`
+	ProgramID   param.Field[string]    `json:"program_id"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
 func (r ExportNewParamsFeeCsv) MarshalJSON() (data []byte, err error) {
