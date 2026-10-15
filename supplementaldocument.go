@@ -36,7 +36,7 @@ func NewSupplementalDocumentService(opts ...option.RequestOption) (r *Supplement
 	return
 }
 
-// Create a supplemental document for an Entity
+// Create a Supplemental Document
 func (r *SupplementalDocumentService) New(ctx context.Context, body SupplementalDocumentNewParams, opts ...option.RequestOption) (res *EntitySupplementalDocument, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "entity_supplemental_documents"
@@ -44,7 +44,7 @@ func (r *SupplementalDocumentService) New(ctx context.Context, body Supplemental
 	return res, err
 }
 
-// List Entity Supplemental Document Submissions
+// List Supplemental Documents
 func (r *SupplementalDocumentService) List(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) (res *pagination.Page[EntitySupplementalDocument], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
@@ -62,7 +62,7 @@ func (r *SupplementalDocumentService) List(ctx context.Context, query Supplement
 	return res, nil
 }
 
-// List Entity Supplemental Document Submissions
+// List Supplemental Documents
 func (r *SupplementalDocumentService) ListAutoPaging(ctx context.Context, query SupplementalDocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[EntitySupplementalDocument] {
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
