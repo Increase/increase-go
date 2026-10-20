@@ -74,7 +74,9 @@ func (r *CardPaymentService) ListAutoPaging(ctx context.Context, query CardPayme
 }
 
 // Card Payments group together interactions related to a single card payment, such
-// as an authorization and its corresponding settlement.
+// as an authorization and its corresponding settlement. For more information, see
+// our guide on the
+// [Card Payment lifecycle](https://increase.com/documentation/card-payment-lifecycle).
 type CardPayment struct {
 	// The Card Payment identifier.
 	ID string `json:"id" api:"required"`
