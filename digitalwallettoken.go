@@ -103,9 +103,6 @@ type DigitalWalletToken struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Digital Wallet Token was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
-	// If the Digital Wallet Token was declined during provisioning, details about the
-	// decline.
-	Decline DigitalWalletTokenDecline `json:"decline" api:"required,nullable"`
 	// The device that was used to create the Digital Wallet Token.
 	Device DigitalWalletTokenDevice `json:"device" api:"required"`
 	// The redacted Dynamic Primary Account Number.
@@ -122,8 +119,9 @@ type DigitalWalletToken struct {
 	// `digital_wallet_token`.
 	Type DigitalWalletTokenType `json:"type" api:"required"`
 	// Updates to the Digital Wallet Token.
-	Updates []DigitalWalletTokenUpdate `json:"updates" api:"required"`
-	JSON    digitalWalletTokenJSON     `json:"-"`
+	Updates     []DigitalWalletTokenUpdate `json:"updates" api:"required"`
+	ExtraFields map[string]interface{}     `json:"-" api:"extrafields"`
+	JSON        digitalWalletTokenJSON     `json:"-"`
 }
 
 // digitalWalletTokenJSON contains the JSON metadata for the struct
@@ -134,7 +132,6 @@ type digitalWalletTokenJSON struct {
 	CardID                                  apijson.Field
 	Cardholder                              apijson.Field
 	CreatedAt                               apijson.Field
-	Decline                                 apijson.Field
 	Device                                  apijson.Field
 	DynamicPrimaryAccountNumber             apijson.Field
 	PrimaryAccountNumberReferenceIdentifier apijson.Field
@@ -176,53 +173,6 @@ func (r *DigitalWalletTokenCardholder) UnmarshalJSON(data []byte) (err error) {
 
 func (r digitalWalletTokenCardholderJSON) RawJSON() string {
 	return r.raw
-}
-
-// If the Digital Wallet Token was declined during provisioning, details about the
-// decline.
-type DigitalWalletTokenDecline struct {
-	// The reason the token provisioning was declined.
-	Reason DigitalWalletTokenDeclineReason `json:"reason" api:"required"`
-	JSON   digitalWalletTokenDeclineJSON   `json:"-"`
-}
-
-// digitalWalletTokenDeclineJSON contains the JSON metadata for the struct
-// [DigitalWalletTokenDecline]
-type digitalWalletTokenDeclineJSON struct {
-	Reason      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *DigitalWalletTokenDecline) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r digitalWalletTokenDeclineJSON) RawJSON() string {
-	return r.raw
-}
-
-// The reason the token provisioning was declined.
-type DigitalWalletTokenDeclineReason string
-
-const (
-	DigitalWalletTokenDeclineReasonCardNotActive                 DigitalWalletTokenDeclineReason = "card_not_active"
-	DigitalWalletTokenDeclineReasonNoVerificationMethod          DigitalWalletTokenDeclineReason = "no_verification_method"
-	DigitalWalletTokenDeclineReasonWebhookTimedOut               DigitalWalletTokenDeclineReason = "webhook_timed_out"
-	DigitalWalletTokenDeclineReasonWebhookDeclined               DigitalWalletTokenDeclineReason = "webhook_declined"
-	DigitalWalletTokenDeclineReasonIncorrectCardVerificationCode DigitalWalletTokenDeclineReason = "incorrect_card_verification_code"
-	DigitalWalletTokenDeclineReasonDeclinedByTokenRequestor      DigitalWalletTokenDeclineReason = "declined_by_token_requestor"
-	DigitalWalletTokenDeclineReasonGroupLocked                   DigitalWalletTokenDeclineReason = "group_locked"
-	DigitalWalletTokenDeclineReasonAccountClosed                 DigitalWalletTokenDeclineReason = "account_closed"
-	DigitalWalletTokenDeclineReasonEntityNotActive               DigitalWalletTokenDeclineReason = "entity_not_active"
-)
-
-func (r DigitalWalletTokenDeclineReason) IsKnown() bool {
-	switch r {
-	case DigitalWalletTokenDeclineReasonCardNotActive, DigitalWalletTokenDeclineReasonNoVerificationMethod, DigitalWalletTokenDeclineReasonWebhookTimedOut, DigitalWalletTokenDeclineReasonWebhookDeclined, DigitalWalletTokenDeclineReasonIncorrectCardVerificationCode, DigitalWalletTokenDeclineReasonDeclinedByTokenRequestor, DigitalWalletTokenDeclineReasonGroupLocked, DigitalWalletTokenDeclineReasonAccountClosed, DigitalWalletTokenDeclineReasonEntityNotActive:
-		return true
-	}
-	return false
 }
 
 // The device that was used to create the Digital Wallet Token.
@@ -314,13 +264,12 @@ const (
 	DigitalWalletTokenStatusInactive             DigitalWalletTokenStatus = "inactive"
 	DigitalWalletTokenStatusSuspended            DigitalWalletTokenStatus = "suspended"
 	DigitalWalletTokenStatusDeactivated          DigitalWalletTokenStatus = "deactivated"
-	DigitalWalletTokenStatusDeclined             DigitalWalletTokenStatus = "declined"
 	DigitalWalletTokenStatusPendingTransitioning DigitalWalletTokenStatus = "pending_transitioning"
 )
 
 func (r DigitalWalletTokenStatus) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenStatusActive, DigitalWalletTokenStatusInactive, DigitalWalletTokenStatusSuspended, DigitalWalletTokenStatusDeactivated, DigitalWalletTokenStatusDeclined, DigitalWalletTokenStatusPendingTransitioning:
+	case DigitalWalletTokenStatusActive, DigitalWalletTokenStatusInactive, DigitalWalletTokenStatusSuspended, DigitalWalletTokenStatusDeactivated, DigitalWalletTokenStatusPendingTransitioning:
 		return true
 	}
 	return false
@@ -395,13 +344,12 @@ const (
 	DigitalWalletTokenUpdatesStatusInactive             DigitalWalletTokenUpdatesStatus = "inactive"
 	DigitalWalletTokenUpdatesStatusSuspended            DigitalWalletTokenUpdatesStatus = "suspended"
 	DigitalWalletTokenUpdatesStatusDeactivated          DigitalWalletTokenUpdatesStatus = "deactivated"
-	DigitalWalletTokenUpdatesStatusDeclined             DigitalWalletTokenUpdatesStatus = "declined"
 	DigitalWalletTokenUpdatesStatusPendingTransitioning DigitalWalletTokenUpdatesStatus = "pending_transitioning"
 )
 
 func (r DigitalWalletTokenUpdatesStatus) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenUpdatesStatusActive, DigitalWalletTokenUpdatesStatusInactive, DigitalWalletTokenUpdatesStatusSuspended, DigitalWalletTokenUpdatesStatusDeactivated, DigitalWalletTokenUpdatesStatusDeclined, DigitalWalletTokenUpdatesStatusPendingTransitioning:
+	case DigitalWalletTokenUpdatesStatusActive, DigitalWalletTokenUpdatesStatusInactive, DigitalWalletTokenUpdatesStatusSuspended, DigitalWalletTokenUpdatesStatusDeactivated, DigitalWalletTokenUpdatesStatusPendingTransitioning:
 		return true
 	}
 	return false
