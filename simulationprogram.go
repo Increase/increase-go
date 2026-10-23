@@ -46,7 +46,7 @@ func (r *SimulationProgramService) New(ctx context.Context, body SimulationProgr
 type SimulationProgramNewParams struct {
 	// The name of the program being added.
 	Name param.Field[string] `json:"name" api:"required"`
-	// The bank for the program's accounts, defaults to First Internet Bank.
+	// The bank for the program's accounts, defaults to Increase Bank.
 	Bank param.Field[SimulationProgramNewParamsBank] `json:"bank"`
 	// The maximum extendable credit of the program being added.
 	LendingMaximumExtendableCredit param.Field[int64] `json:"lending_maximum_extendable_credit"`
@@ -61,7 +61,7 @@ func (r SimulationProgramNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The bank for the program's accounts, defaults to First Internet Bank.
+// The bank for the program's accounts, defaults to Increase Bank.
 type SimulationProgramNewParamsBank string
 
 const (

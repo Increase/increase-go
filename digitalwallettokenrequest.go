@@ -163,11 +163,12 @@ const (
 	DigitalWalletTokenRequestDeclinedReasonGroupLocked                   DigitalWalletTokenRequestDeclinedReason = "group_locked"
 	DigitalWalletTokenRequestDeclinedReasonAccountClosed                 DigitalWalletTokenRequestDeclinedReason = "account_closed"
 	DigitalWalletTokenRequestDeclinedReasonEntityNotActive               DigitalWalletTokenRequestDeclinedReason = "entity_not_active"
+	DigitalWalletTokenRequestDeclinedReasonCardExpirationMismatch        DigitalWalletTokenRequestDeclinedReason = "card_expiration_mismatch"
 )
 
 func (r DigitalWalletTokenRequestDeclinedReason) IsKnown() bool {
 	switch r {
-	case DigitalWalletTokenRequestDeclinedReasonCardNotActive, DigitalWalletTokenRequestDeclinedReasonNoVerificationMethod, DigitalWalletTokenRequestDeclinedReasonWebhookTimedOut, DigitalWalletTokenRequestDeclinedReasonWebhookDeclined, DigitalWalletTokenRequestDeclinedReasonIncorrectCardVerificationCode, DigitalWalletTokenRequestDeclinedReasonDeclinedByTokenRequestor, DigitalWalletTokenRequestDeclinedReasonGroupLocked, DigitalWalletTokenRequestDeclinedReasonAccountClosed, DigitalWalletTokenRequestDeclinedReasonEntityNotActive:
+	case DigitalWalletTokenRequestDeclinedReasonCardNotActive, DigitalWalletTokenRequestDeclinedReasonNoVerificationMethod, DigitalWalletTokenRequestDeclinedReasonWebhookTimedOut, DigitalWalletTokenRequestDeclinedReasonWebhookDeclined, DigitalWalletTokenRequestDeclinedReasonIncorrectCardVerificationCode, DigitalWalletTokenRequestDeclinedReasonDeclinedByTokenRequestor, DigitalWalletTokenRequestDeclinedReasonGroupLocked, DigitalWalletTokenRequestDeclinedReasonAccountClosed, DigitalWalletTokenRequestDeclinedReasonEntityNotActive, DigitalWalletTokenRequestDeclinedReasonCardExpirationMismatch:
 		return true
 	}
 	return false
