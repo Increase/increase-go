@@ -38,7 +38,8 @@ func NewPhysicalCardService(opts ...option.RequestOption) (r *PhysicalCardServic
 	return
 }
 
-// Create a Physical Card
+// Physical Cards start in the status `disabled`. Activate the card once it arrives
+// at the destination and the recipient confirms receipt.
 func (r *PhysicalCardService) New(ctx context.Context, body PhysicalCardNewParams, opts ...option.RequestOption) (res *PhysicalCard, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "physical_cards"
@@ -125,7 +126,7 @@ type PhysicalCard struct {
 	PhysicalCardProfileID string `json:"physical_card_profile_id" api:"required,nullable"`
 	// The details used to ship this physical card.
 	Shipment PhysicalCardShipment `json:"shipment" api:"required"`
-	// The status of the Physical Card.
+	// The status of the Physical Card. The initial status is `disabled`.
 	Status PhysicalCardStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card`.
@@ -427,7 +428,7 @@ func (r PhysicalCardShipmentTrackingUpdatesCategory) IsKnown() bool {
 	return false
 }
 
-// The status of the Physical Card.
+// The status of the Physical Card. The initial status is `disabled`.
 type PhysicalCardStatus string
 
 const (
