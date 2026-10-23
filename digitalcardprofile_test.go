@@ -30,10 +30,18 @@ func TestDigitalCardProfileNewWithOptionalParams(t *testing.T) {
 		BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
 		CardDescription:       increase.F("National Phonograph Card"),
 		Description:           increase.F("My Card Profile"),
-		ContactEmail:          increase.F("user@example.com"),
-		ContactName:           increase.F("National Phonograph Company"),
-		ContactPhone:          increase.F("+18885551212"),
-		ContactWebsite:        increase.F("https://example.com"),
+		ApplePay: increase.F(increase.DigitalCardProfileNewParamsApplePay{
+			AssociatedApplicationIdentifiers: increase.F([]increase.DigitalCardProfileNewParamsApplePayAssociatedApplicationIdentifier{{
+				Identifier: increase.F("210B9798AD.---aH0O-6L.8tjDQ-3.-K-h.8asJ.WN--u-kX-Q.l3VU-F.-i-5p54n-N"),
+			}}),
+			AssociatedStoreIdentifiers: increase.F([]increase.DigitalCardProfileNewParamsApplePayAssociatedStoreIdentifier{{
+				Identifier: increase.F("26"),
+			}}),
+		}),
+		ContactEmail:   increase.F("user@example.com"),
+		ContactName:    increase.F("National Phonograph Company"),
+		ContactPhone:   increase.F("+18885551212"),
+		ContactWebsite: increase.F("https://example.com"),
 		TextColor: increase.F(increase.DigitalCardProfileNewParamsTextColor{
 			Blue:  increase.F(int64(59)),
 			Green: increase.F(int64(43)),
@@ -138,7 +146,15 @@ func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"digital_card_profile_s3puplu90f04xhcwkiga",
 		increase.DigitalCardProfileCloneParams{
-			AppIconFileID:         increase.F("app_icon_file_id"),
+			AppIconFileID: increase.F("app_icon_file_id"),
+			ApplePay: increase.F(increase.DigitalCardProfileCloneParamsApplePay{
+				AssociatedApplicationIdentifiers: increase.F([]increase.DigitalCardProfileCloneParamsApplePayAssociatedApplicationIdentifier{{
+					Identifier: increase.F("210B9798AD.---aH0O-6L.8tjDQ-3.-K-h.8asJ.WN--u-kX-Q.l3VU-F.-i-5p54n-N"),
+				}}),
+				AssociatedStoreIdentifiers: increase.F([]increase.DigitalCardProfileCloneParamsApplePayAssociatedStoreIdentifier{{
+					Identifier: increase.F("26"),
+				}}),
+			}),
 			BackgroundImageFileID: increase.F("file_1ai913suu1zfn1pdetru"),
 			CardDescription:       increase.F("x"),
 			ContactEmail:          increase.F("dev@stainless.com"),
