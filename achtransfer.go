@@ -1254,8 +1254,8 @@ type ACHTransferNewParams struct {
 	// `PAYROLL`, and reversals must use `REVERSAL`.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
 	// The name by which the recipient knows you, sent in the company batch header. We
-	// recommend setting this on every transfer; if you do not, we fall back to the ACH
-	// company name configured on your account.
+	// recommend setting this on every transfer; if you do not, we fall back to the
+	// `statement_descriptor`.
 	CompanyName param.Field[string] `json:"company_name"`
 	// The type of entity that owns the receiver's account.
 	DestinationAccountHolder param.Field[ACHTransferNewParamsDestinationAccountHolder] `json:"destination_account_holder"`

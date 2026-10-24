@@ -113,6 +113,8 @@ type DigitalCardProfile struct {
 	ID string `json:"id" api:"required"`
 	// The identifier of the File containing the card's icon image.
 	AppIconFileID string `json:"app_icon_file_id" api:"required"`
+	// Apple Pay specific settings for the Card Profile.
+	ApplePay DigitalCardProfileApplePay `json:"apple_pay" api:"required,nullable"`
 	// The identifier of the File containing the card's front image.
 	BackgroundImageFileID string `json:"background_image_file_id" api:"required"`
 	// A user-facing description for the card itself.
@@ -151,6 +153,7 @@ type DigitalCardProfile struct {
 type digitalCardProfileJSON struct {
 	ID                    apijson.Field
 	AppIconFileID         apijson.Field
+	ApplePay              apijson.Field
 	BackgroundImageFileID apijson.Field
 	CardDescription       apijson.Field
 	ContactEmail          apijson.Field
@@ -172,6 +175,79 @@ func (r *DigitalCardProfile) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r digitalCardProfileJSON) RawJSON() string {
+	return r.raw
+}
+
+// Apple Pay specific settings for the Card Profile.
+type DigitalCardProfileApplePay struct {
+	// The applications associated with cards using this Card Profile.
+	AssociatedApplicationIdentifiers []DigitalCardProfileApplePayAssociatedApplicationIdentifier `json:"associated_application_identifiers" api:"required"`
+	// The App Store listings of the applications associated with cards using this Card
+	// Profile.
+	AssociatedStoreIdentifiers []DigitalCardProfileApplePayAssociatedStoreIdentifier `json:"associated_store_identifiers" api:"required"`
+	JSON                       digitalCardProfileApplePayJSON                        `json:"-"`
+}
+
+// digitalCardProfileApplePayJSON contains the JSON metadata for the struct
+// [DigitalCardProfileApplePay]
+type digitalCardProfileApplePayJSON struct {
+	AssociatedApplicationIdentifiers apijson.Field
+	AssociatedStoreIdentifiers       apijson.Field
+	raw                              string
+	ExtraFields                      map[string]apijson.Field
+}
+
+func (r *DigitalCardProfileApplePay) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalCardProfileApplePayJSON) RawJSON() string {
+	return r.raw
+}
+
+type DigitalCardProfileApplePayAssociatedApplicationIdentifier struct {
+	// The application identifier, composed of your Apple Developer Team ID and the
+	// application's bundle identifier, like `ABCDE12345.com.example.app`.
+	Identifier string                                                        `json:"identifier" api:"required"`
+	JSON       digitalCardProfileApplePayAssociatedApplicationIdentifierJSON `json:"-"`
+}
+
+// digitalCardProfileApplePayAssociatedApplicationIdentifierJSON contains the JSON
+// metadata for the struct
+// [DigitalCardProfileApplePayAssociatedApplicationIdentifier]
+type digitalCardProfileApplePayAssociatedApplicationIdentifierJSON struct {
+	Identifier  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalCardProfileApplePayAssociatedApplicationIdentifier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalCardProfileApplePayAssociatedApplicationIdentifierJSON) RawJSON() string {
+	return r.raw
+}
+
+type DigitalCardProfileApplePayAssociatedStoreIdentifier struct {
+	// The numeric App Store identifier.
+	Identifier string                                                  `json:"identifier" api:"required"`
+	JSON       digitalCardProfileApplePayAssociatedStoreIdentifierJSON `json:"-"`
+}
+
+// digitalCardProfileApplePayAssociatedStoreIdentifierJSON contains the JSON
+// metadata for the struct [DigitalCardProfileApplePayAssociatedStoreIdentifier]
+type digitalCardProfileApplePayAssociatedStoreIdentifierJSON struct {
+	Identifier  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalCardProfileApplePayAssociatedStoreIdentifier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalCardProfileApplePayAssociatedStoreIdentifierJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -247,6 +323,8 @@ type DigitalCardProfileNewParams struct {
 	CardDescription param.Field[string] `json:"card_description" api:"required"`
 	// A description you can use to identify the Card Profile.
 	Description param.Field[string] `json:"description" api:"required"`
+	// Apple Pay specific settings for the Card Profile.
+	ApplePay param.Field[DigitalCardProfileNewParamsApplePay] `json:"apple_pay"`
 	// An email address the user can contact to receive support for their card.
 	ContactEmail param.Field[string] `json:"contact_email" format:"email"`
 	// The name of your company or card program, shown to the user as who to contact
@@ -261,6 +339,38 @@ type DigitalCardProfileNewParams struct {
 }
 
 func (r DigitalCardProfileNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Apple Pay specific settings for the Card Profile.
+type DigitalCardProfileNewParamsApplePay struct {
+	// The applications to associate with cards using this Card Profile.
+	AssociatedApplicationIdentifiers param.Field[[]DigitalCardProfileNewParamsApplePayAssociatedApplicationIdentifier] `json:"associated_application_identifiers"`
+	// The App Store listings of the applications to associate with cards using this
+	// Card Profile.
+	AssociatedStoreIdentifiers param.Field[[]DigitalCardProfileNewParamsApplePayAssociatedStoreIdentifier] `json:"associated_store_identifiers"`
+}
+
+func (r DigitalCardProfileNewParamsApplePay) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type DigitalCardProfileNewParamsApplePayAssociatedApplicationIdentifier struct {
+	// The application identifier, composed of your Apple Developer Team ID and the
+	// application's bundle identifier, like `ABCDE12345.com.example.app`.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r DigitalCardProfileNewParamsApplePayAssociatedApplicationIdentifier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type DigitalCardProfileNewParamsApplePayAssociatedStoreIdentifier struct {
+	// The numeric App Store identifier.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r DigitalCardProfileNewParamsApplePayAssociatedStoreIdentifier) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -339,6 +449,9 @@ func (r DigitalCardProfileListParamsStatusIn) IsKnown() bool {
 type DigitalCardProfileCloneParams struct {
 	// The identifier of the File containing the card's icon image.
 	AppIconFileID param.Field[string] `json:"app_icon_file_id"`
+	// Apple Pay specific settings for the Card Profile. Each list you leave out is
+	// copied from the original Card Profile.
+	ApplePay param.Field[DigitalCardProfileCloneParamsApplePay] `json:"apple_pay"`
 	// The identifier of the File containing the card's front image.
 	BackgroundImageFileID param.Field[string] `json:"background_image_file_id"`
 	// A user-facing description for the card itself.
@@ -359,6 +472,39 @@ type DigitalCardProfileCloneParams struct {
 }
 
 func (r DigitalCardProfileCloneParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Apple Pay specific settings for the Card Profile. Each list you leave out is
+// copied from the original Card Profile.
+type DigitalCardProfileCloneParamsApplePay struct {
+	// The applications to associate with cards using this Card Profile.
+	AssociatedApplicationIdentifiers param.Field[[]DigitalCardProfileCloneParamsApplePayAssociatedApplicationIdentifier] `json:"associated_application_identifiers"`
+	// The App Store listings of the applications to associate with cards using this
+	// Card Profile.
+	AssociatedStoreIdentifiers param.Field[[]DigitalCardProfileCloneParamsApplePayAssociatedStoreIdentifier] `json:"associated_store_identifiers"`
+}
+
+func (r DigitalCardProfileCloneParamsApplePay) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type DigitalCardProfileCloneParamsApplePayAssociatedApplicationIdentifier struct {
+	// The application identifier, composed of your Apple Developer Team ID and the
+	// application's bundle identifier, like `ABCDE12345.com.example.app`.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r DigitalCardProfileCloneParamsApplePayAssociatedApplicationIdentifier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type DigitalCardProfileCloneParamsApplePayAssociatedStoreIdentifier struct {
+	// The numeric App Store identifier.
+	Identifier param.Field[string] `json:"identifier" api:"required"`
+}
+
+func (r DigitalCardProfileCloneParamsApplePayAssociatedStoreIdentifier) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
