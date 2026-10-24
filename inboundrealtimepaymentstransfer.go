@@ -102,6 +102,8 @@ type InboundRealTimePaymentsTransfer struct {
 	DebtorRoutingNumber string `json:"debtor_routing_number" api:"required"`
 	// If your transfer is declined, this will contain details of the decline.
 	Decline InboundRealTimePaymentsTransferDecline `json:"decline" api:"required,nullable"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// The lifecycle status of the transfer.
 	Status InboundRealTimePaymentsTransferStatus `json:"status" api:"required"`
 	// The Real-Time Payments network identification of the transfer.
@@ -130,6 +132,7 @@ type inboundRealTimePaymentsTransferJSON struct {
 	DebtorName                        apijson.Field
 	DebtorRoutingNumber               apijson.Field
 	Decline                           apijson.Field
+	EndToEndIdentification            apijson.Field
 	Status                            apijson.Field
 	TransactionIdentification         apijson.Field
 	Type                              apijson.Field
