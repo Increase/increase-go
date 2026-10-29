@@ -128,6 +128,9 @@ type WireDrawdownRequest struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
+	// If the debtor refuses the drawdown request, this will contain supplemental
+	// details.
+	Refusal WireDrawdownRequestRefusal `json:"refusal" api:"required,nullable"`
 	// The lifecycle status of the drawdown request.
 	Status WireDrawdownRequestStatus `json:"status" api:"required"`
 	// After the drawdown request is submitted to Fedwire, this will contain
@@ -165,6 +168,7 @@ type wireDrawdownRequestJSON struct {
 	EndToEndIdentification             apijson.Field
 	FulfillmentInboundWireTransferID   apijson.Field
 	IdempotencyKey                     apijson.Field
+	Refusal                            apijson.Field
 	Status                             apijson.Field
 	Submission                         apijson.Field
 	Type                               apijson.Field
@@ -260,6 +264,58 @@ func (r *WireDrawdownRequestDebtorAddress) UnmarshalJSON(data []byte) (err error
 
 func (r wireDrawdownRequestDebtorAddressJSON) RawJSON() string {
 	return r.raw
+}
+
+// If the debtor refuses the drawdown request, this will contain supplemental
+// details.
+type WireDrawdownRequestRefusal struct {
+	// Additional information about the refusal provided by the debtor bank. This is
+	// typically present when the `refusal_reason_code` is `narrative`.
+	RefusalReasonAdditionalInformation string `json:"refusal_reason_additional_information" api:"required,nullable"`
+	// The reason the wire drawdown request was refused as provided by the debtor bank.
+	RefusalReasonCode WireDrawdownRequestRefusalRefusalReasonCode `json:"refusal_reason_code" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the wire drawdown request was refused.
+	RefusedAt time.Time                      `json:"refused_at" api:"required" format:"date-time"`
+	JSON      wireDrawdownRequestRefusalJSON `json:"-"`
+}
+
+// wireDrawdownRequestRefusalJSON contains the JSON metadata for the struct
+// [WireDrawdownRequestRefusal]
+type wireDrawdownRequestRefusalJSON struct {
+	RefusalReasonAdditionalInformation apijson.Field
+	RefusalReasonCode                  apijson.Field
+	RefusedAt                          apijson.Field
+	raw                                string
+	ExtraFields                        map[string]apijson.Field
+}
+
+func (r *WireDrawdownRequestRefusal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r wireDrawdownRequestRefusalJSON) RawJSON() string {
+	return r.raw
+}
+
+// The reason the wire drawdown request was refused as provided by the debtor bank.
+type WireDrawdownRequestRefusalRefusalReasonCode string
+
+const (
+	WireDrawdownRequestRefusalRefusalReasonCodeInvalidDebtorAccountNumber  WireDrawdownRequestRefusalRefusalReasonCode = "invalid_debtor_account_number"
+	WireDrawdownRequestRefusalRefusalReasonCodeTransactionForbidden        WireDrawdownRequestRefusalRefusalReasonCode = "transaction_forbidden"
+	WireDrawdownRequestRefusalRefusalReasonCodeUnsuccessfulDirectDebit     WireDrawdownRequestRefusalRefusalReasonCode = "unsuccessful_direct_debit"
+	WireDrawdownRequestRefusalRefusalReasonCodeInconsistentWithEndCustomer WireDrawdownRequestRefusalRefusalReasonCode = "inconsistent_with_end_customer"
+	WireDrawdownRequestRefusalRefusalReasonCodeNarrative                   WireDrawdownRequestRefusalRefusalReasonCode = "narrative"
+	WireDrawdownRequestRefusalRefusalReasonCodeOther                       WireDrawdownRequestRefusalRefusalReasonCode = "other"
+)
+
+func (r WireDrawdownRequestRefusalRefusalReasonCode) IsKnown() bool {
+	switch r {
+	case WireDrawdownRequestRefusalRefusalReasonCodeInvalidDebtorAccountNumber, WireDrawdownRequestRefusalRefusalReasonCodeTransactionForbidden, WireDrawdownRequestRefusalRefusalReasonCodeUnsuccessfulDirectDebit, WireDrawdownRequestRefusalRefusalReasonCodeInconsistentWithEndCustomer, WireDrawdownRequestRefusalRefusalReasonCodeNarrative, WireDrawdownRequestRefusalRefusalReasonCodeOther:
+		return true
+	}
+	return false
 }
 
 // The lifecycle status of the drawdown request.

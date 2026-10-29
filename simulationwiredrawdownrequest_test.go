@@ -13,7 +13,7 @@ import (
 	"github.com/Increase/increase-go/option"
 )
 
-func TestSimulationWireDrawdownRequestRefuse(t *testing.T) {
+func TestSimulationWireDrawdownRequestRefuseWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,14 @@ func TestSimulationWireDrawdownRequestRefuse(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Simulations.WireDrawdownRequests.Refuse(context.TODO(), "wire_drawdown_request_q6lmocus3glo0lr2bfv3")
+	_, err := client.Simulations.WireDrawdownRequests.Refuse(
+		context.TODO(),
+		"wire_drawdown_request_q6lmocus3glo0lr2bfv3",
+		increase.SimulationWireDrawdownRequestRefuseParams{
+			RefusalReasonAdditionalInformation: increase.F("x"),
+			RefusalReasonCode:                  increase.F(increase.SimulationWireDrawdownRequestRefuseParamsRefusalReasonCodeInvalidDebtorAccountNumber),
+		},
+	)
 	if err != nil {
 		var apierr *increase.Error
 		if errors.As(err, &apierr) {

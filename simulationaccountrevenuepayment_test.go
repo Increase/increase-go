@@ -28,7 +28,7 @@ func TestSimulationAccountRevenuePaymentNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Simulations.AccountRevenuePayments.New(context.TODO(), increase.SimulationAccountRevenuePaymentNewParams{
 		AccountID:          increase.F("account_in71c4amph0vgo2qllky"),
-		Amount:             increase.F(int64(1000)),
+		Amount:             increase.F(int64(100)),
 		AccruedOnAccountID: increase.F("accrued_on_account_id"),
 		PeriodEnd:          increase.F(time.Now()),
 		PeriodStart:        increase.F(time.Now()),
