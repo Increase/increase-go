@@ -29,7 +29,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 	_, err := client.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
 		AccountID:           increase.F("account_in71c4amph0vgo2qllky"),
 		Amount:              increase.F(int64(100)),
-		StatementDescriptor: increase.F("New ACH transfer"),
+		StatementDescriptor: increase.F("INVOICE 2468"),
 		AccountNumber:       increase.F("987654321"),
 		Addenda: increase.F(increase.ACHTransferNewParamsAddenda{
 			Category: increase.F(increase.ACHTransferNewParamsAddendaCategoryFreeform),
@@ -48,12 +48,12 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		CompanyDescriptiveDate:   increase.F("J!"),
 		CompanyDiscretionaryData: increase.F("J!"),
 		CompanyEntryDescription:  increase.F("J!"),
-		CompanyName:              increase.F("company_name"),
+		CompanyName:              increase.F("Phonographs Inc"),
 		DestinationAccountHolder: increase.F(increase.ACHTransferNewParamsDestinationAccountHolderBusiness),
 		ExternalAccountID:        increase.F("external_account_id"),
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
 		IndividualID:             increase.F("individual_id"),
-		IndividualName:           increase.F("individual_name"),
+		IndividualName:           increase.F("Ian Crease"),
 		PreferredEffectiveDate: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDate{
 			Date:               increase.F(time.Now()),
 			SettlementSchedule: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleSameDay),
