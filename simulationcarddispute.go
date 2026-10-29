@@ -87,6 +87,9 @@ type SimulationCardDisputeActionParamsVisa struct {
 	// The parameters for accepting the chargeback. Required if and only if `action` is
 	// `accept_chargeback`.
 	AcceptChargeback param.Field[SimulationCardDisputeActionParamsVisaAcceptChargeback] `json:"accept_chargeback"`
+	// The parameters for accepting the user prearbitration. Required if and only if
+	// `action` is `accept_user_prearbitration`.
+	AcceptUserPrearbitration param.Field[SimulationCardDisputeActionParamsVisaAcceptUserPrearbitration] `json:"accept_user_prearbitration"`
 	// The parameters for accepting the user submission. Required if and only if
 	// `action` is `accept_user_submission`.
 	AcceptUserSubmission param.Field[SimulationCardDisputeActionParamsVisaAcceptUserSubmission] `json:"accept_user_submission"`
@@ -129,6 +132,7 @@ type SimulationCardDisputeActionParamsVisaAction string
 
 const (
 	SimulationCardDisputeActionParamsVisaActionAcceptChargeback              SimulationCardDisputeActionParamsVisaAction = "accept_chargeback"
+	SimulationCardDisputeActionParamsVisaActionAcceptUserPrearbitration      SimulationCardDisputeActionParamsVisaAction = "accept_user_prearbitration"
 	SimulationCardDisputeActionParamsVisaActionAcceptUserSubmission          SimulationCardDisputeActionParamsVisaAction = "accept_user_submission"
 	SimulationCardDisputeActionParamsVisaActionDeclineUserPrearbitration     SimulationCardDisputeActionParamsVisaAction = "decline_user_prearbitration"
 	SimulationCardDisputeActionParamsVisaActionReceiveMerchantPrearbitration SimulationCardDisputeActionParamsVisaAction = "receive_merchant_prearbitration"
@@ -143,7 +147,7 @@ const (
 
 func (r SimulationCardDisputeActionParamsVisaAction) IsKnown() bool {
 	switch r {
-	case SimulationCardDisputeActionParamsVisaActionAcceptChargeback, SimulationCardDisputeActionParamsVisaActionAcceptUserSubmission, SimulationCardDisputeActionParamsVisaActionDeclineUserPrearbitration, SimulationCardDisputeActionParamsVisaActionReceiveMerchantPrearbitration, SimulationCardDisputeActionParamsVisaActionReject, SimulationCardDisputeActionParamsVisaActionRepresent, SimulationCardDisputeActionParamsVisaActionRequestFurtherInformation, SimulationCardDisputeActionParamsVisaActionTimeOutChargeback, SimulationCardDisputeActionParamsVisaActionTimeOutMerchantPrearbitration, SimulationCardDisputeActionParamsVisaActionTimeOutRepresentment, SimulationCardDisputeActionParamsVisaActionTimeOutUserPrearbitration:
+	case SimulationCardDisputeActionParamsVisaActionAcceptChargeback, SimulationCardDisputeActionParamsVisaActionAcceptUserPrearbitration, SimulationCardDisputeActionParamsVisaActionAcceptUserSubmission, SimulationCardDisputeActionParamsVisaActionDeclineUserPrearbitration, SimulationCardDisputeActionParamsVisaActionReceiveMerchantPrearbitration, SimulationCardDisputeActionParamsVisaActionReject, SimulationCardDisputeActionParamsVisaActionRepresent, SimulationCardDisputeActionParamsVisaActionRequestFurtherInformation, SimulationCardDisputeActionParamsVisaActionTimeOutChargeback, SimulationCardDisputeActionParamsVisaActionTimeOutMerchantPrearbitration, SimulationCardDisputeActionParamsVisaActionTimeOutRepresentment, SimulationCardDisputeActionParamsVisaActionTimeOutUserPrearbitration:
 		return true
 	}
 	return false
@@ -155,6 +159,15 @@ type SimulationCardDisputeActionParamsVisaAcceptChargeback struct {
 }
 
 func (r SimulationCardDisputeActionParamsVisaAcceptChargeback) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The parameters for accepting the user prearbitration. Required if and only if
+// `action` is `accept_user_prearbitration`.
+type SimulationCardDisputeActionParamsVisaAcceptUserPrearbitration struct {
+}
+
+func (r SimulationCardDisputeActionParamsVisaAcceptUserPrearbitration) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
