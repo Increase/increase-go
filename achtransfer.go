@@ -200,7 +200,7 @@ type ACHTransfer struct {
 	// to use for the transfer.
 	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code" api:"required"`
 	// The descriptor that will show on the recipient's bank statement.
-	StatementDescriptor string `json:"statement_descriptor" api:"required"`
+	StatementDescriptor string `json:"statement_descriptor" api:"required,nullable"`
 	// The lifecycle status of the transfer.
 	Status ACHTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to FedACH, this will contain supplemental
