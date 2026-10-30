@@ -620,48 +620,6 @@ Methods:
 - <code title="get /real_time_decisions/{real_time_decision_id}">client.RealTimeDecisions.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimeDecisionService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, realTimeDecisionID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimeDecision">RealTimeDecision</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /real_time_decisions/{real_time_decision_id}/action">client.RealTimeDecisions.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimeDecisionService.Action">Action</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, realTimeDecisionID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimeDecisionActionParams">RealTimeDecisionActionParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimeDecision">RealTimeDecision</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-# Groups
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Group">Group</a>
-
-Methods:
-
-- <code title="get /groups/current">client.Groups.<a href="https://pkg.go.dev/github.com/Increase/increase-go#GroupService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Group">Group</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
-# OAuthApplications
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplication">OAuthApplication</a>
-
-Methods:
-
-- <code title="get /oauth_applications/{oauth_application_id}">client.OAuthApplications.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplicationService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, oauthApplicationID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplication">OAuthApplication</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code title="get /oauth_applications">client.OAuthApplications.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplicationService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplicationListParams">OAuthApplicationListParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthApplication">OAuthApplication</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
-# OAuthConnections
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthConnection">OAuthConnection</a>
-
-Methods:
-
-- <code title="get /oauth_connections/{oauth_connection_id}">client.OAuthConnections.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthConnectionService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, oauthConnectionID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthConnection">OAuthConnection</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code title="get /oauth_connections">client.OAuthConnections.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthConnectionService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthConnectionListParams">OAuthConnectionListParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthConnection">OAuthConnection</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
-# OAuthTokens
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthToken">OAuthToken</a>
-
-Methods:
-
-- <code title="post /oauth/tokens">client.OAuthTokens.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthTokenService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthTokenNewParams">OAuthTokenNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#OAuthToken">OAuthToken</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
 # IntrafiAccountEnrollments
 
 Response Types:
