@@ -135,13 +135,22 @@ type ACHTransfer struct {
 	// If your account requires approvals for transfers and the transfer was not
 	// approved, this will contain details of the cancellation.
 	Cancellation ACHTransferCancellation `json:"cancellation" api:"required,nullable"`
-	// The description of the date of the transfer.
+	// A description of the transfer date (typically `YYMMDD`), sent in the company
+	// batch header. This value is informational and does not affect funds movement,
+	// settlement timing, or returns.
 	CompanyDescriptiveDate string `json:"company_descriptive_date" api:"required,nullable"`
-	// The data you chose to associate with the transfer.
+	// Custom data sent in the company batch header, meant as metadata for the
+	// originator. This value is informational and does not affect funds movement,
+	// settlement timing, or returns.
 	CompanyDiscretionaryData string `json:"company_discretionary_data" api:"required,nullable"`
-	// The description of the transfer you set to be shown to the recipient.
+	// A short description sent in the company batch header, meant to provide the
+	// receiver with a reason for the transfer. Many receivers do not surface this data
+	// on the receiver's bank statement.
 	CompanyEntryDescription string `json:"company_entry_description" api:"required,nullable"`
-	// The company ID associated with the transfer.
+	// The Company ID sent in the batch header, which identifies the originator to the
+	// receiving bank. Businesses use this value to allowlist the companies permitted
+	// to debit their accounts. This value is configured by Increase and will be the
+	// same for all your transfers.
 	CompanyID string `json:"company_id" api:"required"`
 	// The name by which the recipient knows you.
 	CompanyName string `json:"company_name" api:"required,nullable"`
@@ -182,10 +191,8 @@ type ACHTransfer struct {
 	// [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals)
 	// by someone else in your organization.
 	PendingTransactionID string `json:"pending_transaction_id" api:"required,nullable"`
-	// Configuration for how the effective date of the transfer will be set. This
-	// determines same-day vs future-dated settlement timing. If not set, defaults to a
-	// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
-	// must be set.
+	// Configuration for how the effective date of the transfer was set. This
+	// determines same-day vs future-dated settlement timing.
 	PreferredEffectiveDate ACHTransferPreferredEffectiveDate `json:"preferred_effective_date" api:"required"`
 	// If your transfer is returned, this will contain details of the return.
 	Return ACHTransferReturn `json:"return" api:"required,nullable"`
@@ -200,7 +207,7 @@ type ACHTransfer struct {
 	// to use for the transfer.
 	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code" api:"required"`
 	// The descriptor that will show on the recipient's bank statement.
-	StatementDescriptor string `json:"statement_descriptor" api:"required"`
+	StatementDescriptor string `json:"statement_descriptor" api:"required,nullable"`
 	// The lifecycle status of the transfer.
 	Status ACHTransferStatus `json:"status" api:"required"`
 	// After the transfer is submitted to FedACH, this will contain supplemental
@@ -876,10 +883,8 @@ func (r ACHTransferNotificationsOfChangeCorrectedAccountFunding) IsKnown() bool 
 	return false
 }
 
-// Configuration for how the effective date of the transfer will be set. This
-// determines same-day vs future-dated settlement timing. If not set, defaults to a
-// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
-// must be set.
+// Configuration for how the effective date of the transfer was set. This
+// determines same-day vs future-dated settlement timing.
 type ACHTransferPreferredEffectiveDate struct {
 	// A specific date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format to
 	// use as the effective date when submitting this transfer.

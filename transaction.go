@@ -611,7 +611,7 @@ type TransactionSourceACHTransferIntention struct {
 	// destination account.
 	RoutingNumber string `json:"routing_number" api:"required"`
 	// A description set when the ACH Transfer was created.
-	StatementDescriptor string `json:"statement_descriptor" api:"required"`
+	StatementDescriptor string `json:"statement_descriptor" api:"required,nullable"`
 	// The identifier of the ACH Transfer that led to this Transaction.
 	TransferID  string                                    `json:"transfer_id" api:"required"`
 	ExtraFields map[string]interface{}                    `json:"-" api:"extrafields"`
