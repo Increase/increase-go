@@ -490,16 +490,19 @@ func (r exportEntityCsvJSON) RawJSON() string {
 type ExportFeeCsv struct {
 	// Filter fees by their created date. The time range must not include any fees on
 	// an open fee statement.
-	CreatedAt   ExportFeeCsvCreatedAt  `json:"created_at" api:"required,nullable"`
-	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
-	JSON        exportFeeCsvJSON       `json:"-"`
+	CreatedAt ExportFeeCsvCreatedAt `json:"created_at" api:"required,nullable"`
+	// Filter fees by the UTC start date of their fee statement's period, such as
+	// `2026-08-01`.
+	FeeStatementPeriodStart time.Time        `json:"fee_statement_period_start" api:"required,nullable" format:"date"`
+	JSON                    exportFeeCsvJSON `json:"-"`
 }
 
 // exportFeeCsvJSON contains the JSON metadata for the struct [ExportFeeCsv]
 type exportFeeCsvJSON struct {
-	CreatedAt   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	CreatedAt               apijson.Field
+	FeeStatementPeriodStart apijson.Field
+	raw                     string
+	ExtraFields             map[string]apijson.Field
 }
 
 func (r *ExportFeeCsv) UnmarshalJSON(data []byte) (err error) {
@@ -973,18 +976,27 @@ func (r ExportNewParamsEntityCsv) MarshalJSON() (data []byte, err error) {
 
 // Options for the created export. Required if `category` is equal to `fee_csv`.
 type ExportNewParamsFeeCsv struct {
-	// Filter results by time range on the `created_at` attribute.
+	// Filter exported Fees by the time they were created. This suits historical
+	// exports across many fee statements. To get all of the Fees for a given fee
+	// statement period, we recommend using `fee_statement_period_start` instead. The
+	// time range must not include any Fees on an open fee statement.
 	CreatedAt param.Field[ExportNewParamsFeeCsvCreatedAt] `json:"created_at"`
+	// Filter exported Fees to the fee statements whose period starts on this UTC date,
+	// such as `2026-08-01`. Use this filter to export all of the Fees on a fee
+	// statement. The matching fee statements must be closed.
+	FeeStatementPeriodStart param.Field[time.Time] `json:"fee_statement_period_start" format:"date"`
 	// Filter exported Fees to the specified Program.
-	ProgramID   param.Field[string]    `json:"program_id"`
-	ExtraFields map[string]interface{} `json:"-,extras"`
+	ProgramID param.Field[string] `json:"program_id"`
 }
 
 func (r ExportNewParamsFeeCsv) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Filter results by time range on the `created_at` attribute.
+// Filter exported Fees by the time they were created. This suits historical
+// exports across many fee statements. To get all of the Fees for a given fee
+// statement period, we recommend using `fee_statement_period_start` instead. The
+// time range must not include any Fees on an open fee statement.
 type ExportNewParamsFeeCsvCreatedAt struct {
 	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 	// timestamp.

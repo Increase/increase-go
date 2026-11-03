@@ -504,7 +504,7 @@ type CheckTransferPhysicalCheck struct {
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note" api:"required,nullable"`
 	// The payer of the check. This will be printed on the top-left portion of the
-	// check and defaults to the return address if unspecified.
+	// check.
 	Payer []CheckTransferPhysicalCheckPayer `json:"payer" api:"required"`
 	// The identifier of the Physical Check Batch that this check is a part of.
 	PhysicalCheckBatchID string `json:"physical_check_batch_id" api:"required,nullable"`

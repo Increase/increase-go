@@ -437,6 +437,7 @@ type CardDisputeVisaNetworkEvent struct {
 	// submitted Visa Card Dispute Network Event, which represents that the user's
 	// request to withdraw the dispute has been submitted to the network.
 	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted" api:"nullable"`
+	ExtraFields             map[string]interface{}                              `json:"-" api:"extrafields"`
 	JSON                    cardDisputeVisaNetworkEventJSON                     `json:"-"`
 }
 
