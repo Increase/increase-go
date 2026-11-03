@@ -139,6 +139,8 @@ type RealTimePaymentsTransfer struct {
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
 	DebtorName string `json:"debtor_name" api:"required,nullable"`
+	// A free-form reference string set by the sender, to help identify the transfer.
+	EndToEndIdentification string `json:"end_to_end_identification" api:"required,nullable"`
 	// The identifier of the External Account the transfer was made to, if any.
 	ExternalAccountID string `json:"external_account_id" api:"required,nullable"`
 	// The idempotency key you chose for this object. This value is unique across
@@ -201,6 +203,7 @@ type realTimePaymentsTransferJSON struct {
 	CreditorName                               apijson.Field
 	Currency                                   apijson.Field
 	DebtorName                                 apijson.Field
+	EndToEndIdentification                     apijson.Field
 	ExternalAccountID                          apijson.Field
 	IdempotencyKey                             apijson.Field
 	InboundRealTimePaymentsRequestForPaymentID apijson.Field
