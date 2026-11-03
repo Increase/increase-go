@@ -62,7 +62,8 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 				OnOrAfter:  increase.F(time.Now()),
 				OnOrBefore: increase.F(time.Now()),
 			}),
-			ProgramID: increase.F("program_id"),
+			FeeStatementPeriodStart: increase.F(time.Now()),
+			ProgramID:               increase.F("program_id"),
 		}),
 		FundingInstructions: increase.F(increase.ExportNewParamsFundingInstructions{
 			AccountNumberID: increase.F("account_number_id"),
