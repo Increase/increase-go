@@ -504,14 +504,14 @@ type CheckTransferPhysicalCheck struct {
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note" api:"required,nullable"`
 	// The payer of the check. This will be printed on the top-left portion of the
-	// check and defaults to the return address if unspecified.
+	// check.
 	Payer []CheckTransferPhysicalCheckPayer `json:"payer" api:"required"`
 	// The identifier of the Physical Check Batch that this check is a part of.
 	PhysicalCheckBatchID string `json:"physical_check_batch_id" api:"required,nullable"`
 	// The name that will be printed on the check.
 	RecipientName string `json:"recipient_name" api:"required"`
 	// The return address to be printed on the check.
-	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required,nullable"`
+	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required"`
 	// A custom name printed above the Increase-managed return address.
 	ReturnAddressName string `json:"return_address_name" api:"required,nullable"`
 	// The shipping method for the check.
@@ -556,9 +556,9 @@ func (r checkTransferPhysicalCheckJSON) RawJSON() string {
 // Details for where Increase will mail the check.
 type CheckTransferPhysicalCheckMailingAddress struct {
 	// The city of the check's destination.
-	City string `json:"city" api:"required,nullable"`
+	City string `json:"city" api:"required"`
 	// The street address of the check's destination.
-	Line1 string `json:"line1" api:"required,nullable"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address of the check's destination.
 	Line2 string `json:"line2" api:"required,nullable"`
 	// The name component of the check's mailing address.
@@ -567,9 +567,9 @@ type CheckTransferPhysicalCheckMailingAddress struct {
 	// address. Only used for FedEx overnight shipping.
 	Phone string `json:"phone" api:"required,nullable"`
 	// The postal code of the check's destination.
-	PostalCode string `json:"postal_code" api:"required,nullable"`
+	PostalCode string `json:"postal_code" api:"required"`
 	// The state of the check's destination.
-	State string                                       `json:"state" api:"required,nullable"`
+	State string                                       `json:"state" api:"required"`
 	JSON  checkTransferPhysicalCheckMailingAddressJSON `json:"-"`
 }
 
@@ -620,20 +620,20 @@ func (r checkTransferPhysicalCheckPayerJSON) RawJSON() string {
 // The return address to be printed on the check.
 type CheckTransferPhysicalCheckReturnAddress struct {
 	// The city of the check's destination.
-	City string `json:"city" api:"required,nullable"`
+	City string `json:"city" api:"required"`
 	// The street address of the check's destination.
-	Line1 string `json:"line1" api:"required,nullable"`
+	Line1 string `json:"line1" api:"required"`
 	// The second line of the address of the check's destination.
 	Line2 string `json:"line2" api:"required,nullable"`
 	// The name component of the check's return address.
-	Name string `json:"name" api:"required,nullable"`
+	Name string `json:"name" api:"required"`
 	// The shipper's phone number to be used in case of delivery issues. Only used for
 	// FedEx overnight shipping.
 	Phone string `json:"phone" api:"required,nullable"`
 	// The postal code of the check's destination.
-	PostalCode string `json:"postal_code" api:"required,nullable"`
+	PostalCode string `json:"postal_code" api:"required"`
 	// The state of the check's destination.
-	State string                                      `json:"state" api:"required,nullable"`
+	State string                                      `json:"state" api:"required"`
 	JSON  checkTransferPhysicalCheckReturnAddressJSON `json:"-"`
 }
 
