@@ -316,6 +316,10 @@ Methods:
 
 # RealTimePaymentsTransfers
 
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimePaymentsTransfer">RealTimePaymentsTransfer</a>
+
 Methods:
 
 - <code title="post /real_time_payments_transfers">client.RealTimePaymentsTransfers.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimePaymentsTransferService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimePaymentsTransferNewParams">RealTimePaymentsTransferNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimePaymentsTransfer">RealTimePaymentsTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
@@ -329,7 +333,6 @@ Methods:
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#InboundRealTimePaymentsTransfer">InboundRealTimePaymentsTransfer</a>
-- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#RealTimePaymentsTransfer">RealTimePaymentsTransfer</a>
 
 Methods:
 
