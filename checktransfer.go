@@ -562,7 +562,7 @@ type CheckTransferPhysicalCheckMailingAddress struct {
 	// The second line of the address of the check's destination.
 	Line2 string `json:"line2" api:"required,nullable"`
 	// The name component of the check's mailing address.
-	Name string `json:"name" api:"required,nullable"`
+	Name string `json:"name" api:"required"`
 	// The phone number to be used in case of delivery issues at the check's mailing
 	// address. Only used for FedEx overnight shipping.
 	Phone string `json:"phone" api:"required,nullable"`
