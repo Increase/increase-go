@@ -37,13 +37,16 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			MailingAddress: increase.F(increase.CheckTransferNewParamsPhysicalCheckMailingAddress{
 				City:       increase.F("New York"),
 				Line1:      increase.F("33 Liberty Street"),
+				Name:       increase.F("Ian Crease"),
 				PostalCode: increase.F("10045"),
 				State:      increase.F("NY"),
 				Line2:      increase.F("line2"),
-				Name:       increase.F("Ian Crease"),
 				Phone:      increase.F("+16505046304"),
 			}),
 			Memo: increase.F("Check payment"),
+			Payee: increase.F([]increase.CheckTransferNewParamsPhysicalCheckPayee{{
+				Contents: increase.F("Ian Crease"),
+			}}),
 			Payer: increase.F([]increase.CheckTransferNewParamsPhysicalCheckPayer{{
 				Contents: increase.F("National Phonograph Company"),
 			}, {
@@ -51,7 +54,6 @@ func TestCheckTransferNewWithOptionalParams(t *testing.T) {
 			}, {
 				Contents: increase.F("New York, NY 10045"),
 			}}),
-			RecipientName:           increase.F("Ian Crease"),
 			AttachmentFileID:        increase.F("attachment_file_id"),
 			CheckVoucherImageFileID: increase.F("check_voucher_image_file_id"),
 			Note:                    increase.F("note"),
