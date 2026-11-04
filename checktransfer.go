@@ -503,13 +503,14 @@ type CheckTransferPhysicalCheck struct {
 	Memo string `json:"memo" api:"required,nullable"`
 	// The descriptor that will be printed on the letter included with the check.
 	Note string `json:"note" api:"required,nullable"`
+	// The payee of the check. This will be printed in the Pay to the Order Of portion
+	// of the check.
+	Payee []CheckTransferPhysicalCheckPayee `json:"payee" api:"required"`
 	// The payer of the check. This will be printed on the top-left portion of the
 	// check.
 	Payer []CheckTransferPhysicalCheckPayer `json:"payer" api:"required"`
 	// The identifier of the Physical Check Batch that this check is a part of.
 	PhysicalCheckBatchID string `json:"physical_check_batch_id" api:"required,nullable"`
-	// The name that will be printed on the check.
-	RecipientName string `json:"recipient_name" api:"required"`
 	// The return address to be printed on the check.
 	ReturnAddress CheckTransferPhysicalCheckReturnAddress `json:"return_address" api:"required"`
 	// A custom name printed above the Increase-managed return address.
@@ -533,9 +534,9 @@ type checkTransferPhysicalCheckJSON struct {
 	MailingAddress          apijson.Field
 	Memo                    apijson.Field
 	Note                    apijson.Field
+	Payee                   apijson.Field
 	Payer                   apijson.Field
 	PhysicalCheckBatchID    apijson.Field
-	RecipientName           apijson.Field
 	ReturnAddress           apijson.Field
 	ReturnAddressName       apijson.Field
 	ShippingMethod          apijson.Field
@@ -592,6 +593,28 @@ func (r *CheckTransferPhysicalCheckMailingAddress) UnmarshalJSON(data []byte) (e
 }
 
 func (r checkTransferPhysicalCheckMailingAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+type CheckTransferPhysicalCheckPayee struct {
+	// The contents of the line.
+	Contents string                              `json:"contents" api:"required"`
+	JSON     checkTransferPhysicalCheckPayeeJSON `json:"-"`
+}
+
+// checkTransferPhysicalCheckPayeeJSON contains the JSON metadata for the struct
+// [CheckTransferPhysicalCheckPayee]
+type checkTransferPhysicalCheckPayeeJSON struct {
+	Contents    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CheckTransferPhysicalCheckPayee) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r checkTransferPhysicalCheckPayeeJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1050,12 +1073,14 @@ type CheckTransferNewParamsPhysicalCheck struct {
 	MailingAddress param.Field[CheckTransferNewParamsPhysicalCheckMailingAddress] `json:"mailing_address" api:"required"`
 	// The descriptor that will be printed on the memo field on the check.
 	Memo param.Field[string] `json:"memo" api:"required"`
+	// The payee of the check. This will be printed in the Pay to the Order Of portion
+	// of the check. This should be an array of up to 4 elements, each of which
+	// represents a line of the payee.
+	Payee param.Field[[]CheckTransferNewParamsPhysicalCheckPayee] `json:"payee" api:"required"`
 	// The payer of the check. This will be printed on the top-left portion of the
 	// check. This should be an array of up to 4 elements, each of which represents a
 	// line of the payer.
 	Payer param.Field[[]CheckTransferNewParamsPhysicalCheckPayer] `json:"payer" api:"required"`
-	// The name that will be printed on the check in the 'To:' field.
-	RecipientName param.Field[string] `json:"recipient_name" api:"required"`
 	// The ID of a File to be attached to the check. This must have
 	// `purpose: check_attachment`. For details on pricing and restrictions, see
 	// https://increase.com/documentation/originating-checks#printing-checks .
@@ -1098,15 +1123,14 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 	City param.Field[string] `json:"city" api:"required"`
 	// The first line of the address component of the check's destination address.
 	Line1 param.Field[string] `json:"line1" api:"required"`
+	// The name component of the check's destination address.
+	Name param.Field[string] `json:"name" api:"required"`
 	// The postal code component of the check's destination address.
 	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The US state component of the check's destination address.
 	State param.Field[string] `json:"state" api:"required"`
 	// The second line of the address component of the check's destination address.
 	Line2 param.Field[string] `json:"line2"`
-	// The name component of the check's destination address. Defaults to the provided
-	// `recipient_name` parameter if `name` is not provided.
-	Name param.Field[string] `json:"name"`
 	// The phone number to associate with the check's destination address. The phone
 	// number is only used when `shipping_method` is `fedex_overnight` and will be
 	// supplied to FedEx to be used in case of delivery issues.
@@ -1114,6 +1138,15 @@ type CheckTransferNewParamsPhysicalCheckMailingAddress struct {
 }
 
 func (r CheckTransferNewParamsPhysicalCheckMailingAddress) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CheckTransferNewParamsPhysicalCheckPayee struct {
+	// The contents of the line.
+	Contents param.Field[string] `json:"contents" api:"required"`
+}
+
+func (r CheckTransferNewParamsPhysicalCheckPayee) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
