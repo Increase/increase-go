@@ -159,8 +159,8 @@ type InboundACHTransfer struct {
 	ReceiverIDNumber string `json:"receiver_id_number" api:"required,nullable"`
 	// The name of the receiver of the transfer.
 	ReceiverName string `json:"receiver_name" api:"required,nullable"`
-	// A subhash containing information about when and how the transfer settled at the
-	// Federal Reserve.
+	// A subhash containing information about when the transfer settled (or will
+	// settle) at the Federal Reserve.
 	Settlement InboundACHTransferSettlement `json:"settlement" api:"required"`
 	// The Standard Entry Class (SEC) code of the transfer.
 	StandardEntryClassCode InboundACHTransferStandardEntryClassCode `json:"standard_entry_class_code" api:"required"`
@@ -682,8 +682,8 @@ func (r inboundACHTransferNotificationOfChangeJSON) RawJSON() string {
 	return r.raw
 }
 
-// A subhash containing information about when and how the transfer settled at the
-// Federal Reserve.
+// A subhash containing information about when the transfer settled (or will
+// settle) at the Federal Reserve.
 type InboundACHTransferSettlement struct {
 	// When the funds for this transfer settle at the recipient bank at the Federal
 	// Reserve.
