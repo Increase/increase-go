@@ -130,8 +130,9 @@ type PhysicalCard struct {
 	Status PhysicalCardStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `physical_card`.
-	Type PhysicalCardType `json:"type" api:"required"`
-	JSON physicalCardJSON `json:"-"`
+	Type        PhysicalCardType       `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        physicalCardJSON       `json:"-"`
 }
 
 // physicalCardJSON contains the JSON metadata for the struct [PhysicalCard]
