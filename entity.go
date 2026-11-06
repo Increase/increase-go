@@ -120,8 +120,6 @@ type Entity struct {
 	// The identifier of the Entity Onboarding Session that was used to create this
 	// Entity, if any.
 	CreatingEntityOnboardingSessionID string `json:"creating_entity_onboarding_session_id" api:"required,nullable"`
-	// The entity's description for display purposes.
-	Description string `json:"description" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
 	// Entity's details were most recently confirmed.
 	DetailsConfirmedAt time.Time `json:"details_confirmed_at" api:"required,nullable" format:"date-time"`
@@ -137,9 +135,6 @@ type Entity struct {
 	// Details of the natural person entity. Will be present if `structure` is equal to
 	// `natural_person`.
 	NaturalPerson EntityNaturalPerson `json:"natural_person" api:"required,nullable"`
-	// An assessment of the entity’s potential risk of involvement in financial crimes,
-	// such as money laundering.
-	RiskRating EntityRiskRating `json:"risk_rating" api:"required,nullable"`
 	// Details of the sole proprietorship entity. Will be present if `structure` is
 	// equal to `sole_proprietorship`.
 	SoleProprietorship EntitySoleProprietorship `json:"sole_proprietorship" api:"required,nullable"`
@@ -176,13 +171,11 @@ type entityJSON struct {
 	Corporation                       apijson.Field
 	CreatedAt                         apijson.Field
 	CreatingEntityOnboardingSessionID apijson.Field
-	Description                       apijson.Field
 	DetailsConfirmedAt                apijson.Field
 	GovernmentAuthority               apijson.Field
 	IdempotencyKey                    apijson.Field
 	Joint                             apijson.Field
 	NaturalPerson                     apijson.Field
-	RiskRating                        apijson.Field
 	SoleProprietorship                apijson.Field
 	Status                            apijson.Field
 	Structure                         apijson.Field
@@ -905,51 +898,6 @@ const (
 func (r EntityNaturalPersonIdentificationMethod) IsKnown() bool {
 	switch r {
 	case EntityNaturalPersonIdentificationMethodSocialSecurityNumber, EntityNaturalPersonIdentificationMethodSocialSecurityNumberLast4, EntityNaturalPersonIdentificationMethodIndividualTaxpayerIdentificationNumber, EntityNaturalPersonIdentificationMethodPassport, EntityNaturalPersonIdentificationMethodDriversLicense, EntityNaturalPersonIdentificationMethodOther:
-		return true
-	}
-	return false
-}
-
-// An assessment of the entity’s potential risk of involvement in financial crimes,
-// such as money laundering.
-type EntityRiskRating struct {
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
-	// rating was performed.
-	RatedAt time.Time `json:"rated_at" api:"required" format:"date-time"`
-	// The rating given to this entity.
-	Rating EntityRiskRatingRating `json:"rating" api:"required"`
-	JSON   entityRiskRatingJSON   `json:"-"`
-}
-
-// entityRiskRatingJSON contains the JSON metadata for the struct
-// [EntityRiskRating]
-type entityRiskRatingJSON struct {
-	RatedAt     apijson.Field
-	Rating      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *EntityRiskRating) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r entityRiskRatingJSON) RawJSON() string {
-	return r.raw
-}
-
-// The rating given to this entity.
-type EntityRiskRatingRating string
-
-const (
-	EntityRiskRatingRatingLow    EntityRiskRatingRating = "low"
-	EntityRiskRatingRatingMedium EntityRiskRatingRating = "medium"
-	EntityRiskRatingRatingHigh   EntityRiskRatingRating = "high"
-)
-
-func (r EntityRiskRatingRating) IsKnown() bool {
-	switch r {
-	case EntityRiskRatingRatingLow, EntityRiskRatingRatingMedium, EntityRiskRatingRatingHigh:
 		return true
 	}
 	return false
@@ -1942,8 +1890,6 @@ type EntityNewParams struct {
 	// Details of the corporation entity to create. Required if `structure` is equal to
 	// `corporation`.
 	Corporation param.Field[EntityNewParamsCorporation] `json:"corporation"`
-	// The description you choose to give the entity.
-	Description param.Field[string] `json:"description"`
 	// Details of the Government Authority entity to create. Required if `structure` is
 	// equal to `government_authority`.
 	GovernmentAuthority param.Field[EntityNewParamsGovernmentAuthority] `json:"government_authority"`
@@ -1955,9 +1901,6 @@ type EntityNewParams struct {
 	// `social_security_number` or `individual_taxpayer_identification_number`
 	// identification methods.
 	NaturalPerson param.Field[EntityNewParamsNaturalPerson] `json:"natural_person"`
-	// An assessment of the entity's potential risk of involvement in financial crimes,
-	// such as money laundering.
-	RiskRating param.Field[EntityNewParamsRiskRating] `json:"risk_rating"`
 	// Details of the sole proprietorship entity to create. Required if `structure` is
 	// equal to `sole_proprietorship`.
 	SoleProprietorship param.Field[EntityNewParamsSoleProprietorship] `json:"sole_proprietorship"`
@@ -2675,37 +2618,6 @@ func (r EntityNewParamsNaturalPersonIdentificationPassport) MarshalJSON() (data 
 	return apijson.MarshalRoot(r)
 }
 
-// An assessment of the entity's potential risk of involvement in financial crimes,
-// such as money laundering.
-type EntityNewParamsRiskRating struct {
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
-	// rating was performed.
-	RatedAt param.Field[time.Time] `json:"rated_at" api:"required" format:"date-time"`
-	// The rating given to this entity.
-	Rating param.Field[EntityNewParamsRiskRatingRating] `json:"rating" api:"required"`
-}
-
-func (r EntityNewParamsRiskRating) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The rating given to this entity.
-type EntityNewParamsRiskRatingRating string
-
-const (
-	EntityNewParamsRiskRatingRatingLow    EntityNewParamsRiskRatingRating = "low"
-	EntityNewParamsRiskRatingRatingMedium EntityNewParamsRiskRatingRating = "medium"
-	EntityNewParamsRiskRatingRatingHigh   EntityNewParamsRiskRatingRating = "high"
-)
-
-func (r EntityNewParamsRiskRatingRating) IsKnown() bool {
-	switch r {
-	case EntityNewParamsRiskRatingRatingLow, EntityNewParamsRiskRatingRatingMedium, EntityNewParamsRiskRatingRatingHigh:
-		return true
-	}
-	return false
-}
-
 // Details of the sole proprietorship entity to create. Required if `structure` is
 // equal to `sole_proprietorship`.
 type EntityNewParamsSoleProprietorship struct {
@@ -3297,9 +3209,6 @@ type EntityUpdateParams struct {
 	// Details of the natural person entity to update. If you specify this parameter
 	// and the entity is not a natural person, the request will fail.
 	NaturalPerson param.Field[EntityUpdateParamsNaturalPerson] `json:"natural_person"`
-	// An assessment of the entity’s potential risk of involvement in financial crimes,
-	// such as money laundering.
-	RiskRating param.Field[EntityUpdateParamsRiskRating] `json:"risk_rating"`
 	// Details of the sole proprietorship entity to update. If you specify this
 	// parameter and the entity is not a sole proprietorship, the request will fail.
 	SoleProprietorship param.Field[EntityUpdateParamsSoleProprietorship] `json:"sole_proprietorship"`
@@ -3585,37 +3494,6 @@ type EntityUpdateParamsNaturalPersonIdentificationPassport struct {
 
 func (r EntityUpdateParamsNaturalPersonIdentificationPassport) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-// An assessment of the entity’s potential risk of involvement in financial crimes,
-// such as money laundering.
-type EntityUpdateParamsRiskRating struct {
-	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the risk
-	// rating was performed.
-	RatedAt param.Field[time.Time] `json:"rated_at" api:"required" format:"date-time"`
-	// The rating given to this entity.
-	Rating param.Field[EntityUpdateParamsRiskRatingRating] `json:"rating" api:"required"`
-}
-
-func (r EntityUpdateParamsRiskRating) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The rating given to this entity.
-type EntityUpdateParamsRiskRatingRating string
-
-const (
-	EntityUpdateParamsRiskRatingRatingLow    EntityUpdateParamsRiskRatingRating = "low"
-	EntityUpdateParamsRiskRatingRatingMedium EntityUpdateParamsRiskRatingRating = "medium"
-	EntityUpdateParamsRiskRatingRatingHigh   EntityUpdateParamsRiskRatingRating = "high"
-)
-
-func (r EntityUpdateParamsRiskRatingRating) IsKnown() bool {
-	switch r {
-	case EntityUpdateParamsRiskRatingRatingLow, EntityUpdateParamsRiskRatingRatingMedium, EntityUpdateParamsRiskRatingRatingHigh:
-		return true
-	}
-	return false
 }
 
 // Details of the sole proprietorship entity to update. If you specify this
