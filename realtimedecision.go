@@ -2878,15 +2878,24 @@ func (r RealTimeDecisionDigitalWalletTokenDecision) IsKnown() bool {
 
 // Device that is being used to provision the digital wallet token.
 type RealTimeDecisionDigitalWalletTokenDevice struct {
+	// Device type.
+	DeviceType RealTimeDecisionDigitalWalletTokenDeviceDeviceType `json:"device_type" api:"required,nullable"`
 	// ID assigned to the device by the digital wallet provider.
-	Identifier string                                       `json:"identifier" api:"required,nullable"`
-	JSON       realTimeDecisionDigitalWalletTokenDeviceJSON `json:"-"`
+	Identifier string `json:"identifier" api:"required,nullable"`
+	// IP address of the device.
+	IPAddress string `json:"ip_address" api:"required,nullable"`
+	// Name of the device, for example "My Work Phone".
+	Name string                                       `json:"name" api:"required,nullable"`
+	JSON realTimeDecisionDigitalWalletTokenDeviceJSON `json:"-"`
 }
 
 // realTimeDecisionDigitalWalletTokenDeviceJSON contains the JSON metadata for the
 // struct [RealTimeDecisionDigitalWalletTokenDevice]
 type realTimeDecisionDigitalWalletTokenDeviceJSON struct {
+	DeviceType  apijson.Field
 	Identifier  apijson.Field
+	IPAddress   apijson.Field
+	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -2897,6 +2906,29 @@ func (r *RealTimeDecisionDigitalWalletTokenDevice) UnmarshalJSON(data []byte) (e
 
 func (r realTimeDecisionDigitalWalletTokenDeviceJSON) RawJSON() string {
 	return r.raw
+}
+
+// Device type.
+type RealTimeDecisionDigitalWalletTokenDeviceDeviceType string
+
+const (
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeUnknown             RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "unknown"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeMobilePhone         RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "mobile_phone"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeTablet              RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "tablet"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeWatch               RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "watch"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeMobilephoneOrTablet RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "mobilephone_or_tablet"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypePc                  RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "pc"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeHouseholdDevice     RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "household_device"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeWearableDevice      RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "wearable_device"
+	RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeAutomobileDevice    RealTimeDecisionDigitalWalletTokenDeviceDeviceType = "automobile_device"
+)
+
+func (r RealTimeDecisionDigitalWalletTokenDeviceDeviceType) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeUnknown, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeMobilePhone, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeTablet, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeWatch, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeMobilephoneOrTablet, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypePc, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeHouseholdDevice, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeWearableDevice, RealTimeDecisionDigitalWalletTokenDeviceDeviceTypeAutomobileDevice:
+		return true
+	}
+	return false
 }
 
 // The digital wallet app being used.

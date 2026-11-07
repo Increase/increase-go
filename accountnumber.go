@@ -112,11 +112,10 @@ type AccountNumber struct {
 	// Increase and is used to ensure that a request is only processed once. Learn more
 	// about [idempotency](https://increase.com/documentation/idempotency-keys).
 	IdempotencyKey string `json:"idempotency_key" api:"required,nullable"`
-	// Properties related to how this Account Number handles inbound ACH transfers.
-	InboundACH AccountNumberInboundACH `json:"inbound_ach" api:"required"`
-	// Properties related to how this Account Number should handle inbound check
-	// withdrawals.
-	InboundChecks AccountNumberInboundChecks `json:"inbound_checks" api:"required"`
+	// Whether inbound ACH debits are allowed against this Account Number. Note that
+	// they will still be declined if this is `allowed` but the Account Number is not
+	// active.
+	InboundACHDebits AccountNumberInboundACHDebits `json:"inbound_ach_debits" api:"required"`
 	// The name you choose for the Account Number.
 	Name string `json:"name" api:"required"`
 	// The American Bankers' Association (ABA) Routing Transit Number (RTN).
@@ -125,26 +124,28 @@ type AccountNumber struct {
 	Status AccountNumberStatus `json:"status" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `account_number`.
-	Type        AccountNumberType      `json:"type" api:"required"`
-	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
-	JSON        accountNumberJSON      `json:"-"`
+	Type AccountNumberType `json:"type" api:"required"`
+	// Whether unregistered inbound checks for this Account Number can be deposited.
+	UnregisteredInboundChecks AccountNumberUnregisteredInboundChecks `json:"unregistered_inbound_checks" api:"required"`
+	ExtraFields               map[string]interface{}                 `json:"-" api:"extrafields"`
+	JSON                      accountNumberJSON                      `json:"-"`
 }
 
 // accountNumberJSON contains the JSON metadata for the struct [AccountNumber]
 type accountNumberJSON struct {
-	ID             apijson.Field
-	AccountID      apijson.Field
-	AccountNumber  apijson.Field
-	CreatedAt      apijson.Field
-	IdempotencyKey apijson.Field
-	InboundACH     apijson.Field
-	InboundChecks  apijson.Field
-	Name           apijson.Field
-	RoutingNumber  apijson.Field
-	Status         apijson.Field
-	Type           apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+	ID                        apijson.Field
+	AccountID                 apijson.Field
+	AccountNumber             apijson.Field
+	CreatedAt                 apijson.Field
+	IdempotencyKey            apijson.Field
+	InboundACHDebits          apijson.Field
+	Name                      apijson.Field
+	RoutingNumber             apijson.Field
+	Status                    apijson.Field
+	Type                      apijson.Field
+	UnregisteredInboundChecks apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *AccountNumber) UnmarshalJSON(data []byte) (err error) {
@@ -155,82 +156,19 @@ func (r accountNumberJSON) RawJSON() string {
 	return r.raw
 }
 
-// Properties related to how this Account Number handles inbound ACH transfers.
-type AccountNumberInboundACH struct {
-	// Whether ACH debits are allowed against this Account Number. Note that they will
-	// still be declined if this is `allowed` but the Account Number is not active.
-	DebitStatus AccountNumberInboundACHDebitStatus `json:"debit_status" api:"required"`
-	JSON        accountNumberInboundACHJSON        `json:"-"`
-}
-
-// accountNumberInboundACHJSON contains the JSON metadata for the struct
-// [AccountNumberInboundACH]
-type accountNumberInboundACHJSON struct {
-	DebitStatus apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AccountNumberInboundACH) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r accountNumberInboundACHJSON) RawJSON() string {
-	return r.raw
-}
-
-// Whether ACH debits are allowed against this Account Number. Note that they will
-// still be declined if this is `allowed` but the Account Number is not active.
-type AccountNumberInboundACHDebitStatus string
+// Whether inbound ACH debits are allowed against this Account Number. Note that
+// they will still be declined if this is `allowed` but the Account Number is not
+// active.
+type AccountNumberInboundACHDebits string
 
 const (
-	AccountNumberInboundACHDebitStatusAllowed AccountNumberInboundACHDebitStatus = "allowed"
-	AccountNumberInboundACHDebitStatusBlocked AccountNumberInboundACHDebitStatus = "blocked"
+	AccountNumberInboundACHDebitsAllowed AccountNumberInboundACHDebits = "allowed"
+	AccountNumberInboundACHDebitsBlocked AccountNumberInboundACHDebits = "blocked"
 )
 
-func (r AccountNumberInboundACHDebitStatus) IsKnown() bool {
+func (r AccountNumberInboundACHDebits) IsKnown() bool {
 	switch r {
-	case AccountNumberInboundACHDebitStatusAllowed, AccountNumberInboundACHDebitStatusBlocked:
-		return true
-	}
-	return false
-}
-
-// Properties related to how this Account Number should handle inbound check
-// withdrawals.
-type AccountNumberInboundChecks struct {
-	// How Increase should process checks with this account number printed on them.
-	Status AccountNumberInboundChecksStatus `json:"status" api:"required"`
-	JSON   accountNumberInboundChecksJSON   `json:"-"`
-}
-
-// accountNumberInboundChecksJSON contains the JSON metadata for the struct
-// [AccountNumberInboundChecks]
-type accountNumberInboundChecksJSON struct {
-	Status      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AccountNumberInboundChecks) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r accountNumberInboundChecksJSON) RawJSON() string {
-	return r.raw
-}
-
-// How Increase should process checks with this account number printed on them.
-type AccountNumberInboundChecksStatus string
-
-const (
-	AccountNumberInboundChecksStatusAllowed            AccountNumberInboundChecksStatus = "allowed"
-	AccountNumberInboundChecksStatusCheckTransfersOnly AccountNumberInboundChecksStatus = "check_transfers_only"
-)
-
-func (r AccountNumberInboundChecksStatus) IsKnown() bool {
-	switch r {
-	case AccountNumberInboundChecksStatusAllowed, AccountNumberInboundChecksStatusCheckTransfersOnly:
+	case AccountNumberInboundACHDebitsAllowed, AccountNumberInboundACHDebitsBlocked:
 		return true
 	}
 	return false
@@ -269,147 +207,105 @@ func (r AccountNumberType) IsKnown() bool {
 	return false
 }
 
+// Whether unregistered inbound checks for this Account Number can be deposited.
+type AccountNumberUnregisteredInboundChecks string
+
+const (
+	AccountNumberUnregisteredInboundChecksAllowed AccountNumberUnregisteredInboundChecks = "allowed"
+	AccountNumberUnregisteredInboundChecksBlocked AccountNumberUnregisteredInboundChecks = "blocked"
+)
+
+func (r AccountNumberUnregisteredInboundChecks) IsKnown() bool {
+	switch r {
+	case AccountNumberUnregisteredInboundChecksAllowed, AccountNumberUnregisteredInboundChecksBlocked:
+		return true
+	}
+	return false
+}
+
 type AccountNumberNewParams struct {
 	// The Account the Account Number should belong to.
 	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// The name you choose for the Account Number.
 	Name param.Field[string] `json:"name" api:"required"`
-	// Options related to how this Account Number should handle inbound ACH transfers.
-	InboundACH param.Field[AccountNumberNewParamsInboundACH] `json:"inbound_ach"`
-	// Options related to how this Account Number should handle inbound check
-	// withdrawals.
-	InboundChecks param.Field[AccountNumberNewParamsInboundChecks] `json:"inbound_checks"`
+	// Whether inbound ACH debits are allowed against this Account Number. Note that
+	// ACH debits will be declined if this is `allowed` but the Account Number is not
+	// active. If you do not specify this field, the default is `allowed`.
+	InboundACHDebits param.Field[AccountNumberNewParamsInboundACHDebits] `json:"inbound_ach_debits"`
+	// Whether unregistered inbound checks for this Account Number can be deposited. If
+	// you do not specify this field, the default is `blocked`.
+	UnregisteredInboundChecks param.Field[AccountNumberNewParamsUnregisteredInboundChecks] `json:"unregistered_inbound_checks"`
 }
 
 func (r AccountNumberNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Options related to how this Account Number should handle inbound ACH transfers.
-type AccountNumberNewParamsInboundACH struct {
-	// Whether ACH debits are allowed against this Account Number. Note that ACH debits
-	// will be declined if this is `allowed` but the Account Number is not active. If
-	// you do not specify this field, the default is `allowed`.
-	DebitStatus param.Field[AccountNumberNewParamsInboundACHDebitStatus] `json:"debit_status" api:"required"`
-}
-
-func (r AccountNumberNewParamsInboundACH) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Whether ACH debits are allowed against this Account Number. Note that ACH debits
-// will be declined if this is `allowed` but the Account Number is not active. If
-// you do not specify this field, the default is `allowed`.
-type AccountNumberNewParamsInboundACHDebitStatus string
+// Whether inbound ACH debits are allowed against this Account Number. Note that
+// ACH debits will be declined if this is `allowed` but the Account Number is not
+// active. If you do not specify this field, the default is `allowed`.
+type AccountNumberNewParamsInboundACHDebits string
 
 const (
-	AccountNumberNewParamsInboundACHDebitStatusAllowed AccountNumberNewParamsInboundACHDebitStatus = "allowed"
-	AccountNumberNewParamsInboundACHDebitStatusBlocked AccountNumberNewParamsInboundACHDebitStatus = "blocked"
+	AccountNumberNewParamsInboundACHDebitsAllowed AccountNumberNewParamsInboundACHDebits = "allowed"
+	AccountNumberNewParamsInboundACHDebitsBlocked AccountNumberNewParamsInboundACHDebits = "blocked"
 )
 
-func (r AccountNumberNewParamsInboundACHDebitStatus) IsKnown() bool {
+func (r AccountNumberNewParamsInboundACHDebits) IsKnown() bool {
 	switch r {
-	case AccountNumberNewParamsInboundACHDebitStatusAllowed, AccountNumberNewParamsInboundACHDebitStatusBlocked:
+	case AccountNumberNewParamsInboundACHDebitsAllowed, AccountNumberNewParamsInboundACHDebitsBlocked:
 		return true
 	}
 	return false
 }
 
-// Options related to how this Account Number should handle inbound check
-// withdrawals.
-type AccountNumberNewParamsInboundChecks struct {
-	// How Increase should process checks with this account number printed on them. If
-	// you do not specify this field, the default is `check_transfers_only`.
-	Status param.Field[AccountNumberNewParamsInboundChecksStatus] `json:"status" api:"required"`
-}
-
-func (r AccountNumberNewParamsInboundChecks) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// How Increase should process checks with this account number printed on them. If
-// you do not specify this field, the default is `check_transfers_only`.
-type AccountNumberNewParamsInboundChecksStatus string
+// Whether unregistered inbound checks for this Account Number can be deposited. If
+// you do not specify this field, the default is `blocked`.
+type AccountNumberNewParamsUnregisteredInboundChecks string
 
 const (
-	AccountNumberNewParamsInboundChecksStatusAllowed            AccountNumberNewParamsInboundChecksStatus = "allowed"
-	AccountNumberNewParamsInboundChecksStatusCheckTransfersOnly AccountNumberNewParamsInboundChecksStatus = "check_transfers_only"
+	AccountNumberNewParamsUnregisteredInboundChecksAllowed AccountNumberNewParamsUnregisteredInboundChecks = "allowed"
+	AccountNumberNewParamsUnregisteredInboundChecksBlocked AccountNumberNewParamsUnregisteredInboundChecks = "blocked"
 )
 
-func (r AccountNumberNewParamsInboundChecksStatus) IsKnown() bool {
+func (r AccountNumberNewParamsUnregisteredInboundChecks) IsKnown() bool {
 	switch r {
-	case AccountNumberNewParamsInboundChecksStatusAllowed, AccountNumberNewParamsInboundChecksStatusCheckTransfersOnly:
+	case AccountNumberNewParamsUnregisteredInboundChecksAllowed, AccountNumberNewParamsUnregisteredInboundChecksBlocked:
 		return true
 	}
 	return false
 }
 
 type AccountNumberUpdateParams struct {
-	// Options related to how this Account Number handles inbound ACH transfers.
-	InboundACH param.Field[AccountNumberUpdateParamsInboundACH] `json:"inbound_ach"`
-	// Options related to how this Account Number should handle inbound check
-	// withdrawals.
-	InboundChecks param.Field[AccountNumberUpdateParamsInboundChecks] `json:"inbound_checks"`
+	// Whether inbound ACH debits are allowed against this Account Number. Note that
+	// ACH debits will be declined if this is `allowed` but the Account Number is not
+	// active.
+	InboundACHDebits param.Field[AccountNumberUpdateParamsInboundACHDebits] `json:"inbound_ach_debits"`
 	// The name you choose for the Account Number.
 	Name param.Field[string] `json:"name"`
 	// This indicates if transfers can be made to the Account Number.
 	Status param.Field[AccountNumberUpdateParamsStatus] `json:"status"`
+	// Whether unregistered inbound checks for this Account Number can be deposited.
+	UnregisteredInboundChecks param.Field[AccountNumberUpdateParamsUnregisteredInboundChecks] `json:"unregistered_inbound_checks"`
 }
 
 func (r AccountNumberUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Options related to how this Account Number handles inbound ACH transfers.
-type AccountNumberUpdateParamsInboundACH struct {
-	// Whether ACH debits are allowed against this Account Number. Note that ACH debits
-	// will be declined if this is `allowed` but the Account Number is not active.
-	DebitStatus param.Field[AccountNumberUpdateParamsInboundACHDebitStatus] `json:"debit_status"`
-}
-
-func (r AccountNumberUpdateParamsInboundACH) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// Whether ACH debits are allowed against this Account Number. Note that ACH debits
-// will be declined if this is `allowed` but the Account Number is not active.
-type AccountNumberUpdateParamsInboundACHDebitStatus string
+// Whether inbound ACH debits are allowed against this Account Number. Note that
+// ACH debits will be declined if this is `allowed` but the Account Number is not
+// active.
+type AccountNumberUpdateParamsInboundACHDebits string
 
 const (
-	AccountNumberUpdateParamsInboundACHDebitStatusAllowed AccountNumberUpdateParamsInboundACHDebitStatus = "allowed"
-	AccountNumberUpdateParamsInboundACHDebitStatusBlocked AccountNumberUpdateParamsInboundACHDebitStatus = "blocked"
+	AccountNumberUpdateParamsInboundACHDebitsAllowed AccountNumberUpdateParamsInboundACHDebits = "allowed"
+	AccountNumberUpdateParamsInboundACHDebitsBlocked AccountNumberUpdateParamsInboundACHDebits = "blocked"
 )
 
-func (r AccountNumberUpdateParamsInboundACHDebitStatus) IsKnown() bool {
+func (r AccountNumberUpdateParamsInboundACHDebits) IsKnown() bool {
 	switch r {
-	case AccountNumberUpdateParamsInboundACHDebitStatusAllowed, AccountNumberUpdateParamsInboundACHDebitStatusBlocked:
-		return true
-	}
-	return false
-}
-
-// Options related to how this Account Number should handle inbound check
-// withdrawals.
-type AccountNumberUpdateParamsInboundChecks struct {
-	// How Increase should process checks with this account number printed on them.
-	Status param.Field[AccountNumberUpdateParamsInboundChecksStatus] `json:"status" api:"required"`
-}
-
-func (r AccountNumberUpdateParamsInboundChecks) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// How Increase should process checks with this account number printed on them.
-type AccountNumberUpdateParamsInboundChecksStatus string
-
-const (
-	AccountNumberUpdateParamsInboundChecksStatusAllowed            AccountNumberUpdateParamsInboundChecksStatus = "allowed"
-	AccountNumberUpdateParamsInboundChecksStatusCheckTransfersOnly AccountNumberUpdateParamsInboundChecksStatus = "check_transfers_only"
-)
-
-func (r AccountNumberUpdateParamsInboundChecksStatus) IsKnown() bool {
-	switch r {
-	case AccountNumberUpdateParamsInboundChecksStatusAllowed, AccountNumberUpdateParamsInboundChecksStatusCheckTransfersOnly:
+	case AccountNumberUpdateParamsInboundACHDebitsAllowed, AccountNumberUpdateParamsInboundACHDebitsBlocked:
 		return true
 	}
 	return false
@@ -432,18 +328,34 @@ func (r AccountNumberUpdateParamsStatus) IsKnown() bool {
 	return false
 }
 
+// Whether unregistered inbound checks for this Account Number can be deposited.
+type AccountNumberUpdateParamsUnregisteredInboundChecks string
+
+const (
+	AccountNumberUpdateParamsUnregisteredInboundChecksAllowed AccountNumberUpdateParamsUnregisteredInboundChecks = "allowed"
+	AccountNumberUpdateParamsUnregisteredInboundChecksBlocked AccountNumberUpdateParamsUnregisteredInboundChecks = "blocked"
+)
+
+func (r AccountNumberUpdateParamsUnregisteredInboundChecks) IsKnown() bool {
+	switch r {
+	case AccountNumberUpdateParamsUnregisteredInboundChecksAllowed, AccountNumberUpdateParamsUnregisteredInboundChecksBlocked:
+		return true
+	}
+	return false
+}
+
 type AccountNumberListParams struct {
 	// Filter Account Numbers to those belonging to the specified Account.
-	AccountID      param.Field[string]                                `query:"account_id"`
-	ACHDebitStatus param.Field[AccountNumberListParamsACHDebitStatus] `query:"ach_debit_status"`
-	CreatedAt      param.Field[AccountNumberListParamsCreatedAt]      `query:"created_at"`
+	AccountID param.Field[string]                           `query:"account_id"`
+	CreatedAt param.Field[AccountNumberListParamsCreatedAt] `query:"created_at"`
 	// Return the page of entries after this one.
 	Cursor param.Field[string] `query:"cursor"`
 	// Filter records to the one with the specified `idempotency_key` you chose for
 	// that object. This value is unique across Increase and is used to ensure that a
 	// request is only processed once. Learn more about
 	// [idempotency](https://increase.com/documentation/idempotency-keys).
-	IdempotencyKey param.Field[string] `query:"idempotency_key"`
+	IdempotencyKey   param.Field[string]                                  `query:"idempotency_key"`
+	InboundACHDebits param.Field[AccountNumberListParamsInboundACHDebits] `query:"inbound_ach_debits"`
 	// Limit the size of the list that is returned. The default (and maximum) is 100
 	// objects.
 	//
@@ -459,36 +371,6 @@ func (r AccountNumberListParams) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
-}
-
-type AccountNumberListParamsACHDebitStatus struct {
-	// The ACH Debit status to retrieve Account Numbers for. For GET requests, this
-	// should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-	In param.Field[[]AccountNumberListParamsACHDebitStatusIn] `query:"in"`
-}
-
-// URLQuery serializes [AccountNumberListParamsACHDebitStatus]'s query parameters
-// as `url.Values`.
-func (r AccountNumberListParamsACHDebitStatus) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatDots,
-	})
-}
-
-type AccountNumberListParamsACHDebitStatusIn string
-
-const (
-	AccountNumberListParamsACHDebitStatusInAllowed AccountNumberListParamsACHDebitStatusIn = "allowed"
-	AccountNumberListParamsACHDebitStatusInBlocked AccountNumberListParamsACHDebitStatusIn = "blocked"
-)
-
-func (r AccountNumberListParamsACHDebitStatusIn) IsKnown() bool {
-	switch r {
-	case AccountNumberListParamsACHDebitStatusInAllowed, AccountNumberListParamsACHDebitStatusInBlocked:
-		return true
-	}
-	return false
 }
 
 type AccountNumberListParamsCreatedAt struct {
@@ -513,6 +395,36 @@ func (r AccountNumberListParamsCreatedAt) URLQuery() (v url.Values) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatDots,
 	})
+}
+
+type AccountNumberListParamsInboundACHDebits struct {
+	// The inbound ACH debits status to retrieve Account Numbers for. For GET requests,
+	// this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+	In param.Field[[]AccountNumberListParamsInboundACHDebitsIn] `query:"in"`
+}
+
+// URLQuery serializes [AccountNumberListParamsInboundACHDebits]'s query parameters
+// as `url.Values`.
+func (r AccountNumberListParamsInboundACHDebits) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type AccountNumberListParamsInboundACHDebitsIn string
+
+const (
+	AccountNumberListParamsInboundACHDebitsInAllowed AccountNumberListParamsInboundACHDebitsIn = "allowed"
+	AccountNumberListParamsInboundACHDebitsInBlocked AccountNumberListParamsInboundACHDebitsIn = "blocked"
+)
+
+func (r AccountNumberListParamsInboundACHDebitsIn) IsKnown() bool {
+	switch r {
+	case AccountNumberListParamsInboundACHDebitsInAllowed, AccountNumberListParamsInboundACHDebitsInBlocked:
+		return true
+	}
+	return false
 }
 
 type AccountNumberListParamsStatus struct {
