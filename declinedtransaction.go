@@ -1496,6 +1496,8 @@ type DeclinedTransactionSourceCheckDecline struct {
 	BackImageFileID string `json:"back_image_file_id" api:"required,nullable"`
 	// The identifier of the Check Transfer object associated with this decline.
 	CheckTransferID string `json:"check_transfer_id" api:"required,nullable"`
+	// The identifier of the Checkbook Check object associated with this decline.
+	CheckbookCheckID string `json:"checkbook_check_id" api:"required,nullable"`
 	// The identifier of the API File object containing an image of the front of the
 	// declined check.
 	FrontImageFileID string `json:"front_image_file_id" api:"required,nullable"`
@@ -1514,6 +1516,7 @@ type declinedTransactionSourceCheckDeclineJSON struct {
 	AuxiliaryOnUs         apijson.Field
 	BackImageFileID       apijson.Field
 	CheckTransferID       apijson.Field
+	CheckbookCheckID      apijson.Field
 	FrontImageFileID      apijson.Field
 	InboundCheckDepositID apijson.Field
 	Reason                apijson.Field

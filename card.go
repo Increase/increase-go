@@ -1726,11 +1726,13 @@ type CardUpdateParamsDigitalWallet struct {
 	// The digital card profile assigned to this digital card.
 	DigitalCardProfileID param.Field[string] `json:"digital_card_profile_id"`
 	// An email address that can be used to verify the cardholder via one-time passcode
-	// over email.
+	// over email. Send `null` to clear the email address. Omit this field to leave it
+	// unchanged.
 	Email param.Field[string] `json:"email" format:"email"`
 	// A phone number that can be used to verify the cardholder via one-time passcode
 	// over SMS. Accepts formats like `+14155550123`, `4155550123`, `415-555-0123`, or
-	// `(415) 555-0123`.
+	// `(415) 555-0123`. Send `null` to clear the phone number. Omit this field to
+	// leave it unchanged.
 	Phone param.Field[string] `json:"phone"`
 }
 
