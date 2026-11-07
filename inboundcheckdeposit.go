@@ -130,6 +130,9 @@ type InboundCheckDeposit struct {
 	// If this deposit is for an existing Check Transfer, the identifier of that Check
 	// Transfer.
 	CheckTransferID string `json:"check_transfer_id" api:"required,nullable"`
+	// If this deposit is for an existing Checkbook Check, the identifier of that
+	// Checkbook Check.
+	CheckbookCheckID string `json:"checkbook_check_id" api:"required,nullable"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the deposit was attempted.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -157,9 +160,8 @@ type InboundCheckDeposit struct {
 	TransactionID string `json:"transaction_id" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `inbound_check_deposit`.
-	Type        InboundCheckDepositType `json:"type" api:"required"`
-	ExtraFields map[string]interface{}  `json:"-" api:"extrafields"`
-	JSON        inboundCheckDepositJSON `json:"-"`
+	Type InboundCheckDepositType `json:"type" api:"required"`
+	JSON inboundCheckDepositJSON `json:"-"`
 }
 
 // inboundCheckDepositJSON contains the JSON metadata for the struct
@@ -176,6 +178,7 @@ type inboundCheckDepositJSON struct {
 	BankOfFirstDepositRoutingNumber apijson.Field
 	CheckNumber                     apijson.Field
 	CheckTransferID                 apijson.Field
+	CheckbookCheckID                apijson.Field
 	CreatedAt                       apijson.Field
 	Currency                        apijson.Field
 	DeclinedAt                      apijson.Field
