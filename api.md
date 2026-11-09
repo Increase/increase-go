@@ -301,6 +301,31 @@ Methods:
 - <code title="post /check_transfers/{check_transfer_id}/cancel">client.CheckTransfers.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckTransferService.Cancel">Cancel</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckTransfer">CheckTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /check_transfers/{check_transfer_id}/stop_payment">client.CheckTransfers.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckTransferService.StopPayment">StopPayment</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkTransferID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckTransferStopPaymentParams">CheckTransferStopPaymentParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckTransfer">CheckTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# Checkbooks
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Checkbook">Checkbook</a>
+
+Methods:
+
+- <code title="post /checkbooks">client.Checkbooks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookNewParams">CheckbookNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Checkbook">Checkbook</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /checkbooks/{checkbook_id}">client.Checkbooks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkbookID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Checkbook">Checkbook</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /checkbooks">client.Checkbooks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookListParams">CheckbookListParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Checkbook">Checkbook</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /checkbooks/{checkbook_id}/stop">client.Checkbooks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookService.Stop">Stop</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkbookID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Checkbook">Checkbook</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# CheckbookChecks
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheck">CheckbookCheck</a>
+
+Methods:
+
+- <code title="get /checkbook_checks/{checkbook_check_id}">client.CheckbookChecks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheckService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkbookCheckID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheck">CheckbookCheck</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /checkbook_checks">client.CheckbookChecks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheckService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheckListParams">CheckbookCheckListParams</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go/packages/pagination#Page">Page</a>[<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheck">CheckbookCheck</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /checkbook_checks/{checkbook_check_id}/stop">client.CheckbookChecks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheckService.Stop">Stop</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkbookCheckID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckbookCheck">CheckbookCheck</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # InboundCheckDeposits
 
 Response Types:
@@ -864,6 +889,12 @@ Methods:
 Methods:
 
 - <code title="post /simulations/check_transfers/{check_transfer_id}/mail">client.Simulations.CheckTransfers.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCheckTransferService.Mail">Mail</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkTransferID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#CheckTransfer">CheckTransfer</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Checkbooks
+
+Methods:
+
+- <code title="post /simulations/checkbooks/{checkbook_id}/mail">client.Simulations.Checkbooks.<a href="https://pkg.go.dev/github.com/Increase/increase-go#SimulationCheckbookService.Mail">Mail</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, checkbookID <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/Increase/increase-go">increase</a>.<a href="https://pkg.go.dev/github.com/Increase/increase-go#Checkbook">Checkbook</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## InboundCheckDeposits
 

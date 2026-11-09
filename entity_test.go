@@ -87,7 +87,6 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			IndustryCode:                       increase.F("x"),
 			Website:                            increase.F("https://example.com"),
 		}),
-		Description: increase.F("x"),
 		GovernmentAuthority: increase.F(increase.EntityNewParamsGovernmentAuthority{
 			Address: increase.F(increase.EntityNewParamsGovernmentAuthorityAddress{
 				City:  increase.F("x"),
@@ -175,10 +174,6 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			}),
 			Name:               increase.F("x"),
 			ConfirmedNoUsTaxID: increase.F(true),
-		}),
-		RiskRating: increase.F(increase.EntityNewParamsRiskRating{
-			RatedAt: increase.F(time.Now()),
-			Rating:  increase.F(increase.EntityNewParamsRiskRatingRatingLow),
 		}),
 		SoleProprietorship: increase.F(increase.EntityNewParamsSoleProprietorship{
 			Address: increase.F(increase.EntityNewParamsSoleProprietorshipAddress{
@@ -375,7 +370,7 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 					Category: increase.F(increase.EntityUpdateParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber),
 				}),
 				Name:    increase.F("x"),
-				Website: increase.F("website"),
+				Website: increase.F("https://company.example.com"),
 			}),
 			DetailsConfirmedAt: increase.F(time.Now()),
 			GovernmentAuthority: increase.F(increase.EntityUpdateParamsGovernmentAuthority{
@@ -421,10 +416,6 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 					}),
 				}),
 				Name: increase.F("x"),
-			}),
-			RiskRating: increase.F(increase.EntityUpdateParamsRiskRating{
-				RatedAt: increase.F(time.Now()),
-				Rating:  increase.F(increase.EntityUpdateParamsRiskRatingRatingLow),
 			}),
 			SoleProprietorship: increase.F(increase.EntityUpdateParamsSoleProprietorship{
 				Address: increase.F(increase.EntityUpdateParamsSoleProprietorshipAddress{
