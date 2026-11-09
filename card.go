@@ -1081,7 +1081,9 @@ type CardNewParams struct {
 	AccountID param.Field[string] `json:"account_id" api:"required"`
 	// Controls that restrict how this card can be used.
 	AuthorizationControls param.Field[CardNewParamsAuthorizationControls] `json:"authorization_controls"`
-	// The card's billing address.
+	// The card's billing address. This is used in card authorizations to
+	// [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides).
+	// If not provided, the address associated with the account's entity will be used.
 	BillingAddress param.Field[CardNewParamsBillingAddress] `json:"billing_address"`
 	// The name of the cardholder. Used to respond to Account Name Inquiry requests
 	// from acquirers in Card Validations.
@@ -1348,7 +1350,9 @@ func (r CardNewParamsAuthorizationControlsUsageSingleUseSettlementAmountComparis
 	return false
 }
 
-// The card's billing address.
+// The card's billing address. This is used in card authorizations to
+// [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides).
+// If not provided, the address associated with the account's entity will be used.
 type CardNewParamsBillingAddress struct {
 	// The city of the billing address.
 	City param.Field[string] `json:"city" api:"required"`
@@ -1440,7 +1444,9 @@ func (r CardNewParamsReplacementForReason) IsKnown() bool {
 type CardUpdateParams struct {
 	// Controls that restrict how this card can be used.
 	AuthorizationControls param.Field[CardUpdateParamsAuthorizationControls] `json:"authorization_controls"`
-	// The card's updated billing address.
+	// The card's billing address. This is used in card authorizations to
+	// [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides).
+	// If not provided, the address associated with the account's entity will be used.
 	BillingAddress param.Field[CardUpdateParamsBillingAddress] `json:"billing_address"`
 	// The description you choose to give the card.
 	Description param.Field[string] `json:"description"`
@@ -1701,7 +1707,9 @@ func (r CardUpdateParamsAuthorizationControlsUsageSingleUseSettlementAmountCompa
 	return false
 }
 
-// The card's updated billing address.
+// The card's billing address. This is used in card authorizations to
+// [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides).
+// If not provided, the address associated with the account's entity will be used.
 type CardUpdateParamsBillingAddress struct {
 	// The city of the billing address.
 	City param.Field[string] `json:"city" api:"required"`
