@@ -6336,6 +6336,9 @@ func (r CardPaymentElementsCardRefundCurrency) IsKnown() bool {
 
 // Interchange assessed as a part of this transaction.
 type CardPaymentElementsCardRefundInterchange struct {
+	// An adjustment the card network made to the interchange after this transaction
+	// cleared, if any.
+	Adjustment CardPaymentElementsCardRefundInterchangeAdjustment `json:"adjustment" api:"required,nullable"`
 	// The interchange amount given as a string containing a decimal number in major
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
@@ -6352,6 +6355,7 @@ type CardPaymentElementsCardRefundInterchange struct {
 // cardPaymentElementsCardRefundInterchangeJSON contains the JSON metadata for the
 // struct [CardPaymentElementsCardRefundInterchange]
 type cardPaymentElementsCardRefundInterchangeJSON struct {
+	Adjustment  apijson.Field
 	Amount      apijson.Field
 	Code        apijson.Field
 	Currency    apijson.Field
@@ -6364,6 +6368,39 @@ func (r *CardPaymentElementsCardRefundInterchange) UnmarshalJSON(data []byte) (e
 }
 
 func (r cardPaymentElementsCardRefundInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// An adjustment the card network made to the interchange after this transaction
+// cleared, if any.
+type CardPaymentElementsCardRefundInterchangeAdjustment struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the interchange was adjusted.
+	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
+	// The adjustment amount given as a string containing a decimal number in major
+	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+	// credited to Increase and a negative number if it is debited.
+	Amount string `json:"amount" api:"required"`
+	// The card network specific interchange code that applies after the adjustment.
+	Code string                                                 `json:"code" api:"required"`
+	JSON cardPaymentElementsCardRefundInterchangeAdjustmentJSON `json:"-"`
+}
+
+// cardPaymentElementsCardRefundInterchangeAdjustmentJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardRefundInterchangeAdjustment]
+type cardPaymentElementsCardRefundInterchangeAdjustmentJSON struct {
+	AdjustedAt  apijson.Field
+	Amount      apijson.Field
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardRefundInterchangeAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardRefundInterchangeAdjustmentJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -7861,6 +7898,9 @@ func (r CardPaymentElementsCardSettlementCurrency) IsKnown() bool {
 
 // Interchange assessed as a part of this transaction.
 type CardPaymentElementsCardSettlementInterchange struct {
+	// An adjustment the card network made to the interchange after this transaction
+	// cleared, if any.
+	Adjustment CardPaymentElementsCardSettlementInterchangeAdjustment `json:"adjustment" api:"required,nullable"`
 	// The interchange amount given as a string containing a decimal number in major
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
@@ -7877,6 +7917,7 @@ type CardPaymentElementsCardSettlementInterchange struct {
 // cardPaymentElementsCardSettlementInterchangeJSON contains the JSON metadata for
 // the struct [CardPaymentElementsCardSettlementInterchange]
 type cardPaymentElementsCardSettlementInterchangeJSON struct {
+	Adjustment  apijson.Field
 	Amount      apijson.Field
 	Code        apijson.Field
 	Currency    apijson.Field
@@ -7889,6 +7930,39 @@ func (r *CardPaymentElementsCardSettlementInterchange) UnmarshalJSON(data []byte
 }
 
 func (r cardPaymentElementsCardSettlementInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// An adjustment the card network made to the interchange after this transaction
+// cleared, if any.
+type CardPaymentElementsCardSettlementInterchangeAdjustment struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the interchange was adjusted.
+	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
+	// The adjustment amount given as a string containing a decimal number in major
+	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+	// credited to Increase and a negative number if it is debited.
+	Amount string `json:"amount" api:"required"`
+	// The card network specific interchange code that applies after the adjustment.
+	Code string                                                     `json:"code" api:"required"`
+	JSON cardPaymentElementsCardSettlementInterchangeAdjustmentJSON `json:"-"`
+}
+
+// cardPaymentElementsCardSettlementInterchangeAdjustmentJSON contains the JSON
+// metadata for the struct [CardPaymentElementsCardSettlementInterchangeAdjustment]
+type cardPaymentElementsCardSettlementInterchangeAdjustmentJSON struct {
+	AdjustedAt  apijson.Field
+	Amount      apijson.Field
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CardPaymentElementsCardSettlementInterchangeAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardPaymentElementsCardSettlementInterchangeAdjustmentJSON) RawJSON() string {
 	return r.raw
 }
 
