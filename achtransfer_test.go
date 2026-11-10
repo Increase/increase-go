@@ -27,10 +27,11 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.New(context.TODO(), increase.ACHTransferNewParams{
-		AccountID:           increase.F("account_in71c4amph0vgo2qllky"),
-		Amount:              increase.F(int64(100)),
-		StatementDescriptor: increase.F("INVOICE 2468"),
-		AccountNumber:       increase.F("987654321"),
+		AccountID:      increase.F("account_in71c4amph0vgo2qllky"),
+		Amount:         increase.F(int64(100)),
+		CompanyName:    increase.F("Phonographs Inc"),
+		IndividualName: increase.F("Ian Crease"),
+		AccountNumber:  increase.F("987654321"),
 		Addenda: increase.F(increase.ACHTransferNewParamsAddenda{
 			Category: increase.F(increase.ACHTransferNewParamsAddendaCategoryFreeform),
 			Freeform: increase.F(increase.ACHTransferNewParamsAddendaFreeform{
@@ -48,12 +49,10 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		CompanyDescriptiveDate:   increase.F("J!"),
 		CompanyDiscretionaryData: increase.F("J!"),
 		CompanyEntryDescription:  increase.F("J!"),
-		CompanyName:              increase.F("Phonographs Inc"),
 		DestinationAccountHolder: increase.F(increase.ACHTransferNewParamsDestinationAccountHolderBusiness),
 		ExternalAccountID:        increase.F("external_account_id"),
 		Funding:                  increase.F(increase.ACHTransferNewParamsFundingChecking),
 		IndividualID:             increase.F("individual_id"),
-		IndividualName:           increase.F("Ian Crease"),
 		PreferredEffectiveDate: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDate{
 			Date:               increase.F(time.Now()),
 			SettlementSchedule: increase.F(increase.ACHTransferNewParamsPreferredEffectiveDateSettlementScheduleSameDay),

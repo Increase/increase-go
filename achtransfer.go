@@ -206,7 +206,10 @@ type ACHTransfer struct {
 	// [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes)
 	// to use for the transfer.
 	StandardEntryClassCode ACHTransferStandardEntryClassCode `json:"standard_entry_class_code" api:"required"`
-	// The descriptor that will show on the recipient's bank statement.
+	// A description you chose to give the transfer. If `individual_name` and
+	// `company_name` were not explicitly set, the `statement_descriptor` will be sent
+	// in those fields to the receiving bank to help the customer recognize the
+	// transfer.
 	StatementDescriptor string `json:"statement_descriptor" api:"required,nullable"`
 	// The lifecycle status of the transfer.
 	Status ACHTransferStatus `json:"status" api:"required"`
@@ -1238,13 +1241,18 @@ type ACHTransferNewParams struct {
 	// into Increase. Debit transfers
 	// [might result in a hold before funds are available](/documentation/sending-ach-debit-transfers).
 	Amount param.Field[int64] `json:"amount" api:"required"`
-	// A description you choose to give the transfer. This will be saved with the
-	// transfer details, displayed in the dashboard, and returned by the API. If
-	// `individual_name` and `company_name` are not explicitly set by this API, the
-	// `statement_descriptor` will be sent in those fields to the receiving bank to
-	// help the customer recognize the transfer. You are highly encouraged to pass
-	// `individual_name` and `company_name` instead of relying on this fallback.
-	StatementDescriptor param.Field[string] `json:"statement_descriptor" api:"required"`
+	// The name by which the recipient knows the counterparty of this transaction. If
+	// you're processing payments on behalf of another party, use their name, not your
+	// own, so that it's more likely the recipient understands the context of the
+	// payment. This value is usually displayed to the recipient on their bank
+	// statement. We recommend setting this on every transfer; if you do not, we fall
+	// back to the `statement_descriptor`.
+	CompanyName param.Field[string] `json:"company_name" api:"required"`
+	// The name of the transfer recipient. This value is informational and generally
+	// not verified by the recipient's bank. This value is usually displayed to the
+	// recipient on their bank statement. We recommend setting this on every transfer;
+	// if you do not, we fall back to the `statement_descriptor`.
+	IndividualName param.Field[string] `json:"individual_name" api:"required"`
 	// The receiver's account number. For credit transfers (transfers with a positive
 	// `amount`), this is the account that funds will be sent to. For debit transfers
 	// (transfers with a negative `amount`), this is the account that funds will be
@@ -1271,13 +1279,6 @@ type ACHTransferNewParams struct {
 	// code and use case. For example, some use cases require constants like
 	// `ACCTVERIFY`, `PURCHASE`, `PAYROLL`, or `REVERSAL`.
 	CompanyEntryDescription param.Field[string] `json:"company_entry_description"`
-	// The name by which the recipient knows the counterparty of this transaction. If
-	// you're processing payments on behalf of another party, use their name, not your
-	// own, so that it's more likely the recipient understands the context of the
-	// payment. This value is usually displayed to the recipient on their bank
-	// statement. We recommend setting this on every transfer; if you do not, we fall
-	// back to the `statement_descriptor`.
-	CompanyName param.Field[string] `json:"company_name"`
 	// The type of entity that owns the receiver's account.
 	DestinationAccountHolder param.Field[ACHTransferNewParamsDestinationAccountHolder] `json:"destination_account_holder"`
 	// The ID of an External Account to initiate a transfer to. If this parameter is
@@ -1292,11 +1293,6 @@ type ACHTransferNewParams struct {
 	// unset. For the specific case of person-to-person credits with the WEB standard
 	// entry class code, this must include the name of the payer.
 	IndividualID param.Field[string] `json:"individual_id"`
-	// The name of the transfer recipient. This value is informational and generally
-	// not verified by the recipient's bank. This value is usually displayed to the
-	// recipient on their bank statement. We recommend setting this on every transfer;
-	// if you do not, we fall back to the `statement_descriptor`.
-	IndividualName param.Field[string] `json:"individual_name"`
 	// Configuration for how the effective date of the transfer will be set. This
 	// determines same-day vs future-dated settlement timing. If not set, defaults to a
 	// `settlement_schedule` of `same_day`. If set, exactly one of the child attributes
