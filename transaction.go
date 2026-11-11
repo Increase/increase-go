@@ -1914,13 +1914,16 @@ const (
 	TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit            TransactionSourceCardFinancialSchemeFeesFeeType = "visa_advertising_service_commercial_credit"
 	TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram            TransactionSourceCardFinancialSchemeFeesFeeType = "visa_community_growth_acceleration_program"
 	TransactionSourceCardFinancialSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit           TransactionSourceCardFinancialSchemeFeesFeeType = "visa_processing_guarantee_commercial_credit"
+	TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAtmCashWithdrawalDomestic                     TransactionSourceCardFinancialSchemeFeesFeeType = "visa_atm_cash_withdrawal_domestic"
+	TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAtmCashWithdrawalInternational                TransactionSourceCardFinancialSchemeFeesFeeType = "visa_atm_cash_withdrawal_international"
+	TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAtmCashDepositDomestic                        TransactionSourceCardFinancialSchemeFeesFeeType = "visa_atm_cash_deposit_domestic"
 	TransactionSourceCardFinancialSchemeFeesFeeTypePulseSwitchFee                                    TransactionSourceCardFinancialSchemeFeesFeeType = "pulse_switch_fee"
 	TransactionSourceCardFinancialSchemeFeesFeeTypePulseTokenizationFee                              TransactionSourceCardFinancialSchemeFeesFeeType = "pulse_tokenization_fee"
 )
 
 func (r TransactionSourceCardFinancialSchemeFeesFeeType) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardFinancialSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAdvancedAuthorization, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaMessageTransmission, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAccountVerificationDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAccountVerificationInternational, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAccountVerificationCanada, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCorporateAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaPurchaseDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaPurchaseInternational, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCreditPurchaseToken, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaDebitPurchaseToken, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaClearingTransmission, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaDirectAuthorization, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaDirectTransactionDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaServiceCommercialCredit, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, TransactionSourceCardFinancialSchemeFeesFeeTypePulseSwitchFee, TransactionSourceCardFinancialSchemeFeesFeeTypePulseTokenizationFee:
+	case TransactionSourceCardFinancialSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAdvancedAuthorization, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaMessageTransmission, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAccountVerificationDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAccountVerificationInternational, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAccountVerificationCanada, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCorporateAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaPurchaseDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaPurchaseInternational, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCreditPurchaseToken, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaDebitPurchaseToken, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaClearingTransmission, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaDirectAuthorization, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaDirectTransactionDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaServiceCommercialCredit, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAtmCashWithdrawalDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAtmCashWithdrawalInternational, TransactionSourceCardFinancialSchemeFeesFeeTypeVisaAtmCashDepositDomestic, TransactionSourceCardFinancialSchemeFeesFeeTypePulseSwitchFee, TransactionSourceCardFinancialSchemeFeesFeeTypePulseTokenizationFee:
 		return true
 	}
 	return false
@@ -2290,6 +2293,9 @@ func (r TransactionSourceCardRefundCurrency) IsKnown() bool {
 
 // Interchange assessed as a part of this transaction.
 type TransactionSourceCardRefundInterchange struct {
+	// An adjustment the card network made to the interchange after this transaction
+	// cleared, if any.
+	Adjustment TransactionSourceCardRefundInterchangeAdjustment `json:"adjustment" api:"required,nullable"`
 	// The interchange amount given as a string containing a decimal number in major
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
@@ -2306,6 +2312,7 @@ type TransactionSourceCardRefundInterchange struct {
 // transactionSourceCardRefundInterchangeJSON contains the JSON metadata for the
 // struct [TransactionSourceCardRefundInterchange]
 type transactionSourceCardRefundInterchangeJSON struct {
+	Adjustment  apijson.Field
 	Amount      apijson.Field
 	Code        apijson.Field
 	Currency    apijson.Field
@@ -2318,6 +2325,39 @@ func (r *TransactionSourceCardRefundInterchange) UnmarshalJSON(data []byte) (err
 }
 
 func (r transactionSourceCardRefundInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// An adjustment the card network made to the interchange after this transaction
+// cleared, if any.
+type TransactionSourceCardRefundInterchangeAdjustment struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the interchange was adjusted.
+	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
+	// The adjustment amount given as a string containing a decimal number in major
+	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+	// credited to Increase and a negative number if it is debited.
+	Amount string `json:"amount" api:"required"`
+	// The card network specific interchange code that applies after the adjustment.
+	Code string                                               `json:"code" api:"required"`
+	JSON transactionSourceCardRefundInterchangeAdjustmentJSON `json:"-"`
+}
+
+// transactionSourceCardRefundInterchangeAdjustmentJSON contains the JSON metadata
+// for the struct [TransactionSourceCardRefundInterchangeAdjustment]
+type transactionSourceCardRefundInterchangeAdjustmentJSON struct {
+	AdjustedAt  apijson.Field
+	Amount      apijson.Field
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardRefundInterchangeAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardRefundInterchangeAdjustmentJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -3314,13 +3354,16 @@ const (
 	TransactionSourceCardRefundSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit            TransactionSourceCardRefundSchemeFeesFeeType = "visa_advertising_service_commercial_credit"
 	TransactionSourceCardRefundSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram            TransactionSourceCardRefundSchemeFeesFeeType = "visa_community_growth_acceleration_program"
 	TransactionSourceCardRefundSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit           TransactionSourceCardRefundSchemeFeesFeeType = "visa_processing_guarantee_commercial_credit"
+	TransactionSourceCardRefundSchemeFeesFeeTypeVisaAtmCashWithdrawalDomestic                     TransactionSourceCardRefundSchemeFeesFeeType = "visa_atm_cash_withdrawal_domestic"
+	TransactionSourceCardRefundSchemeFeesFeeTypeVisaAtmCashWithdrawalInternational                TransactionSourceCardRefundSchemeFeesFeeType = "visa_atm_cash_withdrawal_international"
+	TransactionSourceCardRefundSchemeFeesFeeTypeVisaAtmCashDepositDomestic                        TransactionSourceCardRefundSchemeFeesFeeType = "visa_atm_cash_deposit_domestic"
 	TransactionSourceCardRefundSchemeFeesFeeTypePulseSwitchFee                                    TransactionSourceCardRefundSchemeFeesFeeType = "pulse_switch_fee"
 	TransactionSourceCardRefundSchemeFeesFeeTypePulseTokenizationFee                              TransactionSourceCardRefundSchemeFeesFeeType = "pulse_tokenization_fee"
 )
 
 func (r TransactionSourceCardRefundSchemeFeesFeeType) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardRefundSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, TransactionSourceCardRefundSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAdvancedAuthorization, TransactionSourceCardRefundSchemeFeesFeeTypeVisaMessageTransmission, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAccountVerificationDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAccountVerificationInternational, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAccountVerificationCanada, TransactionSourceCardRefundSchemeFeesFeeTypeVisaCorporateAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaPurchaseDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaPurchaseInternational, TransactionSourceCardRefundSchemeFeesFeeTypeVisaCreditPurchaseToken, TransactionSourceCardRefundSchemeFeesFeeTypeVisaDebitPurchaseToken, TransactionSourceCardRefundSchemeFeesFeeTypeVisaClearingTransmission, TransactionSourceCardRefundSchemeFeesFeeTypeVisaDirectAuthorization, TransactionSourceCardRefundSchemeFeesFeeTypeVisaDirectTransactionDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaServiceCommercialCredit, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, TransactionSourceCardRefundSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, TransactionSourceCardRefundSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, TransactionSourceCardRefundSchemeFeesFeeTypePulseSwitchFee, TransactionSourceCardRefundSchemeFeesFeeTypePulseTokenizationFee:
+	case TransactionSourceCardRefundSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, TransactionSourceCardRefundSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAdvancedAuthorization, TransactionSourceCardRefundSchemeFeesFeeTypeVisaMessageTransmission, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAccountVerificationDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAccountVerificationInternational, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAccountVerificationCanada, TransactionSourceCardRefundSchemeFeesFeeTypeVisaCorporateAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, TransactionSourceCardRefundSchemeFeesFeeTypeVisaPurchaseDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaPurchaseInternational, TransactionSourceCardRefundSchemeFeesFeeTypeVisaCreditPurchaseToken, TransactionSourceCardRefundSchemeFeesFeeTypeVisaDebitPurchaseToken, TransactionSourceCardRefundSchemeFeesFeeTypeVisaClearingTransmission, TransactionSourceCardRefundSchemeFeesFeeTypeVisaDirectAuthorization, TransactionSourceCardRefundSchemeFeesFeeTypeVisaDirectTransactionDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaServiceCommercialCredit, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, TransactionSourceCardRefundSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, TransactionSourceCardRefundSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAtmCashWithdrawalDomestic, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAtmCashWithdrawalInternational, TransactionSourceCardRefundSchemeFeesFeeTypeVisaAtmCashDepositDomestic, TransactionSourceCardRefundSchemeFeesFeeTypePulseSwitchFee, TransactionSourceCardRefundSchemeFeesFeeTypePulseTokenizationFee:
 		return true
 	}
 	return false
@@ -3567,6 +3610,9 @@ func (r TransactionSourceCardSettlementCurrency) IsKnown() bool {
 
 // Interchange assessed as a part of this transaction.
 type TransactionSourceCardSettlementInterchange struct {
+	// An adjustment the card network made to the interchange after this transaction
+	// cleared, if any.
+	Adjustment TransactionSourceCardSettlementInterchangeAdjustment `json:"adjustment" api:"required,nullable"`
 	// The interchange amount given as a string containing a decimal number in major
 	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
 	// credited to Increase (e.g., settlements) and a negative number if it is debited
@@ -3583,6 +3629,7 @@ type TransactionSourceCardSettlementInterchange struct {
 // transactionSourceCardSettlementInterchangeJSON contains the JSON metadata for
 // the struct [TransactionSourceCardSettlementInterchange]
 type transactionSourceCardSettlementInterchangeJSON struct {
+	Adjustment  apijson.Field
 	Amount      apijson.Field
 	Code        apijson.Field
 	Currency    apijson.Field
@@ -3595,6 +3642,39 @@ func (r *TransactionSourceCardSettlementInterchange) UnmarshalJSON(data []byte) 
 }
 
 func (r transactionSourceCardSettlementInterchangeJSON) RawJSON() string {
+	return r.raw
+}
+
+// An adjustment the card network made to the interchange after this transaction
+// cleared, if any.
+type TransactionSourceCardSettlementInterchangeAdjustment struct {
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the interchange was adjusted.
+	AdjustedAt time.Time `json:"adjusted_at" api:"required" format:"date-time"`
+	// The adjustment amount given as a string containing a decimal number in major
+	// units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+	// credited to Increase and a negative number if it is debited.
+	Amount string `json:"amount" api:"required"`
+	// The card network specific interchange code that applies after the adjustment.
+	Code string                                                   `json:"code" api:"required"`
+	JSON transactionSourceCardSettlementInterchangeAdjustmentJSON `json:"-"`
+}
+
+// transactionSourceCardSettlementInterchangeAdjustmentJSON contains the JSON
+// metadata for the struct [TransactionSourceCardSettlementInterchangeAdjustment]
+type transactionSourceCardSettlementInterchangeAdjustmentJSON struct {
+	AdjustedAt  apijson.Field
+	Amount      apijson.Field
+	Code        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *TransactionSourceCardSettlementInterchangeAdjustment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r transactionSourceCardSettlementInterchangeAdjustmentJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -4592,13 +4672,16 @@ const (
 	TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit            TransactionSourceCardSettlementSchemeFeesFeeType = "visa_advertising_service_commercial_credit"
 	TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram            TransactionSourceCardSettlementSchemeFeesFeeType = "visa_community_growth_acceleration_program"
 	TransactionSourceCardSettlementSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit           TransactionSourceCardSettlementSchemeFeesFeeType = "visa_processing_guarantee_commercial_credit"
+	TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAtmCashWithdrawalDomestic                     TransactionSourceCardSettlementSchemeFeesFeeType = "visa_atm_cash_withdrawal_domestic"
+	TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAtmCashWithdrawalInternational                TransactionSourceCardSettlementSchemeFeesFeeType = "visa_atm_cash_withdrawal_international"
+	TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAtmCashDepositDomestic                        TransactionSourceCardSettlementSchemeFeesFeeType = "visa_atm_cash_deposit_domestic"
 	TransactionSourceCardSettlementSchemeFeesFeeTypePulseSwitchFee                                    TransactionSourceCardSettlementSchemeFeesFeeType = "pulse_switch_fee"
 	TransactionSourceCardSettlementSchemeFeesFeeTypePulseTokenizationFee                              TransactionSourceCardSettlementSchemeFeesFeeType = "pulse_tokenization_fee"
 )
 
 func (r TransactionSourceCardSettlementSchemeFeesFeeType) IsKnown() bool {
 	switch r {
-	case TransactionSourceCardSettlementSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAdvancedAuthorization, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaMessageTransmission, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAccountVerificationDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAccountVerificationInternational, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAccountVerificationCanada, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCorporateAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaPurchaseDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaPurchaseInternational, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCreditPurchaseToken, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaDebitPurchaseToken, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaClearingTransmission, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaDirectAuthorization, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaDirectTransactionDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaServiceCommercialCredit, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, TransactionSourceCardSettlementSchemeFeesFeeTypePulseSwitchFee, TransactionSourceCardSettlementSchemeFeesFeeTypePulseTokenizationFee:
+	case TransactionSourceCardSettlementSchemeFeesFeeTypeVisaInternationalServiceAssessmentSingleCurrency, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaInternationalServiceAssessmentCrossCurrency, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationDomesticPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationInternationalPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationCanadaPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationReversalPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationReversalInternationalPointOfSale, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAuthorizationAddressVerificationService, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAdvancedAuthorization, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaMessageTransmission, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAccountVerificationDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAccountVerificationInternational, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAccountVerificationCanada, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCorporateAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaConsumerDebitAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaBusinessDebitAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaPurchasingAcceptanceFee, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaPurchaseDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaPurchaseInternational, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCreditPurchaseToken, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaDebitPurchaseToken, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaClearingTransmission, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaDirectAuthorization, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaDirectTransactionDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaServiceCommercialCredit, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAdvertisingServiceCommercialCredit, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaCommunityGrowthAccelerationProgram, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaProcessingGuaranteeCommercialCredit, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAtmCashWithdrawalDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAtmCashWithdrawalInternational, TransactionSourceCardSettlementSchemeFeesFeeTypeVisaAtmCashDepositDomestic, TransactionSourceCardSettlementSchemeFeesFeeTypePulseSwitchFee, TransactionSourceCardSettlementSchemeFeesFeeTypePulseTokenizationFee:
 		return true
 	}
 	return false
