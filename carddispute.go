@@ -154,8 +154,9 @@ type CardDispute struct {
 	Win CardDisputeWin `json:"win" api:"required,nullable"`
 	// If the Card Dispute has been withdrawn, this will contain details of the
 	// withdrawal.
-	Withdrawal CardDisputeWithdrawal `json:"withdrawal" api:"required,nullable"`
-	JSON       cardDisputeJSON       `json:"-"`
+	Withdrawal  CardDisputeWithdrawal  `json:"withdrawal" api:"required,nullable"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        cardDisputeJSON        `json:"-"`
 }
 
 // cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
