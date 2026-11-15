@@ -348,8 +348,9 @@ type BalanceLookup struct {
 	Loan BalanceLookupLoan `json:"loan" api:"required,nullable"`
 	// A constant representing the object's type. For this resource it will always be
 	// `balance_lookup`.
-	Type BalanceLookupType `json:"type" api:"required"`
-	JSON balanceLookupJSON `json:"-"`
+	Type        BalanceLookupType      `json:"type" api:"required"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        balanceLookupJSON      `json:"-"`
 }
 
 // balanceLookupJSON contains the JSON metadata for the struct [BalanceLookup]
