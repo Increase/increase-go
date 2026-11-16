@@ -154,8 +154,9 @@ type CardDispute struct {
 	Win CardDisputeWin `json:"win" api:"required,nullable"`
 	// If the Card Dispute has been withdrawn, this will contain details of the
 	// withdrawal.
-	Withdrawal CardDisputeWithdrawal `json:"withdrawal" api:"required,nullable"`
-	JSON       cardDisputeJSON       `json:"-"`
+	Withdrawal  CardDisputeWithdrawal  `json:"withdrawal" api:"required,nullable"`
+	ExtraFields map[string]interface{} `json:"-" api:"extrafields"`
+	JSON        cardDisputeJSON        `json:"-"`
 }
 
 // cardDisputeJSON contains the JSON metadata for the struct [CardDispute]
@@ -4553,21 +4554,23 @@ type CardDisputeNewParams struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
 	DisputedTransactionID param.Field[string] `json:"disputed_transaction_id" api:"required"`
-	// The network of the disputed transaction. Details specific to the network are
-	// required under the sub-object with the same identifier as the network.
+	// The network of the disputed transaction. Details specific to the network can be
+	// provided under the sub-object with the same identifier as the network.
 	Network param.Field[CardDisputeNewParamsNetwork] `json:"network" api:"required"`
 	// The monetary amount of the part of the transaction that is being disputed. This
 	// is optional and will default to the full amount of the transaction if not
 	// provided. If provided, the amount must be less than or equal to the amount of
 	// the transaction.
 	Amount param.Field[int64] `json:"amount"`
-	// The files to be attached to the initial dispute submission.
+	// The files to be attached to the initial dispute submission. Can only be provided
+	// along with the network-specific details.
 	AttachmentFiles param.Field[[]CardDisputeNewParamsAttachmentFile] `json:"attachment_files"`
 	// The free-form explanation provided to Increase to provide more context for the
-	// user submission. This field is not sent directly to the card networks.
+	// user submission. This field is not sent directly to the card networks. Can only
+	// be provided along with the network-specific details.
 	Explanation param.Field[string] `json:"explanation"`
-	// The Visa-specific parameters for the dispute. Required if and only if `network`
-	// is `visa`.
+	// The Visa-specific parameters for the initial User Submission. If omitted, a
+	// later User Submission will be required.
 	Visa param.Field[CardDisputeNewParamsVisa] `json:"visa"`
 }
 
@@ -4575,8 +4578,8 @@ func (r CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The network of the disputed transaction. Details specific to the network are
-// required under the sub-object with the same identifier as the network.
+// The network of the disputed transaction. Details specific to the network can be
+// provided under the sub-object with the same identifier as the network.
 type CardDisputeNewParamsNetwork string
 
 const (
@@ -4601,8 +4604,8 @@ func (r CardDisputeNewParamsAttachmentFile) MarshalJSON() (data []byte, err erro
 	return apijson.MarshalRoot(r)
 }
 
-// The Visa-specific parameters for the dispute. Required if and only if `network`
-// is `visa`.
+// The Visa-specific parameters for the initial User Submission. If omitted, a
+// later User Submission will be required.
 type CardDisputeNewParamsVisa struct {
 	// Category.
 	Category param.Field[CardDisputeNewParamsVisaCategory] `json:"category" api:"required"`
