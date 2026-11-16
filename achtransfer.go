@@ -153,7 +153,7 @@ type ACHTransfer struct {
 	// same for all your transfers.
 	CompanyID string `json:"company_id" api:"required"`
 	// The name by which the recipient knows you.
-	CompanyName string `json:"company_name" api:"required,nullable"`
+	CompanyName string `json:"company_name" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the transfer was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -180,7 +180,7 @@ type ACHTransfer struct {
 	IndividualID string `json:"individual_id" api:"required,nullable"`
 	// The name of the transfer recipient. This value is informational and not verified
 	// by the recipient's bank.
-	IndividualName string `json:"individual_name" api:"required,nullable"`
+	IndividualName string `json:"individual_name" api:"required"`
 	// The transfer's network.
 	Network ACHTransferNetwork `json:"network" api:"required"`
 	// If the receiving bank notifies that future transfers should use different

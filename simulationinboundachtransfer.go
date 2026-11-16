@@ -90,6 +90,7 @@ type SimulationInboundACHTransferNewParamsAddenda struct {
 	// The type of addenda to simulate being sent with the transfer.
 	Category param.Field[SimulationInboundACHTransferNewParamsAddendaCategory] `json:"category" api:"required"`
 	// Unstructured `payment_related_information` passed through with the transfer.
+	// Required if and only if `category` is `freeform`.
 	Freeform param.Field[SimulationInboundACHTransferNewParamsAddendaFreeform] `json:"freeform"`
 }
 
@@ -113,6 +114,7 @@ func (r SimulationInboundACHTransferNewParamsAddendaCategory) IsKnown() bool {
 }
 
 // Unstructured `payment_related_information` passed through with the transfer.
+// Required if and only if `category` is `freeform`.
 type SimulationInboundACHTransferNewParamsAddendaFreeform struct {
 	// Each entry represents an addendum sent with the transfer.
 	Entries param.Field[[]SimulationInboundACHTransferNewParamsAddendaFreeformEntry] `json:"entries" api:"required"`

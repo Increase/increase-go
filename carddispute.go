@@ -81,6 +81,32 @@ func (r *CardDisputeService) ListAutoPaging(ctx context.Context, query CardDispu
 	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
+// Credits the cardholder's Account for the Card Dispute amount, funded by your
+// program's provisional credit Account.
+func (r *CardDisputeService) ProvideProvisionalCredit(ctx context.Context, cardDisputeID string, opts ...option.RequestOption) (res *CardDispute, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if cardDisputeID == "" {
+		err = errors.New("missing required card_dispute_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("card_disputes/%s/provide_provisional_credit", cardDisputeID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
+// Debits the cardholder's Account for the provisional credit and returns it to
+// your program's provisional credit Account.
+func (r *CardDisputeService) ReverseProvisionalCredit(ctx context.Context, cardDisputeID string, opts ...option.RequestOption) (res *CardDispute, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if cardDisputeID == "" {
+		err = errors.New("missing required card_dispute_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("card_disputes/%s/reverse_provisional_credit", cardDisputeID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
+	return res, err
+}
+
 // Submit a User Submission for a Card Dispute
 func (r *CardDisputeService) SubmitUserSubmission(ctx context.Context, cardDisputeID string, body CardDisputeSubmitUserSubmissionParams, opts ...option.RequestOption) (res *CardDispute, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -132,6 +158,9 @@ type CardDispute struct {
 	Loss CardDisputeLoss `json:"loss" api:"required,nullable"`
 	// The network that the Card Dispute is associated with.
 	Network CardDisputeNetwork `json:"network" api:"required"`
+	// If a provisional credit has been provided for the Card Dispute, this will
+	// contain details of the provisional credit.
+	ProvisionalCredit CardDisputeProvisionalCredit `json:"provisional_credit" api:"required,nullable"`
 	// If the Card Dispute has been rejected, this will contain details of the
 	// rejection.
 	Rejection CardDisputeRejection `json:"rejection" api:"required,nullable"`
@@ -169,6 +198,7 @@ type cardDisputeJSON struct {
 	IdempotencyKey           apijson.Field
 	Loss                     apijson.Field
 	Network                  apijson.Field
+	ProvisionalCredit        apijson.Field
 	Rejection                apijson.Field
 	Status                   apijson.Field
 	Type                     apijson.Field
@@ -245,6 +275,82 @@ func (r CardDisputeNetwork) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// If a provisional credit has been provided for the Card Dispute, this will
+// contain details of the provisional credit.
+type CardDisputeProvisionalCredit struct {
+	// The amount of the provisional credit in the minor unit of its currency. For
+	// dollars, for example, this is cents.
+	Amount int64 `json:"amount" api:"required"`
+	// The identifier of the Transaction that credited the cardholder's Account.
+	CardholderAccountTransactionID string `json:"cardholder_account_transaction_id" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the provisional credit was provided.
+	ProvidedAt time.Time `json:"provided_at" api:"required" format:"date-time"`
+	// The identifier of the Transaction that debited the provisional credit funding
+	// Account.
+	ProvisionalCreditFundingAccountTransactionID string `json:"provisional_credit_funding_account_transaction_id" api:"required"`
+	// If the provisional credit has been reversed, this will contain details of the
+	// reversal.
+	Reversal CardDisputeProvisionalCreditReversal `json:"reversal" api:"required,nullable"`
+	JSON     cardDisputeProvisionalCreditJSON     `json:"-"`
+}
+
+// cardDisputeProvisionalCreditJSON contains the JSON metadata for the struct
+// [CardDisputeProvisionalCredit]
+type cardDisputeProvisionalCreditJSON struct {
+	Amount                                       apijson.Field
+	CardholderAccountTransactionID               apijson.Field
+	ProvidedAt                                   apijson.Field
+	ProvisionalCreditFundingAccountTransactionID apijson.Field
+	Reversal                                     apijson.Field
+	raw                                          string
+	ExtraFields                                  map[string]apijson.Field
+}
+
+func (r *CardDisputeProvisionalCredit) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeProvisionalCreditJSON) RawJSON() string {
+	return r.raw
+}
+
+// If the provisional credit has been reversed, this will contain details of the
+// reversal.
+type CardDisputeProvisionalCreditReversal struct {
+	// The amount of the reversal in the minor unit of its currency. For dollars, for
+	// example, this is cents.
+	Amount int64 `json:"amount" api:"required"`
+	// The identifier of the Transaction that debited the cardholder's Account.
+	CardholderAccountTransactionID string `json:"cardholder_account_transaction_id" api:"required"`
+	// The identifier of the Transaction that credited the provisional credit funding
+	// Account.
+	ProvisionalCreditFundingAccountTransactionID string `json:"provisional_credit_funding_account_transaction_id" api:"required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+	// the provisional credit was reversed.
+	ReversedAt time.Time                                `json:"reversed_at" api:"required" format:"date-time"`
+	JSON       cardDisputeProvisionalCreditReversalJSON `json:"-"`
+}
+
+// cardDisputeProvisionalCreditReversalJSON contains the JSON metadata for the
+// struct [CardDisputeProvisionalCreditReversal]
+type cardDisputeProvisionalCreditReversalJSON struct {
+	Amount                                       apijson.Field
+	CardholderAccountTransactionID               apijson.Field
+	ProvisionalCreditFundingAccountTransactionID apijson.Field
+	ReversedAt                                   apijson.Field
+	raw                                          string
+	ExtraFields                                  map[string]apijson.Field
+}
+
+func (r *CardDisputeProvisionalCreditReversal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r cardDisputeProvisionalCreditReversalJSON) RawJSON() string {
+	return r.raw
 }
 
 // If the Card Dispute has been rejected, this will contain details of the
@@ -355,6 +461,8 @@ type CardDisputeVisaNetworkEvent struct {
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
 	// the Visa Card Dispute Network Event was created.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// The account the dispute financial transaction was posted to, if any.
+	DisputeFinancialAccountID string `json:"dispute_financial_account_id" api:"required,nullable"`
 	// The dispute financial transaction that resulted from the network event, if any.
 	DisputeFinancialTransactionID string `json:"dispute_financial_transaction_id" api:"required,nullable"`
 	// A Card Dispute Chargeback Accepted Visa Network Event object. This field will be
@@ -437,7 +545,6 @@ type CardDisputeVisaNetworkEvent struct {
 	// submitted Visa Card Dispute Network Event, which represents that the user's
 	// request to withdraw the dispute has been submitted to the network.
 	UserWithdrawalSubmitted CardDisputeVisaNetworkEventsUserWithdrawalSubmitted `json:"user_withdrawal_submitted" api:"nullable"`
-	ExtraFields             map[string]interface{}                              `json:"-" api:"extrafields"`
 	JSON                    cardDisputeVisaNetworkEventJSON                     `json:"-"`
 }
 
@@ -447,6 +554,7 @@ type cardDisputeVisaNetworkEventJSON struct {
 	AttachmentFiles                        apijson.Field
 	Category                               apijson.Field
 	CreatedAt                              apijson.Field
+	DisputeFinancialAccountID              apijson.Field
 	DisputeFinancialTransactionID          apijson.Field
 	ChargebackAccepted                     apijson.Field
 	ChargebackSubmitted                    apijson.Field
@@ -4553,21 +4661,23 @@ type CardDisputeNewParams struct {
 	// The Transaction you wish to dispute. This Transaction must have a `source_type`
 	// of `card_settlement`.
 	DisputedTransactionID param.Field[string] `json:"disputed_transaction_id" api:"required"`
-	// The network of the disputed transaction. Details specific to the network are
-	// required under the sub-object with the same identifier as the network.
+	// The network of the disputed transaction. Details specific to the network can be
+	// provided under the sub-object with the same identifier as the network.
 	Network param.Field[CardDisputeNewParamsNetwork] `json:"network" api:"required"`
 	// The monetary amount of the part of the transaction that is being disputed. This
 	// is optional and will default to the full amount of the transaction if not
 	// provided. If provided, the amount must be less than or equal to the amount of
 	// the transaction.
 	Amount param.Field[int64] `json:"amount"`
-	// The files to be attached to the initial dispute submission.
+	// The files to be attached to the initial dispute submission. Can only be provided
+	// along with the network-specific details.
 	AttachmentFiles param.Field[[]CardDisputeNewParamsAttachmentFile] `json:"attachment_files"`
 	// The free-form explanation provided to Increase to provide more context for the
-	// user submission. This field is not sent directly to the card networks.
+	// user submission. This field is not sent directly to the card networks. Can only
+	// be provided along with the network-specific details.
 	Explanation param.Field[string] `json:"explanation"`
-	// The Visa-specific parameters for the dispute. Required if and only if `network`
-	// is `visa`.
+	// The Visa-specific parameters for the initial User Submission. If omitted, a
+	// later User Submission will be required.
 	Visa param.Field[CardDisputeNewParamsVisa] `json:"visa"`
 }
 
@@ -4575,8 +4685,8 @@ func (r CardDisputeNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The network of the disputed transaction. Details specific to the network are
-// required under the sub-object with the same identifier as the network.
+// The network of the disputed transaction. Details specific to the network can be
+// provided under the sub-object with the same identifier as the network.
 type CardDisputeNewParamsNetwork string
 
 const (
@@ -4601,8 +4711,8 @@ func (r CardDisputeNewParamsAttachmentFile) MarshalJSON() (data []byte, err erro
 	return apijson.MarshalRoot(r)
 }
 
-// The Visa-specific parameters for the dispute. Required if and only if `network`
-// is `visa`.
+// The Visa-specific parameters for the initial User Submission. If omitted, a
+// later User Submission will be required.
 type CardDisputeNewParamsVisa struct {
 	// Category.
 	Category param.Field[CardDisputeNewParamsVisaCategory] `json:"category" api:"required"`
