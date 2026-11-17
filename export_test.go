@@ -29,9 +29,10 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 	_, err := client.Exports.New(context.TODO(), increase.ExportNewParams{
 		Category: increase.F(increase.ExportNewParamsCategoryTransactionCsv),
 		AccountStatementBai2: increase.F(increase.ExportNewParamsAccountStatementBai2{
-			AccountID:     increase.F("account_id"),
-			EffectiveDate: increase.F(time.Now()),
-			ProgramID:     increase.F("program_id"),
+			AccountID:      increase.F("account_id"),
+			OnOrAfterDate:  increase.F(time.Now()),
+			OnOrBeforeDate: increase.F(time.Now()),
+			ProgramID:      increase.F("program_id"),
 		}),
 		AccountStatementOfx: increase.F(increase.ExportNewParamsAccountStatementOfx{
 			AccountID: increase.F("account_id"),
