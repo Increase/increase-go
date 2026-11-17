@@ -2200,6 +2200,8 @@ type EntityNewParamsCorporationLegalIdentifier struct {
 	//
 	// Defaults to `us_employer_identification_number`.
 	Category param.Field[EntityNewParamsCorporationLegalIdentifierCategory] `json:"category"`
+	// The date on which the legal identifier was issued.
+	IssuedOn param.Field[time.Time] `json:"issued_on" format:"date"`
 }
 
 func (r EntityNewParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, err error) {
@@ -3295,6 +3297,8 @@ type EntityUpdateParamsCorporationLegalIdentifier struct {
 	//
 	// Defaults to `us_employer_identification_number`.
 	Category param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
+	// The date on which the legal identifier was issued.
+	IssuedOn param.Field[time.Time] `json:"issued_on" format:"date"`
 }
 
 func (r EntityUpdateParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, err error) {

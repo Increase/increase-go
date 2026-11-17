@@ -79,6 +79,7 @@ func TestEntityNewWithOptionalParams(t *testing.T) {
 			LegalIdentifier: increase.F(increase.EntityNewParamsCorporationLegalIdentifier{
 				Value:    increase.F("602214076"),
 				Category: increase.F(increase.EntityNewParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber),
+				IssuedOn: increase.F(time.Now()),
 			}),
 			Name:                               increase.F("National Phonograph Company"),
 			BeneficialOwnershipExemptionReason: increase.F(increase.EntityNewParamsCorporationBeneficialOwnershipExemptionReasonRegulatedFinancialInstitution),
@@ -368,6 +369,7 @@ func TestEntityUpdateWithOptionalParams(t *testing.T) {
 				LegalIdentifier: increase.F(increase.EntityUpdateParamsCorporationLegalIdentifier{
 					Value:    increase.F("x"),
 					Category: increase.F(increase.EntityUpdateParamsCorporationLegalIdentifierCategoryUsEmployerIdentificationNumber),
+					IssuedOn: increase.F(time.Now()),
 				}),
 				Name:    increase.F("x"),
 				Website: increase.F("https://company.example.com"),
