@@ -122,6 +122,7 @@ type InboundFednowTransfer struct {
 	UniqueEndToEndTransactionReference string `json:"unique_end_to_end_transaction_reference" api:"required,nullable"`
 	// Additional information included with the transfer.
 	UnstructuredRemittanceInformation string                    `json:"unstructured_remittance_information" api:"required,nullable"`
+	ExtraFields                       map[string]interface{}    `json:"-" api:"extrafields"`
 	JSON                              inboundFednowTransferJSON `json:"-"`
 }
 
@@ -256,12 +257,13 @@ const (
 	InboundFednowTransferStatusTimedOut          InboundFednowTransferStatus = "timed_out"
 	InboundFednowTransferStatusConfirmed         InboundFednowTransferStatus = "confirmed"
 	InboundFednowTransferStatusDeclined          InboundFednowTransferStatus = "declined"
+	InboundFednowTransferStatusReturned          InboundFednowTransferStatus = "returned"
 	InboundFednowTransferStatusRequiresAttention InboundFednowTransferStatus = "requires_attention"
 )
 
 func (r InboundFednowTransferStatus) IsKnown() bool {
 	switch r {
-	case InboundFednowTransferStatusPendingConfirming, InboundFednowTransferStatusTimedOut, InboundFednowTransferStatusConfirmed, InboundFednowTransferStatusDeclined, InboundFednowTransferStatusRequiresAttention:
+	case InboundFednowTransferStatusPendingConfirming, InboundFednowTransferStatusTimedOut, InboundFednowTransferStatusConfirmed, InboundFednowTransferStatusDeclined, InboundFednowTransferStatusReturned, InboundFednowTransferStatusRequiresAttention:
 		return true
 	}
 	return false
