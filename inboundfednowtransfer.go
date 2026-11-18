@@ -256,12 +256,13 @@ const (
 	InboundFednowTransferStatusTimedOut          InboundFednowTransferStatus = "timed_out"
 	InboundFednowTransferStatusConfirmed         InboundFednowTransferStatus = "confirmed"
 	InboundFednowTransferStatusDeclined          InboundFednowTransferStatus = "declined"
+	InboundFednowTransferStatusReturned          InboundFednowTransferStatus = "returned"
 	InboundFednowTransferStatusRequiresAttention InboundFednowTransferStatus = "requires_attention"
 )
 
 func (r InboundFednowTransferStatus) IsKnown() bool {
 	switch r {
-	case InboundFednowTransferStatusPendingConfirming, InboundFednowTransferStatusTimedOut, InboundFednowTransferStatusConfirmed, InboundFednowTransferStatusDeclined, InboundFednowTransferStatusRequiresAttention:
+	case InboundFednowTransferStatusPendingConfirming, InboundFednowTransferStatusTimedOut, InboundFednowTransferStatusConfirmed, InboundFednowTransferStatusDeclined, InboundFednowTransferStatusReturned, InboundFednowTransferStatusRequiresAttention:
 		return true
 	}
 	return false

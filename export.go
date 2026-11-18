@@ -196,21 +196,27 @@ func (r exportJSON) RawJSON() string {
 type ExportAccountStatementBai2 struct {
 	// Filter results by Account.
 	AccountID string `json:"account_id" api:"required,nullable"`
-	// The UTC date for which to retrieve the balance.
-	EffectiveDate time.Time `json:"effective_date" api:"required,nullable" format:"date"`
+	// The first as-of date (UTC) reported in the BAI2 file. If null, the report
+	// started from the earliest included Account.
+	OnOrAfterDate time.Time `json:"on_or_after_date" api:"required,nullable" format:"date"`
+	// The last as-of date (UTC) reported in the BAI2 file. If null, the report ran
+	// through the date the Export was created.
+	OnOrBeforeDate time.Time `json:"on_or_before_date" api:"required,nullable" format:"date"`
 	// Filter results by Program.
-	ProgramID string                         `json:"program_id" api:"required,nullable"`
-	JSON      exportAccountStatementBai2JSON `json:"-"`
+	ProgramID   string                         `json:"program_id" api:"required,nullable"`
+	ExtraFields map[string]interface{}         `json:"-" api:"extrafields"`
+	JSON        exportAccountStatementBai2JSON `json:"-"`
 }
 
 // exportAccountStatementBai2JSON contains the JSON metadata for the struct
 // [ExportAccountStatementBai2]
 type exportAccountStatementBai2JSON struct {
-	AccountID     apijson.Field
-	EffectiveDate apijson.Field
-	ProgramID     apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	AccountID      apijson.Field
+	OnOrAfterDate  apijson.Field
+	OnOrBeforeDate apijson.Field
+	ProgramID      apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *ExportAccountStatementBai2) UnmarshalJSON(data []byte) (err error) {
@@ -815,7 +821,11 @@ type ExportNewParams struct {
 	// The type of Export to create.
 	Category param.Field[ExportNewParamsCategory] `json:"category" api:"required"`
 	// Options for the created export. Required if `category` is equal to
-	// `account_statement_bai2`.
+	// `account_statement_bai2`. Each as-of date from `on_or_after_date` through
+	// `on_or_before_date` gets its own BAI2 group (`02` record) in the file. If a
+	// group's as-of date is before the UTC date the Export was created, it has
+	// end-of-day balances. If it's the UTC date the Export was created, it has
+	// intraday balances as of the time the Export was created.
 	AccountStatementBai2 param.Field[ExportNewParamsAccountStatementBai2] `json:"account_statement_bai2"`
 	// Options for the created export. Required if `category` is equal to
 	// `account_statement_ofx`.
@@ -877,18 +887,26 @@ func (r ExportNewParamsCategory) IsKnown() bool {
 }
 
 // Options for the created export. Required if `category` is equal to
-// `account_statement_bai2`.
+// `account_statement_bai2`. Each as-of date from `on_or_after_date` through
+// `on_or_before_date` gets its own BAI2 group (`02` record) in the file. If a
+// group's as-of date is before the UTC date the Export was created, it has
+// end-of-day balances. If it's the UTC date the Export was created, it has
+// intraday balances as of the time the Export was created.
 type ExportNewParamsAccountStatementBai2 struct {
 	// The Account to create a BAI2 report for. If not provided, all open accounts will
 	// be included.
 	AccountID param.Field[string] `json:"account_id"`
-	// The UTC date to create a BAI2 report for. If not provided, the current date will
-	// be used. If the current date is used, the report will include intraday balances,
-	// otherwise it will include end-of-day balances for the provided date.
-	EffectiveDate param.Field[time.Time] `json:"effective_date" format:"date"`
+	// The first as-of date (UTC) to report. Each as-of date gets its own group in the
+	// BAI2 file. If not provided, the report starts from the earliest included
+	// Account.
+	OnOrAfterDate param.Field[time.Time] `json:"on_or_after_date" format:"date"`
+	// The last as-of date (UTC) to report. If not provided, the report runs through
+	// the current UTC date.
+	OnOrBeforeDate param.Field[time.Time] `json:"on_or_before_date" format:"date"`
 	// The Program to create a BAI2 report for. If not provided, all open accounts will
 	// be included.
-	ProgramID param.Field[string] `json:"program_id"`
+	ProgramID   param.Field[string]    `json:"program_id"`
+	ExtraFields map[string]interface{} `json:"-,extras"`
 }
 
 func (r ExportNewParamsAccountStatementBai2) MarshalJSON() (data []byte, err error) {
