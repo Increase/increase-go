@@ -151,7 +151,6 @@ type InboundCheckDeposit struct {
 	// The ID for the File containing the image of the front of the check.
 	FrontImageFileID string `json:"front_image_file_id" api:"required"`
 	// Whether the details on the check match the recipient name of the check transfer.
-	// This is an optional feature, contact sales to enable.
 	PayeeNameAnalysis InboundCheckDepositPayeeNameAnalysis `json:"payee_name_analysis" api:"required"`
 	// The status of the Inbound Check Deposit.
 	Status InboundCheckDepositStatus `json:"status" api:"required"`
@@ -316,7 +315,6 @@ func (r InboundCheckDepositDepositReturnReason) IsKnown() bool {
 }
 
 // Whether the details on the check match the recipient name of the check transfer.
-// This is an optional feature, contact sales to enable.
 type InboundCheckDepositPayeeNameAnalysis string
 
 const (
