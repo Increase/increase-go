@@ -482,8 +482,9 @@ type EntityCorporationLegalIdentifier struct {
 	// The category of the legal identifier.
 	Category EntityCorporationLegalIdentifierCategory `json:"category" api:"required"`
 	// The legal identifier itself.
-	Value string                               `json:"value" api:"required"`
-	JSON  entityCorporationLegalIdentifierJSON `json:"-"`
+	Value       string                               `json:"value" api:"required"`
+	ExtraFields map[string]interface{}               `json:"-" api:"extrafields"`
+	JSON        entityCorporationLegalIdentifierJSON `json:"-"`
 }
 
 // entityCorporationLegalIdentifierJSON contains the JSON metadata for the struct
@@ -2199,7 +2200,8 @@ type EntityNewParamsCorporationLegalIdentifier struct {
 	// The category of the legal identifier.
 	//
 	// Defaults to `us_employer_identification_number`.
-	Category param.Field[EntityNewParamsCorporationLegalIdentifierCategory] `json:"category"`
+	Category    param.Field[EntityNewParamsCorporationLegalIdentifierCategory] `json:"category"`
+	ExtraFields map[string]interface{}                                         `json:"-,extras"`
 }
 
 func (r EntityNewParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, err error) {
@@ -3294,7 +3296,8 @@ type EntityUpdateParamsCorporationLegalIdentifier struct {
 	// The category of the legal identifier.
 	//
 	// Defaults to `us_employer_identification_number`.
-	Category param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
+	Category    param.Field[EntityUpdateParamsCorporationLegalIdentifierCategory] `json:"category"`
+	ExtraFields map[string]interface{}                                            `json:"-,extras"`
 }
 
 func (r EntityUpdateParamsCorporationLegalIdentifier) MarshalJSON() (data []byte, err error) {
