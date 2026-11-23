@@ -115,13 +115,17 @@ type DigitalWalletToken struct {
 	TokenReferenceIdentifier string `json:"token_reference_identifier" api:"required"`
 	// The digital wallet app being used.
 	TokenRequestor DigitalWalletTokenTokenRequestor `json:"token_requestor" api:"required"`
+	// The token requestor.
+	TokenRequestorDetails DigitalWalletTokenTokenRequestorDetails `json:"token_requestor_details" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
 	Type DigitalWalletTokenType `json:"type" api:"required"`
 	// Updates to the Digital Wallet Token.
-	Updates     []DigitalWalletTokenUpdate `json:"updates" api:"required"`
-	ExtraFields map[string]interface{}     `json:"-" api:"extrafields"`
-	JSON        digitalWalletTokenJSON     `json:"-"`
+	Updates []DigitalWalletTokenUpdate `json:"updates" api:"required"`
+	// The digital wallet account.
+	Wallet      DigitalWalletTokenWallet `json:"wallet" api:"required"`
+	ExtraFields map[string]interface{}   `json:"-" api:"extrafields"`
+	JSON        digitalWalletTokenJSON   `json:"-"`
 }
 
 // digitalWalletTokenJSON contains the JSON metadata for the struct
@@ -138,8 +142,10 @@ type digitalWalletTokenJSON struct {
 	Status                                  apijson.Field
 	TokenReferenceIdentifier                apijson.Field
 	TokenRequestor                          apijson.Field
+	TokenRequestorDetails                   apijson.Field
 	Type                                    apijson.Field
 	Updates                                 apijson.Field
+	Wallet                                  apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
@@ -294,6 +300,32 @@ func (r DigitalWalletTokenTokenRequestor) IsKnown() bool {
 	return false
 }
 
+// The token requestor.
+type DigitalWalletTokenTokenRequestorDetails struct {
+	// The token requestor identifier.
+	Identifier string `json:"identifier" api:"required"`
+	// The token requestor name, for example "Apple Inc.".
+	Name string                                      `json:"name" api:"required,nullable"`
+	JSON digitalWalletTokenTokenRequestorDetailsJSON `json:"-"`
+}
+
+// digitalWalletTokenTokenRequestorDetailsJSON contains the JSON metadata for the
+// struct [DigitalWalletTokenTokenRequestorDetails]
+type digitalWalletTokenTokenRequestorDetailsJSON struct {
+	Identifier  apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenTokenRequestorDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenTokenRequestorDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `digital_wallet_token`.
 type DigitalWalletTokenType string
@@ -353,6 +385,32 @@ func (r DigitalWalletTokenUpdatesStatus) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The digital wallet account.
+type DigitalWalletTokenWallet struct {
+	// The wallet account identifier.
+	AccountIdentifier string `json:"account_identifier" api:"required,nullable"`
+	// A hash of the wallet account email address.
+	EmailHash string                       `json:"email_hash" api:"required,nullable"`
+	JSON      digitalWalletTokenWalletJSON `json:"-"`
+}
+
+// digitalWalletTokenWalletJSON contains the JSON metadata for the struct
+// [DigitalWalletTokenWallet]
+type digitalWalletTokenWalletJSON struct {
+	AccountIdentifier apijson.Field
+	EmailHash         apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenWallet) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenWalletJSON) RawJSON() string {
+	return r.raw
 }
 
 type DigitalWalletTokenListParams struct {
