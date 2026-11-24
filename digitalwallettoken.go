@@ -115,13 +115,17 @@ type DigitalWalletToken struct {
 	TokenReferenceIdentifier string `json:"token_reference_identifier" api:"required"`
 	// The digital wallet app being used.
 	TokenRequestor DigitalWalletTokenTokenRequestor `json:"token_requestor" api:"required"`
+	// The digital wallet or merchant that requested the token.
+	TokenRequestorDetails DigitalWalletTokenTokenRequestorDetails `json:"token_requestor_details" api:"required"`
 	// A constant representing the object's type. For this resource it will always be
 	// `digital_wallet_token`.
 	Type DigitalWalletTokenType `json:"type" api:"required"`
 	// Updates to the Digital Wallet Token.
-	Updates     []DigitalWalletTokenUpdate `json:"updates" api:"required"`
-	ExtraFields map[string]interface{}     `json:"-" api:"extrafields"`
-	JSON        digitalWalletTokenJSON     `json:"-"`
+	Updates []DigitalWalletTokenUpdate `json:"updates" api:"required"`
+	// Details about the digital wallet.
+	Wallet      DigitalWalletTokenWallet `json:"wallet" api:"required"`
+	ExtraFields map[string]interface{}   `json:"-" api:"extrafields"`
+	JSON        digitalWalletTokenJSON   `json:"-"`
 }
 
 // digitalWalletTokenJSON contains the JSON metadata for the struct
@@ -138,8 +142,10 @@ type digitalWalletTokenJSON struct {
 	Status                                  apijson.Field
 	TokenReferenceIdentifier                apijson.Field
 	TokenRequestor                          apijson.Field
+	TokenRequestorDetails                   apijson.Field
 	Type                                    apijson.Field
 	Updates                                 apijson.Field
+	Wallet                                  apijson.Field
 	raw                                     string
 	ExtraFields                             map[string]apijson.Field
 }
@@ -294,6 +300,32 @@ func (r DigitalWalletTokenTokenRequestor) IsKnown() bool {
 	return false
 }
 
+// The digital wallet or merchant that requested the token.
+type DigitalWalletTokenTokenRequestorDetails struct {
+	// The identifier assigned to the token requestor by the card network.
+	Identifier string `json:"identifier" api:"required"`
+	// The name of the token requestor, for example "Apple Inc.".
+	Name string                                      `json:"name" api:"required,nullable"`
+	JSON digitalWalletTokenTokenRequestorDetailsJSON `json:"-"`
+}
+
+// digitalWalletTokenTokenRequestorDetailsJSON contains the JSON metadata for the
+// struct [DigitalWalletTokenTokenRequestorDetails]
+type digitalWalletTokenTokenRequestorDetailsJSON struct {
+	Identifier  apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenTokenRequestorDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenTokenRequestorDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
 // A constant representing the object's type. For this resource it will always be
 // `digital_wallet_token`.
 type DigitalWalletTokenType string
@@ -353,6 +385,32 @@ func (r DigitalWalletTokenUpdatesStatus) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Details about the digital wallet.
+type DigitalWalletTokenWallet struct {
+	// An identifier for the cardholder's account with the digital wallet.
+	AccountIdentifier string `json:"account_identifier" api:"required,nullable"`
+	// A hash of the email address on the cardholder's digital wallet account.
+	EmailHash string                       `json:"email_hash" api:"required,nullable"`
+	JSON      digitalWalletTokenWalletJSON `json:"-"`
+}
+
+// digitalWalletTokenWalletJSON contains the JSON metadata for the struct
+// [DigitalWalletTokenWallet]
+type digitalWalletTokenWalletJSON struct {
+	AccountIdentifier apijson.Field
+	EmailHash         apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *DigitalWalletTokenWallet) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r digitalWalletTokenWalletJSON) RawJSON() string {
+	return r.raw
 }
 
 type DigitalWalletTokenListParams struct {

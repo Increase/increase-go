@@ -2830,6 +2830,8 @@ func (r RealTimeDecisionDigitalWalletAuthenticationResult) IsKnown() bool {
 type RealTimeDecisionDigitalWalletToken struct {
 	// The identifier of the Card that is being tokenized.
 	CardID string `json:"card_id" api:"required"`
+	// The cardholder adding the card to the digital wallet.
+	Cardholder RealTimeDecisionDigitalWalletTokenCardholder `json:"cardholder" api:"required"`
 	// Whether or not the provisioning request was approved. This will be null until
 	// the real time decision is responded to.
 	Decision RealTimeDecisionDigitalWalletTokenDecision `json:"decision" api:"required,nullable"`
@@ -2837,18 +2839,38 @@ type RealTimeDecisionDigitalWalletToken struct {
 	Device RealTimeDecisionDigitalWalletTokenDevice `json:"device" api:"required"`
 	// The digital wallet app being used.
 	DigitalWallet RealTimeDecisionDigitalWalletTokenDigitalWallet `json:"digital_wallet" api:"required"`
-	JSON          realTimeDecisionDigitalWalletTokenJSON          `json:"-"`
+	// The card network the token is being provisioned on.
+	Network RealTimeDecisionDigitalWalletTokenNetwork `json:"network" api:"required"`
+	// How the card number was provided to the digital wallet.
+	PrimaryAccountNumberSource RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource `json:"primary_account_number_source" api:"required,nullable"`
+	// The digital wallet or merchant that requested the token.
+	TokenRequestorDetails RealTimeDecisionDigitalWalletTokenTokenRequestorDetails `json:"token_requestor_details" api:"required"`
+	// Fields related to verification of cardholder-provided values.
+	Verification RealTimeDecisionDigitalWalletTokenVerification `json:"verification" api:"required"`
+	// Risk scores provided by Visa for the provisioning request. This field will be
+	// present in the JSON response if and only if `network` is equal to `visa`.
+	Visa RealTimeDecisionDigitalWalletTokenVisa `json:"visa" api:"required,nullable"`
+	// Details about the digital wallet.
+	Wallet RealTimeDecisionDigitalWalletTokenWallet `json:"wallet" api:"required"`
+	JSON   realTimeDecisionDigitalWalletTokenJSON   `json:"-"`
 }
 
 // realTimeDecisionDigitalWalletTokenJSON contains the JSON metadata for the struct
 // [RealTimeDecisionDigitalWalletToken]
 type realTimeDecisionDigitalWalletTokenJSON struct {
-	CardID        apijson.Field
-	Decision      apijson.Field
-	Device        apijson.Field
-	DigitalWallet apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	CardID                     apijson.Field
+	Cardholder                 apijson.Field
+	Decision                   apijson.Field
+	Device                     apijson.Field
+	DigitalWallet              apijson.Field
+	Network                    apijson.Field
+	PrimaryAccountNumberSource apijson.Field
+	TokenRequestorDetails      apijson.Field
+	Verification               apijson.Field
+	Visa                       apijson.Field
+	Wallet                     apijson.Field
+	raw                        string
+	ExtraFields                map[string]apijson.Field
 }
 
 func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err error) {
@@ -2856,6 +2878,29 @@ func (r *RealTimeDecisionDigitalWalletToken) UnmarshalJSON(data []byte) (err err
 }
 
 func (r realTimeDecisionDigitalWalletTokenJSON) RawJSON() string {
+	return r.raw
+}
+
+// The cardholder adding the card to the digital wallet.
+type RealTimeDecisionDigitalWalletTokenCardholder struct {
+	// The cardholder's name, as entered in the digital wallet.
+	Name string                                           `json:"name" api:"required,nullable"`
+	JSON realTimeDecisionDigitalWalletTokenCardholderJSON `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenCardholderJSON contains the JSON metadata for
+// the struct [RealTimeDecisionDigitalWalletTokenCardholder]
+type realTimeDecisionDigitalWalletTokenCardholderJSON struct {
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenCardholder) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenCardholderJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -2948,6 +2993,217 @@ func (r RealTimeDecisionDigitalWalletTokenDigitalWallet) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// The card network the token is being provisioned on.
+type RealTimeDecisionDigitalWalletTokenNetwork string
+
+const (
+	RealTimeDecisionDigitalWalletTokenNetworkVisa RealTimeDecisionDigitalWalletTokenNetwork = "visa"
+)
+
+func (r RealTimeDecisionDigitalWalletTokenNetwork) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletTokenNetworkVisa:
+		return true
+	}
+	return false
+}
+
+// How the card number was provided to the digital wallet.
+type RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource string
+
+const (
+	RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceKeyEntered     RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource = "key_entered"
+	RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceOnFile         RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource = "on_file"
+	RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceMobileApp      RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource = "mobile_app"
+	RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceToken          RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource = "token"
+	RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceChipDip        RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource = "chip_dip"
+	RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceContactlessTap RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource = "contactless_tap"
+)
+
+func (r RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSource) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceKeyEntered, RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceOnFile, RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceMobileApp, RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceToken, RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceChipDip, RealTimeDecisionDigitalWalletTokenPrimaryAccountNumberSourceContactlessTap:
+		return true
+	}
+	return false
+}
+
+// The digital wallet or merchant that requested the token.
+type RealTimeDecisionDigitalWalletTokenTokenRequestorDetails struct {
+	// The identifier assigned to the token requestor by the card network.
+	Identifier string `json:"identifier" api:"required"`
+	// The name of the token requestor, for example "Apple Inc.".
+	Name string                                                      `json:"name" api:"required,nullable"`
+	JSON realTimeDecisionDigitalWalletTokenTokenRequestorDetailsJSON `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenTokenRequestorDetailsJSON contains the JSON
+// metadata for the struct
+// [RealTimeDecisionDigitalWalletTokenTokenRequestorDetails]
+type realTimeDecisionDigitalWalletTokenTokenRequestorDetailsJSON struct {
+	Identifier  apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenTokenRequestorDetails) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenTokenRequestorDetailsJSON) RawJSON() string {
+	return r.raw
+}
+
+// Fields related to verification of cardholder-provided values.
+type RealTimeDecisionDigitalWalletTokenVerification struct {
+	// Cardholder address provided in the provisioning request and the address on file
+	// we verified it against.
+	CardholderAddress RealTimeDecisionDigitalWalletTokenVerificationCardholderAddress `json:"cardholder_address" api:"required"`
+	JSON              realTimeDecisionDigitalWalletTokenVerificationJSON              `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenVerificationJSON contains the JSON metadata
+// for the struct [RealTimeDecisionDigitalWalletTokenVerification]
+type realTimeDecisionDigitalWalletTokenVerificationJSON struct {
+	CardholderAddress apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenVerification) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenVerificationJSON) RawJSON() string {
+	return r.raw
+}
+
+// Cardholder address provided in the provisioning request and the address on file
+// we verified it against.
+type RealTimeDecisionDigitalWalletTokenVerificationCardholderAddress struct {
+	// Line 1 of the address on file for the cardholder.
+	ActualLine1 string `json:"actual_line1" api:"required,nullable"`
+	// The postal code of the address on file for the cardholder.
+	ActualPostalCode string `json:"actual_postal_code" api:"required,nullable"`
+	// The cardholder address line 1 provided for verification in the provisioning
+	// request.
+	ProvidedLine1 string `json:"provided_line1" api:"required,nullable"`
+	// The postal code provided for verification in the provisioning request.
+	ProvidedPostalCode string `json:"provided_postal_code" api:"required,nullable"`
+	// The address verification result.
+	Result RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult `json:"result" api:"required"`
+	JSON   realTimeDecisionDigitalWalletTokenVerificationCardholderAddressJSON   `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenVerificationCardholderAddressJSON contains the
+// JSON metadata for the struct
+// [RealTimeDecisionDigitalWalletTokenVerificationCardholderAddress]
+type realTimeDecisionDigitalWalletTokenVerificationCardholderAddressJSON struct {
+	ActualLine1        apijson.Field
+	ActualPostalCode   apijson.Field
+	ProvidedLine1      apijson.Field
+	ProvidedPostalCode apijson.Field
+	Result             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenVerificationCardholderAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenVerificationCardholderAddressJSON) RawJSON() string {
+	return r.raw
+}
+
+// The address verification result.
+type RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult string
+
+const (
+	RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultNotChecked                       RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult = "not_checked"
+	RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch    RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult = "postal_code_match_address_no_match"
+	RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch    RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult = "postal_code_no_match_address_match"
+	RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultMatch                            RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult = "match"
+	RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultNoMatch                          RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult = "no_match"
+	RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult = "postal_code_match_address_not_checked"
+)
+
+func (r RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResult) IsKnown() bool {
+	switch r {
+	case RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultNotChecked, RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultPostalCodeMatchAddressNoMatch, RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultPostalCodeNoMatchAddressMatch, RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultMatch, RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultNoMatch, RealTimeDecisionDigitalWalletTokenVerificationCardholderAddressResultPostalCodeMatchAddressNotChecked:
+		return true
+	}
+	return false
+}
+
+// Risk scores provided by Visa for the provisioning request. This field will be
+// present in the JSON response if and only if `network` is equal to `visa`.
+type RealTimeDecisionDigitalWalletTokenVisa struct {
+	// Visa's risk score for the card, based on its transaction history, from 0 to 99.
+	// A higher score indicates a higher risk.
+	NetworkRiskScore int64 `json:"network_risk_score" api:"required,nullable"`
+	// Visa's risk score for the provisioning request, from 1 to 99. A higher score
+	// indicates a higher risk.
+	ProvisioningRiskScore int64                                      `json:"provisioning_risk_score" api:"required,nullable"`
+	JSON                  realTimeDecisionDigitalWalletTokenVisaJSON `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenVisaJSON contains the JSON metadata for the
+// struct [RealTimeDecisionDigitalWalletTokenVisa]
+type realTimeDecisionDigitalWalletTokenVisaJSON struct {
+	NetworkRiskScore      apijson.Field
+	ProvisioningRiskScore apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenVisa) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenVisaJSON) RawJSON() string {
+	return r.raw
+}
+
+// Details about the digital wallet.
+type RealTimeDecisionDigitalWalletTokenWallet struct {
+	// The number of days since the email address was added to the cardholder's digital
+	// wallet account, up to 999.
+	AccountEmailAgeDays int64 `json:"account_email_age_days" api:"required,nullable"`
+	// An identifier for the cardholder's account with the digital wallet.
+	AccountIdentifier string `json:"account_identifier" api:"required,nullable"`
+	// How much the digital wallet trusts the cardholder's account, from 1 to 5. A
+	// higher score indicates more trust.
+	AccountScore int64 `json:"account_score" api:"required,nullable"`
+	// How much the digital wallet trusts the device the card is being added to, from 1
+	// to 5. A higher score indicates more trust.
+	DeviceScore int64 `json:"device_score" api:"required,nullable"`
+	// A hash of the email address on the cardholder's digital wallet account.
+	EmailHash string                                       `json:"email_hash" api:"required,nullable"`
+	JSON      realTimeDecisionDigitalWalletTokenWalletJSON `json:"-"`
+}
+
+// realTimeDecisionDigitalWalletTokenWalletJSON contains the JSON metadata for the
+// struct [RealTimeDecisionDigitalWalletTokenWallet]
+type realTimeDecisionDigitalWalletTokenWalletJSON struct {
+	AccountEmailAgeDays apijson.Field
+	AccountIdentifier   apijson.Field
+	AccountScore        apijson.Field
+	DeviceScore         apijson.Field
+	EmailHash           apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
+}
+
+func (r *RealTimeDecisionDigitalWalletTokenWallet) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimeDecisionDigitalWalletTokenWalletJSON) RawJSON() string {
+	return r.raw
 }
 
 // The status of the Real-Time Decision.
