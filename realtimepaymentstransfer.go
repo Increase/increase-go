@@ -136,6 +136,8 @@ type RealTimePaymentsTransfer struct {
 	// The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transfer's
 	// currency. For real-time payments transfers this is always equal to `USD`.
 	Currency RealTimePaymentsTransferCurrency `json:"currency" api:"required"`
+	// The address of the transfer's sender.
+	DebtorAddress RealTimePaymentsTransferDebtorAddress `json:"debtor_address" api:"required,nullable"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
 	DebtorName string `json:"debtor_name" api:"required,nullable"`
@@ -202,6 +204,7 @@ type realTimePaymentsTransferJSON struct {
 	CreatedBy                                  apijson.Field
 	CreditorName                               apijson.Field
 	Currency                                   apijson.Field
+	DebtorAddress                              apijson.Field
 	DebtorName                                 apijson.Field
 	EndToEndIdentification                     apijson.Field
 	ExternalAccountID                          apijson.Field
@@ -447,6 +450,48 @@ func (r RealTimePaymentsTransferCurrency) IsKnown() bool {
 	return false
 }
 
+// The address of the transfer's sender.
+type RealTimePaymentsTransferDebtorAddress struct {
+	// A second address line, such as an apartment or suite number. The first address
+	// line is separated into `building_number` and `street_name`.
+	AddressLine2 string `json:"address_line2" api:"required,nullable"`
+	// The number identifying the position of the building on the street.
+	BuildingNumber string `json:"building_number" api:"required,nullable"`
+	// The town or city.
+	City string `json:"city" api:"required,nullable"`
+	// The ISO 3166, Alpha-2 country code.
+	Country string `json:"country" api:"required,nullable"`
+	// The postal code or zip.
+	PostalCode string `json:"postal_code" api:"required,nullable"`
+	// The US state component of the address.
+	State string `json:"state" api:"required,nullable"`
+	// The street name without the street number.
+	StreetName string                                    `json:"street_name" api:"required,nullable"`
+	JSON       realTimePaymentsTransferDebtorAddressJSON `json:"-"`
+}
+
+// realTimePaymentsTransferDebtorAddressJSON contains the JSON metadata for the
+// struct [RealTimePaymentsTransferDebtorAddress]
+type realTimePaymentsTransferDebtorAddressJSON struct {
+	AddressLine2   apijson.Field
+	BuildingNumber apijson.Field
+	City           apijson.Field
+	Country        apijson.Field
+	PostalCode     apijson.Field
+	State          apijson.Field
+	StreetName     apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *RealTimePaymentsTransferDebtorAddress) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r realTimePaymentsTransferDebtorAddressJSON) RawJSON() string {
+	return r.raw
+}
+
 // If the transfer is rejected by Real-Time Payments or the destination financial
 // institution, this will contain supplemental details.
 type RealTimePaymentsTransferRejection struct {
@@ -594,6 +639,9 @@ type RealTimePaymentsTransferNewParams struct {
 	UnstructuredRemittanceInformation param.Field[string] `json:"unstructured_remittance_information" api:"required"`
 	// The destination account number.
 	AccountNumber param.Field[string] `json:"account_number"`
+	// The address of the transfer's sender. If not provided, no debtor address is sent
+	// with the transfer.
+	DebtorAddress param.Field[RealTimePaymentsTransferNewParamsDebtorAddress] `json:"debtor_address"`
 	// The name of the transfer's sender. If not provided, defaults to the name of the
 	// account's entity.
 	DebtorName param.Field[string] `json:"debtor_name"`
@@ -617,6 +665,32 @@ type RealTimePaymentsTransferNewParams struct {
 }
 
 func (r RealTimePaymentsTransferNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The address of the transfer's sender. If not provided, no debtor address is sent
+// with the transfer.
+type RealTimePaymentsTransferNewParamsDebtorAddress struct {
+	// The town or city.
+	City param.Field[string] `json:"city" api:"required"`
+	// The ISO 3166, Alpha-2 country code.
+	//
+	// Defaults to `US`.
+	Country param.Field[string] `json:"country" api:"required"`
+	// The postal code or zip.
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
+	// The US state component of the address.
+	State param.Field[string] `json:"state" api:"required"`
+	// The street name without the street number.
+	StreetName param.Field[string] `json:"street_name" api:"required"`
+	// A second address line, such as an apartment or suite number. The first address
+	// line is separated into `building_number` and `street_name`.
+	AddressLine2 param.Field[string] `json:"address_line2"`
+	// The number identifying the position of the building on the street.
+	BuildingNumber param.Field[string] `json:"building_number"`
+}
+
+func (r RealTimePaymentsTransferNewParamsDebtorAddress) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
