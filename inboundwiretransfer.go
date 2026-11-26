@@ -230,6 +230,8 @@ func (r inboundWireTransferAcceptanceJSON) RawJSON() string {
 
 // If the transfer is reversed, this will contain details of the reversal.
 type InboundWireTransferReversal struct {
+	// The amount that was reversed in USD cents.
+	Amount int64 `json:"amount" api:"required"`
 	// The reason for the reversal.
 	Reason InboundWireTransferReversalReason `json:"reason" api:"required"`
 	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -241,6 +243,7 @@ type InboundWireTransferReversal struct {
 // inboundWireTransferReversalJSON contains the JSON metadata for the struct
 // [InboundWireTransferReversal]
 type inboundWireTransferReversalJSON struct {
+	Amount      apijson.Field
 	Reason      apijson.Field
 	ReversedAt  apijson.Field
 	raw         string
@@ -262,11 +265,12 @@ const (
 	InboundWireTransferReversalReasonDuplicate            InboundWireTransferReversalReason = "duplicate"
 	InboundWireTransferReversalReasonCreditorRequest      InboundWireTransferReversalReason = "creditor_request"
 	InboundWireTransferReversalReasonTransactionForbidden InboundWireTransferReversalReason = "transaction_forbidden"
+	InboundWireTransferReversalReasonFraud                InboundWireTransferReversalReason = "fraud"
 )
 
 func (r InboundWireTransferReversalReason) IsKnown() bool {
 	switch r {
-	case InboundWireTransferReversalReasonDuplicate, InboundWireTransferReversalReasonCreditorRequest, InboundWireTransferReversalReasonTransactionForbidden:
+	case InboundWireTransferReversalReasonDuplicate, InboundWireTransferReversalReasonCreditorRequest, InboundWireTransferReversalReasonTransactionForbidden, InboundWireTransferReversalReasonFraud:
 		return true
 	}
 	return false
@@ -394,6 +398,10 @@ func (r InboundWireTransferListParamsStatusIn) IsKnown() bool {
 type InboundWireTransferReverseParams struct {
 	// Reason for the reversal.
 	Reason param.Field[InboundWireTransferReverseParamsReason] `json:"reason" api:"required"`
+	// The amount to return, in USD cents. Defaults to the full amount of the Inbound
+	// Wire Transfer. A transfer can only be reversed once, so any amount you don't
+	// return now stays with the recipient.
+	Amount param.Field[int64] `json:"amount"`
 }
 
 func (r InboundWireTransferReverseParams) MarshalJSON() (data []byte, err error) {
@@ -407,11 +415,12 @@ const (
 	InboundWireTransferReverseParamsReasonDuplicate            InboundWireTransferReverseParamsReason = "duplicate"
 	InboundWireTransferReverseParamsReasonCreditorRequest      InboundWireTransferReverseParamsReason = "creditor_request"
 	InboundWireTransferReverseParamsReasonTransactionForbidden InboundWireTransferReverseParamsReason = "transaction_forbidden"
+	InboundWireTransferReverseParamsReasonFraud                InboundWireTransferReverseParamsReason = "fraud"
 )
 
 func (r InboundWireTransferReverseParamsReason) IsKnown() bool {
 	switch r {
-	case InboundWireTransferReverseParamsReasonDuplicate, InboundWireTransferReverseParamsReasonCreditorRequest, InboundWireTransferReverseParamsReasonTransactionForbidden:
+	case InboundWireTransferReverseParamsReasonDuplicate, InboundWireTransferReverseParamsReasonCreditorRequest, InboundWireTransferReverseParamsReasonTransactionForbidden, InboundWireTransferReverseParamsReasonFraud:
 		return true
 	}
 	return false
