@@ -19,6 +19,7 @@ const ErrorReasonWrongEnvironment = apierror.ErrorReasonWrongEnvironment
 
 type ErrorStatus = apierror.ErrorStatus
 
+const ErrorStatus408 = apierror.ErrorStatus408
 const ErrorStatus429 = apierror.ErrorStatus429
 const ErrorStatus403 = apierror.ErrorStatus403
 const ErrorStatus404 = apierror.ErrorStatus404
@@ -29,6 +30,7 @@ const ErrorStatus500 = apierror.ErrorStatus500
 
 type ErrorType = apierror.ErrorType
 
+const ErrorTypeRequestTimeoutError = apierror.ErrorTypeRequestTimeoutError
 const ErrorTypeRateLimitedError = apierror.ErrorTypeRateLimitedError
 const ErrorTypePrivateFeatureError = apierror.ErrorTypePrivateFeatureError
 const ErrorTypeObjectNotFoundError = apierror.ErrorTypeObjectNotFoundError
