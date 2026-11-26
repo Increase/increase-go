@@ -73,7 +73,7 @@ func TestInboundWireTransferListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestInboundWireTransferReverse(t *testing.T) {
+func TestInboundWireTransferReverseWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -90,6 +90,7 @@ func TestInboundWireTransferReverse(t *testing.T) {
 		"inbound_wire_transfer_f228m6bmhtcxjco9pwp0",
 		increase.InboundWireTransferReverseParams{
 			Reason: increase.F(increase.InboundWireTransferReverseParamsReasonCreditorRequest),
+			Amount: increase.F(int64(1)),
 		},
 	)
 	if err != nil {
