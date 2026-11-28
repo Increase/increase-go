@@ -94,6 +94,7 @@ func (r ErrorReason) IsKnown() bool {
 type ErrorStatus int64
 
 const (
+	ErrorStatus408 ErrorStatus = 408
 	ErrorStatus429 ErrorStatus = 429
 	ErrorStatus403 ErrorStatus = 403
 	ErrorStatus404 ErrorStatus = 404
@@ -105,7 +106,7 @@ const (
 
 func (r ErrorStatus) IsKnown() bool {
 	switch r {
-	case ErrorStatus429, ErrorStatus403, ErrorStatus404, ErrorStatus400, ErrorStatus409, ErrorStatus401, ErrorStatus500:
+	case ErrorStatus408, ErrorStatus429, ErrorStatus403, ErrorStatus404, ErrorStatus400, ErrorStatus409, ErrorStatus401, ErrorStatus500:
 		return true
 	}
 	return false
@@ -114,6 +115,7 @@ func (r ErrorStatus) IsKnown() bool {
 type ErrorType string
 
 const (
+	ErrorTypeRequestTimeoutError            ErrorType = "request_timeout_error"
 	ErrorTypeRateLimitedError               ErrorType = "rate_limited_error"
 	ErrorTypePrivateFeatureError            ErrorType = "private_feature_error"
 	ErrorTypeObjectNotFoundError            ErrorType = "object_not_found_error"
@@ -130,7 +132,7 @@ const (
 
 func (r ErrorType) IsKnown() bool {
 	switch r {
-	case ErrorTypeRateLimitedError, ErrorTypePrivateFeatureError, ErrorTypeObjectNotFoundError, ErrorTypeMalformedRequestError, ErrorTypeInvalidParametersError, ErrorTypeInvalidOperationError, ErrorTypeInvalidAPIKeyError, ErrorTypeInternalServerError, ErrorTypeInsufficientPermissionsError, ErrorTypeIdempotencyKeyAlreadyUsedError, ErrorTypeEnvironmentMismatchError, ErrorTypeAPIMethodNotFoundError:
+	case ErrorTypeRequestTimeoutError, ErrorTypeRateLimitedError, ErrorTypePrivateFeatureError, ErrorTypeObjectNotFoundError, ErrorTypeMalformedRequestError, ErrorTypeInvalidParametersError, ErrorTypeInvalidOperationError, ErrorTypeInvalidAPIKeyError, ErrorTypeInternalServerError, ErrorTypeInsufficientPermissionsError, ErrorTypeIdempotencyKeyAlreadyUsedError, ErrorTypeEnvironmentMismatchError, ErrorTypeAPIMethodNotFoundError:
 		return true
 	}
 	return false
