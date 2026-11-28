@@ -42,6 +42,7 @@ func TestCheckbookNewWithOptionalParams(t *testing.T) {
 		}, {
 			Contents: increase.F("New York, NY 10045"),
 		}}),
+		Style: increase.F(increase.CheckbookNewParamsStyleThreeRingBinder),
 	})
 	if err != nil {
 		var apierr *increase.Error

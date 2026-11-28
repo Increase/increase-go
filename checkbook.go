@@ -270,13 +270,14 @@ func (r CheckbookStatus) IsKnown() bool {
 type CheckbookStyle string
 
 const (
+	CheckbookStyleTopTearPad      CheckbookStyle = "top_tear_pad"
 	CheckbookStyleThreeRingBinder CheckbookStyle = "three_ring_binder"
 	CheckbookStyleFolder          CheckbookStyle = "folder"
 )
 
 func (r CheckbookStyle) IsKnown() bool {
 	switch r {
-	case CheckbookStyleThreeRingBinder, CheckbookStyleFolder:
+	case CheckbookStyleTopTearPad, CheckbookStyleThreeRingBinder, CheckbookStyleFolder:
 		return true
 	}
 	return false
@@ -360,6 +361,8 @@ type CheckbookNewParams struct {
 	// check. This should be an array of up to 4 elements, each of which represents a
 	// line of the payer.
 	Payer param.Field[[]CheckbookNewParamsPayer] `json:"payer" api:"required"`
+	// The physical format of the Checkbook.
+	Style param.Field[CheckbookNewParamsStyle] `json:"style" api:"required"`
 }
 
 func (r CheckbookNewParams) MarshalJSON() (data []byte, err error) {
@@ -393,6 +396,22 @@ type CheckbookNewParamsPayer struct {
 
 func (r CheckbookNewParamsPayer) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The physical format of the Checkbook.
+type CheckbookNewParamsStyle string
+
+const (
+	CheckbookNewParamsStyleTopTearPad      CheckbookNewParamsStyle = "top_tear_pad"
+	CheckbookNewParamsStyleThreeRingBinder CheckbookNewParamsStyle = "three_ring_binder"
+)
+
+func (r CheckbookNewParamsStyle) IsKnown() bool {
+	switch r {
+	case CheckbookNewParamsStyleTopTearPad, CheckbookNewParamsStyleThreeRingBinder:
+		return true
+	}
+	return false
 }
 
 type CheckbookListParams struct {
